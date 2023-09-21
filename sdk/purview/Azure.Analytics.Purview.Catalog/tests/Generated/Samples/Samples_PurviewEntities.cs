@@ -11,7 +11,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Purview.Catalog;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -24,27 +23,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.CreateOrUpdate(content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateAsync(content);
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -54,148 +39,224 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 entity = new
                 {
                     businessAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
-                    classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-                    createTime = 123.45F,
+                    classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+                    createTime = 123.45f,
                     createdBy = "<createdBy>",
                     customAttributes = new
                     {
-                        key = "<customAttributes>",
+                        key = "<String>",
                     },
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
-"<labels>"
-},
-                    meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                    provenanceType = 123.45F,
+                    labels = new[] {
+            "<String>"
+        },
+                    meanings = new[] {
+            new {
+                confidence = 1234,
+                createdBy = "<createdBy>",
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DISCOVERED",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+                    provenanceType = 123.45f,
                     proxy = true,
                     relationshipAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     status = "ACTIVE",
-                    updateTime = 123.45F,
+                    updateTime = 123.45f,
                     updatedBy = "<updatedBy>",
-                    version = 123.45F,
+                    version = 123.45f,
                     source = "<source>",
                     sourceDetails = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                        key = new[] {
+                new {
+                    id = "<id>",
+                    info = "<info>",
+                }
+            },
                     },
                     attributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
                 referredEntities = new
                 {
+                    key = new
+                    {
+                        businessAttributes = new
+                        {
+                            key = new { },
+                        },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        customAttributes = new
+                        {
+                            key = "<String>",
+                        },
+                        guid = "<guid>",
+                        homeId = "<homeId>",
+                        isIncomplete = true,
+                        labels = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        provenanceType = 123.45f,
+                        proxy = true,
+                        relationshipAttributes = new
+                        {
+                            key = new { },
+                        },
+                        status = "ACTIVE",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        version = 123.45f,
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
                 },
-            });
-            Response response = client.CreateOrUpdate(content);
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                },
+            };
+
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -204,8 +265,8 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -224,157 +285,249 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 entity = new
                 {
                     businessAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
-                    classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-                    createTime = 123.45F,
+                    classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+                    createTime = 123.45f,
                     createdBy = "<createdBy>",
                     customAttributes = new
                     {
-                        key = "<customAttributes>",
+                        key = "<String>",
                     },
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
-"<labels>"
-},
-                    meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                    provenanceType = 123.45F,
+                    labels = new[] {
+            "<String>"
+        },
+                    meanings = new[] {
+            new {
+                confidence = 1234,
+                createdBy = "<createdBy>",
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DISCOVERED",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+                    provenanceType = 123.45f,
                     proxy = true,
                     relationshipAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     status = "ACTIVE",
-                    updateTime = 123.45F,
+                    updateTime = 123.45f,
                     updatedBy = "<updatedBy>",
-                    version = 123.45F,
+                    version = 123.45f,
                     source = "<source>",
                     sourceDetails = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                        key = new[] {
+                new {
+                    id = "<id>",
+                    info = "<info>",
+                }
+            },
                     },
                     attributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
                 referredEntities = new
                 {
+                    key = new
+                    {
+                        businessAttributes = new
+                        {
+                            key = new { },
+                        },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        customAttributes = new
+                        {
+                            key = "<String>",
+                        },
+                        guid = "<guid>",
+                        homeId = "<homeId>",
+                        isIncomplete = true,
+                        labels = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        provenanceType = 123.45f,
+                        proxy = true,
+                        relationshipAttributes = new
+                        {
+                            key = new { },
+                        },
+                        status = "ACTIVE",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        version = 123.45f,
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
                 },
-            });
-            Response response = await client.CreateOrUpdateAsync(content);
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                },
+            };
+
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -383,8 +536,8 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -403,7 +556,7 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
@@ -412,31 +565,11 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetByGuids()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuids(new List<string>()
-{
-"<guids>"
-}, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuids_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null, null, null, null);
+            Response response = client.GetByGuids(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -446,20 +579,14 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetByGuids_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuids(new List<string>()
-{
-"<guids>"
-}, true, true, new List<string>()
-{
-"<excludeRelationshipTypes>"
-}, null);
+            Response response = client.GetByGuids(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -467,13 +594,13 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("isIncomplete").ToString());
@@ -490,178 +617,72 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("provenanceType").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuids_AllParameters_Async()
+        public async Task Example_GetByGuids_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, true, true, new List<string>()
-{
-"<excludeRelationshipTypes>"
-}, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEntities()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.CreateOrUpdateEntities(content);
+            Response response = await client.GetByGuidsAsync(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -669,14 +690,114 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntities_Async()
+        public async Task Example_GetByGuids_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrUpdateEntitiesAsync(content);
+            Response response = await client.GetByGuidsAsync(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateEntities()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = client.CreateOrUpdateEntities(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -686,151 +807,219 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateEntities_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                entities = new List<object>()
-{
-new
-{
-businessAttributes = new
-{
-key = new object(),
-},
-classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-createTime = 123.45F,
-createdBy = "<createdBy>",
-customAttributes = new
-{
-key = "<customAttributes>",
-},
-guid = "<guid>",
-homeId = "<homeId>",
-isIncomplete = true,
-labels = new List<object>()
-{
-"<labels>"
-},
-meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-provenanceType = 123.45F,
-proxy = true,
-relationshipAttributes = new
-{
-key = new object(),
-},
-status = "ACTIVE",
-updateTime = 123.45F,
-updatedBy = "<updatedBy>",
-version = 123.45F,
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-contacts = new
-{
-key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                entities = new[] {
+        new {
+            businessAttributes = new {
+                key = new {},
+            },
+            classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+            createTime = 123.45f,
+            createdBy = "<createdBy>",
+            customAttributes = new {
+                key = "<String>",
+            },
+            guid = "<guid>",
+            homeId = "<homeId>",
+            isIncomplete = true,
+            labels = new[] {
+                "<String>"
+            },
+            meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+            provenanceType = 123.45f,
+            proxy = true,
+            relationshipAttributes = new {
+                key = new {},
+            },
+            status = "ACTIVE",
+            updateTime = 123.45f,
+            updatedBy = "<updatedBy>",
+            version = 123.45f,
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            contacts = new {
+                key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
+                },
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 referredEntities = new
                 {
+                    key = new
+                    {
+                        businessAttributes = new
+                        {
+                            key = new { },
+                        },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        customAttributes = new
+                        {
+                            key = "<String>",
+                        },
+                        guid = "<guid>",
+                        homeId = "<homeId>",
+                        isIncomplete = true,
+                        labels = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        provenanceType = 123.45f,
+                        proxy = true,
+                        relationshipAttributes = new
+                        {
+                            key = new { },
+                        },
+                        status = "ACTIVE",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        version = 123.45f,
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
                 },
-            });
-            Response response = client.CreateOrUpdateEntities(content);
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                },
+            };
+
+            Response response = client.CreateOrUpdateEntities(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -839,8 +1028,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -859,160 +1048,244 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntities_AllParameters_Async()
+        public async Task Example_CreateOrUpdateEntities_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
-            {
-                entities = new List<object>()
-{
-new
-{
-businessAttributes = new
-{
-key = new object(),
-},
-classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-createTime = 123.45F,
-createdBy = "<createdBy>",
-customAttributes = new
-{
-key = "<customAttributes>",
-},
-guid = "<guid>",
-homeId = "<homeId>",
-isIncomplete = true,
-labels = new List<object>()
-{
-"<labels>"
-},
-meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-provenanceType = 123.45F,
-proxy = true,
-relationshipAttributes = new
-{
-key = new object(),
-},
-status = "ACTIVE",
-updateTime = 123.45F,
-updatedBy = "<updatedBy>",
-version = 123.45F,
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-contacts = new
-{
-key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-                referredEntities = new
-                {
-                },
-            });
-            Response response = await client.CreateOrUpdateEntitiesAsync(content);
+            var data = new { };
+
+            Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateEntities_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new
+            {
+                entities = new[] {
+        new {
+            businessAttributes = new {
+                key = new {},
+            },
+            classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+            createTime = 123.45f,
+            createdBy = "<createdBy>",
+            customAttributes = new {
+                key = "<String>",
+            },
+            guid = "<guid>",
+            homeId = "<homeId>",
+            isIncomplete = true,
+            labels = new[] {
+                "<String>"
+            },
+            meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+            provenanceType = 123.45f,
+            proxy = true,
+            relationshipAttributes = new {
+                key = new {},
+            },
+            status = "ACTIVE",
+            updateTime = 123.45f,
+            updatedBy = "<updatedBy>",
+            version = 123.45f,
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            contacts = new {
+                key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
+                },
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
+                referredEntities = new
+                {
+                    key = new
+                    {
+                        businessAttributes = new
+                        {
+                            key = new { },
+                        },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        customAttributes = new
+                        {
+                            key = "<String>",
+                        },
+                        guid = "<guid>",
+                        homeId = "<homeId>",
+                        isIncomplete = true,
+                        labels = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        provenanceType = 123.45f,
+                        proxy = true,
+                        relationshipAttributes = new
+                        {
+                            key = new { },
+                        },
+                        status = "ACTIVE",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        version = 123.45f,
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
+                },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                },
+            };
+
+            Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -1021,8 +1294,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -1041,7 +1314,7 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
@@ -1050,31 +1323,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByGuids()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuids(new List<string>()
-{
-"<guids>"
-}, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuids_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.DeleteByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null);
+            Response response = client.DeleteByGuids(new string[] { "<guids>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1084,48 +1337,45 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByGuids_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuids(new List<string>()
-{
-"<guids>"
-}, null);
+            Response response = client.DeleteByGuids(new string[] { "<guids>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -1134,8 +1384,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -1154,57 +1404,68 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuids_AllParameters_Async()
+        public async Task Example_DeleteByGuids_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null);
+            Response response = await client.DeleteByGuidsAsync(new string[] { "<guids>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteByGuids_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.DeleteByGuidsAsync(new string[] { "<guids>" }, new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -1213,8 +1474,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -1233,7 +1494,7 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
@@ -1242,25 +1503,13 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddClassification()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.AddClassification(content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new { };
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassification_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.AddClassificationAsync(content);
+            Response response = client.AddClassification(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -1268,44 +1517,56 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddClassification_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 classification = new
                 {
                     entityGuid = "<entityGuid>",
                     entityStatus = "ACTIVE",
                     removePropagationsOnEntityDelete = true,
-                    validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
+                    validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
                     source = "<source>",
                     sourceDetails = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     attributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                entityGuids = new List<object>()
-{
-"<entityGuids>"
-},
-            });
-            Response response = client.AddClassification(content);
+                entityGuids = new[] {
+        "<String>"
+    },
+            };
+
+            Response response = client.AddClassification(RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddClassification_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = await client.AddClassificationAsync(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -1313,44 +1574,42 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddClassification_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 classification = new
                 {
                     entityGuid = "<entityGuid>",
                     entityStatus = "ACTIVE",
                     removePropagationsOnEntityDelete = true,
-                    validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
+                    validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
                     source = "<source>",
                     sourceDetails = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     attributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                entityGuids = new List<object>()
-{
-"<entityGuids>"
-},
-            });
-            Response response = await client.AddClassificationAsync(content);
+                entityGuids = new[] {
+        "<String>"
+    },
+            };
+
+            Response response = await client.AddClassificationAsync(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -1358,25 +1617,11 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuid("<guid>", null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetByGuidAsync("<guid>", null, null, null);
+            Response response = client.GetByGuid("<guid>", true, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1386,14 +1631,14 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuid("<guid>", true, true, null);
+            Response response = client.GetByGuid("<guid>", true, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1401,13 +1646,13 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("isIncomplete").ToString());
@@ -1424,172 +1669,72 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("provenanceType").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuid_AllParameters_Async()
+        public async Task Example_GetByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByGuidAsync("<guid>", true, true, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_PartialUpdateEntityAttributeByGuid()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", content);
+            Response response = await client.GetByGuidAsync("<guid>", true, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1597,14 +1742,114 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateEntityAttributeByGuid_Async()
+        public async Task Example_GetByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", content);
+            Response response = await client.GetByGuidAsync("<guid>", true, true, new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_PartialUpdateEntityAttributeByGuid()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1614,46 +1859,47 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateEntityAttributeByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", content);
+            var data = new { };
+
+            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -1662,8 +1908,8 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -1682,55 +1928,72 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateEntityAttributeByGuid_AllParameters_Async()
+        public async Task Example_PartialUpdateEntityAttributeByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", content);
+            var data = new { };
+
+            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateEntityAttributeByGuid_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -1739,8 +2002,8 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -1759,7 +2022,7 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
@@ -1768,25 +2031,11 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuid("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuid_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.DeleteByGuidAsync("<guid>", null);
+            Response response = client.DeleteByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1796,45 +2045,45 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuid("<guid>", null);
+            Response response = client.DeleteByGuid("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -1843,8 +2092,8 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -1863,54 +2112,68 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuid_AllParameters_Async()
+        public async Task Example_DeleteByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByGuidAsync("<guid>", null);
+            Response response = await client.DeleteByGuidAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteByGuid_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.DeleteByGuidAsync("<guid>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -1919,8 +2182,8 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -1939,7 +2202,7 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
@@ -1948,25 +2211,11 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassification()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetClassification("<guid>", "<classificationName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassification_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", null);
+            Response response = client.GetClassification("<guid>", "<classificationName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1976,11 +2225,11 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassification_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetClassification("<guid>", "<classificationName>", null);
+            Response response = client.GetClassification("<guid>", "<classificationName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityGuid").ToString());
@@ -1990,21 +2239,35 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassification_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassification_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", null);
+            Response response = await client.GetClassificationAsync("<guid>", "<classificationName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entityGuid").ToString());
@@ -2014,8 +2277,8 @@ timeZone = "<timeZone>",
             Console.WriteLine(result.GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
@@ -2024,9 +2287,21 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteClassification()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = client.DeleteClassification("<guid>", "<classificationName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteClassification_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.DeleteClassification("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
@@ -2036,9 +2311,9 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassification_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
@@ -2046,23 +2321,11 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteClassification_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = client.DeleteClassification("<guid>", "<classificationName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassification_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
@@ -2072,25 +2335,11 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetClassifications("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetClassificationsAsync("<guid>", null);
+            Response response = client.GetClassifications("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2100,11 +2349,11 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassifications_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetClassifications("<guid>", null);
+            Response response = client.GetClassifications("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("list")[0].ToString());
@@ -2117,13 +2366,27 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassifications_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetClassificationsAsync("<guid>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassifications_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetClassificationsAsync("<guid>", null);
+            Response response = await client.GetClassificationsAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("list")[0].ToString());
@@ -2138,31 +2401,15 @@ timeZone = "<timeZone>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.AddClassifications("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.AddClassificationsAsync("<guid>", content);
+            Response response = client.AddClassifications("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2170,40 +2417,51 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_AddClassifications_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = client.AddClassifications("<guid>", content);
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = client.AddClassifications("<guid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddClassifications_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.AddClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2211,40 +2469,35 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddClassifications_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = await client.AddClassificationsAsync("<guid>", content);
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = await client.AddClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2252,31 +2505,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.UpdateClassifications("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.UpdateClassificationsAsync("<guid>", content);
+            Response response = client.UpdateClassifications("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2284,40 +2521,51 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateClassifications_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = client.UpdateClassifications("<guid>", content);
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = client.UpdateClassifications("<guid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateClassifications_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.UpdateClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2325,40 +2573,35 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateClassifications_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = await client.UpdateClassificationsAsync("<guid>", content);
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = await client.UpdateClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2366,25 +2609,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetByUniqueAttributes()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByUniqueAttributes("<typeName>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByUniqueAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetByUniqueAttributesAsync("<typeName>", null, null, null, null);
+            Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2394,14 +2623,14 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetByUniqueAttributes_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>", null);
+            Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2409,13 +2638,13 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("isIncomplete").ToString());
@@ -2432,172 +2661,72 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("provenanceType").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByUniqueAttributes_AllParameters_Async()
+        public async Task Example_GetByUniqueAttributes_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_PartialUpdateEntityByUniqueAttributes()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", content);
+            Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2605,14 +2734,114 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateEntityByUniqueAttributes_Async()
+        public async Task Example_GetByUniqueAttributes_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", content);
+            Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_PartialUpdateEntityByUniqueAttributes()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2622,148 +2851,224 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateEntityByUniqueAttributes_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 entity = new
                 {
                     businessAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
-                    classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-                    createTime = 123.45F,
+                    classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+                    createTime = 123.45f,
                     createdBy = "<createdBy>",
                     customAttributes = new
                     {
-                        key = "<customAttributes>",
+                        key = "<String>",
                     },
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
-"<labels>"
-},
-                    meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                    provenanceType = 123.45F,
+                    labels = new[] {
+            "<String>"
+        },
+                    meanings = new[] {
+            new {
+                confidence = 1234,
+                createdBy = "<createdBy>",
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DISCOVERED",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+                    provenanceType = 123.45f,
                     proxy = true,
                     relationshipAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     status = "ACTIVE",
-                    updateTime = 123.45F,
+                    updateTime = 123.45f,
                     updatedBy = "<updatedBy>",
-                    version = 123.45F,
+                    version = 123.45f,
                     source = "<source>",
                     sourceDetails = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                        key = new[] {
+                new {
+                    id = "<id>",
+                    info = "<info>",
+                }
+            },
                     },
                     attributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
                 referredEntities = new
                 {
+                    key = new
+                    {
+                        businessAttributes = new
+                        {
+                            key = new { },
+                        },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        customAttributes = new
+                        {
+                            key = "<String>",
+                        },
+                        guid = "<guid>",
+                        homeId = "<homeId>",
+                        isIncomplete = true,
+                        labels = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        provenanceType = 123.45f,
+                        proxy = true,
+                        relationshipAttributes = new
+                        {
+                            key = new { },
+                        },
+                        status = "ACTIVE",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        version = 123.45f,
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
                 },
-            });
-            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                },
+            };
+
+            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -2772,8 +3077,8 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -2792,157 +3097,249 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateEntityByUniqueAttributes_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_PartialUpdateEntityByUniqueAttributes_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 entity = new
                 {
                     businessAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
-                    classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-                    createTime = 123.45F,
+                    classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+                    createTime = 123.45f,
                     createdBy = "<createdBy>",
                     customAttributes = new
                     {
-                        key = "<customAttributes>",
+                        key = "<String>",
                     },
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
-"<labels>"
-},
-                    meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                    provenanceType = 123.45F,
+                    labels = new[] {
+            "<String>"
+        },
+                    meanings = new[] {
+            new {
+                confidence = 1234,
+                createdBy = "<createdBy>",
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DISCOVERED",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+                    provenanceType = 123.45f,
                     proxy = true,
                     relationshipAttributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     status = "ACTIVE",
-                    updateTime = 123.45F,
+                    updateTime = 123.45f,
                     updatedBy = "<updatedBy>",
-                    version = 123.45F,
+                    version = 123.45f,
                     source = "<source>",
                     sourceDetails = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                        key = new[] {
+                new {
+                    id = "<id>",
+                    info = "<info>",
+                }
+            },
                     },
                     attributes = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
                 referredEntities = new
                 {
+                    key = new
+                    {
+                        businessAttributes = new
+                        {
+                            key = new { },
+                        },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        customAttributes = new
+                        {
+                            key = "<String>",
+                        },
+                        guid = "<guid>",
+                        homeId = "<homeId>",
+                        isIncomplete = true,
+                        labels = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        provenanceType = 123.45f,
+                        proxy = true,
+                        relationshipAttributes = new
+                        {
+                            key = new { },
+                        },
+                        status = "ACTIVE",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        version = 123.45f,
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
                 },
-            });
-            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                },
+            };
+
+            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -2951,8 +3348,8 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -2971,7 +3368,7 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
@@ -2980,25 +3377,11 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByUniqueAttribute("<typeName>", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", null, null);
+            Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3008,45 +3391,45 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteByUniqueAttribute_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>", null);
+            Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -3055,8 +3438,8 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -3075,54 +3458,68 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByUniqueAttribute_AllParameters_Async()
+        public async Task Example_DeleteByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>", null);
+            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<key>")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteByUniqueAttribute_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
@@ -3131,8 +3528,8 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
@@ -3151,7 +3548,7 @@ info = "<info>",
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         }
@@ -3160,9 +3557,9 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteClassificationByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>");
             Console.WriteLine(response.Status);
@@ -3170,11 +3567,23 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteClassificationByUniqueAttribute_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", "<attrQualifiedName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassificationByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>");
             Console.WriteLine(response.Status);
@@ -3182,25 +3591,13 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteClassificationByUniqueAttribute_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", attrQualifiedName: "<attrQualifiedName>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassificationByUniqueAttribute_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", attrQualifiedName: "<attrQualifiedName>");
+            Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3208,31 +3605,15 @@ info = "<info>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddClassificationsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassificationsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", content);
+            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -3240,40 +3621,51 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_AddClassificationsByUniqueAttribute_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddClassificationsByUniqueAttribute_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -3281,40 +3673,35 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddClassificationsByUniqueAttribute_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3322,31 +3709,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateClassificationsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateClassificationsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", content);
+            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -3354,40 +3725,51 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateClassificationsByUniqueAttribute_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateClassificationsByUniqueAttribute_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -3395,40 +3777,35 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateClassificationsByUniqueAttribute_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-});
-            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    new {
+        entityGuid = "<entityGuid>",
+        entityStatus = "ACTIVE",
+        removePropagationsOnEntityDelete = true,
+        validityPeriods = new[] {
+            new {
+                endTime = "<endTime>",
+                startTime = "<startTime>",
+                timeZone = "<timeZone>",
+            }
+        },
+        source = "<source>",
+        sourceDetails = new {
+            key = new {},
+        },
+        attributes = new {
+            key = new {},
+        },
+        typeName = "<typeName>",
+        lastModifiedTS = "<lastModifiedTS>",
+    }
+};
+
+            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3436,27 +3813,13 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SetClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.SetClassifications(content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetClassifications_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.SetClassificationsAsync(content);
+            Response response = client.SetClassifications(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3466,87 +3829,93 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SetClassifications_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 guidHeaderMap = new
                 {
                     key = new
                     {
-                        classificationNames = new List<object>()
-{
-"<classificationNames>"
-},
-                        classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                        classificationNames = new[] {
+                "<String>"
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         displayText = "<displayText>",
                         guid = "<guid>",
                         isIncomplete = true,
-                        labels = new List<object>()
-{
-"<labels>"
-},
-                        meaningNames = new List<object>()
-{
-"<meaningNames>"
-},
-                        meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
+                        labels = new[] {
+                "<String>"
+            },
+                        meaningNames = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         status = "ACTIVE",
                         attributes = new
                         {
-                            key = new object(),
+                            key = new { },
                         },
                         typeName = "<typeName>",
                         lastModifiedTS = "<lastModifiedTS>",
                     },
                 },
-            });
-            Response response = client.SetClassifications(content);
+            };
+
+            Response response = client.SetClassifications(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_SetClassifications_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new { };
+
+            Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3556,87 +3925,77 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SetClassifications_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 guidHeaderMap = new
                 {
                     key = new
                     {
-                        classificationNames = new List<object>()
-{
-"<classificationNames>"
-},
-                        classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                        classificationNames = new[] {
+                "<String>"
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         displayText = "<displayText>",
                         guid = "<guid>",
                         isIncomplete = true,
-                        labels = new List<object>()
-{
-"<labels>"
-},
-                        meaningNames = new List<object>()
-{
-"<meaningNames>"
-},
-                        meanings = new List<object>()
-{
-new
-{
-confidence = 1234,
-createdBy = "<createdBy>",
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DISCOVERED",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
+                        labels = new[] {
+                "<String>"
+            },
+                        meaningNames = new[] {
+                "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         status = "ACTIVE",
                         attributes = new
                         {
-                            key = new object(),
+                            key = new { },
                         },
                         typeName = "<typeName>",
                         lastModifiedTS = "<lastModifiedTS>",
                     },
                 },
-            });
-            Response response = await client.SetClassificationsAsync(content);
+            };
+
+            Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3646,25 +4005,11 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntitiesByUniqueAttributes()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetEntitiesByUniqueAttributes("<typeName>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntitiesByUniqueAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", null, null, null, null);
+            Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3674,14 +4019,14 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntitiesByUniqueAttributes_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>", null);
+            Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3689,13 +4034,13 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("isIncomplete").ToString());
@@ -3712,171 +4057,72 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("provenanceType").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntitiesByUniqueAttributes_AllParameters_Async()
+        public async Task Example_GetEntitiesByUniqueAttributes_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("businessAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("customAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("homeId").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("provenanceType").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("proxy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("relationshipAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetHeader()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = client.GetHeader("<guid>", null);
+            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3884,13 +4130,112 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetHeader_Async()
+        public async Task Example_GetEntitiesByUniqueAttributes_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetHeaderAsync("<guid>", null);
+            Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetHeader()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = client.GetHeader("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3900,11 +4245,11 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetHeader_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetHeader("<guid>", null);
+            Response response = client.GetHeader("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
@@ -3915,8 +4260,8 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("displayText").ToString());
@@ -3935,20 +4280,34 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetHeader_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetHeaderAsync("<guid>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetHeader_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetHeaderAsync("<guid>", null);
+            Response response = await client.GetHeaderAsync("<guid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
@@ -3959,8 +4318,8 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("displayText").ToString());
@@ -3979,7 +4338,7 @@ termGuid = "<termGuid>",
             Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("steward").ToString());
             Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("termGuid").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
@@ -3988,25 +4347,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteBusinessMetadata()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.DeleteBusinessMetadata("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new
+            {
+                key = new { },
+            };
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteBusinessMetadata_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteBusinessMetadataAsync("<guid>", content);
+            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4014,15 +4364,33 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteBusinessMetadata_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = client.DeleteBusinessMetadata("<guid>", content);
+                key = new { },
+            };
+
+            Response response = client.DeleteBusinessMetadata("<guid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteBusinessMetadata_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new
+            {
+                key = new { },
+            };
+
+            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4030,15 +4398,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteBusinessMetadata_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = await client.DeleteBusinessMetadataAsync("<guid>", content);
+                key = new { },
+            };
+
+            Response response = await client.DeleteBusinessMetadataAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4046,25 +4415,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddOrUpdateBusinessMetadata()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.AddOrUpdateBusinessMetadata("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new
+            {
+                key = new { },
+            };
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddOrUpdateBusinessMetadata_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", content);
+            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4072,15 +4432,33 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddOrUpdateBusinessMetadata_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = client.AddOrUpdateBusinessMetadata("<guid>", content, isOverwrite: true);
+                key = new { },
+            };
+
+            Response response = client.AddOrUpdateBusinessMetadata("<guid>", RequestContent.Create(data), true);
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddOrUpdateBusinessMetadata_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new
+            {
+                key = new { },
+            };
+
+            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4088,15 +4466,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddOrUpdateBusinessMetadata_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", content, isOverwrite: true);
+                key = new { },
+            };
+
+            Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", RequestContent.Create(data), true);
             Console.WriteLine(response.Status);
         }
 
@@ -4104,25 +4483,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteBusinessMetadataAttributes()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new
+            {
+                key = new { },
+            };
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteBusinessMetadataAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4130,15 +4500,33 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteBusinessMetadataAttributes_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", content);
+                key = new { },
+            };
+
+            Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteBusinessMetadataAttributes_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new
+            {
+                key = new { },
+            };
+
+            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4146,15 +4534,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteBusinessMetadataAttributes_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+                key = new { },
+            };
+
+            Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4162,25 +4551,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddOrUpdateBusinessMetadataAttributes()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new
+            {
+                key = new { },
+            };
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddOrUpdateBusinessMetadataAttributes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4188,15 +4568,33 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddOrUpdateBusinessMetadataAttributes_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", content);
+                key = new { },
+            };
+
+            Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddOrUpdateBusinessMetadataAttributes_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new
+            {
+                key = new { },
+            };
+
+            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4204,15 +4602,16 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddOrUpdateBusinessMetadataAttributes_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = new object(),
-            });
-            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+                key = new { },
+            };
+
+            Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4220,32 +4619,14 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSampleBusinessMetadataTemplate()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetSampleBusinessMetadataTemplate(null);
+            Response response = client.GetSampleBusinessMetadataTemplate(new RequestContext());
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSampleBusinessMetadataTemplate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            Response response = await client.GetSampleBusinessMetadataTemplateAsync(null);
-            if (response.ContentStream != null)
-            {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
                 {
                     response.ContentStream.CopyTo(outFileStream);
                 }
@@ -4256,14 +4637,32 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSampleBusinessMetadataTemplate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetSampleBusinessMetadataTemplate(null);
+            Response response = client.GetSampleBusinessMetadataTemplate(new RequestContext());
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
+                {
+                    response.ContentStream.CopyTo(outFileStream);
+                }
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSampleBusinessMetadataTemplate_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            Response response = await client.GetSampleBusinessMetadataTemplateAsync(new RequestContext());
+            if (response.ContentStream != null)
+            {
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
                 {
                     response.ContentStream.CopyTo(outFileStream);
                 }
@@ -4274,14 +4673,14 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSampleBusinessMetadataTemplate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetSampleBusinessMetadataTemplateAsync(null);
+            Response response = await client.GetSampleBusinessMetadataTemplateAsync(new RequestContext());
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
                 {
                     response.ContentStream.CopyTo(outFileStream);
                 }
@@ -4292,27 +4691,13 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportBusinessMetadata()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.ImportBusinessMetadata(content);
+            var data = File.OpenRead("<filePath>");
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportBusinessMetadata_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.ImportBusinessMetadataAsync(content);
+            Response response = client.ImportBusinessMetadata(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -4322,12 +4707,13 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportBusinessMetadata_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = client.ImportBusinessMetadata(content);
+            var data = File.OpenRead("<filePath>");
+
+            Response response = client.ImportBusinessMetadata(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4342,14 +4728,31 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportBusinessMetadata_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = File.OpenRead("<filePath>");
+
+            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_ImportBusinessMetadata_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = await client.ImportBusinessMetadataAsync(content);
+            var data = File.OpenRead("<filePath>");
+
+            Response response = await client.ImportBusinessMetadataAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4366,25 +4769,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteLabels()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.DeleteLabels("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    "<String>"
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteLabels_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteLabelsAsync("<guid>", content);
+            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4392,15 +4785,31 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteLabels_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = client.DeleteLabels("<guid>", content);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = client.DeleteLabels("<guid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteLabels_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4408,15 +4817,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteLabels_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = await client.DeleteLabelsAsync("<guid>", content);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4424,25 +4833,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SetLabels()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.SetLabels("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    "<String>"
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetLabels_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.SetLabelsAsync("<guid>", content);
+            Response response = client.SetLabels("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4450,15 +4849,31 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SetLabels_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = client.SetLabels("<guid>", content);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = client.SetLabels("<guid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_SetLabels_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4466,15 +4881,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SetLabels_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = await client.SetLabelsAsync("<guid>", content);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4482,25 +4897,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddLabel()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.AddLabel("<guid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    "<String>"
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddLabel_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddLabelAsync("<guid>", content);
+            Response response = client.AddLabel("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4508,15 +4913,31 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddLabel_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = client.AddLabel("<guid>", content);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = client.AddLabel("<guid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddLabel_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4524,15 +4945,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddLabel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = await client.AddLabelAsync("<guid>", content);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4540,25 +4961,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteLabelsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    "<String>"
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteLabelsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", content);
+            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4566,15 +4977,31 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteLabelsByUniqueAttribute_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteLabelsByUniqueAttribute_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4582,15 +5009,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteLabelsByUniqueAttribute_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4598,25 +5025,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SetLabelsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.SetLabelsByUniqueAttribute("<typeName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    "<String>"
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetLabelsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content);
+            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4624,15 +5041,31 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SetLabelsByUniqueAttribute_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = client.SetLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = client.SetLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_SetLabelsByUniqueAttribute_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4640,15 +5073,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SetLabelsByUniqueAttribute_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -4656,25 +5089,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddLabelsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = null;
-            Response response = client.AddLabelsByUniqueAttribute("<typeName>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    "<String>"
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddLabelsByUniqueAttribute_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-
-            RequestContent content = null;
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content);
+            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4682,15 +5105,31 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AddLabelsByUniqueAttribute_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = client.AddLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = client.AddLabelsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AddLabelsByUniqueAttribute_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4698,15 +5137,15 @@ termGuid = "<termGuid>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddLabelsByUniqueAttribute_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<body>"
-});
-            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
     }
