@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Network
     [CodeGenSuppress("GetIPConfigurationsVirtualMachineScaleSets", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSetAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSet", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetPublicIPAddressesAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetPublicIPAddresses", typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class VirtualMachineScaleSetVmNetworkResource
     {
         /// <summary>
@@ -199,6 +201,64 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetVMs_ListPublicIPAddresses</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkInterfaceName"> The network interface name. </param>
+        /// <param name="ipConfigurationName"> The IP configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PublicIPAddressData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PublicIPAddressData.DeserializePublicIPAddressData(e), _virtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetAllPublicIPAddressData", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetVMs_ListPublicIPAddresses</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkInterfaceName"> The network interface name. </param>
+        /// <param name="ipConfigurationName"> The IP configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <returns> A collection of <see cref="PublicIPAddressData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PublicIPAddressData.DeserializePublicIPAddressData(e), _virtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVmNetworkResource.GetAllPublicIPAddressData", "value", "nextLink", cancellationToken);
         }
     }
 }
