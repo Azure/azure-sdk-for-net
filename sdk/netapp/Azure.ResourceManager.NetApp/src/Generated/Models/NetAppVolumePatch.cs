@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The service level of the file system. </summary>
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume. Specified in bytes. </summary>
+        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume or 2400Tib for LargeVolume on exceptional basis. Specified in bytes. </summary>
         public long? UsageThreshold { get; set; }
         /// <summary> Set of export policy rules. </summary>
         internal VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
@@ -39,8 +39,18 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
         public float? ThroughputMibps { get; set; }
-        /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
-        public NetAppVolumePatchDataProtection DataProtection { get; set; }
+        /// <summary> Snapshot Policy ResourceId. </summary>
+        public ResourceIdentifier SnapshotPolicyId
+        {
+            get => DataProtection is null ? default : DataProtection.SnapshotPolicyId;
+            set
+            {
+                if (DataProtection is null)
+                    DataProtection = new NetAppVolumePatchDataProtection();
+                DataProtection.SnapshotPolicyId = value;
+            }
+        }
+
         /// <summary> Specifies if default quota is enabled for the volume. </summary>
         public bool? IsDefaultQuotaEnabled { get; set; }
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
@@ -53,7 +63,18 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsCoolAccessEnabled { get; set; }
         /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
         public int? CoolnessPeriod { get; set; }
+        /// <summary>
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        ///  Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        ///  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        ///  Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </summary>
+        public CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get; set; }
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </summary>
         public bool? IsSnapshotDirectoryVisible { get; set; }
+        /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
+        /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbNonBrowsable? SmbNonBrowsable { get; set; }
     }
 }

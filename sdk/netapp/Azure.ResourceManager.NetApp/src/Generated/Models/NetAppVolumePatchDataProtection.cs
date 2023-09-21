@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Backup Properties. </summary>
-        public NetAppVolumeBackupConfiguration Backup { get; set; }
         /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
         /// <summary> Snapshot Policy ResourceId. </summary>

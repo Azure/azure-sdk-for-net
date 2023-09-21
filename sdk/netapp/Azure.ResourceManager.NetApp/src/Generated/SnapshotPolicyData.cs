@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
         /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             HourlySchedule = hourlySchedule;

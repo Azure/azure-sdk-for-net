@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Basic network, or Standard features available to the volume. </summary>
+    /// <summary> Network features available to the volume, or current state of update. </summary>
     public readonly partial struct NetAppNetworkFeature : IEquatable<NetAppNetworkFeature>
     {
         private readonly string _value;
@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.NetApp.Models
 
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
+        private const string BasicStandardValue = "Basic_Standard";
+        private const string StandardBasicValue = "Standard_Basic";
 
-        /// <summary> Basic network feature. </summary>
+        /// <summary> Basic network features. </summary>
         public static NetAppNetworkFeature Basic { get; } = new NetAppNetworkFeature(BasicValue);
-        /// <summary> Standard network feature. </summary>
+        /// <summary> Standard network features. </summary>
         public static NetAppNetworkFeature Standard { get; } = new NetAppNetworkFeature(StandardValue);
+        /// <summary> Updating from Basic to Standard network features. </summary>
+        public static NetAppNetworkFeature BasicStandard { get; } = new NetAppNetworkFeature(BasicStandardValue);
+        /// <summary> Updating from Standard to Basic network features. </summary>
+        public static NetAppNetworkFeature StandardBasic { get; } = new NetAppNetworkFeature(StandardBasicValue);
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are the same. </summary>
         public static bool operator ==(NetAppNetworkFeature left, NetAppNetworkFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are not the same. </summary>
