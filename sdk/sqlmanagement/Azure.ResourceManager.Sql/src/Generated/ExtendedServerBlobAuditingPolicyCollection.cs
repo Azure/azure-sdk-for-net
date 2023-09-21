@@ -304,6 +304,72 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtendedServerBlobAuditingPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ExtendedServerBlobAuditingPolicyResource>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _extendedServerBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExtendedServerBlobAuditingPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtendedServerBlobAuditingPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ExtendedServerBlobAuditingPolicyResource> GetIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _extendedServerBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExtendedServerBlobAuditingPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ExtendedServerBlobAuditingPolicyResource> IEnumerable<ExtendedServerBlobAuditingPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

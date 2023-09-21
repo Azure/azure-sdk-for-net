@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var scope = _sqlServerJobJobsClientDiagnostics.CreateScope("SqlServerJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var scope = _sqlServerJobJobsClientDiagnostics.CreateScope("SqlServerJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SqlServerJobResource> IEnumerable<SqlServerJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

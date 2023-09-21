@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncMembers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="syncMemberName"> The name of the sync member. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SyncMemberResource>> GetIfExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
+
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _syncMemberRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, syncMemberName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SyncMemberResource>(response.GetRawResponse());
+                return Response.FromValue(new SyncMemberResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/syncMembers/{syncMemberName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SyncMembers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="syncMemberName"> The name of the sync member. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
+        public virtual NullableResponse<SyncMemberResource> GetIfExists(string syncMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
+
+            using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _syncMemberRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, syncMemberName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SyncMemberResource>(response.GetRawResponse());
+                return Response.FromValue(new SyncMemberResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SyncMemberResource> IEnumerable<SyncMemberResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
