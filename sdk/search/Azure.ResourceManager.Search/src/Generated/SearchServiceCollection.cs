@@ -333,6 +333,82 @@ namespace Azure.ResourceManager.Search
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SearchServiceResource>> GetIfExistsAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+
+            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _searchServiceServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SearchServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
+        public virtual NullableResponse<SearchServiceResource> GetIfExists(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
+
+            using var scope = _searchServiceServicesClientDiagnostics.CreateScope("SearchServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _searchServiceServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, searchManagementRequestOptions, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SearchServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SearchServiceResource> IEnumerable<SearchServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
