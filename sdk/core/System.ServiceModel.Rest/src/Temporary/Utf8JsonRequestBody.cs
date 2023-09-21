@@ -21,7 +21,7 @@ namespace System.ServiceModel.Rest.Shared.Core.Serialization
         public Utf8JsonRequestBody()
         {
             _stream = new MemoryStream();
-            _content = Create(_stream);
+            _content = CreateFromStream(_stream);
             JsonWriter = new Utf8JsonWriter(_stream);
         }
 

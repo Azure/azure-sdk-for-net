@@ -70,7 +70,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class RequestBody : System.IDisposable
     {
         protected RequestBody() { }
-        public static System.ServiceModel.Rest.Core.RequestBody Create(System.IO.Stream stream) { throw null; }
+        public static System.ServiceModel.Rest.Core.RequestBody CreateFromStream(System.IO.Stream stream) { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
