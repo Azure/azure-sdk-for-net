@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Synapse.AccessControl;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,57 +23,26 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CheckPrincipalAccess()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 subject = new
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
-                actions = new List<object>()
-{
-new
-{
-id = "<id>",
-isDataAction = true,
-}
-},
-                scope = "<scope>",
-            });
-            Response response = client.CheckPrincipalAccess(content, new ContentType("application/json"));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+                actions = new[] {
+        new {
+            id = "<id>",
+            isDataAction = true,
         }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CheckPrincipalAccess_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                subject = new
-                {
-                    principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                },
-                actions = new List<object>()
-{
-new
-{
-id = "<id>",
-isDataAction = true,
-}
-},
+    },
                 scope = "<scope>",
-            });
-            Response response = await client.CheckPrincipalAccessAsync(content, new ContentType("application/json"));
+            };
+
+            Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -83,31 +52,29 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_CheckPrincipalAccess_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 subject = new
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                    groupIds = new List<object>()
-{
-"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
-},
+                    groupIds = new[] {
+            "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+        },
                 },
-                actions = new List<object>()
-{
-new
-{
-id = "<id>",
-isDataAction = true,
-}
-},
+                actions = new[] {
+        new {
+            id = "<id>",
+            isDataAction = true,
+        }
+    },
                 scope = "<scope>",
-            });
-            Response response = client.CheckPrincipalAccess(content, new ContentType("application/json"));
+            };
+
+            Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
@@ -121,33 +88,60 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CheckPrincipalAccess_AllParameters_Async()
+        public async Task Example_CheckPrincipalAccess_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 subject = new
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                    groupIds = new List<object>()
-{
-"73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
-},
                 },
-                actions = new List<object>()
-{
-new
-{
-id = "<id>",
-isDataAction = true,
-}
-},
+                actions = new[] {
+        new {
+            id = "<id>",
+            isDataAction = true,
+        }
+    },
                 scope = "<scope>",
-            });
-            Response response = await client.CheckPrincipalAccessAsync(content, new ContentType("application/json"));
+            };
+
+            Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CheckPrincipalAccess_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
+
+            var data = new
+            {
+                subject = new
+                {
+                    principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                    groupIds = new[] {
+            "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+        },
+                },
+                actions = new[] {
+        new {
+            id = "<id>",
+            isDataAction = true,
+        }
+    },
+                scope = "<scope>",
+            };
+
+            Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
@@ -163,25 +157,11 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleAssignments()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = client.GetRoleAssignments(null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignments_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
-
-            Response response = await client.GetRoleAssignmentsAsync(null, null, null, null, null);
+            Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -191,11 +171,11 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleAssignments_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>", null);
+            Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("count").ToString());
@@ -208,13 +188,27 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRoleAssignments_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
+
+            Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleAssignments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>", null);
+            Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("count").ToString());
@@ -229,37 +223,18 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateRoleAssignment()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 scope = "<scope>",
-            });
-            Response response = client.CreateRoleAssignment("<roleAssignmentId>", content, new ContentType("application/json"));
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateRoleAssignment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                scope = "<scope>",
-            });
-            Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", content, new ContentType("application/json"));
+            Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -269,18 +244,19 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateRoleAssignment_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 scope = "<scope>",
                 principalType = "<principalType>",
-            });
-            Response response = client.CreateRoleAssignment("<roleAssignmentId>", content, new ContentType("application/json"));
+            };
+
+            Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -292,20 +268,42 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateRoleAssignment_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
+
+            var data = new
+            {
+                roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+                scope = "<scope>",
+            };
+
+            Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateRoleAssignment_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 scope = "<scope>",
                 principalType = "<principalType>",
-            });
-            Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", content, new ContentType("application/json"));
+            };
+
+            Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -319,25 +317,11 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleAssignmentById()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = client.GetRoleAssignmentById("<roleAssignmentId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignmentById_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
-
-            Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>", null);
+            Response response = client.GetRoleAssignmentById("<roleAssignmentId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -347,11 +331,11 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleAssignmentById_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = client.GetRoleAssignmentById("<roleAssignmentId>", null);
+            Response response = client.GetRoleAssignmentById("<roleAssignmentId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -363,13 +347,27 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRoleAssignmentById_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
+
+            Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleAssignmentById_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>", null);
+            Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -383,9 +381,9 @@ isDataAction = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteRoleAssignmentById()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>");
             Console.WriteLine(response.Status);
@@ -393,11 +391,23 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteRoleAssignmentById_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
+
+            Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", "<scope>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteRoleAssignmentById_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>");
             Console.WriteLine(response.Status);
@@ -405,25 +415,13 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteRoleAssignmentById_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
-
-            Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", scope: "<scope>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteRoleAssignmentById_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new RoleAssignmentsClient(endpoint, credential);
 
-            Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", scope: "<scope>");
+            Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", "<scope>");
             Console.WriteLine(response.Status);
         }
     }
