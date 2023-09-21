@@ -48,7 +48,7 @@ public class OpenAIClient
     {
         Result result = GetCompletions(prompt, null);
         var value = Completions.Deserialize(result.GetRawResponse().Content);
-        return new Result<Completions>(value, result);
+        return new Result<Completions>(value, result.GetRawResponse());
     }
 
     protected PipelineMessage CreateGetCompletions(BinaryData body, RequestOptions options)

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System.Diagnostics;
 using System.ServiceModel.Rest.Core;
 
 namespace System.ServiceModel.Rest;
@@ -26,9 +27,10 @@ public class NullableResult<T> : Result
     private T? _value;
     private IResponse _response;
 
-    public NullableResult(T? value, Result result)
+    public NullableResult(T? value, IResponse response)
     {
-        _response = result.GetRawResponse();
+        Debug.Assert(response != null);
+        _response = response!;
         _value = value;
     }
 
@@ -41,8 +43,10 @@ public class NullableResult<T> : Result
 
 public class Result<T> : NullableResult<T>
 {
-    public Result(T value, Result response) : base(value, response)
+    public Result(T value, IResponse response) : base(value, response)
     {
+        Debug.Assert(value != null);
+        Debug.Assert(response != null);
     }
 
     public override T Value => base.Value!;
