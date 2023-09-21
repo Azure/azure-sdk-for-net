@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ServiceModel.Rest;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -28,7 +28,35 @@ namespace Azure
         /// <summary>
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
-        public ErrorOptions ErrorOptions { get; set; } = ErrorOptions.Default;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ErrorOptions ErrorOptions
+        {
+            get => FromResultErrorOptions(ResultErrorOptions);
+            set
+            {
+                ResultErrorOptions = ToResultErrorOptions(value);
+            }
+        }
+
+        private ErrorOptions FromResultErrorOptions(ResultErrorOptions errorOptions)
+        {
+            return errorOptions switch
+            {
+                ResultErrorOptions.Default => ErrorOptions.Default,
+                ResultErrorOptions.NoThrow => ErrorOptions.NoThrow,
+                _ => throw new NotSupportedException(),
+            };
+        }
+
+        private ResultErrorOptions ToResultErrorOptions(ErrorOptions errorOptions)
+        {
+            return errorOptions switch
+            {
+                ErrorOptions.Default => ResultErrorOptions.Default,
+                ErrorOptions.NoThrow => ResultErrorOptions.NoThrow,
+                _ => throw new NotSupportedException(),
+            };
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.

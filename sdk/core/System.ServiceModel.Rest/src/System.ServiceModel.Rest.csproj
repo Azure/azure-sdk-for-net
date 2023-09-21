@@ -1,17 +1,36 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Description>Contains base building blocks for TypeSpec generated libraries.</Description>
-    <Version>1.0.0-beta.1</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <Nullable>enable</Nullable>
-    <TargetFrameworks>net461;netstandard2.0;</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Description>Contains base building blocks for TypeSpec generated libraries.</Description>
+		<Version>1.0.0-beta.1</Version>
+		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+		<Nullable>enable</Nullable>
+		<TargetFrameworks>netstandard2.0;netcoreapp2.1</TargetFrameworks>
+		<IsClientLibrary>true</IsClientLibrary>
+		
+		<!--
+      netcoreapp2.1 is out of support but we'll keep is as a target for a bit
+      to give customers time to migrate without losing perf optimizations
+     -->
+		<!-- TODO: Remove warning suppression -->
+		<NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0014;CS1591;NETSDK1138</NoWarn>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Diagnostics.DiagnosticSource"/>
+		<PackageReference Include="System.Memory.Data" />
+		<PackageReference Include="System.Text.Json" />
+		<PackageReference Include="System.Text.Encodings.Web" />
+	</ItemGroup>
+
+	<!-- Keep System.Diagnostics.DiagnosticSource 4.6.0 for netcoreapp2.1 support. -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+		<PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared" />
+		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared" />
+		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared" />
+	</ItemGroup>
 
 </Project>

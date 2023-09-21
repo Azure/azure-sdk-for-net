@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.ServiceModel.Rest.Core;
 
 namespace Azure.Core
 {
@@ -10,7 +11,7 @@ namespace Azure.Core
     /// A type that analyzes HTTP responses and exceptions and determines if they should be retried,
     /// and/or analyzes responses and determines if they should be treated as error responses.
     /// </summary>
-    public class ResponseClassifier
+    public class ResponseClassifier : ResponseErrorClassifier
     {
         internal static ResponseClassifier Shared { get; } = new();
 
@@ -53,12 +54,10 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Specifies if the response contained in the <paramref name="message"/> is not successful.
+        /// TBD.
         /// </summary>
-        public virtual bool IsErrorResponse(HttpMessage message)
-        {
-            var statusKind = message.Response.Status / 100;
-            return statusKind == 4 || statusKind == 5;
-        }
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public virtual bool IsErrorResponse(HttpMessage message) => base.IsErrorResponse(message);
     }
 }

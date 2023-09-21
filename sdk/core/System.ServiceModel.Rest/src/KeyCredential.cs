@@ -6,7 +6,7 @@ namespace System.ServiceModel.Rest;
 /// <summary>
 /// TBD.
 /// </summary>
-public class KeyCredential : Credential
+public class KeyCredential
 {
     private string _key;
 

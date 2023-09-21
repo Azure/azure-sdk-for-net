@@ -9,35 +9,22 @@ namespace System.ServiceModel.Rest;
 /// TBD.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class NullableResult<T>
+public abstract class NullableResult<T>
 {
-    private T? _value;
-    private Result _result;
-
     /// <summary>
     /// TBD.
     /// </summary>
-    /// <param result=""></param>
-    public NullableResult(T? value, Result result)
-    {
-        _value = value;
-        _result = result;
-    }
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public virtual T? Value => _value;
+    public abstract T? Value { get; }
 
     /// <summary>
     /// TBD.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual bool HasValue => _value != null;
+    public abstract bool HasValue {get;}
 
     /// <summary>
     /// TBD.
     /// </summary>
     /// <returns></returns>
-    public virtual Result GetRawResult() => _result;
+    public abstract Result GetRawResult();
 }

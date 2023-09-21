@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
@@ -15,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\AzureSamples.Security.KeyVault.Proxy.csproj" />
-    <ProjectReference Include="../../../../core/Azure.Core/src/Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

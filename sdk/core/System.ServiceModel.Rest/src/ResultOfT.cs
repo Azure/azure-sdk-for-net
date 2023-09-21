@@ -9,29 +9,6 @@ namespace System.ServiceModel.Rest;
 /// TBD.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class Result<T> : NullableResult<T>
+public abstract class Result<T> : NullableResult<T>
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param result=""></param>
-    public Result(T value, Result result) : base(value, result) {
-    }
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public override T Value => base.Value!;
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override bool HasValue => true;
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <returns></returns>
-    public override Result GetRawResult() => base.GetRawResult();
 }

@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Threading;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -12,10 +15,11 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : IDisposable
+    public sealed class HttpMessage : RestMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
-        private Response? _response;
+
+        private Result? _result;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpMessage"/>.
@@ -27,6 +31,25 @@ namespace Azure.Core
             Argument.AssertNotNull(request, nameof(Request));
             Request = request;
             ResponseClassifier = responseClassifier;
+            BufferResponse = true;
+            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="ArgumentException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public HttpMessage(RestMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new ArgumentException("Unsupported type.");
+            }
+
+            Request = httpMessage.Request;
+            ResponseClassifier = httpMessage.ResponseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -44,28 +67,23 @@ namespace Azure.Core
         {
             get
             {
-                if (_response == null)
+                if (_result == null)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-                return _response;
+                return new ResultResponse(_result);
             }
-            set => _response = value;
+            set => _result = value;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null;
+        public bool HasResponse => _result != null;
 
-        internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
+        internal void ClearResponse() => _result = null;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
@@ -114,6 +132,12 @@ namespace Azure.Core
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override Result? Result => _result;
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -182,12 +206,12 @@ namespace Azure.Core
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (_response?.ContentStream)
+            switch (_result?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    _result.ContentStream = new ResponseShouldNotBeUsedStream(_result.ContentStream);
                     return stream;
                 default:
                     return null;
@@ -197,15 +221,15 @@ namespace Azure.Core
         /// <summary>
         /// Disposes the request and response.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             Request.Dispose();
             _propertyBag.Dispose();
 
-            var response = _response;
+            var response = _result;
             if (response != null)
             {
-                _response = null;
+                _result = null;
                 response.Dispose();
             }
         }
@@ -265,5 +289,46 @@ namespace Azure.Core
         /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
         private class MessagePropertyKey { }
+
+        private class ResultResponse : Response
+        {
+            private readonly Response _innerResponse;
+
+            public ResultResponse(Result result)
+            {
+                if (result is not Response response)
+                {
+                    throw new NotSupportedException("Must assign a result of type Response.");
+                }
+
+                _innerResponse = response;
+            }
+
+            public override string ReasonPhrase => _innerResponse.ReasonPhrase;
+
+            public override string ClientRequestId
+            {
+                get => _innerResponse.ClientRequestId;
+                set => _innerResponse.ClientRequestId = value;
+            }
+
+            public override int Status => _innerResponse.Status;
+
+            public override Stream? ContentStream
+            {
+                get => _innerResponse?.ContentStream;
+                set => _innerResponse.ContentStream = value;
+            }
+
+            public override void Dispose() => _innerResponse.Dispose();
+
+            protected override bool TryGetHeader(string name, out string? value) => _innerResponse.TryGetHeaderValue(name, out value);
+
+            protected internal override bool ContainsHeader(string name) => _innerResponse.ContainsHeader(name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _innerResponse.EnumerateHeaders();
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => _innerResponse.TryGetHeaderValues(name, out values);
+        }
     }
 }

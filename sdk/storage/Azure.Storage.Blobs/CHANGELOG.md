@@ -1,14 +1,8 @@
 # Release History
 
 ## 12.19.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2023-11-03.
+- Added support for BlobClientOptions.Audience
 
 ## 12.18.0 (2023-09-12)
 - Includes all features from 12.18.0-beta.1.

@@ -22,13 +22,6 @@ namespace Azure.Core
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
 
         /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.</returns>
-        public static RequestContent Create(Stream stream) => new StreamContent(stream);
-
-        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="Array"/>of <see cref="Byte"/>.
         /// </summary>
         /// <param name="bytes">The <see cref="Array"/>of <see cref="Byte"/> to use.</param>
@@ -131,70 +124,6 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
-
-        private sealed class StreamContent : RequestContent
-        {
-            private const int CopyToBufferSize = 81920;
-
-            private readonly Stream _stream;
-
-            private readonly long _origin;
-
-            public StreamContent(Stream stream)
-            {
-                if (!stream.CanSeek)
-                    throw new ArgumentException("stream must be seekable", nameof(stream));
-                _origin = stream.Position;
-                _stream = stream;
-            }
-
-            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
-            {
-                _stream.Seek(_origin, SeekOrigin.Begin);
-
-                // this is not using CopyTo so that we can honor cancellations.
-                byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
-                try
-                {
-                    while (true)
-                    {
-                        CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                        var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0)
-                        { break; }
-                        CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                        stream.Write(buffer, 0, read);
-                    }
-                }
-                finally
-                {
-                    stream.Flush();
-                    ArrayPool<byte>.Shared.Return(buffer, true);
-                }
-            }
-
-            public override bool TryComputeLength(out long length)
-            {
-                if (_stream.CanSeek)
-                {
-                    length = _stream.Length - _origin;
-                    return true;
-                }
-                length = 0;
-                return false;
-            }
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
-            {
-                _stream.Seek(_origin, SeekOrigin.Begin);
-                await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
-            }
-
-            public override void Dispose()
-            {
-                _stream.Dispose();
-            }
-        }
 
         private sealed class ArrayContent : RequestContent
         {

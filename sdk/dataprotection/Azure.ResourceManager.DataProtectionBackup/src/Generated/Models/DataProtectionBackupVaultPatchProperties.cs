@@ -32,17 +32,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Security Settings. </summary>
         public BackupVaultSecuritySettings SecuritySettings { get; set; }
         /// <summary> Feature Settings. </summary>
-        internal FeatureSettings FeatureSettings { get; set; }
-        /// <summary> CrossSubscriptionRestore state. </summary>
-        public DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
-        {
-            get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
-            set
-            {
-                if (FeatureSettings is null)
-                    FeatureSettings = new FeatureSettings();
-                FeatureSettings.CrossSubscriptionRestoreState = value;
-            }
-        }
+        public BackupVaultFeatureSettings FeatureSettings { get; set; }
     }
 }
