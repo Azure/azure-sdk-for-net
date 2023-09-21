@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Add support to VMSS features
+
 ### Breaking Changes
 
 ### Bugs Fixed
