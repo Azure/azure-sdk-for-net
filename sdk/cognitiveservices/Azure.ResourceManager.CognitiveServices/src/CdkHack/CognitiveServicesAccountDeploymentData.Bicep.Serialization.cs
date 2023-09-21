@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private BinaryData SerializeBicep(ModelSerializerOptions options)
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"  name: '{Name}'");
             if (Optional.IsDefined(Sku))
             {
                 sb.AppendLine($"  sku: {{");
