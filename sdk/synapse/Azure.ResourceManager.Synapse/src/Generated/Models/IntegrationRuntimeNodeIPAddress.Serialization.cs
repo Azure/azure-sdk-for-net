@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeNodeIPAddress
+    public partial class IntegrationRuntimeNodeIPAddress
     {
-        internal static SynapseIntegrationRuntimeNodeIPAddress DeserializeSynapseIntegrationRuntimeNodeIPAddress(JsonElement element)
+        internal static IntegrationRuntimeNodeIPAddress DeserializeIntegrationRuntimeNodeIPAddress(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseIntegrationRuntimeNodeIPAddress(ipAddress.Value);
+            return new IntegrationRuntimeNodeIPAddress(ipAddress.Value);
         }
     }
 }
