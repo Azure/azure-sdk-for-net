@@ -352,22 +352,18 @@ namespace Azure.Core.Pipeline
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override Task SendAsync(RestMessage message, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ValueTask SendAsync(RestMessage message, CancellationToken cancellationToken)
+            => SendAsync((HttpMessage)message, cancellationToken);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
-        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override void Send(RestMessage message, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+            => Send((HttpMessage)message, cancellationToken);
 
         private class HttpMessagePropertiesScope : IDisposable
         {

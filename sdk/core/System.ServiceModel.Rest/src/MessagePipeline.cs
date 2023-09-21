@@ -17,7 +17,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task SendAsync(RestMessage message, CancellationToken cancellationToken);
+        public abstract ValueTask SendAsync(RestMessage message, CancellationToken cancellationToken);
 
         /// <summary>
         /// TBD.
