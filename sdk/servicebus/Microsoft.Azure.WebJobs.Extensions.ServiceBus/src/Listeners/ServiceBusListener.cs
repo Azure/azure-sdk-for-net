@@ -668,60 +668,67 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             ActivityKind.Consumer,
                             MessagingDiagnosticOperation.Process);
 
-            scope.SetMessageData(messagesArray);
-
-            scope.Start();
-            FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), _functionExecutionCancellationTokenSource.Token).ConfigureAwait(false);
-            if (result.Exception != null)
+            try
             {
-                scope.Failed(result.Exception);
-            }
-            receiveActions.EndExecutionScope();
+                scope.SetMessageData(messagesArray);
 
-            foreach (var message in input.Messages)
-            {
-                _messagingProvider.ActionsCache.TryRemove(message.LockToken, out _);
-            }
-
-            var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
-            // Complete batch of messages only if the execution was successful
-            if (_autoCompleteMessages && result.Succeeded)
-            {
-                List<Task> completeTasks = new List<Task>();
-                foreach (ServiceBusReceivedMessage message in processedMessages)
+                scope.Start();
+                FunctionResult result = await _triggerExecutor
+                    .TryExecuteAsync(input.GetTriggerFunctionData(), _functionExecutionCancellationTokenSource.Token).ConfigureAwait(false);
+                if (result.Exception != null)
                 {
-                    // Skip messages that were settled in the user's function
-                    if (input.MessageActions.SettledMessages.ContainsKey(message))
-                    {
-                        continue;
-                    }
-
-                    // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
-                    completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
+                    scope.Failed(result.Exception);
                 }
 
-                await Task.WhenAll(completeTasks).ConfigureAwait(false);
-            }
-            else if (!result.Succeeded)
-            {
-                // For failed executions, we abandon the messages regardless of the autoCompleteMessages configuration.
-                // This matches the behavior that happens for single dispatch functions as the processor does the same thing
-                // in the Service Bus SDK.
+                receiveActions.EndExecutionScope();
 
-                List<Task> abandonTasks = new();
-                foreach (ServiceBusReceivedMessage message in processedMessages)
+                var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
+                // Complete batch of messages only if the execution was successful
+                if (_autoCompleteMessages && result.Succeeded)
                 {
-                    // skip messages that were settled in the user's function
-                    if (input.MessageActions.SettledMessages.ContainsKey(message))
+                    List<Task> completeTasks = new List<Task>();
+                    foreach (ServiceBusReceivedMessage message in processedMessages)
                     {
-                        continue;
+                        // Skip messages that were settled in the user's function
+                        if (input.MessageActions.SettledMessages.ContainsKey(message))
+                        {
+                            continue;
+                        }
+
+                        // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
+                        completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
                     }
 
-                    // Pass CancellationToken.None to allow abandon to finish even when shutting down
-                    abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
+                    await Task.WhenAll(completeTasks).ConfigureAwait(false);
                 }
+                else if (!result.Succeeded)
+                {
+                    // For failed executions, we abandon the messages regardless of the autoCompleteMessages configuration.
+                    // This matches the behavior that happens for single dispatch functions as the processor does the same thing
+                    // in the Service Bus SDK.
 
-                await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                    List<Task> abandonTasks = new();
+                    foreach (ServiceBusReceivedMessage message in processedMessages)
+                    {
+                        // skip messages that were settled in the user's function
+                        if (input.MessageActions.SettledMessages.ContainsKey(message))
+                        {
+                            continue;
+                        }
+
+                        // Pass CancellationToken.None to allow abandon to finish even when shutting down
+                        abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
+                    }
+
+                    await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                }
+            }
+            finally
+            {
+                foreach (var message in input.Messages)
+                {
+                    _messagingProvider.ActionsCache.TryRemove(message.LockToken, out _);
+                }
             }
         }
 
