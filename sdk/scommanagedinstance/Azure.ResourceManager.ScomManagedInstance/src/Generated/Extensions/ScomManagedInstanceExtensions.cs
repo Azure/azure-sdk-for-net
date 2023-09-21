@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.ScomManagedInstance.Models;
 
 namespace Azure.ResourceManager.ScomManagedInstance
 {
@@ -50,47 +49,69 @@ namespace Azure.ResourceManager.ScomManagedInstance
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-
+        #region ManagedInstanceResource
         /// <summary>
-        /// Lists all SCOM managed instances in a resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="ManagedInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstance> GetInstancesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedInstanceResource" /> object. </returns>
+        public static ManagedInstanceResource GetManagedInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstancesByResourceGroupAsync(cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                ManagedInstanceResource.ValidateResourceId(id);
+                return new ManagedInstanceResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region MonitoredResource
         /// <summary>
-        /// Lists all SCOM managed instances in a resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="MonitoredResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitoredResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstance> GetInstancesByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitoredResource" /> object. </returns>
+        public static MonitoredResource GetMonitoredResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstancesByResourceGroup(cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                MonitoredResource.ValidateResourceId(id);
+                return new MonitoredResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedGatewayResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedGatewayResource.CreateResourceIdentifier" /> to create a <see cref="ManagedGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedGatewayResource" /> object. </returns>
+        public static ManagedGatewayResource GetManagedGatewayResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedGatewayResource.ValidateResourceId(id);
+                return new ManagedGatewayResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        /// <summary> Gets a collection of ManagedInstanceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
+        public static ManagedInstanceCollection GetManagedInstances(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedInstances();
         }
 
         /// <summary>
@@ -111,11 +132,10 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static async Task<Response<ManagedInstance>> GetInstanceAsync(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<ManagedInstanceResource>> GetManagedInstanceAsync(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstanceAsync(instanceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetManagedInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,775 +156,14 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static Response<ManagedInstance> GetInstance(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<ManagedInstanceResource> GetManagedInstance(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstance(instanceName, cancellationToken);
+            return resourceGroupResource.GetManagedInstances().Get(instanceName, cancellationToken);
         }
 
         /// <summary>
-        /// Create or update SCOM managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="managedInstance"> SCOM Managed Instance. </param>
-        /// <param name="validationMode"> Validation mode for the SCOM managed instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="managedInstance"/> is null. </exception>
-        public static async Task<ArmOperation<ManagedInstance>> CreateOrUpdateInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, ManagedInstance managedInstance, bool? validationMode = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(managedInstance, nameof(managedInstance));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateInstanceAsync(waitUntil, instanceName, managedInstance, validationMode, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Create or update SCOM managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="managedInstance"> SCOM Managed Instance. </param>
-        /// <param name="validationMode"> Validation mode for the SCOM managed instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="managedInstance"/> is null. </exception>
-        public static ArmOperation<ManagedInstance> CreateOrUpdateInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, ManagedInstance managedInstance, bool? validationMode = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(managedInstance, nameof(managedInstance));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateInstance(waitUntil, instanceName, managedInstance, validationMode, cancellationToken);
-        }
-
-        /// <summary>
-        /// Patch SCOM managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Update</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="patch"> SCOM managed instance properties update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static async Task<ArmOperation<ManagedInstance>> UpdateInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, MonitoringInstancePatch patch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateInstanceAsync(waitUntil, instanceName, patch, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Patch SCOM managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Update</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="patch"> SCOM managed instance properties update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static ArmOperation<ManagedInstance> UpdateInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, MonitoringInstancePatch patch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateInstance(waitUntil, instanceName, patch, cancellationToken);
-        }
-
-        /// <summary>
-        /// Delete a SCOM managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteInstanceAsync(waitUntil, instanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Delete a SCOM managed instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static ArmOperation DeleteInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteInstance(waitUntil, instanceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Scaling SCOM managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/setServerCount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Scale</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="body"> The ScalingProperties to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="body"/> is null. </exception>
-        public static async Task<ArmOperation<SetServerCountResponseProperties>> ScaleInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, ScalingProperties body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ScaleInstanceAsync(waitUntil, instanceName, body, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Scaling SCOM managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/setServerCount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_Scale</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="body"> The ScalingProperties to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="body"/> is null. </exception>
-        public static ArmOperation<SetServerCountResponseProperties> ScaleInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, ScalingProperties body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).ScaleInstance(waitUntil, instanceName, body, cancellationToken);
-        }
-
-        /// <summary>
-        /// Update SCOM servers with latest scom software.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/patchServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_PatchServers</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static async Task<ArmOperation<PatchServersResponseProperties>> PatchServersInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).PatchServersInstanceAsync(waitUntil, instanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Update SCOM servers with latest scom software.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/patchServers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_PatchServers</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static ArmOperation<PatchServersResponseProperties> PatchServersInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).PatchServersInstance(waitUntil, instanceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Link Log Analytics workspace for SCOM monitoring instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/linkLogAnalytics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_LinkLogAnalytics</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="body"> The LogAnalyticsConfiguration to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="body"/> is null. </exception>
-        public static async Task<ArmOperation<LogAnalyticsConfiguration>> LinkLogAnalyticsInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, LogAnalyticsConfiguration body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).LinkLogAnalyticsInstanceAsync(waitUntil, instanceName, body, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Link Log Analytics workspace for SCOM monitoring instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/linkLogAnalytics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_LinkLogAnalytics</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="body"> The LogAnalyticsConfiguration to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="body"/> is null. </exception>
-        public static ArmOperation<LogAnalyticsConfiguration> LinkLogAnalyticsInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, LogAnalyticsConfiguration body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).LinkLogAnalyticsInstance(waitUntil, instanceName, body, cancellationToken);
-        }
-
-        /// <summary>
-        /// Unlink Log Analytics workspace for SCOM monitoring instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/unlinkLogAnalytics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_UnlinkLogAnalytics</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static async Task<ArmOperation<UnlinkLogAnalyticsResponseProperties>> UnlinkLogAnalyticsInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UnlinkLogAnalyticsInstanceAsync(waitUntil, instanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Unlink Log Analytics workspace for SCOM monitoring instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/unlinkLogAnalytics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_UnlinkLogAnalytics</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
-        public static ArmOperation<UnlinkLogAnalyticsResponseProperties> UnlinkLogAnalyticsInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UnlinkLogAnalyticsInstance(waitUntil, instanceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Update configuration for log analytics linking for SCOM monitoring instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/updateLogAnalytics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_UpdateLogAnalytics</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="body"> The LogAnalyticsUpdateConfiguration to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="body"/> is null. </exception>
-        public static async Task<ArmOperation<LogAnalyticsUpdateConfiguration>> UpdateLogAnalyticsInstanceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, LogAnalyticsUpdateConfiguration body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateLogAnalyticsInstanceAsync(waitUntil, instanceName, body, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Update configuration for log analytics linking for SCOM monitoring instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/updateLogAnalytics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Instances_UpdateLogAnalytics</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="instanceName"> Name of the Azure Monitor Operations Manager Managed Instance (SCOM MI). </param>
-        /// <param name="body"> The LogAnalyticsUpdateConfiguration to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="body"/> is null. </exception>
-        public static ArmOperation<LogAnalyticsUpdateConfiguration> UpdateLogAnalyticsInstance(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string instanceName, LogAnalyticsUpdateConfiguration body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateLogAnalyticsInstance(waitUntil, instanceName, body, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the details of the monitored resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources/{monitoredResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<MonitoredResource>> GetMonitoredResourceAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMonitoredResourceAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the details of the monitored resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources/{monitoredResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<MonitoredResource> GetMonitoredResource(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMonitoredResource(cancellationToken);
-        }
-
-        /// <summary>
-        /// Create or update a monitored resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources/{monitoredResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<MonitoredResource>> CreateOrUpdateMonitoredResourceAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateMonitoredResourceAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Create or update a monitored resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources/{monitoredResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<MonitoredResource> CreateOrUpdateMonitoredResource(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateMonitoredResource(cancellationToken);
-        }
-
-        /// <summary>
-        /// Delete a monitored resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources/{monitoredResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> DeleteMonitoredResourceAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteMonitoredResourceAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Delete a monitored resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources/{monitoredResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response DeleteMonitoredResource(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteMonitoredResource(cancellationToken);
-        }
-
-        /// <summary>
-        /// A comprehensive list of all monitored resources within a SCOM managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_ListByManagedInstance</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MonitoredResource> GetMonitoredResourcesByManagedInstanceAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMonitoredResourcesByManagedInstanceAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// A comprehensive list of all monitored resources within a SCOM managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/monitoredResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MonitoredResources_ListByManagedInstance</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MonitoredResource> GetMonitoredResourcesByManagedInstance(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMonitoredResourcesByManagedInstance(cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the details of the gateway resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways/{managedGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ManagedGateway>> GetManagedGatewayAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedGatewayAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the details of the gateway resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways/{managedGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ManagedGateway> GetManagedGateway(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedGateway(cancellationToken);
-        }
-
-        /// <summary>
-        /// Create or update a gateway resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways/{managedGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ManagedGateway>> CreateOrUpdateManagedGatewayAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateManagedGatewayAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Create or update a gateway resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways/{managedGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ManagedGateway> CreateOrUpdateManagedGateway(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateManagedGateway(cancellationToken);
-        }
-
-        /// <summary>
-        /// Remove a gateway resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways/{managedGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> DeleteManagedGatewayAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteManagedGatewayAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Remove a gateway resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways/{managedGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response DeleteManagedGateway(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteManagedGateway(cancellationToken);
-        }
-
-        /// <summary>
-        /// A comprehensive list of all gateway resources within a SCOM managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_ListByManagedInstance</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedGateway" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedGateway> GetManagedGatewaysByManagedInstanceAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedGatewaysByManagedInstanceAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// A comprehensive list of all gateway resources within a SCOM managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Scom/managedInstances/{instanceName}/managedGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGateways_ListByManagedInstance</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedGateway" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedGateway> GetManagedGatewaysByManagedInstance(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedGatewaysByManagedInstance(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all SCOM managed instances in a subscription 
+        /// Lists all SCOM managed instances in a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -918,14 +177,14 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstance> GetInstancesBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInstancesBySubscriptionAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedInstancesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Lists all SCOM managed instances in a subscription 
+        /// Lists all SCOM managed instances in a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -939,10 +198,10 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstance> GetInstancesBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceResource> GetManagedInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInstancesBySubscription(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedInstances(cancellationToken);
         }
     }
 }

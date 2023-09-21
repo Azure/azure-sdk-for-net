@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ScomManagedInstance;
 
 namespace Azure.ResourceManager.ScomManagedInstance.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArmScomManagedInstanceModelFactory
     {
-        /// <summary> Initializes a new instance of ManagedInstance. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,12 +26,12 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The properties of a SCOM instance resource. </param>
         /// <param name="identity"> The Azure Active Directory identity of the SCOM instance. </param>
-        /// <returns> A new <see cref="Models.ManagedInstance"/> instance for mocking. </returns>
-        public static ManagedInstance ManagedInstance(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MonitoringInstanceProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="ScomManagedInstance.ManagedInstanceData"/> instance for mocking. </returns>
+        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MonitoringInstanceProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedInstance(id, name, resourceType, systemData, tags, location, properties, identity);
+            return new ManagedInstanceData(id, name, resourceType, systemData, tags, location, properties, identity);
         }
 
         /// <summary> Initializes a new instance of MonitoringInstanceProperties. </summary>
@@ -112,16 +113,16 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
             return new UnlinkLogAnalyticsResponseProperties(status);
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a monitored resource. </param>
-        /// <returns> A new <see cref="Models.MonitoredResource"/> instance for mocking. </returns>
-        public static MonitoredResource MonitoredResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoredResourceProperties properties = null)
+        /// <returns> A new <see cref="ScomManagedInstance.MonitoredResourceData"/> instance for mocking. </returns>
+        public static MonitoredResourceData MonitoredResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoredResourceProperties properties = null)
         {
-            return new MonitoredResource(id, name, resourceType, systemData, properties);
+            return new MonitoredResourceData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of MonitoredResourceProperties. </summary>
@@ -141,16 +142,16 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
             return new MonitoredResourceProperties(resourceId, resourceLocation, computerName, domainName, managementServerEndpoint, healthStatus, connectionStatus, agentVersion, installType, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ManagedGateway. </summary>
+        /// <summary> Initializes a new instance of ManagedGatewayData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a gateway resource. </param>
-        /// <returns> A new <see cref="Models.ManagedGateway"/> instance for mocking. </returns>
-        public static ManagedGateway ManagedGateway(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedGatewayProperties properties = null)
+        /// <returns> A new <see cref="ScomManagedInstance.ManagedGatewayData"/> instance for mocking. </returns>
+        public static ManagedGatewayData ManagedGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedGatewayProperties properties = null)
         {
-            return new ManagedGateway(id, name, resourceType, systemData, properties);
+            return new ManagedGatewayData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of ManagedGatewayProperties. </summary>

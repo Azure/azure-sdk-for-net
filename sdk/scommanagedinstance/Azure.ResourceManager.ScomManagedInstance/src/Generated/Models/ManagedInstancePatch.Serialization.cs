@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ScomManagedInstance.Models
 {
-    public partial class MonitoringInstancePatch : IUtf8JsonSerializable
+    public partial class ManagedInstancePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

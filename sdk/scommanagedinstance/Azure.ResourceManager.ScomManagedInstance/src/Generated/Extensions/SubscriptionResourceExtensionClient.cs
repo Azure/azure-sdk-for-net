@@ -6,19 +6,19 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ScomManagedInstance.Models;
 
 namespace Azure.ResourceManager.ScomManagedInstance
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _instancesClientDiagnostics;
-        private InstancesRestOperations _instancesRestClient;
+        private ClientDiagnostics _managedInstanceInstancesClientDiagnostics;
+        private InstancesRestOperations _managedInstanceInstancesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.ScomManagedInstance
         {
         }
 
-        private ClientDiagnostics InstancesClientDiagnostics => _instancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScomManagedInstance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private InstancesRestOperations InstancesRestClient => _instancesRestClient ??= new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ManagedInstanceInstancesClientDiagnostics => _managedInstanceInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScomManagedInstance", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
+        private InstancesRestOperations ManagedInstanceInstancesRestClient => _managedInstanceInstancesRestClient ??= new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedInstanceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
         }
 
         /// <summary>
-        /// Lists all SCOM managed instances in a subscription 
+        /// Lists all SCOM managed instances in a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstance> GetInstancesBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstance.DeserializeManagedInstance, InstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInstancesBySubscription", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedInstanceInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedInstanceInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), ManagedInstanceInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists all SCOM managed instances in a subscription 
+        /// Lists all SCOM managed instances in a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstance> GetInstancesBySubscription(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceResource> GetManagedInstances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstance.DeserializeManagedInstance, InstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInstancesBySubscription", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedInstanceInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedInstanceInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), ManagedInstanceInstancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedInstances", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -20,31 +20,24 @@ namespace Azure.ResourceManager.ScomManagedInstance
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
-        private readonly string _instanceName;
-        private readonly string _managedGatewayName;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ManagedGatewaysRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
-        /// <param name="managedGatewayName"> The gateway resource name. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="instanceName"/>, <paramref name="managedGatewayName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public ManagedGatewaysRestOperations(HttpPipeline pipeline, string applicationId, string instanceName, string managedGatewayName, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public ManagedGatewaysRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _instanceName = instanceName ?? throw new ArgumentNullException(nameof(instanceName));
-            _managedGatewayName = managedGatewayName ?? throw new ArgumentNullException(nameof(managedGatewayName));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-07-07-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,9 +49,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/managedGateways/", false);
-            uri.AppendPath(_managedGatewayName, true);
+            uri.AppendPath(managedGatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -69,25 +62,31 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Retrieve the details of the gateway resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="managedGatewayName"> The gateway resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedGateway>> GetAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedGatewayData>> GetAsync(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(managedGatewayName, nameof(managedGatewayName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, instanceName, managedGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ManagedGateway value = default;
+                        ManagedGatewayData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedGateway.DeserializeManagedGateway(document.RootElement);
+                        value = ManagedGatewayData.DeserializeManagedGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ManagedGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -96,31 +95,37 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Retrieve the details of the gateway resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="managedGatewayName"> The gateway resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedGateway> Get(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedGatewayData> Get(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(managedGatewayName, nameof(managedGatewayName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, instanceName, managedGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ManagedGateway value = default;
+                        ManagedGatewayData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedGateway.DeserializeManagedGateway(document.RootElement);
+                        value = ManagedGatewayData.DeserializeManagedGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ManagedGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -132,9 +137,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/managedGateways/", false);
-            uri.AppendPath(_managedGatewayName, true);
+            uri.AppendPath(managedGatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -145,15 +150,19 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Create or update a gateway resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="managedGatewayName"> The gateway resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedGateway>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedGatewayData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(managedGatewayName, nameof(managedGatewayName));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, instanceName, managedGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -161,9 +170,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
                 case 201:
                 case 202:
                     {
-                        ManagedGateway value = default;
+                        ManagedGatewayData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedGateway.DeserializeManagedGateway(document.RootElement);
+                        value = ManagedGatewayData.DeserializeManagedGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -174,15 +183,19 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Create or update a gateway resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="managedGatewayName"> The gateway resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedGateway> CreateOrUpdate(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedGatewayData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(managedGatewayName, nameof(managedGatewayName));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, instanceName, managedGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -190,9 +203,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
                 case 201:
                 case 202:
                     {
-                        ManagedGateway value = default;
+                        ManagedGatewayData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedGateway.DeserializeManagedGateway(document.RootElement);
+                        value = ManagedGatewayData.DeserializeManagedGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -200,7 +213,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -212,9 +225,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/managedGateways/", false);
-            uri.AppendPath(_managedGatewayName, true);
+            uri.AppendPath(managedGatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -225,15 +238,19 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Remove a gateway resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="managedGatewayName"> The gateway resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(managedGatewayName, nameof(managedGatewayName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, instanceName, managedGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -248,15 +265,19 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Remove a gateway resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="managedGatewayName"> The gateway resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="managedGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string instanceName, string managedGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(managedGatewayName, nameof(managedGatewayName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, instanceName, managedGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -268,7 +289,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             }
         }
 
-        internal HttpMessage CreateListByManagedInstanceRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByManagedInstanceRequest(string subscriptionId, string resourceGroupName, string instanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -280,7 +301,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/managedGateways", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -292,15 +313,17 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> A comprehensive list of all gateway resources within a SCOM managed instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedGateways>> ListByManagedInstanceAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedGateways>> ListByManagedInstanceAsync(string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName, instanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -319,15 +342,17 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> A comprehensive list of all gateway resources within a SCOM managed instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedGateways> ListByManagedInstance(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedGateways> ListByManagedInstance(string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName, instanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -343,7 +368,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             }
         }
 
-        internal HttpMessage CreateListByManagedInstanceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByManagedInstanceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string instanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -361,16 +386,18 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedGateways>> ListByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedGateways>> ListByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, instanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -390,16 +417,18 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedGateways> ListByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedGateways> ListByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, instanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

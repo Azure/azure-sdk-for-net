@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ScomManagedInstance.Models
 {
     /// <summary> Object containing updates for patch operations. </summary>
-    public partial class MonitoringInstancePatch
+    public partial class ManagedInstancePatch
     {
-        /// <summary> Initializes a new instance of MonitoringInstancePatch. </summary>
-        public MonitoringInstancePatch()
+        /// <summary> Initializes a new instance of ManagedInstancePatch. </summary>
+        public ManagedInstancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

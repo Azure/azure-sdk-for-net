@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ScomManagedInstance;
 
 namespace Azure.ResourceManager.ScomManagedInstance.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedInstance>> value = default;
+            Optional<IReadOnlyList<ManagedInstanceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
                     {
                         continue;
                     }
-                    List<ManagedInstance> array = new List<ManagedInstance>();
+                    List<ManagedInstanceData> array = new List<ManagedInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstance.DeserializeManagedInstance(item));
+                        array.Add(ManagedInstanceData.DeserializeManagedInstanceData(item));
                     }
                     value = array;
                     continue;

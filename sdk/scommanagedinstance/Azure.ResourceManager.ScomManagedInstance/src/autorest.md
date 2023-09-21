@@ -46,4 +46,22 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - from: managedGateways.json
+    where: $.parameters.instanceName
+    transform: >
+      $["x-ms-parameter-location"] = "method"
+  - from: managedGateways.json
+    where: $.parameters.managedGatewayName
+    transform: >
+      $["x-ms-parameter-location"] = "method"
+  - from: monitoredResources.json
+    where: $.parameters.instanceName
+    transform: >
+      $["x-ms-parameter-location"] = "method"
+  - from: monitoredResources.json
+    where: $.parameters.monitoredResourceName
+    transform: >
+      $["x-ms-parameter-location"] = "method"
+
 ```

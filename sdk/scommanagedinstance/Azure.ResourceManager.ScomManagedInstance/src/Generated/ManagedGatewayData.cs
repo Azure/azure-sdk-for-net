@@ -7,24 +7,28 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ScomManagedInstance.Models;
 
-namespace Azure.ResourceManager.ScomManagedInstance.Models
+namespace Azure.ResourceManager.ScomManagedInstance
 {
-    /// <summary> A gateway resource. </summary>
-    public partial class ManagedGateway : ResourceData
+    /// <summary>
+    /// A class representing the ManagedGateway data model.
+    /// A gateway resource.
+    /// </summary>
+    public partial class ManagedGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedGateway. </summary>
-        public ManagedGateway()
+        /// <summary> Initializes a new instance of ManagedGatewayData. </summary>
+        public ManagedGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedGateway. </summary>
+        /// <summary> Initializes a new instance of ManagedGatewayData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a gateway resource. </param>
-        internal ManagedGateway(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedGatewayProperties properties) : base(id, name, resourceType, systemData)
+        internal ManagedGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedGatewayProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

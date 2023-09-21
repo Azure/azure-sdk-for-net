@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ScomManagedInstance;
 
 namespace Azure.ResourceManager.ScomManagedInstance.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
         /// <summary> Initializes a new instance of MonitoringInstanceList. </summary>
         internal MonitoringInstanceList()
         {
-            Value = new ChangeTrackingList<ManagedInstance>();
+            Value = new ChangeTrackingList<ManagedInstanceData>();
         }
 
         /// <summary> Initializes a new instance of MonitoringInstanceList. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal MonitoringInstanceList(IReadOnlyList<ManagedInstance> value, string nextLink)
+        internal MonitoringInstanceList(IReadOnlyList<ManagedInstanceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on the page. </summary>
-        public IReadOnlyList<ManagedInstance> Value { get; }
+        public IReadOnlyList<ManagedInstanceData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

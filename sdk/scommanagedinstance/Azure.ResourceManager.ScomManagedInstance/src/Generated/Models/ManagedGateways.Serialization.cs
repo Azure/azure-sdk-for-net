@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ScomManagedInstance;
 
 namespace Azure.ResourceManager.ScomManagedInstance.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedGateway>> value = default;
+            Optional<IReadOnlyList<ManagedGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
                     {
                         continue;
                     }
-                    List<ManagedGateway> array = new List<ManagedGateway>();
+                    List<ManagedGatewayData> array = new List<ManagedGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedGateway.DeserializeManagedGateway(item));
+                        array.Add(ManagedGatewayData.DeserializeManagedGatewayData(item));
                     }
                     value = array;
                     continue;

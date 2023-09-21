@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ScomManagedInstance.Models;
 
-namespace Azure.ResourceManager.ScomManagedInstance.Models
+namespace Azure.ResourceManager.ScomManagedInstance
 {
-    public partial class ManagedInstance : IUtf8JsonSerializable
+    public partial class ManagedInstanceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedInstance DeserializeManagedInstance(JsonElement element)
+        internal static ManagedInstanceData DeserializeManagedInstanceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
                     continue;
                 }
             }
-            return new ManagedInstance(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, identity);
+            return new ManagedInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, identity);
         }
     }
 }

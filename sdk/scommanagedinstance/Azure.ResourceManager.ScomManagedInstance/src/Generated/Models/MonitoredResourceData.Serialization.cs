@@ -8,10 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ScomManagedInstance.Models;
 
-namespace Azure.ResourceManager.ScomManagedInstance.Models
+namespace Azure.ResourceManager.ScomManagedInstance
 {
-    public partial class MonitoredResource : IUtf8JsonSerializable
+    public partial class MonitoredResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
+        internal static MonitoredResourceData DeserializeMonitoredResourceData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
                     continue;
                 }
             }
-            return new MonitoredResource(id, name, type, systemData.Value, properties.Value);
+            return new MonitoredResourceData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

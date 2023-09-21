@@ -8,19 +8,23 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ScomManagedInstance.Models;
 
-namespace Azure.ResourceManager.ScomManagedInstance.Models
+namespace Azure.ResourceManager.ScomManagedInstance
 {
-    /// <summary> A SCOM instance resource. </summary>
-    public partial class ManagedInstance : TrackedResourceData
+    /// <summary>
+    /// A class representing the ManagedInstance data model.
+    /// A SCOM instance resource
+    /// </summary>
+    public partial class ManagedInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstance. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedInstance(AzureLocation location) : base(location)
+        public ManagedInstanceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstance. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The properties of a SCOM instance resource. </param>
         /// <param name="identity"> The Azure Active Directory identity of the SCOM instance. </param>
-        internal ManagedInstance(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MonitoringInstanceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MonitoringInstanceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;

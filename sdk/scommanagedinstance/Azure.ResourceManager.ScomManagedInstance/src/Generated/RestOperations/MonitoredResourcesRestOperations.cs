@@ -20,31 +20,24 @@ namespace Azure.ResourceManager.ScomManagedInstance
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
-        private readonly string _instanceName;
-        private readonly string _monitoredResourceName;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of MonitoredResourcesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
-        /// <param name="monitoredResourceName"> The monitored resource name. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="instanceName"/>, <paramref name="monitoredResourceName"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public MonitoredResourcesRestOperations(HttpPipeline pipeline, string applicationId, string instanceName, string monitoredResourceName, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public MonitoredResourcesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _instanceName = instanceName ?? throw new ArgumentNullException(nameof(instanceName));
-            _monitoredResourceName = monitoredResourceName ?? throw new ArgumentNullException(nameof(monitoredResourceName));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-07-07-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,9 +49,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/monitoredResources/", false);
-            uri.AppendPath(_monitoredResourceName, true);
+            uri.AppendPath(monitoredResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -69,25 +62,31 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Retrieve the details of the monitored resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="monitoredResourceName"> The monitored resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResource>> GetAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MonitoredResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(monitoredResourceName, nameof(monitoredResourceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, instanceName, monitoredResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MonitoredResource value = default;
+                        MonitoredResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MonitoredResource.DeserializeMonitoredResource(document.RootElement);
+                        value = MonitoredResourceData.DeserializeMonitoredResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((MonitoredResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -96,31 +95,37 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Retrieve the details of the monitored resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="monitoredResourceName"> The monitored resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResource> Get(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MonitoredResourceData> Get(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(monitoredResourceName, nameof(monitoredResourceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, instanceName, monitoredResourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MonitoredResource value = default;
+                        MonitoredResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MonitoredResource.DeserializeMonitoredResource(document.RootElement);
+                        value = MonitoredResourceData.DeserializeMonitoredResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((MonitoredResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -132,9 +137,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/monitoredResources/", false);
-            uri.AppendPath(_monitoredResourceName, true);
+            uri.AppendPath(monitoredResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -145,24 +150,28 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Create or update a monitored resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="monitoredResourceName"> The monitored resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResource>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MonitoredResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(monitoredResourceName, nameof(monitoredResourceName));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, instanceName, monitoredResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        MonitoredResource value = default;
+                        MonitoredResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MonitoredResource.DeserializeMonitoredResource(document.RootElement);
+                        value = MonitoredResourceData.DeserializeMonitoredResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,24 +182,28 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Create or update a monitored resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="monitoredResourceName"> The monitored resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResource> CreateOrUpdate(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MonitoredResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(monitoredResourceName, nameof(monitoredResourceName));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, instanceName, monitoredResourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        MonitoredResource value = default;
+                        MonitoredResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MonitoredResource.DeserializeMonitoredResource(document.RootElement);
+                        value = MonitoredResourceData.DeserializeMonitoredResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,7 +211,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -210,9 +223,9 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/monitoredResources/", false);
-            uri.AppendPath(_monitoredResourceName, true);
+            uri.AppendPath(monitoredResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -223,15 +236,19 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Delete a monitored resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="monitoredResourceName"> The monitored resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(monitoredResourceName, nameof(monitoredResourceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, instanceName, monitoredResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -246,15 +263,19 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> Delete a monitored resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
+        /// <param name="monitoredResourceName"> The monitored resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="monitoredResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string instanceName, string monitoredResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNullOrEmpty(monitoredResourceName, nameof(monitoredResourceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, instanceName, monitoredResourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -266,7 +287,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             }
         }
 
-        internal HttpMessage CreateListByManagedInstanceRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByManagedInstanceRequest(string subscriptionId, string resourceGroupName, string instanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -278,7 +299,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Scom/managedInstances/", false);
-            uri.AppendPath(_instanceName, true);
+            uri.AppendPath(instanceName, true);
             uri.AppendPath("/monitoredResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -290,15 +311,17 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> A comprehensive list of all monitored resources within a SCOM managed instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResources>> ListByManagedInstanceAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MonitoredResources>> ListByManagedInstanceAsync(string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName, instanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -317,15 +340,17 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <summary> A comprehensive list of all monitored resources within a SCOM managed instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResources> ListByManagedInstance(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MonitoredResources> ListByManagedInstance(string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceRequest(subscriptionId, resourceGroupName, instanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -341,7 +366,7 @@ namespace Azure.ResourceManager.ScomManagedInstance
             }
         }
 
-        internal HttpMessage CreateListByManagedInstanceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByManagedInstanceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string instanceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -359,16 +384,18 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoredResources>> ListByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MonitoredResources>> ListByManagedInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, instanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -388,16 +415,18 @@ namespace Azure.ResourceManager.ScomManagedInstance
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="instanceName"> Name of the SCOM managed instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoredResources> ListByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MonitoredResources> ListByManagedInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListByManagedInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, instanceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

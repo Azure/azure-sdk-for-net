@@ -10,22 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ScomManagedInstance.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ScomManagedInstance
 {
-    internal class ManagedInstanceOperationSource : IOperationSource<ManagedInstance>
+    internal class ManagedInstanceOperationSource : IOperationSource<ManagedInstanceResource>
     {
-        ManagedInstance IOperationSource<ManagedInstance>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal ManagedInstanceOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return ManagedInstance.DeserializeManagedInstance(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<ManagedInstance> IOperationSource<ManagedInstance>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        ManagedInstanceResource IOperationSource<ManagedInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = ManagedInstanceData.DeserializeManagedInstanceData(document.RootElement);
+            return new ManagedInstanceResource(_client, data);
+        }
+
+        async ValueTask<ManagedInstanceResource> IOperationSource<ManagedInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ManagedInstance.DeserializeManagedInstance(document.RootElement);
+            var data = ManagedInstanceData.DeserializeManagedInstanceData(document.RootElement);
+            return new ManagedInstanceResource(_client, data);
         }
     }
 }

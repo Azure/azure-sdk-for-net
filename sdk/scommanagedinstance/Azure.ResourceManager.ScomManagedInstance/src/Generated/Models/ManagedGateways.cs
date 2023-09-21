@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ScomManagedInstance;
 
 namespace Azure.ResourceManager.ScomManagedInstance.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.ScomManagedInstance.Models
         /// <summary> Initializes a new instance of ManagedGateways. </summary>
         internal ManagedGateways()
         {
-            Value = new ChangeTrackingList<ManagedGateway>();
+            Value = new ChangeTrackingList<ManagedGatewayData>();
         }
 
         /// <summary> Initializes a new instance of ManagedGateways. </summary>
         /// <param name="value"> The contents displayed on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal ManagedGateways(IReadOnlyList<ManagedGateway> value, string nextLink)
+        internal ManagedGateways(IReadOnlyList<ManagedGatewayData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The contents displayed on the page. </summary>
-        public IReadOnlyList<ManagedGateway> Value { get; }
+        public IReadOnlyList<ManagedGatewayData> Value { get; }
         /// <summary> URL to get the next page if any. </summary>
         public string NextLink { get; }
     }

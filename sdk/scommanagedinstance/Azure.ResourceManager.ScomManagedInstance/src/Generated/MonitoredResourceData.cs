@@ -7,24 +7,28 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ScomManagedInstance.Models;
 
-namespace Azure.ResourceManager.ScomManagedInstance.Models
+namespace Azure.ResourceManager.ScomManagedInstance
 {
-    /// <summary> A monitored resource. </summary>
-    public partial class MonitoredResource : ResourceData
+    /// <summary>
+    /// A class representing the MonitoredResource data model.
+    /// A monitored resource.
+    /// </summary>
+    public partial class MonitoredResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
-        public MonitoredResource()
+        /// <summary> Initializes a new instance of MonitoredResourceData. </summary>
+        public MonitoredResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of MonitoredResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a monitored resource. </param>
-        internal MonitoredResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitoredResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal MonitoredResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitoredResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
