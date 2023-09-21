@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> linkType = default;
             Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
             Optional<IReadOnlyDictionary<string, string>> context = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> resourceId = default;
             Optional<long> roundTripTimeMin = default;
             Optional<long> roundTripTimeAvg = default;
             Optional<long> roundTripTimeMax = default;
@@ -69,11 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -181,6 +181,7 @@ rename-mapping:
   SyncMode: BackendAddressSyncMode
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
+  HopLink.resourceId: ResourceIdString
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
