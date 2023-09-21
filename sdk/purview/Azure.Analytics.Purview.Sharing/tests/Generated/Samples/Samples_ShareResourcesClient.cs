@@ -6,9 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Analytics.Purview.Sharing;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -21,29 +23,14 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllShareResources()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ShareResourcesClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetAllShareResources(null, null, null))
+            foreach (var item in client.GetAllShareResources("<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllShareResources_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetAllShareResourcesAsync(null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -51,20 +38,35 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllShareResources_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ShareResourcesClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetAllShareResources("<filter>", "<orderby>", null))
+            foreach (var item in client.GetAllShareResources("<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("receivedSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("sentSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("storeKind").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("referenceName").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("sentSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("storeKind").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("referenceName").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAllShareResources_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ShareResourcesClient(endpoint, credential);
+
+            await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -72,20 +74,20 @@ namespace Azure.Analytics.Purview.Sharing.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllShareResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ShareResourcesClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", null))
+            await foreach (var item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("receivedSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("sentSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("storeKind").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("referenceName").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("sentSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("storeKind").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("referenceName").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
     }

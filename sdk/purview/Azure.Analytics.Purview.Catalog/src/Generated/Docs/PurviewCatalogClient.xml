@@ -2,49 +2,51 @@
 <doc>
   <members>
     <member name="SearchAsync(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call SearchAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.SearchAsync(content);
+var data = new {};
+
+Response response = await client.SearchAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call SearchAsync with all request content and parse the result.
+This sample shows how to call SearchAsync with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     keywords = "<keywords>",
     offset = 1234,
     limit = 1234,
-    filter = new object(),
-    facets = new List<object>()
-    {
-        new
-        {
+    filter = new {},
+    facets = new[] {
+        new {
             count = 1234,
             facet = "<facet>",
-            sort = new object(),
+            sort = new {},
         }
     },
-    taxonomySetting = new
-    {
-        assetTypes = new List<object>()
-        {
-            "<assetTypes>"
+    taxonomySetting = new {
+        assetTypes = new[] {
+            "<String>"
+        },
+        facet = new {
+            count = 1234,
+            facet = "<facet>",
+            sort = new {},
         },
     },
-});
-Response response = await client.SearchAsync(content);
+};
+
+Response response = await client.SearchAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -84,52 +86,55 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetPr
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="Search(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call Search and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = client.Search(content);
+var data = new {};
+
+Response response = client.Search(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call Search with all request content and parse the result.
+This sample shows how to call Search with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     keywords = "<keywords>",
     offset = 1234,
     limit = 1234,
-    filter = new object(),
-    facets = new List<object>()
-    {
-        new
-        {
+    filter = new {},
+    facets = new[] {
+        new {
             count = 1234,
             facet = "<facet>",
-            sort = new object(),
+            sort = new {},
         }
     },
-    taxonomySetting = new
-    {
-        assetTypes = new List<object>()
-        {
-            "<assetTypes>"
+    taxonomySetting = new {
+        assetTypes = new[] {
+            "<String>"
+        },
+        facet = new {
+            count = 1234,
+            facet = "<facet>",
+            sort = new {},
         },
     },
-});
-Response response = client.Search(content);
+};
+
+Response response = client.Search(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -169,35 +174,37 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetPr
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="SuggestAsync(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call SuggestAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.SuggestAsync(content);
+var data = new {};
+
+Response response = await client.SuggestAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call SuggestAsync with all request content and parse the result.
+This sample shows how to call SuggestAsync with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     keywords = "<keywords>",
     limit = 1234,
-    filter = new object(),
-});
-Response response = await client.SuggestAsync(content);
+    filter = new {},
+};
+
+Response response = await client.SuggestAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
@@ -217,35 +224,37 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetPr
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="Suggest(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call Suggest and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = client.Suggest(content);
+var data = new {};
+
+Response response = client.Suggest(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call Suggest with all request content and parse the result.
+This sample shows how to call Suggest with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     keywords = "<keywords>",
     limit = 1234,
-    filter = new object(),
-});
-Response response = client.Suggest(content);
+    filter = new {},
+};
+
+Response response = client.Suggest(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
@@ -265,36 +274,38 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetPr
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="BrowseAsync(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call BrowseAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.BrowseAsync(content);
+var data = new {};
+
+Response response = await client.BrowseAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call BrowseAsync with all request content and parse the result.
+This sample shows how to call BrowseAsync with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     entityType = "<entityType>",
     path = "<path>",
     limit = 1234,
     offset = 1234,
-});
-Response response = await client.BrowseAsync(content);
+};
+
+Response response = await client.BrowseAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -308,36 +319,38 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProp
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("contactType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("path").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="Browse(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call Browse and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = client.Browse(content);
+var data = new {};
+
+Response response = client.Browse(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call Browse with all request content and parse the result.
+This sample shows how to call Browse with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     entityType = "<entityType>",
     path = "<path>",
     limit = 1234,
     offset = 1234,
-});
-Response response = client.Browse(content);
+};
+
+Response response = client.Browse(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("@search.count").ToString());
@@ -351,73 +364,78 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProp
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("contactType").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("path").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="AutoCompleteAsync(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call AutoCompleteAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = await client.AutoCompleteAsync(content);
+var data = new {};
+
+Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call AutoCompleteAsync with all request content and parse the result.
+This sample shows how to call AutoCompleteAsync with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     keywords = "<keywords>",
     limit = 1234,
-    filter = new object(),
-});
-Response response = await client.AutoCompleteAsync(content);
+    filter = new {},
+};
+
+Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="AutoComplete(RequestContent,RequestContext)">
-      <example>
+<example>
 This sample shows how to call AutoComplete and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
-Response response = client.AutoComplete(content);
+var data = new {};
+
+Response response = client.AutoComplete(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call AutoComplete with all request content and parse the result.
+This sample shows how to call AutoComplete with all request content, and how to parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewCatalogClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     keywords = "<keywords>",
     limit = 1234,
-    filter = new object(),
-});
-Response response = client.AutoComplete(content);
+    filter = new {},
+};
+
+Response response = client.AutoComplete(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
   </members>
 </doc>

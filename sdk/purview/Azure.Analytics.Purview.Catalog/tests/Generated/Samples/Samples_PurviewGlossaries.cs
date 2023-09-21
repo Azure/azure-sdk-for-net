@@ -11,7 +11,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Purview.Catalog;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -24,25 +23,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaries()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaries(null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaries_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossariesAsync(null, null, null, null, null);
+            Response response = client.GetGlossaries(1234, 1234, "<sort>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -52,11 +37,11 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaries_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaries(1234, 1234, "<sort>", true, null);
+            Response response = client.GetGlossaries(1234, 1234, "<sort>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -81,8 +66,8 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -95,13 +80,27 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaries_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossariesAsync(1234, 1234, "<sort>", true, new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossaries_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossariesAsync(1234, 1234, "<sort>", true, null);
+            Response response = await client.GetGlossariesAsync(1234, 1234, "<sort>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -126,8 +125,8 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -142,27 +141,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossary()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.CreateGlossary(content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateGlossaryAsync(content);
+            Response response = client.CreateGlossary(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -172,76 +157,413 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossary_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
+                categoryInfo = new
+                {
+                    key = new
+                    {
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        childrenCategories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                }
+            },
+                        parentCategory = new
+                        {
+                            categoryGuid = "<categoryGuid>",
+                            description = "<description>",
+                            displayText = "<displayText>",
+                            parentCategoryGuid = "<parentCategoryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        terms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                termInfo = new
+                {
+                    key = new
+                    {
+                        abbreviation = "<abbreviation>",
+                        templateName = new[] {
+                new {}
+            },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        status = "Draft",
+                        resources = new[] {
+                new {
+                    displayName = "<displayName>",
+                    url = "<url>",
+                }
+            },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
+                },
+                        },
+                        attributes = new
+                        {
+                            key = new
+                            {
+                                key = new { },
+                            },
+                        },
+                        assignedEntities = new[] {
+                new {
+                    displayText = "<displayText>",
+                    entityStatus = "ACTIVE",
+                    relationshipType = "<relationshipType>",
+                    relationshipAttributes = new {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
+                        source = "<source>",
+                        sourceDetails = new {
+                            key = new {},
+                        },
+                        attributes = new {
+                            key = new {},
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                    relationshipGuid = "<relationshipGuid>",
+                    relationshipStatus = "ACTIVE",
+                    guid = "<guid>",
+                    typeName = "<typeName>",
+                    uniqueAttributes = new {
+                        key = new {},
+                    },
+                }
+            },
+                        categories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    relationGuid = "<relationGuid>",
+                    status = "DRAFT",
+                }
+            },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        examples = new[] {
+                "<String>"
+            },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
                 language = "<language>",
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = client.CreateGlossary(content);
+            };
+
+            Response response = client.CreateGlossary(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -266,8 +588,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -280,78 +602,431 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossary_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new { };
+
+            Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateGlossary_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
+                categoryInfo = new
+                {
+                    key = new
+                    {
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        childrenCategories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                }
+            },
+                        parentCategory = new
+                        {
+                            categoryGuid = "<categoryGuid>",
+                            description = "<description>",
+                            displayText = "<displayText>",
+                            parentCategoryGuid = "<parentCategoryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        terms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                termInfo = new
+                {
+                    key = new
+                    {
+                        abbreviation = "<abbreviation>",
+                        templateName = new[] {
+                new {}
+            },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        status = "Draft",
+                        resources = new[] {
+                new {
+                    displayName = "<displayName>",
+                    url = "<url>",
+                }
+            },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
+                },
+                        },
+                        attributes = new
+                        {
+                            key = new
+                            {
+                                key = new { },
+                            },
+                        },
+                        assignedEntities = new[] {
+                new {
+                    displayText = "<displayText>",
+                    entityStatus = "ACTIVE",
+                    relationshipType = "<relationshipType>",
+                    relationshipAttributes = new {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
+                        source = "<source>",
+                        sourceDetails = new {
+                            key = new {},
+                        },
+                        attributes = new {
+                            key = new {},
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                    relationshipGuid = "<relationshipGuid>",
+                    relationshipStatus = "ACTIVE",
+                    guid = "<guid>",
+                    typeName = "<typeName>",
+                    uniqueAttributes = new {
+                        key = new {},
+                    },
+                }
+            },
+                        categories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    relationGuid = "<relationGuid>",
+                    status = "DRAFT",
+                }
+            },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        examples = new[] {
+                "<String>"
+            },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
                 language = "<language>",
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = await client.CreateGlossaryAsync(content);
+            };
+
+            Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -376,8 +1051,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -392,33 +1067,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryCategories()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.CreateGlossaryCategories(content);
+            var data = new[] {
+    new {}
+};
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryCategories_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.CreateGlossaryCategoriesAsync(content);
+            Response response = client.CreateGlossaryCategories(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -428,83 +1085,78 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryCategories_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-anchor = new
-{
-displayText = "<displayText>",
-glossaryGuid = "<glossaryGuid>",
-relationGuid = "<relationGuid>",
-},
-childrenCategories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
-terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-longDescription = "<longDescription>",
-name = "<name>",
-qualifiedName = "<qualifiedName>",
-shortDescription = "<shortDescription>",
-lastModifiedTS = "<lastModifiedTS>",
-guid = "<guid>",
-}
-});
-            Response response = client.CreateGlossaryCategories(content);
+            var data = new[] {
+    new {
+        anchor = new {
+            displayText = "<displayText>",
+            glossaryGuid = "<glossaryGuid>",
+            relationGuid = "<relationGuid>",
+        },
+        childrenCategories = new[] {
+            new {
+                categoryGuid = "<categoryGuid>",
+                description = "<description>",
+                displayText = "<displayText>",
+                parentCategoryGuid = "<parentCategoryGuid>",
+                relationGuid = "<relationGuid>",
+            }
+        },
+        parentCategory = new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        },
+        terms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+        longDescription = "<longDescription>",
+        name = "<name>",
+        qualifiedName = "<qualifiedName>",
+        shortDescription = "<shortDescription>",
+        lastModifiedTS = "<lastModifiedTS>",
+        guid = "<guid>",
+    }
+};
+
+            Response response = client.CreateGlossaryCategories(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
@@ -535,8 +1187,8 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -549,85 +1201,98 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryCategories_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.CreateGlossaryCategoriesAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateGlossaryCategories_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-anchor = new
-{
-displayText = "<displayText>",
-glossaryGuid = "<glossaryGuid>",
-relationGuid = "<relationGuid>",
-},
-childrenCategories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
-terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-longDescription = "<longDescription>",
-name = "<name>",
-qualifiedName = "<qualifiedName>",
-shortDescription = "<shortDescription>",
-lastModifiedTS = "<lastModifiedTS>",
-guid = "<guid>",
-}
-});
-            Response response = await client.CreateGlossaryCategoriesAsync(content);
+            var data = new[] {
+    new {
+        anchor = new {
+            displayText = "<displayText>",
+            glossaryGuid = "<glossaryGuid>",
+            relationGuid = "<relationGuid>",
+        },
+        childrenCategories = new[] {
+            new {
+                categoryGuid = "<categoryGuid>",
+                description = "<description>",
+                displayText = "<displayText>",
+                parentCategoryGuid = "<parentCategoryGuid>",
+                relationGuid = "<relationGuid>",
+            }
+        },
+        parentCategory = new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        },
+        terms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+        longDescription = "<longDescription>",
+        name = "<name>",
+        qualifiedName = "<qualifiedName>",
+        shortDescription = "<shortDescription>",
+        lastModifiedTS = "<lastModifiedTS>",
+        guid = "<guid>",
+    }
+};
+
+            Response response = await client.CreateGlossaryCategoriesAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
@@ -658,8 +1323,8 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -674,27 +1339,13 @@ guid = "<guid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.CreateGlossaryCategory(content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateGlossaryCategoryAsync(content);
+            Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -704,11 +1355,11 @@ guid = "<guid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryCategory_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 anchor = new
                 {
@@ -716,68 +1367,67 @@ guid = "<guid>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                childrenCategories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
+                parentCategory = new
+                {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                },
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = client.CreateGlossaryCategory(content);
+            };
+
+            Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -808,8 +1458,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -822,13 +1472,29 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryCategory_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new { };
+
+            Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateGlossaryCategory_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 anchor = new
                 {
@@ -836,68 +1502,67 @@ lastModifiedTS = "<lastModifiedTS>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                childrenCategories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
+                parentCategory = new
+                {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                },
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = await client.CreateGlossaryCategoryAsync(content);
+            };
+
+            Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -928,8 +1593,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -944,25 +1609,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategory("<categoryGuid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>", null);
+            Response response = client.GetGlossaryCategory("<categoryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -972,11 +1623,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategory_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategory("<categoryGuid>", null);
+            Response response = client.GetGlossaryCategory("<categoryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1007,8 +1658,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -1021,13 +1672,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryCategory_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossaryCategory_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>", null);
+            Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1058,8 +1723,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -1074,27 +1739,13 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateGlossaryCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpdateGlossaryCategory("<categoryGuid>", content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", content);
+            Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1104,11 +1755,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateGlossaryCategory_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 anchor = new
                 {
@@ -1116,68 +1767,67 @@ lastModifiedTS = "<lastModifiedTS>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                childrenCategories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
+                parentCategory = new
+                {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                },
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = client.UpdateGlossaryCategory("<categoryGuid>", content);
+            };
+
+            Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1208,8 +1858,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -1222,13 +1872,29 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateGlossaryCategory_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new { };
+
+            Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateGlossaryCategory_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 anchor = new
                 {
@@ -1236,68 +1902,67 @@ lastModifiedTS = "<lastModifiedTS>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                childrenCategories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
+                parentCategory = new
+                {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                },
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", content);
+            };
+
+            Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1328,8 +1993,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -1344,9 +2009,21 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteGlossaryCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = client.DeleteGlossaryCategory("<categoryGuid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteGlossaryCategory_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryCategory("<categoryGuid>");
             Console.WriteLine(response.Status);
@@ -1356,9 +2033,9 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteGlossaryCategory_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
             Console.WriteLine(response.Status);
@@ -1366,23 +2043,11 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteGlossaryCategory_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = client.DeleteGlossaryCategory("<categoryGuid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteGlossaryCategory_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
             Console.WriteLine(response.Status);
@@ -1392,33 +2057,16 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateGlossaryCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", content);
+                key = "<String>",
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossaryCategory_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new
-            {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", content);
+            Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1428,15 +2076,16 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateGlossaryCategory_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", content);
+                key = "<String>",
+            };
+
+            Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1467,8 +2116,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -1481,17 +2130,37 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateGlossaryCategory_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new
+            {
+                key = "<String>",
+            };
+
+            Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_PartialUpdateGlossaryCategory_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", content);
+                key = "<String>",
+            };
+
+            Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
@@ -1522,8 +2191,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -1538,89 +2207,75 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelatedCategories()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetRelatedCategories("<categoryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelatedCategories_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", null, null, null, null);
+            Response response = client.GetRelatedCategories("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelatedCategories_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetRelatedCategories("<categoryGuid>", 1234, 1234, "<sort>", null);
+            Response response = client.GetRelatedCategories("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("parentCategoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("parentCategoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelatedCategories_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("<test>")[0].ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelatedCategories_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>", null);
+            Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("parentCategoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("parentCategoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCategoryTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetCategoryTerms("<categoryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCategoryTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetCategoryTermsAsync("<categoryGuid>", null, null, null, null);
+            Response response = client.GetCategoryTerms("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -1630,11 +2285,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetCategoryTerms_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetCategoryTerms("<categoryGuid>", 1234, 1234, "<sort>", null);
+            Response response = client.GetCategoryTerms("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("description").ToString());
@@ -1649,13 +2304,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetCategoryTerms_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetCategoryTerms_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>", null);
+            Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("description").ToString());
@@ -1672,27 +2341,13 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.CreateGlossaryTerm(content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateGlossaryTermAsync(content);
+            Response response = client.CreateGlossaryTerm(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1702,195 +2357,285 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryTerm_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
-new object()
-},
+                templateName = new[] {
+        new {}
+    },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                createTime = 123.45F,
+                antonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                createTime = 123.45f,
                 createdBy = "<createdBy>",
-                updateTime = 123.45F,
+                updateTime = 123.45f,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
-new
-{
-displayName = "<displayName>",
-url = "<url>",
-}
-},
+                resources = new[] {
+        new {
+            displayName = "<displayName>",
+            url = "<url>",
+        }
+    },
                 contacts = new
                 {
-                    key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                    key = new[] {
+            new {
+                id = "<id>",
+                info = "<info>",
+            }
+        },
                 },
                 attributes = new
                 {
                     key = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                 },
-                assignedEntities = new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-},
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-relationGuid = "<relationGuid>",
-status = "DRAFT",
-}
-},
-                classifies = new List<object>()
-{
-null
-},
-                examples = new List<object>()
-{
-"<examples>"
-},
-                isA = new List<object>()
-{
-null
-},
-                preferredTerms = new List<object>()
-{
-null
-},
-                preferredToTerms = new List<object>()
-{
-null
-},
-                replacedBy = new List<object>()
-{
-null
-},
-                replacementTerms = new List<object>()
-{
-null
-},
-                seeAlso = new List<object>()
-{
-null
-},
-                synonyms = new List<object>()
-{
-null
-},
-                translatedTerms = new List<object>()
-{
-null
-},
-                translationTerms = new List<object>()
-{
-null
-},
+                assignedEntities = new[] {
+        new {
+            displayText = "<displayText>",
+            entityStatus = "ACTIVE",
+            relationshipType = "<relationshipType>",
+            relationshipAttributes = new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            },
+            relationshipGuid = "<relationshipGuid>",
+            relationshipStatus = "ACTIVE",
+            guid = "<guid>",
+            typeName = "<typeName>",
+            uniqueAttributes = new {
+                key = new {},
+            },
+        }
+    },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            relationGuid = "<relationGuid>",
+            status = "DRAFT",
+        }
+    },
+                classifies = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                examples = new[] {
+        "<String>"
+    },
+                isA = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredToTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacedBy = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacementTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                seeAlso = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                synonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translatedTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translationTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
-null
-},
-                validValuesFor = new List<object>()
-{
-null
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                validValues = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                validValuesFor = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = client.CreateGlossaryTerm(content, includeTermHierarchy: true);
+            };
+
+            Response response = client.CreateGlossaryTerm(RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -1913,20 +2658,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -2037,8 +2782,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -2051,197 +2796,303 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryTerm_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new { };
+
+            Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateGlossaryTerm_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
-new object()
-},
+                templateName = new[] {
+        new {}
+    },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                createTime = 123.45F,
+                antonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                createTime = 123.45f,
                 createdBy = "<createdBy>",
-                updateTime = 123.45F,
+                updateTime = 123.45f,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
-new
-{
-displayName = "<displayName>",
-url = "<url>",
-}
-},
+                resources = new[] {
+        new {
+            displayName = "<displayName>",
+            url = "<url>",
+        }
+    },
                 contacts = new
                 {
-                    key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                    key = new[] {
+            new {
+                id = "<id>",
+                info = "<info>",
+            }
+        },
                 },
                 attributes = new
                 {
                     key = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                 },
-                assignedEntities = new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-},
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-relationGuid = "<relationGuid>",
-status = "DRAFT",
-}
-},
-                classifies = new List<object>()
-{
-null
-},
-                examples = new List<object>()
-{
-"<examples>"
-},
-                isA = new List<object>()
-{
-null
-},
-                preferredTerms = new List<object>()
-{
-null
-},
-                preferredToTerms = new List<object>()
-{
-null
-},
-                replacedBy = new List<object>()
-{
-null
-},
-                replacementTerms = new List<object>()
-{
-null
-},
-                seeAlso = new List<object>()
-{
-null
-},
-                synonyms = new List<object>()
-{
-null
-},
-                translatedTerms = new List<object>()
-{
-null
-},
-                translationTerms = new List<object>()
-{
-null
-},
+                assignedEntities = new[] {
+        new {
+            displayText = "<displayText>",
+            entityStatus = "ACTIVE",
+            relationshipType = "<relationshipType>",
+            relationshipAttributes = new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            },
+            relationshipGuid = "<relationshipGuid>",
+            relationshipStatus = "ACTIVE",
+            guid = "<guid>",
+            typeName = "<typeName>",
+            uniqueAttributes = new {
+                key = new {},
+            },
+        }
+    },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            relationGuid = "<relationGuid>",
+            status = "DRAFT",
+        }
+    },
+                classifies = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                examples = new[] {
+        "<String>"
+    },
+                isA = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredToTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacedBy = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacementTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                seeAlso = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                synonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translatedTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translationTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
-null
-},
-                validValuesFor = new List<object>()
-{
-null
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                validValues = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                validValuesFor = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = await client.CreateGlossaryTermAsync(content, includeTermHierarchy: true);
+            };
+
+            Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2264,20 +3115,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -2388,8 +3239,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -2404,25 +3255,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTerm("<termGuid>", null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryTermAsync("<termGuid>", null, null, null);
+            Response response = client.GetGlossaryTerm("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2432,14 +3269,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTerm_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTerm("<termGuid>", true, new List<string>()
-{
-"<excludeRelationshipTypeList>"
-}, null);
+            Response response = client.GetGlossaryTerm("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2462,20 +3296,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -2586,8 +3420,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -2600,16 +3434,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryTerm_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossaryTerm_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new List<string>()
-{
-"<excludeRelationshipTypeList>"
-}, null);
+            Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2632,20 +3477,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -2756,8 +3601,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -2772,27 +3617,13 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateGlossaryTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpdateGlossaryTerm("<termGuid>", content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateGlossaryTermAsync("<termGuid>", content);
+            Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2802,195 +3633,285 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateGlossaryTerm_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
-new object()
-},
+                templateName = new[] {
+        new {}
+    },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                createTime = 123.45F,
+                antonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                createTime = 123.45f,
                 createdBy = "<createdBy>",
-                updateTime = 123.45F,
+                updateTime = 123.45f,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
-new
-{
-displayName = "<displayName>",
-url = "<url>",
-}
-},
+                resources = new[] {
+        new {
+            displayName = "<displayName>",
+            url = "<url>",
+        }
+    },
                 contacts = new
                 {
-                    key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                    key = new[] {
+            new {
+                id = "<id>",
+                info = "<info>",
+            }
+        },
                 },
                 attributes = new
                 {
                     key = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                 },
-                assignedEntities = new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-},
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-relationGuid = "<relationGuid>",
-status = "DRAFT",
-}
-},
-                classifies = new List<object>()
-{
-null
-},
-                examples = new List<object>()
-{
-"<examples>"
-},
-                isA = new List<object>()
-{
-null
-},
-                preferredTerms = new List<object>()
-{
-null
-},
-                preferredToTerms = new List<object>()
-{
-null
-},
-                replacedBy = new List<object>()
-{
-null
-},
-                replacementTerms = new List<object>()
-{
-null
-},
-                seeAlso = new List<object>()
-{
-null
-},
-                synonyms = new List<object>()
-{
-null
-},
-                translatedTerms = new List<object>()
-{
-null
-},
-                translationTerms = new List<object>()
-{
-null
-},
+                assignedEntities = new[] {
+        new {
+            displayText = "<displayText>",
+            entityStatus = "ACTIVE",
+            relationshipType = "<relationshipType>",
+            relationshipAttributes = new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            },
+            relationshipGuid = "<relationshipGuid>",
+            relationshipStatus = "ACTIVE",
+            guid = "<guid>",
+            typeName = "<typeName>",
+            uniqueAttributes = new {
+                key = new {},
+            },
+        }
+    },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            relationGuid = "<relationGuid>",
+            status = "DRAFT",
+        }
+    },
+                classifies = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                examples = new[] {
+        "<String>"
+    },
+                isA = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredToTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacedBy = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacementTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                seeAlso = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                synonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translatedTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translationTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
-null
-},
-                validValuesFor = new List<object>()
-{
-null
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                validValues = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                validValuesFor = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = client.UpdateGlossaryTerm("<termGuid>", content, includeTermHierarchy: true);
+            };
+
+            Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -3013,20 +3934,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -3137,8 +4058,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -3151,197 +4072,303 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateGlossaryTerm_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new { };
+
+            Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateGlossaryTerm_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
-new object()
-},
+                templateName = new[] {
+        new {}
+    },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-                createTime = 123.45F,
+                antonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                createTime = 123.45f,
                 createdBy = "<createdBy>",
-                updateTime = 123.45F,
+                updateTime = 123.45f,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
-new
-{
-displayName = "<displayName>",
-url = "<url>",
-}
-},
+                resources = new[] {
+        new {
+            displayName = "<displayName>",
+            url = "<url>",
+        }
+    },
                 contacts = new
                 {
-                    key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
+                    key = new[] {
+            new {
+                id = "<id>",
+                info = "<info>",
+            }
+        },
                 },
                 attributes = new
                 {
                     key = new
                     {
-                        key = new object(),
+                        key = new { },
                     },
                 },
-                assignedEntities = new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-},
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-relationGuid = "<relationGuid>",
-status = "DRAFT",
-}
-},
-                classifies = new List<object>()
-{
-null
-},
-                examples = new List<object>()
-{
-"<examples>"
-},
-                isA = new List<object>()
-{
-null
-},
-                preferredTerms = new List<object>()
-{
-null
-},
-                preferredToTerms = new List<object>()
-{
-null
-},
-                replacedBy = new List<object>()
-{
-null
-},
-                replacementTerms = new List<object>()
-{
-null
-},
-                seeAlso = new List<object>()
-{
-null
-},
-                synonyms = new List<object>()
-{
-null
-},
-                translatedTerms = new List<object>()
-{
-null
-},
-                translationTerms = new List<object>()
-{
-null
-},
+                assignedEntities = new[] {
+        new {
+            displayText = "<displayText>",
+            entityStatus = "ACTIVE",
+            relationshipType = "<relationshipType>",
+            relationshipAttributes = new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            },
+            relationshipGuid = "<relationshipGuid>",
+            relationshipStatus = "ACTIVE",
+            guid = "<guid>",
+            typeName = "<typeName>",
+            uniqueAttributes = new {
+                key = new {},
+            },
+        }
+    },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            relationGuid = "<relationGuid>",
+            status = "DRAFT",
+        }
+    },
+                classifies = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                examples = new[] {
+        "<String>"
+    },
+                isA = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                preferredToTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacedBy = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                replacementTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                seeAlso = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                synonyms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translatedTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                translationTerms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
-null
-},
-                validValuesFor = new List<object>()
-{
-null
-},
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                validValues = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                validValuesFor = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = await client.UpdateGlossaryTermAsync("<termGuid>", content, includeTermHierarchy: true);
+            };
+
+            Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -3364,20 +4391,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -3488,8 +4515,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -3504,9 +4531,21 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteGlossaryTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = client.DeleteGlossaryTerm("<termGuid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteGlossaryTerm_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryTerm("<termGuid>");
             Console.WriteLine(response.Status);
@@ -3516,9 +4555,9 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteGlossaryTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
             Console.WriteLine(response.Status);
@@ -3526,23 +4565,11 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteGlossaryTerm_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = client.DeleteGlossaryTerm("<termGuid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteGlossaryTerm_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
             Console.WriteLine(response.Status);
@@ -3552,33 +4579,16 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateGlossaryTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = client.PartialUpdateGlossaryTerm("<termGuid>", content);
+                key = "<String>",
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossaryTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new
-            {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", content);
+            Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -3588,15 +4598,16 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateGlossaryTerm_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = client.PartialUpdateGlossaryTerm("<termGuid>", content, includeTermHierarchy: true);
+                key = "<String>",
+            };
+
+            Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -3619,20 +4630,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -3743,8 +4754,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -3757,17 +4768,37 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateGlossaryTerm_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new
+            {
+                key = "<String>",
+            };
+
+            Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_PartialUpdateGlossaryTerm_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", content, includeTermHierarchy: true);
+                key = "<String>",
+            };
+
+            Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -3790,20 +4821,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -3914,8 +4945,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -3930,33 +4961,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.CreateGlossaryTerms(content);
+            var data = new[] {
+    new {}
+};
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.CreateGlossaryTermsAsync(content);
+            Response response = client.CreateGlossaryTerms(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3966,198 +4979,282 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateGlossaryTerms_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-abbreviation = "<abbreviation>",
-templateName = new List<object>()
-{
-new object()
-},
-anchor = new
-{
-displayText = "<displayText>",
-glossaryGuid = "<glossaryGuid>",
-relationGuid = "<relationGuid>",
-},
-antonyms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-createTime = 123.45F,
-createdBy = "<createdBy>",
-updateTime = 123.45F,
-updatedBy = "<updatedBy>",
-status = "Draft",
-resources = new List<object>()
-{
-new
-{
-displayName = "<displayName>",
-url = "<url>",
-}
-},
-contacts = new
-{
-key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
-},
-attributes = new
-{
-key = new
-{
-key = new object(),
-},
-},
-assignedEntities = new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-},
-categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-relationGuid = "<relationGuid>",
-status = "DRAFT",
-}
-},
-classifies = new List<object>()
-{
-null
-},
-examples = new List<object>()
-{
-"<examples>"
-},
-isA = new List<object>()
-{
-null
-},
-preferredTerms = new List<object>()
-{
-null
-},
-preferredToTerms = new List<object>()
-{
-null
-},
-replacedBy = new List<object>()
-{
-null
-},
-replacementTerms = new List<object>()
-{
-null
-},
-seeAlso = new List<object>()
-{
-null
-},
-synonyms = new List<object>()
-{
-null
-},
-translatedTerms = new List<object>()
-{
-null
-},
-translationTerms = new List<object>()
-{
-null
-},
-usage = "<usage>",
-validValues = new List<object>()
-{
-null
-},
-validValuesFor = new List<object>()
-{
-null
-},
-classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-longDescription = "<longDescription>",
-name = "<name>",
-qualifiedName = "<qualifiedName>",
-shortDescription = "<shortDescription>",
-lastModifiedTS = "<lastModifiedTS>",
-guid = "<guid>",
-}
-});
-            Response response = client.CreateGlossaryTerms(content, includeTermHierarchy: true);
+            var data = new[] {
+    new {
+        abbreviation = "<abbreviation>",
+        templateName = new[] {
+            new {}
+        },
+        anchor = new {
+            displayText = "<displayText>",
+            glossaryGuid = "<glossaryGuid>",
+            relationGuid = "<relationGuid>",
+        },
+        antonyms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        createTime = 123.45f,
+        createdBy = "<createdBy>",
+        updateTime = 123.45f,
+        updatedBy = "<updatedBy>",
+        status = "Draft",
+        resources = new[] {
+            new {
+                displayName = "<displayName>",
+                url = "<url>",
+            }
+        },
+        contacts = new {
+            key = new[] {
+                new {
+                    id = "<id>",
+                    info = "<info>",
+                }
+            },
+        },
+        attributes = new {
+            key = new {
+                key = new {},
+            },
+        },
+        assignedEntities = new[] {
+            new {
+                displayText = "<displayText>",
+                entityStatus = "ACTIVE",
+                relationshipType = "<relationshipType>",
+                relationshipAttributes = new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                },
+                relationshipGuid = "<relationshipGuid>",
+                relationshipStatus = "ACTIVE",
+                guid = "<guid>",
+                typeName = "<typeName>",
+                uniqueAttributes = new {
+                    key = new {},
+                },
+            }
+        },
+        categories = new[] {
+            new {
+                categoryGuid = "<categoryGuid>",
+                description = "<description>",
+                displayText = "<displayText>",
+                relationGuid = "<relationGuid>",
+                status = "DRAFT",
+            }
+        },
+        classifies = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        examples = new[] {
+            "<String>"
+        },
+        isA = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        preferredTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        preferredToTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        replacedBy = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        replacementTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        seeAlso = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        synonyms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        translatedTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        translationTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        usage = "<usage>",
+        validValues = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        validValuesFor = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+        longDescription = "<longDescription>",
+        name = "<name>",
+        qualifiedName = "<qualifiedName>",
+        shortDescription = "<shortDescription>",
+        lastModifiedTS = "<lastModifiedTS>",
+        guid = "<guid>",
+    }
+};
+
+            Response response = client.CreateGlossaryTerms(RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -4180,20 +5277,20 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -4304,8 +5401,8 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -4318,200 +5415,302 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateGlossaryTerms_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateGlossaryTerms_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-abbreviation = "<abbreviation>",
-templateName = new List<object>()
-{
-new object()
-},
-anchor = new
-{
-displayText = "<displayText>",
-glossaryGuid = "<glossaryGuid>",
-relationGuid = "<relationGuid>",
-},
-antonyms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
-createTime = 123.45F,
-createdBy = "<createdBy>",
-updateTime = 123.45F,
-updatedBy = "<updatedBy>",
-status = "Draft",
-resources = new List<object>()
-{
-new
-{
-displayName = "<displayName>",
-url = "<url>",
-}
-},
-contacts = new
-{
-key = new List<object>()
-{
-new
-{
-id = "<id>",
-info = "<info>",
-}
-},
-},
-attributes = new
-{
-key = new
-{
-key = new object(),
-},
-},
-assignedEntities = new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-},
-categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-relationGuid = "<relationGuid>",
-status = "DRAFT",
-}
-},
-classifies = new List<object>()
-{
-null
-},
-examples = new List<object>()
-{
-"<examples>"
-},
-isA = new List<object>()
-{
-null
-},
-preferredTerms = new List<object>()
-{
-null
-},
-preferredToTerms = new List<object>()
-{
-null
-},
-replacedBy = new List<object>()
-{
-null
-},
-replacementTerms = new List<object>()
-{
-null
-},
-seeAlso = new List<object>()
-{
-null
-},
-synonyms = new List<object>()
-{
-null
-},
-translatedTerms = new List<object>()
-{
-null
-},
-translationTerms = new List<object>()
-{
-null
-},
-usage = "<usage>",
-validValues = new List<object>()
-{
-null
-},
-validValuesFor = new List<object>()
-{
-null
-},
-classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
-longDescription = "<longDescription>",
-name = "<name>",
-qualifiedName = "<qualifiedName>",
-shortDescription = "<shortDescription>",
-lastModifiedTS = "<lastModifiedTS>",
-guid = "<guid>",
-}
-});
-            Response response = await client.CreateGlossaryTermsAsync(content, includeTermHierarchy: true);
+            var data = new[] {
+    new {
+        abbreviation = "<abbreviation>",
+        templateName = new[] {
+            new {}
+        },
+        anchor = new {
+            displayText = "<displayText>",
+            glossaryGuid = "<glossaryGuid>",
+            relationGuid = "<relationGuid>",
+        },
+        antonyms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        createTime = 123.45f,
+        createdBy = "<createdBy>",
+        updateTime = 123.45f,
+        updatedBy = "<updatedBy>",
+        status = "Draft",
+        resources = new[] {
+            new {
+                displayName = "<displayName>",
+                url = "<url>",
+            }
+        },
+        contacts = new {
+            key = new[] {
+                new {
+                    id = "<id>",
+                    info = "<info>",
+                }
+            },
+        },
+        attributes = new {
+            key = new {
+                key = new {},
+            },
+        },
+        assignedEntities = new[] {
+            new {
+                displayText = "<displayText>",
+                entityStatus = "ACTIVE",
+                relationshipType = "<relationshipType>",
+                relationshipAttributes = new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                },
+                relationshipGuid = "<relationshipGuid>",
+                relationshipStatus = "ACTIVE",
+                guid = "<guid>",
+                typeName = "<typeName>",
+                uniqueAttributes = new {
+                    key = new {},
+                },
+            }
+        },
+        categories = new[] {
+            new {
+                categoryGuid = "<categoryGuid>",
+                description = "<description>",
+                displayText = "<displayText>",
+                relationGuid = "<relationGuid>",
+                status = "DRAFT",
+            }
+        },
+        classifies = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        examples = new[] {
+            "<String>"
+        },
+        isA = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        preferredTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        preferredToTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        replacedBy = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        replacementTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        seeAlso = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        synonyms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        translatedTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        translationTerms = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        usage = "<usage>",
+        validValues = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        validValuesFor = new[] {
+            new {
+                description = "<description>",
+                displayText = "<displayText>",
+                expression = "<expression>",
+                relationGuid = "<relationGuid>",
+                source = "<source>",
+                status = "DRAFT",
+                steward = "<steward>",
+                termGuid = "<termGuid>",
+            }
+        },
+        classifications = new[] {
+            new {
+                entityGuid = "<entityGuid>",
+                entityStatus = "ACTIVE",
+                removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
+                source = "<source>",
+                sourceDetails = new {
+                    key = new {},
+                },
+                attributes = new {
+                    key = new {},
+                },
+                typeName = "<typeName>",
+                lastModifiedTS = "<lastModifiedTS>",
+            }
+        },
+        longDescription = "<longDescription>",
+        name = "<name>",
+        qualifiedName = "<qualifiedName>",
+        shortDescription = "<shortDescription>",
+        lastModifiedTS = "<lastModifiedTS>",
+        guid = "<guid>",
+    }
+};
+
+            Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -4534,20 +5733,20 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -4658,8 +5857,8 @@ guid = "<guid>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -4674,25 +5873,11 @@ guid = "<guid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntitiesAssignedWithTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntitiesAssignedWithTerm_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", null, null, null, null);
+            Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -4702,79 +5887,77 @@ guid = "<guid>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntitiesAssignedWithTerm_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", 1234, 1234, "<sort>", null);
+            Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetEntitiesAssignedWithTerm_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEntitiesAssignedWithTerm_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>", null);
+            Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_AssignTermToEntities()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.AssignTermToEntities("<termGuid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AssignTermToEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
+            Response response = client.AssignTermToEntities("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4782,37 +5965,63 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_AssignTermToEntities_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-});
-            Response response = client.AssignTermToEntities("<termGuid>", content);
+            var data = new[] {
+    new {
+        displayText = "<displayText>",
+        entityStatus = "ACTIVE",
+        relationshipType = "<relationshipType>",
+        relationshipAttributes = new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+        relationshipGuid = "<relationshipGuid>",
+        relationshipStatus = "ACTIVE",
+        guid = "<guid>",
+        typeName = "<typeName>",
+        uniqueAttributes = new {
+            key = new {},
+        },
+    }
+};
+
+            Response response = client.AssignTermToEntities("<termGuid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AssignTermToEntities_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.AssignTermToEntitiesAsync("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4820,37 +6029,47 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AssignTermToEntities_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-});
-            Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
+            var data = new[] {
+    new {
+        displayText = "<displayText>",
+        entityStatus = "ACTIVE",
+        relationshipType = "<relationshipType>",
+        relationshipAttributes = new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+        relationshipGuid = "<relationshipGuid>",
+        relationshipStatus = "ACTIVE",
+        guid = "<guid>",
+        typeName = "<typeName>",
+        uniqueAttributes = new {
+            key = new {},
+        },
+    }
+};
+
+            Response response = await client.AssignTermToEntitiesAsync("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4858,31 +6077,15 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_RemoveTermAssignmentFromEntities()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveTermAssignmentFromEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
+            Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4890,37 +6093,63 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_RemoveTermAssignmentFromEntities_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-});
-            Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", content);
+            var data = new[] {
+    new {
+        displayText = "<displayText>",
+        entityStatus = "ACTIVE",
+        relationshipType = "<relationshipType>",
+        relationshipAttributes = new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+        relationshipGuid = "<relationshipGuid>",
+        relationshipStatus = "ACTIVE",
+        guid = "<guid>",
+        typeName = "<typeName>",
+        uniqueAttributes = new {
+            key = new {},
+        },
+    }
+};
+
+            Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_RemoveTermAssignmentFromEntities_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4928,37 +6157,47 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RemoveTermAssignmentFromEntities_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-});
-            Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
+            var data = new[] {
+    new {
+        displayText = "<displayText>",
+        entityStatus = "ACTIVE",
+        relationshipType = "<relationshipType>",
+        relationshipAttributes = new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+        relationshipGuid = "<relationshipGuid>",
+        relationshipStatus = "ACTIVE",
+        guid = "<guid>",
+        typeName = "<typeName>",
+        uniqueAttributes = new {
+            key = new {},
+        },
+    }
+};
+
+            Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4966,31 +6205,15 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTermAssignmentFromEntities()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", content);
-            Console.WriteLine(response.Status);
-        }
+            var data = new[] {
+    new {}
+};
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTermAssignmentFromEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new object()
-});
-            Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
+            Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -4998,37 +6221,63 @@ new object()
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTermAssignmentFromEntities_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-});
-            Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", content);
+            var data = new[] {
+    new {
+        displayText = "<displayText>",
+        entityStatus = "ACTIVE",
+        relationshipType = "<relationshipType>",
+        relationshipAttributes = new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+        relationshipGuid = "<relationshipGuid>",
+        relationshipStatus = "ACTIVE",
+        guid = "<guid>",
+        typeName = "<typeName>",
+        uniqueAttributes = new {
+            key = new {},
+        },
+    }
+};
+
+            Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTermAssignmentFromEntities_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new[] {
+    new {}
+};
+
+            Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -5036,37 +6285,47 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTermAssignmentFromEntities_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-new
-{
-displayText = "<displayText>",
-entityStatus = "ACTIVE",
-relationshipType = "<relationshipType>",
-relationshipAttributes = new
-{
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-},
-relationshipGuid = "<relationshipGuid>",
-relationshipStatus = "ACTIVE",
-guid = "<guid>",
-typeName = "<typeName>",
-uniqueAttributes = new
-{
-key = new object(),
-},
-}
-});
-            Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
+            var data = new[] {
+    new {
+        displayText = "<displayText>",
+        entityStatus = "ACTIVE",
+        relationshipType = "<relationshipType>",
+        relationshipAttributes = new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        },
+        relationshipGuid = "<relationshipGuid>",
+        relationshipStatus = "ACTIVE",
+        guid = "<guid>",
+        typeName = "<typeName>",
+        uniqueAttributes = new {
+            key = new {},
+        },
+    }
+};
+
+            Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -5074,95 +6333,81 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelatedTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetRelatedTerms("<termGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelatedTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetRelatedTermsAsync("<termGuid>", null, null, null, null);
+            Response response = client.GetRelatedTerms("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelatedTerms_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetRelatedTerms("<termGuid>", 1234, 1234, "<sort>", null);
+            Response response = client.GetRelatedTerms("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("termGuid").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRelatedTerms_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetRelatedTermsAsync("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("<test>")[0].ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelatedTerms_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetRelatedTermsAsync("<termGuid>", 1234, 1234, "<sort>", null);
+            Response response = await client.GetRelatedTermsAsync("<termGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("termGuid").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossary()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossary("<glossaryGuid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryAsync("<glossaryGuid>", null);
+            Response response = client.GetGlossary("<glossaryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -5172,11 +6417,11 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossary_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossary("<glossaryGuid>", null);
+            Response response = client.GetGlossary("<glossaryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -5201,8 +6446,8 @@ key = new object(),
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -5215,13 +6460,27 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossary_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryAsync("<glossaryGuid>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossary_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryAsync("<glossaryGuid>", null);
+            Response response = await client.GetGlossaryAsync("<glossaryGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -5246,8 +6505,8 @@ key = new object(),
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -5262,27 +6521,13 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateGlossary()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new object());
-            Response response = client.UpdateGlossary("<glossaryGuid>", content);
+            var data = new { };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new object());
-            Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", content);
+            Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -5292,76 +6537,413 @@ key = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateGlossary_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
+                categoryInfo = new
+                {
+                    key = new
+                    {
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        childrenCategories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                }
+            },
+                        parentCategory = new
+                        {
+                            categoryGuid = "<categoryGuid>",
+                            description = "<description>",
+                            displayText = "<displayText>",
+                            parentCategoryGuid = "<parentCategoryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        terms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                termInfo = new
+                {
+                    key = new
+                    {
+                        abbreviation = "<abbreviation>",
+                        templateName = new[] {
+                new {}
+            },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        status = "Draft",
+                        resources = new[] {
+                new {
+                    displayName = "<displayName>",
+                    url = "<url>",
+                }
+            },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
+                },
+                        },
+                        attributes = new
+                        {
+                            key = new
+                            {
+                                key = new { },
+                            },
+                        },
+                        assignedEntities = new[] {
+                new {
+                    displayText = "<displayText>",
+                    entityStatus = "ACTIVE",
+                    relationshipType = "<relationshipType>",
+                    relationshipAttributes = new {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
+                        source = "<source>",
+                        sourceDetails = new {
+                            key = new {},
+                        },
+                        attributes = new {
+                            key = new {},
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                    relationshipGuid = "<relationshipGuid>",
+                    relationshipStatus = "ACTIVE",
+                    guid = "<guid>",
+                    typeName = "<typeName>",
+                    uniqueAttributes = new {
+                        key = new {},
+                    },
+                }
+            },
+                        categories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    relationGuid = "<relationGuid>",
+                    status = "DRAFT",
+                }
+            },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        examples = new[] {
+                "<String>"
+            },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
                 language = "<language>",
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = client.UpdateGlossary("<glossaryGuid>", content);
+            };
+
+            Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -5386,8 +6968,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -5400,78 +6982,431 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateGlossary_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new { };
+
+            Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateGlossary_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                categories = new List<object>()
-{
-new
-{
-categoryGuid = "<categoryGuid>",
-description = "<description>",
-displayText = "<displayText>",
-parentCategoryGuid = "<parentCategoryGuid>",
-relationGuid = "<relationGuid>",
-}
-},
+                categoryInfo = new
+                {
+                    key = new
+                    {
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        childrenCategories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    parentCategoryGuid = "<parentCategoryGuid>",
+                    relationGuid = "<relationGuid>",
+                }
+            },
+                        parentCategory = new
+                        {
+                            categoryGuid = "<categoryGuid>",
+                            description = "<description>",
+                            displayText = "<displayText>",
+                            parentCategoryGuid = "<parentCategoryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        terms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                termInfo = new
+                {
+                    key = new
+                    {
+                        abbreviation = "<abbreviation>",
+                        templateName = new[] {
+                new {}
+            },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        createTime = 123.45f,
+                        createdBy = "<createdBy>",
+                        updateTime = 123.45f,
+                        updatedBy = "<updatedBy>",
+                        status = "Draft",
+                        resources = new[] {
+                new {
+                    displayName = "<displayName>",
+                    url = "<url>",
+                }
+            },
+                        contacts = new
+                        {
+                            key = new[] {
+                    new {
+                        id = "<id>",
+                        info = "<info>",
+                    }
+                },
+                        },
+                        attributes = new
+                        {
+                            key = new
+                            {
+                                key = new { },
+                            },
+                        },
+                        assignedEntities = new[] {
+                new {
+                    displayText = "<displayText>",
+                    entityStatus = "ACTIVE",
+                    relationshipType = "<relationshipType>",
+                    relationshipAttributes = new {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
+                        source = "<source>",
+                        sourceDetails = new {
+                            key = new {},
+                        },
+                        attributes = new {
+                            key = new {},
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
+                    relationshipGuid = "<relationshipGuid>",
+                    relationshipStatus = "ACTIVE",
+                    guid = "<guid>",
+                    typeName = "<typeName>",
+                    uniqueAttributes = new {
+                        key = new {},
+                    },
+                }
+            },
+                        categories = new[] {
+                new {
+                    categoryGuid = "<categoryGuid>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    relationGuid = "<relationGuid>",
+                    status = "DRAFT",
+                }
+            },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        examples = new[] {
+                "<String>"
+            },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
+                        longDescription = "<longDescription>",
+                        name = "<name>",
+                        qualifiedName = "<qualifiedName>",
+                        shortDescription = "<shortDescription>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                        guid = "<guid>",
+                    },
+                },
+                categories = new[] {
+        new {
+            categoryGuid = "<categoryGuid>",
+            description = "<description>",
+            displayText = "<displayText>",
+            parentCategoryGuid = "<parentCategoryGuid>",
+            relationGuid = "<relationGuid>",
+        }
+    },
                 language = "<language>",
-                terms = new List<object>()
-{
-new
-{
-description = "<description>",
-displayText = "<displayText>",
-expression = "<expression>",
-relationGuid = "<relationGuid>",
-source = "<source>",
-status = "DRAFT",
-steward = "<steward>",
-termGuid = "<termGuid>",
-}
-},
+                terms = new[] {
+        new {
+            description = "<description>",
+            displayText = "<displayText>",
+            expression = "<expression>",
+            relationGuid = "<relationGuid>",
+            source = "<source>",
+            status = "DRAFT",
+            steward = "<steward>",
+            termGuid = "<termGuid>",
+        }
+    },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
-new
-{
-entityGuid = "<entityGuid>",
-entityStatus = "ACTIVE",
-removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
-{
-new
-{
-endTime = "<endTime>",
-startTime = "<startTime>",
-timeZone = "<timeZone>",
-}
-},
-source = "<source>",
-sourceDetails = new
-{
-key = new object(),
-},
-attributes = new
-{
-key = new object(),
-},
-typeName = "<typeName>",
-lastModifiedTS = "<lastModifiedTS>",
-}
-},
+                classifications = new[] {
+        new {
+            entityGuid = "<entityGuid>",
+            entityStatus = "ACTIVE",
+            removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+            source = "<source>",
+            sourceDetails = new {
+                key = new {},
+            },
+            attributes = new {
+                key = new {},
+            },
+            typeName = "<typeName>",
+            lastModifiedTS = "<lastModifiedTS>",
+        }
+    },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
                 shortDescription = "<shortDescription>",
                 lastModifiedTS = "<lastModifiedTS>",
                 guid = "<guid>",
-            });
-            Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", content);
+            };
+
+            Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -5496,8 +7431,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -5512,9 +7447,21 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteGlossary()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = client.DeleteGlossary("<glossaryGuid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteGlossary_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossary("<glossaryGuid>");
             Console.WriteLine(response.Status);
@@ -5524,9 +7471,9 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteGlossary_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
             Console.WriteLine(response.Status);
@@ -5534,23 +7481,11 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteGlossary_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = client.DeleteGlossary("<glossaryGuid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteGlossary_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
             Console.WriteLine(response.Status);
@@ -5560,25 +7495,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategories()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategories("<glossaryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategories_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", null, null, null, null);
+            Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -5588,11 +7509,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategories_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>", null);
+            Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
@@ -5623,8 +7544,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -5637,13 +7558,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryCategories_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossaryCategories_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", 1234, 1234, "<sort>", null);
+            Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
@@ -5674,8 +7609,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -5690,25 +7625,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategoriesHeaders()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategoriesHeaders_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", null, null, null, null);
+            Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -5718,11 +7639,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryCategoriesHeaders_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>", null);
+            Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("categoryGuid").ToString());
@@ -5734,13 +7655,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryCategoriesHeaders_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossaryCategoriesHeaders_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", null);
+            Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("categoryGuid").ToString());
@@ -5754,25 +7689,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDetailedGlossary()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetDetailedGlossary("<glossaryGuid>", null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDetailedGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", null, null);
+            Response response = client.GetDetailedGlossary("<glossaryGuid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -5782,205 +7703,205 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDetailedGlossary_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetDetailedGlossary("<glossaryGuid>", true, null);
+            Response response = client.GetDetailedGlossary("<glossaryGuid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("longDescription").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("shortDescription").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("abbreviation").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("templateName")[0].ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("resources")[0].GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("examples")[0].ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("usage").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("longDescription").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("shortDescription").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("abbreviation").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("templateName")[0].ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("examples")[0].ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("usage").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -6003,8 +7924,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -6017,207 +7938,221 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDetailedGlossary_AllParameters_Async()
+        public async Task Example_GetDetailedGlossary_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", true, null);
+            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("longDescription").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("shortDescription").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("abbreviation").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("templateName")[0].ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("anchor").GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("resources")[0].GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("categories")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifies")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("examples")[0].ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("isA")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("usage").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValues")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("longDescription").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("qualifiedName").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("shortDescription").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("guid").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDetailedGlossary_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", true, new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("abbreviation").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("templateName")[0].ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updateTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updatedBy").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("examples")[0].ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("usage").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -6240,8 +8175,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -6256,33 +8191,16 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateGlossary()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = client.PartialUpdateGlossary("<glossaryGuid>", content);
+                key = "<String>",
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new
-            {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", content);
+            Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6292,15 +8210,16 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_PartialUpdateGlossary_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = client.PartialUpdateGlossary("<glossaryGuid>", content, includeTermHierarchy: true);
+                key = "<String>",
+            };
+
+            Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -6325,8 +8244,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -6339,17 +8258,37 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_PartialUpdateGlossary_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new
+            {
+                key = "<String>",
+            };
+
+            Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_PartialUpdateGlossary_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
-                key = "<partialUpdates>",
-            });
-            Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", content, includeTermHierarchy: true);
+                key = "<String>",
+            };
+
+            Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
@@ -6374,8 +8313,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("longDescription").ToString());
@@ -6390,25 +8329,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTerms("<glossaryGuid>", null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTerms_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", null, null, null, null, null);
+            Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6418,11 +8343,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTerms_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>", null);
+            Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -6445,20 +8370,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -6569,8 +8494,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -6583,13 +8508,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryTerms_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", true, 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossaryTerms_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", true, 1234, 1234, "<sort>", null);
+            Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", true, 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -6612,20 +8551,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -6736,8 +8675,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -6752,25 +8691,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTermHeaders()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTermHeaders_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", null, null, null, null);
+            Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6780,11 +8705,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetGlossaryTermHeaders_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", 1234, 1234, "<sort>", null);
+            Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("description").ToString());
@@ -6799,13 +8724,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGlossaryTermHeaders_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetGlossaryTermHeaders_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", null);
+            Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("description").ToString());
@@ -6822,25 +8761,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetImportCsvOperationStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetImportCsvOperationStatus("<operationGuid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportCsvOperationStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>", null);
+            Response response = client.GetImportCsvOperationStatus("<operationGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6850,11 +8775,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetImportCsvOperationStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetImportCsvOperationStatus("<operationGuid>", null);
+            Response response = client.GetImportCsvOperationStatus("<operationGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -6869,13 +8794,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetImportCsvOperationStatus_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetImportCsvOperationStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>", null);
+            Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -6892,33 +8831,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ExportGlossaryTermsAsCsv()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<termGuids>"
-});
-            Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", content);
+            var data = new[] {
+    "<String>"
+};
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportGlossaryTermsAsCsv_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<termGuids>"
-});
-            Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", content);
+            Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6928,15 +8849,33 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ExportGlossaryTermsAsCsv_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<termGuids>"
-});
-            Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", content, includeTermHierarchy: true);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data), true);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ExportGlossaryTermsAsCsv_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6946,15 +8885,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ExportGlossaryTermsAsCsv_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
-"<termGuids>"
-});
-            Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", content, includeTermHierarchy: true);
+            var data = new[] {
+    "<String>"
+};
+
+            Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data), true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6964,25 +8903,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermsByGlossaryName()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetTermsByGlossaryName("<glossaryName>", null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermsByGlossaryName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", null, null, null, null);
+            Response response = client.GetTermsByGlossaryName("<glossaryName>", 1234, 1234, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -6992,11 +8917,11 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermsByGlossaryName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetTermsByGlossaryName("<glossaryName>", 1234, 1234, true, null);
+            Response response = client.GetTermsByGlossaryName("<glossaryName>", 1234, 1234, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -7019,20 +8944,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -7143,8 +9068,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -7157,13 +9082,27 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTermsByGlossaryName_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", 1234, 1234, true, new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTermsByGlossaryName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", 1234, 1234, true, null);
+            Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", 1234, 1234, true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
@@ -7186,20 +9125,20 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("status").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
             Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("id").ToString());
-            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<key>")[0].GetProperty("info").ToString());
-            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<key>").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+            Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+            Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
             Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
             Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -7310,8 +9249,8 @@ lastModifiedTS = "<lastModifiedTS>",
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
-            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+            Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
             Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result[0].GetProperty("longDescription").ToString());
@@ -7326,30 +9265,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportGlossaryTermsViaCsv()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content);
+            var data = File.OpenRead("<filePath>");
+
+            var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportGlossaryTermsViaCsv_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content);
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.ToString());
         }
@@ -7358,14 +9282,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportGlossaryTermsViaCsv_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
+            var data = File.OpenRead("<filePath>");
+
+            var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -7379,16 +9304,34 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportGlossaryTermsViaCsv_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = File.OpenRead("<filePath>");
+
+            var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_ImportGlossaryTermsViaCsv_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
+            var data = File.OpenRead("<filePath>");
+
+            var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -7404,30 +9347,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportGlossaryTermsViaCsvByGlossaryName()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content);
+            var data = File.OpenRead("<filePath>");
+
+            var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportGlossaryTermsViaCsvByGlossaryName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
-
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content);
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.ToString());
         }
@@ -7436,14 +9364,15 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportGlossaryTermsViaCsvByGlossaryName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
+            var data = File.OpenRead("<filePath>");
+
+            var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
@@ -7457,16 +9386,34 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportGlossaryTermsViaCsvByGlossaryName_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+
+            var data = File.OpenRead("<filePath>");
+
+            var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_ImportGlossaryTermsViaCsvByGlossaryName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
+            var data = File.OpenRead("<filePath>");
+
+            var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());

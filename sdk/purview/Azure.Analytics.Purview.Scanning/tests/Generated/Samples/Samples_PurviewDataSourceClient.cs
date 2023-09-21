@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Analytics.Purview.Scanning;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -22,28 +23,16 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            RequestContent content = null;
-            Response response = client.CreateOrUpdate(content);
+            var data = new
+            {
+                kind = "AzureSubscription",
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
-
-            RequestContent content = null;
-            Response response = await client.CreateOrUpdateAsync(content);
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -54,11 +43,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 properties = new
                 {
@@ -69,8 +58,9 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     },
                 },
                 kind = "AzureSubscription",
-            });
-            Response response = client.CreateOrUpdate(content);
+            };
+
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -83,7 +73,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -108,13 +98,33 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
+
+            var data = new
+            {
+                kind = "AzureSubscription",
+            };
+
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 properties = new
                 {
@@ -125,8 +135,9 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     },
                 },
                 kind = "AzureSubscription",
-            });
-            Response response = await client.CreateOrUpdateAsync(content);
+            };
+
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -139,7 +150,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -166,26 +177,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = client.GetProperties(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProperties_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
-
-            Response response = await client.GetPropertiesAsync(null);
+            Response response = client.GetProperties(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -196,11 +192,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = client.GetProperties(null);
+            Response response = client.GetProperties(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -213,7 +209,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -238,13 +234,28 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProperties_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
+
+            Response response = await client.GetPropertiesAsync(new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = await client.GetPropertiesAsync(null);
+            Response response = await client.GetPropertiesAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -257,7 +268,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -284,26 +295,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = client.Delete(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
-
-            Response response = await client.DeleteAsync(null);
+            Response response = client.Delete(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -314,11 +310,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = client.Delete(null);
+            Response response = client.Delete(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -331,7 +327,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -356,13 +352,28 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_Delete_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
+
+            Response response = await client.DeleteAsync(new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            Response response = await client.DeleteAsync(null);
+            Response response = await client.DeleteAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -375,7 +386,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -402,31 +413,15 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetScans()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            foreach (BinaryData item in client.GetScans(null))
+            foreach (var item in client.GetScans(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScans_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
-
-            await foreach (BinaryData item in client.GetScansAsync(null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -434,41 +429,57 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetScans_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            foreach (BinaryData item in client.GetScans(null))
+            foreach (var item in client.GetScans(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetScans_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
+
+            await foreach (var item in client.GetScansAsync(new RequestContext()))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -476,41 +487,41 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetScans_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new PurviewDataSourceClient(endpoint, "<dataSourceName>", credential);
 
-            await foreach (BinaryData item in client.GetScansAsync(null))
+            await foreach (var item in client.GetScansAsync(new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+                Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
     }
