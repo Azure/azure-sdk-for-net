@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 // <copyright file="ListenerHandler.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 //
