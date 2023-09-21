@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Administrators_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="objectId"> Guid of the objectId for the administrator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public virtual async Task<NullableResponse<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>> GetIfExistsAsync(string objectId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
+
+            using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Administrators_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="objectId"> Guid of the objectId for the administrator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        public virtual NullableResponse<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> GetIfExists(string objectId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
+
+            using var scope = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> IEnumerable<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
