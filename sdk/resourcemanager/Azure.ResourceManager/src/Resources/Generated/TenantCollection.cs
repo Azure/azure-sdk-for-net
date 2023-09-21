@@ -93,6 +93,70 @@ namespace Azure.ResourceManager.Resources
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tenants_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<TenantResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _tenantRestClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tenants_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<TenantResource> GetIfExists(CancellationToken cancellationToken = default)
+        {
+            using var scope = _tenantClientDiagnostics.CreateScope("TenantCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _tenantRestClient.Get(cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<TenantResource> IEnumerable<TenantResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

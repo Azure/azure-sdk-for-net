@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ResourceConnector
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceConnectorApplianceResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceConnectorApplianceAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceConnectorApplianceResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Appliances name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual NullableResponse<ResourceConnectorApplianceResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceConnectorApplianceAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceConnectorApplianceResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ResourceConnectorApplianceResource> IEnumerable<ResourceConnectorApplianceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
