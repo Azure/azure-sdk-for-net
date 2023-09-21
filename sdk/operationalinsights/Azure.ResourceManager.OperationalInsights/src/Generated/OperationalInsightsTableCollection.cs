@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/tables/{tableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tables_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual async Task<NullableResponse<OperationalInsightsTableResource>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            using var scope = _operationalInsightsTableTablesClientDiagnostics.CreateScope("OperationalInsightsTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _operationalInsightsTableTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsTableResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/tables/{tableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tables_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual NullableResponse<OperationalInsightsTableResource> GetIfExists(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            using var scope = _operationalInsightsTableTablesClientDiagnostics.CreateScope("OperationalInsightsTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _operationalInsightsTableTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsTableResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<OperationalInsightsTableResource> IEnumerable<OperationalInsightsTableResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
