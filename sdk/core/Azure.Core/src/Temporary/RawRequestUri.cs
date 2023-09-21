@@ -75,22 +75,6 @@ namespace Azure.Core
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="escape"></param>
-        public override void AppendRaw(string value, bool escape)
-            => _uri.AppendRaw(value, escape);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="nextLink"></param>
-        /// <param name="escape"></param>
-        public override void AppendRawNextLink(string nextLink, bool escape)
-            => _uri.AppendRawNextLink(nextLink, escape);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="value"></param>
         public override void Reset(Uri value)
             => _uri.Reset(value);
 

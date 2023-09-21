@@ -128,8 +128,7 @@ namespace System.ServiceModel.Rest.Shared.Core
         public virtual void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
         public virtual void AppendQuery(string name, string value) { }
         public virtual void AppendQuery(string name, string value, bool escapeValue) { }
-        public virtual void AppendRaw(string value, bool escape) { }
-        public virtual void AppendRawNextLink(string nextLink, bool escape) { }
+        public void AppendRawPathOrQueryOrHostOrScheme(string value, bool escape) { }
         public virtual void Reset(System.Uri value) { }
         public override string ToString() { throw null; }
         public virtual System.Uri ToUri() { throw null; }

@@ -523,8 +523,6 @@ namespace Azure.Core
         public override void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
         public override void AppendQuery(string name, string value) { }
         public override void AppendQuery(string name, string value, bool escapeValue) { }
-        public override void AppendRaw(string value, bool escape) { }
-        public override void AppendRawNextLink(string nextLink, bool escape) { }
         public override void Reset(System.Uri value) { }
         public override System.Uri ToUri() { throw null; }
     }

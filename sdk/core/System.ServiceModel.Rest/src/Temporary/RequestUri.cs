@@ -386,7 +386,7 @@ namespace System.ServiceModel.Rest.Shared.Core
         /// </summary>
         /// <param name="value"></param>
         /// <param name="escape"></param>
-        public virtual void AppendRaw(string value, bool escape)
+        public void AppendRawPathOrQueryOrHostOrScheme(string value, bool escape)
         {
             AppendRaw(value.AsSpan(), escape);
         }
@@ -525,23 +525,6 @@ namespace System.ServiceModel.Rest.Shared.Core
             Port,
             Path,
             Query
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="nextLink"></param>
-        /// <param name="escape"></param>
-        public virtual void AppendRawNextLink(string nextLink, bool escape)
-        {
-            // If it is an absolute link, we use the nextLink as the entire url
-            if (nextLink.StartsWith(Uri.UriSchemeHttp, StringComparison.InvariantCultureIgnoreCase))
-            {
-                Reset(new Uri(nextLink));
-                return;
-            }
-
-            AppendRaw(nextLink, escape);
         }
         #endregion
     }
