@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageVmConfigurationProfileAssignmentResource>> GetIfExistsAsync(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            using var scope = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageVmConfigurationProfileAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageVmConfigurationProfileAssignmentResource> GetIfExists(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            using var scope = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageVmConfigurationProfileAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomanageVmConfigurationProfileAssignmentResource> IEnumerable<AutomanageVmConfigurationProfileAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
