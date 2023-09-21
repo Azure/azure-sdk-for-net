@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration
         private const string CreatedOnValue = "created";
         private const string ExpiresOnValue = "expires";
         private const string RetentionPeriodValue = "retention_period";
-        private const string SizeValue = "size";
+        private const string SizeInBytesValue = "size";
         private const string ItemCountValue = "items_count";
         private const string TagsValue = "tags";
         private const string ETagValue = "etag";
@@ -47,7 +47,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> retention_period. </summary>
         public static SnapshotFields RetentionPeriod { get; } = new SnapshotFields(RetentionPeriodValue);
         /// <summary> size. </summary>
-        public static SnapshotFields Size { get; } = new SnapshotFields(SizeValue);
+        public static SnapshotFields SizeInBytes { get; } = new SnapshotFields(SizeInBytesValue);
         /// <summary> items_count. </summary>
         public static SnapshotFields ItemCount { get; } = new SnapshotFields(ItemCountValue);
         /// <summary> tags. </summary>

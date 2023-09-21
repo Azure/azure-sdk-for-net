@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData);
         }
 
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
+        /// <summary> Initializes a new instance of SkuDetails. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
-        /// <returns> A new <see cref="Models.SkuDetailsForExistingResource"/> instance for mocking. </returns>
-        public static SkuDetailsForExistingResource SkuDetailsForExistingResource(string resourceType = null, CapacitySku sku = null)
+        /// <returns> A new <see cref="Models.SkuDetails"/> instance for mocking. </returns>
+        public static SkuDetails SkuDetails(string resourceType = null, CapacitySku sku = null)
         {
-            return new SkuDetailsForExistingResource(resourceType, sku);
+            return new SkuDetails(resourceType, sku);
         }
 
         /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityResult. </summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,11 @@ namespace Azure.Storage.DataMovement.JobPlan
         public string FilePath { get; private set; }
 
         /// <summary>
+        /// List of Job Part Plan Files associated with this job.
+        /// </summary>
+        public Dictionary<int, JobPartPlanFile> JobParts { get; private set; }
+
+        /// <summary>
         /// Lock for the memory mapped file to allow only one writer.
         /// </summary>
         public readonly SemaphoreSlim WriteLock;
@@ -31,6 +37,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         {
             Id = id;
             FilePath = filePath;
+            JobParts = new Dictionary<int, JobPartPlanFile>();
             WriteLock = new SemaphoreSlim(1);
         }
 
@@ -53,6 +60,21 @@ namespace Azure.Storage.DataMovement.JobPlan
             }
 
             return jobPlanFile;
+        }
+
+        public static JobPlanFile LoadExistingJobPlanFile(string fullPath)
+        {
+            Argument.AssertNotNullOrEmpty(fullPath, nameof(fullPath));
+
+            // File name is just the transfer id
+            string transferId = Path.GetFileNameWithoutExtension(fullPath);
+            // Validate transfer id by converting to Guid
+            if (!Guid.TryParse(transferId, out _))
+            {
+                throw Errors.InvalidTransferIdFileName(fullPath);
+            }
+
+            return new JobPlanFile(transferId, fullPath);
         }
 
         public void Dispose()
