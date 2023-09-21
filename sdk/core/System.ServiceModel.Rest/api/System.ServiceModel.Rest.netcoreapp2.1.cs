@@ -70,6 +70,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class RequestBody : System.IDisposable
     {
         protected RequestBody() { }
+        public static System.ServiceModel.Rest.Core.RequestBody Create(System.IO.Stream stream) { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
@@ -105,6 +106,7 @@ namespace System.ServiceModel.Rest.Shared
         public ClientUtilities() { }
         public static void AssertNotNullOrEmpty(string value, string name) { }
         public static void AssertNotNull<T>(T value, string name) { }
+        public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
     }
 }
 namespace System.ServiceModel.Rest.Shared.Core
@@ -221,5 +223,14 @@ namespace System.ServiceModel.Rest.Shared.Serialization
         public T Value { get { throw null; } }
         public static implicit operator T (System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<T> optional) { throw null; }
         public static implicit operator System.ServiceModel.Rest.Shared.Serialization.OptionalProperty<T> (T value) { throw null; }
+    }
+    public partial class Utf8JsonRequestBody : System.ServiceModel.Rest.Core.RequestBody
+    {
+        public Utf8JsonRequestBody() { }
+        public System.Text.Json.Utf8JsonWriter JsonWriter { get { throw null; } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
     }
 }
