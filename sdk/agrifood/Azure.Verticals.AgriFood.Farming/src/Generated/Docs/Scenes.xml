@@ -2,89 +2,49 @@
 <doc>
   <members>
     <member name="DownloadAsync(string,RequestContext)">
-      <example>
-This sample shows how to call DownloadAsync and parse the result.
+<example>
+This sample shows how to call DownloadAsync with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-Response response = await client.DownloadAsync("<filePath>", null);
+Response response = await client.DownloadAsync("<filePath>", new RequestContext());
 if (response.ContentStream != null)
 {
-    using (Stream outFileStream = File.OpenWrite("<filepath>"))
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
     {
         response.ContentStream.CopyTo(outFileStream);
     }
 }
 ]]></code>
-This sample shows how to call DownloadAsync with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-Response response = await client.DownloadAsync("<filePath>", null);
-if (response.ContentStream != null)
-{
-    using (Stream outFileStream = File.OpenWrite("<filepath>"))
-    {
-        response.ContentStream.CopyTo(outFileStream);
-    }
-}
-]]></code></example>
+</example>
     </member>
     <member name="Download(string,RequestContext)">
-      <example>
-This sample shows how to call Download and parse the result.
+<example>
+This sample shows how to call Download with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-Response response = client.Download("<filePath>", null);
+Response response = client.Download("<filePath>", new RequestContext());
 if (response.ContentStream != null)
 {
-    using (Stream outFileStream = File.OpenWrite("<filepath>"))
+    using(Stream outFileStream = File.OpenWrite("<filePath>"))
     {
         response.ContentStream.CopyTo(outFileStream);
     }
 }
 ]]></code>
-This sample shows how to call Download with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-Response response = client.Download("<filePath>", null);
-if (response.ContentStream != null)
-{
-    using (Stream outFileStream = File.OpenWrite("<filepath>"))
-    {
-        response.ContentStream.CopyTo(outFileStream);
-    }
-}
-]]></code></example>
+</example>
     </member>
     <member name="GetSatelliteDataIngestionJobDetailsAsync(string,RequestContext)">
-      <example>
-This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync and parse the result.
+<example>
+This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("partyId").ToString());
-Console.WriteLine(result.GetProperty("boundaryId").ToString());
-Console.WriteLine(result.GetProperty("startDateTime").ToString());
-Console.WriteLine(result.GetProperty("endDateTime").ToString());
-Console.WriteLine(result.GetProperty("source").ToString());
-]]></code>
-This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>", null);
+Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -109,31 +69,18 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-]]></code></example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
     </member>
     <member name="GetSatelliteDataIngestionJobDetails(string,RequestContext)">
-      <example>
-This sample shows how to call GetSatelliteDataIngestionJobDetails and parse the result.
+<example>
+This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("partyId").ToString());
-Console.WriteLine(result.GetProperty("boundaryId").ToString());
-Console.WriteLine(result.GetProperty("startDateTime").ToString());
-Console.WriteLine(result.GetProperty("endDateTime").ToString());
-Console.WriteLine(result.GetProperty("source").ToString());
-]]></code>
-This sample shows how to call GetSatelliteDataIngestionJobDetails with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>", null);
+Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -158,22 +105,23 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-]]></code></example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
     </member>
     <member name="SearchFeaturesAsync(string,RequestContent,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call SearchFeaturesAsync and parse the result.
+<example>
+This sample shows how to call SearchFeaturesAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
-});
-Response response = await client.SearchFeaturesAsync("Sentinel_2_L2A", content);
+};
+
+Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -182,44 +130,37 @@ Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
 ]]></code>
-This sample shows how to call SearchFeaturesAsync with all parameters and request content and parse the result.
+This sample shows how to call SearchFeaturesAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
-    intersects = new
-    {
-        coordinates = new List<object>()
-        {
-            new List<object>()
-            {
-                new List<object>()
-                {
-                    new List<object>()
-                    {
-                        123.45
+    intersects = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
                     }
                 }
             }
         },
         type = "MultiPolygon",
     },
-    bbox = new List<object>()
-    {
-        123.45
+    bbox = new[] {
+        123.45d
     },
-    featureIds = new List<object>()
-    {
-        "<featureIds>"
+    featureIds = new[] {
+        "<String>"
     },
-});
-Response response = await client.SearchFeaturesAsync("Sentinel_2_L2A", content, maxpagesize: 1234, skip: 1234);
+};
+
+Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data), 1234, 1234);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -233,28 +174,29 @@ Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetP
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
 Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="SearchFeatures(string,RequestContent,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call SearchFeatures and parse the result.
+<example>
+This sample shows how to call SearchFeatures with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
-});
-Response response = client.SearchFeatures("Sentinel_2_L2A", content);
+};
+
+Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -263,44 +205,37 @@ Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
 ]]></code>
-This sample shows how to call SearchFeatures with all parameters and request content and parse the result.
+This sample shows how to call SearchFeatures with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
-    intersects = new
-    {
-        coordinates = new List<object>()
-        {
-            new List<object>()
-            {
-                new List<object>()
-                {
-                    new List<object>()
-                    {
-                        123.45
+    intersects = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
                     }
                 }
             }
         },
         type = "MultiPolygon",
     },
-    bbox = new List<object>()
-    {
-        123.45
+    bbox = new[] {
+        123.45d
     },
-    featureIds = new List<object>()
-    {
-        "<featureIds>"
+    featureIds = new[] {
+        "<String>"
     },
-});
-Response response = client.SearchFeatures("Sentinel_2_L2A", content, maxpagesize: 1234, skip: 1234);
+};
+
+Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data), 1234, 1234);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -314,39 +249,24 @@ Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetP
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<key>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
 Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="GetStacFeatureAsync(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetStacFeatureAsync and parse the result.
+<example>
+This sample shows how to call GetStacFeatureAsync with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
-]]></code>
-This sample shows how to call GetStacFeatureAsync with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
+Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -360,38 +280,23 @@ Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString())
 Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
 Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
 Console.WriteLine(result.GetProperty("collection").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="GetStacFeature(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetStacFeature and parse the result.
+<example>
+This sample shows how to call GetStacFeature with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
-]]></code>
-This sample shows how to call GetStacFeature with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
+Response response = client.GetStacFeature("<collectionId>", "<featureId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("stacVersion").ToString());
@@ -405,128 +310,91 @@ Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString())
 Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
 Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<key>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
 Console.WriteLine(result.GetProperty("collection").ToString());
-]]></code></example>
+]]></code>
+</example>
     </member>
     <member name="GetScenesAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)">
-      <example>
-This sample shows how to call GetScenesAsync and parse the result.
+<example>
+This sample shows how to call GetScenesAsync with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
+await foreach (var item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<imageNames>"}, new Double[]{3.14}, new String[]{"<imageFormats>"}, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+    Console.WriteLine(result.GetProperty("provider").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+    Console.WriteLine(result.GetProperty("imageFormat").ToString());
+    Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+    Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+    Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+    Console.WriteLine(result.GetProperty("boundaryId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
 }
 ]]></code>
-This sample shows how to call GetScenesAsync with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-    "<imageNames>"
-}, new List<double>()
-{
-    123.45
-}, new List<string>()
-{
-    "<imageFormats>"
-}, 1234, "<skipToken>", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("provider").ToString());
-    Console.WriteLine(result[0].GetProperty("source").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFormat").ToString());
-    Console.WriteLine(result[0].GetProperty("cloudCoverPercentage").ToString());
-    Console.WriteLine(result[0].GetProperty("darkPixelPercentage").ToString());
-    Console.WriteLine(result[0].GetProperty("ndviMedianValue").ToString());
-    Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
-    Console.WriteLine(result[0].GetProperty("partyId").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("eTag").ToString());
-}
-]]></code></example>
+</example>
     </member>
     <member name="GetScenes(string,string,string,string,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{double},IEnumerable{string},int?,string,RequestContext)">
-      <example>
-This sample shows how to call GetScenes and parse the result.
+<example>
+This sample shows how to call GetScenes with required parameters and parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
+foreach (var item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 3.14, 3.14, new String[]{"<imageNames>"}, new Double[]{3.14}, new String[]{"<imageFormats>"}, 1234, "<skipToken>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+    Console.WriteLine(result.GetProperty("provider").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+    Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+    Console.WriteLine(result.GetProperty("imageFormat").ToString());
+    Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+    Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+    Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+    Console.WriteLine(result.GetProperty("boundaryId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
 }
 ]]></code>
-This sample shows how to call GetScenes with all parameters and parse the result.
-<code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
-
-foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-    "<imageNames>"
-}, new List<double>()
-{
-    123.45
-}, new List<string>()
-{
-    "<imageFormats>"
-}, 1234, "<skipToken>", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("provider").ToString());
-    Console.WriteLine(result[0].GetProperty("source").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-    Console.WriteLine(result[0].GetProperty("imageFormat").ToString());
-    Console.WriteLine(result[0].GetProperty("cloudCoverPercentage").ToString());
-    Console.WriteLine(result[0].GetProperty("darkPixelPercentage").ToString());
-    Console.WriteLine(result[0].GetProperty("ndviMedianValue").ToString());
-    Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
-    Console.WriteLine(result[0].GetProperty("partyId").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("eTag").ToString());
-}
-]]></code></example>
+</example>
     </member>
     <member name="CreateSatelliteDataIngestionJobAsync(WaitUntil,string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateSatelliteDataIngestionJobAsync and parse the result.
+<example>
+This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     source = "Sentinel_2_L2A",
-});
-Operation<BinaryData> operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -534,44 +402,39 @@ Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 ]]></code>
-This sample shows how to call CreateSatelliteDataIngestionJobAsync with all parameters and request content and parse the result.
+This sample shows how to call CreateSatelliteDataIngestionJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     provider = "Microsoft",
     source = "Sentinel_2_L2A",
-    data = new
-    {
-        imageNames = new List<object>()
-        {
-            "<imageNames>"
+    data = new {
+        imageNames = new[] {
+            "<String>"
         },
-        imageFormats = new List<object>()
-        {
-            "<imageFormats>"
+        imageFormats = new[] {
+            "<String>"
         },
-        imageResolutions = new List<object>()
-        {
-            123.45
+        imageResolutions = new[] {
+            123.45d
         },
     },
     name = "<name>",
     description = "<description>",
-    properties = new
-    {
-        key = new object(),
+    properties = new {
+        key = new {},
     },
-});
-Operation<BinaryData> operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -595,27 +458,28 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-]]></code></example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
     </member>
     <member name="CreateSatelliteDataIngestionJob(WaitUntil,string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateSatelliteDataIngestionJob and parse the result.
+<example>
+This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     source = "Sentinel_2_L2A",
-});
-Operation<BinaryData> operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -623,44 +487,39 @@ Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 ]]></code>
-This sample shows how to call CreateSatelliteDataIngestionJob with all parameters and request content and parse the result.
+This sample shows how to call CreateSatelliteDataIngestionJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
-TokenCredential credential = new DefaultAzureCredential();
-Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient("2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
-{
+var data = new {
     partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     provider = "Microsoft",
     source = "Sentinel_2_L2A",
-    data = new
-    {
-        imageNames = new List<object>()
-        {
-            "<imageNames>"
+    data = new {
+        imageNames = new[] {
+            "<String>"
         },
-        imageFormats = new List<object>()
-        {
-            "<imageFormats>"
+        imageFormats = new[] {
+            "<String>"
         },
-        imageResolutions = new List<object>()
-        {
-            123.45
+        imageResolutions = new[] {
+            123.45d
         },
     },
     name = "<name>",
     description = "<description>",
-    properties = new
-    {
-        key = new object(),
+    properties = new {
+        key = new {},
     },
-});
-Operation<BinaryData> operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", content);
-BinaryData responseData = operation.Value;
+};
 
+var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -684,8 +543,9 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
-]]></code></example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
     </member>
   </members>
 </doc>

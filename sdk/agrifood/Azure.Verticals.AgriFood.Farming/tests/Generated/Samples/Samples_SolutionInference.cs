@@ -6,12 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -22,232 +23,244 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Cancel()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
-            });
-            Response response = client.Cancel("<solutionId>", content);
+            };
+
+            Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Cancel_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new
-            {
-                requestPath = "<requestPath>",
-            });
-            Response response = await client.CancelAsync("<solutionId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Cancel_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Response response = client.Cancel("<solutionId>", content);
+            };
+
+            Response response = client.Cancel("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Cancel_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+
+            var data = new
+            {
+                requestPath = "<requestPath>",
+            };
+
+            Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Cancel_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Response response = await client.CancelAsync("<solutionId>", content);
+            };
+
+            Response response = await client.CancelAsync("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Fetch()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
-            });
-            Response response = client.Fetch("<solutionId>", content);
+            };
+
+            Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Fetch_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new
-            {
-                requestPath = "<requestPath>",
-            });
-            Response response = await client.FetchAsync("<solutionId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Fetch_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Response response = client.Fetch("<solutionId>", content);
+            };
+
+            Response response = client.Fetch("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Fetch_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+
+            var data = new
+            {
+                requestPath = "<requestPath>",
+            };
+
+            Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Fetch_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Response response = await client.FetchAsync("<solutionId>", content);
+            };
+
+            Response response = await client.FetchAsync("<solutionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
-            });
-            Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", content);
+            };
+
+            var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = RequestContent.Create(new
-            {
-                requestPath = "<requestPath>",
-            });
-            Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", content);
-            BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = client.CreateOrUpdate(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
+
+            var data = new
+            {
+                requestPath = "<requestPath>",
+            };
+
+            var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            SolutionInference client = new FarmBeatsClient(credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetSolutionInferenceClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 requestPath = "<requestPath>",
                 partnerRequestBody = new
                 {
-                    key = new object(),
+                    key = new { },
                 },
-            });
-            Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<solutionId>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("<test>").ToString());
         }
     }
 }

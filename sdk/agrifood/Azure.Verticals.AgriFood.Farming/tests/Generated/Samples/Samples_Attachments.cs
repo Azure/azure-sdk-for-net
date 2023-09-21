@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
@@ -24,23 +23,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAttachment()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.GetAttachment("<partyId>", "<attachmentId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAttachment_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", null);
+            Response response = client.GetAttachment("<partyId>", "<attachmentId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -50,10 +36,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAttachment_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.GetAttachment("<partyId>", "<attachmentId>", null);
+            Response response = client.GetAttachment("<partyId>", "<attachmentId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -74,12 +60,25 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAttachment_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+
+            Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAttachment_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", null);
+            Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -102,25 +101,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            RequestContent content = null;
-            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+            var data = File.OpenRead("<filePath>");
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
-
-            RequestContent content = null;
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -130,11 +116,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+            var data = File.OpenRead("<filePath>");
+
+            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -155,13 +142,29 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+
+            var data = File.OpenRead("<filePath>");
+
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+            var data = File.OpenRead("<filePath>");
+
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -184,8 +187,19 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+
+            Response response = client.Delete("<partyId>", "<attachmentId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Delete_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
@@ -195,8 +209,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
@@ -204,21 +218,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
-
-            Response response = client.Delete("<partyId>", "<attachmentId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
@@ -228,30 +231,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Download()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.Download("<partyId>", "<attachmentId>", null);
+            Response response = client.Download("<partyId>", "<attachmentId>", new RequestContext());
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Download_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
-
-            Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", null);
-            if (response.ContentStream != null)
-            {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
                 {
                     response.ContentStream.CopyTo(outFileStream);
                 }
@@ -262,13 +248,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Download_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.Download("<partyId>", "<attachmentId>", null);
+            Response response = client.Download("<partyId>", "<attachmentId>", new RequestContext());
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
+                {
+                    response.ContentStream.CopyTo(outFileStream);
+                }
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Download_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+
+            Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", new RequestContext());
+            if (response.ContentStream != null)
+            {
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
                 {
                     response.ContentStream.CopyTo(outFileStream);
                 }
@@ -279,13 +282,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Download_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", null);
+            Response response = await client.DownloadAsync("<partyId>", "<attachmentId>", new RequestContext());
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
+                using (Stream outFileStream = File.OpenWrite("<filePath>"))
                 {
                     response.ContentStream.CopyTo(outFileStream);
                 }
@@ -296,27 +299,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAttachmentsByPartyId()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetAttachmentsByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
+            foreach (var item in client.GetAttachmentsByPartyId("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAttachmentsByPartyId_Async()
-        {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
-
-            await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -324,44 +313,40 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAttachmentsByPartyId_AllParameters()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetAttachmentsByPartyId("<partyId>", new List<string>()
-{
-"<resourceIds>"
-}, new List<string>()
-{
-"<resourceTypes>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (var item in client.GetAttachmentsByPartyId("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceType").ToString());
-                Console.WriteLine(result[0].GetProperty("originalFileName").ToString());
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("resourceId").ToString());
+                Console.WriteLine(result.GetProperty("resourceType").ToString());
+                Console.WriteLine(result.GetProperty("originalFileName").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAttachmentsByPartyId_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
+
+            await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -369,44 +354,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAttachmentsByPartyId_AllParameters_Async()
         {
-            TokenCredential credential = new DefaultAzureCredential();
-            Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
+            var credential = new DefaultAzureCredential();
+            var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetAttachmentsByPartyIdAsync("<partyId>", new List<string>()
-{
-"<resourceIds>"
-}, new List<string>()
-{
-"<resourceTypes>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (var item in client.GetAttachmentsByPartyIdAsync("<partyId>", new string[] { "<resourceIds>" }, new string[] { "<resourceTypes>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceType").ToString());
-                Console.WriteLine(result[0].GetProperty("originalFileName").ToString());
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("resourceId").ToString());
+                Console.WriteLine(result.GetProperty("resourceType").ToString());
+                Console.WriteLine(result.GetProperty("originalFileName").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
             }
         }
     }
