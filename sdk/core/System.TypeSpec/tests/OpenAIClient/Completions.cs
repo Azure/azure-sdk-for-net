@@ -15,7 +15,7 @@ public class Completions
     public string Id { get; internal set; }
 
     public static implicit operator Completions(Result result)
-        => Deserialize(result.Response.Content);
+        => Deserialize(result.GetRawResponse().Content);
 
     internal static Completions Deserialize(BinaryData data)
     {

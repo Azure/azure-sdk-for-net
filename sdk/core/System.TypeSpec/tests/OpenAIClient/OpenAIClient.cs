@@ -47,7 +47,7 @@ public class OpenAIClient
     public Result<Completions> GetCompletions(string prompt)
     {
         Result result = GetCompletions(prompt, null);
-        var value = Completions.Deserialize(result.Response.Content);
+        var value = Completions.Deserialize(result.GetRawResponse().Content);
         return new Result<Completions>(value, result);
     }
 

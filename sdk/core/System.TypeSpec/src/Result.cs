@@ -8,7 +8,7 @@ namespace System.ServiceModel.Rest;
 
 public abstract class Result
 {
-    public abstract IResponse Response { get; }
+    public abstract IResponse GetRawResponse();
 
     public static Result Create(IResponse response) => new SimpleResult(response);
 
@@ -17,7 +17,7 @@ public abstract class Result
         public readonly IResponse _response;
         public SimpleResult(IResponse response)
             => _response = response;
-        public override IResponse Response => _response;
+        public override IResponse GetRawResponse() => _response;
     }
 }
 
@@ -28,7 +28,7 @@ public class NullableResult<T> : Result
 
     public NullableResult(T? value, Result result)
     {
-        _response = result.Response;
+        _response = result.GetRawResponse();
         _value = value;
     }
 
@@ -36,7 +36,7 @@ public class NullableResult<T> : Result
 
     public virtual bool HasValue => _value != null;
 
-    public override IResponse Response => _response;
+    public override IResponse GetRawResponse() => _response;
 }
 
 public class Result<T> : NullableResult<T>
