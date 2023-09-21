@@ -36,21 +36,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClass_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeviceClassAsync("<deviceClassId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceClass_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -70,6 +55,21 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceClass_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeviceClassAsync("<deviceClassId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -116,25 +116,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateDeviceClass_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                friendlyName = "<friendlyName>",
-            });
-            Response response = await client.UpdateDeviceClassAsync("<deviceClassId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_UpdateDeviceClass_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -158,6 +139,25 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpdateDeviceClass_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                friendlyName = "<friendlyName>",
+            });
+            Response response = await client.UpdateDeviceClassAsync("<deviceClassId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
         }
 
         [Test]
@@ -201,18 +201,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeviceClass_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDeviceClass_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -220,6 +208,18 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClass("<deviceClassId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteDeviceClass_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
             Console.WriteLine(response.Status);
         }
 
@@ -244,22 +244,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.GetDevice("<deviceId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deviceId").ToString());
-            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDevice_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeviceAsync("<deviceId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -307,6 +291,22 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultCode").ToString());
             Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("extendedResultCode").ToString());
             Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDevice_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeviceAsync("<deviceId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deviceId").ToString());
+            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
         }
 
         [Test]
@@ -369,22 +369,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceModule_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeviceModuleAsync("<deviceId>", "<moduleId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deviceId").ToString());
-            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceModule_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -423,6 +407,22 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultCode").ToString());
             Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("extendedResultCode").ToString());
             Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceModule_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeviceModuleAsync("<deviceId>", "<moduleId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deviceId").ToString());
+            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
         }
 
         [Test]
@@ -486,13 +486,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateCompliance_Async()
+        public void Example_GetUpdateCompliance_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            Response response = await client.GetUpdateComplianceAsync();
+            Response response = client.GetUpdateCompliance();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -503,13 +503,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateCompliance_AllParameters()
+        public async Task Example_GetUpdateCompliance_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            Response response = client.GetUpdateCompliance();
+            Response response = await client.GetUpdateComplianceAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -553,22 +553,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGroup_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetGroupAsync("<groupId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-            Console.WriteLine(result.GetProperty("groupType").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetGroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -586,6 +570,22 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("subgroupsWithUpdatesInProgressCount").ToString());
             Console.WriteLine(result.GetProperty("subgroupsWithOnLatestUpdateCount").ToString());
             Console.WriteLine(result.GetProperty("deployments")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGroup_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetGroupAsync("<groupId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("groupId").ToString());
+            Console.WriteLine(result.GetProperty("groupType").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
 
         [Test]
@@ -623,18 +623,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGroup_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.DeleteGroupAsync("<groupId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteGroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -642,6 +630,18 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteGroup("<groupId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteGroup_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.DeleteGroupAsync("<groupId>");
             Console.WriteLine(response.Status);
         }
 
@@ -676,13 +676,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateComplianceForGroup_Async()
+        public void Example_GetUpdateComplianceForGroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            Response response = await client.GetUpdateComplianceForGroupAsync("<groupId>");
+            Response response = client.GetUpdateComplianceForGroup("<groupId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -693,13 +693,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateComplianceForGroup_AllParameters()
+        public async Task Example_GetUpdateComplianceForGroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            Response response = client.GetUpdateComplianceForGroup("<groupId>");
+            Response response = await client.GetUpdateComplianceForGroupAsync("<groupId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -746,25 +746,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeploymentAsync("<groupId>", "<deploymentId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deploymentId").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployment_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -793,6 +774,25 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
             Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeployment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeploymentAsync("<groupId>", "<deploymentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentId").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("groupId").ToString());
         }
 
         [Test]
@@ -863,40 +863,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateDeployment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                deploymentId = "<deploymentId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                update = new
-                {
-                    updateId = new
-                    {
-                        provider = "<provider>",
-                        name = "<name>",
-                        version = "<version>",
-                    },
-                },
-                groupId = "<groupId>",
-            });
-            Response response = await client.CreateOrUpdateDeploymentAsync("<groupId>", "<deploymentId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deploymentId").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateDeployment_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -955,6 +921,40 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
             Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateDeployment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                deploymentId = "<deploymentId>",
+                startDateTime = "2022-05-10T18:57:31.2311892Z",
+                update = new
+                {
+                    updateId = new
+                    {
+                        provider = "<provider>",
+                        name = "<name>",
+                        version = "<version>",
+                    },
+                },
+                groupId = "<groupId>",
+            });
+            Response response = await client.CreateOrUpdateDeploymentAsync("<groupId>", "<deploymentId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentId").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("groupId").ToString());
         }
 
         [Test]
@@ -1033,18 +1033,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeployment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDeployment_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1052,6 +1040,18 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteDeployment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
             Console.WriteLine(response.Status);
         }
 
@@ -1076,24 +1076,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.GetDeploymentStatus("<groupId>", "<deploymentId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-            Console.WriteLine(result.GetProperty("deploymentState").ToString());
-            Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("groupId").ToString());
-            Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("deploymentState").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeploymentStatusAsync("<groupId>", "<deploymentId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -1138,6 +1120,24 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCompletedFailedCount").ToString());
             Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCompletedSucceededCount").ToString());
             Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCanceledCount").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeploymentStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeploymentStatusAsync("<groupId>", "<deploymentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("groupId").ToString());
+            Console.WriteLine(result.GetProperty("deploymentState").ToString());
+            Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("groupId").ToString());
+            Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("deploymentState").ToString());
         }
 
         [Test]
@@ -1195,22 +1195,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroup_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceClassSubgroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1225,6 +1209,22 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("deviceCount").ToString());
             Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceClassSubgroup_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("groupId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
 
         [Test]
@@ -1259,18 +1259,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeviceClassSubgroup_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDeviceClassSubgroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1278,6 +1266,18 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteDeviceClassSubgroup_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
             Console.WriteLine(response.Status);
         }
 
@@ -1312,13 +1312,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroupUpdateCompliance_Async()
+        public void Example_GetDeviceClassSubgroupUpdateCompliance_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            Response response = await client.GetDeviceClassSubgroupUpdateComplianceAsync("<groupId>", "<deviceClassId>");
+            Response response = client.GetDeviceClassSubgroupUpdateCompliance("<groupId>", "<deviceClassId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -1329,13 +1329,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceClassSubgroupUpdateCompliance_AllParameters()
+        public async Task Example_GetDeviceClassSubgroupUpdateCompliance_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
-            Response response = client.GetDeviceClassSubgroupUpdateCompliance("<groupId>", "<deviceClassId>");
+            Response response = await client.GetDeviceClassSubgroupUpdateComplianceAsync("<groupId>", "<deviceClassId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -1382,25 +1382,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBestUpdatesForDeviceClassSubgroup_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetBestUpdatesForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("deviceCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetBestUpdatesForDeviceClassSubgroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1417,6 +1398,25 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
+            Console.WriteLine(result.GetProperty("deviceCount").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetBestUpdatesForDeviceClassSubgroup_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetBestUpdatesForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("groupId").ToString());
+            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("deviceCount").ToString());
         }
 
@@ -1462,25 +1462,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentForDeviceClassSubgroup_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deploymentId").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeploymentForDeviceClassSubgroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1509,6 +1490,25 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
             Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeploymentForDeviceClassSubgroup_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentId").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("groupId").ToString());
         }
 
         [Test]
@@ -1557,18 +1557,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeploymentForDeviceClassSubgroup_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDeploymentForDeviceClassSubgroup_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1576,6 +1564,18 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteDeploymentForDeviceClassSubgroup_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
             Console.WriteLine(response.Status);
         }
 
@@ -1600,25 +1600,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.StopDeployment("<groupId>", "<deviceClassId>", "<deploymentId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deploymentId").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_StopDeployment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.StopDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1659,6 +1640,25 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
             Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StopDeployment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.StopDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentId").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("groupId").ToString());
         }
 
         [Test]
@@ -1714,25 +1714,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RetryDeployment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.RetryDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deploymentId").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_RetryDeployment_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1761,6 +1742,25 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
             Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
             Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_RetryDeployment_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.RetryDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentId").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+            Console.WriteLine(result.GetProperty("groupId").ToString());
         }
 
         [Test]
@@ -1813,22 +1813,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroupDeploymentStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetDeviceClassSubgroupDeploymentStatusAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("groupId").ToString());
-            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-            Console.WriteLine(result.GetProperty("deploymentState").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceClassSubgroupDeploymentStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1853,6 +1837,22 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("devicesCompletedFailedCount").ToString());
             Console.WriteLine(result.GetProperty("devicesCompletedSucceededCount").ToString());
             Console.WriteLine(result.GetProperty("devicesCanceledCount").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceClassSubgroupDeploymentStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetDeviceClassSubgroupDeploymentStatusAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("groupId").ToString());
+            Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+            Console.WriteLine(result.GetProperty("deploymentState").ToString());
         }
 
         [Test]
@@ -1902,23 +1902,6 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOperationStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetOperationStatusAsync("<operationId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("operationId").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetOperationStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1941,6 +1924,23 @@ namespace Azure.IoT.DeviceUpdate.Samples
             Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("etag").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetOperationStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetOperationStatusAsync("<operationId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("operationId").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         }
 
         [Test]
@@ -1995,30 +1995,6 @@ deviceId = "<deviceId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_StartLogCollection_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                deviceList = new List<object>()
-{
-new
-{
-deviceId = "<deviceId>",
-}
-},
-            });
-            Response response = await client.StartLogCollectionAsync("<logCollectionId>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_StartLogCollection_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2048,6 +2024,30 @@ moduleId = "<moduleId>",
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StartLogCollection_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            RequestContent content = RequestContent.Create(new
+            {
+                deviceList = new List<object>()
+{
+new
+{
+deviceId = "<deviceId>",
+}
+},
+            });
+            Response response = await client.StartLogCollectionAsync("<logCollectionId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
         }
 
         [Test]
@@ -2099,20 +2099,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLogCollection_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetLogCollectionAsync("<logCollectionId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetLogCollection_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2129,6 +2115,20 @@ moduleId = "<moduleId>",
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLogCollection_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetLogCollectionAsync("<logCollectionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
         }
 
         [Test]
@@ -2167,20 +2167,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLogCollectionDetailedStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            Response response = await client.GetLogCollectionDetailedStatusAsync("<logCollectionId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetLogCollectionDetailedStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2201,6 +2187,20 @@ moduleId = "<moduleId>",
             Console.WriteLine(result.GetProperty("deviceStatus")[0].GetProperty("extendedResultCode").ToString());
             Console.WriteLine(result.GetProperty("deviceStatus")[0].GetProperty("logLocation").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLogCollectionDetailedStatus_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            Response response = await client.GetLogCollectionDetailedStatusAsync("<logCollectionId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -2245,22 +2245,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClasses_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetDeviceClassesAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceClasses_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2280,6 +2264,22 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
                 Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
                 Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceClasses_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetDeviceClassesAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
             }
         }
 
@@ -2326,23 +2326,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetInstallableUpdatesForDeviceClasses_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("version").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetInstallableUpdatesForDeviceClasses_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2357,6 +2340,23 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("updateId").GetProperty("version").ToString());
                 Console.WriteLine(result[0].GetProperty("description").ToString());
                 Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetInstallableUpdatesForDeviceClasses_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("version").ToString());
             }
         }
 
@@ -2388,23 +2388,6 @@ moduleId = "<moduleId>",
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             foreach (BinaryData item in client.GetDevices())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("onLatestUpdate").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDevices_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetDevicesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("deviceId").ToString());
@@ -2453,6 +2436,23 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultCode").ToString());
                 Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("extendedResultCode").ToString());
                 Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDevices_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetDevicesAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
+                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result[0].GetProperty("onLatestUpdate").ToString());
             }
         }
 
@@ -2518,23 +2518,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGroups_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetGroupsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupType").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetGroups_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2552,6 +2535,23 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("subgroupsWithUpdatesInProgressCount").ToString());
                 Console.WriteLine(result[0].GetProperty("subgroupsWithOnLatestUpdateCount").ToString());
                 Console.WriteLine(result[0].GetProperty("deployments")[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetGroups_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetGroupsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("groupId").ToString());
+                Console.WriteLine(result[0].GetProperty("groupType").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -2599,26 +2599,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBestUpdatesForGroups_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetBestUpdatesForGroupsAsync("<groupId>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetBestUpdatesForGroups_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2635,6 +2615,26 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
                 Console.WriteLine(result[0].GetProperty("update").GetProperty("description").ToString());
                 Console.WriteLine(result[0].GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetBestUpdatesForGroups_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetBestUpdatesForGroupsAsync("<groupId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("groupId").ToString());
+                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
                 Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
             }
         }
@@ -2683,26 +2683,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentsForGroups_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetDeploymentsForGroupsAsync("<groupId>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeploymentsForGroups_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2731,6 +2711,26 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
                 Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
                 Console.WriteLine(result[0].GetProperty("isCloudInitiatedRollback").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeploymentsForGroups_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetDeploymentsForGroupsAsync("<groupId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
+                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("groupId").ToString());
             }
         }
 
@@ -2786,23 +2786,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroupsForGroups_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroupsAsync("<groupId>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceClassSubgroupsForGroups_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2817,6 +2800,23 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
                 Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceClassSubgroupsForGroups_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroupsAsync("<groupId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result[0].GetProperty("groupId").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -2861,26 +2861,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentsForDeviceClassSubgroups_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroupsAsync("<groupId>", "<deviceClassId>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeploymentsForDeviceClassSubgroups_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2909,6 +2889,26 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
                 Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
                 Console.WriteLine(result[0].GetProperty("isCloudInitiatedRollback").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeploymentsForDeviceClassSubgroups_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroupsAsync("<groupId>", "<deviceClassId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
+                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("groupId").ToString());
             }
         }
 
@@ -2965,24 +2965,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceStatesForDeviceClassSubgroupDeployments_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync("<groupId>", "<deviceClassId>", "<deploymentId>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("retryCount").ToString());
-                Console.WriteLine(result[0].GetProperty("movedOnToNewDeployment").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceState").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetDeviceStatesForDeviceClassSubgroupDeployments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2994,6 +2976,24 @@ moduleId = "<moduleId>",
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("deviceId").ToString());
                 Console.WriteLine(result[0].GetProperty("moduleId").ToString());
+                Console.WriteLine(result[0].GetProperty("retryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("movedOnToNewDeployment").ToString());
+                Console.WriteLine(result[0].GetProperty("deviceState").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeviceStatesForDeviceClassSubgroupDeployments_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync("<groupId>", "<deviceClassId>", "<deploymentId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
                 Console.WriteLine(result[0].GetProperty("retryCount").ToString());
                 Console.WriteLine(result[0].GetProperty("movedOnToNewDeployment").ToString());
                 Console.WriteLine(result[0].GetProperty("deviceState").ToString());
@@ -3039,24 +3039,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOperationStatuses_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetOperationStatusesAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("operationId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetOperationStatuses_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3079,6 +3061,24 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetOperationStatuses_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetOperationStatusesAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("operationId").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -3126,21 +3126,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLogCollections_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetLogCollectionsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetLogCollections_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3157,6 +3142,21 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
                 Console.WriteLine(result[0].GetProperty("status").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLogCollections_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetLogCollectionsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
             }
         }
 
@@ -3200,23 +3200,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetHealthOfDevices_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            await foreach (BinaryData item in client.GetHealthOfDevicesAsync("<filter>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("state").ToString());
-                Console.WriteLine(result[0].GetProperty("healthChecks")[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetHealthOfDevices_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3232,6 +3215,23 @@ moduleId = "<moduleId>",
                 Console.WriteLine(result[0].GetProperty("digitalTwinModelId").ToString());
                 Console.WriteLine(result[0].GetProperty("healthChecks")[0].GetProperty("name").ToString());
                 Console.WriteLine(result[0].GetProperty("healthChecks")[0].GetProperty("result").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetHealthOfDevices_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            await foreach (BinaryData item in client.GetHealthOfDevicesAsync("<filter>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
+                Console.WriteLine(result[0].GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("healthChecks")[0].ToString());
             }
         }
 
@@ -3269,18 +3269,6 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportDevices_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
-
-            RequestContent content = RequestContent.Create("Devices");
-            Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_ImportDevices_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3289,6 +3277,18 @@ moduleId = "<moduleId>",
 
             RequestContent content = RequestContent.Create("Devices");
             Operation operation = client.ImportDevices(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportDevices_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
+
+            RequestContent content = RequestContent.Create("Devices");
+            Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, content);
         }
 
         [Test]
