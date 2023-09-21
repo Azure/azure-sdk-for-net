@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 blobs = array;
             }
-            return new FilterBlobSegment(serviceEndpoint, where, blobs, nextMarker);
+            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker);
         }
     }
 }

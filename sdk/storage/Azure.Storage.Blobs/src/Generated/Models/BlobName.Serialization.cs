@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 encoded = (bool?)encodedAttribute;
             }
-            content = element.Value;
+            content = (string)element;
             return new BlobName(encoded, content);
         }
     }

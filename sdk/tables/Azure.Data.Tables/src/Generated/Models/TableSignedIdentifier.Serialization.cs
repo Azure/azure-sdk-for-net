@@ -19,10 +19,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteStartElement("Id");
             writer.WriteValue(Id);
             writer.WriteEndElement();
-            if (AccessPolicy != null)
-            {
-                writer.WriteObjectValue(AccessPolicy, "AccessPolicy");
-            }
+            writer.WriteObjectValue(AccessPolicy, "AccessPolicy");
             writer.WriteEndElement();
         }
 
