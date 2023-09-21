@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     /// </summary>
     public class ServiceBusSessionMessageActions : ServiceBusMessageActions
     {
-        private new readonly ProcessSessionMessageEventArgs _eventArgs;
+        private readonly ProcessSessionMessageEventArgs _eventArgs;
         private readonly ServiceBusSessionReceiver _receiver;
 
         internal bool ShouldReleaseSession { get; set; }
