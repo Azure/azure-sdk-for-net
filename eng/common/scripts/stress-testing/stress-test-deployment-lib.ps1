@@ -107,7 +107,8 @@ function DeployStressTests(
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,
-    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters
+    [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters,
+    [Parameter(Mandatory=$False)][int]$LockDeletionForDays
 ) {
     if ($environment -eq 'pg') {
         if ($clusterGroup -or $subscription) {
@@ -168,7 +169,7 @@ function DeployStressTests(
             -subscription $subscription
     }
 
-    if ($FailedCommands.Count -lt $pkgs.Count) {
+    if ($FailedCommands.Count -lt $pkgs.Count -and !$Template) {
         Write-Host "Releases deployed by $deployer"
         Run helm list --all-namespaces -l deployId=$deployer
     }
@@ -211,12 +212,14 @@ function DeployStressPackage(
     }
     $imageTagBase += "/$($pkg.Namespace)/$($pkg.ReleaseName)"
 
-    Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
-    kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
-    Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
-    $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
-    if ($LASTEXITCODE) {exit $LASTEXITCODE}
+    if (!$Template) {
+        Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
+        kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+        if ($LASTEXITCODE) {exit $LASTEXITCODE}
+        Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
+        $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
+        if ($LASTEXITCODE) {exit $LASTEXITCODE}
+    }
 
     $dockerBuildConfigs = @()
 
@@ -317,8 +320,18 @@ function DeployStressPackage(
 
     $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
     $subCommand = $Template ? "template" : "upgrade"
-    $installFlag = $Template ? "" : "--install"
-    $helmCommandArg = "helm", $subCommand, $releaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
+    $subCommandFlag = $Template ? "--debug" : "--install"
+    $helmCommandArg = "helm", $subCommand, $releaseName, $pkg.Directory, "-n", $pkg.Namespace, $subCommandFlag, "--values", $generatedConfigPath, "--set", "stress-test-addons.env=$environment"
+
+    if ($LockDeletionForDays) {
+        $date = (Get-Date).AddDays($LockDeletionForDays).ToUniversalTime()
+        $isoDate = $date.ToString("o")
+        # Tell kubernetes job to run only on this specific future time. Technically it will run once per year.
+        $cron = "$($date.Minute) $($date.Hour) $($date.Day) $($date.Month) *"
+
+        Write-Host "PodDisruptionBudget will be set to prevent deletion until $isoDate"
+        $helmCommandArg += "--set", "PodDisruptionBudgetExpiry=$($isoDate)", "--set", "PodDisruptionBudgetExpiryCron=$cron"
+    }
 
     $result = (Run @helmCommandArg) 2>&1 | Write-Host
 
@@ -342,7 +355,7 @@ function DeployStressPackage(
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
     # specific releases (thereby enabling filtering on `helm list`) is to label the underlying secret resources.
     # There is not currently support for setting these labels via the helm cli.
-    if(!$Template) {
+    if (!$Template) {
         $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
                                                 -n $pkg.Namespace `
                                                 -l "status=deployed,name=$releaseName" `
