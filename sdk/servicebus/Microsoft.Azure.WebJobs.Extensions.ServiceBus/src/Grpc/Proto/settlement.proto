@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 // this namespace will be shared between isolated worker and WebJobs extension so make it somewhat generic
 option csharp_namespace = "Microsoft.Azure.ServiceBus.Grpc";
@@ -8,16 +9,16 @@ option csharp_namespace = "Microsoft.Azure.ServiceBus.Grpc";
 // The settlement service definition.
 service Settlement {
   // Completes a message
-  rpc Complete (CompleteRequest) returns (SettlementReply) {}
+  rpc Complete (CompleteRequest) returns (google.protobuf.Empty) {}
 
   // Abandons a message
-  rpc Abandon (AbandonRequest) returns (SettlementReply) {}
+  rpc Abandon (AbandonRequest) returns (google.protobuf.Empty) {}
 
   // Deadletters a message
-  rpc Deadletter (DeadletterRequest) returns (SettlementReply) {}
+  rpc Deadletter (DeadletterRequest) returns (google.protobuf.Empty) {}
 
   // Defers a message
-  rpc Defer (DeferRequest) returns (SettlementReply) {}
+  rpc Defer (DeferRequest) returns (google.protobuf.Empty) {}
 }
 
 // The complete message request containing the locktoken.
@@ -43,11 +44,6 @@ message DeadletterRequest {
 message DeferRequest {
   string locktoken = 1;
   map<string, SettlementProperties> propertiesToModify = 2;
-}
-
-// The response message containing any exceptions
-message SettlementReply {
-  string exception = 1;
 }
 
 // The settlement property can be of any type listed below, which 

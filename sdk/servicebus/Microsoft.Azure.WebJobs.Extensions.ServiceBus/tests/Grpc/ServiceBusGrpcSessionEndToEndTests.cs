@@ -16,23 +16,23 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class ServiceBusGrpcEndToEndTests : WebJobsServiceBusTestBase
+    public class ServiceBusGrpcSessionEndToEndTests : WebJobsServiceBusTestBase
     {
-        public ServiceBusGrpcEndToEndTests() : base(isSession: false)
+        public ServiceBusGrpcSessionEndToEndTests() : base(isSession: true)
         {
         }
 
         [Test]
-        public async Task BindToMessageAndComplete()
+        public async Task BindToSessionMessageAndComplete()
         {
-            var host = BuildHost<ServiceBusBindToMessageAndComplete>();
+            var host = BuildHost<ServiceBusBindToSessionMessageAndComplete>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
-            ServiceBusBindToMessageAndComplete.SettlementService = settlementImpl;
+            ServiceBusBindToSessionMessageAndComplete.SettlementService = settlementImpl;
 
             using (host)
             {
-                var message = new ServiceBusMessage("foobar");
+                var message = new ServiceBusMessage("foobar") {SessionId = "sessionId"};
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task BindToBatchAndComplete()
+        public async Task BindToSessionBatchAndComplete()
         {
-            var host = BuildHost<ServiceBusBindToBatchAndComplete>();
+            var host = BuildHost<ServiceBusBindToSessionBatchAndComplete>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
-            ServiceBusBindToBatchAndComplete.SettlementService = settlementImpl;
+            ServiceBusBindToSessionBatchAndComplete.SettlementService = settlementImpl;
 
             using (host)
             {
-                var message = new ServiceBusMessage("foobar");
+                var message = new ServiceBusMessage("foobar") {SessionId = "sessionId"};
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
@@ -65,16 +65,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task BindToMessageAndDeadletter()
+        public async Task BindToSessionMessageAndDeadletter()
         {
-            var host = BuildHost<ServiceBusBindToMessageAndDeadletter>();
+            var host = BuildHost<ServiceBusBindToSessionMessageAndDeadletter>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
-            ServiceBusBindToMessageAndDeadletter.SettlementService = settlementImpl;
+            ServiceBusBindToSessionMessageAndDeadletter.SettlementService = settlementImpl;
 
             using (host)
             {
-                var message = new ServiceBusMessage("foobar");
+                var message = new ServiceBusMessage("foobar") {SessionId = "sessionId"};
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
@@ -86,16 +86,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task BindToMessageAndDefer()
+        public async Task BindToSessionMessageAndDefer()
         {
-            var host = BuildHost<ServiceBusBindToMessageAndDefer>();
+            var host = BuildHost<ServiceBusBindToSessionMessageAndDefer>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
-            ServiceBusBindToMessageAndDefer.SettlementService = settlementImpl;
+            ServiceBusBindToSessionMessageAndDefer.SettlementService = settlementImpl;
 
             using (host)
             {
-                var message = new ServiceBusMessage("foobar");
+                var message = new ServiceBusMessage("foobar") {SessionId = "sessionId"};
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
@@ -107,17 +107,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task BindToMessageAndAbandon()
+        public async Task BindToSessionMessageAndAbandon()
         {
-            var host = BuildHost<ServiceBusBindToMessageAndAbandon>();
+            var host = BuildHost<ServiceBusBindToSessionMessageAndAbandon>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
-            ServiceBusBindToMessageAndAbandon.SettlementService = settlementImpl;
+            ServiceBusBindToSessionMessageAndAbandon.SettlementService = settlementImpl;
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
 
             using (host)
             {
-                var message = new ServiceBusMessage("foobar");
+                var message = new ServiceBusMessage("foobar") {SessionId = "sessionId"};
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
 
@@ -125,17 +125,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(result);
             }
 
-            var abandonedMessage = (await client.CreateReceiver(FirstQueueScope.QueueName).ReceiveMessagesAsync(1)).Single();
+            var receiver = await client.AcceptNextSessionAsync(FirstQueueScope.QueueName);
+            var abandonedMessage = (await receiver.ReceiveMessagesAsync(1)).Single();
             Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
             Assert.AreEqual("value", abandonedMessage.ApplicationProperties["key"]);
             Assert.IsEmpty(provider.ActionsCache);
         }
 
-        public class ServiceBusBindToMessageAndComplete
+        public class ServiceBusBindToSessionMessageAndComplete
         {
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
-                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message)
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
                 await SettlementService.Complete(new CompleteRequest() { Locktoken = message.LockToken }, new MockServerCallContext());
@@ -143,11 +144,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class ServiceBusBindToBatchAndComplete
+        public class ServiceBusBindToSessionBatchAndComplete
         {
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
-                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages)
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage[] messages)
             {
                 var message = messages.Single();
                 Assert.AreEqual("foobar", message.Body.ToString());
@@ -156,11 +157,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class ServiceBusBindToMessageAndDeadletter
+        public class ServiceBusBindToSessionMessageAndDeadletter
         {
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
-                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusClient client)
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusClient client)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
                 await SettlementService.Deadletter(
@@ -183,11 +184,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class ServiceBusBindToMessageAndDefer
+        public class ServiceBusBindToSessionMessageAndDefer
         {
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
-                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
                 await SettlementService.Defer(
@@ -205,11 +206,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class ServiceBusBindToMessageAndAbandon
+        public class ServiceBusBindToSessionMessageAndAbandon
         {
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
-                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
                 await SettlementService.Abandon(

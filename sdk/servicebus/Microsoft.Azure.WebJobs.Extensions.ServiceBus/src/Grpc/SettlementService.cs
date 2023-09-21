@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Microsoft.Azure.ServiceBus.Grpc;
 using Microsoft.Azure.WebJobs.ServiceBus;
@@ -25,89 +26,63 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             _provider = null;
         }
 
-        public override async Task<SettlementReply> Complete(CompleteRequest request, ServerCallContext context)
+        public override async Task<Empty> Complete(CompleteRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var action))
+            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
             {
-                try
-                {
-                    await action.CompleteMessageAsync(action._eventArgs.Message, context.CancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception exception)
-                {
-                    return new SettlementReply() { Exception = exception.ToString() };
-                }
-                return new SettlementReply();
+                await tuple.Actions.CompleteMessageAsync(
+                    tuple.Message,
+                    context.CancellationToken).ConfigureAwait(false);
+                return new Empty();
             }
-            return new SettlementReply {Exception = $"LockToken {request.Locktoken} not found."};
+            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
-        public override async Task<SettlementReply> Abandon(AbandonRequest request, ServerCallContext context)
+        public override async Task<Empty> Abandon(AbandonRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var action))
+            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
             {
-                try
-                {
-                    await action.AbandonMessageAsync(
-                        action._eventArgs.Message,
-                        request.PropertiesToModify.ToDictionary(
-                            pair => pair.Key,
-                            pair => pair.Value.GetPropertyValue()),
-                        context.CancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception exception)
-                {
-                    return new SettlementReply() { Exception = exception.ToString() };
-                }
-                return new SettlementReply();
+                await tuple.Actions.AbandonMessageAsync(
+                    tuple.Message,
+                    request.PropertiesToModify.ToDictionary(
+                        pair => pair.Key,
+                        pair => pair.Value.GetPropertyValue()),
+                    context.CancellationToken).ConfigureAwait(false);
+                return new Empty();
             }
-            return new SettlementReply {Exception = $"LockToken {request.Locktoken} not found."};
+            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
-        public override async Task<SettlementReply> Defer(DeferRequest request, ServerCallContext context)
+        public override async Task<Empty> Defer(DeferRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var action))
+            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
             {
-                try
-                {
-                    await action.DeferMessageAsync(
-                        action._eventArgs.Message,
-                        request.PropertiesToModify.ToDictionary(
-                            pair => pair.Key,
-                            pair => pair.Value.GetPropertyValue()),
-                        context.CancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception exception)
-                {
-                    return new SettlementReply() { Exception = exception.ToString() };
-                }
-                return new SettlementReply();
+                await tuple.Actions.DeferMessageAsync(
+                    tuple.Message,
+                    request.PropertiesToModify.ToDictionary(
+                        pair => pair.Key,
+                        pair => pair.Value.GetPropertyValue()),
+                    context.CancellationToken).ConfigureAwait(false);
+                return new Empty();
             }
-            return new SettlementReply {Exception = $"LockToken {request.Locktoken} not found."};
+            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
-        public override async Task<SettlementReply> Deadletter(DeadletterRequest request, ServerCallContext context)
+        public override async Task<Empty> Deadletter(DeadletterRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var action))
+            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
             {
-                try
-                {
-                    await action.DeadLetterMessageAsync(
-                        action._eventArgs.Message,
-                        request.PropertiesToModify.ToDictionary(
-                            pair => pair.Key,
-                            pair => pair.Value.GetPropertyValue()),
-                        request.DeadletterReason,
-                        request.DeadletterErrorDescription,
-                        context.CancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception exception)
-                {
-                    return new SettlementReply() { Exception = exception.ToString() };
-                }
-                return new SettlementReply();
+                await tuple.Actions.DeadLetterMessageAsync(
+                    tuple.Message,
+                    request.PropertiesToModify.ToDictionary(
+                        pair => pair.Key,
+                        pair => pair.Value.GetPropertyValue()),
+                    request.DeadletterReason,
+                    request.DeadletterErrorDescription,
+                    context.CancellationToken).ConfigureAwait(false);
+                return new Empty();
             }
-            return new SettlementReply {Exception = $"LockToken {request.Locktoken} not found."};
+            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
     }
 }

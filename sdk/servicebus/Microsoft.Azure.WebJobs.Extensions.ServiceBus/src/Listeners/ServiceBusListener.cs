@@ -355,7 +355,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _stoppingCancellationTokenSource.Token))
             {
                 var actions = new ServiceBusMessageActions(args);
-                _messagingProvider.ActionsCache.TryAdd(args.Message.LockToken, actions);
+                _messagingProvider.ActionsCache.TryAdd(args.Message.LockToken, (args.Message, actions));
 
                 if (!await _messageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
                 {
@@ -376,6 +376,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 finally
                 {
                     receiveActions.EndExecutionScope();
+                    _messagingProvider.ActionsCache.TryRemove(args.Message.LockToken, out _);
                 }
             }
         }
@@ -390,6 +391,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _stoppingCancellationTokenSource.Token))
             {
                 var actions = new ServiceBusSessionMessageActions(args);
+                _messagingProvider.ActionsCache.TryAdd(args.Message.LockToken, (args.Message, actions));
+
                 if (!await _sessionMessageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token)
                     .ConfigureAwait(false))
                 {
@@ -415,6 +418,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 finally
                 {
                     receiveActions.EndExecutionScope();
+                    _messagingProvider.ActionsCache.TryRemove(args.Message.LockToken, out _);
                 }
             }
         }
@@ -496,6 +500,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         var messageActions = _isSessionsEnabled
                             ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver)
                             : new ServiceBusMessageActions(receiver);
+
+                        foreach (var message in messages)
+                        {
+                            _messagingProvider.ActionsCache.TryAdd(message.LockToken, (message, messageActions));
+                        }
+
                         var receiveActions = new ServiceBusReceiveActions(receiver);
 
                         ServiceBusReceivedMessage[] messagesArray = _supportMinBatchSize ? Array.Empty<ServiceBusReceivedMessage>() : messages.ToArray();
@@ -667,6 +677,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 scope.Failed(result.Exception);
             }
             receiveActions.EndExecutionScope();
+
+            foreach (var message in input.Messages)
+            {
+                _messagingProvider.ActionsCache.TryRemove(message.LockToken, out _);
+            }
 
             var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
             // Complete batch of messages only if the execution was successful
