@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class ChatCompletions
+    public partial class ChatCompletions
     {
         internal static ChatCompletions DeserializeChatCompletions(JsonElement element)
         {

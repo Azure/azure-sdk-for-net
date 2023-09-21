@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class FunctionDefinition : IUtf8JsonSerializable
+    public partial class FunctionDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -13,10 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Analytics.Purview.Sca
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Analytics.Purview.Shared.Tests", "..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.shproj", "{283CB4FE-A207-4D92-8431-6147F1ECBAB7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{78EFED2C-8D14-4F15-A466-14449D19473B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ServiceModel.Rest", "..\..\core\System.ServiceModel.Rest\src\System.ServiceModel.Rest.csproj", "{88A8A367-280D-4C71-AB70-4FE99E109369}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,14 +35,6 @@ Global
 		{41F48A9A-86CC-4855-AB01-3B2F94E6E8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41F48A9A-86CC-4855-AB01-3B2F94E6E8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41F48A9A-86CC-4855-AB01-3B2F94E6E8CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78EFED2C-8D14-4F15-A466-14449D19473B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78EFED2C-8D14-4F15-A466-14449D19473B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78EFED2C-8D14-4F15-A466-14449D19473B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78EFED2C-8D14-4F15-A466-14449D19473B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88A8A367-280D-4C71-AB70-4FE99E109369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88A8A367-280D-4C71-AB70-4FE99E109369}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88A8A367-280D-4C71-AB70-4FE99E109369}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88A8A367-280D-4C71-AB70-4FE99E109369}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

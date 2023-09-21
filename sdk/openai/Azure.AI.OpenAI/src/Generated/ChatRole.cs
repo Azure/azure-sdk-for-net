@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI
 {
     /// <summary> A description of the intended purpose of a message within a chat completions interaction. </summary>
-    internal readonly partial struct ChatRole : IEquatable<ChatRole>
+    public readonly partial struct ChatRole : IEquatable<ChatRole>
     {
         private readonly string _value;
 

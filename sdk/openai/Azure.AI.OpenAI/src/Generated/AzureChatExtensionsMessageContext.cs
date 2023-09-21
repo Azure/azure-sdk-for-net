@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     ///   in the generation of a corresponding chat completions response. This context information is only populated when
     ///   using an Azure OpenAI request configured to use a matching extension.
     /// </summary>
-    internal partial class AzureChatExtensionsMessageContext
+    public partial class AzureChatExtensionsMessageContext
     {
         /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>
         public AzureChatExtensionsMessageContext()
