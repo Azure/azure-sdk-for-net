@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    lastUpdatedTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdatedTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("description"u8))
