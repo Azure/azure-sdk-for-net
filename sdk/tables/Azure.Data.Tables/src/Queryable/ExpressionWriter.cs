@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
@@ -203,19 +202,14 @@ namespace Azure.Data.Tables.Queryable
 
         protected virtual string TranslateMemberName(MemberInfo memberName)
         {
-            if (!ReflectionUtil.s_dictionaryTypePropertyInfo.TryGetValue(memberName.DeclaringType, out PropertyInfo[] memberAttributeProperties))
+            if (memberInfo.GetCustomAttribute<DataMemberAttribute>() is DataMemberAttribute dataMemberAttribute)
             {
-                ReflectionUtil.s_dictionaryTypePropertyInfo[memberName.DeclaringType] = memberAttributeProperties = memberName.DeclaringType.GetProperties();
+                return dataMemberAttribute.Name;
             }
-
-            PropertyInfo dataMemberProperty = memberAttributeProperties.FirstOrDefault(p => p.Name == memberName.Name && Attribute.IsDefined(p, typeof(DataMemberAttribute)));
-
-            if (dataMemberProperty != null)
+            else
             {
-                return dataMemberProperty.GetCustomAttribute<DataMemberAttribute>().Name;
+                return memberInfo.Name;
             }
-
-            return memberName.Name;
         }
 
         protected virtual string TranslateOperator(ExpressionType type)
