@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PartnerRegistrationResource>> GetIfExistsAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+
+            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _partnerRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        public virtual NullableResponse<PartnerRegistrationResource> GetIfExists(string partnerRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+
+            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _partnerRegistrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PartnerRegistrationResource> IEnumerable<PartnerRegistrationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

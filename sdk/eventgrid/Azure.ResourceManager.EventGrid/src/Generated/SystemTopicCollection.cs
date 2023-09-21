@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="systemTopicName"> Name of the system topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SystemTopicResource>> GetIfExistsAsync(string systemTopicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+
+            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _systemTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SystemTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SystemTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="systemTopicName"> Name of the system topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        public virtual NullableResponse<SystemTopicResource> GetIfExists(string systemTopicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+
+            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _systemTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SystemTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SystemTopicResource> IEnumerable<SystemTopicResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
