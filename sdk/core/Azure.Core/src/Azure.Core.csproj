@@ -25,18 +25,36 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.Numerics.Vectors" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0' AND '$(TargetFramework)' != 'net7.0' AND '$(TargetFramework)' != 'net6.0' AND '$(TargetFramework)' != 'net5.0'">
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" /> <!-- needed only before .netcore 3.1 -->
+    <PackageReference Include="System.Numerics.Vectors" /> <!-- it builds without this on higher platforms -->
+    <PackageReference Include="System.Threading.Tasks.Extensions" /> <!-- support for ValueTask on lower platforms -->
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0' AND '$(TargetFramework)' != 'net7.0' AND '$(TargetFramework)' != 'net6.0' AND '$(TargetFramework)' != 'net5.0' AND '$(TargetFramework)' != 'netcoreapp2.1'">
+    <PackageReference Include="System.Memory.Data" VersionOverride="6.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="6.0.0" />
+    <PackageReference Include="System.Text.Json" VersionOverride="6.0.8" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+    <PackageReference Include="System.Memory.Data" VersionOverride="1.0.2" />
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="5.0.0" />
+    <PackageReference Include="System.Text.Json" VersionOverride="5.0.2" />
+  </ItemGroup>
+  
   <!-- Keep System.Diagnostics.DiagnosticSource 4.6.0 for netcoreapp2.1 support. -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.7.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" VersionOverride="4.7.1" />
+    <PackageReference Include="System.Memory.Data" VersionOverride="1.0.2" />
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />
+    <PackageReference Include="System.Text.Json" VersionOverride="4.7.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
