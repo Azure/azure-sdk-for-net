@@ -6,13 +6,13 @@ using System.Threading;
 
 namespace System.ServiceModel.Rest;
 
-public class RequestOptions // base of ClientOptions and RequestContext
+public class RequestOptions
 {
-    public CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
+    public CancellationToken? CancellationToken { get; set; }
 
-    public IPipelinePolicy<PipelineMessage> RetryPolicy { get; set; } = DefaultRetryPolicy;
+    public IPipelinePolicy<PipelineMessage>? RetryPolicy { get; set; }
 
-    public IPipelinePolicy<PipelineMessage> LoggingPolicy { get; set; } = DefaultLoggingPolicy;
+    public IPipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
 
     public PipelineTransport<PipelineMessage>? Transport { get; set; }
 
@@ -20,5 +20,5 @@ public class RequestOptions // base of ClientOptions and RequestContext
 
     public static IPipelinePolicy<PipelineMessage> DefaultLoggingPolicy { get; set; } = new LoggingPolicy();
 
-    public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
+    public static CancellationToken DefaultCancellationToken { get; set; } = System.Threading.CancellationToken.None;
 }
