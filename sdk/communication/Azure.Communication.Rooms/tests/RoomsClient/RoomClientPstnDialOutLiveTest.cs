@@ -66,12 +66,11 @@ namespace Azure.Communication.Rooms.Test
                 validUntil = validUntil.AddDays(10);
                 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
                 {
-                    Id = createdRoomId,
                     ValidFrom = validFrom,
                     ValidUntil = validUntil
                 };
 
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(roomUpdateOptions);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert:
@@ -143,13 +142,12 @@ namespace Azure.Communication.Rooms.Test
                 validUntil = validUntil.AddDays(10);
                 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
                 {
-                    Id = createdRoomId,
                     ValidFrom = validFrom,
                     ValidUntil = validUntil,
                     PstnDialOutEnabled = pstnDialOutEnabled
                 };
 
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(roomUpdateOptions);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert:
@@ -231,11 +229,10 @@ namespace Azure.Communication.Rooms.Test
 
                 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
                 {
-                    Id = createdRoomId,
                     ValidFrom = validFrom,
                     ValidUntil = validUntil
                 };
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(roomUpdateOptions);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert
@@ -323,13 +320,12 @@ namespace Azure.Communication.Rooms.Test
 
                 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
                 {
-                    Id = createdRoomId,
                     ValidFrom = validFrom,
                     ValidUntil = validUntil,
                     PstnDialOutEnabled = !pstnDialOutEnabled // Set Pstn Dial-Out
                 };
 
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(roomUpdateOptions);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert
@@ -365,7 +361,7 @@ namespace Azure.Communication.Rooms.Test
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
 
             // Act
-            var createdRoom = await roomsClient.CreateRoomAsync(roomCreateOptions: null);
+            var createdRoom = await roomsClient.CreateRoomAsync(createRoomOptions: null);
 
             // Assert
             Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
@@ -685,17 +681,16 @@ namespace Azure.Communication.Rooms.Test
             var createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = createRoomResponse.Value.Id,
                 PstnDialOutEnabled = !pstnDialOutEnabled
             };
 
             // Act and Assert
-            Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(roomUpdateOptions);
+            Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
             // Assert:
             Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
-            Assert.AreEqual(roomUpdateOptions.Id, updateCommunicationRoom.Id);
+            Assert.AreEqual(createRoomResponse.Value.Id, updateCommunicationRoom.Id);
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
@@ -716,13 +711,12 @@ namespace Azure.Communication.Rooms.Test
             validUntil = validFrom.AddDays(200);
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = createRoomResponse.Value.Id,
                 ValidFrom = validFrom,
                 ValidUntil = validUntil
             };
 
             // Act and Assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
         }
@@ -747,14 +741,13 @@ namespace Azure.Communication.Rooms.Test
 
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = createRoomResponse.Value.Id,
                 ValidFrom = validFrom,
                 ValidUntil = validUntil,
                 PstnDialOutEnabled = pstnDialOutEnabled
             };
 
             // Act and Assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
         }
@@ -778,12 +771,11 @@ namespace Azure.Communication.Rooms.Test
             validUntil = validFrom.AddDays(-20);
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = createRoomResponse.Value.Id,
                 ValidFrom = validFrom,
                 ValidUntil = validUntil
             };
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
         }
@@ -808,14 +800,13 @@ namespace Azure.Communication.Rooms.Test
 
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = createRoomResponse.Value.Id,
                 ValidFrom = validFrom,
                 ValidUntil = validUntil,
                 PstnDialOutEnabled = pstnDialOutEnabled
             };
 
             // Act and Assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
         }
@@ -830,13 +821,12 @@ namespace Azure.Communication.Rooms.Test
 
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = "invalid_id",
                 ValidFrom = validFrom,
                 ValidUntil = validUntil
             };
 
             // Act and Assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync("invalid_id", roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
         }
@@ -853,14 +843,13 @@ namespace Azure.Communication.Rooms.Test
 
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = "invalid_id",
                 ValidFrom = validFrom,
                 ValidUntil = validUntil,
                 PstnDialOutEnabled = pstnDialOutEnabled
             };
 
             // Act and Assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync("invalid_id", roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
         }
@@ -882,13 +871,12 @@ namespace Azure.Communication.Rooms.Test
             await roomsClient.DeleteRoomAsync(createRoomResponse.Value.Id);
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = createRoomResponse.Value.Id,
                 ValidFrom = validFrom,
                 ValidUntil = validUntil
             };
 
             // Act and assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(404, ex?.Status);
         }
@@ -915,14 +903,13 @@ namespace Azure.Communication.Rooms.Test
 
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
-                Id = createRoomResponse.Value.Id,
                 ValidFrom = validFrom,
                 ValidUntil = validUntil,
                 PstnDialOutEnabled = pstnDialOutEnabled
             };
 
             // Act and assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(roomUpdateOptions));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions));
             Assert.NotNull(ex);
             Assert.AreEqual(404, ex?.Status);
         }
@@ -932,7 +919,7 @@ namespace Azure.Communication.Rooms.Test
         {
             // Arrange
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions: null);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(createRoomOptions: null);
             List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
             {
                 new RoomParticipant(new CommunicationUserIdentifier("invalid_mri"))
@@ -1215,7 +1202,7 @@ namespace Azure.Communication.Rooms.Test
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions: null);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(createRoomOptions: null);
             var participant1 = await communicationIdentityClient.CreateUserAsync();
             List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
             {
@@ -1254,7 +1241,7 @@ namespace Azure.Communication.Rooms.Test
         {
             // Arrange
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions: null);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(createRoomOptions: null);
             var createdRoomId = createRoomResponse.Value.Id;
 
             // Act
@@ -1303,7 +1290,7 @@ namespace Azure.Communication.Rooms.Test
         private void ValidateRoom(CommunicationRoom? room, UpdateRoomOptions roomUpdateOptions)
         {
             Assert.NotNull(room);
-            Assert.AreEqual(room?.Id, roomUpdateOptions.Id);
+            Assert.NotNull(room?.Id);
             Assert.NotNull(room?.CreatedAt);
             Assert.NotNull(room?.CreatedAt);
             Assert.NotNull(room?.ValidFrom);

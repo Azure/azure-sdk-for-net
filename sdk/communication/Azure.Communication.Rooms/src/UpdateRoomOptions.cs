@@ -10,9 +10,6 @@ namespace Azure.Communication.Rooms
     /// </summary>
     public class UpdateRoomOptions
     {
-        /// <summary> Unique identifier of a room. This id is server generated. </summary>
-        public string Id { get; set; }
-
         /// <summary> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidFrom { get; set; }
 
