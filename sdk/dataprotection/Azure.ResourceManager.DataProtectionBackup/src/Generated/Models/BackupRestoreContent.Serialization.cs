@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
+            if (Optional.IsDefined(IdentityDetails))
+            {
+                writer.WritePropertyName("identityDetails"u8);
+                writer.WriteObjectValue(IdentityDetails);
+            }
             writer.WriteEndObject();
         }
     }

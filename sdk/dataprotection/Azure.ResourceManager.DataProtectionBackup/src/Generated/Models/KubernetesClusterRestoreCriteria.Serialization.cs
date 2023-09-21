@@ -88,6 +88,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(RestoreHookReferences))
+            {
+                writer.WritePropertyName("restoreHookReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in RestoreHookReferences)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();

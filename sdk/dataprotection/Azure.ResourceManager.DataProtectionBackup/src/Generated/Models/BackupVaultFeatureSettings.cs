@@ -8,18 +8,20 @@
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Class containing feature settings of vault. </summary>
-    internal partial class FeatureSettings
+    public partial class BackupVaultFeatureSettings
     {
-        /// <summary> Initializes a new instance of FeatureSettings. </summary>
-        public FeatureSettings()
+        /// <summary> Initializes a new instance of BackupVaultFeatureSettings. </summary>
+        public BackupVaultFeatureSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureSettings. </summary>
+        /// <summary> Initializes a new instance of BackupVaultFeatureSettings. </summary>
         /// <param name="crossSubscriptionRestoreSettings"> CrossSubscriptionRestore Settings. </param>
-        internal FeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings)
+        /// <param name="crossRegionRestoreSettings"></param>
+        internal BackupVaultFeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings, CrossRegionRestoreSettings crossRegionRestoreSettings)
         {
             CrossSubscriptionRestoreSettings = crossSubscriptionRestoreSettings;
+            CrossRegionRestoreSettings = crossRegionRestoreSettings;
         }
 
         /// <summary> CrossSubscriptionRestore Settings. </summary>
@@ -33,6 +35,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 if (CrossSubscriptionRestoreSettings is null)
                     CrossSubscriptionRestoreSettings = new CrossSubscriptionRestoreSettings();
                 CrossSubscriptionRestoreSettings.State = value;
+            }
+        }
+
+        /// <summary> Gets or sets the cross region restore settings. </summary>
+        internal CrossRegionRestoreSettings CrossRegionRestoreSettings { get; set; }
+        /// <summary> CrossRegionRestore state. </summary>
+        public CrossRegionRestoreState? CrossRegionRestoreState
+        {
+            get => CrossRegionRestoreSettings is null ? default : CrossRegionRestoreSettings.State;
+            set
+            {
+                if (CrossRegionRestoreSettings is null)
+                    CrossRegionRestoreSettings = new CrossRegionRestoreSettings();
+                CrossRegionRestoreSettings.State = value;
             }
         }
     }

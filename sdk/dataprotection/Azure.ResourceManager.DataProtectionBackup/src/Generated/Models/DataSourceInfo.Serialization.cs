@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
+            if (Optional.IsDefined(ResourceProperties))
+            {
+                writer.WritePropertyName("resourceProperties"u8);
+                writer.WriteObjectValue(ResourceProperties);
+            }
             writer.WriteEndObject();
         }
 
@@ -63,6 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> resourceName = default;
             Optional<ResourceType> resourceType = default;
             Optional<string> resourceUri = default;
+            Optional<BaseResourceProperties> resourceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasourceType"u8))
@@ -108,8 +114,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     resourceUri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resourceProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceProperties = BaseResourceProperties.DeserializeBaseResourceProperties(property.Value);
+                    continue;
+                }
             }
-            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value);
+            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value, resourceProperties.Value);
         }
     }
 }
