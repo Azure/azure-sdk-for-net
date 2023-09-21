@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
