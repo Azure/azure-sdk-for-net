@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubNetworkRuleSetIPRule : IUtf8JsonSerializable
+    public partial class NetworkRuleSetIPRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteEndObject();
         }
 
-        internal static IotHubNetworkRuleSetIPRule DeserializeIotHubNetworkRuleSetIPRule(JsonElement element)
+        internal static NetworkRuleSetIPRule DeserializeNetworkRuleSetIPRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubNetworkRuleSetIPRule(filterName, Optional.ToNullable(action), ipMask);
+            return new NetworkRuleSetIPRule(filterName, Optional.ToNullable(action), ipMask);
         }
     }
 }
