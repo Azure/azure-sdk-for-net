@@ -13,12 +13,13 @@ param sshPubKey string
 
 param adminUserName string = 'azureuser'
 
+param latestAksVersion string
+
 //See https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 var blobContributor = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe') //Storage Blob Data Contributor
 var websiteContributor = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'de139f84-1756-47ae-9be6-808fbbe84772') //Website Contributor
 // cluster parameters
-var kubernetesVersion = '1.26.6'
-var nodeResourceGroup = 'aks-nodes-${resourceGroup().name}'
+var kubernetesVersion = latestAksVersion
 
 resource usermgdid 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: baseName

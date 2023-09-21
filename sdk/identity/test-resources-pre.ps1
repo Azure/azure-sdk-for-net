@@ -12,6 +12,10 @@ $sshKey = Get-Content $PSScriptRoot/sshKey.pub
 
 $templateFileParameters['sshPubKey'] = $sshKey
 
+# Get the max version that is not preview and then get the name of the patch version with the max value
+$latestAksVersion = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Sort-Object -Descending | Select-Object -First 1
+$templateFileParameters['latestAksVersion'] = $latestAksVersion
+
 if (!$CI) {
     # TODO: Remove this once auto-cloud config downloads are supported locally
     Write-Host "Skipping cert setup in local testing mode"

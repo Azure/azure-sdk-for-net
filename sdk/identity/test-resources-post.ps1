@@ -1,6 +1,8 @@
 param (
   [hashtable] $DeploymentOutputs
 )
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
 
 $webappRoot = "$PSScriptRoot/Azure.Identity/integration" | Resolve-Path
 $workingFolder = $webappRoot;
@@ -32,21 +34,25 @@ $MIName = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_NAME']
 $SaAccountName = 'workload-identity-sa'
 $PodName = $DeploymentOutputs['IDENTITY_AKS_POD_NAME']
 
-if ($IsMacOS -eq $false) {
-  # Get the aks cluster credentials
-  Write-Host "Getting AKS credentials"
-  az aks get-credentials --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --name $DeploymentOutputs['IDENTITY_AKS_CLUSTER_NAME']
+if ($IsMacOS -eq $true) {
+  # Not supported on MacOS agents
+  az logout
+  return
+}
+# Get the aks cluster credentials
+Write-Host "Getting AKS credentials"
+az aks get-credentials --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --name $DeploymentOutputs['IDENTITY_AKS_CLUSTER_NAME']
 
-  #Get the aks cluster OIDC issuer
-  Write-Host "Getting AKS OIDC issuer"
-  $AKS_OIDC_ISSUER = az aks show -n $DeploymentOutputs['IDENTITY_AKS_CLUSTER_NAME'] -g $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --query "oidcIssuerProfile.issuerUrl" -otsv
+#Get the aks cluster OIDC issuer
+Write-Host "Getting AKS OIDC issuer"
+$AKS_OIDC_ISSUER = az aks show -n $DeploymentOutputs['IDENTITY_AKS_CLUSTER_NAME'] -g $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --query "oidcIssuerProfile.issuerUrl" -otsv
 
-  # Create the federated identity
-  Write-Host "Creating federated identity"
-  az identity federated-credential create --name $MIName --identity-name $MIName --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --issuer $AKS_OIDC_ISSUER --subject system:serviceaccount:default:workload-identity-sa
+# Create the federated identity
+Write-Host "Creating federated identity"
+az identity federated-credential create --name $MIName --identity-name $MIName --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --issuer $AKS_OIDC_ISSUER --subject system:serviceaccount:default:workload-identity-sa
 
-  # Build the kubernetes deployment yaml
-  $kubeConfig = @"
+# Build the kubernetes deployment yaml
+$kubeConfig = @"
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -79,12 +85,12 @@ spec:
   nodeSelector:
     kubernetes.io/os: linux
 "@
-  Set-Content -Path "$workingFolder/kubeconfig.yaml" -Value $kubeConfig
-  Write-Host "Created kubeconfig.yaml with contents:"
-  Write-Host $kubeConfig
 
-  # Apply the config
-  kubectl apply -f "$workingFolder/kubeconfig.yaml" --overwrite=true
-  Write-Host "Applied kubeconfig.yaml"
-}
+Set-Content -Path "$workingFolder/kubeconfig.yaml" -Value $kubeConfig
+Write-Host "Created kubeconfig.yaml with contents:"
+Write-Host $kubeConfig
+
+# Apply the config
+kubectl apply -f "$workingFolder/kubeconfig.yaml" --overwrite=true
+Write-Host "Applied kubeconfig.yaml"
 az logout
