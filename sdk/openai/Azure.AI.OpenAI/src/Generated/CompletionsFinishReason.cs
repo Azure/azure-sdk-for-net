@@ -15,6 +15,13 @@ namespace Azure.AI.OpenAI
     {
         private readonly string _value;
 
+        /// <summary> Initializes a new instance of <see cref="CompletionsFinishReason"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CompletionsFinishReason(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string StoppedValue = "stop";
         private const string TokenLimitReachedValue = "length";
         private const string ContentFilteredValue = "content_filter";
