@@ -56,32 +56,32 @@ function Split-Items([array]$Items) {
 # ensure the output directory exists
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 
-if (Test-Path "Function:$GetFoldersForGenerationFn") {
-  $foldersForGeneration = &$GetFoldersForGenerationFn -OnlyTypespec $OnlyTypespec
+if (Test-Path "Function:$GetDirectoriesForGenerationFn") {
+  $directoriesForGeneration = &$GetDirectoriesForGenerationFn
 }
 else {
-  $foldersForGeneration = Get-ChildItem "$RepoRoot/sdk" -Directory | Get-ChildItem -Directory
-  
-  if ($OnlyTypespec) {
-    $foldersForGeneration = $foldersForGeneration | Where-Object { Test-Path "$_/tsp-location.yaml" }
-  }
+  $directoriesForGeneration = Get-ChildItem "$RepoRoot/sdk" -Directory | Get-ChildItem -Directory
 }
 
-[array]$packageFolders = $foldersForGeneration
+if ($OnlyTypespec) {
+  $directoriesForGeneration = $directoriesForGeneration | Where-Object { Test-Path "$_/tsp-location.yaml" }
+}
+
+[array]$packageDirectories = $directoriesForGeneration
 | Sort-Object -Property FullName
 | ForEach-Object {
   [ordered]@{
-    "PackageFolder" = "$($_.Parent.Name)/$($_.Name)"
+    "PackageDirectory" = "$($_.Parent.Name)/$($_.Name)"
     "ServiceArea"   = $_.Parent.Name
   }
 }
 
-$batches = Split-Items -Items $packageFolders
+$batches = Split-Items -Items $packageDirectories
 
 $matrix = [ordered]@{}
 for ($i = 0; $i -lt $batches.Length; $i++) {
   $batch = $batches[$i]
-  $json = $batch.PackageFolder | ConvertTo-Json -AsArray
+  $json = $batch.PackageDirectory | ConvertTo-Json -AsArray
 
   $firstPrefix = $batch[0].ServiceArea.Substring(0, 2)
   $lastPrefix = $batch[-1].ServiceArea.Substring(0, 2)
@@ -95,7 +95,7 @@ for ($i = 0; $i -lt $batches.Length; $i++) {
   $json | Out-Host
   $json | Out-File "$OutputDirectory/$fileName"
 
-  $matrix[$key] = [ordered]@{ "JobKey" = $key; "FolderList" = $fileName }
+  $matrix[$key] = [ordered]@{ "JobKey" = $key; "DirectoryList" = $fileName }
 }
 
 $compressed = ConvertTo-Json $matrix -Depth 100 -Compress
