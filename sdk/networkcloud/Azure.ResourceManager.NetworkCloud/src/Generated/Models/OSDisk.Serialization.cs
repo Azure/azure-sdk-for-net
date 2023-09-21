@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudOSDisk : IUtf8JsonSerializable
+    public partial class OSDisk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudOSDisk DeserializeNetworkCloudOSDisk(JsonElement element)
+        internal static OSDisk DeserializeOSDisk(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new NetworkCloudOSDisk(Optional.ToNullable(createOption), Optional.ToNullable(deleteOption), diskSizeGB);
+            return new OSDisk(Optional.ToNullable(createOption), Optional.ToNullable(deleteOption), diskSizeGB);
         }
     }
 }
