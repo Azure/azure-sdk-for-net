@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/outputs/{outputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Outputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outputName"> The name of the output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamingJobOutputResource>> GetIfExistsAsync(string outputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
+
+            using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamingJobOutputOutputsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobOutputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/outputs/{outputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Outputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outputName"> The name of the output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
+        public virtual NullableResponse<StreamingJobOutputResource> GetIfExists(string outputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
+
+            using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamingJobOutputOutputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobOutputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<StreamingJobOutputResource> IEnumerable<StreamingJobOutputResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
