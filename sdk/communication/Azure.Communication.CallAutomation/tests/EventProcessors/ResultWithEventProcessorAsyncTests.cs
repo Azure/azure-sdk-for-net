@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using Microsoft.Azure.Amqp.Framing;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Microsoft.Azure.Amqp.Framing;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 {
@@ -592,6 +592,70 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(typeof(DialogFailed), returnedResult.FailureResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
             Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
+        }
+
+        [Test]
+        public async Task AddParticipantCancelledEventResultFailedTest()
+        {
+            var invitationId = "invitationId";
+            var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+            var callInvite = CreateMockInvite();
+            var response = callConnection.CancelAddParticipant(invitationId);
+
+            Assert.AreEqual(202, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.CancelAddParticipantFailed(
+                CallConnectionId,
+                ServerCallId,
+                CorelationId,
+                invitationId,
+                new ResultInformation(400, 4000, "resultInformation"),
+                OperationContext));
+
+            CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.FailureResult);
+            Assert.IsNull(returnedResult.SuccessResult);
+            Assert.AreEqual(typeof(CancelAddParticipantFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
+            Assert.AreEqual(invitationId, returnedResult.FailureResult.InvitationId);
+        }
+
+        [Test]
+        public async Task AddParticipantCancelledEventResultSuccessTest()
+        {
+            var invitationId = "invitationId";
+            var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+            var callInvite = CreateMockInvite();
+            var response = callConnection.CancelAddParticipant(invitationId);
+
+            Assert.AreEqual(202, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.AddParticipantCancelled(
+                CallConnectionId,
+                ServerCallId,
+                CorelationId,
+                invitationId,
+                callInvite.Target,
+                OperationContext));
+
+            CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(true, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.SuccessResult);
+            Assert.IsNull(returnedResult.FailureResult);
+            Assert.AreEqual(typeof(AddParticipantCancelled), returnedResult.SuccessResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
+            Assert.AreEqual(invitationId, returnedResult.SuccessResult.InvitationId);
         }
     }
 }
