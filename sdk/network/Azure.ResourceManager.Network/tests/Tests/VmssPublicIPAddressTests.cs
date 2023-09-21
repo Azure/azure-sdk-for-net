@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             string virtualMachineScaleSetName = "vmssip";
             var vmssId = VirtualMachineScaleSetNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName);
-            var vmssListAllPageResultAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetPublicIPAddressesAsync();
+            var vmssListAllPageResultAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetAllPublicIPAddressDataAsync();
             var vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
             var firstResult = vmssListAllPageResult.First();
 
             Assert.NotNull(vmssListAllPageResult);
-            Assert.AreEqual("Succeeded", firstResult.Data.ProvisioningState.ToString());
-            Assert.NotNull(firstResult.Data.ResourceGuid);
+            Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
+            Assert.NotNull(firstResult.ResourceGuid);
 
             string idItem = firstResult.Id;
             string vmIndex = GetNameById(idItem, "virtualMachines");
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.Network.Tests
             string ipName = GetNameById(idItem, "publicIPAddresses");
 
             var vmssVmId = VirtualMachineScaleSetVmNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName, vmIndex);
-            var vmssListResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressesAsync(nicName, ipConfigName).ToEnumerableAsync();
+            var vmssListResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetAllPublicIPAddressDataAsync(nicName, ipConfigName).ToEnumerableAsync();
 
             Has.One.EqualTo(vmssListResult);
 
-            var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressAsync(nicName, ipConfigName, ipName);
+            var vmssGetResult = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetPublicIPAddressDataAsync(nicName, ipConfigName, ipName);
 
             Assert.NotNull(vmssGetResult);
-            Assert.AreEqual("Succeeded", vmssGetResult.Value.Data.ProvisioningState.ToString());
-            Assert.NotNull(vmssGetResult.Value.Data.ResourceGuid);
+            Assert.AreEqual("Succeeded", vmssGetResult.Value.ProvisioningState.ToString());
+            Assert.NotNull(vmssGetResult.Value.ResourceGuid);
         }
     }
 }
