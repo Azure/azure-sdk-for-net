@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)AsyncPageableExtensions.cs" LinkBase="Shared\Test" />
+    <Compile Include="$(AzureStorageSharedTestSources)RandomExtensions.cs" LinkBase="Shared\Test" />
     <Compile Include="$(AzureStorageSharedTestSources)Tree.cs" LinkBase="Shared\Test" />
   </ItemGroup>
   <ItemGroup>

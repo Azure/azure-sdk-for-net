@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -28,7 +28,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceItem GetStorageResourceReference(string path)
         {
-            throw new NotImplementedException();
+            List<string> pathSegments = path.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+            ShareDirectoryClient dir = ShareDirectoryClient;
+            foreach (string pathSegment in pathSegments.Take(pathSegments.Count - 1))
+            {
+                dir = dir.GetSubdirectoryClient(pathSegment);
+            }
+            ShareFileClient file = dir.GetFileClient(pathSegments.Last());
+            return new ShareFileStorageResourceItem(file, ResourceOptions);
         }
 
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
@@ -51,6 +58,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 yield return resource;
             }
         }
+
+        internal StorageResourceItem GetStorageResourceReferenceInternal(string path)
+            => GetStorageResourceReference(path);
         #endregion
     }
 }
