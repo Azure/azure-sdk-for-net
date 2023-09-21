@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
-using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,41 +23,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateProject()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 projectKind = "Conversation",
                 projectName = "<projectName>",
                 language = "<language>",
-            });
-            Response response = client.CreateProject("<projectName>", content);
+            };
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                projectKind = "Conversation",
-                projectName = "<projectName>",
-                language = "<language>",
-            });
-            Response response = await client.CreateProjectAsync("<projectName>", content);
+            Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -71,23 +48,24 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 projectKind = "Conversation",
                 settings = new
                 {
-                    confidenceThreshold = 123.45F,
+                    confidenceThreshold = 123.45f,
                 },
                 projectName = "<projectName>",
                 multilingual = true,
                 description = "<description>",
                 language = "<language>",
-            });
-            Response response = client.CreateProject("<projectName>", content);
+            };
+
+            Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -104,25 +82,51 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateProject_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var data = new
+            {
+                projectKind = "Conversation",
+                projectName = "<projectName>",
+                language = "<language>",
+            };
+
+            Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("projectName").ToString());
+            Console.WriteLine(result.GetProperty("language").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 projectKind = "Conversation",
                 settings = new
                 {
-                    confidenceThreshold = 123.45F,
+                    confidenceThreshold = 123.45f,
                 },
                 projectName = "<projectName>",
                 multilingual = true,
                 description = "<description>",
                 language = "<language>",
-            });
-            Response response = await client.CreateProjectAsync("<projectName>", content);
+            };
+
+            Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -141,9 +145,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProject()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetProject("<projectName>");
 
@@ -157,29 +161,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetProjectAsync("<projectName>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetProject("<projectName>");
 
@@ -198,11 +184,29 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProject_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetProjectAsync("<projectName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("projectName").ToString());
+            Console.WriteLine(result.GetProperty("language").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetProjectAsync("<projectName>");
 
@@ -223,9 +227,28 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployment()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = client.GetDeployment("<projectName>", "<deploymentName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentName").ToString());
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+            Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetDeployment_AllParameters()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetDeployment("<projectName>", "<deploymentName>");
 
@@ -242,9 +265,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployment_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
 
@@ -259,30 +282,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployment_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = client.GetDeployment("<projectName>", "<deploymentName>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("deploymentName").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
-            Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployment_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
 
@@ -299,28 +303,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeploymentJobStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetDeploymentJobStatus("<projectName>", "<deploymentName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetDeploymentJobStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -333,9 +320,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeploymentJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetDeploymentJobStatus("<projectName>", "<deploymentName>", "<jobId>");
 
@@ -355,21 +342,38 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeploymentJobStatus_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetDeploymentJobStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeploymentJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetDeploymentJobStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 
@@ -389,11 +393,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -401,28 +405,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSwapDeploymentsJobStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetSwapDeploymentsJobStatus("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSwapDeploymentsJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetSwapDeploymentsJobStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -435,9 +422,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSwapDeploymentsJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetSwapDeploymentsJobStatus("<projectName>", "<jobId>");
 
@@ -457,21 +444,38 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSwapDeploymentsJobStatus_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetSwapDeploymentsJobStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSwapDeploymentsJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetSwapDeploymentsJobStatusAsync("<projectName>", "<jobId>");
 
@@ -491,11 +495,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -503,25 +507,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExportProjectJobStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportProjectJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -531,9 +521,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExportProjectJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
 
@@ -554,21 +544,35 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetExportProjectJobStatus_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExportProjectJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
 
@@ -589,11 +593,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -601,28 +605,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetImportProjectJobStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetImportProjectJobStatus("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportProjectJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetImportProjectJobStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -635,9 +622,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetImportProjectJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetImportProjectJobStatus("<projectName>", "<jobId>");
 
@@ -657,21 +644,38 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetImportProjectJobStatus_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetImportProjectJobStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetImportProjectJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetImportProjectJobStatusAsync("<projectName>", "<jobId>");
 
@@ -691,11 +695,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -703,9 +707,29 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainedModel()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("label").ToString());
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+            Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+            Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+            Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTrainedModel_AllParameters()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
 
@@ -723,9 +747,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrainedModel_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 
@@ -741,31 +765,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainedModel_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("label").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
-            Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-            Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrainedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 
@@ -783,9 +787,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTrainedModel()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTrainedModel_AllParameters()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
             Console.WriteLine(response.Status);
@@ -795,9 +811,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTrainedModel_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
             Console.WriteLine(response.Status);
@@ -805,23 +821,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTrainedModel_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTrainedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
             Console.WriteLine(response.Status);
@@ -831,80 +835,37 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetModelEvaluationSummary()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroF1").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroPrecision").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroRecall").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetModelEvaluationSummary_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
@@ -917,37 +878,37 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetModelEvaluationSummary_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
@@ -961,39 +922,82 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetModelEvaluationSummary_AllParameters_Async()
+        public async Task Example_GetModelEvaluationSummary_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroF1").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroPrecision").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroRecall").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetModelEvaluationSummary_AllParameters_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<test>").GetProperty("<test>").GetProperty("rawValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("f1").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("precision").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("recall").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("truePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("trueNegativeCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falsePositiveCount").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<test>").GetProperty("falseNegativeCount").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
@@ -1009,28 +1013,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLoadSnapshotJobStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetLoadSnapshotJobStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLoadSnapshotJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetLoadSnapshotJobStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1043,9 +1030,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetLoadSnapshotJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetLoadSnapshotJobStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 
@@ -1065,21 +1052,38 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetLoadSnapshotJobStatus_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetLoadSnapshotJobStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetLoadSnapshotJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetLoadSnapshotJobStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 
@@ -1099,11 +1103,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -1111,32 +1115,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainingJobStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetTrainingJobStatus("<projectName>", "<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
@@ -1153,9 +1136,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainingJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetTrainingJobStatus("<projectName>", "<jobId>");
 
@@ -1187,21 +1170,42 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTrainingJobStatus_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrainingJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>");
 
@@ -1233,11 +1237,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -1245,28 +1249,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjectDeletionJobStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetProjectDeletionJobStatus("<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDeletionJobStatus_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Response response = await client.GetProjectDeletionJobStatusAsync("<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1279,9 +1266,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjectDeletionJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.GetProjectDeletionJobStatus("<jobId>");
 
@@ -1301,21 +1288,38 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProjectDeletionJobStatus_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            Response response = await client.GetProjectDeletionJobStatusAsync("<jobId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProjectDeletionJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.GetProjectDeletionJobStatusAsync("<jobId>");
 
@@ -1335,11 +1339,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -1347,37 +1351,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjects()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetProjects())
+            foreach (var item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastModifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("projectKind").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetProjectsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastModifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("projectKind").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("projectKind").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
             }
         }
 
@@ -1385,23 +1370,42 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjects_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetProjects())
+            foreach (var item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastModifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("projectKind").ToString());
-                Console.WriteLine(result[0].GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("multilingual").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("projectKind").ToString());
+                Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("multilingual").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProjects_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetProjectsAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("projectKind").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
             }
         }
 
@@ -1409,23 +1413,23 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProjects_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetProjectsAsync())
+            await foreach (var item in client.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastModifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("projectKind").ToString());
-                Console.WriteLine(result[0].GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-                Console.WriteLine(result[0].GetProperty("projectName").ToString());
-                Console.WriteLine(result[0].GetProperty("multilingual").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("projectKind").ToString());
+                Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+                Console.WriteLine(result.GetProperty("projectName").ToString());
+                Console.WriteLine(result.GetProperty("multilingual").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
             }
         }
 
@@ -1433,39 +1437,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployments()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetDeployments("<projectName>"))
+            foreach (var item in client.GetDeployments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentName").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentName").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("deploymentName").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
             }
         }
 
@@ -1473,19 +1457,39 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetDeployments("<projectName>"))
+            foreach (var item in client.GetDeployments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentName").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("deploymentName").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDeployments_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetDeploymentsAsync("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("deploymentName").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
             }
         }
 
@@ -1493,19 +1497,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
+            await foreach (var item in client.GetDeploymentsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentName").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeployedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("deploymentName").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
             }
         }
 
@@ -1513,41 +1517,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainedModels()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTrainedModels("<projectName>"))
+            foreach (var item in client.GetTrainedModels("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("label").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainingDurationInSeconds").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("hasSnapshot").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainedModels_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("label").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainingDurationInSeconds").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("hasSnapshot").ToString());
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
             }
         }
 
@@ -1555,20 +1538,41 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainedModels_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTrainedModels("<projectName>"))
+            foreach (var item in client.GetTrainedModels("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("label").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainingDurationInSeconds").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("hasSnapshot").ToString());
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTrainedModels_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetTrainedModelsAsync("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
             }
         }
 
@@ -1576,20 +1580,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrainedModels_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>"))
+            await foreach (var item in client.GetTrainedModelsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("label").ToString());
-                Console.WriteLine(result[0].GetProperty("modelId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastTrainingDurationInSeconds").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
-                Console.WriteLine(result[0].GetProperty("modelTrainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("hasSnapshot").ToString());
+                Console.WriteLine(result.GetProperty("label").ToString());
+                Console.WriteLine(result.GetProperty("modelId").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
             }
         }
 
@@ -1597,47 +1601,23 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetModelEvaluationResults()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
+            foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("text").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetModelEvaluationResults_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("text").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+                Console.WriteLine(result.GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
             }
         }
 
@@ -1645,23 +1625,47 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetModelEvaluationResults_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", stringIndexType: "Utf16CodeUnit"))
+            foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("text").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+                Console.WriteLine(result.GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetModelEvaluationResults_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
             }
         }
 
@@ -1669,23 +1673,23 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetModelEvaluationResults_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", stringIndexType: "Utf16CodeUnit"))
+            await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("text").ToString());
-                Console.WriteLine(result[0].GetProperty("language").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
-                Console.WriteLine(result[0].GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
-                Console.WriteLine(result[0].GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+                Console.WriteLine(result.GetProperty("text").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+                Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+                Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
             }
         }
 
@@ -1693,43 +1697,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainingJobs()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTrainingJobs("<projectName>"))
+            foreach (var item in client.GetTrainingJobs("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("modelLabel").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingJobs_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("modelLabel").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -1737,46 +1719,68 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainingJobs_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTrainingJobs("<projectName>"))
+            foreach (var item in client.GetTrainingJobs("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("modelLabel").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingMode").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expirationDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("warnings")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("warnings")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
+                Console.WriteLine(result.GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTrainingJobs_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetTrainingJobsAsync("<projectName>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -1784,46 +1788,46 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrainingJobs_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>"))
+            await foreach (var item in client.GetTrainingJobsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("modelLabel").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingMode").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("jobId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("expirationDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("warnings")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("warnings")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
+                Console.WriteLine(result.GetProperty("jobId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
             }
         }
 
@@ -1831,31 +1835,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSupportedLanguages()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetSupportedLanguages("Conversation"))
+            foreach (var item in client.GetSupportedLanguages("<projectKind>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("languageName").ToString());
-                Console.WriteLine(result[0].GetProperty("languageCode").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedLanguages_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("languageName").ToString());
-                Console.WriteLine(result[0].GetProperty("languageCode").ToString());
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
             }
         }
 
@@ -1863,15 +1851,31 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSupportedLanguages_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetSupportedLanguages("Conversation"))
+            foreach (var item in client.GetSupportedLanguages("<projectKind>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("languageName").ToString());
-                Console.WriteLine(result[0].GetProperty("languageCode").ToString());
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSupportedLanguages_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetSupportedLanguagesAsync("<projectKind>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
             }
         }
 
@@ -1879,15 +1883,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSupportedLanguages_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation"))
+            await foreach (var item in client.GetSupportedLanguagesAsync("<projectKind>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("languageName").ToString());
-                Console.WriteLine(result[0].GetProperty("languageCode").ToString());
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
             }
         }
 
@@ -1895,33 +1899,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSupportedPrebuiltEntities()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetSupportedPrebuiltEntities())
+            foreach (var item in client.GetSupportedPrebuiltEntities())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("examples").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedPrebuiltEntities_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("examples").ToString());
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
             }
         }
 
@@ -1929,16 +1916,33 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSupportedPrebuiltEntities_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetSupportedPrebuiltEntities(language: "<language>", multilingual: true))
+            foreach (var item in client.GetSupportedPrebuiltEntities("<language>", true))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("examples").ToString());
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSupportedPrebuiltEntities_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetSupportedPrebuiltEntitiesAsync())
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
             }
         }
 
@@ -1946,16 +1950,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSupportedPrebuiltEntities_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync(language: "<language>", multilingual: true))
+            await foreach (var item in client.GetSupportedPrebuiltEntitiesAsync("<language>", true))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("category").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("examples").ToString());
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
             }
         }
 
@@ -1963,31 +1967,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainingConfigVersions()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTrainingConfigVersions("Conversation"))
+            foreach (var item in client.GetTrainingConfigVersions("<projectKind>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingConfigVersions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("Conversation"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
             }
         }
 
@@ -1995,15 +1983,31 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrainingConfigVersions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTrainingConfigVersions("Conversation"))
+            foreach (var item in client.GetTrainingConfigVersions("<projectKind>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTrainingConfigVersions_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            await foreach (var item in client.GetTrainingConfigVersionsAsync("<projectKind>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
             }
         }
 
@@ -2011,15 +2015,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrainingConfigVersions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("Conversation"))
+            await foreach (var item in client.GetTrainingConfigVersionsAsync("<projectKind>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("trainingConfigVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("modelExpirationDate").ToString());
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
             }
         }
 
@@ -2027,31 +2031,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteProject()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+            var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Operation<BinaryData> operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2063,13 +2049,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+            var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2086,25 +2072,43 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteProject_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+            var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2121,11 +2125,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -2133,28 +2137,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ExportProject()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
+            var operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Operation<BinaryData> operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.ToString());
         }
@@ -2163,13 +2152,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ExportProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.ExportProject(WaitUntil.Completed, "<projectName>", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", stringIndexType: "Utf16CodeUnit", trainedModelLabel: "<trainedModelLabel>");
+            var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("resultUrl").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -2187,25 +2176,40 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ExportProject_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ExportProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", stringIndexType: "Utf16CodeUnit", trainedModelLabel: "<trainedModelLabel>");
+            var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("resultUrl").ToString());
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -2223,11 +2227,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -2235,11 +2239,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportProject()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 projectFileVersion = "<projectFileVersion>",
                 stringIndexType = "Utf16CodeUnit",
@@ -2249,39 +2253,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                     projectName = "<projectName>",
                     language = "<language>",
                 },
-            });
-            Operation<BinaryData> operation = client.ImportProject(WaitUntil.Completed, "<projectName>", content);
+            };
+
+            var operation = client.ImportProject(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                projectFileVersion = "<projectFileVersion>",
-                stringIndexType = "Utf16CodeUnit",
-                metadata = new
-                {
-                    projectKind = "Conversation",
-                    projectName = "<projectName>",
-                    language = "<language>",
-                },
-            });
-            Operation<BinaryData> operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2293,11 +2269,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ImportProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 projectFileVersion = "<projectFileVersion>",
                 stringIndexType = "Utf16CodeUnit",
@@ -2306,7 +2282,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                     projectKind = "Conversation",
                     settings = new
                     {
-                        confidenceThreshold = 123.45F,
+                        confidenceThreshold = 123.45f,
                     },
                     projectName = "<projectName>",
                     multilingual = true,
@@ -2315,90 +2291,71 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                 },
                 assets = new
                 {
-                    intents = new List<object>()
-{
-new
-{
-category = "<category>",
-}
-},
-                    entities = new List<object>()
-{
-new
-{
-category = "<category>",
-compositionSetting = "returnLongestOverlap",
-list = new
-{
-sublists = new List<object>()
-{
-new
-{
-listKey = "<listKey>",
-synonyms = new List<object>()
-{
-new
-{
-language = "<language>",
-values = new List<object>()
-{
-"<values>"
-},
-}
-},
-}
-},
-},
-prebuilts = new List<object>()
-{
-new
-{
-category = "<category>",
-}
-},
-regex = new
-{
-expressions = new List<object>()
-{
-new
-{
-regexKey = "<regexKey>",
-language = "<language>",
-regexPattern = "<regexPattern>",
-}
-},
-},
-requiredComponents = new List<object>()
-{
-"<requiredComponents>"
-},
-}
-},
-                    utterances = new List<object>()
-{
-new
-{
-entities = new List<object>()
-{
-new
-{
-category = "<category>",
-offset = 1234,
-length = 1234,
-}
-},
-text = "<text>",
-language = "<language>",
-intent = "<intent>",
-dataset = "<dataset>",
-}
-},
+                    intents = new[] {
+            new {
+                category = "<category>",
+            }
+        },
+                    entities = new[] {
+            new {
+                category = "<category>",
+                compositionSetting = "returnLongestOverlap",
+                list = new {
+                    sublists = new[] {
+                        new {
+                            listKey = "<listKey>",
+                            synonyms = new[] {
+                                new {
+                                    language = "<language>",
+                                    values = new[] {
+                                        "<String>"
+                                    },
+                                }
+                            },
+                        }
+                    },
+                },
+                prebuilts = new[] {
+                    new {
+                        category = "<category>",
+                    }
+                },
+                regex = new {
+                    expressions = new[] {
+                        new {
+                            regexKey = "<regexKey>",
+                            language = "<language>",
+                            regexPattern = "<regexPattern>",
+                        }
+                    },
+                },
+                requiredComponents = new[] {
+                    "<String>"
+                },
+            }
+        },
+                    utterances = new[] {
+            new {
+                entities = new[] {
+                    new {
+                        category = "<category>",
+                        offset = 1234,
+                        length = 1234,
+                    }
+                },
+                text = "<text>",
+                language = "<language>",
+                intent = "<intent>",
+                dataset = "<dataset>",
+            }
+        },
                     projectKind = "Conversation",
                 },
-            });
-            Operation<BinaryData> operation = client.ImportProject(WaitUntil.Completed, "<projectName>", content, exportedProjectFormat: "Conversation");
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = client.ImportProject(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>");
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2415,23 +2372,53 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ImportProject_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var data = new
+            {
+                projectFileVersion = "<projectFileVersion>",
+                stringIndexType = "Utf16CodeUnit",
+                metadata = new
+                {
+                    projectKind = "Conversation",
+                    projectName = "<projectName>",
+                    language = "<language>",
+                },
+            };
+
+            var operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ImportProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 projectFileVersion = "<projectFileVersion>",
                 stringIndexType = "Utf16CodeUnit",
@@ -2440,7 +2427,7 @@ dataset = "<dataset>",
                     projectKind = "Conversation",
                     settings = new
                     {
-                        confidenceThreshold = 123.45F,
+                        confidenceThreshold = 123.45f,
                     },
                     projectName = "<projectName>",
                     multilingual = true,
@@ -2449,90 +2436,71 @@ dataset = "<dataset>",
                 },
                 assets = new
                 {
-                    intents = new List<object>()
-{
-new
-{
-category = "<category>",
-}
-},
-                    entities = new List<object>()
-{
-new
-{
-category = "<category>",
-compositionSetting = "returnLongestOverlap",
-list = new
-{
-sublists = new List<object>()
-{
-new
-{
-listKey = "<listKey>",
-synonyms = new List<object>()
-{
-new
-{
-language = "<language>",
-values = new List<object>()
-{
-"<values>"
-},
-}
-},
-}
-},
-},
-prebuilts = new List<object>()
-{
-new
-{
-category = "<category>",
-}
-},
-regex = new
-{
-expressions = new List<object>()
-{
-new
-{
-regexKey = "<regexKey>",
-language = "<language>",
-regexPattern = "<regexPattern>",
-}
-},
-},
-requiredComponents = new List<object>()
-{
-"<requiredComponents>"
-},
-}
-},
-                    utterances = new List<object>()
-{
-new
-{
-entities = new List<object>()
-{
-new
-{
-category = "<category>",
-offset = 1234,
-length = 1234,
-}
-},
-text = "<text>",
-language = "<language>",
-intent = "<intent>",
-dataset = "<dataset>",
-}
-},
+                    intents = new[] {
+            new {
+                category = "<category>",
+            }
+        },
+                    entities = new[] {
+            new {
+                category = "<category>",
+                compositionSetting = "returnLongestOverlap",
+                list = new {
+                    sublists = new[] {
+                        new {
+                            listKey = "<listKey>",
+                            synonyms = new[] {
+                                new {
+                                    language = "<language>",
+                                    values = new[] {
+                                        "<String>"
+                                    },
+                                }
+                            },
+                        }
+                    },
+                },
+                prebuilts = new[] {
+                    new {
+                        category = "<category>",
+                    }
+                },
+                regex = new {
+                    expressions = new[] {
+                        new {
+                            regexKey = "<regexKey>",
+                            language = "<language>",
+                            regexPattern = "<regexPattern>",
+                        }
+                    },
+                },
+                requiredComponents = new[] {
+                    "<String>"
+                },
+            }
+        },
+                    utterances = new[] {
+            new {
+                entities = new[] {
+                    new {
+                        category = "<category>",
+                        offset = 1234,
+                        length = 1234,
+                    }
+                },
+                text = "<text>",
+                language = "<language>",
+                intent = "<intent>",
+                dataset = "<dataset>",
+            }
+        },
                     projectKind = "Conversation",
                 },
-            });
-            Operation<BinaryData> operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", content, exportedProjectFormat: "Conversation");
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = await client.ImportProjectAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<exportedProjectFormat>");
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2549,11 +2517,11 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -2561,45 +2529,19 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Train()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 modelLabel = "<modelLabel>",
                 trainingMode = "advanced",
-            });
-            Operation<BinaryData> operation = client.Train(WaitUntil.Completed, "<projectName>", content);
+            };
+
+            var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Train_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                modelLabel = "<modelLabel>",
-                trainingMode = "advanced",
-            });
-            Operation<BinaryData> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -2615,11 +2557,11 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Train_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 modelLabel = "<modelLabel>",
                 trainingConfigVersion = "<trainingConfigVersion>",
@@ -2630,10 +2572,11 @@ dataset = "<dataset>",
                     trainingSplitPercentage = 1234,
                     testingSplitPercentage = 1234,
                 },
-            });
-            Operation<BinaryData> operation = client.Train(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -2662,23 +2605,51 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Train_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var data = new
+            {
+                modelLabel = "<modelLabel>",
+                trainingMode = "advanced",
+            };
+
+            var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Train_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 modelLabel = "<modelLabel>",
                 trainingConfigVersion = "<trainingConfigVersion>",
@@ -2689,10 +2660,11 @@ dataset = "<dataset>",
                     trainingSplitPercentage = 1234,
                     testingSplitPercentage = 1234,
                 },
-            });
-            Operation<BinaryData> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -2721,11 +2693,11 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -2733,41 +2705,19 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SwapDeployments()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 firstDeploymentName = "<firstDeploymentName>",
                 secondDeploymentName = "<secondDeploymentName>",
-            });
-            Operation<BinaryData> operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", content);
+            };
+
+            var operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_SwapDeployments_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                firstDeploymentName = "<firstDeploymentName>",
-                secondDeploymentName = "<secondDeploymentName>",
-            });
-            Operation<BinaryData> operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2779,18 +2729,19 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_SwapDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 firstDeploymentName = "<firstDeploymentName>",
                 secondDeploymentName = "<secondDeploymentName>",
-            });
-            Operation<BinaryData> operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2807,30 +2758,55 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_SwapDeployments_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var data = new
+            {
+                firstDeploymentName = "<firstDeploymentName>",
+                secondDeploymentName = "<secondDeploymentName>",
+            };
+
+            var operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SwapDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 firstDeploymentName = "<firstDeploymentName>",
                 secondDeploymentName = "<secondDeploymentName>",
-            });
-            Operation<BinaryData> operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2847,11 +2823,11 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -2859,41 +2835,18 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeployProject()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 trainedModelLabel = "<trainedModelLabel>",
-            });
-            Operation<BinaryData> operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
+            };
+
+            var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("deploymentName").ToString());
-            Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
-            Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            RequestContent content = RequestContent.Create(new
-            {
-                trainedModelLabel = "<trainedModelLabel>",
-            });
-            Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -2907,17 +2860,43 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeployProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 trainedModelLabel = "<trainedModelLabel>",
-            });
-            Operation<BinaryData> operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("deploymentName").ToString());
+            Console.WriteLine(result.GetProperty("modelId").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
+            Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeployProject_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var data = new
+            {
+                trainedModelLabel = "<trainedModelLabel>",
+            };
+
+            var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -2931,17 +2910,18 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeployProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            var data = new
             {
                 trainedModelLabel = "<trainedModelLabel>",
-            });
-            Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
-            BinaryData responseData = operation.Value;
+            };
 
+            var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
@@ -2955,31 +2935,13 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDeployment()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+            var operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeployment_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Operation<BinaryData> operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2991,13 +2953,13 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDeployment_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+            var operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3014,25 +2976,43 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteDeployment_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteDeployment_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+            var operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -3049,11 +3029,11 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
 
@@ -3061,79 +3041,65 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_LoadSnapshot()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
-        }
+            var operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_LoadSnapshot_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+            Console.WriteLine(operation.GetRawResponse().Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_LoadSnapshot_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+            var operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+
+            Console.WriteLine(operation.GetRawResponse().Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_LoadSnapshot_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+
+            Console.WriteLine(operation.GetRawResponse().Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LoadSnapshot_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+            var operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+
+            Console.WriteLine(operation.GetRawResponse().Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelTrainingJob()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+            var operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+
             BinaryData responseData = operation.Value;
-
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelTrainingJob_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-
-            Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
-            BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -3149,13 +3115,13 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelTrainingJob_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+            var operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -3184,25 +3150,47 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CancelTrainingJob_Async()
+        {
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
+
+            var operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelTrainingJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
+            var credential = new AzureKeyCredential("<key>");
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+            var operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
+
             BinaryData responseData = operation.Value;
-
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -3231,11 +3219,11 @@ dataset = "<dataset>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         }
     }
