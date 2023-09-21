@@ -1,7 +1,7 @@
 [CmdLetBinding()]
 param(
   [Parameter(Mandatory)]
-  [string]$PackageFoldersFile
+  [string]$PackageDirectoriesFile
 )
 
 . $PSScriptRoot/common.ps1
@@ -10,7 +10,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 if (Test-Path "Function:$UpdateGeneratedSdksFn") {
-    &$UpdateGeneratedSdksFn $PackageFoldersFile
+    &$UpdateGeneratedSdksFn $PackageDirectoriesFile
 } else {
     Write-Error "Function $UpdateGeneratedSdksFn not implemented in Language-Settings.ps1"
 }

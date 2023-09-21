@@ -419,7 +419,7 @@ function EnsureCustomSource($package) {
       -AllVersions `
       -AllowPrereleaseVersions
 
-      if (!$? -or !$existingVersions) { 
+      if (!$? -or !$existingVersions) {
         Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
         return $package
       }
@@ -495,19 +495,19 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       continue
     }
 
-    if ($matchingPublishedPackage.Support -eq 'deprecated') { 
-      if ($Mode -eq 'legacy') { 
+    if ($matchingPublishedPackage.Support -eq 'deprecated') {
+      if ($Mode -eq 'legacy') {
 
         # Select the GA version, if none use the preview version
         $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
-        if (!$updatedVersion) { 
+        if (!$updatedVersion) {
           $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
         }
         $package.Versions = @($updatedVersion)
 
         Write-Host "Add deprecated package to legacy moniker: $($package.Name)"
         $outputPackages += $package
-      } else { 
+      } else {
         Write-Host "Removing deprecated package: $($package.Name)"
       }
 
@@ -587,23 +587,23 @@ function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
   return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
 }
 
-function Update-dotnet-GeneratedSdks([string]$PackageFoldersFile) {
-  $packageFolders = Get-Content $PackageFoldersFile | ConvertFrom-Json
+function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
+  $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
   $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
 
-  foreach ($folder in $packageFolders) {
+  foreach ($directory in $packageDirectories) {
     Push-Location $RepoRoot
     try {
       Write-Host 'Generating projects under folder ' -ForegroundColor Green -NoNewline
-      Write-Host "$folder" -ForegroundColor Yellow
+      Write-Host "$directory" -ForegroundColor Yellow
       if ($showSummary) {
-        Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" /v:n /ds eng\service.proj" -GroupOutput
+        Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$directory`" /v:n /ds eng\service.proj" -GroupOutput
       }
       else {
-        Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" eng\service.proj" -GroupOutput
+        Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$directory`" eng\service.proj" -GroupOutput
       }
       if ($LastExitCode -ne 0) {
-        Write-Error "Generation error in $folder"
+        Write-Error "Generation error in $directory"
         exit 1
       }
     }
