@@ -36,6 +36,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             OperationContext = "context"
         };
 
+        private static readonly StartDialogOptions _startDialogOptionsWithoutBotAppId = new StartDialogOptions(DialogInputType.PowerVirtualAgents, new Dictionary<string, object>())
+        {
+            OperationContext = "context"
+        };
+
         private static readonly StartDialogOptions _startDialogWithCustomObjectOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, "botAppId", dialogContextWithObject)
         {
             OperationContext = "context"
@@ -47,6 +52,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         };
 
         private static readonly StartDialogOptions _startDialogWithIdOptions = new StartDialogOptions(dialogId, DialogInputType.PowerVirtualAgents, "botAppId", new Dictionary<string, object>())
+        {
+            OperationContext = "context"
+        };
+
+        private static readonly StartDialogOptions _startDialogWithIdOptionsWithoutBotAppId = new StartDialogOptions(dialogId, DialogInputType.AzureOpenAI, new Dictionary<string, object>())
         {
             OperationContext = "context"
         };
@@ -140,6 +150,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 {
                     callDialog => callDialog.StartDialogAsync(_startDialogWithIdOptions)
                 },
+                new Func<CallDialog, Task<Response<DialogResult>>>?[]
+                {
+                    callDialog => callDialog.StartDialogAsync(_startDialogOptionsWithoutBotAppId)
+                },
             };
         }
 
@@ -163,6 +177,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 {
                     callDialog => callDialog.StartDialog(_startDialogWithIdOptions)
                 },
+                new Func<CallDialog, Response<DialogResult>>?[]
+                {
+                    callDialog => callDialog.StartDialog(_startDialogOptionsWithoutBotAppId)
+                },
             };
         }
 
@@ -174,6 +192,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 {
                     callDialog => callDialog.StartDialogAsync(_startDialogWithIdOptions)
                 },
+
+                new Func<CallDialog, Task<Response<DialogResult>>>?[]
+                {
+                    callDialog => callDialog.StartDialogAsync(_startDialogWithIdOptionsWithoutBotAppId)
+                },
             };
         }
 
@@ -184,6 +207,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 new Func<CallDialog, Response<DialogResult>>?[]
                 {
                     callDialog => callDialog.StartDialog(_startDialogWithIdOptions)
+                },
+
+                new Func<CallDialog, Response<DialogResult>>?[]
+                {
+                    callDialog => callDialog.StartDialog(_startDialogWithIdOptionsWithoutBotAppId)
                 },
             };
         }

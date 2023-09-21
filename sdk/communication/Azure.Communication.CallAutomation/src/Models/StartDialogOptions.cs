@@ -24,6 +24,19 @@ namespace Azure.Communication.CallAutomation
             DialogContext = dialogContext;
             DialogId = Guid.NewGuid().ToString();
         }
+
+        /// <summary>
+        /// Creates a new instance of the DialogOptions.
+        /// </summary>
+        /// <param name="dialogInputType"></param>
+        /// <param name="dialogContext"></param>
+        public StartDialogOptions(DialogInputType dialogInputType, IDictionary<string, object> dialogContext)
+        {
+            DialogInputType = dialogInputType;
+            DialogContext = dialogContext;
+            DialogId = Guid.NewGuid().ToString();
+        }
+
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
@@ -35,6 +48,19 @@ namespace Azure.Communication.CallAutomation
         {
             DialogInputType = dialogInputType;
             BotAppId = botAppId;
+            DialogContext = dialogContext;
+            DialogId = dialogId;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the DialogOptions.
+        /// </summary>
+        /// <param name="dialogInputType"></param>
+        /// <param name="dialogContext"></param>
+        /// /// <param name="dialogId"></param>
+        public StartDialogOptions(string dialogId, DialogInputType dialogInputType, IDictionary<string, object> dialogContext)
+        {
+            DialogInputType = dialogInputType;
             DialogContext = dialogContext;
             DialogId = dialogId;
         }
