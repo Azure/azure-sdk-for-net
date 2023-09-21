@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedServices/{linkedServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedServiceName"> Name of the linked service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<OperationalInsightsLinkedServiceResource>> GetIfExistsAsync(string linkedServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+
+            using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _operationalInsightsLinkedServiceLinkedServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsLinkedServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedServices/{linkedServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedServiceName"> Name of the linked service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public virtual NullableResponse<OperationalInsightsLinkedServiceResource> GetIfExists(string linkedServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+
+            using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _operationalInsightsLinkedServiceLinkedServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsLinkedServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<OperationalInsightsLinkedServiceResource> IEnumerable<OperationalInsightsLinkedServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
