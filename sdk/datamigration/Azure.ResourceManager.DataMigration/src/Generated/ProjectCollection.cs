@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProjectResource>> GetIfExistsAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _projectRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        public virtual NullableResponse<ProjectResource> GetIfExists(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _projectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ProjectResource> IEnumerable<ProjectResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
