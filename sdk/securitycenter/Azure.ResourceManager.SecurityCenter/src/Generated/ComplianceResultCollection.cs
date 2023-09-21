@@ -231,6 +231,80 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ComplianceResultResource>> GetIfExistsAsync(string complianceResultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
+
+            using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _complianceResultRestClient.GetAsync(Id, complianceResultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ComplianceResultResource>(response.GetRawResponse());
+                return Response.FromValue(new ComplianceResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="complianceResultName"> name of the desired assessment compliance result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="complianceResultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="complianceResultName"/> is null. </exception>
+        public virtual NullableResponse<ComplianceResultResource> GetIfExists(string complianceResultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(complianceResultName, nameof(complianceResultName));
+
+            using var scope = _complianceResultClientDiagnostics.CreateScope("ComplianceResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _complianceResultRestClient.Get(Id, complianceResultName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ComplianceResultResource>(response.GetRawResponse());
+                return Response.FromValue(new ComplianceResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ComplianceResultResource> IEnumerable<ComplianceResultResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
