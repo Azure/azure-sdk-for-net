@@ -134,7 +134,7 @@ Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("web
 
 ### Delete the Dev Box
 
-Deleting a DevBox is easy. It's much faster operation that creating a new DevBox. 
+Deleting a DevBox is easy. It's much faster operation than creating a new DevBox. 
 
 ```C# Snippet:Azure_DevCenter_DeleteDevBox_Scenario
 Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
