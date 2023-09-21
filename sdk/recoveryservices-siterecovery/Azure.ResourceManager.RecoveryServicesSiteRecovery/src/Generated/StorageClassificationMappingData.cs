@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <summary> Properties of the storage mapping object. </summary>
         internal StorageClassificationMappingProperties Properties { get; }
         /// <summary> Target storage object Id. </summary>
-        public string TargetStorageClassificationId
+        public ResourceIdentifier TargetStorageClassificationId
         {
             get => Properties?.TargetStorageClassificationId;
         }

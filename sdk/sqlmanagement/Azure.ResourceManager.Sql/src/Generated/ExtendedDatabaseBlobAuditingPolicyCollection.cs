@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates an extended database&apos;s blob auditing policy.
+        /// Creates or updates an extended database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates an extended database&apos;s blob auditing policy.
+        /// Creates or updates an extended database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an extended database&apos;s blob auditing policy.
+        /// Gets an extended database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an extended database&apos;s blob auditing policy.
+        /// Gets an extended database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedDatabaseBlobAuditingPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extendedDatabaseBlobAuditingPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtendedDatabaseBlobAuditingPolicyResource(Client, ExtendedDatabaseBlobAuditingPolicyData.DeserializeExtendedDatabaseBlobAuditingPolicyData(e)), _extendedDatabaseBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtendedDatabaseBlobAuditingPolicyResource(Client, ExtendedDatabaseBlobAuditingPolicyData.DeserializeExtendedDatabaseBlobAuditingPolicyData(e)), _extendedDatabaseBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedDatabaseBlobAuditingPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extendedDatabaseBlobAuditingPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtendedDatabaseBlobAuditingPolicyResource(Client, ExtendedDatabaseBlobAuditingPolicyData.DeserializeExtendedDatabaseBlobAuditingPolicyData(e)), _extendedDatabaseBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtendedDatabaseBlobAuditingPolicyResource(Client, ExtendedDatabaseBlobAuditingPolicyData.DeserializeExtendedDatabaseBlobAuditingPolicyData(e)), _extendedDatabaseBlobAuditingPolicyClientDiagnostics, Pipeline, "ExtendedDatabaseBlobAuditingPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

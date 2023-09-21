@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -131,14 +132,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+&apos;Subscription&apos; to filter on only resource of type = &apos;Subscription&apos;. Use $filter=resourceType+eq+&apos;subscription&apos;+or+resourceType+eq+&apos;resourcegroup&apos; to filter on resource of type = &apos;Subscription&apos; or &apos;ResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EligibleChildResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,14 +155,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+&apos;Subscription&apos; to filter on only resource of type = &apos;Subscription&apos;. Use $filter=resourceType+eq+&apos;subscription&apos;+or+resourceType+eq+&apos;resourcegroup&apos; to filter on resource of type = &apos;Subscription&apos; or &apos;ResourceGroup&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EligibleChildResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EligibleChildResource> GetEligibleChildResources(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
     }
 }

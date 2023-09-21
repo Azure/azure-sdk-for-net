@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of PolicyDefinitionGroup. </summary>
         /// <param name="name"> The name of the group. </param>
-        /// <param name="displayName"> The group&apos;s display name. </param>
-        /// <param name="category"> The group&apos;s category. </param>
-        /// <param name="description"> The group&apos;s description. </param>
+        /// <param name="displayName"> The group's display name. </param>
+        /// <param name="category"> The group's category. </param>
+        /// <param name="description"> The group's description. </param>
         /// <param name="additionalMetadataId"> A resource ID of a resource that contains additional metadata about the group. </param>
         internal PolicyDefinitionGroup(string name, string displayName, string category, string description, string additionalMetadataId)
         {
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The name of the group. </summary>
         public string Name { get; set; }
-        /// <summary> The group&apos;s display name. </summary>
+        /// <summary> The group's display name. </summary>
         public string DisplayName { get; set; }
-        /// <summary> The group&apos;s category. </summary>
+        /// <summary> The group's category. </summary>
         public string Category { get; set; }
-        /// <summary> The group&apos;s description. </summary>
+        /// <summary> The group's description. </summary>
         public string Description { get; set; }
         /// <summary> A resource ID of a resource that contains additional metadata about the group. </summary>
         public string AdditionalMetadataId { get; set; }

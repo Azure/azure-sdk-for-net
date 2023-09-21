@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> This cannot be specified if networkPlugin is anything other than &apos;azure&apos;. </summary>
+    /// <summary> This cannot be specified if networkPlugin is anything other than 'azure'. </summary>
     public readonly partial struct ContainerServiceNetworkMode : IEquatable<ContainerServiceNetworkMode>
     {
         private readonly string _value;

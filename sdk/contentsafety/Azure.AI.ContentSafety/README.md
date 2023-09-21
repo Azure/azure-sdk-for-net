@@ -6,7 +6,7 @@
 * Image Analysis API: Scans images for sexual content, violence, hate, and self harm with multi-severity levels.
 * Text Blocklist Management APIs: The default AI classifiers are sufficient for most content safety needs; however, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
 
 ## Getting started
 
@@ -58,6 +58,7 @@ ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new Azur
 ### Harm categories
 
 Content Safety recognizes four distinct categories of objectionable content.
+
 |Category |Description  |
 |---------|---------|
 |Hate |Hate refers to any content that attacks or uses pejorative or discriminatory language in reference to a person or identity group based on certain differentiating attributes of that group. This includes but is not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
@@ -70,6 +71,7 @@ Classification can be multi-labeled. For example, when a text sample goes throug
 ### Severity levels
 
 Every harm category the service applies also comes with a severity level rating. The severity level is meant to indicate the severity of the consequences of showing the flagged content.
+
 |Severity |Label |
 |---------|---------|
 |0 |Safe|
@@ -103,7 +105,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -122,8 +124,7 @@ Please refer to [sample data](https://github.com/Azure/azure-sdk-for-net/blob/ma
 #### Analyze text without blocklists
 
 ```C# Snippet:Azure_AI_ContentSafety_AnalyzeText
-string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "text.txt");
-string text = File.ReadAllText(datapath);
+string text = "You are an idiot";
 
 var request = new AnalyzeTextOptions(text);
 
@@ -178,7 +179,7 @@ if (response.Value.BlocklistsMatchResults != null)
 
 ```C# Snippet:Azure_AI_ContentSafety_AnalyzeImage
 string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
-ImageData image = new ImageData() { Content = BinaryData.FromBytes(File.ReadAllBytes(datapath)) };
+ContentSafetyImageData image = new ContentSafetyImageData() { Content = BinaryData.FromBytes(File.ReadAllBytes(datapath)) };
 
 var request = new AnalyzeImageOptions(image);
 

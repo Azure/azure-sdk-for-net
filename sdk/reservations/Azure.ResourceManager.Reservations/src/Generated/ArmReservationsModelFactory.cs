@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of CalculatePriceResultProperties. </summary>
-        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer&apos;s local currency. Tax is not included. </param>
+        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </param>
         /// <param name="netTotal"> Net total amount in pricing currency. </param>
         /// <param name="taxTotal"> Tax amount in pricing currency. </param>
         /// <param name="grandTotal"> Total amount in pricing currency. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
         /// <param name="mergeDestination"> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="mergeSources"> Resource ids of the source reservation&apos;s merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="mergeSources"> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <returns> A new <see cref="Models.ReservationMergeProperties"/> instance for mocking. </returns>
         public static ReservationMergeProperties ReservationMergeProperties(string mergeDestination = null, IEnumerable<string> mergeSources = null)
         {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of RenewProperties. </summary>
         /// <param name="purchaseProperties"> The request for reservation purchase. </param>
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
-        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer&apos;s local currency for renewal purchase. Tax is not included. </param>
+        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </param>
         /// <returns> A new <see cref="Models.RenewProperties"/> instance for mocking. </returns>
         public static RenewProperties RenewProperties(ReservationPurchaseContent purchaseProperties = null, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal = null, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal = null)
         {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
         /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
-        /// <param name="aggregates"> The array of aggregates of a reservation&apos;s utilization. </param>
+        /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
         /// <returns> A new <see cref="Models.ReservationPropertiesUtilization"/> instance for mocking. </returns>
         public static ReservationPropertiesUtilization ReservationPropertiesUtilization(string trend = null, IEnumerable<ReservationUtilizationAggregates> aggregates = null)
         {
@@ -419,8 +419,8 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
         /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="completedTransactions"> The number of completed transactions in this reservation&apos;s payment. </param>
-        /// <param name="totalTransactions"> The number of total transactions in this reservation&apos;s payment. </param>
+        /// <param name="completedTransactions"> The number of completed transactions in this reservation's payment. </param>
+        /// <param name="totalTransactions"> The number of total transactions in this reservation's payment. </param>
         /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BmcKeySetData>> value = default;
+            Optional<IReadOnlyList<NetworkCloudBmcKeySetData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<BmcKeySetData> array = new List<BmcKeySetData>();
+                    List<NetworkCloudBmcKeySetData> array = new List<NetworkCloudBmcKeySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BmcKeySetData.DeserializeBmcKeySetData(item));
+                        array.Add(NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(item));
                     }
                     value = array;
                     continue;

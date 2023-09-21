@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machine scale set network profile&apos;s IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual network. </summary>
+    /// <summary> Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual network. </summary>
     public partial class VirtualMachineScaleSetUpdateIPConfiguration : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>
         public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
-        /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
+        /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> The application gateway backend address pools. </summary>
         public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }

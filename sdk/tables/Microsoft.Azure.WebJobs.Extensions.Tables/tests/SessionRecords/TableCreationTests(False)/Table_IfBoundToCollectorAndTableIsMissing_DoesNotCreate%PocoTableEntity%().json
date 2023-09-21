@@ -1,9 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "RandomSeed": "1053900753",
-    "STORAGE_ENDPOINT_SUFFIX": "core.windows.net",
-    "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "Kg==",
-    "TABLES_STORAGE_ACCOUNT_NAME": "pakrymtables3prim"
-  }
-}

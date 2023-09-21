@@ -13,16 +13,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
     internal class EventGridAsyncCollectorFactoryTests
     {
         [Test]
-        [TestCase(null, null, null, "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
-        [TestCase("", null, null, "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
-        [TestCase(null, null, "", "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
-        [TestCase(null, null, "EmptyUri", "The 'Connection.topicEndpointUri' property or 'TopicEndpointUri' property must be set")]
-        [TestCase("bar.com", "baz", null, "The 'TopicEndpointUri' property must be a valid absolute Uri")]
-        [TestCase(null, "baz", "ValidUri", "Conflicting topic credentials have been set in 'ValidUri' and 'TopicKeySetting'")]
-        [TestCase("https://foo.com", "baz", "ValidUri", "Conflicting topic credentials have been set in 'ValidUri' and 'TopicKeySetting'")]
-        [TestCase("https://foo.com", null, "MissingUri", "The topic endpoint uri in 'MissingUri' does not exist. Make sure that it is a defined App Setting.")]
-        [TestCase("https://foo.com", null, "InvalidUri", "The topic endpoint uri in 'InvalidUri' must be a valid absolute Uri")]
-        [TestCase("https://foo.com", null, "AnotherUri", "Conflicting topic endpoint uris have been set in 'AnotherUri' and 'TopicEndpointUri'")]
+        [TestCase(null, null, null, EventGridAsyncCollectorFactory.MissingSettingsErrorMessage)]
+        [TestCase("", null, null, EventGridAsyncCollectorFactory.MissingSettingsErrorMessage)]
+        [TestCase(null, null, "", EventGridAsyncCollectorFactory.MissingSettingsErrorMessage)]
+        [TestCase(null, null, "EmptyUri", "The 'topicEndpointUri' was not specified in 'EmptyUri'.")]
+        [TestCase("bar.com", "baz", null, EventGridAsyncCollectorFactory.MustBeValidAbsoluteUriErrorMessage)]
+        [TestCase(null, "baz", "ValidUri", EventGridAsyncCollectorFactory.ConflictingSettingsErrorMessage)]
+        [TestCase("https://foo.com", "baz", "ValidUri", EventGridAsyncCollectorFactory.ConflictingSettingsErrorMessage)]
+        [TestCase("https://foo.com", null, "ValidUri", EventGridAsyncCollectorFactory.ConflictingSettingsErrorMessage)]
+        [TestCase("https://foo.com", null, null, EventGridAsyncCollectorFactory.MissingTopicKeySettingErrorMessage)]
+        [TestCase(null, null, "MissingUri", "The 'MissingUri' setting does not exist. Make sure that it is a defined App Setting.")]
+        [TestCase(null, null, "InvalidUri", "The 'topicEndpointUri' in 'InvalidUri' must be a valid absolute Uri.")]
         public void ValidateOutputBindingAttributeTests(string topicEndpointUri, string topicKeySetting, string connection, string message)
         {
             var host = TestHelpers.NewHost<Empty>(configuration: new Dictionary<string, string>
@@ -42,6 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
             }));
 
             Assert.That(exception.Message, Is.EqualTo(message));
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
         }
 
         [Test]
@@ -61,23 +63,83 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Config
         }
 
         [Test]
-        [TestCase("https://foo.com", null, null)]
-        [TestCase(null, null, "ValidUri")]
-        [TestCase("https://foo.com", null, "EmptyUri")]
-        public void TestSystemAssignedIdentity(string topicEndpointUri, string topicKeySetting, string connection)
+        public void TestMissingKeySetting()
+        {
+            var host = TestHelpers.NewHost<Empty>();
+            var factory = host.Services.GetRequiredService<EventGridAsyncCollectorFactory>();
+
+            var exception = Assert.Throws<InvalidOperationException>(() => factory.Validate(new EventGridAttribute
+            {
+                TopicEndpointUri = "https://foo.com"
+            }));
+
+            Assert.That(exception.Message, Is.EqualTo("The 'TopicKeySetting' property must be the name of an application setting containing the Topic Key."));
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void TestMissingUriSetting()
+        {
+            var host = TestHelpers.NewHost<Empty>();
+            var factory = host.Services.GetRequiredService<EventGridAsyncCollectorFactory>();
+
+            var exception = Assert.Throws<InvalidOperationException>(() => factory.Validate(new EventGridAttribute
+            {
+                TopicKeySetting = "Bar"
+            }));
+
+            Assert.That(exception.Message, Is.EqualTo(EventGridAsyncCollectorFactory.MissingSettingsErrorMessage));
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void TestMissingUriSetting_Connection()
         {
             var host = TestHelpers.NewHost<Empty>(configuration: new Dictionary<string, string>
             {
-                { "EmptyUri:topicEndpointUri", "" },
+                { "MissingUri:clientId", "clientId" },
+            });
+            var factory = host.Services.GetRequiredService<EventGridAsyncCollectorFactory>();
+
+            var exception = Assert.Throws<InvalidOperationException>(() => factory.Validate(new EventGridAttribute
+            {
+                Connection = "MissingUri"
+            }));
+
+            Assert.That(exception.Message, Is.EqualTo("The 'topicEndpointUri' was not specified in 'MissingUri'."));
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void TestInvalidUriSetting()
+        {
+            var host = TestHelpers.NewHost<Empty>(configuration: new Dictionary<string, string>
+            {
+                { "InvalidUri:topicEndpointUri", "bar.com" },
+            });
+            var factory = host.Services.GetRequiredService<EventGridAsyncCollectorFactory>();
+
+            var exception = Assert.Throws<InvalidOperationException>(() => factory.Validate(new EventGridAttribute
+            {
+                Connection = "InvalidUri"
+            }));
+
+            Assert.That(exception.Message, Is.EqualTo("The 'topicEndpointUri' in 'InvalidUri' must be a valid absolute Uri."));
+            Assert.That(exception, Is.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void TestSystemAssignedIdentity()
+        {
+            var host = TestHelpers.NewHost<Empty>(configuration: new Dictionary<string, string>
+            {
                 { "ValidUri:topicEndpointUri", "https://foo.com" },
             });
             var factory = host.Services.GetRequiredService<EventGridAsyncCollectorFactory>();
 
             var connectionInformation = factory.ResolveConnectionInformation(new EventGridAttribute
             {
-                TopicEndpointUri = topicEndpointUri,
-                TopicKeySetting = topicKeySetting,
-                Connection = connection
+                Connection = "ValidUri"
             });
 
             Assert.That(connectionInformation.TokenCredential, Is.Not.Null.And.TypeOf<DefaultAzureCredential>());

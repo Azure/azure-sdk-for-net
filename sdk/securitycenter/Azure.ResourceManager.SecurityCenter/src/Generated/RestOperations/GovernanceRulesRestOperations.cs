@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a list of all relevant governance rules over a scope. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<GovernanceRuleList>> ListAsync(string scope, CancellationToken cancellationToken = default)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a list of all relevant governance rules over a scope. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<GovernanceRuleList> List(string scope, CancellationToken cancellationToken = default)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a specific governance rule for the requested scope by ruleId. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a specific governance rule for the requested scope by ruleId. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Creates or updates a governance rule over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Creates or updates a governance rule over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Delete a Governance rule over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Delete a Governance rule over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ruleId"/> is null. </exception>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Execute a governance rule. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Execute a governance rule. </summary>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get a list of all relevant governance rules over a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<GovernanceRuleList>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get a list of all relevant governance rules over a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: &apos;providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance rules. Valid scopes are: management group (format: 'providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<GovernanceRuleList> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)

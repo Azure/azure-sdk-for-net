@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="profileName"> The name of the profile which holds the domain. </param>
-        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
+        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
         /// <param name="dnsZoneId"> Resource reference to the Azure DNS zone. </param>
         /// <param name="preValidatedCustomDomainResourceId"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
         /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
-        /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <returns> A new <see cref="Cdn.FrontDoorOriginGroupData"/> instance for mocking. </returns>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
         /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
         /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <returns> A new <see cref="Cdn.FrontDoorRouteData"/> instance for mocking. </returns>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="properties">
         /// object which contains secret parameters
         /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
+        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="Models.CustomerCertificateProperties"/>, <see cref="Models.ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecretData"/> instance for mocking. </returns>
         public static FrontDoorSecretData FrontDoorSecretData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, FrontDoorSecretProperties properties = null)
@@ -589,13 +589,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="originPath"> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
         /// <param name="contentTypesToCompress"> List of content types on which compression applies. The value should be a valid MIME type. </param>
         /// <param name="originHostHeader"> The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </param>
-        /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </param>
+        /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </param>
         /// <param name="isHttpAllowed"> Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
         /// <param name="isHttpsAllowed"> Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
         /// <param name="queryStringCachingBehavior"> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </param>
         /// <param name="optimizationType"> Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization. </param>
         /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
-        /// <param name="geoFilters"> List of rules defining the user&apos;s geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
+        /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
         /// <param name="defaultOriginGroupId"> A reference to the origin group. </param>
         /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
@@ -629,9 +629,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
         /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
         /// <param name="enabled"> Origin is enabled for load balancing or not. By default, origin is always enabled. </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is &apos;Private&apos;. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </param>
+        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </param>
+        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
         /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
         /// <returns> A new <see cref="Models.DeepCreatedOrigin"/> instance for mocking. </returns>
@@ -674,9 +674,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
         /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
         /// <param name="enabled"> Origin is enabled for load balancing or not. </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is &apos;Private&apos;. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </param>
+        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </param>
+        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
         /// <param name="resourceState"> Resource status of the origin. </param>
         /// <param name="provisioningState"> Provisioning status of the origin. </param>

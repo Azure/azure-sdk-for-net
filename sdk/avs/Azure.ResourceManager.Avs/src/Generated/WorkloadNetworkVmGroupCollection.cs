@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group&apos;s display name. </param>
+        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="data"> NSX VM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group&apos;s display name. </param>
+        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="data"> NSX VM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group&apos;s display name. </param>
+        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group&apos;s display name. </param>
+        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group&apos;s display name. </param>
+        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group&apos;s display name. </param>
+        /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>

@@ -15,12 +15,8 @@ namespace Azure.Communication.JobRouter
     public abstract partial class DistributionMode
     {
         /// <summary> Initializes a new instance of DistributionMode. </summary>
-        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
-        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
-        protected DistributionMode(int minConcurrentOffers, int maxConcurrentOffers)
+        protected DistributionMode()
         {
-            MinConcurrentOffers = minConcurrentOffers;
-            MaxConcurrentOffers = maxConcurrentOffers;
         }
 
         /// <summary> Initializes a new instance of DistributionMode. </summary>
@@ -29,7 +25,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
         /// <param name="bypassSelectors">
         /// (Optional)
-        /// If set to true, then router will match workers to jobs even if they don&apos;t match label selectors.
+        /// If set to true, then router will match workers to jobs even if they don't match label selectors.
         /// Warning: You may get workers that are not qualified for the job they are matched with if you set this
         /// variable to true. This flag is intended more for temporary usage.
         /// By default, set to false.
@@ -46,7 +42,7 @@ namespace Azure.Communication.JobRouter
         internal string Kind { get; set; }
         /// <summary>
         /// (Optional)
-        /// If set to true, then router will match workers to jobs even if they don&apos;t match label selectors.
+        /// If set to true, then router will match workers to jobs even if they don't match label selectors.
         /// Warning: You may get workers that are not qualified for the job they are matched with if you set this
         /// variable to true. This flag is intended more for temporary usage.
         /// By default, set to false.

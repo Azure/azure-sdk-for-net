@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// Represents a single property on a dynamic JSON object.

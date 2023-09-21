@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> LicenseType - The licenseType to use for Windows VMs. Windows_Server is used to enable Azure Hybrid User Benefits for Windows VMs. Possible values include: &apos;None&apos;, &apos;Windows_Server&apos;. </summary>
+    /// <summary> LicenseType - The licenseType to use for Windows VMs. Windows_Server is used to enable Azure Hybrid User Benefits for Windows VMs. Possible values include: 'None', 'Windows_Server'. </summary>
     public readonly partial struct LicenseType : IEquatable<LicenseType>
     {
         private readonly string _value;

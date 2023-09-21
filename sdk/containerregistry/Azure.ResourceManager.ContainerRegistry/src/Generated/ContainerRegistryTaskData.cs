@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A class representing the ContainerRegistryTask data model.
-    /// The task that has the ARM resource and task properties. 
+    /// The task that has the ARM resource and task properties.
     /// The task will have all information to schedule a run against it.
     /// </summary>
     public partial class ContainerRegistryTaskData : TrackedResourceData

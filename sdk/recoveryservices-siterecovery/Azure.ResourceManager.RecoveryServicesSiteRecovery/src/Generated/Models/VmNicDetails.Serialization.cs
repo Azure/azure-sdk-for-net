@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> nicId = default;
             Optional<string> replicaNicId = default;
-            Optional<string> sourceNicArmId = default;
+            Optional<ResourceIdentifier> sourceNicArmId = default;
             Optional<string> vmNetworkName = default;
-            Optional<string> recoveryVmNetworkId = default;
-            Optional<IReadOnlyList<IPConfigDetails>> ipConfigs = default;
+            Optional<ResourceIdentifier> recoveryVmNetworkId = default;
+            Optional<IReadOnlyList<HyperVIPConfigDetails>> ipConfigs = default;
             Optional<string> selectionType = default;
             Optional<string> recoveryNetworkSecurityGroupId = default;
             Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
-            Optional<string> tfoVmNetworkId = default;
+            Optional<ResourceIdentifier> tfoVmNetworkId = default;
             Optional<string> tfoNetworkSecurityGroupId = default;
             Optional<bool> enableAcceleratedNetworkingOnTfo = default;
             Optional<string> recoveryNicName = default;
@@ -52,7 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("sourceNicArmId"u8))
                 {
-                    sourceNicArmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceNicArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vMNetworkName"u8))
@@ -62,7 +66,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryVMNetworkId"u8))
                 {
-                    recoveryVmNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryVmNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipConfigs"u8))
@@ -71,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<IPConfigDetails> array = new List<IPConfigDetails>();
+                    List<HyperVIPConfigDetails> array = new List<HyperVIPConfigDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPConfigDetails.DeserializeIPConfigDetails(item));
+                        array.Add(HyperVIPConfigDetails.DeserializeHyperVIPConfigDetails(item));
                     }
                     ipConfigs = array;
                     continue;
@@ -100,7 +108,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("tfoVMNetworkId"u8))
                 {
-                    tfoVmNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tfoVmNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tfoNetworkSecurityGroupId"u8))

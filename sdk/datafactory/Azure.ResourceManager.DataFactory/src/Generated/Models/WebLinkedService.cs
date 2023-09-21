@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Web linked service. </summary>
-    public partial class WebLinkedService : FactoryLinkedServiceDefinition
+    public partial class WebLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of WebLinkedService. </summary>
         /// <param name="typeProperties">

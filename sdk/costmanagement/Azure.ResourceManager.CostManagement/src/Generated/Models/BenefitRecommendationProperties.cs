@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
-        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property &apos;properties/usage/charges&apos;. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property 'properties/usage/charges'. </param>
         /// <param name="usage"> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
-        /// <param name="armSkuName"> ARM SKU name. &apos;Compute_Savings_Plan&apos; for SavingsPlan. </param>
+        /// <param name="armSkuName"> ARM SKU name. 'Compute_Savings_Plan' for SavingsPlan. </param>
         /// <param name="term"> Term period of the benefit. For example, P1Y or P3Y. </param>
-        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: &apos;Hourly&apos;. </param>
+        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: 'Hourly'. </param>
         /// <param name="currencyCode"> An ISO 4217 currency code identifier for the costs and savings amounts. </param>
-        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to &apos;totalHours&apos; in the look-back period. </param>
+        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </param>
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.CostManagement.Models
         public DateTimeOffset? LastConsumptionOn { get; }
         /// <summary> The number of days of usage evaluated for computing the recommendations. </summary>
         public LookBackPeriod? LookBackPeriod { get; set; }
-        /// <summary> The total hours for which the cost is covered. Its equal to number of records in a property &apos;properties/usage/charges&apos;. </summary>
+        /// <summary> The total hours for which the cost is covered. Its equal to number of records in a property 'properties/usage/charges'. </summary>
         public int? TotalHours { get; }
         /// <summary> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </summary>
         public RecommendationUsageDetails Usage { get; set; }
-        /// <summary> ARM SKU name. &apos;Compute_Savings_Plan&apos; for SavingsPlan. </summary>
+        /// <summary> ARM SKU name. 'Compute_Savings_Plan' for SavingsPlan. </summary>
         public string ArmSkuName { get; }
         /// <summary> Term period of the benefit. For example, P1Y or P3Y. </summary>
         public BenefitRecommendationPeriodTerm? Term { get; set; }
-        /// <summary> Grain of the proposed commitment amount. Supported values: &apos;Hourly&apos;. </summary>
+        /// <summary> Grain of the proposed commitment amount. Supported values: 'Hourly'. </summary>
         public BenefitRecommendationUsageGrain? CommitmentGranularity { get; set; }
         /// <summary> An ISO 4217 currency code identifier for the costs and savings amounts. </summary>
         public string CurrencyCode { get; }
-        /// <summary> The current cost without benefit, corresponds to &apos;totalHours&apos; in the look-back period. </summary>
+        /// <summary> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </summary>
         public decimal? CostWithoutBenefit { get; }
         /// <summary> The details of the proposed recommendation. </summary>
         public AllSavingsBenefitDetails RecommendationDetails { get; set; }

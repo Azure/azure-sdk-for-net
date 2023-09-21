@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Peering
 {
     /// <summary>
     /// A class representing the PeerAsn data model.
-    /// The essential information related to the peer&apos;s ASN.
+    /// The essential information related to the peer's ASN.
     /// </summary>
     public partial class PeerAsnData : ResourceData
     {

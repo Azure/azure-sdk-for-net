@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Lists a Sql pool&apos;s replication links.
+        /// Lists a Sql pool's replication links.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -145,11 +146,11 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists a Sql pool&apos;s replication links.
+        /// Lists a Sql pool's replication links.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Buffers;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+
+#nullable enable
 
 namespace Azure.Core.Json
 {
@@ -14,8 +17,11 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON element.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [JsonConverter(typeof(MutableJsonElementConverter))]
     internal readonly partial struct MutableJsonElement
     {
+        internal const int MaxStackLimit = 1024;
+
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
         private readonly string _path;
@@ -34,14 +40,16 @@ namespace Azure.Core.Json
         /// <summary>
         /// Gets the type of the current JSON value.
         /// </summary>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-        public JsonValueKind ValueKind
-#pragma warning restore AZC0014 // Avoid using banned types in public API
+        public JsonValueKind? ValueKind
         {
             get
             {
-                JsonElement element = GetJsonElement();
-                return element.ValueKind;
+                if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
+                {
+                    return change.ValueKind;
+                }
+
+                return _element.ValueKind;
             }
         }
 
@@ -50,9 +58,17 @@ namespace Azure.Core.Json
         /// </summary>
         public MutableJsonElement GetProperty(string name)
         {
+            return GetProperty(name.AsSpan());
+        }
+
+        /// <summary>
+        /// Gets the MutableJsonElement for the value of the property with the specified name.
+        /// </summary>
+        public MutableJsonElement GetProperty(ReadOnlySpan<char> name)
+        {
             if (!TryGetProperty(name, out MutableJsonElement value))
             {
-                throw new InvalidOperationException($"'{_path}' does not contain property called '{name}'");
+                throw new InvalidOperationException($"'{_path}' does not contain property called '{GetString(name, 0, name.Length)}'");
             }
 
             return value;
@@ -66,29 +82,73 @@ namespace Azure.Core.Json
         /// <returns></returns>
         public bool TryGetProperty(string name, out MutableJsonElement value)
         {
+            return TryGetProperty(name.AsSpan(), out value);
+        }
+
+        /// <summary>
+        /// Looks for a property named propertyName in the current object, returning a value that indicates whether or not such a property exists. When the property exists, its value is assigned to the value argument.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value">The value to assign to the element.</param>
+        /// <returns></returns>
+        public bool TryGetProperty(ReadOnlySpan<char> name, out MutableJsonElement value)
+        {
             EnsureValid();
 
             EnsureObject();
 
-            bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
-            if (!hasProperty)
-            {
-                value = default;
-                return false;
-            }
+            char[]? tempArray = null;
+            int length = name.Length;
+            length += _path.Length > 0 ? _path.Length + 1 : 0;
+            Span<char> path = length <= MaxStackLimit ?
+                stackalloc char[length] :
+                tempArray = ArrayPool<char>.Shared.Rent(length);
 
-            var path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
+            try
             {
-                if (change.ReplacesJsonElement)
+                _path.AsSpan().CopyTo(path);
+                int pathLength = _path.Length;
+
+                MutableJsonDocument.ChangeTracker.PushProperty(path, ref pathLength, name);
+
+                if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
                 {
-                    value = new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
+                    if (change.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
+                    {
+                        value = default;
+                        return false;
+                    }
+
+                    value = new MutableJsonElement(_root, SerializeToJsonElement(change.Value, _root.SerializerOptions), GetString(path, 0, pathLength), change.Index);
                     return true;
                 }
-            }
 
-            value = new MutableJsonElement(_root, element, path, _highWaterMark);
-            return true;
+                bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
+                if (!hasProperty)
+                {
+                    value = default;
+                    return false;
+                }
+
+                value = new MutableJsonElement(_root, element, GetString(path, 0, pathLength), _highWaterMark);
+                return true;
+            }
+            finally
+            {
+                if (tempArray != null)
+                {
+                    ArrayPool<char>.Shared.Return(tempArray);
+                }
+            }
+        }
+
+        private static string GetString(ReadOnlySpan<char> value, int start, int end)
+        {
+#if NET5_0_OR_GREATER
+            return new string(value.Slice(start, end));
+#else
+            return new string(value.Slice(start, end).ToArray());
+#endif
         }
 
         public int GetArrayLength()
@@ -99,7 +159,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.AsJsonElement().GetArrayLength();
+                return change.GetArrayLength();
             }
 
             return _element.GetArrayLength();
@@ -111,14 +171,10 @@ namespace Azure.Core.Json
 
             EnsureArray();
 
-            var path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
-
+            string path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ReplacesJsonElement)
-                {
-                    return new MutableJsonElement(_root, change.AsJsonElement(), path, change.Index);
-                }
+                return new MutableJsonElement(_root, SerializeToJsonElement(change.Value, _root.SerializerOptions), path, change.Index);
             }
 
             return new MutableJsonElement(_root, _element[index], path, _highWaterMark);
@@ -138,6 +194,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case double d:
@@ -149,7 +207,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetDouble(out value);
+                        value = checked((double)change.Value);
+                        return true;
                 }
             }
 
@@ -191,6 +250,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case int i:
@@ -202,7 +263,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetInt32(out value);
+                        value = checked((int)change.Value);
+                        return true;
                 }
             }
 
@@ -239,6 +301,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case long l:
@@ -250,7 +314,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetInt64(out value);
+                        value = checked((long)change.Value);
+                        return true;
                 }
             }
 
@@ -287,6 +352,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case float f:
@@ -298,7 +365,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetSingle(out value);
+                        value = checked((float)change.Value);
+                        return true;
                 }
             }
 
@@ -332,6 +400,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureString();
+
                 switch (change.Value)
                 {
                     case string s:
@@ -341,11 +411,6 @@ namespace Azure.Core.Json
                     case null:
                         return null;
                     default:
-                        JsonElement el = change.AsJsonElement();
-                        if (el.ValueKind == JsonValueKind.String)
-                        {
-                            return el.GetString();
-                        }
                         throw new InvalidOperationException($"Element at '{_path}' is not a string.");
                 }
             }
@@ -381,6 +446,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case byte b:
@@ -392,7 +459,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetByte(out value);
+                        value = checked((byte)change.Value);
+                        return true;
                 }
             }
 
@@ -415,18 +483,23 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureString();
+
                 switch (change.Value)
                 {
                     case DateTime d:
                         value = d;
                         return true;
+                    case DateTimeOffset:
+                    case string:
+                        return SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTime(out value);
                     case JsonElement element:
                         return element.TryGetDateTime(out value);
                     case null:
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetDateTime(out value);
+                        throw new InvalidOperationException($"Element {change.Value} cannot be converted to DateTime.");
                 }
             }
 
@@ -449,19 +522,23 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureString();
+
                 switch (change.Value)
                 {
                     case DateTimeOffset o:
                         value = o;
                         return true;
-                        ;
+                    case DateTime:
+                    case string:
+                        return SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTimeOffset(out value);
                     case JsonElement element:
                         return element.TryGetDateTimeOffset(out value);
                     case null:
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetDateTimeOffset(out value);
+                        throw new InvalidOperationException($"Element {change.Value} cannot be converted to DateTimeOffset.");
                 }
             }
 
@@ -484,6 +561,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case decimal d:
@@ -495,7 +574,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetDecimal(out value);
+                        value = checked((decimal)change.Value);
+                        return true;
                 }
             }
 
@@ -518,18 +598,22 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureString();
+
                 switch (change.Value)
                 {
                     case Guid g:
                         value = g;
                         return true;
+                    case string:
+                        return SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetGuid(out value);
                     case JsonElement element:
                         return element.TryGetGuid(out value);
                     case null:
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetGuid(out value);
+                        throw new InvalidOperationException($"Element {change.Value} cannot be converted to Guid.");
                 }
             }
 
@@ -552,6 +636,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case short s:
@@ -563,7 +649,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetInt16(out value);
+                        value = checked((short)change.Value);
+                        return true;
                 }
             }
 
@@ -586,6 +673,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case sbyte b:
@@ -597,7 +686,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetSByte(out value);
+                        value = checked((sbyte)change.Value);
+                        return true;
                 }
             }
 
@@ -620,6 +710,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case ushort u:
@@ -631,7 +723,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetUInt16(out value);
+                        value = checked((ushort)change.Value);
+                        return true;
                 }
             }
 
@@ -654,6 +747,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case uint d:
@@ -665,7 +760,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetUInt32(out value);
+                        value = checked((uint)change.Value);
+                        return true;
                 }
             }
 
@@ -688,6 +784,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureNumber();
+
                 switch (change.Value)
                 {
                     case ulong u:
@@ -699,7 +797,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        return change.AsJsonElement().TryGetUInt64(out value);
+                        value = checked((ulong)change.Value);
+                        return true;
                 }
             }
 
@@ -741,45 +840,6 @@ namespace Azure.Core.Json
         }
 
         /// <summary>
-        /// Set the value of the property with the specified name to the passed-in value.  If the property is not already present, it will be created.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value">The value to assign to the element.</param>
-        public MutableJsonElement SetProperty(string name, object value)
-        {
-            if (TryGetProperty(name, out MutableJsonElement element))
-            {
-                element.Set(value);
-                return this;
-            }
-
-#if !NET6_0_OR_GREATER
-            // Earlier versions of JsonSerializer.Serialize include "RootElement"
-            // as a property when called on JsonDocument.
-            if (value is JsonDocument doc)
-            {
-                value = doc.RootElement;
-            }
-#endif
-
-            // If it's not already there, we'll add a change to this element's JsonElement instead.
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
-            dict[name] = value;
-
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
-            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
-
-            int index = Changes.AddChange(_path, newElement, true);
-
-            // Make sure the object reference is stored to ensure reference semantics
-            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            Changes.AddChange(path, value, true);
-
-            // Element has changed, return the new valid one.
-            return new MutableJsonElement(_root, newElement, _path, index);
-        }
-
-        /// <summary>
         /// Remove the property with the specified name from the current MutableJsonElement.
         /// </summary>
         /// <param name="name"></param>
@@ -795,13 +855,8 @@ namespace Azure.Core.Json
                 throw new InvalidOperationException($"Object does not have property: '{name}'.");
             }
 
-            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(GetRawBytes(), _root.SerializerOptions)!;
-            dict.Remove(name);
-
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(dict, _root.SerializerOptions);
-            JsonElement newElement = JsonDocument.Parse(bytes).RootElement;
-
-            Changes.AddChange(_path, newElement, true);
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, null, changeKind: MutableJsonChangeKind.PropertyRemoval);
         }
 
         /// <summary>
@@ -812,7 +867,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, double value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -823,7 +891,19 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+        public MutableJsonElement SetProperty(string name, int value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -834,7 +914,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, long value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -845,7 +938,19 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+        public MutableJsonElement SetProperty(string name, float value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -856,7 +961,40 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, string value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
+        }
+
+        public void SetNull()
+        {
+            EnsureValid();
+
+            Changes.AddChange(_path, null);
+        }
+
+        public MutableJsonElement SetPropertyNull(string name)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.SetNull();
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, null, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -867,9 +1005,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value,
-                !(_element.ValueKind == JsonValueKind.True ||
-                  _element.ValueKind == JsonValueKind.False));
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, bool value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -880,7 +1029,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, byte value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -891,7 +1053,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, sbyte value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -902,7 +1077,19 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+        public MutableJsonElement SetProperty(string name, short value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -913,7 +1100,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, ushort value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -924,7 +1124,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, uint value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -935,7 +1148,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, ulong value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -946,7 +1172,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.Number);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, decimal value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -957,7 +1196,19 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value);
+        }
+        public MutableJsonElement SetProperty(string name, Guid value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -968,7 +1219,20 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, DateTime value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
@@ -979,103 +1243,44 @@ namespace Azure.Core.Json
         {
             EnsureValid();
 
-            Changes.AddChange(_path, value, _element.ValueKind != JsonValueKind.String);
+            Changes.AddChange(_path, value);
+        }
+
+        public MutableJsonElement SetProperty(string name, DateTimeOffset value)
+        {
+            if (TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return this;
+            }
+
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <summary>
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value">The value to assign to the element.</param>
-        public void Set(object value)
+        public void Set(JsonElement value)
         {
             EnsureValid();
 
-            switch (value)
-            {
-                case bool b:
-                    Set(b);
-                    break;
-                case string s:
-                    Set(s);
-                    break;
-                case byte b:
-                    Set(b);
-                    break;
-                case sbyte sb:
-                    Set(sb);
-                    break;
-                case short sh:
-                    Set(sh);
-                    break;
-                case ushort us:
-                    Set(us);
-                    break;
-                case int i:
-                    Set(i);
-                    break;
-                case uint u:
-                    Set(u);
-                    break;
-                case long l:
-                    Set(l);
-                    break;
-                case ulong ul:
-                    Set(ul);
-                    break;
-                case float f:
-                    Set(f);
-                    break;
-                case double d:
-                    Set(d);
-                    break;
-                case decimal d:
-                    Set(d);
-                    break;
-                case DateTime d:
-                    Set(d);
-                    break;
-                case DateTimeOffset d:
-                    Set(d);
-                    break;
-                case Guid g:
-                    Set(g);
-                    break;
-                case MutableJsonElement e:
-                    Set(e);
-                    break;
-                case MutableJsonDocument d:
-                    Set(d.RootElement);
-                    break;
-                case JsonDocument d:
-                    Set(d.RootElement);
-                    break;
-                default:
-                    Changes.AddChange(_path, value, true);
-                    break;
-            }
+            Changes.AddChange(_path, value);
         }
 
-        /// <summary>
-        /// Sets the value of this element to the passed-in value.
-        /// </summary>
-        /// <param name="value">The value to assign to the element.</param>
-        public void Set(MutableJsonElement value)
+        public MutableJsonElement SetProperty(string name, JsonElement value)
         {
-            EnsureValid();
-
-            value.EnsureValid();
-
-            JsonElement element = value._element;
-
-            if (Changes.TryGetChange(value._path, value._highWaterMark, out MutableJsonChange change))
+            if (TryGetProperty(name, out MutableJsonElement element))
             {
-                if (change.ReplacesJsonElement)
-                {
-                    element = change.AsJsonElement();
-                }
+                element.Set(value);
+                return this;
             }
 
-            Changes.AddChange(_path, element, true);
+            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            Changes.AddChange(path, value, MutableJsonChangeKind.PropertyAddition, name);
+            return this;
         }
 
         /// <inheritdoc/>
@@ -1097,20 +1302,40 @@ namespace Azure.Core.Json
             return _element.ToString() ?? "null";
         }
 
+        internal static JsonElement SerializeToJsonElement(object? value, JsonSerializerOptions? options = default)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);
+            return ParseFromBytes(bytes);
+        }
+
+        private static JsonElement ParseFromBytes(byte[] bytes)
+        {
+            // Most JsonDocument.Parse calls return an array that is backed by one or more
+            // ArrayPool arrays.  Those arrays are not returned until the instance is disposed.
+            // This workaround allows us to dispose the JsonDocument so that we don't leak
+            // ArrayPool arrays.
+#if NET6_0_OR_GREATER
+            Utf8JsonReader reader = new(bytes);
+            return JsonElement.ParseValue(ref reader);
+#else
+            using JsonDocument doc = JsonDocument.Parse(bytes);
+            return doc.RootElement.Clone();
+#endif
+        }
+
         internal JsonElement GetJsonElement()
         {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.AsJsonElement();
+                return SerializeToJsonElement(change.Value, _root.SerializerOptions);
             }
 
             // Account for changes to descendants of this element as well
             if (Changes.DescendantChanged(_path, _highWaterMark))
             {
-                JsonDocument document = JsonDocument.Parse(GetRawBytes());
-                return document.RootElement;
+                return ParseFromBytes(GetRawBytes());
             }
 
             return _element;
@@ -1169,5 +1394,19 @@ namespace Azure.Core.Json
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
+
+        private class MutableJsonElementConverter : JsonConverter<MutableJsonElement>
+        {
+            public override MutableJsonElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
+                return mdoc.RootElement;
+            }
+
+            public override void Write(Utf8JsonWriter writer, MutableJsonElement value, JsonSerializerOptions options)
+            {
+                value.WriteTo(writer);
+            }
+        }
     }
 }

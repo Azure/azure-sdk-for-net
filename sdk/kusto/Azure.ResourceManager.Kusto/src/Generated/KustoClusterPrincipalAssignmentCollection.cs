@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
-        /// <param name="data"> The Kusto cluster principalAssignment&apos;s parameters supplied for the operation. </param>
+        /// <param name="data"> The Kusto cluster principalAssignment's parameters supplied for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
-        /// <param name="data"> The Kusto cluster principalAssignment&apos;s parameters supplied for the operation. </param>
+        /// <param name="data"> The Kusto cluster principalAssignment's parameters supplied for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterPrincipalAssignmentResource(Client, KustoClusterPrincipalAssignmentData.DeserializeKustoClusterPrincipalAssignmentData(e)), _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics, Pipeline, "KustoClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

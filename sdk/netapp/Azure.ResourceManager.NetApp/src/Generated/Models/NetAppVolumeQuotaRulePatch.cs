@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public long? QuotaSizeInKiBs { get; set; }
         /// <summary> Type of quota. </summary>
         public NetAppVolumeQuotaType? QuotaType { get; set; }
-        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name=&apos;user-name&apos; get sid&gt;. </summary>
+        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; set; }
     }
 }

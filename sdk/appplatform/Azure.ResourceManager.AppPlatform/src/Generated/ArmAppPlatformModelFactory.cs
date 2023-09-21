@@ -604,8 +604,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the certificate resource payload.
-        /// Please note <see cref="AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppPlatformContentCertificateProperties"/> and <see cref="AppPlatformKeyVaultCertificateProperties"/>.
+        /// Please note <see cref="Models.AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AppPlatformContentCertificateProperties"/> and <see cref="Models.AppPlatformKeyVaultCertificateProperties"/>.
         /// </param>
         /// <returns> A new <see cref="AppPlatform.AppPlatformCertificateData"/> instance for mocking. </returns>
         public static AppPlatformCertificateData AppPlatformCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformCertificateProperties properties = null)
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of AppPlatformSupportedRuntimeVersion. </summary>
         /// <param name="value"> The raw value which could be passed to deployment CRUD operations. </param>
-        /// <param name="platform"> The platform of this runtime version (possible values: &quot;Java&quot; or &quot;.NET&quot;). </param>
+        /// <param name="platform"> The platform of this runtime version (possible values: "Java" or ".NET"). </param>
         /// <param name="version"> The detailed version (major.minor) of the platform. </param>
         /// <returns> A new <see cref="Models.AppPlatformSupportedRuntimeVersion"/> instance for mocking. </returns>
         public static AppPlatformSupportedRuntimeVersion AppPlatformSupportedRuntimeVersion(AppPlatformSupportedRuntimeValue? value = null, AppPlatformSupportedRuntimePlatform? platform = null, string version = null)
@@ -824,13 +824,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
-        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </param>
+        /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to
         /// location. This would be different locations where the SKU is restricted.
         /// </param>
         /// <param name="restrictionInfo"> Gets the information about the restriction where the SKU cannot be used. </param>
-        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </param>
+        /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: 'QuotaId', 'NotAvailableForSubscription'. </param>
         /// <returns> A new <see cref="Models.AppPlatformSkuRestrictions"/> instance for mocking. </returns>
         public static AppPlatformSkuRestrictions AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, AppPlatformSkuRestrictionInfo restrictionInfo = null, AppPlatformSkuRestrictionsReasonCode? reasonCode = null)
         {
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway. </param>
         /// <param name="isPublic"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
-        /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when &apos;public&apos; is true. </param>
+        /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when 'public' is true. </param>
         /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="apiMetadataProperties"> API metadata property for Spring Cloud Gateway. </param>
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
         /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
-        /// <param name="uri"> URL of the API portal, exposed when &apos;public&apos; is true. </param>
+        /// <param name="uri"> URL of the API portal, exposed when 'public' is true. </param>
         /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="gatewayIds"> The array of resource Ids of gateway to integrate with API portal. </param>
         /// <param name="sourceUris"> Collection of OpenAPI source URL locations. </param>

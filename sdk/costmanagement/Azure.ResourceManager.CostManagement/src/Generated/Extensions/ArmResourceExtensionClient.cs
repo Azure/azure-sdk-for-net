@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Shared&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last60Days&apos;; properties/term with allowed values [&apos;P1Y&apos;, &apos;P3Y&apos;] and default value &apos;P3Y&apos;; properties/subscriptionId; properties/resourceGroup. </param>
+        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
         /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(Id, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter, orderby, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values [&apos;Single&apos;, &apos;Shared&apos;] and default value &apos;Shared&apos;; and properties/lookBackPeriod with allowed values [&apos;Last7Days&apos;, &apos;Last30Days&apos;, &apos;Last60Days&apos;] and default value &apos;Last60Days&apos;; properties/term with allowed values [&apos;P1Y&apos;, &apos;P3Y&apos;] and default value &apos;P3Y&apos;; properties/subscriptionId; properties/resourceGroup. </param>
+        /// <param name="filter"> Can be used to filter benefitRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Shared'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last60Days'; properties/term with allowed values ['P1Y', 'P3Y'] and default value 'P3Y'; properties/subscriptionId; properties/resourceGroup. </param>
         /// <param name="orderby"> May be used to order the recommendations by: properties/armSkuName. For the savings plan, the results are in order by default. There is no need to use this clause. </param>
         /// <param name="expand"> May be used to expand the properties by: properties/usage, properties/allRecommendationDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitRecommendationsRestClient.CreateListRequest(Id, filter, orderby, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id, filter, orderby, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitRecommendationModel.DeserializeBenefitRecommendationModel, BenefitRecommendationsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBenefitRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
-        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ForecastResult>> UsageForecastAsync(ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="forecastDefinition"> Parameters supplied to the CreateOrUpdate Forecast Config operation. </param>
-        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports &apos;eq&apos;, &apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;or&apos;, or &apos;not&apos;. </param>
+        /// <param name="filter"> May be used to filter forecasts by properties/usageDate (Utc time), properties/chargeType or properties/grain. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ForecastResult> UsageForecast(ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are &apos;eq&apos;,&apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;. </param>
+        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
         /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are &apos;eq&apos;,&apos;lt&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;. </param>
+        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
         /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementDimension> GetDimensions(string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(Id, filter, expand, skiptoken, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -326,15 +327,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityByScopeScheduledActionAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(Id, checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(Id, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -357,15 +358,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityByScopeScheduledAction(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(Id, checkNameAvailabilityRequest, cancellationToken);
+                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(Id, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

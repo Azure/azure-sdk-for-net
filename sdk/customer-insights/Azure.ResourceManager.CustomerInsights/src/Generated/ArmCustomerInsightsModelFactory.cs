@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="description"> The description of the connector mapping. </param>
         /// <param name="dataFormatId"> The DataFormat ID. </param>
         /// <param name="mappingProperties"> The properties of the mapping. </param>
-        /// <param name="nextRunOn"> The next run time based on customer&apos;s settings. </param>
+        /// <param name="nextRunOn"> The next run time based on customer's settings. </param>
         /// <param name="runId"> The RunId. </param>
         /// <param name="state"> State of connector mapping. </param>
         /// <param name="tenantId"> The hub name. </param>

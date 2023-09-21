@@ -32,10 +32,10 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version  |Supported API version of service
 |-------------|-----------------------------------------------------|
-|5.3.0-beta.4 | 3.0, 3.1, 2022-05-01, 2023-04-01 (default)
-|5.2.0        | 3.0, 3.1, 2022-05-01 (default)
+|5.3.X        | 3.0, 3.1, 2022-05-01, 2023-04-01 (default)
+|5.2.X        | 3.0, 3.1, 2022-05-01 (default)
 |5.1.X        | 3.0, 3.1 (default)
-|5.0.0        | 3.0
+|5.0.X        | 3.0
 |1.0.X        | 3.0
 
 ### Prerequisites
@@ -138,7 +138,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -482,8 +482,7 @@ List<string> batchedDocuments = new()
 };
 
 // Perform the text analysis operation.
-AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
-await operation.WaitForCompletionAsync();
+AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Completed, batchedDocuments);
 
 Console.WriteLine($"The operation has completed.");
 Console.WriteLine();
@@ -621,25 +620,33 @@ This functionality allows running multiple actions in one or more documents. Act
 
     TextAnalyticsActions actions = new()
     {
-        ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
-        RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() },
+        ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() { ActionName = "ExtractKeyPhrasesSample" } },
+        RecognizeEntitiesActions = new List<RecognizeEntitiesAction>() { new RecognizeEntitiesAction() { ActionName = "RecognizeEntitiesSample" } },
         DisplayName = "AnalyzeOperationSample"
     };
 
     // Perform the text analysis operation.
-    AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-    await operation.WaitForCompletionAsync();
+    AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, batchedDocuments, actions);
 
-    Console.WriteLine($"Status: {operation.Status}");
-    Console.WriteLine($"Created On: {operation.CreatedOn}");
-    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
-    Console.WriteLine($"Last modified: {operation.LastModified}");
+    // View the operation status.
+    Console.WriteLine($"Created On   : {operation.CreatedOn}");
+    Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+    Console.WriteLine($"Id           : {operation.Id}");
+    Console.WriteLine($"Status       : {operation.Status}");
+    Console.WriteLine($"Last Modified: {operation.LastModified}");
+    Console.WriteLine();
+
     if (!string.IsNullOrEmpty(operation.DisplayName))
+    {
         Console.WriteLine($"Display name: {operation.DisplayName}");
+        Console.WriteLine();
+    }
+
     Console.WriteLine($"Total actions: {operation.ActionsTotal}");
     Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
     Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
     Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
+    Console.WriteLine();
 
     await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     {
@@ -651,6 +658,7 @@ This functionality allows running multiple actions in one or more documents. Act
         foreach (RecognizeEntitiesActionResult entitiesActionResults in entitiesResults)
         {
             Console.WriteLine($" Action name: {entitiesActionResults.ActionName}");
+            Console.WriteLine();
             foreach (RecognizeEntitiesResult documentResult in entitiesActionResults.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
@@ -658,21 +666,24 @@ This functionality allows running multiple actions in one or more documents. Act
 
                 foreach (CategorizedEntity entity in documentResult.Entities)
                 {
-                    Console.WriteLine($"  Entity: {entity.Text}");
-                    Console.WriteLine($"  Category: {entity.Category}");
-                    Console.WriteLine($"  Offset: {entity.Offset}");
-                    Console.WriteLine($"  Length: {entity.Length}");
-                    Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                    Console.WriteLine();
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
                 }
                 Console.WriteLine();
             }
         }
 
-        Console.WriteLine("Key Phrases");
+        Console.WriteLine("Extracted Key Phrases");
         docNumber = 1;
         foreach (ExtractKeyPhrasesActionResult keyPhrasesActionResult in keyPhrasesResults)
         {
+            Console.WriteLine($" Action name: {keyPhrasesActionResult.ActionName}");
+            Console.WriteLine();
             foreach (ExtractKeyPhrasesResult documentResults in keyPhrasesActionResult.DocumentsResults)
             {
                 Console.WriteLine($" Document #{docNumber++}");
@@ -680,7 +691,7 @@ This functionality allows running multiple actions in one or more documents. Act
 
                 foreach (string keyphrase in documentResults.KeyPhrases)
                 {
-                    Console.WriteLine($"  {keyphrase}");
+                    Console.WriteLine($"    {keyphrase}");
                 }
                 Console.WriteLine();
             }

@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CostManagementExportResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CostManagementExportResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<ExportRun> GetExecutionHistoryAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportResource.GetExecutionHistory", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportResource.GetExecutionHistory", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +397,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<ExportRun> GetExecutionHistory(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportResource.GetExecutionHistory", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ExportRun.DeserializeExportRun, _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportResource.GetExecutionHistory", "value", null, cancellationToken);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -55,30 +56,30 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreationTime))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationTime);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(CloseTime))
+            if (Optional.IsDefined(CloseOn))
             {
                 writer.WritePropertyName("closeTime"u8);
-                writer.WriteStringValue(CloseTime);
+                writer.WriteStringValue(CloseOn.Value, "O");
             }
-            if (Optional.IsDefined(ModificationTime))
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modificationTime"u8);
-                writer.WriteStringValue(ModificationTime);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModificationTime))
+            if (Optional.IsDefined(StatusModifiedOn))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
-                writer.WriteStringValue(StatusModificationTime);
+                writer.WriteStringValue(StatusModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

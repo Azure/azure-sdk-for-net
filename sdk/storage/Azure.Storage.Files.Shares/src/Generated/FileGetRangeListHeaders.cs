@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.Shares
         {
             _response = response;
         }
-        /// <summary> The date/time that the file was last modified. Any operation that modifies the file, including an update of the file&apos;s metadata or properties, changes the file&apos;s last modified time. </summary>
+        /// <summary> The date/time that the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the file's last modified time. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> The size of the file in bytes. </summary>
         public long? FileContentLength => _response.Headers.TryGetValue("x-ms-content-length", out long? value) ? value : null;

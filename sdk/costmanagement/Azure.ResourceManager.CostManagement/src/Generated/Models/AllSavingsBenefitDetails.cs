@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
-        /// <param name="overageCost"> The difference between total cost and benefit cost for the &apos;totalHours&apos; in the look-back period. </param>
-        /// <param name="benefitCost"> The estimated cost with benefit for the &apos;totalHours&apos; in the look-back period. It&apos;s equal to (commitmentAmount * totalHours). </param>
+        /// <param name="overageCost"> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </param>
+        /// <param name="benefitCost"> The estimated cost with benefit for the 'totalHours' in the look-back period. It's equal to (commitmentAmount * totalHours). </param>
         /// <param name="totalCost"> Total cost, which is sum of benefit cost and overage cost. </param>
-        /// <param name="savingsAmount"> The amount saved for the &apos;totalHours&apos; in the look-back period, by purchasing the recommended quantity of the benefit. </param>
-        /// <param name="savingsPercentage"> The savings in percentage for the &apos;totalHours&apos; in the look-back period, by purchasing the recommended quantity of benefit. </param>
-        /// <param name="coveragePercentage"> Estimated benefit coverage percentage for the &apos;totalHours&apos; in the look-back period, with this commitment. </param>
+        /// <param name="savingsAmount"> The amount saved for the 'totalHours' in the look-back period, by purchasing the recommended quantity of the benefit. </param>
+        /// <param name="savingsPercentage"> The savings in percentage for the 'totalHours' in the look-back period, by purchasing the recommended quantity of benefit. </param>
+        /// <param name="coveragePercentage"> Estimated benefit coverage percentage for the 'totalHours' in the look-back period, with this commitment. </param>
         /// <param name="commitmentAmount"> The commitment amount at the commitmentGranularity. </param>
-        /// <param name="averageUtilizationPercentage"> Estimated average utilization percentage for the &apos;totalHours&apos; in the look-back period, with this commitment. </param>
-        /// <param name="wastageCost"> Estimated unused portion of the &apos;benefitCost&apos;. </param>
+        /// <param name="averageUtilizationPercentage"> Estimated average utilization percentage for the 'totalHours' in the look-back period, with this commitment. </param>
+        /// <param name="wastageCost"> Estimated unused portion of the 'benefitCost'. </param>
         internal AllSavingsBenefitDetails(decimal? overageCost, decimal? benefitCost, decimal? totalCost, decimal? savingsAmount, decimal? savingsPercentage, decimal? coveragePercentage, decimal? commitmentAmount, decimal? averageUtilizationPercentage, decimal? wastageCost)
         {
             OverageCost = overageCost;
@@ -38,23 +38,23 @@ namespace Azure.ResourceManager.CostManagement.Models
             WastageCost = wastageCost;
         }
 
-        /// <summary> The difference between total cost and benefit cost for the &apos;totalHours&apos; in the look-back period. </summary>
+        /// <summary> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </summary>
         public decimal? OverageCost { get; }
-        /// <summary> The estimated cost with benefit for the &apos;totalHours&apos; in the look-back period. It&apos;s equal to (commitmentAmount * totalHours). </summary>
+        /// <summary> The estimated cost with benefit for the 'totalHours' in the look-back period. It's equal to (commitmentAmount * totalHours). </summary>
         public decimal? BenefitCost { get; }
         /// <summary> Total cost, which is sum of benefit cost and overage cost. </summary>
         public decimal? TotalCost { get; }
-        /// <summary> The amount saved for the &apos;totalHours&apos; in the look-back period, by purchasing the recommended quantity of the benefit. </summary>
+        /// <summary> The amount saved for the 'totalHours' in the look-back period, by purchasing the recommended quantity of the benefit. </summary>
         public decimal? SavingsAmount { get; }
-        /// <summary> The savings in percentage for the &apos;totalHours&apos; in the look-back period, by purchasing the recommended quantity of benefit. </summary>
+        /// <summary> The savings in percentage for the 'totalHours' in the look-back period, by purchasing the recommended quantity of benefit. </summary>
         public decimal? SavingsPercentage { get; }
-        /// <summary> Estimated benefit coverage percentage for the &apos;totalHours&apos; in the look-back period, with this commitment. </summary>
+        /// <summary> Estimated benefit coverage percentage for the 'totalHours' in the look-back period, with this commitment. </summary>
         public decimal? CoveragePercentage { get; }
         /// <summary> The commitment amount at the commitmentGranularity. </summary>
         public decimal? CommitmentAmount { get; }
-        /// <summary> Estimated average utilization percentage for the &apos;totalHours&apos; in the look-back period, with this commitment. </summary>
+        /// <summary> Estimated average utilization percentage for the 'totalHours' in the look-back period, with this commitment. </summary>
         public decimal? AverageUtilizationPercentage { get; }
-        /// <summary> Estimated unused portion of the &apos;benefitCost&apos;. </summary>
+        /// <summary> Estimated unused portion of the 'benefitCost'. </summary>
         public decimal? WastageCost { get; }
     }
 }

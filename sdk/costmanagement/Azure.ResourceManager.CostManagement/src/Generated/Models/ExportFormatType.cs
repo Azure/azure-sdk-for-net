@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </summary>
+    /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>
     public readonly partial struct ExportFormatType : IEquatable<ExportFormatType>
     {
         private readonly string _value;

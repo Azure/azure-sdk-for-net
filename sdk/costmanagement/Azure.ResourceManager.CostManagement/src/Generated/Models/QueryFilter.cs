@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             Or = new ChangeTrackingList<QueryFilter>();
         }
 
-        /// <summary> The logical &quot;AND&quot; expression. Must have at least 2 items. </summary>
+        /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>
         public IList<QueryFilter> And { get; }
-        /// <summary> The logical &quot;OR&quot; expression. Must have at least 2 items. </summary>
+        /// <summary> The logical "OR" expression. Must have at least 2 items. </summary>
         public IList<QueryFilter> Or { get; }
         /// <summary> Has comparison expression for a dimension. </summary>
         public QueryComparisonExpression Dimensions { get; set; }

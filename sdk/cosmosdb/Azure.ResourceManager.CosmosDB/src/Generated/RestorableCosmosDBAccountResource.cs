@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*&apos; permission.
+        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -213,11 +214,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableSqlDatabase> GetRestorableSqlDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableSqlDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableSqlDatabase.DeserializeRestorableSqlDatabase, _restorableSqlDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableSqlDatabase.DeserializeRestorableSqlDatabase, _restorableSqlDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -234,11 +235,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableSqlDatabase> GetRestorableSqlDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableSqlDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableSqlDatabase.DeserializeRestorableSqlDatabase, _restorableSqlDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableSqlDatabase.DeserializeRestorableSqlDatabase, _restorableSqlDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL containers under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL containers under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -258,11 +259,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableSqlContainersRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableSqlDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableSqlContainer.DeserializeRestorableSqlContainer, _restorableSqlContainersClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlContainers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableSqlContainer.DeserializeRestorableSqlContainer, _restorableSqlContainersClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlContainers", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL containers under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL containers under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -282,11 +283,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableSqlContainersRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableSqlDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableSqlContainer.DeserializeRestorableSqlContainer, _restorableSqlContainersClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlContainers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableSqlContainer.DeserializeRestorableSqlContainer, _restorableSqlContainersClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableSqlContainers", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of database and container combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of database and container combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -305,11 +306,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableSqlResourceData> GetAllRestorableSqlResourceDataAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableSqlResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableSqlResourceData.DeserializeRestorableSqlResourceData, _restorableSqlResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableSqlResourceData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableSqlResourceData.DeserializeRestorableSqlResourceData, _restorableSqlResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableSqlResourceData", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of database and container combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of database and container combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -328,11 +329,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableSqlResourceData> GetAllRestorableSqlResourceData(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableSqlResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableSqlResourceData.DeserializeRestorableSqlResourceData, _restorableSqlResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableSqlResourceData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableSqlResourceData.DeserializeRestorableSqlResourceData, _restorableSqlResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableSqlResourceData", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires  &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires  'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -349,11 +350,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableMongoDBDatabase> GetRestorableMongoDBDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBDatabase.DeserializeRestorableMongoDBDatabase, _restorableMongoDBDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBDatabase.DeserializeRestorableMongoDBDatabase, _restorableMongoDBDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires  &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB databases under the restorable account.  This helps in scenario where database was accidentally deleted to get the deletion time.  This API requires  'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -370,11 +371,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableMongoDBDatabase> GetRestorableMongoDBDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBDatabase.DeserializeRestorableMongoDBDatabase, _restorableMongoDBDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBDatabase.DeserializeRestorableMongoDBDatabase, _restorableMongoDBDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -394,11 +395,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBCollectionsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -418,11 +419,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBCollectionsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of database and collection combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of database and collection combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -441,11 +442,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceDataAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBResourceData.DeserializeRestorableMongoDBResourceData, _restorableMongoDBResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableMongoDBResourceData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBResourceData.DeserializeRestorableMongoDBResourceData, _restorableMongoDBResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableMongoDBResourceData", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of database and collection combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of database and collection combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -464,11 +465,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableMongoDBResourceData> GetAllRestorableMongoDBResourceData(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBResourceData.DeserializeRestorableMongoDBResourceData, _restorableMongoDBResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableMongoDBResourceData", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBResourceData.DeserializeRestorableMongoDBResourceData, _restorableMongoDBResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetAllRestorableMongoDBResourceData", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin databases under the restorable account. This helps in scenario where database was accidentally deleted to get the deletion time. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin databases under the restorable account. This helps in scenario where database was accidentally deleted to get the deletion time. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -485,11 +486,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableGremlinDatabase> GetRestorableGremlinDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin databases under the restorable account. This helps in scenario where database was accidentally deleted to get the deletion time. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin databases under the restorable account. This helps in scenario where database was accidentally deleted to get the deletion time. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -506,11 +507,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableGremlinDatabase> GetRestorableGremlinDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin graphs under a specific database. This helps in scenario where container was accidentally deleted. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin graphs under a specific database. This helps in scenario where container was accidentally deleted. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -530,11 +531,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableGremlinGraph> GetRestorableGremlinGraphsAsync(string restorableGremlinDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinGraphsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableGremlinDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinGraph.DeserializeRestorableGremlinGraph, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinGraph.DeserializeRestorableGremlinGraph, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin graphs under a specific database. This helps in scenario where container was accidentally deleted. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin graphs under a specific database. This helps in scenario where container was accidentally deleted. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -554,11 +555,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableGremlinGraph> GetRestorableGremlinGraphs(string restorableGremlinDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinGraphsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableGremlinDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinGraph.DeserializeRestorableGremlinGraph, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinGraph.DeserializeRestorableGremlinGraph, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of gremlin database and graphs combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of gremlin database and graphs combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -577,11 +578,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableGremlinResourceData> GetRestorableGremlinResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of gremlin database and graphs combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of gremlin database and graphs combo that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -600,11 +601,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableGremlinResourceData> GetRestorableGremlinResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -623,11 +624,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableTable> GetRestorableTablesAsync(string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTablesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), startTime, endTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTable.DeserializeRestorableTable, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTable.DeserializeRestorableTable, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB Tables. This helps in scenario where table was accidentally deleted. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -646,11 +647,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableTable> GetRestorableTables(string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTablesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), startTime, endTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTable.DeserializeRestorableTable, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTable.DeserializeRestorableTable, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of tables that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of tables that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -669,11 +670,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableTableResourceData> GetRestorableTableResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTableResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTableResourceData.DeserializeRestorableTableResourceData, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTableResourceData.DeserializeRestorableTableResourceData, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Return a list of tables that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission.
+        /// Return a list of tables that exist on the account at the given timestamp and location. This helps in scenarios to validate what resources exist at given timestamp and location. This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -692,7 +693,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableTableResourceData> GetRestorableTableResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTableResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTableResourceData.DeserializeRestorableTableResourceData, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTableResourceData.DeserializeRestorableTableResourceData, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
         }
     }
 }

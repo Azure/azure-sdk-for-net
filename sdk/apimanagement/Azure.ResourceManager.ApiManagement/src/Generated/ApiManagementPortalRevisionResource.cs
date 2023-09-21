@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

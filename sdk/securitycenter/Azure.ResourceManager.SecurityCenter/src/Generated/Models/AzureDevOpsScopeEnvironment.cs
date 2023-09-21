@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The AzureDevOps scope connector&apos;s environment data. </summary>
+    /// <summary> The AzureDevOps scope connector's environment data. </summary>
     public partial class AzureDevOpsScopeEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of AzureDevOpsScopeEnvironment. </summary>

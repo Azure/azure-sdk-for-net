@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmIotHubModelFactory
     {
-
         /// <summary> Initializes a new instance of IotHubDescriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="ipFilterRules"> The IP filter rules. </param>
         /// <param name="networkRuleSets"> Network Rule Set Properties of IotHub. </param>
-        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to &quot;1.2&quot; to have clients that use a TLS version below 1.2 to be rejected. </param>
+        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients that use a TLS version below 1.2 to be rejected. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="state"> The hub state. </param>
@@ -102,6 +101,26 @@ namespace Azure.ResourceManager.IotHub.Models
             partitionIds ??= new List<string>();
 
             return new EventHubCompatibleEndpointProperties(retentionTimeInDays, partitionCount, partitionIds?.ToList(), eventHubCompatibleName, endpoint);
+        }
+
+        /// <summary> Initializes a new instance of RoutingCosmosDBSqlApiProperties. </summary>
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
+        /// <param name="id"> Id of the cosmos DB sql container endpoint. </param>
+        /// <param name="subscriptionId"> The subscription identifier of the cosmos DB account. </param>
+        /// <param name="resourceGroup"> The name of the resource group of the cosmos DB account. </param>
+        /// <param name="endpointUri"> The url of the cosmos DB account. It must include the protocol https://. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the cosmos DB sql container endpoint. </param>
+        /// <param name="userAssignedIdentity"> Managed identity properties of routing cosmos DB container endpoint. </param>
+        /// <param name="primaryKey"> The primary key of the cosmos DB account. </param>
+        /// <param name="secondaryKey"> The secondary key of the cosmos DB account. </param>
+        /// <param name="databaseName"> The name of the cosmos DB database in the cosmos DB account. </param>
+        /// <param name="containerName"> The name of the cosmos DB sql container in the cosmos DB database. </param>
+        /// <param name="partitionKeyName"> The name of the partition key associated with this cosmos DB sql container if one exists. This is an optional parameter. </param>
+        /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
+        /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
+        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = null, string id = null, string subscriptionId = null, string resourceGroup = null, Uri endpointUri = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string primaryKey = null, string secondaryKey = null, string databaseName = null, string containerName = null, string partitionKeyName = null, string partitionKeyTemplate = null)
+        {
+            return new RoutingCosmosDBSqlApiProperties(name, id, subscriptionId, resourceGroup, endpointUri, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, primaryKey, secondaryKey, databaseName, containerName, partitionKeyName, partitionKeyTemplate);
         }
 
         /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
@@ -196,7 +215,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Initializes a new instance of IotHubEndpointHealthInfo. </summary>
         /// <param name="endpointId"> Id of the endpoint. </param>
-        /// <param name="healthStatus"> Health statuses have following meanings. The &apos;healthy&apos; status shows that the endpoint is accepting messages as expected. The &apos;unhealthy&apos; status shows that the endpoint is not accepting messages as expected and IoT Hub is retrying to send data to this endpoint. The status of an unhealthy endpoint will be updated to healthy when IoT Hub has established an eventually consistent state of health. The &apos;dead&apos; status shows that the endpoint is not accepting messages, after IoT Hub retried sending messages for the retrial period. See IoT Hub metrics to identify errors and monitor issues with endpoints. The &apos;unknown&apos; status shows that the IoT Hub has not established a connection with the endpoint. No messages have been delivered to or rejected from this endpoint. </param>
+        /// <param name="healthStatus"> Health statuses have following meanings. The 'healthy' status shows that the endpoint is accepting messages as expected. The 'unhealthy' status shows that the endpoint is not accepting messages as expected and IoT Hub is retrying to send data to this endpoint. The status of an unhealthy endpoint will be updated to healthy when IoT Hub has established an eventually consistent state of health. The 'dead' status shows that the endpoint is not accepting messages, after IoT Hub retried sending messages for the retrial period. See IoT Hub metrics to identify errors and monitor issues with endpoints. The 'unknown' status shows that the IoT Hub has not established a connection with the endpoint. No messages have been delivered to or rejected from this endpoint. </param>
         /// <param name="lastKnownError"> Last error obtained when a message failed to be delivered to iot hub. </param>
         /// <param name="lastKnownErrorOn"> Time at which the last known error occurred. </param>
         /// <param name="lastSuccessfulSendAttemptOn"> Last time iot hub successfully sent a message to the endpoint. </param>
@@ -310,12 +329,12 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
-        /// <param name="subject"> The certificate&apos;s subject name. </param>
-        /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprintString"> The certificate&apos;s thumbprint. </param>
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
-        /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
-        /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
+        /// <param name="createdOn"> The certificate's create date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
         public static IotHubCertificateProperties IotHubCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, BinaryData certificate = null)
@@ -337,13 +356,13 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
-        /// <param name="subject"> The certificate&apos;s subject name. </param>
-        /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprintString"> The certificate&apos;s thumbprint. </param>
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
-        /// <param name="createdOn"> The certificate&apos;s create date and time. </param>
-        /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
-        /// <param name="verificationCode"> The certificate&apos;s verification code that will be used for proof of possession. </param>
+        /// <param name="createdOn"> The certificate's create date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
+        /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
         public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string verificationCode = null, BinaryData certificate = null)

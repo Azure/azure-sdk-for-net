@@ -61,11 +61,11 @@ namespace Azure.Core.Shared
         /// <returns>The created diagnostic scope containing the common set of messaging attributes that are knowable upon creation.</returns>
         public DiagnosticScope CreateScope(
             string activityName,
-            DiagnosticScope.ActivityKind kind,
+            ActivityKind kind,
             MessagingDiagnosticOperation operation = default)
         {
             DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
-            if (ActivityExtensions.SupportsActivitySource())
+            if (ActivityExtensions.SupportsActivitySource)
             {
                 scope.AddAttribute(MessagingSystem, _messagingSystem);
                 if (operation != default)
@@ -99,7 +99,7 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
                 if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
@@ -131,7 +131,7 @@ namespace Azure.Core.Shared
             traceparent = null;
             tracestate = null;
 
-            if (ActivityExtensions.SupportsActivitySource() && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
+            if (ActivityExtensions.SupportsActivitySource && properties.TryGetValue(TraceParent, out var traceParent) && traceParent is string traceParentString)
             {
                 traceparent = traceParentString;
                 if (properties.TryGetValue(TraceState, out object state) && state is string stateString)
@@ -167,15 +167,15 @@ namespace Azure.Core.Shared
             {
                 using DiagnosticScope messageScope = CreateScope(
                     activityName,
-                    DiagnosticScope.ActivityKind.Producer);
+                    ActivityKind.Producer);
                 messageScope.Start();
 
-                Activity activity = Activity.Current;
+                Activity? activity = Activity.Current;
                 if (activity != null)
                 {
-                    traceparent = activity.Id;
+                    traceparent = activity.Id!;
                     properties[DiagnosticIdAttribute] = traceparent;
-                    if (ActivityExtensions.SupportsActivitySource())
+                    if (ActivityExtensions.SupportsActivitySource)
                     {
                         properties[TraceParent] = traceparent;
                         if (activity.TraceStateString != null)

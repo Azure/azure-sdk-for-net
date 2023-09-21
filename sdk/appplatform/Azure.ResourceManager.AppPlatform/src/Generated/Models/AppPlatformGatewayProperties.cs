@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway. </param>
         /// <param name="isPublic"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
-        /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when &apos;public&apos; is true. </param>
+        /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when 'public' is true. </param>
         /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="apiMetadataProperties"> API metadata property for Spring Cloud Gateway. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public AppPlatformGatewayProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates whether the Spring Cloud Gateway exposes endpoint. </summary>
         public bool? IsPublic { get; set; }
-        /// <summary> URL of the Spring Cloud Gateway, exposed when &apos;public&apos; is true. </summary>
+        /// <summary> URL of the Spring Cloud Gateway, exposed when 'public' is true. </summary>
         public Uri Uri { get; }
         /// <summary> Indicate if only https is allowed. </summary>
         public bool? IsHttpsOnly { get; set; }

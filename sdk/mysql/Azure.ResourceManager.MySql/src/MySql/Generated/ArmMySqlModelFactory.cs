@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMySqlModelFactory
     {
-
         /// <summary> Initializes a new instance of MySqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="version"> Server version. </param>
         /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
         /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="replicationRole"> The replication role of the server. </param>
         /// <param name="masterServerId"> The master server id of a replica server. </param>
         /// <param name="replicaCapacity"> The maximum number of replicas that a master server can have. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
         /// <returns> A new <see cref="MySql.MySqlServerData"/> instance for mocking. </returns>
         public static MySqlServerData MySqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MySqlSku sku = null, string administratorLogin = null, MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, string byokEnforcement = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlServerState? userVisibleState = null, string fullyQualifiedDomainName = null, DateTimeOffset? earliestRestoreOn = null, MySqlStorageProfile storageProfile = null, string replicationRole = null, ResourceIdentifier masterServerId = null, int? replicaCapacity = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, IEnumerable<MySqlServerPrivateEndpointConnection> privateEndpointConnections = null)
@@ -400,7 +399,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector used to protect the key. </param>
-        /// <param name="serverKeyType"> The key type like &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The key type like 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
         /// <returns> A new <see cref="MySql.MySqlServerKeyData"/> instance for mocking. </returns>

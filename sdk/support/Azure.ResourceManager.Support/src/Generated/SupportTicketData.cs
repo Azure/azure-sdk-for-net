@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="description"> Detailed description of the question or issue. </param>
         /// <param name="problemClassificationId"> Each Azure service has its own set of issue categories, also known as problem classification. This parameter is the unique Id for the type of problem you are experiencing. </param>
         /// <param name="problemClassificationDisplayName"> Localized name of problem classification. </param>
-        /// <param name="severity"> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: &apos;Highest critical impact&apos;, also known as the &apos;Emergency - Severe impact&apos; level in the Azure portal is reserved only for our Premium customers. </param>
+        /// <param name="severity"> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </param>
         /// <param name="enrollmentId"> Enrollment Id associated with the support ticket. </param>
         /// <param name="require24X7Response"> Indicates if this requires a 24x7 response from Azure. </param>
         /// <param name="contactDetails"> Contact information of the user requesting to create a support ticket. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Support
         public string ProblemClassificationId { get; set; }
         /// <summary> Localized name of problem classification. </summary>
         public string ProblemClassificationDisplayName { get; }
-        /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: &apos;Highest critical impact&apos;, also known as the &apos;Emergency - Severe impact&apos; level in the Azure portal is reserved only for our Premium customers. </summary>
+        /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </summary>
         public SupportSeverityLevel? Severity { get; set; }
         /// <summary> Enrollment Id associated with the support ticket. </summary>
         public string EnrollmentId { get; }

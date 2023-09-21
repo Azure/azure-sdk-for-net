@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a database&apos;s transparent data encryption configuration.
+        /// Updates a database's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a database&apos;s transparent data encryption configuration.
+        /// Updates a database's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s transparent data encryption.
+        /// Gets a managed database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s transparent data encryption.
+        /// Gets a managed database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of managed database&apos;s transparent data encryptions.
+        /// Gets a list of managed database's transparent data encryptions.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of managed database&apos;s transparent data encryptions.
+        /// Gets a list of managed database's transparent data encryptions.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -23,7 +23,8 @@ namespace Azure.Communication.PhoneNumbers
                     new MSUserAgentPolicy()
                 }
             };
-            return HttpPipelineBuilder.Build(pipelineOptions);
+            HttpPipelineTransportOptions httpPipelineTransportOptions = new() { IsClientRedirectEnabled = true };
+            return HttpPipelineBuilder.Build(pipelineOptions, httpPipelineTransportOptions);
         }
 
         public static HttpPipeline BuildPhoneNumbersHttpPipeline(this ClientOptions options, AzureKeyCredential keyCredential)
@@ -37,7 +38,8 @@ namespace Azure.Communication.PhoneNumbers
                     new MSUserAgentPolicy()
                 }
             };
-            return HttpPipelineBuilder.Build(pipelineOptions);
+            HttpPipelineTransportOptions httpPipelineTransportOptions = new() { IsClientRedirectEnabled = true };
+            return HttpPipelineBuilder.Build(pipelineOptions, httpPipelineTransportOptions);
         }
 
         public static HttpPipeline BuildPhoneNumbersHttpPipeline(this ClientOptions options, TokenCredential tokenCredential)

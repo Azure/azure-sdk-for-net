@@ -3,10 +3,13 @@
 
 // This is a temporary solution.
 // Please remove this code when swagger is updated to support `kind` property: https://github.com/Azure/azure-rest-api-specs/pull/19675
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication
 {
+    // Excluded internal shared code.
+    [ExcludeFromCodeCoverage]
     [CodeGenModel("CommunicationIdentifierModel")]
     internal partial class CommunicationIdentifierModel
     {

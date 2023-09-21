@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="ClipTime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AbsoluteClipTime"/> and <see cref="UtcClipTime"/>.
         /// </param>
-        /// <param name="label"> A label that is assigned to a JobInputClip, that is used to satisfy a reference used in the Transform. For example, a Transform can be authored so as to take an image file with the label &apos;xyz&apos; and apply it as an overlay onto the input video before it is encoded. When submitting a Job, exactly one of the JobInputs should be the image file, and it should have the label &apos;xyz&apos;. </param>
+        /// <param name="label"> A label that is assigned to a JobInputClip, that is used to satisfy a reference used in the Transform. For example, a Transform can be authored so as to take an image file with the label 'xyz' and apply it as an overlay onto the input video before it is encoded. When submitting a Job, exactly one of the JobInputs should be the image file, and it should have the label 'xyz'. </param>
         /// <param name="inputDefinitions">
         /// Defines a list of InputDefinitions. For each InputDefinition, it defines a list of track selections and related metadata.
         /// Please note <see cref="MediaJobInputDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="AbsoluteClipTime"/> and <see cref="UtcClipTime"/>.
         /// </summary>
         public ClipTime End { get; set; }
-        /// <summary> A label that is assigned to a JobInputClip, that is used to satisfy a reference used in the Transform. For example, a Transform can be authored so as to take an image file with the label &apos;xyz&apos; and apply it as an overlay onto the input video before it is encoded. When submitting a Job, exactly one of the JobInputs should be the image file, and it should have the label &apos;xyz&apos;. </summary>
+        /// <summary> A label that is assigned to a JobInputClip, that is used to satisfy a reference used in the Transform. For example, a Transform can be authored so as to take an image file with the label 'xyz' and apply it as an overlay onto the input video before it is encoded. When submitting a Job, exactly one of the JobInputs should be the image file, and it should have the label 'xyz'. </summary>
         public string Label { get; set; }
         /// <summary>
         /// Defines a list of InputDefinitions. For each InputDefinition, it defines a list of track selections and related metadata.

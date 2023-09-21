@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSecurityCenterModelFactory
     {
-
         /// <summary> Initializes a new instance of MdeOnboarding. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -98,17 +97,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
+        /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
         /// <param name="subPlan"> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. </param>
         /// <param name="freeTrialRemainingTime"> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </param>
+        /// <param name="enabledOn"> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </param>
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
+        /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityCenterPricingTier? pricingTier = null, string subPlan = null, TimeSpan? freeTrialRemainingTime = null, bool? isDeprecated = null, IEnumerable<string> replacedBy = null)
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityCenterPricingTier? pricingTier = null, string subPlan = null, TimeSpan? freeTrialRemainingTime = null, DateTimeOffset? enabledOn = null, bool? isDeprecated = null, IEnumerable<string> replacedBy = null, IEnumerable<PlanExtension> extensions = null)
         {
             replacedBy ??= new List<string>();
+            extensions ??= new List<PlanExtension>();
 
-            return new SecurityCenterPricingData(id, name, resourceType, systemData, pricingTier, subPlan, freeTrialRemainingTime, isDeprecated, replacedBy?.ToList());
+            return new SecurityCenterPricingData(id, name, resourceType, systemData, pricingTier, subPlan, freeTrialRemainingTime, enabledOn, isDeprecated, replacedBy?.ToList(), extensions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PlanExtension. </summary>
+        /// <param name="name">
+        /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
+        /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
+        /// Available for StorageAccounts plan.&lt;br&gt;&lt;br&gt;**SensitiveDataDiscovery** - Sensitive data discovery identifies Blob storage container with sensitive data such as credentials, credit cards, and more, to help prioritize and investigate security events.
+        /// Available for StorageAccounts and CloudPosture plans.&lt;br&gt;&lt;br&gt;**ContainerRegistriesVulnerabilityAssessments** - Provides vulnerability management for images stored in your container registries.
+        /// Available for CloudPosture and Containers plans.
+        /// </param>
+        /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
+        /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
+        /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
+        /// <returns> A new <see cref="Models.PlanExtension"/> instance for mocking. </returns>
+        public static PlanExtension PlanExtension(string name = null, IsExtensionEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = null, ExtensionOperationStatus operationStatus = null)
+        {
+            additionalExtensionProperties ??= new Dictionary<string, BinaryData>();
+
+            return new PlanExtension(name, isEnabled, additionalExtensionProperties, operationStatus);
+        }
+
+        /// <summary> Initializes a new instance of ExtensionOperationStatus. </summary>
+        /// <param name="code"> The operation status code. </param>
+        /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
+        /// <returns> A new <see cref="Models.ExtensionOperationStatus"/> instance for mocking. </returns>
+        public static ExtensionOperationStatus ExtensionOperationStatus(ExtensionOperationStatusCode? code = null, string message = null)
+        {
+            return new ExtensionOperationStatus(code, message);
         }
 
         /// <summary> Initializes a new instance of AdvancedThreatProtectionSettingData. </summary>
@@ -130,18 +160,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="thresholdRules">
         /// The list of custom alert threshold rules.
-        /// Please note <see cref="ThresholdCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TimeWindowCustomAlertRule"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
+        /// Please note <see cref="Models.ThresholdCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.TimeWindowCustomAlertRule"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/> and <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>.
         /// </param>
         /// <param name="timeWindowRules">
         /// The list of custom alert time-window rules.
-        /// Please note <see cref="TimeWindowCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
+        /// Please note <see cref="Models.TimeWindowCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/> and <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>.
         /// </param>
         /// <param name="allowlistRules">
         /// The allow-list custom alert rules.
-        /// Please note <see cref="AllowlistCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectionFromIPNotAllowed"/>, <see cref="ConnectionToIPNotAllowed"/>, <see cref="LocalUserNotAllowed"/> and <see cref="ProcessNotAllowed"/>.
+        /// Please note <see cref="Models.AllowlistCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ConnectionFromIPNotAllowed"/>, <see cref="Models.ConnectionToIPNotAllowed"/>, <see cref="Models.LocalUserNotAllowed"/> and <see cref="Models.ProcessNotAllowed"/>.
         /// </param>
         /// <param name="denylistRules"> The deny-list custom alert rules. </param>
         /// <returns> A new <see cref="SecurityCenter.DeviceSecurityGroupData"/> instance for mocking. </returns>
@@ -243,7 +273,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="export"> List of additional options for exporting to workspace data. </param>
         /// <param name="disabledDataSources"> Disabled data sources. Disabling these data sources compromises the system. </param>
         /// <param name="iotHubs"> IoT Hub resource IDs. </param>
-        /// <param name="userDefinedResources"> Properties of the IoT Security solution&apos;s user defined resources. </param>
+        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
         /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
         /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
@@ -424,7 +454,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
         /// <param name="createdOn"> The time this task was discovered in UTC. </param>
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangedOn"> The time this task&apos;s details were last changed in UTC. </param>
+        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityTaskData"/> instance for mocking. </returns>
         public static SecurityTaskData SecurityTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string state = null, DateTimeOffset? createdOn = null, SecurityTaskProperties securityTaskParameters = null, DateTimeOffset? lastStateChangedOn = null, string subState = null)
@@ -504,7 +534,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
-        /// <param name="phone"> The security contact&apos;s phone number. </param>
+        /// <param name="phone"> The security contact's phone number. </param>
         /// <param name="alertNotifications"> Defines whether to send email notifications about new security alerts. </param>
         /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityContactData"/> instance for mocking. </returns>
@@ -531,7 +561,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Aggregative state based on the standard&apos;s supported controls states. </param>
+        /// <param name="state"> Aggregative state based on the standard's supported controls states. </param>
         /// <param name="passedControls"> The number of supported regulatory compliance controls of the given standard with a passed state. </param>
         /// <param name="failedControls"> The number of supported regulatory compliance controls of the given standard with a failed state. </param>
         /// <param name="skippedControls"> The number of supported regulatory compliance controls of the given standard with a skipped state. </param>
@@ -548,7 +578,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> The description of the regulatory compliance control. </param>
-        /// <param name="state"> Aggregative state based on the control&apos;s supported assessments states. </param>
+        /// <param name="state"> Aggregative state based on the control's supported assessments states. </param>
         /// <param name="passedAssessments"> The number of supported regulatory compliance assessments of the given control with a passed state. </param>
         /// <param name="failedAssessments"> The number of supported regulatory compliance assessments of the given control with a failed state. </param>
         /// <param name="skippedAssessments"> The number of supported regulatory compliance assessments of the given control with a skipped state. </param>
@@ -566,11 +596,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The description of the regulatory compliance assessment. </param>
         /// <param name="assessmentType"> The expected type of assessment contained in the AssessmentDetailsLink. </param>
         /// <param name="assessmentDetailsLink"> Link to more detailed assessment results data. The response type will be according to the assessmentType field. </param>
-        /// <param name="state"> Aggregative state based on the assessment&apos;s scanned resources states. </param>
-        /// <param name="passedResources"> The given assessment&apos;s related resources count with passed state. </param>
-        /// <param name="failedResources"> The given assessment&apos;s related resources count with failed state. </param>
-        /// <param name="skippedResources"> The given assessment&apos;s related resources count with skipped state. </param>
-        /// <param name="unsupportedResources"> The given assessment&apos;s related resources count with unsupported state. </param>
+        /// <param name="state"> Aggregative state based on the assessment's scanned resources states. </param>
+        /// <param name="passedResources"> The given assessment's related resources count with passed state. </param>
+        /// <param name="failedResources"> The given assessment's related resources count with failed state. </param>
+        /// <param name="skippedResources"> The given assessment's related resources count with skipped state. </param>
+        /// <param name="unsupportedResources"> The given assessment's related resources count with unsupported state. </param>
         /// <returns> A new <see cref="SecurityCenter.RegulatoryComplianceAssessmentData"/> instance for mocking. </returns>
         public static RegulatoryComplianceAssessmentData RegulatoryComplianceAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string assessmentType = null, string assessmentDetailsLink = null, RegulatoryComplianceState? state = null, int? passedResources = null, int? failedResources = null, int? skippedResources = null, int? unsupportedResources = null)
         {
@@ -593,12 +623,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="additionalData">
         /// Details of the sub-assessment
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
+        /// The available derived classes include <see cref="Models.ContainerRegistryVulnerabilityProperties"/>, <see cref="Models.ServerVulnerabilityProperties"/> and <see cref="Models.SqlServerVulnerabilityProperties"/>.
         /// </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySubAssessmentData"/> instance for mocking. </returns>
         public static SecuritySubAssessmentData SecuritySubAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vulnerabilityId = null, string displayName = null, SubAssessmentStatus status = null, string remediation = null, string impact = null, string category = null, string description = null, DateTimeOffset? generatedOn = null, SecurityCenterResourceDetails resourceDetails = null, SecuritySubAssessmentAdditionalInfo additionalData = null)
@@ -631,7 +661,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="actions">
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
+        /// The available derived classes include <see cref="Models.SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
@@ -660,7 +690,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use &apos;*&apos;. </param>
+        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
         /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
         /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
         /// <param name="reason"> The reason for dismissing the alert. </param>
@@ -749,7 +779,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="additionalData"> Additional data regarding the assessment. </param>
@@ -785,7 +815,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="additionalData"> Additional data regarding the assessment. </param>
@@ -965,9 +995,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="securityFamily"> The security family of the discovered solution. </param>
-        /// <param name="offer"> The security solutions&apos; image offer. </param>
-        /// <param name="publisher"> The security solutions&apos; image publisher. </param>
-        /// <param name="sku"> The security solutions&apos; image sku. </param>
+        /// <param name="offer"> The security solutions' image offer. </param>
+        /// <param name="publisher"> The security solutions' image publisher. </param>
+        /// <param name="sku"> The security solutions' image sku. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.DiscoveredSecuritySolution"/> instance for mocking. </returns>
         public static DiscoveredSecuritySolution DiscoveredSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string offer = null, string publisher = null, string sku = null, AzureLocation? location = null)
@@ -981,12 +1011,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="securityFamily"> The security family of the security solution. </param>
-        /// <param name="alertVendorName"> The security solutions&apos; vendor name. </param>
-        /// <param name="packageInfoUri"> The security solutions&apos; package info url. </param>
-        /// <param name="productName"> The security solutions&apos; product name. </param>
-        /// <param name="publisher"> The security solutions&apos; publisher. </param>
-        /// <param name="publisherDisplayName"> The security solutions&apos; publisher display name. </param>
-        /// <param name="template"> The security solutions&apos; template. </param>
+        /// <param name="alertVendorName"> The security solutions' vendor name. </param>
+        /// <param name="packageInfoUri"> The security solutions' package info url. </param>
+        /// <param name="productName"> The security solutions' product name. </param>
+        /// <param name="publisher"> The security solutions' publisher. </param>
+        /// <param name="publisherDisplayName"> The security solutions' publisher display name. </param>
+        /// <param name="template"> The security solutions' template. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.SecuritySolutionsReferenceData"/> instance for mocking. </returns>
         public static SecuritySolutionsReferenceData SecuritySolutionsReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string alertVendorName = null, Uri packageInfoUri = null, string productName = null, string publisher = null, string publisherDisplayName = null, string template = null, AzureLocation? location = null)
@@ -1068,8 +1098,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="securityFamily"> The security family of the security solution. </param>
         /// <param name="provisioningState"> The security family provisioning State. </param>
-        /// <param name="template"> The security solutions&apos; template. </param>
-        /// <param name="protectionStatus"> The security solutions&apos; status. </param>
+        /// <param name="template"> The security solutions' template. </param>
+        /// <param name="protectionStatus"> The security solutions' status. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.SecuritySolution"/> instance for mocking. </returns>
         public static SecuritySolution SecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily? securityFamily = null, SecurityFamilyProvisioningState? provisioningState = null, string template = null, string protectionStatus = null, AzureLocation? location = null)
@@ -1085,8 +1115,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="hybridComputeSettings"> Settings for hybrid compute management. These settings are relevant only for Arc autoProvision (Hybrid Compute). </param>
         /// <param name="authenticationDetails">
         /// Settings for authentication management, these settings are relevant only for the cloud connector.
-        /// Please note <see cref="AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="AwsCredsAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
+        /// Please note <see cref="Models.AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="Models.AwsCredsAuthenticationDetailsProperties"/> and <see cref="Models.GcpCredentialsDetailsProperties"/>.
         /// </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCloudConnectorData"/> instance for mocking. </returns>
         public static SecurityCloudConnectorData SecurityCloudConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridComputeSettingsProperties hybridComputeSettings = null, AuthenticationDetailsProperties authenticationDetails = null)
@@ -1131,13 +1161,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="alertDisplayName"> The display name of the alert. </param>
         /// <param name="description"> Description of the suspicious activity that was detected. </param>
         /// <param name="severity"> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </param>
-        /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center&apos;s supported kill chain intents. </param>
+        /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </param>
         /// <param name="startOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
         /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers">
         /// The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert.
         /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceIdentifier"/> and <see cref="LogAnalyticsIdentifier"/>.
+        /// The available derived classes include <see cref="Models.AzureResourceIdentifier"/> and <see cref="Models.LogAnalyticsIdentifier"/>.
         /// </param>
         /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
         /// <param name="vendorName"> The name of the vendor that raises the alert. </param>
@@ -1261,11 +1291,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> The location. </param>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
         /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
-        /// <param name="environmentName"> The multi cloud resource&apos;s cloud name. </param>
+        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
         /// <param name="offerings">
         /// A collection of offerings for the security connector.
-        /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
+        /// Please note <see cref="Models.SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="Models.DefenderForDevOpsGithubOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/> and <see cref="Models.InformationProtectionAwsOffering"/>.
         /// </param>
         /// <param name="environmentData">
         /// The security connector environment data.

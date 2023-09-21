@@ -21,7 +21,6 @@ namespace Azure.Maps.Search.Models
     /// </summary>
     public readonly partial struct SearchAddressResultType : IEquatable<SearchAddressResultType>
     {
-
         private const string PointOfInterestValue = "POI";
         private const string StreetValue = "Street";
         private const string GeographyValue = "Geography";

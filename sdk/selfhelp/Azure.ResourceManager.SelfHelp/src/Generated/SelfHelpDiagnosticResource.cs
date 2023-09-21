@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Get the diagnostics using the &apos;diagnosticsResourceName&apos; you chose while creating the diagnostic.
+        /// Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Get the diagnostics using the &apos;diagnosticsResourceName&apos; you chose while creating the diagnostic.
+        /// Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

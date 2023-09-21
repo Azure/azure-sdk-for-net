@@ -18,24 +18,6 @@ namespace ApiManagement.Tests.ManagementApiTests
     {
         [Fact]
         [Trait("owner", "jikang")]
-        public void ListPortalSetting()
-        {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var testBase = new ApiManagementTestBase(context);
-                testBase.TryCreateApiManagementService();
-
-                // get the existing settings on the service
-                var portalSettings =  testBase.client.PortalSettings.ListByService(
-                    testBase.rgName,
-                    testBase.serviceName);
-                Assert.NotNull(portalSettings);
-            }
-        }
-
-        [Fact]
-        [Trait("owner", "jikang")]
         public async Task CreateListUpdatePortalRevision()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

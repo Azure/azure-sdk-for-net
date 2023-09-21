@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="authorizationKey"> Authorization key from the peer express route used for the global reach connection. </param>
         /// <param name="circuitConnectionStatus"> The connection status of the global reach connection. </param>
         /// <param name="peerExpressRouteCircuit"> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </param>
-        /// <param name="expressRouteId"> The ID of the Private Cloud&apos;s ExpressRoute Circuit that is participating in the global reach connection. </param>
+        /// <param name="expressRouteId"> The ID of the Private Cloud's ExpressRoute Circuit that is participating in the global reach connection. </param>
         /// <returns> A new <see cref="Avs.GlobalReachConnectionData"/> instance for mocking. </returns>
         public static GlobalReachConnectionData GlobalReachConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GlobalReachConnectionProvisioningState? provisioningState = null, string addressPrefix = null, string authorizationKey = null, GlobalReachConnectionStatus? circuitConnectionStatus = null, ResourceIdentifier peerExpressRouteCircuit = null, ResourceIdentifier expressRouteId = null)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// DHCP properties.
-        /// Please note <see cref="WorkloadNetworkDhcpEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
+        /// Please note <see cref="Models.WorkloadNetworkDhcpEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.WorkloadNetworkDhcpRelay"/> and <see cref="Models.WorkloadNetworkDhcpServer"/>.
         /// </param>
         /// <returns> A new <see cref="Avs.WorkloadNetworkDhcpData"/> instance for mocking. </returns>
         public static WorkloadNetworkDhcpData WorkloadNetworkDhcpData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkDhcpEntity properties = null)
@@ -455,8 +455,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The properties of an addon resource
-        /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
+        /// Please note <see cref="Models.AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AddonArcProperties"/>, <see cref="Models.AddonHcxProperties"/>, <see cref="Models.AddonSrmProperties"/> and <see cref="Models.AddonVrProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudAddonData"/> instance for mocking. </returns>
         public static AvsPrivateCloudAddonData AvsPrivateCloudAddonData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudAddonProperties properties = null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Display name of the VM. </param>
         /// <param name="moRefId"> Virtual machine managed object reference id. </param>
-        /// <param name="folderPath"> Path to virtual machine&apos;s folder starting from datacenter virtual machine folder. </param>
+        /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/> instance for mocking. </returns>
         public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string moRefId = null, string folderPath = null, VirtualMachineRestrictMovementState? restrictMovement = null)
@@ -495,8 +495,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// placement policy properties
-        /// Please note <see cref="PlacementPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VmHostPlacementPolicyProperties"/> and <see cref="VmPlacementPolicyProperties"/>.
+        /// Please note <see cref="Models.PlacementPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.VmHostPlacementPolicyProperties"/> and <see cref="Models.VmPlacementPolicyProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Avs.PlacementPolicyData"/> instance for mocking. </returns>
         public static PlacementPolicyData PlacementPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlacementPolicyProperties properties = null)

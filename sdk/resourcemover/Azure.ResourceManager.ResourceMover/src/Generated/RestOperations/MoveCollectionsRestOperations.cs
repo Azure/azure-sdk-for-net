@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ResourceMover
             return message;
         }
 
-        /// <summary> Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState &apos;PreparePending&apos; or &apos;PrepareFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState 'PreparePending' or 'PrepareFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        /// <summary> Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState &apos;PreparePending&apos; or &apos;PrepareFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState 'PreparePending' or 'PrepareFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ResourceMover
             return message;
         }
 
-        /// <summary> Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState &apos;MovePending&apos; or &apos;MoveFailed&apos;, on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState 'MovePending' or 'MoveFailed', on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        /// <summary> Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState &apos;MovePending&apos; or &apos;MoveFailed&apos;, on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState 'MovePending' or 'MoveFailed', on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.ResourceMover
             return message;
         }
 
-        /// <summary> Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;CommitFailed&apos;, on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState 'CommitPending' or 'CommitFailed', on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        /// <summary> Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;CommitFailed&apos;, on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState 'CommitPending' or 'CommitFailed', on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ResourceMover
             return message;
         }
 
-        /// <summary> Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;DiscardFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState 'CommitPending' or 'DiscardFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        /// <summary> Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;DiscardFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
+        /// <summary> Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState 'CommitPending' or 'DiscardFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true. </summary>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>

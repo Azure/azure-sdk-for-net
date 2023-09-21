@@ -46,11 +46,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         protected VaultOperationsTestsBase(bool isAsync, RecordedTestMode mode)
-            : base(isAsync, mode)//, true)
+            : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
         }
 
         protected async Task Initialize()

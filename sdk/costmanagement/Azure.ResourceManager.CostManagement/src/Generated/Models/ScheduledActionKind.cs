@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Cost analysis data will be emailed. </summary>
         public static ScheduledActionKind Email { get; } = new ScheduledActionKind(EmailValue);
-        /// <summary> Cost anomaly information will be emailed. Available only on subscription scope at daily frequency. If no anomaly is detected on the resource, an email won&apos;t be sent. </summary>
+        /// <summary> Cost anomaly information will be emailed. Available only on subscription scope at daily frequency. If no anomaly is detected on the resource, an email won't be sent. </summary>
         public static ScheduledActionKind InsightAlert { get; } = new ScheduledActionKind(InsightAlertValue);
         /// <summary> Determines if two <see cref="ScheduledActionKind"/> values are the same. </summary>
         public static bool operator ==(ScheduledActionKind left, ScheduledActionKind right) => left.Equals(right);

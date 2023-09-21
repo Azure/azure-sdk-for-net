@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Autoscaler never changes pod resources but provides recommendations. </summary>
         public static ManagedClusterVerticalPodAutoscalerUpdateMode Off { get; } = new ManagedClusterVerticalPodAutoscalerUpdateMode(OffValue);
-        /// <summary> Autoscaler only assigns resources on pod creation and doesn&apos;t change them during the lifetime of the pod. </summary>
+        /// <summary> Autoscaler only assigns resources on pod creation and doesn't change them during the lifetime of the pod. </summary>
         public static ManagedClusterVerticalPodAutoscalerUpdateMode Initial { get; } = new ManagedClusterVerticalPodAutoscalerUpdateMode(InitialValue);
         /// <summary> Autoscaler assigns resources on pod creation and updates pods that need further scaling during their lifetime by deleting and recreating. </summary>
         public static ManagedClusterVerticalPodAutoscalerUpdateMode Recreate { get; } = new ManagedClusterVerticalPodAutoscalerUpdateMode(RecreateValue);

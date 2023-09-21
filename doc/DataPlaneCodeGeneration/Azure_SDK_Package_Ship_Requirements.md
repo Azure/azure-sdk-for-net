@@ -7,6 +7,13 @@ You can refer to following guideline to add those requirements:
 - README/Samples: <https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository>
 - Changelog: <https://azure.github.io/azure-sdk/policies_releases.html#change-logs>
 - Other release concerns: <https://azure.github.io/azure-sdk/policies_releases.html>
+- Pipeline requirements: <https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/55/Pipelines>
+
+## Pipeline
+
+Every PR should include a pipeline named `net - [serviceDirectory] - ci`.  If this is not present then you will need to [initialize the pipeline from scratch](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/55/Pipelines?anchor=creating-pipelines-for-new-services) by running `prepare-pipelines` or investigate the configuration of your triggers in your ci.yml file.  Once `prepare-pipelines` finishes you should be able to manually kick off the pipeline with `/azp run net - [serviceDirectory] - ci`.  All subsequent PRs should automatically have this pipeline run as long as the ci.yml triggers are set up correctly.
+
+For an example of ci.yml trigger configuration go [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/ci.yml).
 
 ## Tests
 

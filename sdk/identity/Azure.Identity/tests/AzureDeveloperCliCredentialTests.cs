@@ -32,6 +32,7 @@ namespace Azure.Identity.Tests
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
             var testProcess = new TestProcess { Output = processOutput };
@@ -115,14 +116,22 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ConfigureCliProcessTimeout_ProcessTimeout()
+        public void ConfigureCliProcessTimeout_ProcessTimeout([Values(true, false)] bool isChainedCredential)
         {
             var testProcess = new TestProcess { Timeout = 10000 };
             AzureDeveloperCliCredential credential = InstrumentClient(
                 new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess),
-                    new AzureDeveloperCliCredentialOptions() { ProcessTimeout = TimeSpan.Zero }));
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                    new AzureDeveloperCliCredentialOptions() { ProcessTimeout = TimeSpan.Zero, IsChainedCredential = isChainedCredential }));
+            Exception ex = null;
+            if (isChainedCredential)
+            {
+                ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
+            else
+            {
+                ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
             Assert.AreEqual(AzureDeveloperCliCredential.AzdCliTimeoutError, ex.Message);
         }
     }

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of QueryResultDocumentSemanticField. </summary>
         /// <param name="name"> The name of the field that was sent to the semantic enrichment process. </param>
         /// <param name="state"> The way the field was used for the semantic enrichment process (fully used, partially used, or unused). </param>
-        internal QueryResultDocumentSemanticField(string name, QueryResultDocumentSemanticFieldState? state)
+        internal QueryResultDocumentSemanticField(string name, SemanticFieldState? state)
         {
             Name = name;
             State = state;
@@ -27,6 +27,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> The name of the field that was sent to the semantic enrichment process. </summary>
         public string Name { get; }
         /// <summary> The way the field was used for the semantic enrichment process (fully used, partially used, or unused). </summary>
-        public QueryResultDocumentSemanticFieldState? State { get; }
+        public SemanticFieldState? State { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
-        /// <param name="message"> Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false. </param>
+        /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
         internal SelfHelpNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
         {
             IsNameAvailable = isNameAvailable;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public bool? IsNameAvailable { get; }
         /// <summary> Reason for why value is not available. This field is returned if nameAvailable is false. </summary>
         public string Reason { get; }
-        /// <summary> Gets an error message explaining the &apos;reason&apos; value with more details. This field is returned iif nameAvailable is false. </summary>
+        /// <summary> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </summary>
         public string Message { get; }
     }
 }

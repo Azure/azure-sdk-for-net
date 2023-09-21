@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Regenerates the RedisEnterprise database&apos;s access keys.
+        /// Regenerates the RedisEnterprise database's access keys.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         }
 
         /// <summary>
-        /// Regenerates the RedisEnterprise database&apos;s access keys.
+        /// Regenerates the RedisEnterprise database's access keys.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

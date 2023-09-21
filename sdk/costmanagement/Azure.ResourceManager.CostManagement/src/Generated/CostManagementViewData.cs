@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Initializes a new instance of CostManagementViewData. </summary>
         public CostManagementViewData()
         {
-            Kpis = new ChangeTrackingList<KpiProperties>();
+            Kpis = new ChangeTrackingList<ViewKpiProperties>();
             Pivots = new ChangeTrackingList<ViewPivotProperties>();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> User input name of the view. Required. </param>
-        /// <param name="scope"> Cost Management scope to save the view on. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.Management/managementGroups/{managementGroupId}&apos; for Management Group scope, &apos;/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for ExternalBillingAccount scope, and &apos;/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for ExternalSubscription scope. </param>
+        /// <param name="scope"> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
         /// <param name="createdOn"> Date the user created this view. </param>
         /// <param name="modifiedOn"> Date when the user last modified this view. </param>
         /// <param name="dateRange"> Date range of the current view. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<KpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<ViewKpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Scope = scope;
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> User input name of the view. Required. </summary>
         public string DisplayName { get; set; }
-        /// <summary> Cost Management scope to save the view on. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.Management/managementGroups/{managementGroupId}&apos; for Management Group scope, &apos;/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for ExternalBillingAccount scope, and &apos;/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for ExternalSubscription scope. </summary>
-        public string Scope { get; set; }
+        /// <summary> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </summary>
+        public ResourceIdentifier Scope { get; set; }
         /// <summary> Date the user created this view. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Date when the user last modified this view. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Metric to use when displaying costs. </summary>
         public ViewMetricType? Metric { get; set; }
         /// <summary> List of KPIs to show in Cost Analysis UI. </summary>
-        public IList<KpiProperties> Kpis { get; }
+        public IList<ViewKpiProperties> Kpis { get; }
         /// <summary> Configuration of 3 sub-views in the Cost Analysis UI. </summary>
         public IList<ViewPivotProperties> Pivots { get; }
         /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>

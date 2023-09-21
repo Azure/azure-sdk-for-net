@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="name"> A name for the key describing its usage. </param>
         /// <param name="value"> The value of the key that is used for authentication purposes. </param>
         /// <param name="connectionString"> A connection string that can be used by supporting clients for authentication. </param>
-        /// <param name="lastModifiedOn"> The last time any of the key&apos;s properties were modified. </param>
+        /// <param name="lastModifiedOn"> The last time any of the key's properties were modified. </param>
         /// <param name="isReadOnly"> Whether this key can only be used for read operations. </param>
         /// <returns> A new <see cref="Models.AppConfigurationStoreApiKey"/> instance for mocking. </returns>
         public static AppConfigurationStoreApiKey AppConfigurationStoreApiKey(string id = null, string name = null, string value = null, string connectionString = null, DateTimeOffset? lastModifiedOn = null, bool? isReadOnly = null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </param>
         /// <param name="value"> The value of the key-value. </param>
         /// <param name="contentType">
-        /// The content type of the key-value&apos;s value.
+        /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
         /// <param name="eTag"> An ETag indicating the state of a key-value within a configuration store. </param>

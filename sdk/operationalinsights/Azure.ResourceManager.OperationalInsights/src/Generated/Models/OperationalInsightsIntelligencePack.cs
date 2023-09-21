@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Intelligence Pack containing a string name and boolean indicating if it&apos;s enabled. </summary>
+    /// <summary> Intelligence Pack containing a string name and boolean indicating if it's enabled. </summary>
     public partial class OperationalInsightsIntelligencePack
     {
         /// <summary> Initializes a new instance of OperationalInsightsIntelligencePack. </summary>

@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    scheduledPurgeDate = property.Value.GetDateTimeOffset("U");
+                    scheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("deletedDate"u8))
@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    deletedDate = property.Value.GetDateTimeOffset("U");
+                    deletedDate = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

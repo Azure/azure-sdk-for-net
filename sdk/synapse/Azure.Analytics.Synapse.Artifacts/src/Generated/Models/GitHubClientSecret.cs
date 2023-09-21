@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Client secret information for factory&apos;s bring your own app repository configuration. </summary>
+    /// <summary> Client secret information for factory's bring your own app repository configuration. </summary>
     public partial class GitHubClientSecret
     {
         /// <summary> Initializes a new instance of GitHubClientSecret. </summary>

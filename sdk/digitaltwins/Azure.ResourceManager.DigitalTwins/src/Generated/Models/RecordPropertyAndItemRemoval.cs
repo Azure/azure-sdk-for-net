@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    /// <summary> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to &apos;true&apos;. Setting this property to &apos;true&apos; will generate an additional column in the property events table in ADX. </summary>
+    /// <summary> Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). This feature is de-activated unless explicitly set to 'true'. Setting this property to 'true' will generate an additional column in the property events table in ADX. </summary>
     public readonly partial struct RecordPropertyAndItemRemoval : IEquatable<RecordPropertyAndItemRemoval>
     {
         private readonly string _value;

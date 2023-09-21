@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
 using Microsoft.CSharp.RuntimeBinder;
@@ -160,7 +159,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentArrays()
         {
-            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic value = BinaryData.FromString("""{"foo": [1, 2]}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Assert.Throws<InvalidOperationException>(() => { int i = value[0]; });
             Assert.Throws<InvalidOperationException>(() => { value[0] = 1; });
@@ -172,7 +171,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CannotGetOrSetValuesOnAbsentProperties()
         {
-            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(DynamicCaseMapping.PascalToCamel);
+            dynamic value = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Assert.Throws<InvalidOperationException>(() => { int i = value.Foo.Bar.Baz; });
             Assert.Throws<InvalidOperationException>(() => { value.Foo.Bar.Baz = "hi"; });
@@ -309,7 +308,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanMakeChangesAndAddNewProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic jsonData = BinaryData.FromString("""
                 {
                   "foo" : 1
@@ -329,9 +328,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAddPocoProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -373,9 +373,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanAddNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -417,9 +418,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanSetNestedPocoProperty()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic value = BinaryData.FromBytes("""
                 {
                     "foo": 1
@@ -487,7 +489,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCheckOptionalPropertyWithChanges()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : "foo",
@@ -591,7 +593,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsInvalidCastForOriginalJsonValue()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic json = BinaryData.FromString(
                 """
                 {
@@ -624,7 +626,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanCastToByte()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic json = BinaryData.FromString("""
                 {
                   "foo" : 42
@@ -657,7 +659,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(NumberValues))]
         public void CanCastToNumber<T, U>(string serializedX, T x, T y, T z, U invalid)
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             dynamic json = BinaryData.FromString($"{{\"foo\" : {serializedX}}}").ToDynamicFromJson(options);
 
             // Get from parsed JSON
@@ -693,7 +695,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToGuid()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             Guid guid = Guid.NewGuid();
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{guid}\"}}").ToDynamicFromJson(options);
 
@@ -733,7 +735,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTime()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             DateTime dateTime = DateTime.UtcNow;
             string dateTimeString = FormatDateTime(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
@@ -776,7 +778,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanExplicitCastToDateTimeOffset()
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             DateTimeOffset dateTime = DateTimeOffset.UtcNow;
             string dateTimeString = FormatDateTimeOffset(dateTime);
             dynamic json = BinaryData.FromString($"{{\"foo\" : \"{dateTimeString}\"}}").ToDynamicFromJson(options);
@@ -831,7 +833,7 @@ namespace Azure.Core.Tests
         {
             DynamicDataOptions options = new DynamicDataOptions()
             {
-                DateTimeHandling = DynamicDateTimeHandling.UnixTime
+                DateTimeFormat = "x"
             };
 
             dynamic value = BinaryData.FromString("""{ "foo": 0 }""").ToDynamicFromJson(options);
@@ -931,9 +933,9 @@ namespace Azure.Core.Tests
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
 
-            json.a = new object[] { 1, 2, null, "string" };
+            json.a = new bool[] { true, false, true, false };
 
-            Assert.AreEqual("{\"a\":[1,2,null,\"string\"]}", json.ToString());
+            Assert.AreEqual("{\"a\":[true,false,true,false]}", json.ToString());
         }
 
         [Test]
@@ -948,18 +950,27 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void NewObjectPropertiesCanBeAssignedWithObjectIndirectly()
+        public void NewObjectPropertiesCannotBeAssignedViaReferences()
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
             dynamic anotherJson = DynamicJsonTests.GetDynamicJson("{}");
 
             json.a = anotherJson;
+
+            // DynamicData uses value semantics, so this has no effect on the parent
             anotherJson.b = 2;
+
+            Assert.AreEqual("{\"a\":{}}", json.ToString());
+            Assert.AreEqual("{\"b\":2}", anotherJson.ToString());
+
+            // Value can still be updated on the object directly
+            json.a.b = 2;
 
             Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
         }
 
         [Test]
+        [Ignore("Not an allowed type")]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
             dynamic json = DynamicJsonTests.GetDynamicJson("{}");
@@ -1098,7 +1109,7 @@ namespace Azure.Core.Tests
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
-            DynamicDataOptions options = new() { CaseMapping = DynamicCaseMapping.PascalToCamel };
+            DynamicDataOptions options = new() { PropertyNameFormat = JsonPropertyNames.CamelCase };
             return new BinaryData(json).ToDynamicFromJson(options);
         }
 
@@ -1126,8 +1137,8 @@ namespace Azure.Core.Tests
             yield return new object[] { 1, "1" };
             yield return new object[] { 1.0, "1" };
 #if NETCOREAPP
-            yield return new object[] {1.1D, "1.1"};
-            yield return new object[] {1.1F, "1.1"};
+            yield return new object[] { 1.1D, "1.1" };
+            yield return new object[] { 1.1F, "1.1" };
 #else
             yield return new object[] { 1.1D, "1.1000000000000001" };
             yield return new object[] { 1.1F, "1.10000002" };

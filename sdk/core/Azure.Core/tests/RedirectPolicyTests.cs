@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -25,16 +24,20 @@ namespace Azure.Core.Tests
             using var testListener = new TestEventListener();
             testListener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Verbose);
 
-            var fistResponse = new MockResponse(code).AddHeader("Location", "http://new.host/");
+            var fistResponse = new MockResponse(code).AddHeader("Location", "https://new.host/");
             var mockTransport = new MockTransport(
                 fistResponse,
                 new MockResponse(200));
 
-            var response = await SendGetRequest(mockTransport, RedirectPolicy.Shared);
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+            }, RedirectPolicy.Shared);
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("http://new.host/", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://new.host/", mockTransport.Requests[1].Uri.ToString());
             Assert.True(fistResponse.IsDisposed);
 
             var e = testListener.SingleEventById(20);
@@ -42,8 +45,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestRedirect", e.EventName);
             Assert.AreEqual(mockTransport.Requests[0].ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("http://example.com/", e.GetProperty<string>("from"));
-            Assert.AreEqual("http://new.host/", e.GetProperty<string>("to"));
+            Assert.AreEqual("https://example.com/", e.GetProperty<string>("from"));
+            Assert.AreEqual("https://new.host/", e.GetProperty<string>("to"));
             Assert.AreEqual(code, e.GetProperty<int>("status"));
         }
 
@@ -55,28 +58,33 @@ namespace Azure.Core.Tests
                 fistResponse,
                 new MockResponse(200));
 
-            var response = await SendGetRequest(mockTransport, RedirectPolicy.Shared);
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+            }, RedirectPolicy.Shared);
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("http://example.com/uploads/", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://example.com/uploads/", mockTransport.Requests[1].Uri.ToString());
         }
 
         [TestCaseSource(nameof(RedirectStatusCodesOldMethodsNewMethods))]
         public async Task ChangesMethodWhenRequired(int code, string oldMethod, string newMethod)
         {
             var mockTransport = new MockTransport(
-                new MockResponse(code).AddHeader("Location", "http://new.host/"),
+                new MockResponse(code).AddHeader("Location", "https://new.host/"),
                 new MockResponse(200));
 
-            await SendRequestAsync(mockTransport, request =>
+            await SendRequestAsync(mockTransport, message =>
             {
-                request.Uri.Reset(new Uri("http://example.com/"));
-                request.Method = new RequestMethod(oldMethod);
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("http://example.com/"));
+                message.Request.Method = new RequestMethod(oldMethod);
             }, RedirectPolicy.Shared);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("http://new.host/", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://new.host/", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual(newMethod, mockTransport.Requests[1].Method.ToString());
         }
 
@@ -88,21 +96,25 @@ namespace Azure.Core.Tests
             testListener.EnableEvents(AzureCoreEventSource.Singleton, EventLevel.Verbose);
 
             var mockTransport = new MockTransport(_ =>
-                new MockResponse(300).AddHeader("Location", "http://new.host/"));
+                new MockResponse(300).AddHeader("Location", "https://new.host/"));
 
-            var response = await SendGetRequest(mockTransport, RedirectPolicy.Shared);
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+            }, RedirectPolicy.Shared);
 
             Assert.AreEqual(300, response.Status);
             Assert.AreEqual(51, mockTransport.Requests.Count);
-            Assert.AreEqual("http://new.host/", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://new.host/", mockTransport.Requests[1].Uri.ToString());
 
             var e = testListener.SingleEventById(22);
 
             Assert.AreEqual(EventLevel.Warning, e.Level);
             Assert.AreEqual("RequestRedirectCountExceeded", e.EventName);
             Assert.AreEqual(mockTransport.Requests[0].ClientRequestId, e.GetProperty<string>("requestId"));
-            Assert.AreEqual("http://new.host/", e.GetProperty<string>("from"));
-            Assert.AreEqual("http://new.host/", e.GetProperty<string>("to"));
+            Assert.AreEqual("https://new.host/", e.GetProperty<string>("from"));
+            Assert.AreEqual("https://new.host/", e.GetProperty<string>("to"));
         }
 
         [Test]
@@ -115,9 +127,10 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(_ =>
                 new MockResponse(300).AddHeader("Location", "http://new.host/"));
 
-            var response = await SendRequestAsync(mockTransport, request =>
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
             {
-                request.Uri.Reset(new Uri("https://example.com/"));
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
             }, RedirectPolicy.Shared);
 
             Assert.AreEqual(300, response.Status);
@@ -137,15 +150,77 @@ namespace Azure.Core.Tests
         {
             var mockTransport = new MockTransport(
                 new MockResponse(300)
-                    .AddHeader("Location", "http://new.host/")
+                    .AddHeader("Location", "https://new.host/")
                     .AddHeader("Authorization", "secret value"),
                 new MockResponse(200));
 
-            var response = await SendGetRequest(mockTransport, RedirectPolicy.Shared);
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+            }, RedirectPolicy.Shared);
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(2, mockTransport.Requests.Count);
             Assert.False(mockTransport.Requests[1].Headers.Contains("Authorization"));
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RespectsCtorParameter(bool isClientRedirectEnabled)
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(300)
+                    .AddHeader("Location", "https://new.host/"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+            }, new RedirectPolicy(isClientRedirectEnabled));
+
+            if (isClientRedirectEnabled)
+            {
+                Assert.AreEqual(200, response.Status);
+                Assert.AreEqual(2, mockTransport.Requests.Count);
+            }
+            else
+            {
+                Assert.AreEqual(300, response.Status);
+                Assert.AreEqual(1, mockTransport.Requests.Count);
+            }
+        }
+
+        [Test]
+        public async Task SetAllowAutoRedirectTakesPrecedenceWhenSet(
+            [Values(true, false)] bool isClientRedirectEnabled,
+            [Values(true, false, null)] bool? setAllowAutoRedirect)
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(300)
+                    .AddHeader("Location", "https://new.host/"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, messageAction: message =>
+            {
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+                if (setAllowAutoRedirect.HasValue)
+                {
+                    RedirectPolicy.SetAllowAutoRedirect(message, setAllowAutoRedirect.Value);
+                }
+            }, new RedirectPolicy(isClientRedirectEnabled));
+
+            if (setAllowAutoRedirect ?? false || (!setAllowAutoRedirect.HasValue && isClientRedirectEnabled))
+            {
+                Assert.AreEqual(200, response.Status);
+                Assert.AreEqual(2, mockTransport.Requests.Count);
+            }
+            else
+            {
+                Assert.AreEqual(300, response.Status);
+                Assert.AreEqual(1, mockTransport.Requests.Count);
+            }
         }
 
         public static readonly object[][] RedirectStatusCodes = {

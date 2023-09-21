@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The properties of the benefit recommendations.
-        /// Please note <see cref="BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
+        /// Please note <see cref="Models.BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SharedScopeBenefitRecommendationProperties"/> and <see cref="Models.SingleScopeBenefitRecommendationProperties"/>.
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
-        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property &apos;properties/usage/charges&apos;. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property 'properties/usage/charges'. </param>
         /// <param name="usage"> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
-        /// <param name="armSkuName"> ARM SKU name. &apos;Compute_Savings_Plan&apos; for SavingsPlan. </param>
+        /// <param name="armSkuName"> ARM SKU name. 'Compute_Savings_Plan' for SavingsPlan. </param>
         /// <param name="term"> Term period of the benefit. For example, P1Y or P3Y. </param>
-        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: &apos;Hourly&apos;. </param>
+        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: 'Hourly'. </param>
         /// <param name="currencyCode"> An ISO 4217 currency code identifier for the costs and savings amounts. </param>
-        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to &apos;totalHours&apos; in the look-back period. </param>
+        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </param>
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>
-        /// <param name="usageGrain"> The grain of the usage. Supported values: &apos;Hourly&apos;. </param>
+        /// <param name="usageGrain"> The grain of the usage. Supported values: 'Hourly'. </param>
         /// <param name="charges"> On-demand charges for each hour between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
         /// <returns> A new <see cref="Models.RecommendationUsageDetails"/> instance for mocking. </returns>
         public static RecommendationUsageDetails RecommendationUsageDetails(BenefitRecommendationUsageGrain? usageGrain = null, IEnumerable<decimal> charges = null)
@@ -67,15 +67,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
-        /// <param name="overageCost"> The difference between total cost and benefit cost for the &apos;totalHours&apos; in the look-back period. </param>
-        /// <param name="benefitCost"> The estimated cost with benefit for the &apos;totalHours&apos; in the look-back period. It&apos;s equal to (commitmentAmount * totalHours). </param>
+        /// <param name="overageCost"> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </param>
+        /// <param name="benefitCost"> The estimated cost with benefit for the 'totalHours' in the look-back period. It's equal to (commitmentAmount * totalHours). </param>
         /// <param name="totalCost"> Total cost, which is sum of benefit cost and overage cost. </param>
-        /// <param name="savingsAmount"> The amount saved for the &apos;totalHours&apos; in the look-back period, by purchasing the recommended quantity of the benefit. </param>
-        /// <param name="savingsPercentage"> The savings in percentage for the &apos;totalHours&apos; in the look-back period, by purchasing the recommended quantity of benefit. </param>
-        /// <param name="coveragePercentage"> Estimated benefit coverage percentage for the &apos;totalHours&apos; in the look-back period, with this commitment. </param>
+        /// <param name="savingsAmount"> The amount saved for the 'totalHours' in the look-back period, by purchasing the recommended quantity of the benefit. </param>
+        /// <param name="savingsPercentage"> The savings in percentage for the 'totalHours' in the look-back period, by purchasing the recommended quantity of benefit. </param>
+        /// <param name="coveragePercentage"> Estimated benefit coverage percentage for the 'totalHours' in the look-back period, with this commitment. </param>
         /// <param name="commitmentAmount"> The commitment amount at the commitmentGranularity. </param>
-        /// <param name="averageUtilizationPercentage"> Estimated average utilization percentage for the &apos;totalHours&apos; in the look-back period, with this commitment. </param>
-        /// <param name="wastageCost"> Estimated unused portion of the &apos;benefitCost&apos;. </param>
+        /// <param name="averageUtilizationPercentage"> Estimated average utilization percentage for the 'totalHours' in the look-back period, with this commitment. </param>
+        /// <param name="wastageCost"> Estimated unused portion of the 'benefitCost'. </param>
         /// <returns> A new <see cref="Models.AllSavingsBenefitDetails"/> instance for mocking. </returns>
         public static AllSavingsBenefitDetails AllSavingsBenefitDetails(decimal? overageCost = null, decimal? benefitCost = null, decimal? totalCost = null, decimal? savingsAmount = null, decimal? savingsPercentage = null, decimal? coveragePercentage = null, decimal? commitmentAmount = null, decimal? averageUtilizationPercentage = null, decimal? wastageCost = null)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Supported values: &apos;SavingsPlan&apos;. </param>
+        /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummary"/> instance for mocking. </returns>
         public static BenefitUtilizationSummary BenefitUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="status"> The status of the creation of the benefit utilization summaries report. </param>
         /// <param name="properties"> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummariesOperationStatus"/> instance for mocking. </returns>
-        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesRequest input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
+        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesContent input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
         {
             return new BenefitUtilizationSummariesOperationStatus(input, status, properties);
         }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="format"> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </param>
+        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfoDestination"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <param name="runHistoryValue"> If requested, has the most recent run history for the export. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of CommonExportProperties. </summary>
-        /// <param name="format"> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </param>
+        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfoDestination"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <param name="runHistoryValue"> If requested, has the most recent run history for the export. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="executionType"> The type of the export run. </param>
         /// <param name="status"> The last known status of the export run. </param>
-        /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is &apos;System&apos;. </param>
+        /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </param>
         /// <param name="submittedOn"> The time when export was queued to be run. </param>
         /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
         /// <param name="processingEndOn"> The time when the export run finished. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ExportRun"/> instance for mocking. </returns>
-        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExecutionType? executionType = null, ExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
+        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportRunExecutionType? executionType = null, ExportRunExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
         {
             return new ExportRun(id, name, resourceType, systemData, executionType, status, submittedBy, submittedOn, processingStartOn, processingEndOn, fileName, runSettings, error, eTag);
         }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> User input name of the view. Required. </param>
-        /// <param name="scope"> Cost Management scope to save the view on. This includes &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;providers/Microsoft.Management/managementGroups/{managementGroupId}&apos; for Management Group scope, &apos;/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for ExternalBillingAccount scope, and &apos;/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for ExternalSubscription scope. </param>
+        /// <param name="scope"> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
         /// <param name="createdOn"> Date the user created this view. </param>
         /// <param name="modifiedOn"> Date when the user last modified this view. </param>
         /// <param name="dateRange"> Date range of the current view. </param>
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementViewData"/> instance for mocking. </returns>
-        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<KpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? eTag = null)
+        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<ViewKpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? eTag = null)
         {
-            kpis ??= new List<KpiProperties>();
+            kpis ??= new List<ViewKpiProperties>();
             pivots ??= new List<ViewPivotProperties>();
 
             return new CostManagementViewData(id, name, resourceType, systemData, displayName, scope, createdOn, modifiedOn, dateRange, currency, chart, accumulated, metric, kpis?.ToList(), pivots?.ToList(), typePropertiesQueryType, timeframe, timePeriod, dataSet, includeMonetaryCommitment, eTag);
@@ -233,16 +233,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="details"> Alert details. </param>
         /// <param name="costEntityId"> related budget. </param>
         /// <param name="status"> alert status. </param>
-        /// <param name="creationTime"> dateTime in which alert was created. </param>
-        /// <param name="closeTime"> dateTime in which alert was closed. </param>
-        /// <param name="modificationTime"> dateTime in which alert was last modified. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
-        /// <param name="statusModificationTime"> dateTime in which the alert status was last modified. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
-        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, string creationTime = null, string closeTime = null, string modificationTime = null, string statusModificationUserName = null, string statusModificationTime = null, ETag? eTag = null)
+        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? closeOn = null, DateTimeOffset? modifiedOn = null, string statusModificationUserName = null, DateTimeOffset? statusModifiedOn = null, ETag? eTag = null)
         {
-            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, creationTime, closeTime, modificationTime, statusModificationUserName, statusModificationTime, eTag);
+            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, createdOn, closeOn, modifiedOn, statusModificationUserName, statusModifiedOn, eTag);
         }
 
         /// <summary> Initializes a new instance of ForecastResult. </summary>
@@ -282,8 +282,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Dimension description. </param>
-        /// <param name="filterEnabled"> Filter enabled. </param>
-        /// <param name="groupingEnabled"> Grouping enabled. </param>
+        /// <param name="isFilterEnabled"> Filter enabled. </param>
+        /// <param name="isGroupingEnabled"> Grouping enabled. </param>
         /// <param name="data"> Dimension data. </param>
         /// <param name="total"> Total number of data for the dimension. </param>
         /// <param name="category"> Dimension category. </param>
@@ -295,12 +295,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CostManagementDimension"/> instance for mocking. </returns>
-        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? filterEnabled = null, bool? groupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             data ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new CostManagementDimension(id, name, resourceType, systemData, description, filterEnabled, groupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
+            return new CostManagementDimension(id, name, resourceType, systemData, description, isFilterEnabled, isGroupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>
@@ -364,44 +364,44 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="notification"> Notification properties based on scheduled action kind. </param>
         /// <param name="notificationEmail"> Email address of the point of contact that should get the unsubscribe requests and notification emails. </param>
         /// <param name="schedule"> Schedule of the scheduled action. </param>
-        /// <param name="scope"> Cost Management scope like &apos;subscriptions/{subscriptionId}&apos; for subscription scope, &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}&apos; for resourceGroup scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}&apos; for Billing Account scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}&apos; for Department scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}&apos; for EnrollmentAccount scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}&apos; for BillingProfile scope, &apos;providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}&apos; for InvoiceSection scope, &apos;/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}&apos; for ExternalBillingAccount scope, and &apos;/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}&apos; for ExternalSubscription scope. </param>
+        /// <param name="scope"> Cost Management scope like 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
         /// <param name="status"> Status of the scheduled action. </param>
-        /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, &apos;/providers/Microsoft.CostManagement/views/swaggerExample&apos;. </param>
-        /// <param name="eTag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource&apos;s eTag by doing a &apos;GET&apos; call first and then including the latest eTag as part of the request body or &apos;If-Match&apos; header while performing the update. For create calls, eTag is not required. </param>
+        /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
+        /// <param name="eTag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
         /// <param name="kind"> Kind of the scheduled action. </param>
         /// <returns> A new <see cref="CostManagement.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, string scope = null, ScheduledActionStatus? status = null, string viewId = null, ETag? eTag = null, ScheduledActionKind? kind = null)
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, ResourceIdentifier scope = null, ScheduledActionStatus? status = null, ResourceIdentifier viewId = null, ETag? eTag = null, ScheduledActionKind? kind = null)
         {
             fileFormats ??= new List<ScheduledActionFileFormat>();
 
             return new ScheduledActionData(id, name, resourceType, systemData, displayName, fileFormats != null ? new FileDestination(fileFormats?.ToList()) : null, notification, notificationEmail, schedule, scope, status, viewId, eTag, kind);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of CostManagementNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CostManagementNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CostManagementNameAvailabilityResult CostManagementNameAvailabilityResult(bool? nameAvailable = null, CostManagementUnavailabilityReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new CostManagementNameAvailabilityResult(nameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
-        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property &apos;properties/usage/charges&apos;. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property 'properties/usage/charges'. </param>
         /// <param name="usage"> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
-        /// <param name="armSkuName"> ARM SKU name. &apos;Compute_Savings_Plan&apos; for SavingsPlan. </param>
+        /// <param name="armSkuName"> ARM SKU name. 'Compute_Savings_Plan' for SavingsPlan. </param>
         /// <param name="term"> Term period of the benefit. For example, P1Y or P3Y. </param>
-        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: &apos;Hourly&apos;. </param>
+        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: 'Hourly'. </param>
         /// <param name="currencyCode"> An ISO 4217 currency code identifier for the costs and savings amounts. </param>
-        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to &apos;totalHours&apos; in the look-back period. </param>
+        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </param>
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
-        /// <param name="subscriptionId"> The subscription ID that this single scope recommendation is for. Applicable only if recommendation is for &apos;Single&apos; scope. </param>
-        /// <param name="resourceGroup"> The resource group that this single scope recommendation is for. Applicable only if recommendation is for &apos;Single&apos; scope and &apos;ResourceGroup&apos; request scope. </param>
+        /// <param name="subscriptionId"> The subscription ID that this single scope recommendation is for. Applicable only if recommendation is for 'Single' scope. </param>
+        /// <param name="resourceGroup"> The resource group that this single scope recommendation is for. Applicable only if recommendation is for 'Single' scope and 'ResourceGroup' request scope. </param>
         /// <returns> A new <see cref="Models.SingleScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
         public static SingleScopeBenefitRecommendationProperties SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string subscriptionId = null, string resourceGroup = null)
         {
@@ -412,13 +412,13 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
-        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property &apos;properties/usage/charges&apos;. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property 'properties/usage/charges'. </param>
         /// <param name="usage"> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
-        /// <param name="armSkuName"> ARM SKU name. &apos;Compute_Savings_Plan&apos; for SavingsPlan. </param>
+        /// <param name="armSkuName"> ARM SKU name. 'Compute_Savings_Plan' for SavingsPlan. </param>
         /// <param name="term"> Term period of the benefit. For example, P1Y or P3Y. </param>
-        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: &apos;Hourly&apos;. </param>
+        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: 'Hourly'. </param>
         /// <param name="currencyCode"> An ISO 4217 currency code identifier for the costs and savings amounts. </param>
-        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to &apos;totalHours&apos; in the look-back period. </param>
+        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </param>
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <returns> A new <see cref="Models.SharedScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
@@ -432,10 +432,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="armSkuName"> ARM SKU name. For example, &apos;Compute_Savings_Plan&apos; for savings plan. </param>
+        /// <param name="armSkuName"> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </param>
         /// <param name="benefitId"> The benefit ID is the identifier of the benefit. </param>
         /// <param name="benefitOrderId"> The benefit order ID is the identifier for a benefit purchase. </param>
-        /// <param name="benefitType"> The benefit type. Supported values: &apos;SavingsPlan&apos;. </param>
+        /// <param name="benefitType"> The benefit type. Supported values: 'SavingsPlan'. </param>
         /// <param name="usageOn"> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </param>
         /// <param name="utilizationPercentage"> This is the utilized percentage for the benefit ID. </param>
         /// <returns> A new <see cref="Models.IncludedQuantityUtilizationSummary"/> instance for mocking. </returns>
@@ -449,10 +449,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="armSkuName"> ARM SKU name. For example, &apos;Compute_Savings_Plan&apos; for savings plan. </param>
+        /// <param name="armSkuName"> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </param>
         /// <param name="benefitId"> The benefit ID is the identifier of the benefit. </param>
         /// <param name="benefitOrderId"> The benefit order ID is the identifier for a benefit purchase. </param>
-        /// <param name="benefitType"> The benefit type. Supported values: &apos;SavingsPlan&apos;. </param>
+        /// <param name="benefitType"> The benefit type. Supported values: 'SavingsPlan'. </param>
         /// <param name="usageOn"> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </param>
         /// <param name="avgUtilizationPercentage"> This is the average hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the avgUtilizationPercentage value will be equal to the average of the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. </param>
         /// <param name="minUtilizationPercentage"> This is the minimum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the minUtilizationPercentage value will be equal to the smallest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the lowest utilization percentage was 10% at hour 4, then the value for the minUtilizationPercentage in the response will be 10%. </param>

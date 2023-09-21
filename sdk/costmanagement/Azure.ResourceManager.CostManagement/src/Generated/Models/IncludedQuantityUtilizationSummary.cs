@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Supported values: &apos;SavingsPlan&apos;. </param>
-        /// <param name="armSkuName"> ARM SKU name. For example, &apos;Compute_Savings_Plan&apos; for savings plan. </param>
+        /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
+        /// <param name="armSkuName"> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </param>
         /// <param name="benefitId"> The benefit ID is the identifier of the benefit. </param>
         /// <param name="benefitOrderId"> The benefit order ID is the identifier for a benefit purchase. </param>
-        /// <param name="benefitType"> The benefit type. Supported values: &apos;SavingsPlan&apos;. </param>
+        /// <param name="benefitType"> The benefit type. Supported values: 'SavingsPlan'. </param>
         /// <param name="usageOn"> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </param>
         /// <param name="utilizationPercentage"> This is the utilized percentage for the benefit ID. </param>
         internal IncludedQuantityUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? utilizationPercentage) : base(id, name, resourceType, systemData, kind)
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             Kind = kind;
         }
 
-        /// <summary> ARM SKU name. For example, &apos;Compute_Savings_Plan&apos; for savings plan. </summary>
+        /// <summary> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </summary>
         public string ArmSkuName { get; }
         /// <summary> The benefit ID is the identifier of the benefit. </summary>
         public string BenefitId { get; }
         /// <summary> The benefit order ID is the identifier for a benefit purchase. </summary>
         public string BenefitOrderId { get; }
-        /// <summary> The benefit type. Supported values: &apos;SavingsPlan&apos;. </summary>
+        /// <summary> The benefit type. Supported values: 'SavingsPlan'. </summary>
         public BillingAccountBenefitKind? BenefitType { get; set; }
         /// <summary> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </summary>
         public DateTimeOffset? UsageOn { get; }

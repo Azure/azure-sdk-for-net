@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="localNetworkAddressSpace"> Local network site address space. </param>
         /// <param name="gatewayIPAddress"> IP address of local network gateway. </param>
         /// <param name="fqdn"> FQDN of local network gateway. </param>
-        /// <param name="bgpSettings"> Local network gateway&apos;s BGP speaker settings. </param>
+        /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
         internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         public string GatewayIPAddress { get; set; }
         /// <summary> FQDN of local network gateway. </summary>
         public string Fqdn { get; set; }
-        /// <summary> Local network gateway&apos;s BGP speaker settings. </summary>
+        /// <summary> Local network gateway's BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The resource GUID property of the local network gateway resource. </summary>
         public Guid? ResourceGuid { get; }

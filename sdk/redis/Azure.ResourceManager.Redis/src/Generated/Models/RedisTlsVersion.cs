@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;). </summary>
+    /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </summary>
     public readonly partial struct RedisTlsVersion : IEquatable<RedisTlsVersion>
     {
         private readonly string _value;

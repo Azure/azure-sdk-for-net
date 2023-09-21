@@ -295,10 +295,6 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.CertificateCancelDeletionHeaders>> CancelDeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
-
-        Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
-
         Task<AzureOperationResponse<Models.TaskAddCollectionResult, Models.TaskAddCollectionHeaders>> AddTaskCollection(string jobId, IEnumerable<Models.TaskAddParameter> tasks, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<IPage<Models.PoolUsageMetrics>, Models.PoolListUsageMetricsHeaders>> ListPoolUsageMetrics(

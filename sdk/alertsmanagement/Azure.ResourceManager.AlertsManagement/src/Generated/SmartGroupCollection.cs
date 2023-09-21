@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// List all the Smart Groups within a specified subscription. 
+        /// List all the Smart Groups within a specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.AlertsManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _smartGroupRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smartGroupRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List all the Smart Groups within a specified subscription. 
+        /// List all the Smart Groups within a specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _smartGroupRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smartGroupRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceGroup, options.TargetResourceType, options.MonitorService, options.MonitorCondition, options.Severity, options.SmartGroupState, options.TimeRange, options.PageCount, options.SortBy, options.SortOrder);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

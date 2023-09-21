@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the server. </param>
         /// <param name="isPublicIPAccessEnabled"> If public access is enabled on server. </param>
         /// <param name="isReadOnly"> If server database is set to read-only by system maintenance depending on high disk space usage. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of the servers in the cluster. </param>
+        /// <param name="administratorLogin"> The administrator's login name of the servers in the cluster. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
         /// <param name="role"> The role of server in the cluster. </param>
         /// <param name="state"> A state of a cluster/server that is visible to user. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public bool? IsPublicIPAccessEnabled { get; }
         /// <summary> If server database is set to read-only by system maintenance depending on high disk space usage. </summary>
         public bool? IsReadOnly { get; }
-        /// <summary> The administrator&apos;s login name of the servers in the cluster. </summary>
+        /// <summary> The administrator's login name of the servers in the cluster. </summary>
         public string AdministratorLogin { get; }
         /// <summary> The fully qualified domain name of a server. </summary>
         public string FullyQualifiedDomainName { get; }

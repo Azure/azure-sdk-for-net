@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary> Initializes a new instance of LogicWsdlService. </summary>
         /// <param name="qualifiedName"> The qualified name. </param>
-        /// <param name="endpointQualifiedNames"> The list of endpoints&apos; qualified names. </param>
+        /// <param name="endpointQualifiedNames"> The list of endpoints' qualified names. </param>
         internal LogicWsdlService(string qualifiedName, IReadOnlyList<string> endpointQualifiedNames)
         {
             QualifiedName = qualifiedName;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary> The qualified name. </summary>
         public string QualifiedName { get; }
-        /// <summary> The list of endpoints&apos; qualified names. </summary>
+        /// <summary> The list of endpoints' qualified names. </summary>
         public IReadOnlyList<string> EndpointQualifiedNames { get; }
     }
 }

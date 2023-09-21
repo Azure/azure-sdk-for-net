@@ -552,6 +552,30 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getPublicIpAddressResponse;
         }
 
+        public async Task<PublicIPAddressResource> CreateStaticPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressCollection publicIPAddressCollection)
+        {
+            var publicIp = new PublicIPAddressData()
+            {
+                Location = location,
+                Tags = { { "key", "value" } },
+                Sku = new PublicIPAddressSku()
+                {
+                    Name = PublicIPAddressSkuName.Standard,
+                    Tier = PublicIPAddressSkuTier.Regional
+                },
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
+                DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
+            };
+
+            // Put nic1PublicIpAddress
+            Operation<PublicIPAddressResource> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, publicIp);
+            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
+
+            return getPublicIpAddressResponse;
+        }
+
         public async Task<PublicIPAddressResource> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location)
         {
             var publicIp = new PublicIPAddressData()

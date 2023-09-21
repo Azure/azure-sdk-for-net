@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="properties">
         /// alert meta data property bag
         /// Please note <see cref="ServiceAlertMetadataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MonitorServiceList"/>.
+        /// The available derived classes include <see cref="Models.MonitorServiceList"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ServiceAlertMetadata"/> instance for mocking. </returns>
         public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = null)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="startOn"> Creation time(ISO-8601 format) of alert instance. </param>
         /// <param name="lastModifiedOn"> Last modification time(ISO-8601 format) of alert instance. </param>
         /// <param name="monitorConditionResolvedOn"> Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met. </param>
-        /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be &apos;system&apos;, otherwise name of the user. </param>
+        /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </param>
         /// <param name="isSuppressed"> Action status. </param>
         /// <param name="description"> Alert description. </param>
         /// <returns> A new <see cref="Models.ServiceAlertEssentials"/> instance for mocking. </returns>

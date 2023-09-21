@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="osType"> Gets or sets the type of the os. </param>
         /// <param name="osName"> Gets or sets os name. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
-        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine&apos;s memory, in MB. </param>
+        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
         /// <param name="cpuCount"> Gets or sets the desired number of vCPUs for the vm. </param>
         /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
         /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>

@@ -84,6 +84,8 @@ namespace Azure.Maps.Search
         protected MapsSearchClient() { }
         public MapsSearchClient(Azure.AzureKeyCredential credential) { }
         public MapsSearchClient(Azure.AzureKeyCredential credential, Azure.Maps.Search.MapsSearchClientOptions options) { }
+        public MapsSearchClient(Azure.AzureSasCredential credential) { }
+        public MapsSearchClient(Azure.AzureSasCredential credential, Azure.Maps.Search.MapsSearchClientOptions options) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsSearchClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Search.MapsSearchClientOptions options) { }
         public virtual Azure.Maps.Search.FuzzySearchBatchOperation FuzzyBatchSearch(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.Maps.Search.Models.FuzzySearchQuery> queries, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

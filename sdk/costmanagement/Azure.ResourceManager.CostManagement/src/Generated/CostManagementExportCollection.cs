@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
@@ -213,13 +214,13 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last run of each export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CostManagementExportResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementExportResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -235,13 +236,13 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last run of each export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CostManagementExportResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementExportResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only &apos;runHistory&apos; is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>

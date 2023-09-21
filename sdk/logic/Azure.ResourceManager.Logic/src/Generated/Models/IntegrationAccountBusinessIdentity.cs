@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration account partner&apos;s business identity. </summary>
+    /// <summary> The integration account partner's business identity. </summary>
     public partial class IntegrationAccountBusinessIdentity
     {
         /// <summary> Initializes a new instance of IntegrationAccountBusinessIdentity. </summary>

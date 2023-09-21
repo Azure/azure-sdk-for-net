@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
-            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResource>();
+            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceContent>();
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentData. </summary>
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
         /// <param name="etag"> Resource etag. </param>
-        /// <param name="applicationId"> The unique ID of your application. This field mirrors the &apos;Name&apos; field and cannot be changed. </param>
+        /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
         /// <param name="appId"> Application Insights Unique ID for your Application. </param>
         /// <param name="namePropertiesName"> Application name. </param>
         /// <param name="applicationType"> Type of application being monitored. </param>
-        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API. </param>
-        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;. </param>
+        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </param>
+        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </param>
         /// <param name="instrumentationKey"> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </param>
         /// <param name="createdOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
         /// <param name="tenantId"> Azure Tenant Id. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
-        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? etag, string applicationId, string appId, string namePropertiesName, ApplicationType? applicationType, FlowType? flowType, RequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, string workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResource> privateLinkScopedResources, PublicNetworkAccessType? publicNetworkAccessForIngestion, PublicNetworkAccessType? publicNetworkAccessForQuery, IngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler) : base(id, name, resourceType, systemData, tags, location)
+        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? etag, string applicationId, string appId, string namePropertiesName, ApplicationType? applicationType, FlowType? flowType, RequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, string workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources, PublicNetworkAccessType? publicNetworkAccessForIngestion, PublicNetworkAccessType? publicNetworkAccessForQuery, IngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ETag = etag;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string Kind { get; set; }
         /// <summary> Resource etag. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> The unique ID of your application. This field mirrors the &apos;Name&apos; field and cannot be changed. </summary>
+        /// <summary> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </summary>
         public string ApplicationId { get; }
         /// <summary> Application Insights Unique ID for your Application. </summary>
         public string AppId { get; }
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string NamePropertiesName { get; }
         /// <summary> Type of application being monitored. </summary>
         public ApplicationType? ApplicationType { get; set; }
-        /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API. </summary>
+        /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </summary>
         public FlowType? FlowType { get; set; }
-        /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;. </summary>
+        /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </summary>
         public RequestSource? RequestSource { get; set; }
         /// <summary> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </summary>
         public string InstrumentationKey { get; }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> The date which the component got migrated to LA, in ISO 8601 format. </summary>
         public DateTimeOffset? LaMigrationOn { get; }
         /// <summary> List of linked private link scope resources. </summary>
-        public IReadOnlyList<PrivateLinkScopedResource> PrivateLinkScopedResources { get; }
+        public IReadOnlyList<PrivateLinkScopedResourceContent> PrivateLinkScopedResources { get; }
         /// <summary> The network access type for accessing Application Insights ingestion. </summary>
         public PublicNetworkAccessType? PublicNetworkAccessForIngestion { get; set; }
         /// <summary> The network access type for accessing Application Insights query. </summary>

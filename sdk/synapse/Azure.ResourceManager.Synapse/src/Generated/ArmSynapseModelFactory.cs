@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="restorePointInTime"> Snapshot time to restore. </param>
         /// <param name="createMode">
         /// Specifies the mode of sql pool creation.
-        /// 
+        ///
         /// Default: regular sql pool creation.
-        /// 
+        ///
         /// PointInTimeRestore: Creates a sql pool by restoring a point in time backup of an existing sql pool. sourceDatabaseId must be specified as the resource ID of the existing sql pool, and restorePointInTime must be specified.
-        /// 
+        ///
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
-        /// 
-        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        ///
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </param>
         /// <param name="createdOn"> Date the SQL pool was created. </param>
         /// <param name="storageAccountType"> The storage account type used to store backups for this sql pool. </param>
@@ -340,17 +340,17 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -384,34 +384,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;state&apos; as &apos;Enabled&apos; and &apos;isAzureMonitorTargetEnabled&apos; as true.
-        /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
-        /// 
+        /// Specifies whether audit events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolBlobAuditingPolicyData"/> instance for mocking. </returns>
         public static SynapseSqlPoolBlobAuditingPolicyData SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, SynapseBlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, Guid? storageAccountSubscriptionId = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null)
@@ -547,9 +547,9 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/).  It is required if server level vulnerability assessment policy doesn&apos;t set. </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in &apos;storageContainerPath&apos; parameter. If &apos;storageAccountAccessKey&apos; isn&apos;t specified, StorageContainerSasKey is required. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If &apos;StorageContainerSasKey&apos; isn&apos;t specified, storageAccountAccessKey is required. </param>
+        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/).  It is required if server level vulnerability assessment policy doesn't set. </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. </param>
         /// <param name="recurringScans"> The recurring scans settings. </param>
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentData SynapseSqlPoolVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, SynapseVulnerabilityAssessmentRecurringScansProperties recurringScans = null)
@@ -644,27 +644,27 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -685,11 +685,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -698,34 +698,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;state&apos; as &apos;Enabled&apos; and &apos;isAzureMonitorTargetEnabled&apos; as true.
-        /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
-        /// 
+        /// Specifies whether audit events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <param name="queueDelayMs">
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
-        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn&apos;t already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
+        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
         /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
         /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
         /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
@@ -824,27 +824,27 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -865,11 +865,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -878,34 +878,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;state&apos; as &apos;Enabled&apos; and &apos;isAzureMonitorTargetEnabled&apos; as true.
-        /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
-        /// 
+        /// Specifies whether audit events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <param name="queueDelayMs">
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
@@ -913,16 +913,16 @@ namespace Azure.ResourceManager.Synapse.Models
         /// </param>
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos;, &apos;IsAzureMonitorTargetEnabled&apos; as true and &apos;IsDevopsAuditEnabled&apos; as true
-        /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should also be created.
-        /// 
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <returns> A new <see cref="Synapse.SynapseServerBlobAuditingPolicyData"/> instance for mocking. </returns>
         public static SynapseServerBlobAuditingPolicyData SynapseServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapseBlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, Guid? storageAccountSubscriptionId = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isDevopsAuditEnabled = null)
@@ -941,27 +941,27 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -982,11 +982,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -995,34 +995,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;state&apos; as &apos;Enabled&apos; and &apos;isAzureMonitorTargetEnabled&apos; as true.
-        /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
-        /// 
+        /// Specifies whether audit events are sent to Azure Monitor.
+        /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <param name="queueDelayMs">
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
@@ -1030,16 +1030,16 @@ namespace Azure.ResourceManager.Synapse.Models
         /// </param>
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos;, &apos;IsAzureMonitorTargetEnabled&apos; as true and &apos;IsDevopsAuditEnabled&apos; as true
-        /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should also be created.
-        /// 
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
+        ///
+        /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <returns> A new <see cref="Synapse.SynapseExtendedServerBlobAuditingPolicyData"/> instance for mocking. </returns>
         public static SynapseExtendedServerBlobAuditingPolicyData SynapseExtendedServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string predicateExpression = null, SynapseBlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, Guid? storageAccountSubscriptionId = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isDevopsAuditEnabled = null)
@@ -1077,8 +1077,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/). </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has read and write access to the blob container specified in &apos;storageContainerPath&apos; parameter. If &apos;storageAccountAccessKey&apos; isn&apos;t specified, StorageContainerSasKey is required. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If &apos;StorageContainerSasKey&apos; isn&apos;t specified, storageAccountAccessKey is required. </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has read and write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. </param>
         /// <param name="recurringScans"> The recurring scans settings. </param>
         /// <returns> A new <see cref="Synapse.SynapseServerVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static SynapseServerVulnerabilityAssessmentData SynapseServerVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, SynapseVulnerabilityAssessmentRecurringScansProperties recurringScans = null)
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the encryption protector. </param>
         /// <param name="serverKeyName"> The name of the server key. </param>
-        /// <param name="serverKeyType"> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <returns> A new <see cref="Synapse.SynapseEncryptionProtectorData"/> instance for mocking. </returns>
@@ -1156,12 +1156,12 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="identity"> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
         /// <param name="defaultDataLakeStorage"> Workspace default data lake storage account details. </param>
         /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
-        /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;. </param>
+        /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="sqlAdministratorLogin"> Login for workspace SQL active directory administrator. </param>
         /// <param name="virtualNetworkComputeSubnetId"> Virtual Network profile. </param>
         /// <param name="connectivityEndpoints"> Connectivity endpoints. </param>
-        /// <param name="managedVirtualNetwork"> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
+        /// <param name="managedVirtualNetwork"> Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the workspace. </param>
         /// <param name="encryption"> The encryption details of the workspace. </param>
         /// <param name="workspaceUid"> The workspace unique identifier. </param>
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="properties">
         /// Integration runtime properties.
         /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
+        /// The available derived classes include <see cref="Models.SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="Synapse.SynapseIntegrationRuntimeData"/> instance for mocking. </returns>
@@ -1436,8 +1436,8 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The integration runtime name. </param>
         /// <param name="properties">
         /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntimeStatus"/> and <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>.
+        /// Please note <see cref="Models.SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SynapseManagedIntegrationRuntimeStatus"/> and <see cref="Models.SynapseSelfHostedIntegrationRuntimeStatus"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeStatusResult"/> instance for mocking. </returns>
         public static SynapseIntegrationRuntimeStatusResult SynapseIntegrationRuntimeStatusResult(string name = null, SynapseIntegrationRuntimeStatus properties = null)
@@ -1612,11 +1612,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="uri"> The Kusto Pool URI. </param>
         /// <param name="dataIngestionUri"> The Kusto Pool data ingestion URI. </param>
-        /// <param name="stateReason"> The reason for the Kusto Pool&apos;s current state. </param>
+        /// <param name="stateReason"> The reason for the Kusto Pool's current state. </param>
         /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
         /// <param name="enableStreamingIngest"> A boolean value that indicates if the streaming ingest is enabled. </param>
         /// <param name="enablePurge"> A boolean value that indicates if the purge operations are enabled. </param>
-        /// <param name="languageExtensionsValue"> List of the Kusto Pool&apos;s language extensions. </param>
+        /// <param name="languageExtensionsValue"> List of the Kusto Pool's language extensions. </param>
         /// <param name="workspaceUid"> The workspace unique identifier. </param>
         /// <returns> A new <see cref="Synapse.SynapseKustoPoolData"/> instance for mocking. </returns>
         public static SynapseKustoPoolData SynapseKustoPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SynapseDataSourceSku sku = null, ETag? etag = null, KustoPoolState? state = null, ResourceProvisioningState? provisioningState = null, Uri uri = null, Uri dataIngestionUri = null, string stateReason = null, SynapseOptimizedAutoscale optimizedAutoscale = null, bool? enableStreamingIngest = null, bool? enablePurge = null, IEnumerable<SynapseLanguageExtension> languageExtensionsValue = null, Guid? workspaceUid = null)
@@ -1638,11 +1638,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="uri"> The Kusto Pool URI. </param>
         /// <param name="dataIngestionUri"> The Kusto Pool data ingestion URI. </param>
-        /// <param name="stateReason"> The reason for the Kusto Pool&apos;s current state. </param>
+        /// <param name="stateReason"> The reason for the Kusto Pool's current state. </param>
         /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
         /// <param name="enableStreamingIngest"> A boolean value that indicates if the streaming ingest is enabled. </param>
         /// <param name="enablePurge"> A boolean value that indicates if the purge operations are enabled. </param>
-        /// <param name="languageExtensionsValue"> List of the Kusto Pool&apos;s language extensions. </param>
+        /// <param name="languageExtensionsValue"> List of the Kusto Pool's language extensions. </param>
         /// <param name="workspaceUid"> The workspace unique identifier. </param>
         /// <returns> A new <see cref="Models.SynapseKustoPoolPatch"/> instance for mocking. </returns>
         public static SynapseKustoPoolPatch SynapseKustoPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, SynapseDataSourceSku sku = null, KustoPoolState? state = null, ResourceProvisioningState? provisioningState = null, Uri uri = null, Uri dataIngestionUri = null, string stateReason = null, SynapseOptimizedAutoscale optimizedAutoscale = null, bool? enableStreamingIngest = null, bool? enablePurge = null, IEnumerable<SynapseLanguageExtension> languageExtensionsValue = null, Guid? workspaceUid = null)

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> The type of interpolation technique : &quot;Linear&quot; or &quot;Step&quot;. </summary>
+    /// <summary> The type of interpolation technique : "Linear" or "Step". </summary>
     public readonly partial struct InterpolationKind : IEquatable<InterpolationKind>
     {
         private readonly string _value;

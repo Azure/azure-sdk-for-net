@@ -187,7 +187,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionMessageEventArgs, Task> ProcessMessageAsync
         {
@@ -210,7 +209,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
@@ -232,7 +230,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
         {
@@ -256,7 +253,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
         {

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Creates or updates a governance assignment on the given subscription. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="data"> Governance assignment over a subscription scope. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Creates or updates a governance assignment on the given subscription. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="data"> Governance assignment over a subscription scope. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Delete a GovernanceAssignment over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Delete a GovernanceAssignment over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: &apos;subscriptions/{subscriptionId}&apos;), or security connector (format: &apos;subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})&apos;. </param>
+        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
         /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The date range for data in the export. This should only be specified with timeFrame set to &apos;Custom&apos;. The maximum date range is 3 months. </summary>
+    /// <summary> The date range for data in the export. This should only be specified with timeFrame set to 'Custom'. The maximum date range is 3 months. </summary>
     public partial class ExportTimePeriod
     {
         /// <summary> Initializes a new instance of ExportTimePeriod. </summary>

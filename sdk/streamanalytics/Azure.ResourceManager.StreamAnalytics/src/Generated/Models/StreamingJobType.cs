@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes the type of the job. Valid modes are `Cloud` and &apos;Edge&apos;. </summary>
+    /// <summary> Describes the type of the job. Valid modes are `Cloud` and 'Edge'. </summary>
     public readonly partial struct StreamingJobType : IEquatable<StreamingJobType>
     {
         private readonly string _value;

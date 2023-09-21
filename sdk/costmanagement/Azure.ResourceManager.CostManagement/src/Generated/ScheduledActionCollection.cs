@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -213,14 +214,14 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScheduledActionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledActionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledActionRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,14 +237,14 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScheduledActionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledActionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledActionRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

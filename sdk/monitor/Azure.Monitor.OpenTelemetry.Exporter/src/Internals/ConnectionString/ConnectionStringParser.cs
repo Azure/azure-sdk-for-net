@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("ConnectionStringError", ex);
+                AzureMonitorExporterEventSource.Log.FailedToParseConnectionString(ex);
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
         }

@@ -14,9 +14,9 @@ TextAnalyticsClient client = new(endpoint, credential);
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Summarize one or more documents
+## Summarize one or more text documents
 
-To summarize one or more text documents using extractive summarization, call `StartExtractiveSummarize` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `ExtractiveSummarizeOperation`.
+To summarize one or more text documents using extractive summarization, call `ExtractiveSummarize` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `ExtractiveSummarizeOperation`.
 
 ```C# Snippet:Sample11_ExtractiveSummarizeConvenienceAsync
 string document =
@@ -64,23 +64,10 @@ List<string> batchedDocuments = new()
 };
 
 // Perform the text analysis operation.
-ExtractiveSummarizeOperation operation = client.StartExtractiveSummarize(batchedDocuments);
-await operation.WaitForCompletionAsync();
+ExtractiveSummarizeOperation operation = client.ExtractiveSummarize(WaitUntil.Completed, batchedDocuments);
 ```
 
-The `ExtractiveSummarizeOperation` includes general information about the status of the long-running operation, and it can be queried at any time:
-
-```C# Snippet:Sample11_ExtractiveSummarizeConvenienceAsync_ViewOperationStatus
-// View the operation status.
-Console.WriteLine($"Created On   : {operation.CreatedOn}");
-Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
-Console.WriteLine($"Id           : {operation.Id}");
-Console.WriteLine($"Status       : {operation.Status}");
-Console.WriteLine($"Last Modified: {operation.LastModified}");
-Console.WriteLine();
-```
-
-Once the long-running operation has completed, you can view the results of the extractive summarization, including any errors that might have occurred:
+Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the extractive summarization, including any errors that might have occurred:
 
 ```C# Snippet:Sample11_ExtractiveSummarizeConvenienceAsync_ViewResults
 // View the operation results.

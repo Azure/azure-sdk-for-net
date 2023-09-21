@@ -15,18 +15,6 @@ namespace Azure.Search.Documents.Models
     /// <summary> Model factory for models. </summary>
     public static partial class SearchModelFactory
     {
-        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
-        /// <param name="value"> The vector representation of a search query. </param>
-        /// <param name="k"> Number of nearest neighbors to return as top hits. </param>
-        /// <param name="fields"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        /// <returns> A new <see cref="Models.SearchQueryVector"/> instance for mocking. </returns>
-        public static SearchQueryVector SearchQueryVector(IEnumerable<float> value = null, int? k = null, string fields = null)
-        {
-            value ??= new List<float>();
-
-            return new SearchQueryVector(value?.ToList(), k, fields);
-        }
-
         /// <summary> Initializes a new instance of AnswerResult. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
@@ -79,7 +67,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the field that was sent to the semantic enrichment process. </param>
         /// <param name="state"> The way the field was used for the semantic enrichment process (fully used, partially used, or unused). </param>
         /// <returns> A new <see cref="Models.QueryResultDocumentSemanticField"/> instance for mocking. </returns>
-        public static QueryResultDocumentSemanticField QueryResultDocumentSemanticField(string name = null, QueryResultDocumentSemanticFieldState? state = null)
+        public static QueryResultDocumentSemanticField QueryResultDocumentSemanticField(string name = null, SemanticFieldState? state = null)
         {
             return new QueryResultDocumentSemanticField(name, state);
         }
@@ -121,7 +109,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="statusDetail"> The outcome of this indexer execution. </param>
-        /// <param name="currentState"> All of the state that defines and dictates the indexer&apos;s current execution. </param>
+        /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
         /// <param name="startTime"> The start time of this indexer execution. </param>
         /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>
@@ -138,6 +126,70 @@ namespace Azure.Search.Documents.Models
             warnings ??= new List<SearchIndexerWarning>();
 
             return new IndexerExecutionResult(status, statusDetail, currentState, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
+        /// <param name="documentCount"> The number of documents in the index. </param>
+        /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
+        /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexStatistics"/> instance for mocking. </returns>
+        public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long? vectorIndexSize = null)
+        {
+            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="aliasCounter"> Total number of aliases. </param>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aliasCounter"/>, <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, <paramref name="synonymMapCounter"/>, <paramref name="skillsetCounter"/> or <paramref name="vectorIndexSizeCounter"/> is null. </exception>
+        /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
+        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter = null, SearchResourceCounter documentCounter = null, SearchResourceCounter indexCounter = null, SearchResourceCounter indexerCounter = null, SearchResourceCounter dataSourceCounter = null, SearchResourceCounter storageSizeCounter = null, SearchResourceCounter synonymMapCounter = null, SearchResourceCounter skillsetCounter = null, SearchResourceCounter vectorIndexSizeCounter = null)
+        {
+            if (aliasCounter == null)
+            {
+                throw new ArgumentNullException(nameof(aliasCounter));
+            }
+            if (documentCounter == null)
+            {
+                throw new ArgumentNullException(nameof(documentCounter));
+            }
+            if (indexCounter == null)
+            {
+                throw new ArgumentNullException(nameof(indexCounter));
+            }
+            if (indexerCounter == null)
+            {
+                throw new ArgumentNullException(nameof(indexerCounter));
+            }
+            if (dataSourceCounter == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceCounter));
+            }
+            if (storageSizeCounter == null)
+            {
+                throw new ArgumentNullException(nameof(storageSizeCounter));
+            }
+            if (synonymMapCounter == null)
+            {
+                throw new ArgumentNullException(nameof(synonymMapCounter));
+            }
+            if (skillsetCounter == null)
+            {
+                throw new ArgumentNullException(nameof(skillsetCounter));
+            }
+            if (vectorIndexSizeCounter == null)
+            {
+                throw new ArgumentNullException(nameof(vectorIndexSizeCounter));
+            }
+
+            return new SearchServiceCounters(aliasCounter, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter);
         }
     }
 }

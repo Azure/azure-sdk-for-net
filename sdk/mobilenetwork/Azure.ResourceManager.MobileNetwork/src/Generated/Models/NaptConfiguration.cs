@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="portReuseHoldTime"> The minimum time (in seconds) that will pass before a port that was used by a closed pinhole can be recycled for use by another pinhole. All hold times must be at least 1 second. </param>
         /// <param name="pinholeLimits"> Maximum number of UDP and TCP pinholes that can be open simultaneously on the core interface. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
         /// <param name="pinholeTimeouts"> Expiry times of inactive NAPT pinholes, in seconds. All timers must be at least 1 second. </param>
-        internal NaptConfiguration(NaptEnabled? enabled, PortRange portRange, PortReuseHoldTimes portReuseHoldTime, int? pinholeLimits, PinholeTimeouts pinholeTimeouts)
+        internal NaptConfiguration(NaptState? enabled, MobileNetworkPortRange portRange, MobileNetworkPortReuseHoldTimes portReuseHoldTime, int? pinholeLimits, PinholeTimeouts pinholeTimeouts)
         {
             Enabled = enabled;
             PortRange = portRange;
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Whether NAPT is enabled for connections to this attached data network. </summary>
-        public NaptEnabled? Enabled { get; set; }
+        public NaptState? Enabled { get; set; }
         /// <summary>
         /// Range of port numbers to use as translated ports on each translated address.
         /// If not specified and NAPT is enabled, this range defaults to 1,024 - 49,999.
         /// (Ports under 1,024 should not be used because these are special purpose ports reserved by IANA. Ports 50,000 and above are reserved for non-NAPT use.)
         /// </summary>
-        public PortRange PortRange { get; set; }
+        public MobileNetworkPortRange PortRange { get; set; }
         /// <summary> The minimum time (in seconds) that will pass before a port that was used by a closed pinhole can be recycled for use by another pinhole. All hold times must be at least 1 second. </summary>
-        public PortReuseHoldTimes PortReuseHoldTime { get; set; }
+        public MobileNetworkPortReuseHoldTimes PortReuseHoldTime { get; set; }
         /// <summary> Maximum number of UDP and TCP pinholes that can be open simultaneously on the core interface. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </summary>
         public int? PinholeLimits { get; set; }
         /// <summary> Expiry times of inactive NAPT pinholes, in seconds. All timers must be at least 1 second. </summary>

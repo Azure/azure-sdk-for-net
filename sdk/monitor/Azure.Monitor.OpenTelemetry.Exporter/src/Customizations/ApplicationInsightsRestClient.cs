@@ -41,8 +41,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
-                if (ex.InnerException?.Source != "System.Net.Http")
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
+                if (ex.InnerException?.Source != "System.Net.Http" && ex.InnerException?.Source != "System")
                 {
                     message?.Dispose();
                     throw;
@@ -69,8 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
-                if (ex.InnerException?.Source != "System.Net.Http")
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
+                if (ex.InnerException?.Source != "System.Net.Http" && ex.InnerException?.Source != "System")
                 {
                     message?.Dispose();
                     throw;
@@ -89,14 +89,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 content.WriteNewLine();
             }
 
+#if DEBUG
             TelemetryDebugWriter.WriteTelemetry(content);
+#endif
 
             return CreateRequest(RequestContent.Create(content.ToBytes()));
         }
 
         internal HttpMessage CreateTrackRequest(ReadOnlyMemory<byte> body)
         {
+#if DEBUG
             TelemetryDebugWriter.WriteTelemetryFromStorage(body);
+#endif
 
             return CreateRequest(RequestContent.Create(body));
         }

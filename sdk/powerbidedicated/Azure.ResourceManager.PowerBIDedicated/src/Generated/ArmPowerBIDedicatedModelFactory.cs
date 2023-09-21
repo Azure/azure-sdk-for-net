@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <param name="administrationMembers"> A collection of Dedicated capacity administrators. </param>
-        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value &apos;Gen2&apos; is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
+        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
         /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
         /// <param name="friendlyName"> Capacity name. </param>
         /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData);
         }
 
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
+        /// <summary> Initializes a new instance of SkuDetails. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
-        /// <returns> A new <see cref="Models.SkuDetailsForExistingResource"/> instance for mocking. </returns>
-        public static SkuDetailsForExistingResource SkuDetailsForExistingResource(string resourceType = null, CapacitySku sku = null)
+        /// <returns> A new <see cref="Models.SkuDetails"/> instance for mocking. </returns>
+        public static SkuDetails SkuDetails(string resourceType = null, CapacitySku sku = null)
         {
-            return new SkuDetailsForExistingResource(resourceType, sku);
+            return new SkuDetails(resourceType, sku);
         }
 
         /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityResult. </summary>

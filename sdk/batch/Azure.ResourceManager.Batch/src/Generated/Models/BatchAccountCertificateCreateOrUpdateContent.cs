@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </param>
+        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </param>
         /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="data"> The maximum size is 10KB. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
             ETag = etag;
         }
 
-        /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
+        /// <summary> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </summary>
         public string ThumbprintAlgorithm { get; set; }
         /// <summary> This must match the thumbprint from the name. </summary>
         public string ThumbprintString { get; set; }

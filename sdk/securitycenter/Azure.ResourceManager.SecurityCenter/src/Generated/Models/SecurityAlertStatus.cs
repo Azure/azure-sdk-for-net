@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ResolvedValue = "Resolved";
         private const string DismissedValue = "Dismissed";
 
-        /// <summary> An alert which doesn&apos;t specify a value is assigned the status &apos;Active&apos;. </summary>
+        /// <summary> An alert which doesn't specify a value is assigned the status 'Active'. </summary>
         public static SecurityAlertStatus Active { get; } = new SecurityAlertStatus(ActiveValue);
         /// <summary> An alert which is in handling state. </summary>
         public static SecurityAlertStatus InProgress { get; } = new SecurityAlertStatus(InProgressValue);

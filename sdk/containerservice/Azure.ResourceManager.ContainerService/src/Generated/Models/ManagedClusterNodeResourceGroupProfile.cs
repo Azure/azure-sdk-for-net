@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterNodeResourceGroupProfile. </summary>
-        /// <param name="restrictionLevel"> The restriction level applied to the cluster&apos;s node resource group. </param>
+        /// <param name="restrictionLevel"> The restriction level applied to the cluster's node resource group. </param>
         internal ManagedClusterNodeResourceGroupProfile(ManagedClusterNodeResourceGroupRestrictionLevel? restrictionLevel)
         {
             RestrictionLevel = restrictionLevel;
         }
 
-        /// <summary> The restriction level applied to the cluster&apos;s node resource group. </summary>
+        /// <summary> The restriction level applied to the cluster's node resource group. </summary>
         public ManagedClusterNodeResourceGroupRestrictionLevel? RestrictionLevel { get; set; }
     }
 }

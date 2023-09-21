@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWorkloadsModelFactory
     {
-
         /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
         /// <param name="supportedSkus"> Gets the list of SAP supported SKUs. </param>
         /// <returns> A new <see cref="Models.SapSupportedResourceSkusResult"/> instance for mocking. </returns>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>
-        /// <param name="volumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </param>
+        /// <param name="volumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </param>
         /// <returns> A new <see cref="Models.SapDiskConfigurationsResult"/> instance for mocking. </returns>
         public static SapDiskConfigurationsResult SapDiskConfigurationsResult(IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations = null)
         {
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="Models.DiscoveryConfiguration"/>.
         /// </param>
         /// <param name="managedResourceGroupName"> Managed resource group configuration. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>

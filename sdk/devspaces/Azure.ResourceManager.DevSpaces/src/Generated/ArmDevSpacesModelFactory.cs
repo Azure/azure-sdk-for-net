@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <param name="provisioningState"> Provisioning state of the Azure Dev Spaces Controller. </param>
         /// <param name="hostSuffix"> DNS suffix for public endpoints running in the Azure Dev Spaces Controller. </param>
         /// <param name="dataPlaneFqdn"> DNS name for accessing DataPlane services. </param>
-        /// <param name="targetContainerHostApiServerFqdn"> DNS of the target container host&apos;s API server. </param>
+        /// <param name="targetContainerHostApiServerFqdn"> DNS of the target container host's API server. </param>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host. </param>
         /// <param name="targetContainerHostCredentialsBase64"> Credentials of the target container host (base64). </param>
         /// <returns> A new <see cref="DevSpaces.ControllerData"/> instance for mocking. </returns>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <param name="orchestratorSpecificConnectionDetails">
         /// Base class for types that supply values used to connect to container orchestrators
         /// Please note <see cref="OrchestratorSpecificConnectionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KubernetesConnectionDetails"/>.
+        /// The available derived classes include <see cref="Models.KubernetesConnectionDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ControllerConnectionDetails"/> instance for mocking. </returns>
         public static ControllerConnectionDetails ControllerConnectionDetails(OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = null)

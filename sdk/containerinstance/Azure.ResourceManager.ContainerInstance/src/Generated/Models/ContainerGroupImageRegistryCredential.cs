@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public partial class ContainerGroupImageRegistryCredential
     {
         /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
-        /// <param name="server"> The Docker image registry server without a protocol such as &quot;http&quot; and &quot;https&quot;. </param>
+        /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public ContainerGroupImageRegistryCredential(string server)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
-        /// <param name="server"> The Docker image registry server without a protocol such as &quot;http&quot; and &quot;https&quot;. </param>
+        /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <param name="username"> The username for the private registry. </param>
         /// <param name="password"> The password for the private registry. </param>
         /// <param name="identity"> The identity for the private registry. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             IdentityUri = identityUri;
         }
 
-        /// <summary> The Docker image registry server without a protocol such as &quot;http&quot; and &quot;https&quot;. </summary>
+        /// <summary> The Docker image registry server without a protocol such as "http" and "https". </summary>
         public string Server { get; set; }
         /// <summary> The username for the private registry. </summary>
         public string Username { get; set; }

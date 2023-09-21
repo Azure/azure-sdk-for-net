@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing the SecurityCenterLocation data model.
-    /// The ASC location of the subscription is in the &quot;name&quot; field
+    /// The ASC location of the subscription is in the "name" field
     /// </summary>
     public partial class SecurityCenterLocationData : ResourceData
     {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
@@ -15,6 +16,8 @@ using Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Common;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -226,12 +229,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var configuration = new Dictionary<string, string>
                 {
                     { "eventGridUri" , "this could be anything...so lets try yolo" },
-                    { "eventgridKey" , "thisismagic" }
+                    { "eventgridKey" , "thisismagic" },
                 };
 
             host = TestHelpers.NewHost<OutputBindingParams>(configuration: configuration);
             indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be a valid absolute Uri", indexException.InnerException.Message);
+            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be a valid absolute Uri.", indexException.InnerException.Message);
 
             configuration = new Dictionary<string, string>
                 {
@@ -242,11 +245,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             host = TestHelpers.NewHost<OutputBindingParams>(configuration: configuration);
             indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key", indexException.InnerException.Message);
+            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key.", indexException.InnerException.Message);
         }
 
         [Theory]
         [TestCase("SingleEvent", "0")]
+        [TestCase("SingleEventWithConnection", "0")]
         [TestCase("SingleEventString", "0")]
         [TestCase("SingleEventBinaryData", "0")]
         [TestCase("SingleEventJObject", "0")]
@@ -263,7 +267,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             List<EventGridEvent> egOutput = new List<EventGridEvent>();
 
-            var mockFactory = new Mock<EventGridAsyncCollectorFactory>();
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddProvider(new TestLoggerProvider());
+
+            var configuration = new Dictionary<string, string>
+                {
+                    { "eventGridUri" , "https://pccode.westus2-1.eventgrid.azure.net/api/events" },
+                    { "eventgridKey" , "thisismagic" },
+                    { "eventGridConnection:topicEndpointUri" , "https://pccode.westus2-1.eventgrid.azure.net/api/events" },
+                };
+
+            // use moq eventgridclient for test extension
+            var configSection = new ConfigurationBuilder().AddInMemoryCollection(configuration).Build();
+
+            var mockFactory = new Mock<EventGridAsyncCollectorFactory>(configSection, new MockComponentFactory());
+
             mockFactory.Setup(x => x.CreateCollector(It.IsAny<EventGridAttribute>()))
                 .Returns((EventGridAttribute attr) =>
                 {
@@ -280,17 +298,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                         });
                     return new EventGridAsyncCollector(mockClient.Object);
                 });
-
-            ILoggerFactory loggerFactory = new LoggerFactory();
-            loggerFactory.AddProvider(new TestLoggerProvider());
-            // use moq eventgridclient for test extension
             var customExtension = new EventGridExtensionConfigProvider(mockFactory.Object, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
-
-            var configuration = new Dictionary<string, string>
-                {
-                    { "eventGridUri" , "https://pccode.westus2-1.eventgrid.azure.net/api/events" },
-                    { "eventgridKey" , "thisismagic" }
-                };
 
             var host = TestHelpers.NewHost<OutputBindingParams>(customExtension, configuration: configuration);
 
@@ -302,6 +310,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 Assert.True(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()));
             }
             Assert.True(expectedEvents.Count == 0);
+        }
+
+        private class MockComponentFactory : AzureComponentFactory
+        {
+            public override TokenCredential CreateTokenCredential(IConfiguration configuration)
+            {
+                return new MockCredential();
+            }
+
+            public override object CreateClientOptions(Type optionsType, object serviceVersion, IConfiguration configuration)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override object CreateClient(Type clientType, IConfiguration configuration, TokenCredential credential, object clientOptions)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class EventGridParams
@@ -607,6 +633,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public class OutputBindingParams
         {
             public void SingleEvent([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out EventGridEvent single)
+            {
+                single = new EventGridEvent("", "", "", data: "0");
+            }
+
+            public void SingleEventWithConnection([EventGrid(Connection = "eventGridConnection")] out EventGridEvent single)
             {
                 single = new EventGridEvent("", "", "", data: "0");
             }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="alertDisplayName"> The display name of the alert. </param>
         /// <param name="description"> Description of the suspicious activity that was detected. </param>
         /// <param name="severity"> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </param>
-        /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center&apos;s supported kill chain intents. </param>
+        /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </param>
         /// <param name="startOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
         /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers">
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public string Description { get; }
         /// <summary> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </summary>
         public SecurityAlertSeverity? Severity { get; }
-        /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center&apos;s supported kill chain intents. </summary>
+        /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </summary>
         public KillChainIntent? Intent { get; }
         /// <summary> The UTC time of the first event or activity included in the alert in ISO8601 format. </summary>
         public DateTimeOffset? StartOn { get; }

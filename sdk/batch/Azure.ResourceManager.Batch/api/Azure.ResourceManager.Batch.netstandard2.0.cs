@@ -426,7 +426,6 @@ namespace Azure.ResourceManager.Batch.Models
         public static Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption? nodeDeallocationOption = default(Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchSkuCapability BatchSkuCapability(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchSupportedSku BatchSupportedSku(string name = null, string familyName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchSkuCapability> capabilities = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration BatchVmContainerConfiguration(Azure.ResourceManager.Batch.Models.BatchVmContainerType containerType = default(Azure.ResourceManager.Batch.Models.BatchVmContainerType), System.Collections.Generic.IEnumerable<string> containerImageNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> containerRegistries = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchVmFamilyCoreQuota BatchVmFamilyCoreQuota(string name = null, int? coreQuota = default(int?)) { throw null; }
     }
     public partial class BatchAccountAutoScaleSettings
@@ -871,6 +870,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         public BatchNetworkConfiguration() { }
         public Azure.ResourceManager.Batch.Models.DynamicVNetAssignmentScope? DynamicVNetAssignmentScope { get { throw null; } set { } }
+        public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchInboundNatPool> EndpointInboundNatPools { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -1071,6 +1071,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchVmContainerConfiguration
     {
         public BatchVmContainerConfiguration() { }
+        public BatchVmContainerConfiguration(Azure.ResourceManager.Batch.Models.BatchVmContainerType containerType) { }
         public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> ContainerRegistries { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchVmContainerType ContainerType { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
@@ -1089,6 +1090,7 @@ namespace Azure.ResourceManager.Batch.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BatchVmContainerType(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchVmContainerType CriCompatible { get { throw null; } }
         public static Azure.ResourceManager.Batch.Models.BatchVmContainerType DockerCompatible { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Batch.Models.BatchVmContainerType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1112,6 +1114,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         public BatchVmExtension(string name, string publisher, string extensionType) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
+        public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }

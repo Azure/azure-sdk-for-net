@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="provisionedBandwidthInMbps"> The bandwidth that is actually provisioned. </param>
         /// <param name="sessionAddressProvider"> The field indicating if Microsoft provides session ip addresses. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the connection is used for peering service. </param>
-        /// <param name="microsoftTrackingId"> The ID used within Microsoft&apos;s peering provisioning system to track the connection. </param>
+        /// <param name="microsoftTrackingId"> The ID used within Microsoft's peering provisioning system to track the connection. </param>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility at which the connection has to be set up. </param>
         /// <param name="connectionState"> The state of the connection. </param>
         /// <param name="bgpSession"> The BGP session associated with the connection. </param>
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
-        /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends&apos; IPv4 addresses. </param>
-        /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends&apos; IPv6 addresses. </param>
-        /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft&apos;s end. </param>
-        /// <param name="microsoftSessionIPv6Address"> The IPv6 session address on Microsoft&apos;s end. </param>
-        /// <param name="peerSessionIPv4Address"> The IPv4 session address on peer&apos;s end. </param>
-        /// <param name="peerSessionIPv6Address"> The IPv6 session address on peer&apos;s end. </param>
+        /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends' IPv4 addresses. </param>
+        /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends' IPv6 addresses. </param>
+        /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft's end. </param>
+        /// <param name="microsoftSessionIPv6Address"> The IPv6 session address on Microsoft's end. </param>
+        /// <param name="peerSessionIPv4Address"> The IPv4 session address on peer's end. </param>
+        /// <param name="peerSessionIPv6Address"> The IPv6 session address on peer's end. </param>
         /// <param name="sessionStateV4"> The state of the IPv4 session. </param>
         /// <param name="sessionStateV6"> The state of the IPv6 session. </param>
         /// <param name="maxPrefixesAdvertisedV4"> The maximum number of prefixes advertised over the IPv4 session. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="asn"> The customer&apos;s ASN from which traffic originates. </param>
+        /// <param name="asn"> The customer's ASN from which traffic originates. </param>
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Peering.PeeringRegisteredAsnData"/> instance for mocking. </returns>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="prefix"> The customer&apos;s prefix from which traffic originates. </param>
+        /// <param name="prefix"> The customer's prefix from which traffic originates. </param>
         /// <param name="prefixValidationState"> The prefix validation state. </param>
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="errorMessage"> The error message associated with the validation state, if any. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="nextHop"> The next hop for the prefix. </param>
         /// <param name="asPath"> The AS path for the prefix. </param>
         /// <param name="originAsValidationState"> The origin AS change information for the prefix. </param>
-        /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that&apos;s listed in the AS path. </param>
+        /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that's listed in the AS path. </param>
         /// <param name="trustAnchor"> The authority which holds the Route Origin Authorization record for the prefix, if any. </param>
         /// <param name="receivedTimestamp"> The received timestamp associated with the prefix. </param>
         /// <returns> A new <see cref="Models.PeeringReceivedRoute"/> instance for mocking. </returns>

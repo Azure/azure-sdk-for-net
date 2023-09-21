@@ -43,9 +43,10 @@ namespace Azure.Communication.JobRouter
         public string DispositionCode { get; set; }
 
         /// <summary>
-        /// If provided, the future time at which to release the capacity. If not provided capacity will be released immediately.
+        /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time in UTC.
         /// </summary>
-        public DateTimeOffset CloseTime { get; set; }
+        public DateTimeOffset CloseAt { get; set; }
 
         /// <summary>
         /// Custom supplied note.

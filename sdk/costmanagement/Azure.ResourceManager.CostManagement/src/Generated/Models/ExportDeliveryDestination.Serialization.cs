@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             string container = default;
             Optional<string> rootFolderPath = default;
             Optional<string> sasToken = default;
@@ -55,7 +55,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("container"u8))

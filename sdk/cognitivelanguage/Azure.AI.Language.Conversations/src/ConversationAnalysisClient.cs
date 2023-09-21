@@ -9,9 +9,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations
 {
     /// <remarks>
-    /// See <see href="https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime"/> for more information about models you can pass to this client.
+    /// See <see href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime"/> for more information about models you can pass to this client.
     /// </remarks>
-    /// <seealso href="https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime"/>
+    /// <seealso href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime"/>
     public partial class ConversationAnalysisClient
     {
         /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>

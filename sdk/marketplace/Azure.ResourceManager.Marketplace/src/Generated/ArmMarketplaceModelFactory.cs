@@ -134,19 +134,21 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="collectionId"> Gets collection Id. </param>
         /// <param name="collectionName"> Gets or sets collection name. </param>
-        /// <param name="claim"> Gets or sets the association with Commercial&apos;s Billing Account. </param>
+        /// <param name="claim"> Gets or sets the association with Commercial's Billing Account. </param>
         /// <param name="areAllSubscriptionsSelected"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
         /// <param name="areAllItemsApproved"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
         /// <param name="approveAllItemsModifiedOn"> Gets the modified date of all items approved. </param>
         /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
         /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
+        /// <param name="appliedRules"> Gets list of collection rules. </param>
         /// <returns> A new <see cref="Marketplace.PrivateStoreCollectionInfoData"/> instance for mocking. </returns>
-        public static PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? collectionId = null, string collectionName = null, string claim = null, bool? areAllSubscriptionsSelected = null, bool? areAllItemsApproved = null, DateTimeOffset? approveAllItemsModifiedOn = null, IEnumerable<string> subscriptionsList = null, bool? isEnabled = null, long? numberOfOffers = null)
+        public static PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? collectionId = null, string collectionName = null, string claim = null, bool? areAllSubscriptionsSelected = null, bool? areAllItemsApproved = null, DateTimeOffset? approveAllItemsModifiedOn = null, IEnumerable<string> subscriptionsList = null, bool? isEnabled = null, long? numberOfOffers = null, IEnumerable<MarketplaceRule> appliedRules = null)
         {
             subscriptionsList ??= new List<string>();
+            appliedRules ??= new List<MarketplaceRule>();
 
-            return new PrivateStoreCollectionInfoData(id, name, resourceType, systemData, collectionId, collectionName, claim, areAllSubscriptionsSelected, areAllItemsApproved, approveAllItemsModifiedOn, subscriptionsList?.ToList(), isEnabled, numberOfOffers);
+            return new PrivateStoreCollectionInfoData(id, name, resourceType, systemData, collectionId, collectionName, claim, areAllSubscriptionsSelected, areAllItemsApproved, approveAllItemsModifiedOn, subscriptionsList?.ToList(), isEnabled, numberOfOffers, appliedRules?.ToList());
         }
 
         /// <summary> Initializes a new instance of TransferOffersResult. </summary>
@@ -230,6 +232,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PrivateStoreOfferData(id, name, resourceType, systemData, uniqueOfferId, offerDisplayName, publisherDisplayName, eTag, privateStoreId, createdOn, modifiedOn, specificPlanIdsLimitation?.ToList(), isUpdateSuppressedDueToIdempotence, iconFileUris, plans?.ToList());
         }
 
+        /// <summary> Initializes a new instance of CollectionOffersByContext. </summary>
+        /// <param name="context"> Offer's context, e.g. subscription ID, tenant ID. </param>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.CollectionOffersByContext"/> instance for mocking. </returns>
+        public static CollectionOffersByContext CollectionOffersByContext(string context = null, IEnumerable<PrivateStoreOfferResult> value = null)
+        {
+            value ??= new List<PrivateStoreOfferResult>();
+
+            return new CollectionOffersByContext(context, value?.ToList());
+        }
+
         /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -237,7 +250,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="offerId"> Gets or sets unique offer id. </param>
         /// <param name="offerDisplayName"> Gets offer display name. </param>
-        /// <param name="publisherId"> The offer&apos;s publisher id. </param>
+        /// <param name="publisherId"> The offer's publisher id. </param>
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
         /// <param name="isClosed"> Gets a value indicating whether the request is closed. </param>
         /// <param name="messageCode"> Gets or sets the request approval message code. </param>
@@ -253,7 +266,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="planId"> Gets or sets Plan Id. </param>
         /// <param name="status"> Gets the plan status. </param>
         /// <param name="requestDate"> Gets request date. </param>
-        /// <param name="justification"> Gets or sets user&apos;s justification for the plan&apos;s request. </param>
+        /// <param name="justification"> Gets or sets user's justification for the plan's request. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription id that the user is requesting to add the plan to. </param>
         /// <param name="subscriptionName"> Gets or sets the subscription name that the user is requesting to add the plan to. </param>
         /// <returns> A new <see cref="Models.PrivateStorePlanDetails"/> instance for mocking. </returns>

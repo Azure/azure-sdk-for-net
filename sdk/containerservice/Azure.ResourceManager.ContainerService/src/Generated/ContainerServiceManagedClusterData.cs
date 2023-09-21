@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="fqdnSubdomain"> This cannot be updated once the Managed Cluster has been created. </param>
         /// <param name="fqdn"> The FQDN of the master pool. </param>
         /// <param name="privateFqdn"> The FQDN of private cluster. </param>
-        /// <param name="azurePortalFqdn"> The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn&apos;t handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </param>
+        /// <param name="azurePortalFqdn"> The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </param>
         /// <param name="agentPoolProfiles"> The agent pool properties. </param>
         /// <param name="linuxProfile"> The profile for Linux VMs in the Managed Cluster. </param>
         /// <param name="windowsProfile"> The profile for Windows VMs in the Managed Cluster. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="autoUpgradeProfile"> The auto upgrade configuration. </param>
         /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when enabled. </param>
         /// <param name="apiServerAccessProfile"> The access profile for managed cluster API server. </param>
-        /// <param name="diskEncryptionSetId"> This is of the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}&apos;. </param>
+        /// <param name="diskEncryptionSetId"> This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}'. </param>
         /// <param name="identityProfile"> Identities associated with the cluster. </param>
         /// <param name="privateLinkResources"> Private link resources associated with the cluster. </param>
         /// <param name="disableLocalAccounts"> If set to true, getting static credentials will be disabled for this cluster. This must only be used on Managed Clusters that are AAD enabled. For more details see [disable local accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview). </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService
         public string Fqdn { get; }
         /// <summary> The FQDN of private cluster. </summary>
         public string PrivateFqdn { get; }
-        /// <summary> The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn&apos;t handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </summary>
+        /// <summary> The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </summary>
         public string AzurePortalFqdn { get; }
         /// <summary> The agent pool properties. </summary>
         public IList<ManagedClusterAgentPoolProfile> AgentPoolProfiles { get; }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerService
         public string NodeResourceGroup { get; set; }
         /// <summary> The node resource group configuration profile. </summary>
         internal ManagedClusterNodeResourceGroupProfile NodeResourceGroupProfile { get; set; }
-        /// <summary> The restriction level applied to the cluster&apos;s node resource group. </summary>
+        /// <summary> The restriction level applied to the cluster's node resource group. </summary>
         public ManagedClusterNodeResourceGroupRestrictionLevel? NodeResourceGroupRestrictionLevel
         {
             get => NodeResourceGroupProfile is null ? default : NodeResourceGroupProfile.RestrictionLevel;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerService
         public ManagedClusterAutoScalerProfile AutoScalerProfile { get; set; }
         /// <summary> The access profile for managed cluster API server. </summary>
         public ManagedClusterApiServerAccessProfile ApiServerAccessProfile { get; set; }
-        /// <summary> This is of the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}&apos;. </summary>
+        /// <summary> This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}'. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
         /// <summary> Identities associated with the cluster. </summary>
         public IDictionary<string, ContainerServiceUserAssignedIdentity> IdentityProfile { get; }

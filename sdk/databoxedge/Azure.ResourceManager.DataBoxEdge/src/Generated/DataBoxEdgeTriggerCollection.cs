@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -221,14 +222,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeTriggerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,14 +245,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeTriggerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

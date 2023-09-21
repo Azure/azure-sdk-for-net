@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="executionType"> The type of the export run. </param>
         /// <param name="status"> The last known status of the export run. </param>
-        /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is &apos;System&apos;. </param>
+        /// <param name="submittedBy"> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </param>
         /// <param name="submittedOn"> The time when export was queued to be run. </param>
         /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
         /// <param name="processingEndOn"> The time when the export run finished. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="runSettings"> The export settings that were in effect for this run. </param>
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExecutionType? executionType, ExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             ExecutionType = executionType;
             Status = status;
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The type of the export run. </summary>
-        public ExecutionType? ExecutionType { get; set; }
+        public ExportRunExecutionType? ExecutionType { get; set; }
         /// <summary> The last known status of the export run. </summary>
-        public ExecutionStatus? Status { get; set; }
-        /// <summary> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is &apos;System&apos;. </summary>
+        public ExportRunExecutionStatus? Status { get; set; }
+        /// <summary> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </summary>
         public string SubmittedBy { get; set; }
         /// <summary> The time when export was queued to be run. </summary>
         public DateTimeOffset? SubmittedOn { get; set; }

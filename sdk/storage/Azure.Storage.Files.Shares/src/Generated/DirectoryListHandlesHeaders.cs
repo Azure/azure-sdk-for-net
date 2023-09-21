@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.Shares
         {
             _response = response;
         }
-        /// <summary> Specifies the format in which the results are returned. Currently this value is &apos;application/xml&apos;. </summary>
+        /// <summary> Specifies the format in which the results are returned. Currently this value is 'application/xml'. </summary>
         public string ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? value : null;
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;

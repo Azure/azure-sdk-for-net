@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Serialization
 {
     /// <summary>
     /// A dynamic abstraction over content data, such as JSON.
@@ -20,7 +20,7 @@ namespace Azure.Core.Dynamic
     /// This and related types are not intended to be mocked.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [JsonConverter(typeof(JsonConverter))]
+    [JsonConverter(typeof(DynamicDataJsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -37,43 +37,7 @@ namespace Azure.Core.Dynamic
         {
             _element = element;
             _options = options;
-            _serializerOptions = GetSerializerOptions(options);
-        }
-
-        internal static JsonSerializerOptions GetSerializerOptions(DynamicDataOptions options)
-        {
-            JsonSerializerOptions serializerOptions = new()
-            {
-                Converters =
-                {
-                    new DefaultTimeSpanConverter()
-                }
-            };
-
-            switch (options.CaseMapping)
-            {
-                case DynamicCaseMapping.PascalToCamel:
-                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    break;
-                case DynamicCaseMapping.None:
-                default:
-                    break;
-            }
-
-            switch (options.DateTimeHandling)
-            {
-                case DynamicDateTimeHandling.UnixTime:
-                    serializerOptions.Converters.Add(new UnixTimeDateTimeConverter());
-                    serializerOptions.Converters.Add(new UnixTimeDateTimeOffsetConverter());
-                    break;
-                case DynamicDateTimeHandling.Rfc3339:
-                default:
-                    serializerOptions.Converters.Add(new Rfc3339DateTimeConverter());
-                    serializerOptions.Converters.Add(new Rfc3339DateTimeOffsetConverter());
-                    break;
-            }
-
-            return serializerOptions;
+            _serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
         }
 
         internal void WriteTo(Stream stream)
@@ -101,11 +65,10 @@ namespace Azure.Core.Dynamic
                 return new DynamicData(element, _options);
             }
 
-            // If we're using the PascalToCamel mapping and the strict name lookup
-            // failed, do a second lookup with a camelCase name as well.
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel && char.IsUpper(name[0]))
+            // If the dynamic content has a specified property name format, do a second look-up.
+            if (_options.PropertyNameFormat != JsonPropertyNames.UseExact)
             {
-                if (_element.TryGetProperty(ConvertToCamelCase(name), out element))
+                if (_element.TryGetProperty(FormatPropertyName(name), out element))
                 {
                     if (element.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +83,15 @@ namespace Azure.Core.Dynamic
             return null;
         }
 
-        private static string ConvertToCamelCase(string value) => JsonNamingPolicy.CamelCase.ConvertName(value);
+        private string FormatPropertyName(string value)
+        {
+            return _options.PropertyNameFormat switch
+            {
+                JsonPropertyNames.UseExact => value,
+                JsonPropertyNames.CamelCase => JsonNamingPolicy.CamelCase.ConvertName(value),
+                _ => throw new NotSupportedException($"Unknown value for DynamicDataOptions.PropertyNamingConvention: '{_options.PropertyNameFormat}'."),
+            };
+        }
 
         private object? GetViaIndexer(object index)
         {
@@ -166,18 +137,22 @@ namespace Azure.Core.Dynamic
         private object? SetProperty(string name, object value)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            AllowList.AssertAllowedValue(value);
 
             if (HasTypeConverter(value))
             {
                 value = ConvertType(value);
             }
 
-            if (_options.CaseMapping == DynamicCaseMapping.PascalToCamel)
+            if (_options.PropertyNameFormat == JsonPropertyNames.UseExact ||
+                _element.TryGetProperty(name, out MutableJsonElement _))
             {
-                name = ConvertToCamelCase(name);
+                SetPropertyInternal(name, value);
+                return null;
             }
 
-            _element = _element.SetProperty(name, value);
+            // The dynamic content has a specified property name format.
+            SetPropertyInternal(FormatPropertyName(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;
@@ -191,26 +166,155 @@ namespace Azure.Core.Dynamic
             _ => false
         };
 
-        private object ConvertType(object value)
-        {
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _serializerOptions);
-            return JsonDocument.Parse(bytes);
-        }
+        private JsonElement ConvertType(object value) =>
+            MutableJsonElement.SerializeToJsonElement(value, _serializerOptions);
 
         private object? SetViaIndexer(object index, object value)
         {
+            AllowList.AssertAllowedValue(value);
+
             switch (index)
             {
                 case string propertyName:
-                    _element = _element.SetProperty(propertyName, value);
+                    SetPropertyInternal(propertyName, value);
                     return null;
                 case int arrayIndex:
                     MutableJsonElement element = _element.GetIndexElement(arrayIndex);
-                    element.Set(value);
+                    SetInternal(ref element, value);
                     return new DynamicData(element, _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
+        }
+
+        private void SetPropertyInternal(string name, object value)
+        {
+            switch (value)
+            {
+                case bool b:
+                    _element = _element.SetProperty(name, b);
+                    break;
+                case string s:
+                    _element = _element.SetProperty(name, s);
+                    break;
+                case byte b:
+                    _element = _element.SetProperty(name, b);
+                    break;
+                case sbyte sb:
+                    _element = _element.SetProperty(name, sb);
+                    break;
+                case short sh:
+                    _element = _element.SetProperty(name, sh);
+                    break;
+                case ushort us:
+                    _element = _element.SetProperty(name, us);
+                    break;
+                case int i:
+                    _element = _element.SetProperty(name, i);
+                    break;
+                case uint u:
+                    _element = _element.SetProperty(name, u);
+                    break;
+                case long l:
+                    _element = _element.SetProperty(name, l);
+                    break;
+                case ulong ul:
+                    _element = _element.SetProperty(name, ul);
+                    break;
+                case float f:
+                    _element = _element.SetProperty(name, f);
+                    break;
+                case double d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case decimal d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case DateTime d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case DateTimeOffset d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case Guid g:
+                    _element = _element.SetProperty(name, g);
+                    break;
+                case null:
+                    _element = _element.SetPropertyNull(name);
+                    break;
+                case JsonElement e:
+                    _element = _element.SetProperty(name, e);
+                    break;
+                default:
+                    JsonElement element = ConvertType(value);
+                    _element = _element.SetProperty(name, element);
+                    break;
+            }
+        }
+
+        private void SetInternal(ref MutableJsonElement element, object value)
+        {
+            switch (value)
+            {
+                case bool b:
+                    element.Set(b);
+                    break;
+                case string s:
+                    element.Set(s);
+                    break;
+                case byte b:
+                    element.Set(b);
+                    break;
+                case sbyte sb:
+                    element.Set(sb);
+                    break;
+                case short sh:
+                    element.Set(sh);
+                    break;
+                case ushort us:
+                    element.Set(us);
+                    break;
+                case int i:
+                    element.Set(i);
+                    break;
+                case uint u:
+                    element.Set(u);
+                    break;
+                case long l:
+                    element.Set(l);
+                    break;
+                case ulong ul:
+                    element.Set(ul);
+                    break;
+                case float f:
+                    element.Set(f);
+                    break;
+                case double d:
+                    element.Set(d);
+                    break;
+                case decimal d:
+                    element.Set(d);
+                    break;
+                case DateTime d:
+                    element.Set(d);
+                    break;
+                case DateTimeOffset d:
+                    element.Set(d);
+                    break;
+                case Guid g:
+                    element.Set(g);
+                    break;
+                case null:
+                    element.SetNull();
+                    break;
+                case JsonElement e:
+                    element.Set(e);
+                    break;
+                default:
+                    JsonElement jsonElement = ConvertType(value);
+                    element.Set(jsonElement);
+                    break;
+            }
         }
 
         private T? ConvertTo<T>()
@@ -367,12 +471,12 @@ namespace Azure.Core.Dynamic
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
-        private class JsonConverter : JsonConverter<DynamicData>
+        private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.Default);
+                MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
+                return new DynamicData(mdoc.RootElement, DynamicDataOptions.FromSerializerOptions(options));
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)

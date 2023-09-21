@@ -14,9 +14,9 @@ TextAnalyticsClient client = new(endpoint, credential);
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Summarize one or more documents
+## Summarize one or more text documents
 
-To summarize one or more text documents using abstractive summarization, call `StartAbstractiveSummarize` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AbstractiveSummarizeOperation`.
+To summarize one or more text documents using abstractive summarization, call `AbstractiveSummarize` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AbstractiveSummarizeOperation`.
 
 ```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync
 string document =
@@ -64,23 +64,10 @@ List<string> batchedDocuments = new()
 };
 
 // Perform the text analysis operation.
-AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(batchedDocuments);
-await operation.WaitForCompletionAsync();
+AbstractiveSummarizeOperation operation = client.AbstractiveSummarize(WaitUntil.Completed, batchedDocuments);
 ```
 
-The `AbstractiveSummarizeOperation` includes general information about the status of the long-running operation, and it can be queried at any time:
-
-```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync_ViewOperationStatus
-// View the operation status.
-Console.WriteLine($"Created On   : {operation.CreatedOn}");
-Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
-Console.WriteLine($"Id           : {operation.Id}");
-Console.WriteLine($"Status       : {operation.Status}");
-Console.WriteLine($"Last Modified: {operation.LastModified}");
-Console.WriteLine();
-```
-
-Once the long-running operation has completed, you can view the results of the abstractive summarization, including any errors that might have occurred:
+Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the abstractive summarization, including any errors that might have occurred:
 
 ```C# Snippet:Sample12_AbstractiveSummarizeConvenienceAsync_ViewResults
 // View the operation results.

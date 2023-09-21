@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="email"> Email address. </param>
         /// <param name="registriesOn">
         /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="groups"> Collection of groups user is part of. </param>
         internal ApiManagementGroupUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups) : base(id, name, resourceType, systemData)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Email { get; set; }
         /// <summary>
         /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? RegistriesOn { get; set; }
         /// <summary> Collection of groups user is part of. </summary>
