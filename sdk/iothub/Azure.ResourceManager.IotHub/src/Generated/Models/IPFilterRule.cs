@@ -11,14 +11,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The IP filter rules for the IoT hub. </summary>
-    public partial class IotHubIPFilterRule
+    public partial class IPFilterRule
     {
-        /// <summary> Initializes a new instance of IotHubIPFilterRule. </summary>
+        /// <summary> Initializes a new instance of IPFilterRule. </summary>
         /// <param name="filterName"> The name of the IP filter rule. </param>
         /// <param name="action"> The desired action for requests captured by this rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
-        public IotHubIPFilterRule(string filterName, IotHubIPFilterActionType action, string ipMask)
+        public IPFilterRule(string filterName, IPFilterActionType action, string ipMask)
         {
             Argument.AssertNotNull(filterName, nameof(filterName));
             Argument.AssertNotNull(ipMask, nameof(ipMask));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The name of the IP filter rule. </summary>
         public string FilterName { get; set; }
         /// <summary> The desired action for requests captured by this rule. </summary>
-        public IotHubIPFilterActionType Action { get; set; }
+        public IPFilterActionType Action { get; set; }
         /// <summary> A string that contains the IP address range in CIDR notation for the rule. </summary>
         public string IPMask { get; set; }
     }
