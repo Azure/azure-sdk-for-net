@@ -6,10 +6,13 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Identity;
-using Azure.Messaging.WebPubSub;
 using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Samples
@@ -20,7 +23,17 @@ namespace Azure.Messaging.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetServiceStatus()
         {
-            HealthApiClient client = new HealthApiClient("<Endpoint>");
+            var client = new HealthApiClient("<https://my-service.azure.com>");
+
+            Response response = client.GetServiceStatus();
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetServiceStatus_AllParameters()
+        {
+            var client = new HealthApiClient("<https://my-service.azure.com>");
 
             Response response = client.GetServiceStatus();
             Console.WriteLine(response.Status);
@@ -30,7 +43,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetServiceStatus_Async()
         {
-            HealthApiClient client = new HealthApiClient("<Endpoint>");
+            var client = new HealthApiClient("<https://my-service.azure.com>");
 
             Response response = await client.GetServiceStatusAsync();
             Console.WriteLine(response.Status);
@@ -38,19 +51,9 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetServiceStatus_AllParameters()
-        {
-            HealthApiClient client = new HealthApiClient("<Endpoint>");
-
-            Response response = client.GetServiceStatus();
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetServiceStatus_AllParameters_Async()
         {
-            HealthApiClient client = new HealthApiClient("<Endpoint>");
+            var client = new HealthApiClient("<https://my-service.azure.com>");
 
             Response response = await client.GetServiceStatusAsync();
             Console.WriteLine(response.Status);
