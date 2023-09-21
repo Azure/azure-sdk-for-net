@@ -695,6 +695,66 @@ namespace Azure.Communication.Rooms.Test
         }
 
         [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        public async Task UpdateRoom_WithValidTimeRange_Succeed(ServiceVersion apiVersion)
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(10);
+            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = true,
+            };
+
+            var createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
+            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
+            {
+                ValidFrom = validFrom.AddDays(10),
+                ValidUntil = validUntil.AddDays(10)
+            };
+
+            // Act and Assert
+            Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions);
+            CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+
+            // Assert:
+            Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+            Assert.AreEqual(createRoomResponse.Value.Id, updateCommunicationRoom.Id);
+            Assert.AreEqual(updateCommunicationRoom.PstnDialOutEnabled, roomCreateOptions.PstnDialOutEnabled); // PSTN Enabled Dial-Out remains unchanged as in the room create operation
+            ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
+        }
+
+        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        public async Task UpdateRoom_WithEmptyUpdateRoomOptions_Succeed(ServiceVersion apiVersion)
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(10);
+            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = true,
+            };
+
+            var createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
+            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions(){ };
+
+            // Act and Assert
+            Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, roomUpdateOptions);
+            CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+
+            // Assert:
+            Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+            Assert.AreEqual(createRoomResponse.Value.Id, updateCommunicationRoom.Id);
+            Assert.AreEqual(updateCommunicationRoom.PstnDialOutEnabled, roomCreateOptions.PstnDialOutEnabled); // PSTN Enabled Dial-Out remains unchanged as in the room create operation
+            ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
+        }
+
+        [TestCase(ServiceVersion.V2023_10_30_Preview)]
         public async Task UpdateRoom_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -1285,6 +1345,11 @@ namespace Azure.Communication.Rooms.Test
             Assert.NotNull(room?.ValidFrom);
             Assert.NotNull(room?.ValidUntil);
             Assert.AreEqual(room?.PstnDialOutEnabled, roomCreateOptions.PstnDialOutEnabled.HasValue ? roomCreateOptions?.PstnDialOutEnabled : false);
+            Console.Write("Room Id: " + room?.Id);
+            Console.Write("CreatedAt: " + room?.CreatedAt);
+            Console.Write("ValidFrom: " + room?.ValidFrom);
+            Console.Write("ValidUntil: " + room?.ValidUntil);
+            Console.Write("PstnDialOutEnabled: " + room?.PstnDialOutEnabled);
         }
 
         private void ValidateRoom(CommunicationRoom? room, UpdateRoomOptions roomUpdateOptions)
@@ -1294,7 +1359,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.NotNull(room?.CreatedAt);
             Assert.NotNull(room?.CreatedAt);
             Assert.NotNull(room?.ValidFrom);
-            Assert.AreEqual(room?.PstnDialOutEnabled, roomUpdateOptions.PstnDialOutEnabled.HasValue ? roomUpdateOptions.PstnDialOutEnabled : false);
+            Assert.AreEqual(room?.PstnDialOutEnabled, roomUpdateOptions.PstnDialOutEnabled.HasValue ? roomUpdateOptions.PstnDialOutEnabled : room?.PstnDialOutEnabled);
         }
     }
 }
