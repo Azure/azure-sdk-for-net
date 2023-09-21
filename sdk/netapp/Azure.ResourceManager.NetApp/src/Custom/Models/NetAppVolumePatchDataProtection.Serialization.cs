@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumePatchDataProtection : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Backup))
