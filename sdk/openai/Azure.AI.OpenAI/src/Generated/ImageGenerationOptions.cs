@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Represents the request data used to generate images. </summary>
-    internal partial class ImageGenerationOptions
+    public partial class ImageGenerationOptions
     {
         /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
@@ -40,18 +40,10 @@ namespace Azure.AI.OpenAI
             ResponseFormat = responseFormat;
             User = user;
         }
-
-        /// <summary> A description of the desired images. </summary>
-        public string Prompt { get; }
         /// <summary> The number of images to generate (defaults to 1). </summary>
         public int? ImageCount { get; set; }
         /// <summary> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 (defaults to 1024x1024). </summary>
         public ImageSize? Size { get; set; }
-        /// <summary>
-        ///   The format in which image generation response items should be presented.
-        ///   Azure OpenAI only supports URL response items.
-        /// </summary>
-        public ImageGenerationResponseFormat? ResponseFormat { get; set; }
         /// <summary> A unique identifier representing your end-user, which can help to monitor and detect abuse. </summary>
         public string User { get; set; }
     }

@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class ImageGenerations
+    public partial class ImageGenerations
     {
         internal static ImageGenerations DeserializeImageGenerations(JsonElement element)
         {
@@ -21,7 +22,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             DateTimeOffset created = default;
-            object data = default;
+            IReadOnlyList<ImageLocation> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("created"u8))
@@ -31,7 +32,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    data = property.Value.GetObject();
+                    DeserializeDataProperty(property, ref data);
                     continue;
                 }
             }

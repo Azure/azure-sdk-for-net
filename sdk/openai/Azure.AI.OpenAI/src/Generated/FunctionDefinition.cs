@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
-    internal partial class FunctionDefinition
+    public partial class FunctionDefinition
     {
         /// <summary> Initializes a new instance of FunctionDefinition. </summary>
         /// <param name="name"> The name of the function to be called. </param>
@@ -36,9 +36,6 @@ namespace Azure.AI.OpenAI
             Description = description;
             Parameters = parameters;
         }
-
-        /// <summary> The name of the function to be called. </summary>
-        public string Name { get; }
         /// <summary>
         /// A description of what the function does. The model will use this description when selecting the function and
         /// interpreting its parameters.
