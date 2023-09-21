@@ -200,7 +200,7 @@ namespace Azure.Data.Tables.Queryable
             return _builder.ToString();
         }
 
-        protected virtual string TranslateMemberName(MemberInfo memberName)
+        protected virtual string TranslateMemberName(MemberInfo memberInfo)
         {
             if (memberInfo.GetCustomAttribute<DataMemberAttribute>() is DataMemberAttribute dataMemberAttribute)
             {
