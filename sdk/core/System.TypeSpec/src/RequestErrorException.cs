@@ -5,9 +5,9 @@ namespace System.ServiceModel.Rest.Core;
 
 public class RequestErrorException : Exception
 {
-    private IResponse _result;
+    private PipelineResponse _result;
 
-    public RequestErrorException(IResponse response) : base(response.Content.ToString())
+    public RequestErrorException(PipelineResponse response) : base(response.Content.ToString())
     {
         _result = response;
     }

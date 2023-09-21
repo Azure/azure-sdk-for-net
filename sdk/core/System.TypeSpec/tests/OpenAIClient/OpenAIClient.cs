@@ -5,7 +5,6 @@ using System;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using System.Threading;
-using Azure.Core.Pipeline;
 
 namespace OpenAI;
 
@@ -19,7 +18,7 @@ public class OpenAIClient
     {
         _options = options ?? new OpenAIClientOptions();
         _credential = credential;
-        _pipeline = MessagePipeline.Create(options);
+        _pipeline = MessagePipeline.Create(_options);
     }
 
     public Result GetCompletions(string prompt, RequestOptions options)

@@ -55,7 +55,7 @@ internal class MessagePipelineTransport
         m.BufferResponse = true;
         return m;
     }
-    private static IResponse FromHttpMessage(HttpMessage message)
+    private static PipelineResponse FromHttpMessage(HttpMessage message)
     {
         Response response = message.Response;
         if (response.ContentStream != null)
@@ -68,7 +68,7 @@ internal class MessagePipelineTransport
         }
         return response;
     }
-    private static async Task<IResponse> FromHttpMessageAsync(HttpMessage message)
+    private static async Task<PipelineResponse> FromHttpMessageAsync(HttpMessage message)
     {
         Response response = message.Response;
         if (response.ContentStream != null)

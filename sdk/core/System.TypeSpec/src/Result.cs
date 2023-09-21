@@ -9,25 +9,25 @@ namespace System.ServiceModel.Rest;
 
 public abstract class Result
 {
-    public abstract IResponse GetRawResponse();
+    public abstract PipelineResponse GetRawResponse();
 
-    public static Result Create(IResponse response) => new SimpleResult(response);
+    public static Result Create(PipelineResponse response) => new SimpleResult(response);
 
     internal class SimpleResult : Result
     {
-        public readonly IResponse _response;
-        public SimpleResult(IResponse response)
+        public readonly PipelineResponse _response;
+        public SimpleResult(PipelineResponse response)
             => _response = response;
-        public override IResponse GetRawResponse() => _response;
+        public override PipelineResponse GetRawResponse() => _response;
     }
 }
 
 public class NullableResult<T> : Result
 {
     private T? _value;
-    private IResponse _response;
+    private PipelineResponse _response;
 
-    public NullableResult(T? value, IResponse response)
+    public NullableResult(T? value, PipelineResponse response)
     {
         Debug.Assert(response != null);
         _response = response!;
@@ -38,12 +38,12 @@ public class NullableResult<T> : Result
 
     public virtual bool HasValue => _value != null;
 
-    public override IResponse GetRawResponse() => _response;
+    public override PipelineResponse GetRawResponse() => _response;
 }
 
 public class Result<T> : NullableResult<T>
 {
-    public Result(T value, IResponse response) : base(value, response)
+    public Result(T value, PipelineResponse response) : base(value, response)
     {
         Debug.Assert(value != null);
         Debug.Assert(response != null);

@@ -14,24 +14,9 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : IResponse, IDisposable
+    public abstract class Response : PipelineResponse, IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        /// <summary>
-        /// Gets the HTTP status code.
-        /// </summary>
-        public abstract int Status { get; }
-
-        /// <summary>
-        /// Gets the HTTP reason phrase.
-        /// </summary>
-        public abstract string ReasonPhrase { get; }
-
-        /// <summary>
-        /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
-        /// </summary>
-        public abstract Stream? ContentStream { get; set; }
-
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
@@ -49,9 +34,9 @@ namespace Azure
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
         /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
+        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
         /// </remarks>
-        public virtual BinaryData Content
+        public override BinaryData Content
         {
             get
             {
@@ -162,7 +147,7 @@ namespace Azure
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool TryGetHeaderValue(string name, out string? value)
+        public override bool TryGetHeaderValue(string name, out string? value)
             => this.TryGetHeader(name, out value);
     }
 }

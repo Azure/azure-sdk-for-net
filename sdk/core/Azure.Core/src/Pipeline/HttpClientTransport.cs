@@ -142,7 +142,7 @@ namespace Azure.Core.Pipeline
                 throw new RequestFailedException(e.Message, e);
             }
 
-            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
+            message.Response = new HttpClientTransportResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
@@ -625,7 +625,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private sealed class PipelineResponse : Response
+        private sealed class HttpClientTransportResponse : Response
         {
             private readonly HttpResponseMessage _responseMessage;
 
@@ -635,7 +635,7 @@ namespace Azure.Core.Pipeline
             private Stream? _contentStream;
 #pragma warning restore CA2213
 
-            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
+            public HttpClientTransportResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));

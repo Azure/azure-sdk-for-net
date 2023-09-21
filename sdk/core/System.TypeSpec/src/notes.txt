@@ -1,1 +1,22 @@
-Principles:
+Allow efficient custom policies per request, i..e pipleline in options
+Allow UTF8 implementations
+Allow System.IO.Pipelines
+Enable HTTP/2, maybe 3
+Change IResponse to class
+Change IPipelinePolicy to class
+Solve buffering problem
+Make options configurable
+Add expando properties to messages
+Freeze options
+Make policies public
+Measure perfromance and allocation
+Verify that LROs can be added
+Verify that pageables can be added
+Allow rotating client and process-wide cancellation tokens
+Model serialization
+Can we make some policies be read-only, i.e. prevent them from mutating the message
+Can we support custom pipelines?
+What about:
+- ETag, conditions, etc.
+- dynamic
+- response classifier
