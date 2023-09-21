@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest.Shared.Serialization
+namespace System.ServiceModel.Rest.Shared.Core.Serialization
 {
     public class Utf8JsonRequestBody : RequestBody
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace System.ServiceModel.Rest.Shared.Serialization
+namespace System.ServiceModel.Rest.Shared.Core.Serialization
 {
     public class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey: notnull
     {

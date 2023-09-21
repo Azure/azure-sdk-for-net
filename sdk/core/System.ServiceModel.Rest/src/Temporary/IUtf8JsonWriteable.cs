@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace System.ServiceModel.Rest.Shared.Serialization
+namespace System.ServiceModel.Rest.Shared.Core.Serialization
 {
     /// <summary>
     /// TBD.

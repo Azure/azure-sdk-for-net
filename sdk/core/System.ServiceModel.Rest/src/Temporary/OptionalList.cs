@@ -8,7 +8,7 @@ using System.Linq;
 
 #nullable enable
 
-namespace System.ServiceModel.Rest.Shared.Serialization
+namespace System.ServiceModel.Rest.Shared.Core.Serialization
 {
     public class OptionalList<T>: IList<T>, IReadOnlyList<T>
     {
