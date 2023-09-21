@@ -551,6 +551,7 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
+        public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
@@ -1011,7 +1012,7 @@ namespace Azure.Core.Pipeline
         public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
-    public abstract partial class HttpPipelinePolicy
+    public abstract partial class HttpPipelinePolicy : System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy
     {
         protected HttpPipelinePolicy() { }
         public abstract void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);

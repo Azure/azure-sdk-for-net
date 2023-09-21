@@ -70,7 +70,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class RequestBody : System.IDisposable
     {
         protected RequestBody() { }
-        public static System.ServiceModel.Rest.Core.RequestBody Create(System.IO.Stream stream) { throw null; }
+        public static System.ServiceModel.Rest.Core.RequestBody CreateFromStream(System.IO.Stream stream) { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
@@ -98,6 +98,10 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract void Send(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
     }
+    public abstract partial class PipelinePolicy
+    {
+        protected PipelinePolicy() { }
+    }
 }
 namespace System.ServiceModel.Rest.Shared
 {
@@ -107,6 +111,10 @@ namespace System.ServiceModel.Rest.Shared
         public static void AssertNotNullOrEmpty(string value, string name) { }
         public static void AssertNotNull<T>(T value, string name) { }
         public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
+    }
+    public partial class KeyCredentialPolicy
+    {
+        public KeyCredentialPolicy() { }
     }
 }
 namespace System.ServiceModel.Rest.Shared.Core

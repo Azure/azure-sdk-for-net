@@ -19,7 +19,7 @@ namespace System.ServiceModel.Rest.Core
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
         /// <returns>An instance of <see cref="RequestBody"/> that wraps a <see cref="Stream"/>.</returns>
-        public static RequestBody Create(Stream stream) => new StreamBody(stream);
+        public static RequestBody CreateFromStream(Stream stream) => new StreamBody(stream);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
