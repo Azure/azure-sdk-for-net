@@ -330,6 +330,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPlanName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryRecoveryPlanResource>> GetIfExistsAsync(string recoveryPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPlanName, nameof(recoveryPlanName));
+
+            using var scope = _siteRecoveryRecoveryPlanReplicationRecoveryPlansClientDiagnostics.CreateScope("SiteRecoveryRecoveryPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryRecoveryPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryRecoveryPlanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPlanName"/> is null. </exception>
+        public virtual NullableResponse<SiteRecoveryRecoveryPlanResource> GetIfExists(string recoveryPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPlanName, nameof(recoveryPlanName));
+
+            using var scope = _siteRecoveryRecoveryPlanReplicationRecoveryPlansClientDiagnostics.CreateScope("SiteRecoveryRecoveryPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryRecoveryPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryRecoveryPlanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SiteRecoveryRecoveryPlanResource> IEnumerable<SiteRecoveryRecoveryPlanResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
