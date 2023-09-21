@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPApplicationServerInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SapApplicationServerInstanceResource>> GetIfExistsAsync(string applicationInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+
+            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SapApplicationServerInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}/applicationInstances/{applicationInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SAPApplicationServerInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
+        public virtual NullableResponse<SapApplicationServerInstanceResource> GetIfExists(string applicationInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+
+            using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sapApplicationServerInstanceSapApplicationServerInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationInstanceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SapApplicationServerInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SapApplicationServerInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SapApplicationServerInstanceResource> IEnumerable<SapApplicationServerInstanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
