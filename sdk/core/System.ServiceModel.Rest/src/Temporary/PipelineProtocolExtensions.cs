@@ -21,7 +21,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="RequestErrorException"></exception>
-        public static async ValueTask<Result> ProcessMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        public static async ValueTask<PipelineResponse> ProcessMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
         {
             await pipeline.SendAsync(message).ConfigureAwait(false);
 
@@ -32,7 +32,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 
             if (!message.PipelineResponse.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
             {
-                return Result.FromPipelineResponse(message.PipelineResponse);
+                return message.PipelineResponse;
             }
 
             throw new RequestErrorException(message.PipelineResponse);
@@ -47,7 +47,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="RequestErrorException"></exception>
-        public static Result ProcessMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        public static PipelineResponse ProcessMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
         {
             pipeline.Send(message);
 
@@ -58,7 +58,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 
             if (!message.PipelineResponse.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
             {
-                return Result.FromPipelineResponse(message.PipelineResponse);
+                return message.PipelineResponse;
             }
 
             throw new RequestErrorException(message.PipelineResponse);
@@ -72,9 +72,9 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="clientDiagnostics"></param>
         /// <param name="requestContext"></param>
         /// <returns></returns>
-        public static async ValueTask<Result<bool>> ProcessHeadAsBoolMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
         {
-            var response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
+            PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
             switch (response.Status)
             {
                 case >= 200 and < 300:
@@ -94,9 +94,9 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="clientDiagnostics"></param>
         /// <param name="requestContext"></param>
         /// <returns></returns>
-        public static Result<bool> ProcessHeadAsBoolMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        public static NullableResult<bool> ProcessHeadAsBoolMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
         {
-            var response = pipeline.ProcessMessage(message, requestContext);
+            PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
             switch (response.Status)
             {
                 case >= 200 and < 300:
@@ -118,12 +118,13 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
             return (requestContext.CancellationToken, requestContext.ResultErrorOptions);
         }
 
-        internal class ErrorResult<T> : Result<T>
+        internal class ErrorResult<T> : NullableResult<T>
         {
-            private readonly Result _response;
+            private readonly PipelineResponse _response;
             private readonly RequestErrorException _exception;
 
-            public ErrorResult(Result response, RequestErrorException exception)
+            public ErrorResult(PipelineResponse response, RequestErrorException exception)
+                : base(default, response)
             {
                 _response = response;
                 _exception = exception;
@@ -133,7 +134,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 
             public override bool HasValue => false;
 
-            public override Result GetRawResult() => _response;
+            public override PipelineResponse GetRawResponse() => _response;
         }
     }
 }

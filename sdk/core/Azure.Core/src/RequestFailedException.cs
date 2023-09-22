@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -73,45 +73,29 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(new ErrorResult(status), message, innerException)
+            : base(new ErrorPipelineResult(status), message, innerException)
         {
             ErrorCode = errorCode;
         }
 
-        private class ErrorResult : Result
+        private class ErrorPipelineResult : PipelineResponse
         {
-            private int _status;
+            private readonly int _status;
 
-            public ErrorResult(int status)
+            public ErrorPipelineResult(int status)
             {
                 _status = status;
             }
 
             public override int Status => _status;
 
-            public override Stream? ContentStream
-            {
-                get => throw new NotImplementedException();
-                set => throw new NotImplementedException();
-            }
-
             public override BinaryData Content => throw new NotImplementedException();
+
+            public override Stream? ContentStream { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             public override string ReasonPhrase => throw new NotImplementedException();
 
-            public override void Dispose()
-            {
-            }
-
-            public override bool TryGetHeaderValue(string name, [NotNullWhenAttribute(true)] out string? value)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override bool TryGetHeader(string name, [NotNullWhenAttribute(true)] out string? value)
-            {
-                throw new NotImplementedException();
-            }
+            public override bool TryGetHeaderValue(string name, out string? value) => throw new NotImplementedException();
         }
 
         internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
