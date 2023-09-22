@@ -1866,7 +1866,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var selector = new SnapshotSelector()
                 {
-                    Name = firstSnapshotName
+                    NameFilter = firstSnapshotName
                 };
 
                 ConfigurationSnapshot[] batch = (await service.GetSnapshotsAsync(selector).ToEnumerableAsync()).ToArray();
