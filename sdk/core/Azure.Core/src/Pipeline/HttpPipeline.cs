@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline
+    public class HttpPipeline : Pipeline<PipelineMessage>
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -109,6 +109,20 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
             => CreateMessage((PipelineOptions?)context, classifier);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="classifier"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override PipelineMessage CreateMessage(PipelineOptions options, ResponseErrorClassifier classifier)
+        {
+            // TODO: I made a mess here, clean it up.
+            return CreateMessage((PipelineOptions?)options, (ResponseClassifier?)classifier);
+        }
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -331,6 +345,23 @@ namespace Azure.Core.Pipeline
                 }
             }
         }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override void Send(PipelineMessage message)
+            => Send((HttpMessage)message, CancellationToken.None);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ValueTask SendAsync(PipelineMessage message)
+            => SendAsync((HttpMessage)message, CancellationToken.None);
 
         private class HttpMessagePropertiesScope : IDisposable
         {

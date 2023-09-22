@@ -67,12 +67,13 @@ namespace System.ServiceModel.Rest.Core
         void Process(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline);
         System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline);
     }
-    public abstract partial class PipelineMessage
+    public abstract partial class PipelineMessage : System.IDisposable
     {
-        protected PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request) { }
+        protected PipelineMessage() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } set { } }
-        public System.ServiceModel.Rest.Core.PipelineResponse? Response { get { throw null; } set { } }
+        public abstract System.ServiceModel.Rest.Core.PipelineRequest PipelineRequest { get; }
+        public abstract System.ServiceModel.Rest.Core.PipelineResponse? PipelineResponse { get; set; }
+        public abstract void Dispose();
     }
     public enum PipelinePosition
     {
@@ -99,7 +100,7 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class Pipeline<TMessage>
     {
         protected Pipeline() { }
-        public abstract TMessage CreateMessage(string verb, System.Uri uri);
+        public abstract TMessage CreateMessage(System.ServiceModel.Rest.PipelineOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);
         public static void ProcessNext(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline) { }
         public static System.Threading.Tasks.ValueTask ProcessNextAsync(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline) { throw null; }
         public abstract void Send(TMessage message);

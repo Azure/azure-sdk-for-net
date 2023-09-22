@@ -7,7 +7,7 @@ namespace System.ServiceModel.Rest.Core;
 
 public abstract class Pipeline<TMessage>
 {
-    public abstract TMessage CreateMessage(string verb, Uri uri);
+    public abstract TMessage CreateMessage(PipelineOptions options, ResponseErrorClassifier classifier);
 
     public abstract void Send(TMessage message);
 

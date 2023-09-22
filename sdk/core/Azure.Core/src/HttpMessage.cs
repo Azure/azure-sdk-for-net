@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
 
@@ -25,7 +24,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
-        public HttpMessage(Request request, ResponseClassifier responseClassifier) : base(request)
+        public HttpMessage(Request request, ResponseClassifier responseClassifier)
         {
             Argument.AssertNotNull(request, nameof(Request));
             Request = request;
@@ -40,7 +39,7 @@ namespace Azure.Core
         /// <param name="message"></param>
         /// <exception cref="ArgumentException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpMessage(PipelineMessage message) : base(message.Request)
+        public HttpMessage(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -56,13 +55,13 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public new Request Request { get; }
+        public Request Request { get; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public new Response Response
+        public Response Response
         {
             get
             {
@@ -75,6 +74,25 @@ namespace Azure.Core
                 return _response;
             }
             set => _response = value;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override PipelineResponse? PipelineResponse
+        {
+            get => Response;
+            set => _response = (Response?)value;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override PipelineRequest PipelineRequest
+        {
+            get => Request;
         }
 
         /// <summary>
@@ -214,7 +232,7 @@ namespace Azure.Core
         /// <summary>
         /// Disposes the request and response.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             Request.Dispose();
             _propertyBag.Dispose();

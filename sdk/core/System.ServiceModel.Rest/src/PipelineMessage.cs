@@ -5,16 +5,13 @@ using System.Threading;
 
 namespace System.ServiceModel.Rest.Core;
 
-public abstract class PipelineMessage
+public abstract class PipelineMessage : IDisposable
 {
-    protected PipelineMessage(PipelineRequest request)
-    {
-        Request = request;
-    }
-
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-    public PipelineResponse? Response { get; set; }
+    public abstract PipelineResponse? PipelineResponse { get; set; }
 
-    public PipelineRequest Request { get; set; }
+    public abstract PipelineRequest PipelineRequest { get; }
+
+    public abstract void Dispose();
 }
