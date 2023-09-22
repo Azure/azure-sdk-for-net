@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Threading;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -12,9 +15,10 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : IDisposable
+    public sealed class HttpMessage : RestMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
+
         private Response? _response;
 
         /// <summary>
@@ -27,6 +31,25 @@ namespace Azure.Core
             Argument.AssertNotNull(request, nameof(Request));
             Request = request;
             ResponseClassifier = responseClassifier;
+            BufferResponse = true;
+            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="ArgumentException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public HttpMessage(RestMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new ArgumentException("Unsupported type.");
+            }
+
+            Request = httpMessage.Request;
+            ResponseClassifier = httpMessage.ResponseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -61,11 +84,6 @@ namespace Azure.Core
         public bool HasResponse => _response != null;
 
         internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
@@ -114,6 +132,12 @@ namespace Azure.Core
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override Result? Result => _response;
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -197,7 +221,7 @@ namespace Azure.Core
         /// <summary>
         /// Disposes the request and response.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             Request.Dispose();
             _propertyBag.Dispose();

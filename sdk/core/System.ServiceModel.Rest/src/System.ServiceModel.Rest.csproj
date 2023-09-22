@@ -11,7 +11,8 @@
       netcoreapp2.1 is out of support but we'll keep is as a target for a bit
       to give customers time to migrate without losing perf optimizations
      -->
-		<NoWarn>$(NoWarn);AZC0001;AZC0012;NETSDK1138</NoWarn>
+		<!-- TODO: Remove warning suppression -->
+		<NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0014;CS1591;NETSDK1138</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>

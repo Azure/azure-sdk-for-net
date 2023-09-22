@@ -57,7 +57,7 @@ namespace Azure.Core.Pipeline
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <param name="responseClassifier">The client provided response classifier.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        private static HttpPipeline Build(
+        public static HttpPipeline Build(
             PipelineOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,

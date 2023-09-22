@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -11,7 +12,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represent an extension point for the <see cref="HttpPipeline"/> that can mutate the <see cref="Request"/> and react to received <see cref="Response"/>.
     /// </summary>
-    public abstract class HttpPipelinePolicy
+    public abstract class HttpPipelinePolicy : PipelinePolicy
     {
         /// <summary>
         /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
