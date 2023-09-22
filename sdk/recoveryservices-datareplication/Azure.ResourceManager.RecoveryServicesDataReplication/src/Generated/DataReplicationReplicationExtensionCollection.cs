@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationExtension_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="replicationExtensionName"> The replication extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataReplicationReplicationExtensionResource>> GetIfExistsAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+
+            using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataReplicationReplicationExtensionReplicationExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationReplicationExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationReplicationExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationExtensions/{replicationExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationExtension_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="replicationExtensionName"> The replication extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
+        public virtual NullableResponse<DataReplicationReplicationExtensionResource> GetIfExists(string replicationExtensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+
+            using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataReplicationReplicationExtensionReplicationExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicationExtensionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationReplicationExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationReplicationExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataReplicationReplicationExtensionResource> IEnumerable<DataReplicationReplicationExtensionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerCommunicationLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationLinkName"> The name of the server communication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerCommunicationLinkResource>> GetIfExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
+
+            using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerCommunicationLinkServerCommunicationLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerCommunicationLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerCommunicationLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerCommunicationLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationLinkName"> The name of the server communication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerCommunicationLinkResource> GetIfExists(string communicationLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
+
+            using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerCommunicationLinkServerCommunicationLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerCommunicationLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerCommunicationLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SqlServerCommunicationLinkResource> IEnumerable<SqlServerCommunicationLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

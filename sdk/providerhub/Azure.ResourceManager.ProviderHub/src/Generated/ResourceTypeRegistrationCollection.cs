@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceTypeRegistrationResource>> GetIfExistsAsync(string resourceType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceTypeRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, resourceType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceTypeRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
+        public virtual NullableResponse<ResourceTypeRegistrationResource> GetIfExists(string resourceType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceTypeRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, resourceType, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceTypeRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ResourceTypeRegistrationResource> IEnumerable<ResourceTypeRegistrationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

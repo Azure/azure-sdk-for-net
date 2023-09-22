@@ -326,6 +326,80 @@ namespace Azure.ResourceManager.Orbital
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/contactProfiles/{contactProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContactProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contactProfileName"> Contact Profile name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<OrbitalContactProfileResource>> GetIfExistsAsync(string contactProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+
+            using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _orbitalContactProfileContactProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OrbitalContactProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/contactProfiles/{contactProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContactProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contactProfileName"> Contact Profile name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        public virtual NullableResponse<OrbitalContactProfileResource> GetIfExists(string contactProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+
+            using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _orbitalContactProfileContactProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OrbitalContactProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<OrbitalContactProfileResource> IEnumerable<OrbitalContactProfileResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

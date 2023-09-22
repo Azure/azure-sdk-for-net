@@ -329,6 +329,82 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/profiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the profile. </param>
+        /// <param name="localeCode"> Locale of profile to retrieve, default is en-us. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProfileResourceFormatResource>> GetIfExistsAsync(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _profileResourceFormatProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProfileResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ProfileResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/profiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> The name of the profile. </param>
+        /// <param name="localeCode"> Locale of profile to retrieve, default is en-us. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        public virtual NullableResponse<ProfileResourceFormatResource> GetIfExists(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var scope = _profileResourceFormatProfilesClientDiagnostics.CreateScope("ProfileResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _profileResourceFormatProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, localeCode, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProfileResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ProfileResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ProfileResourceFormatResource> IEnumerable<ProfileResourceFormatResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

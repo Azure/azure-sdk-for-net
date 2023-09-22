@@ -327,6 +327,82 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appName"> The name of the App resource. </param>
+        /// <param name="syncStatus"> Indicates whether sync status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformAppResource>> GetIfExistsAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+
+            using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformAppAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformAppResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appName"> The name of the App resource. </param>
+        /// <param name="syncStatus"> Indicates whether sync status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformAppResource> GetIfExists(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+
+            using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformAppResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AppPlatformAppResource> IEnumerable<AppPlatformAppResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
