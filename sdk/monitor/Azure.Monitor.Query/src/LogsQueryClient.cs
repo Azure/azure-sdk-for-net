@@ -114,8 +114,8 @@ namespace Azure.Monitor.Query
         /// </example>
         /// </summary>
         /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeRange</c>.</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
@@ -153,8 +153,8 @@ namespace Azure.Monitor.Query
         /// </example>
         /// </summary>
         /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeRange</c>.</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
@@ -172,8 +172,8 @@ namespace Azure.Monitor.Query
         /// Executes the logs query.
         /// </summary>
         /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeRange</c>.</param>
+        /// <param name="query">TThe Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
@@ -199,8 +199,8 @@ namespace Azure.Monitor.Query
         /// Executes the logs query.
         /// </summary>
         /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
-        /// <param name="query">The Kusto query to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeRange</c>.</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
@@ -356,7 +356,7 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
         /// <param name="query"> The Kusto query to fetch the logs. </param>
         /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
@@ -395,7 +395,7 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
         /// <param name="query"> The Kusto query to fetch the logs. </param>
         /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
@@ -437,7 +437,7 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
         /// <param name="query"> The Kusto query to fetch the logs. </param>
         /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
@@ -489,7 +489,7 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </example>
         /// </summary>
-        /// <param name="resourceId"> The resourceId where the query should be executed. </param>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
         /// <param name="query"> The Kusto query to fetch the logs. </param>
         /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
