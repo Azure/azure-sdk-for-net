@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             JObject jsonData = new JObject();
             jsonData["kind"] = "AudioData";
             jsonData["audioData"] = new JObject();
-            jsonData["audioData"]["data"] = "AQIDBAU=";
+            jsonData["audioData"]!["data"] = "AQIDBAU=";
             jsonData["audioData"]["timestamp"] = "2022-08-23T11:48:05Z";
             jsonData["audioData"]["participantRawID"] = "participantId";
             jsonData["audioData"]["silent"] = false;

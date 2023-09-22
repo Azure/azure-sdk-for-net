@@ -59,8 +59,8 @@
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
-    <PackageReference Update="System.Text.Encodings.Web" Version="4.5.1" />
-    <PackageReference Update="System.Text.Json" Version="4.7.2" />
+    <PackageReference Remove="System.Text.Encodings.Web" />
+    <PackageReference Update="System.Text.Json" Version="7.0.3" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
 
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
