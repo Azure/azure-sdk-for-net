@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
-using System.Text;
 
 namespace System.ServiceModel.Rest.Experimental
 {
