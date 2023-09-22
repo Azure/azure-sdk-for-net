@@ -326,6 +326,80 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{targetDbServerName}/migrations/{migrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Migrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="migrationName"> The name of the migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PostgreSqlMigrationResource>> GetIfExistsAsync(string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postgreSqlMigrationMigrationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlMigrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlMigrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{targetDbServerName}/migrations/{migrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Migrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="migrationName"> The name of the migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        public virtual NullableResponse<PostgreSqlMigrationResource> GetIfExists(string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postgreSqlMigrationMigrationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlMigrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlMigrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PostgreSqlMigrationResource> IEnumerable<PostgreSqlMigrationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

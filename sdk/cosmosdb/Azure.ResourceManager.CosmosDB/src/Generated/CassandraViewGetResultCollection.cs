@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CassandraViewGetResultResource>> GetIfExistsAsync(string viewName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
+            using var scope = _cassandraViewGetResultCassandraResourcesClientDiagnostics.CreateScope("CassandraViewGetResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cassandraViewGetResultCassandraResourcesRestClient.GetCassandraViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CassandraViewGetResultResource>(response.GetRawResponse());
+                return Response.FromValue(new CassandraViewGetResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        public virtual NullableResponse<CassandraViewGetResultResource> GetIfExists(string viewName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
+            using var scope = _cassandraViewGetResultCassandraResourcesClientDiagnostics.CreateScope("CassandraViewGetResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cassandraViewGetResultCassandraResourcesRestClient.GetCassandraView(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CassandraViewGetResultResource>(response.GetRawResponse());
+                return Response.FromValue(new CassandraViewGetResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<CassandraViewGetResultResource> IEnumerable<CassandraViewGetResultResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

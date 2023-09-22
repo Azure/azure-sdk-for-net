@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.DataLakeStore
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedIdProviders_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trustedIdProviderName"> The name of the trusted identity provider to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trustedIdProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataLakeStoreTrustedIdProviderResource>> GetIfExistsAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
+
+            using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataLakeStoreTrustedIdProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/trustedIdProviders/{trustedIdProviderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TrustedIdProviders_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trustedIdProviderName"> The name of the trusted identity provider to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trustedIdProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
+        public virtual NullableResponse<DataLakeStoreTrustedIdProviderResource> GetIfExists(string trustedIdProviderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trustedIdProviderName, nameof(trustedIdProviderName));
+
+            using var scope = _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics.CreateScope("DataLakeStoreTrustedIdProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataLakeStoreTrustedIdProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataLakeStoreTrustedIdProviderResource> IEnumerable<DataLakeStoreTrustedIdProviderResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

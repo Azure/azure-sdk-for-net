@@ -86,21 +86,24 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
 
-            JobPlanOperation fromTo;
+            JobPlanOperation operationType;
             if (sourceType == StorageResourceType.Local)
             {
-                fromTo = JobPlanOperation.Upload;
+                operationType = JobPlanOperation.Upload;
             }
             else if (destinatonType == StorageResourceType.Local)
             {
-                fromTo = JobPlanOperation.Download;
+                operationType = JobPlanOperation.Download;
             }
             else
             {
-                fromTo = JobPlanOperation.ServiceToService;
+                operationType = JobPlanOperation.ServiceToService;
             }
 
-            await checkpointer.AddNewJobAsync(transferId);
+            // Use dummy resources that don't correspond to correct paths
+            StorageResource source = MockStorageResource.MakeSourceResource(10);
+            StorageResource destination = MockStorageResource.MakeDestinationResource();
+            await checkpointer.AddNewJobAsync(transferId, source, destination);
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
@@ -109,7 +112,7 @@ namespace Azure.Storage.DataMovement.Tests
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],
                     destinationPath: destinationPaths[currentPart],
-                    fromTo: fromTo);
+                    fromTo: operationType);
 
                 using (Stream stream = new MemoryStream())
                 {
