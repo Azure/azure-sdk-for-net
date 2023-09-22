@@ -14,7 +14,11 @@ $templateFileParameters['sshPubKey'] = $sshKey
 
 # Get the max version that is not preview and then get the name of the patch version with the max value
 $versions = az aks get-versions -o json | ConvertFrom-Json
-$latestAksVersion = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Sort-Object -Descending | Select-Object -First 1
+Write-Host "AKS versions: $($versions | ConvertTo-Json -Depth 100)"
+$patchVersions = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions
+Write-Host "AKS patch versions: $($patchVersions | ConvertTo-Json -Depth 100)"
+$latestAksVersion = $patchVersions | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Sort-Object -Descending | Select-Object -First 1
+Write-Host "Latest AKS version: $latestAksVersion"
 $templateFileParameters['latestAksVersion'] = $latestAksVersion
 
 if (!$CI) {
