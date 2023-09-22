@@ -1,32 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Options for the Unmute Participant Request.
+    /// Options for the Start Hold Music Request.
     /// </summary>
     public class StartHoldMusicOptions
     {
         /// <summary>
-        /// Creates a new UnmuteParticipantOptions object.
+        /// Creates a new StartHoldMusicOptions object.
         /// </summary>
-        public StartHoldMusicOptions(CommunicationIdentifier targetParticipant)
+        public StartHoldMusicOptions(CommunicationIdentifier targetParticipant, PlaySource playSourceInfo)
         {
             TargetParticipant = targetParticipant;
+            PlaySourceInfo = playSourceInfo;
+            Loop = true;
         }
 
         /// <summary>
-        /// The identity of participants to be held from the call.
+        /// The participant that is going to be put on hold.
         /// </summary>
         public CommunicationIdentifier TargetParticipant { get; }
 
         /// <summary>
-        /// Prompt to play while in hold.
+        /// Prompt to play while on hold.
         /// </summary>
         public PlaySource PlaySourceInfo { get; set; }
 

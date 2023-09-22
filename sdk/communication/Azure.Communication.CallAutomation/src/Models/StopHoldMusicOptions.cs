@@ -4,12 +4,12 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Options for the Unmute Participant Request.
+    /// Options for the Stop Hold Music Request.
     /// </summary>
     public class StopHoldMusicOptions
     {
         /// <summary>
-        /// Creates a new UnmuteParticipantOptions object.
+        /// Creates a new StopHoldMusicOptions object.
         /// </summary>
         public StopHoldMusicOptions(CommunicationIdentifier targetParticipant)
         {
@@ -17,9 +17,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The identity of participants to be unmuted from the call.
-        /// Only one participant is currently supported.
-        /// Only ACS Users are currently supported.
+        /// The participant that is currently on hold.
         /// </summary>
         public CommunicationIdentifier TargetParticipant { get; }
 

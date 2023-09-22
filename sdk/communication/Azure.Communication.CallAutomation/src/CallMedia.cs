@@ -394,7 +394,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Hold participant.
+        /// Hold participant from the call.
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
@@ -423,7 +423,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Hold participant.
+        /// Hold participant from the call.
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
