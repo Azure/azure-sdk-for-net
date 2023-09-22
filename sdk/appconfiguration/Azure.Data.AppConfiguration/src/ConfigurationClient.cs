@@ -1156,7 +1156,7 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSnapshot> GetSnapshotsAsync(SnapshotSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            var name = selector.Name;
+            var name = selector.NameFilter;
             var fields = selector.Fields;
             var status = selector.Status;
 
@@ -1185,7 +1185,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSnapshot> GetSnapshots(SnapshotSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            var name = selector.Name;
+            var name = selector.NameFilter;
             var fields = selector.Fields;
             var status = selector.Status;
 

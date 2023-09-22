@@ -247,7 +247,7 @@ namespace Azure.Data.AppConfiguration
     {
         public SnapshotSelector() { }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotFields> Fields { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string NameFilter { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.ConfigurationSnapshotStatus> Status { get { throw null; } }
     }
     public partial class SnapshotSettingFilter
