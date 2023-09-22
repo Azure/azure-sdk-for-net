@@ -14,13 +14,13 @@ public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
 
     public abstract TMessage CreateMessage(string verb, Uri uri);
 
-    public void Process(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline)
+    public void Process(TMessage message, PipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
         Process(message);
     }
 
-    public async ValueTask ProcessAsync(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline)
+    public async ValueTask ProcessAsync(TMessage message, PipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
         await ProcessAsync(message).ConfigureAwait(false);

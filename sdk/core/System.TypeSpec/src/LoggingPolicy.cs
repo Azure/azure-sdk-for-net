@@ -2,28 +2,27 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using System.ServiceModel.Rest;
 
 namespace System.ServiceModel.Rest.Core;
 
-public class LoggingPolicy : IPipelinePolicy<PipelineMessage>
+public class ConsoleLoggingPolicy : IPipelinePolicy<PipelineMessage>
 {
     private bool _enabled;
 
-    public LoggingPolicy(bool isLoggingEnabled = true)
+    public ConsoleLoggingPolicy(bool isLoggingEnabled = true)
     {
         _enabled = isLoggingEnabled;
     }
 
-    public void Process(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
+    public void Process(PipelineMessage message, PipelineEnumerator pipeline)
     {
         if (_enabled) Console.WriteLine("Message Processing");
-        Pipeline<PipelineMessage>.ProcessNext(message, pipeline);
+        pipeline.ProcessNext();
     }
 
-    public async ValueTask ProcessAsync(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
+    public async ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline)
     {
         if (_enabled) Console.WriteLine("Message Processing");
-        await Pipeline<PipelineMessage>.ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+        await pipeline.ProcessNextAsync().ConfigureAwait(false);
     }
 }

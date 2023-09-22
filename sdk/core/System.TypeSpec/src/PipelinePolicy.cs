@@ -8,7 +8,16 @@ namespace System.ServiceModel.Rest.Core;
 // TODO: can we make it a class? ... but it means all existing polices need to inherit from it.
 public interface IPipelinePolicy<TMessage>
 {
-    void Process(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline);
+    void Process(TMessage message, PipelineEnumerator pipeline);
 
-    ValueTask ProcessAsync(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline);
+    ValueTask ProcessAsync(TMessage message, PipelineEnumerator pipeline);
+}
+
+public abstract class PipelineEnumerator
+{
+    public int Length { get; internal set; }
+
+    public abstract bool ProcessNext();
+
+    public abstract ValueTask<bool> ProcessNextAsync();
 }

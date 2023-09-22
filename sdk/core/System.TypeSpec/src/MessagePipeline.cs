@@ -11,7 +11,7 @@ namespace System.ServiceModel.Rest;
 /// </summary>
 public class MessagePipeline : Pipeline<PipelineMessage>
 {
-    private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _pipeline;
+    private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
     private readonly PipelineTransport<PipelineMessage> _transport;
     /// <summary>
     /// TBD.
@@ -27,13 +27,13 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         var larger = new IPipelinePolicy<PipelineMessage>[policies.Length + 1];
         policies.Span.CopyTo(larger);
         larger[policies.Length] = transport;
-        _pipeline = larger;
+        _policies = larger;
     }
 
     private MessagePipeline(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
     {
         _transport = (PipelineTransport<PipelineMessage>)policies.Span[policies.Length-1];
-        _pipeline = policies;
+        _policies = policies;
     }
 
     /// <summary>
@@ -131,6 +131,34 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     /// <param name="message"></param>
     public override void Send(PipelineMessage message)
     {
-        ProcessNext(message, _pipeline);
+        var enumerator = new MessagePipelineExecutor(_policies, message);
+        enumerator.ProcessNext();
     }
- }
+
+    internal class MessagePipelineExecutor : PipelineEnumerator
+    {
+        private PipelineMessage _message;
+        private ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
+
+        public MessagePipelineExecutor(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>>  policies, PipelineMessage message)
+        {
+            _policies = policies;
+            _message = message;
+        }
+        public override bool ProcessNext()
+        {
+            var first = _policies.Span[0];
+            _policies = _policies.Slice(1);
+            first.Process(_message, this);
+            return _policies.Length > 0;
+        }
+
+        public async override ValueTask<bool> ProcessNextAsync()
+        {
+            var first = _policies.Span[0];
+            _policies = _policies.Slice(1);
+            await first.ProcessAsync(_message, this).ConfigureAwait(false);
+            return _policies.Length > 0;
+        }
+    }
+}

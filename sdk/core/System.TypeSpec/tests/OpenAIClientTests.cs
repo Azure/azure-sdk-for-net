@@ -24,12 +24,12 @@ public partial class OpenAIClientTests
     [Fact]
     public void Options()
     {
-        RequestOptions.DefaultLoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
-        RequestOptions.DefaultRetryPolicy = new RetryPolicy(maxRetries: 3);
+        RequestOptions.DefaultLoggingPolicy = new ConsoleLoggingPolicy(isLoggingEnabled: true);
+        // RequestOptions.DefaultRetryPolicy = new RetryPolicy(maxRetries: 3);
 
         var options = new OpenAIClientOptions();
         options.RetryPolicy = new CustomRetryPolicy();
-        options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: true);
+        options.LoggingPolicy = new ConsoleLoggingPolicy(isLoggingEnabled: true);
 
         var credential = new KeyCredential(Environment.GetEnvironmentVariable("OPENAI_KEY"));
         var client = new OpenAIClient(credential, options);

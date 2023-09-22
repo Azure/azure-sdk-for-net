@@ -20,9 +20,9 @@ public class RequestOptions
 
     public PipelineTransport<PipelineMessage>? Transport { get; set; }
 
-    public static IPipelinePolicy<PipelineMessage> DefaultRetryPolicy { get; set; } = new RetryPolicy(maxRetries: 3);
+    public static IPipelinePolicy<PipelineMessage>? DefaultRetryPolicy { get; set; }
 
-    public static IPipelinePolicy<PipelineMessage> DefaultLoggingPolicy { get; set; } = new LoggingPolicy();
+    public static IPipelinePolicy<PipelineMessage> DefaultLoggingPolicy { get; set; } = new ConsoleLoggingPolicy();
 
     public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
 

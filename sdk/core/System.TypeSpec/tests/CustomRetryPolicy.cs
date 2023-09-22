@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +13,12 @@ public partial class OpenAIClientTests
     {
         private int _try = 0;
 
-        public void Process(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
+        public void Process(PipelineMessage message, PipelineEnumerator pipeline)
         {
             retry:
             try {
                 _try++;
-                MessagePipeline.ProcessNext(message, pipeline);
+                pipeline.ProcessNext();
             }
             catch (Exception) {
                 if (_try > 5) {
@@ -31,12 +30,12 @@ public partial class OpenAIClientTests
             }
         }
 
-        public async ValueTask ProcessAsync(PipelineMessage message, ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> pipeline)
+        public async ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline)
         {
         retry:
             try {
                 _try++;
-                await MessagePipeline.ProcessNextAsync(message, pipeline);
+                await pipeline.ProcessNextAsync().ConfigureAwait(false);
             }
             catch (Exception) {
                 if (_try > 5) {
