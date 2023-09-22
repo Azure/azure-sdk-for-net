@@ -4,6 +4,8 @@
 #nullable enable
 
 using System;
+using System.ComponentModel;
+using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading.Tasks;
 
@@ -49,5 +51,27 @@ namespace Azure.Core.Pipeline
         {
             pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
+
+        #region System.ServiceModel.Rest
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override ValueTask ProcessAsync(RestMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+            => ProcessAsync((HttpMessage)message, pipeline);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void Process(RestMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+            => Process((HttpMessage)message, pipeline);
+
+        #endregion
     }
 }

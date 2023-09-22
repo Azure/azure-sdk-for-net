@@ -342,7 +342,7 @@ namespace Azure.Core.Pipeline
             private string? _clientRequestId;
             private readonly DictionaryHeaders _headers = new();
 
-            protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+            protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 
             protected internal override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
 

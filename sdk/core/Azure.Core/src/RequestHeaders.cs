@@ -95,7 +95,7 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         public void SetValue(string name, string value)
         {
-            _request.SetHeader(name, value);
+            _request.SetHeaderInternal(name, value);
         }
 
         /// <summary>
