@@ -329,6 +329,82 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/dataflows/{dataFlowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataFlows_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataFactoryDataFlowResource>> GetIfExistsAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
+
+            using var scope = _dataFactoryDataFlowDataFlowsClientDiagnostics.CreateScope("DataFactoryDataFlowCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataFactoryDataFlowDataFlowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryDataFlowResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDataFlowResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/dataflows/{dataFlowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataFlows_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
+        public virtual NullableResponse<DataFactoryDataFlowResource> GetIfExists(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
+
+            using var scope = _dataFactoryDataFlowDataFlowsClientDiagnostics.CreateScope("DataFactoryDataFlowCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataFactoryDataFlowDataFlowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryDataFlowResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDataFlowResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataFactoryDataFlowResource> IEnumerable<DataFactoryDataFlowResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Models;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using System;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
@@ -32,6 +32,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}" +
                "]" +
             "}";
+
+        private const string CancelAddParticipantPayload = "{" +
+                                    "\"operationContext\": \"someOperationContext\"," +
+                                    "\"invitationId\": \"invitationId\"" +
+                                    "}";
 
         private const string OperationContext = "someOperationContext";
         private const string ParticipantUserId = "participantId1";
@@ -524,6 +529,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
 
             Assert.ThrowsAsync(typeof(RequestFailedException), async () => await callConnection.UnmuteParticipantsAsync(options));
+        }
+
+        [Test]
+        public async Task CancelAddParticipantAsync_202Accepted()
+        {
+            var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
+            var invitationId = "invitationId";
+
+            var response = await callConnection.CancelAddParticipantAsync(invitationId).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(invitationId, response.Value.InvitationId);
         }
 
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")

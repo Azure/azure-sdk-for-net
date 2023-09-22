@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfilesVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The configuration profile version name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageConfigurationProfileVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageConfigurationProfileVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfilesVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The configuration profile version name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageConfigurationProfileVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageConfigurationProfileVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomanageConfigurationProfileVersionResource> IEnumerable<AutomanageConfigurationProfileVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
