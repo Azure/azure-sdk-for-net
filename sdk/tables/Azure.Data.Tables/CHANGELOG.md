@@ -13,7 +13,8 @@ Thank you to our developer community members who helped to make Azure Tables bet
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed an issue where custom models decorated with the `DataMemberAttribute` were not properly considered in query filters (A community contribution, courtesy of _[metjuperry] ([#38884](https://github.com/Azure/azure-sdk-for-net/issues/38884))
+
+- Fixed an issue where custom models decorated with the `DataMemberAttribute` were not properly considered in query filters (A community contribution, courtesy of _[metjuperry]_ ([#38884](https://github.com/Azure/azure-sdk-for-net/issues/38884))
 
 ### Other Changes
 
