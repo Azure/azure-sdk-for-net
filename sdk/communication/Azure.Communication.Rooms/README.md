@@ -75,19 +75,18 @@ List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
 Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
-// Create a room with PSTN Dial-Out enabled
+// Starting in 1.1.0-beta.1 release,CreateRoom function also takes roomCreateOptions as parameter
 bool pstnDialOutEnabled = true;
 CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
 {
     ValidFrom = validFrom,
     ValidUntil = validUntil,
     PstnDialOutEnabled = pstnDialOutEnabled,
-    Participants = createRoomParticipants
+    Participants = invitedParticipants
 };
 
-Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
-CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
-
+createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
+createCommunicationRoom = createRoomResponse.Value;
 ```
 
 ### Update a room
@@ -98,12 +97,10 @@ The `updateRoomOptions` parameter contains `ValidFrom`, `ValidUntil` and `PstnDi
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
 validUntil = validFrom.AddDays(30);
-pstnDialOutEnabled = false;
-
 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
-// Update a room with PSTN Dial-Out enabled
+// Starting in 1.1.0-beta.1 release,UpdateRoom function also takes roomCreateOptions as parameter
 UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
 {
     ValidFrom = validFrom,
@@ -111,9 +108,8 @@ UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
     PstnDialOutEnabled = pstnDialOutEnabled,
 };
 
-Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
-CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
-
+updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
+updateCommunicationRoom = updateRoomResponse.Value;
 ```
 
 ### Get a created room

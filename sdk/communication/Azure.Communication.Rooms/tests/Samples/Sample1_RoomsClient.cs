@@ -45,6 +45,19 @@ namespace Azure.Communication.Rooms.Tests.samples
             Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
             CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
+            // Starting in 1.1.0-beta.1 release,CreateRoom function also takes roomCreateOptions as parameter
+            bool pstnDialOutEnabled = true;
+            CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled,
+                Participants = invitedParticipants
+            };
+
+            createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
+            createCommunicationRoom = createRoomResponse.Value;
+
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
@@ -55,6 +68,18 @@ namespace Azure.Communication.Rooms.Tests.samples
             validUntil = validFrom.AddDays(30);
             Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+
+            // Starting in 1.1.0-beta.1 release,UpdateRoom function also takes roomCreateOptions as parameter
+            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled,
+            };
+
+            updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
+            updateCommunicationRoom = updateRoomResponse.Value;
+
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(updateCommunicationRoom.Id));
