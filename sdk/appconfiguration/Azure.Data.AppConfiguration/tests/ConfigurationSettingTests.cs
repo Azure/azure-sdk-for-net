@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration.Tests
