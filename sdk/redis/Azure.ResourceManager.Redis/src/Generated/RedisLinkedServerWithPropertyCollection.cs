@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedServer_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RedisLinkedServerWithPropertyResource>> GetIfExistsAsync(string linkedServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+
+            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _redisLinkedServerWithPropertyLinkedServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RedisLinkedServerWithPropertyResource>(response.GetRawResponse());
+                return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/linkedServers/{linkedServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedServer_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedServerName"> The name of the linked server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        public virtual NullableResponse<RedisLinkedServerWithPropertyResource> GetIfExists(string linkedServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkedServerName, nameof(linkedServerName));
+
+            using var scope = _redisLinkedServerWithPropertyLinkedServerClientDiagnostics.CreateScope("RedisLinkedServerWithPropertyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _redisLinkedServerWithPropertyLinkedServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RedisLinkedServerWithPropertyResource>(response.GetRawResponse());
+                return Response.FromValue(new RedisLinkedServerWithPropertyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RedisLinkedServerWithPropertyResource> IEnumerable<RedisLinkedServerWithPropertyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

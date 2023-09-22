@@ -304,6 +304,72 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceDtcs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ManagedInstanceDtcResource>> GetIfExistsAsync(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedInstanceDtcRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceDtcResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDtcResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstanceDtcs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ManagedInstanceDtcResource> GetIfExists(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedInstanceDtcRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceDtcResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceDtcResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ManagedInstanceDtcResource> IEnumerable<ManagedInstanceDtcResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
