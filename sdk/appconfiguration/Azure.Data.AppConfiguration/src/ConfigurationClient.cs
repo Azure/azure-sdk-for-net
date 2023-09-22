@@ -899,7 +899,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to delete. </param>
+        /// <param name="name"> The name of the configuration snapshot to archive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -930,7 +930,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to delete. </param>
+        /// <param name="name"> The name of the configuration snapshot to archive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
         {
@@ -961,7 +961,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to delete. </param>
+        /// <param name="name"> The name of the configuration snapshot to archive. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string name, MatchConditions matchConditions, CancellationToken cancellationToken = default)
@@ -993,7 +993,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to delete. </param>
+        /// <param name="name"> The name of the configuration snapshot to archive. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string name, MatchConditions matchConditions, CancellationToken cancellationToken = default)
