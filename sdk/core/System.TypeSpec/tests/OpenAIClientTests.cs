@@ -45,7 +45,7 @@ public partial class OpenAIClientTests
     [Fact]
     public void Pipeline()
     {
-        MessagePipeline pipeline = MessagePipeline.Create(new RequestOptions());
+        MessagePipeline pipeline = MessagePipeline.Create(new MessagePipelineTransport(), new RequestOptions());
         PipelineMessage message = pipeline.CreateMessage("GET", new Uri("http://www.google.com"));
         pipeline.Send(message);
         Assert.True(message.Response.Status < 299);
