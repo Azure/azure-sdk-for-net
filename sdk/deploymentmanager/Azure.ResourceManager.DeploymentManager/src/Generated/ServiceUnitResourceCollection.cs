@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.DeploymentManager
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}/services/{serviceName}/serviceUnits/{serviceUnitName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceUnits_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceUnitName"> The name of the service unit resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceUnitName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceUnitName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ServiceUnitResource>> GetIfExistsAsync(string serviceUnitName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceUnitName, nameof(serviceUnitName));
+
+            using var scope = _serviceUnitResourceServiceUnitsClientDiagnostics.CreateScope("ServiceUnitResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceUnitResourceServiceUnitsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceUnitName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceUnitResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceUnitResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}/services/{serviceName}/serviceUnits/{serviceUnitName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceUnits_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceUnitName"> The name of the service unit resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceUnitName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceUnitName"/> is null. </exception>
+        public virtual NullableResponse<ServiceUnitResource> GetIfExists(string serviceUnitName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceUnitName, nameof(serviceUnitName));
+
+            using var scope = _serviceUnitResourceServiceUnitsClientDiagnostics.CreateScope("ServiceUnitResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceUnitResourceServiceUnitsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceUnitName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceUnitResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceUnitResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ServiceUnitResource> IEnumerable<ServiceUnitResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

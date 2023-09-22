@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="remediationName"> The name of the remediation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PolicyRemediationResource>> GetIfExistsAsync(string remediationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+
+            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _policyRemediationRemediationsRestClient.GetAtResourceAsync(Id, remediationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PolicyRemediationResource>(response.GetRawResponse());
+                return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="remediationName"> The name of the remediation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        public virtual NullableResponse<PolicyRemediationResource> GetIfExists(string remediationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+
+            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _policyRemediationRemediationsRestClient.GetAtResource(Id, remediationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PolicyRemediationResource>(response.GetRawResponse());
+                return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PolicyRemediationResource> IEnumerable<PolicyRemediationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -233,6 +233,72 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smartGroupId"> Smart group unique id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SmartGroupResource>> GetIfExistsAsync(Guid smartGroupId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _smartGroupRestClient.GetByIdAsync(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SmartGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smartGroupId"> Smart group unique id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SmartGroupResource> GetIfExists(Guid smartGroupId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _smartGroupRestClient.GetById(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SmartGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SmartGroupResource> IEnumerable<SmartGroupResource>.GetEnumerator()
         {
             return GetAll(options: null).GetEnumerator();

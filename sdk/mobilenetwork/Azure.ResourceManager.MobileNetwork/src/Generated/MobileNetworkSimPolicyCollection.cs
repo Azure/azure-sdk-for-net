@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simPolicyName"> The name of the SIM policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileNetworkSimPolicyResource>> GetIfExistsAsync(string simPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
+
+            using var scope = _mobileNetworkSimPolicySimPoliciesClientDiagnostics.CreateScope("MobileNetworkSimPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkSimPolicySimPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simPolicyName"> The name of the SIM policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simPolicyName"/> is null. </exception>
+        public virtual NullableResponse<MobileNetworkSimPolicyResource> GetIfExists(string simPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
+
+            using var scope = _mobileNetworkSimPolicySimPoliciesClientDiagnostics.CreateScope("MobileNetworkSimPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkSimPolicySimPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MobileNetworkSimPolicyResource> IEnumerable<MobileNetworkSimPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.DeploymentManager
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTopologies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceTopologyName"> The name of the service topology . </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceTopologyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceTopologyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ServiceTopologyResource>> GetIfExistsAsync(string serviceTopologyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceTopologyName, nameof(serviceTopologyName));
+
+            using var scope = _serviceTopologyResourceServiceTopologiesClientDiagnostics.CreateScope("ServiceTopologyResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceTopologyResourceServiceTopologiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceTopologyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceTopologyResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceTopologyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/serviceTopologies/{serviceTopologyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceTopologies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceTopologyName"> The name of the service topology . </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceTopologyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceTopologyName"/> is null. </exception>
+        public virtual NullableResponse<ServiceTopologyResource> GetIfExists(string serviceTopologyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceTopologyName, nameof(serviceTopologyName));
+
+            using var scope = _serviceTopologyResourceServiceTopologiesClientDiagnostics.CreateScope("ServiceTopologyResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceTopologyResourceServiceTopologiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceTopologyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceTopologyResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceTopologyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ServiceTopologyResource> IEnumerable<ServiceTopologyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

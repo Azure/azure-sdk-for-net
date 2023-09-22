@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="moduleName"> The module name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationAccountModuleResource>> GetIfExistsAsync(string moduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+
+            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationAccountModuleResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Module_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="moduleName"> The module name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        public virtual NullableResponse<AutomationAccountModuleResource> GetIfExists(string moduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+
+            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moduleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationAccountModuleResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomationAccountModuleResource> IEnumerable<AutomationAccountModuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

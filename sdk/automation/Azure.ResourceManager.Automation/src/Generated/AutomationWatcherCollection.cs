@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Watcher_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="watcherName"> The watcher name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationWatcherResource>> GetIfExistsAsync(string watcherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+
+            using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationWatcherWatcherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationWatcherResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationWatcherResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Watcher_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="watcherName"> The watcher name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
+        public virtual NullableResponse<AutomationWatcherResource> GetIfExists(string watcherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+
+            using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationWatcherWatcherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationWatcherResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationWatcherResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomationWatcherResource> IEnumerable<AutomationWatcherResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

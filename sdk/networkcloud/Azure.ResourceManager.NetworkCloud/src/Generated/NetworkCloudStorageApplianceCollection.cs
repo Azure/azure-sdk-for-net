@@ -242,6 +242,80 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAppliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageApplianceName"> The name of the storage appliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudStorageApplianceResource>> GetIfExistsAsync(string storageApplianceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
+
+            using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudStorageApplianceStorageAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageApplianceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudStorageApplianceResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudStorageApplianceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/storageAppliances/{storageApplianceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAppliances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageApplianceName"> The name of the storage appliance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudStorageApplianceResource> GetIfExists(string storageApplianceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageApplianceName, nameof(storageApplianceName));
+
+            using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudStorageApplianceStorageAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageApplianceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudStorageApplianceResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudStorageApplianceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkCloudStorageApplianceResource> IEnumerable<NetworkCloudStorageApplianceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

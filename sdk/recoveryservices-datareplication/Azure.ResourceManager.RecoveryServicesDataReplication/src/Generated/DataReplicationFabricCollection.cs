@@ -326,6 +326,80 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fabric_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataReplicationFabricResource>> GetIfExistsAsync(string fabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+
+            using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataReplicationFabricFabricRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationFabricResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationFabricResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fabric_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
+        public virtual NullableResponse<DataReplicationFabricResource> GetIfExists(string fabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+
+            using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataReplicationFabricFabricRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fabricName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationFabricResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationFabricResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataReplicationFabricResource> IEnumerable<DataReplicationFabricResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

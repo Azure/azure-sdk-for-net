@@ -243,6 +243,80 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImpactedResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceHealthEventImpactedResource>> GetIfExistsAsync(string impactedResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
+
+            using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceHealthEventImpactedResourceImpactedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.Name, impactedResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceHealthEventImpactedResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImpactedResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        public virtual NullableResponse<ResourceHealthEventImpactedResource> GetIfExists(string impactedResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
+
+            using var scope = _resourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceHealthEventImpactedResourceImpactedResourcesRestClient.Get(Id.SubscriptionId, Id.Name, impactedResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceHealthEventImpactedResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ResourceHealthEventImpactedResource> IEnumerable<ResourceHealthEventImpactedResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
