@@ -131,12 +131,11 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Starts transcripition in the call. </summary>
+        /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
-        /// <remarks> Starts transcription in the call. </remarks>
         public async Task<Response> StartTranscriptionAsync(string callConnectionId, StartTranscriptionRequest startTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -159,12 +158,11 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Starts transcripition in the call. </summary>
+        /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
-        /// <remarks> Starts transcription in the call. </remarks>
         public Response StartTranscription(string callConnectionId, StartTranscriptionRequest startTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -693,7 +691,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartHoldMusicRequest(string callConnectionId, HoldParticipantRequestInternal holdParticipantRequest)
+        internal HttpMessage CreateStartHoldMusicRequest(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -708,28 +706,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(holdParticipantRequest);
+            content.JsonWriter.WriteObjectValue(startHoldMusicRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Hold participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="holdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="startHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdParticipantRequest"/> is null. </exception>
-        public async Task<Response> StartHoldMusicAsync(string callConnectionId, HoldParticipantRequestInternal holdParticipantRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startHoldMusicRequest"/> is null. </exception>
+        public async Task<Response> StartHoldMusicAsync(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (holdParticipantRequest == null)
+            if (startHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(holdParticipantRequest));
+                throw new ArgumentNullException(nameof(startHoldMusicRequest));
             }
 
-            using var message = CreateStartHoldMusicRequest(callConnectionId, holdParticipantRequest);
+            using var message = CreateStartHoldMusicRequest(callConnectionId, startHoldMusicRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -742,21 +740,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Hold participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="holdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="startHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdParticipantRequest"/> is null. </exception>
-        public Response StartHoldMusic(string callConnectionId, HoldParticipantRequestInternal holdParticipantRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startHoldMusicRequest"/> is null. </exception>
+        public Response StartHoldMusic(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (holdParticipantRequest == null)
+            if (startHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(holdParticipantRequest));
+                throw new ArgumentNullException(nameof(startHoldMusicRequest));
             }
 
-            using var message = CreateStartHoldMusicRequest(callConnectionId, holdParticipantRequest);
+            using var message = CreateStartHoldMusicRequest(callConnectionId, startHoldMusicRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -767,7 +765,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopHoldMusicRequest(string callConnectionId, UnholdParticipantRequestInternal unholdParticipantRequest)
+        internal HttpMessage CreateStopHoldMusicRequest(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -782,28 +780,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unholdParticipantRequest);
+            content.JsonWriter.WriteObjectValue(stopHoldMusicRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Unhold participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unholdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="stopHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdParticipantRequest"/> is null. </exception>
-        public async Task<Response> StopHoldMusicAsync(string callConnectionId, UnholdParticipantRequestInternal unholdParticipantRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopHoldMusicRequest"/> is null. </exception>
+        public async Task<Response> StopHoldMusicAsync(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (unholdParticipantRequest == null)
+            if (stopHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(unholdParticipantRequest));
+                throw new ArgumentNullException(nameof(stopHoldMusicRequest));
             }
 
-            using var message = CreateStopHoldMusicRequest(callConnectionId, unholdParticipantRequest);
+            using var message = CreateStopHoldMusicRequest(callConnectionId, stopHoldMusicRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -816,21 +814,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Unhold participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unholdParticipantRequest"> The participants to be hold from the call. </param>
+        /// <param name="stopHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdParticipantRequest"/> is null. </exception>
-        public Response StopHoldMusic(string callConnectionId, UnholdParticipantRequestInternal unholdParticipantRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopHoldMusicRequest"/> is null. </exception>
+        public Response StopHoldMusic(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (unholdParticipantRequest == null)
+            if (stopHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(unholdParticipantRequest));
+                throw new ArgumentNullException(nameof(stopHoldMusicRequest));
             }
 
-            using var message = CreateStopHoldMusicRequest(callConnectionId, unholdParticipantRequest);
+            using var message = CreateStopHoldMusicRequest(callConnectionId, stopHoldMusicRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

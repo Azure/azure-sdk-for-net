@@ -405,7 +405,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new HoldParticipantRequestInternal(
+                var request = new StartHoldMusicRequestInternal(
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
                     TranslatePlaySourceToInternal(options.PlaySourceInfo))
                 {
@@ -434,7 +434,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new HoldParticipantRequestInternal(
+                var request = new StartHoldMusicRequestInternal(
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
                     TranslatePlaySourceToInternal(options.PlaySourceInfo))
                 {
@@ -463,7 +463,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UnholdParticipantRequestInternal request = new UnholdParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                StopHoldMusicRequestInternal request = new StopHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
 
                 return await CallMediaRestClient.StopHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -486,7 +486,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UnholdParticipantRequestInternal request = new UnholdParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                StopHoldMusicRequestInternal request = new StopHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
 
                 return CallMediaRestClient.StopHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
             }
