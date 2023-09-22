@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> remediation = default;
             Optional<IsPass> isPass = default;
             Optional<string> policyId = default;
-            Optional<IReadOnlyList<AssessmentResource>> resourceList = default;
+            Optional<IReadOnlyList<AssessmentResourceContent>> resourceList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    List<AssessmentResource> array = new List<AssessmentResource>();
+                    List<AssessmentResourceContent> array = new List<AssessmentResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssessmentResource.DeserializeAssessmentResource(item));
+                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item));
                     }
                     resourceList = array;
                     continue;

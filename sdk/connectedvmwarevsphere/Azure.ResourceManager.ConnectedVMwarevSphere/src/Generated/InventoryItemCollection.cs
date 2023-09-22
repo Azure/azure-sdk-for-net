@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}/inventoryItems/{inventoryItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InventoryItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
+        public virtual async Task<NullableResponse<InventoryItemResource>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+
+            using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<InventoryItemResource>(response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}/inventoryItems/{inventoryItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InventoryItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
+        public virtual NullableResponse<InventoryItemResource> GetIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+
+            using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<InventoryItemResource>(response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<InventoryItemResource> IEnumerable<InventoryItemResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

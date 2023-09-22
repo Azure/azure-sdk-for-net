@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Tests
     public class OpenAIInferenceTests : OpenAITestBase
     {
         public OpenAIInferenceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Live)
+            : base(isAsync) // , RecordedTestMode.Live)
         {
         }
 
@@ -187,28 +187,11 @@ namespace Azure.AI.OpenAI.Tests
             ChatChoice firstChoice = response.Value.Choices[0];
             Assert.That(firstChoice, Is.Not.Null);
 
-            if (serviceTarget == OpenAIClientServiceTarget.NonAzure)
-            {
-                Assert.That(response.Value.PromptFilterResults, Is.Null.Or.Empty);
-                Assert.That(firstChoice.ContentFilterResults, Is.Null);
-            }
-            else
-            {
-                Assert.That(response.Value.PromptFilterResults, Is.Not.Null.Or.Empty);
-                Assert.That(response.Value.PromptFilterResults[0].PromptIndex, Is.EqualTo(0));
-                Assert.That(response.Value.PromptFilterResults[0].ContentFilterResults, Is.Not.Null);
-                Assert.That(response.Value.PromptFilterResults[0].ContentFilterResults.Hate, Is.Not.Null);
-                Assert.That(response.Value.PromptFilterResults[0].ContentFilterResults.Hate.Filtered, Is.False);
-                Assert.That(
-                    response.Value.PromptFilterResults[0].ContentFilterResults.Hate.Severity,
-                    Is.EqualTo(ContentFilterSeverity.Safe));
-                Assert.That(response.Value.Choices[0].ContentFilterResults, Is.Not.Null.Or.Empty);
-                Assert.That(response.Value.Choices[0].ContentFilterResults.Hate, Is.Not.Null);
-                Assert.That(response.Value.Choices[0].ContentFilterResults.Hate.Filtered, Is.False);
-                Assert.That(
-                    response.Value.Choices[0].ContentFilterResults.Hate.Severity,
-                    Is.EqualTo(ContentFilterSeverity.Safe));
-            }
+            AssertExpectedPromptFilterResults(
+                response.Value.PromptFilterResults,
+                serviceTarget,
+                expectedCount: (requestOptions.ChoiceCount ?? 1));
+            AssertExpectedContentFilterResults(firstChoice.ContentFilterResults, serviceTarget);
         }
 
         [RecordedTest]
@@ -216,14 +199,9 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
         public async Task CompletionsContentFilterCategories(OpenAIClientServiceTarget serviceTarget)
         {
-            // Temporary test note: at the time of authoring, content filter results aren't included for completions
-            // with the latest 2023-07-01-preview service API version. We'll manually configure one version behind
-            // pending the latest version having these results enabled.
-            OpenAIClient client = GetTestClient(
-                serviceTarget,
-                azureServiceVersionOverride: OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview);
+            OpenAIClient client = GetTestClient(serviceTarget);
             string deploymentOrModelName
-                = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
+                = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 Prompts = { "How do I cook a bell pepper?" },
@@ -238,28 +216,11 @@ namespace Azure.AI.OpenAI.Tests
             Choice firstChoice = response.Value.Choices[0];
             Assert.That(firstChoice, Is.Not.Null);
 
-            if (serviceTarget == OpenAIClientServiceTarget.NonAzure)
-            {
-                Assert.That(response.Value.PromptFilterResults, Is.Null.Or.Empty);
-                Assert.That(firstChoice.ContentFilterResults, Is.Null);
-            }
-            else
-            {
-                Assert.That(response.Value.PromptFilterResults, Is.Not.Null.Or.Empty);
-                Assert.That(response.Value.PromptFilterResults[0].PromptIndex, Is.EqualTo(0));
-                Assert.That(response.Value.PromptFilterResults[0].ContentFilterResults, Is.Not.Null);
-                Assert.That(response.Value.PromptFilterResults[0].ContentFilterResults.Hate, Is.Not.Null);
-                Assert.That(response.Value.PromptFilterResults[0].ContentFilterResults.Hate.Filtered, Is.False);
-                Assert.That(
-                    response.Value.PromptFilterResults[0].ContentFilterResults.Hate.Severity,
-                    Is.EqualTo(ContentFilterSeverity.Safe));
-                Assert.That(response.Value.Choices[0].ContentFilterResults, Is.Not.Null.Or.Empty);
-                Assert.That(response.Value.Choices[0].ContentFilterResults.Hate, Is.Not.Null);
-                Assert.That(response.Value.Choices[0].ContentFilterResults.Hate.Filtered, Is.False);
-                Assert.That(
-                    response.Value.Choices[0].ContentFilterResults.Hate.Severity,
-                    Is.EqualTo(ContentFilterSeverity.Safe));
-            }
+            AssertExpectedPromptFilterResults(
+                response.Value.PromptFilterResults,
+                serviceTarget,
+                expectedCount: requestOptions.Prompts.Count * (requestOptions.ChoicesPerPrompt ?? 1));
+            AssertExpectedContentFilterResults(firstChoice.ContentFilterResults, serviceTarget);
         }
 
         [RecordedTest]
@@ -298,6 +259,7 @@ namespace Azure.AI.OpenAI.Tests
                     Assert.That(streamingMessage.Role, Is.EqualTo(ChatRole.Assistant));
                     totalMessages++;
                 }
+                AssertExpectedContentFilterResults(streamingChoice.ContentFilterResults, serviceTarget);
             }
 
             Assert.That(totalMessages, Is.GreaterThan(1));
@@ -308,6 +270,7 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(streamingChatCompletions.Id, Is.Not.Null.Or.Empty);
             Assert.That(streamingChatCompletions.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
             Assert.That(streamingChatCompletions.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
+            AssertExpectedPromptFilterResults(streamingChatCompletions.PromptFilterResults, serviceTarget, (requestOptions.ChoiceCount ?? 1));
         }
 
         [RecordedTest]
@@ -407,9 +370,8 @@ namespace Azure.AI.OpenAI.Tests
             // Temporary test note: at the time of authoring, content filter results aren't included for completions
             // with the latest 2023-07-01-preview service API version. We'll manually configure one version behind
             // pending the latest version having these results enabled.
-            OpenAIClient client = GetTestClient(
-                serviceTarget,
-                azureServiceVersionOverride: OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview);
+            OpenAIClient client = GetTestClient(serviceTarget);
+
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
@@ -446,6 +408,7 @@ namespace Azure.AI.OpenAI.Tests
                 }
                 Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
                 Assert.That(choice.LogProbabilityModel, Is.Not.Null);
+                AssertExpectedContentFilterResults(choice.ContentFilterResults, serviceTarget);
                 originallyEnumeratedChoices++;
                 originallyEnumeratedTextParts.Add(textPartsForChoice);
             }
@@ -456,6 +419,11 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(responseValue.Id, Is.Not.Null.Or.Empty);
             Assert.That(responseValue.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
             Assert.That(responseValue.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
+
+            AssertExpectedPromptFilterResults(
+                responseValue.PromptFilterResults,
+                serviceTarget,
+                expectedCount: requestOptions.Prompts.Count * (requestOptions.ChoicesPerPrompt ?? 1));
 
             // Validate stability of enumeration (non-cancelled case)
             IReadOnlyList<StreamingChoice> secondPassChoices = await GetBlockingListFromIAsyncEnumerable(
@@ -500,6 +468,49 @@ namespace Azure.AI.OpenAI.Tests
                 result.Add(asyncValue);
             }
             return result;
+        }
+
+        private void AssertExpectedPromptFilterResults(
+            IReadOnlyList<PromptFilterResult> promptFilterResults,
+            OpenAIClientServiceTarget serviceTarget,
+            int expectedCount)
+        {
+            if (serviceTarget == OpenAIClientServiceTarget.NonAzure)
+            {
+                Assert.That(promptFilterResults, Is.Null.Or.Empty);
+            }
+            else
+            {
+                Assert.That(promptFilterResults, Is.Not.Null.Or.Empty);
+                Assert.That(promptFilterResults.Count, Is.EqualTo(expectedCount));
+                for (int i = 0; i < promptFilterResults.Count; i++)
+                {
+                    Assert.That(promptFilterResults[i].PromptIndex, Is.EqualTo(i));
+                    Assert.That(promptFilterResults[i].ContentFilterResults, Is.Not.Null);
+                    Assert.That(promptFilterResults[i].ContentFilterResults.Hate, Is.Not.Null);
+                    Assert.That(promptFilterResults[i].ContentFilterResults.Hate.Filtered, Is.False);
+                    Assert.That(
+                        promptFilterResults[0].ContentFilterResults.Hate.Severity,
+                        Is.EqualTo(ContentFilterSeverity.Safe));
+                }
+            }
+        }
+
+        private void AssertExpectedContentFilterResults(
+            ContentFilterResults contentFilterResults,
+            OpenAIClientServiceTarget serviceTarget)
+        {
+            if (serviceTarget == OpenAIClientServiceTarget.NonAzure)
+            {
+                Assert.That(contentFilterResults, Is.Null);
+            }
+            else
+            {
+                Assert.That(contentFilterResults, Is.Not.Null.Or.Empty);
+                Assert.That(contentFilterResults.Hate, Is.Not.Null);
+                Assert.That(contentFilterResults.Hate.Filtered, Is.False);
+                Assert.That(contentFilterResults.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            }
         }
     }
 }

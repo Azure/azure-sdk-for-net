@@ -37,14 +37,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
-        /// <param name="sourceRegion"> Gets or sets the source region. </param>
-        /// <param name="targetRegion"> Gets or sets the target region. </param>
+        /// <param name="sourceLocation"> Gets or sets the source region. </param>
+        /// <param name="targetLocation"> Gets or sets the target region. </param>
+        /// <param name="moveLocation"> Gets or sets the move region which indicates the region where the VM Regional to Zonal move will be conducted. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="version"> Gets or sets the version of move collection. </param>
+        /// <param name="moveType"> Defines the MoveType. </param>
         /// <param name="errorsProperties"> Defines the move collection errors. </param>
         /// <returns> A new <see cref="Models.MoverResourceSetProperties"/> instance for mocking. </returns>
-        public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation sourceRegion = default, AzureLocation targetRegion = default, MoverProvisioningState? provisioningState = null, ResponseError errorsProperties = null)
+        public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation? sourceLocation = null, AzureLocation? targetLocation = null, AzureLocation? moveLocation = null, MoverProvisioningState? provisioningState = null, string version = null, MoveType? moveType = null, ResponseError errorsProperties = null)
         {
-            return new MoverResourceSetProperties(sourceRegion, targetRegion, provisioningState, errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties) : null);
+            return new MoverResourceSetProperties(sourceLocation, targetLocation, moveLocation, provisioningState, version, moveType, errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of MoverOperationStatus. </summary>

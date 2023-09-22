@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -779,7 +778,7 @@ namespace Azure.Core.Tests
         {
             var root = ResourceIdentifier.Root;
             Assert.IsNull(root.Parent);
-            Assert.AreEqual(root.ResourceType, TenantResource.ResourceType.ToString());
+            Assert.AreEqual(root.ResourceType, "Microsoft.Resources/tenants");
             Assert.AreEqual("/", root.ToString());
         }
 
