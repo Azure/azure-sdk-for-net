@@ -24,27 +24,16 @@ namespace System.ServiceModel.Rest
     public partial class RequestErrorException : System.Exception
     {
         protected RequestErrorException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public RequestErrorException(System.ServiceModel.Rest.Result result) { }
-        protected RequestErrorException(System.ServiceModel.Rest.Result result, string message, System.Exception? innerException) { }
+        public RequestErrorException(System.ServiceModel.Rest.Core.PipelineResponse response) { }
+        protected RequestErrorException(System.ServiceModel.Rest.Core.PipelineResponse response, string message, System.Exception? innerException) { }
         public int Status { get { throw null; } }
     }
-    public abstract partial class RestRequest : System.IDisposable
-    {
-        protected RestRequest() { }
-        public abstract void Dispose();
-        protected internal abstract void SetHeader(string name, string value);
-    }
-    public abstract partial class Result : System.IDisposable
+    public abstract partial class Result : System.ServiceModel.Rest.Core.PipelineResponse
     {
         protected Result() { }
-        public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
-        public virtual bool IsError { get { throw null; } set { } }
-        public abstract int Status { get; }
         public abstract void Dispose();
         public static System.ServiceModel.Rest.Result<T> FromValue<T>(T value, System.ServiceModel.Rest.Result result) { throw null; }
         protected abstract bool TryGetHeader(string name, out string? value);
-        public bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ResultErrorOptions
@@ -73,6 +62,54 @@ namespace System.ServiceModel.Rest
 }
 namespace System.ServiceModel.Rest.Core
 {
+    public partial interface IPipelinePolicy<TMessage>
+    {
+        void Process(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline);
+        System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline);
+    }
+    public abstract partial class PipelineMessage
+    {
+        protected PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } set { } }
+        public System.ServiceModel.Rest.Core.PipelineResponse? Response { get { throw null; } set { } }
+    }
+    public enum PipelinePosition
+    {
+        PerCall = 0,
+        PerRetry = 1,
+        BeforeTransport = 2,
+    }
+    public abstract partial class PipelineRequest : System.IDisposable
+    {
+        protected PipelineRequest() { }
+        public abstract string ClientRequestId { get; set; }
+        public abstract bool IsHttps { get; }
+        public abstract void Dispose();
+        public abstract bool RemoveHeaderValue(string name);
+        public abstract void SetContent(System.BinaryData content);
+        public abstract void SetHeaderValue(string key, string value);
+        public abstract bool TryGetHeaderValue(string name, out string? value);
+    }
+    public abstract partial class PipelineResponse
+    {
+        protected PipelineResponse() { }
+        public abstract System.BinaryData Content { get; }
+        public abstract System.IO.Stream? ContentStream { get; set; }
+        public virtual bool IsError { get { throw null; } set { } }
+        public abstract string ReasonPhrase { get; }
+        public abstract int Status { get; }
+        public abstract bool TryGetHeaderValue(string name, out string? value);
+    }
+    public abstract partial class Pipeline<TMessage>
+    {
+        protected Pipeline() { }
+        public abstract TMessage CreateMessage(string verb, System.Uri uri);
+        public static void ProcessNext(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline) { }
+        public static System.Threading.Tasks.ValueTask ProcessNextAsync(TMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>> pipeline) { throw null; }
+        public abstract void Send(TMessage message);
+        public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
+    }
     public abstract partial class RequestBody : System.IDisposable
     {
         protected RequestBody() { }
@@ -85,28 +122,7 @@ namespace System.ServiceModel.Rest.Core
     public partial class ResponseErrorClassifier
     {
         public ResponseErrorClassifier() { }
-        public virtual bool IsErrorResponse(System.ServiceModel.Rest.Core.RestMessage message) { throw null; }
-    }
-    public abstract partial class RestMessage : System.IDisposable
-    {
-        protected RestMessage() { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public abstract System.ServiceModel.Rest.Result? Result { get; }
-        public abstract void Dispose();
-    }
-}
-namespace System.ServiceModel.Rest.Core.Pipeline
-{
-    public abstract partial class MessagePipeline
-    {
-        protected MessagePipeline() { }
-        public abstract System.ServiceModel.Rest.Core.RestMessage CreateRestMessage(System.ServiceModel.Rest.PipelineOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);
-        public abstract void Send(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.RestMessage message, System.Threading.CancellationToken cancellationToken);
-    }
-    public abstract partial class PipelinePolicy
-    {
-        protected PipelinePolicy() { }
+        public virtual bool IsErrorResponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Experimental
@@ -152,10 +168,10 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 {
     public static partial class PipelineProtocolExtensions
     {
-        public static System.ServiceModel.Rest.Result<bool> ProcessHeadAsBoolMessage(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.PipelineOptions? requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Result<bool>> ProcessHeadAsBoolMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.PipelineOptions? requestContext) { throw null; }
-        public static System.ServiceModel.Rest.Result ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.PipelineOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Result> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.PipelineOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ServiceModel.Rest.Result<bool> ProcessHeadAsBoolMessage(this System.ServiceModel.Rest.Core.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.PipelineOptions? requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Result<bool>> ProcessHeadAsBoolMessageAsync(this System.ServiceModel.Rest.Core.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.PipelineOptions? requestContext) { throw null; }
+        public static System.ServiceModel.Rest.Result ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.PipelineOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Result> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.PipelineOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Experimental.Core.Serialization

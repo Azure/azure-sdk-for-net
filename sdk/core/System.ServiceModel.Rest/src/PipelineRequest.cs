@@ -6,6 +6,7 @@ namespace System.ServiceModel.Rest.Core;
 public abstract class PipelineRequest : IDisposable
 {
     public abstract bool IsHttps { get; }
+
     public abstract string ClientRequestId { get; set; }
 
     public abstract void SetHeaderValue(string key, string value);
