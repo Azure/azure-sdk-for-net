@@ -2,16 +2,20 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.ServiceModel.Rest.Core;
 
 namespace System.ServiceModel.Rest;
 
 /// <summary>
 /// TBD.
 /// </summary>
-public abstract class Result : IDisposable
+public abstract class Result : PipelineResponse
 {
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
+
+    // TODO: This won't work in the general case.
+    internal static Result FromPipelineResponse(PipelineResponse response) => (Result)response;
 
     /// <summary>
     /// TBD.
@@ -25,55 +29,35 @@ public abstract class Result : IDisposable
         return new ValueResult<T>(result, value);
     }
 
-    /// <summary>
-    /// Indicates whether the status code of the returned response is considered
-    /// an error code.
-    /// </summary>
-    // TODO: we have to make IsError publicly settable, but we might not want this.  Rethink?
-    public virtual bool IsError { get; set; }
+    ///// <summary>
+    ///// Gets the contents of HTTP response, if it is available.
+    ///// </summary>
+    //public override BinaryData Content
+    //{
+    //    get
+    //    {
+    //        if (ContentStream == null)
+    //        {
+    //            return s_EmptyBinaryData;
+    //        }
 
-    /// <summary>
-    /// Gets the contents of HTTP response, if it is available.
-    /// </summary>
-    /// <remarks>
-    /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
-    /// </remarks>
-    public virtual BinaryData Content
-    {
-        get
-        {
-            if (ContentStream == null)
-            {
-                return s_EmptyBinaryData;
-            }
+    //        MemoryStream? memoryContent = ContentStream as MemoryStream;
 
-            MemoryStream? memoryContent = ContentStream as MemoryStream;
+    //        if (memoryContent == null)
+    //        {
+    //            throw new InvalidOperationException($"The response is not fully buffered.");
+    //        }
 
-            if (memoryContent == null)
-            {
-                throw new InvalidOperationException($"The response is not fully buffered.");
-            }
-
-            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(memoryContent.ToArray());
-            }
-        }
-    }
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public abstract int Status { get; }
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public abstract Stream? ContentStream { get; set; }
+    //        if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+    //        {
+    //            return new BinaryData(segment.AsMemory());
+    //        }
+    //        else
+    //        {
+    //            return new BinaryData(memoryContent.ToArray());
+    //        }
+    //    }
+    //}
 
     /// <summary>
     /// Returns header value if the header is stored in the collection. If header has multiple values they will be joined with a comma.

@@ -15,7 +15,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : RestMessage
+    public sealed class HttpMessage : PipelineMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
@@ -41,7 +41,7 @@ namespace Azure.Core
         /// <param name="message"></param>
         /// <exception cref="ArgumentException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpMessage(RestMessage message)
+        public HttpMessage(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
             {

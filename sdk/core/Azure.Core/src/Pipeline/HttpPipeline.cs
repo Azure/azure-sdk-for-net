@@ -142,7 +142,7 @@ namespace Azure.Core.Pipeline
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override RestMessage CreateRestMessage(PipelineOptions options, ResponseErrorClassifier classifier)
+        public override PipelineMessage CreateRestMessage(PipelineOptions options, ResponseErrorClassifier classifier)
         {
             return CreateMessage((PipelineOptions?)options, (ResponseClassifier?)classifier);
         }
@@ -353,7 +353,7 @@ namespace Azure.Core.Pipeline
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ValueTask SendAsync(RestMessage message, CancellationToken cancellationToken)
+        public override ValueTask SendAsync(PipelineMessage message, CancellationToken cancellationToken)
             => SendAsync((HttpMessage)message, cancellationToken);
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override void Send(RestMessage message, CancellationToken cancellationToken)
+        public override void Send(PipelineMessage message, CancellationToken cancellationToken)
             => Send((HttpMessage)message, cancellationToken);
 
         private class HttpMessagePropertiesScope : IDisposable

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,30 +21,21 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="RequestErrorException"></exception>
-        public static async ValueTask<Result> ProcessMessageAsync(this MessagePipeline pipeline, RestMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        public static async ValueTask<Result> ProcessMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
         {
-            var (userCt, statusOption) = ApplyRequestContext(requestContext);
-            if (!userCt.CanBeCanceled || !cancellationToken.CanBeCanceled)
-            {
-                await pipeline.SendAsync(message, cancellationToken.CanBeCanceled ? cancellationToken : userCt).ConfigureAwait(false);
-            }
-            else
-            {
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(userCt, cancellationToken);
-                await pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
-            }
+            await pipeline.SendAsync(message).ConfigureAwait(false);
 
-            if (message.Result is null)
+            if (message.Response is null)
             {
                 throw new InvalidOperationException("Failed to receive Result.");
             }
 
-            if (!message.Result.IsError || statusOption == ResultErrorOptions.NoThrow)
+            if (!message.Response.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
             {
-                return message.Result;
+                return Result.FromPipelineResponse(message.Response);
             }
 
-            throw new RequestErrorException(message.Result);
+            throw new RequestErrorException(message.Response);
         }
 
         /// <summary>
@@ -57,30 +47,21 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="RequestErrorException"></exception>
-        public static Result ProcessMessage(this MessagePipeline pipeline, RestMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        public static Result ProcessMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
         {
-            var (userCt, statusOption) = ApplyRequestContext(requestContext);
-            if (!userCt.CanBeCanceled || !cancellationToken.CanBeCanceled)
-            {
-                pipeline.Send(message, cancellationToken.CanBeCanceled ? cancellationToken : userCt);
-            }
-            else
-            {
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(userCt, cancellationToken);
-                pipeline.Send(message, cts.Token);
-            }
+            pipeline.Send(message);
 
-            if (message.Result is null)
+            if (message.Response is null)
             {
                 throw new InvalidOperationException("Failed to receive Result.");
             }
 
-            if (!message.Result.IsError || statusOption == ResultErrorOptions.NoThrow)
+            if (!message.Response.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
             {
-                return message.Result;
+                return Result.FromPipelineResponse(message.Response);
             }
 
-            throw new RequestErrorException(message.Result);
+            throw new RequestErrorException(message.Response);
         }
 
         /// <summary>
@@ -91,7 +72,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="clientDiagnostics"></param>
         /// <param name="requestContext"></param>
         /// <returns></returns>
-        public static async ValueTask<Result<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, RestMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        public static async ValueTask<Result<bool>> ProcessHeadAsBoolMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
         {
             var response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
             switch (response.Status)
@@ -113,7 +94,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="clientDiagnostics"></param>
         /// <param name="requestContext"></param>
         /// <returns></returns>
-        public static Result<bool> ProcessHeadAsBoolMessage(this MessagePipeline pipeline, RestMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        public static Result<bool> ProcessHeadAsBoolMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
         {
             var response = pipeline.ProcessMessage(message, requestContext);
             switch (response.Status)

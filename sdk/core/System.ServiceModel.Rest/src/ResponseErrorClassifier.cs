@@ -13,14 +13,14 @@ namespace System.ServiceModel.Rest.Core
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
-        public virtual bool IsErrorResponse(RestMessage message)
+        public virtual bool IsErrorResponse(PipelineMessage message)
         {
-            if (message.Result is null)
+            if (message.Response is null)
             {
                 throw new InvalidOperationException("IsErrorResponse must be called on a message where the Result is populated.");
             }
 
-            int statusKind = message.Result.Status / 100;
+            int statusKind = message.Response.Status / 100;
             return statusKind == 4 || statusKind == 5;
         }
     }
