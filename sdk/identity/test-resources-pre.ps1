@@ -2,7 +2,18 @@
 param (
     # Captures any arguments from eng/New-TestResources.ps1 not declared here (no parameter errors).
     [Parameter(ValueFromRemainingArguments = $true)]
-    $RemainingArguments
+    $RemainingArguments,
+
+    [Parameter()]
+    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
+    [string] $TestApplicationId,
+
+    [Parameter()]
+    [string] $TestApplicationSecret,
+
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [string] $TenantId
 )
 
 Import-Module -Name $PSScriptRoot/../../eng/common/scripts/X509Certificate2 -Verbose
@@ -13,8 +24,7 @@ $sshKey = Get-Content $PSScriptRoot/sshKey.pub
 $templateFileParameters['sshPubKey'] = $sshKey
 
 # Get the max version that is not preview and then get the name of the patch version with the max value
-
-az login --service-principal -u $EnvironmentVariables['IDENTITY_CLIENT_ID'] -p $EnvironmentVariables['IDENTITY_CLIENT_SECRET'] --tenant $EnvironmentVariables['IDENTITY_TENANT_ID']
+az login --service-principal -u $TestApplicationId -p $TestApplicationSecret --tenant $TenantId
 $versions = az aks get-versions -o json | ConvertFrom-Json
 Write-Host "AKS versions: $($versions | ConvertTo-Json -Depth 100)"
 $patchVersions = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions
