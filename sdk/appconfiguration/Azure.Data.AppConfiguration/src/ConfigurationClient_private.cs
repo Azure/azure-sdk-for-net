@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
@@ -63,9 +64,11 @@ namespace Azure.Data.AppConfiguration
                 builder.AppendQuery(LabelQueryFilter, selector.LabelFilter);
             }
 
-            if (selector.Fields != SettingFields.All)
+            IEnumerable<string> splitFields = selector.Fields.Split();
+
+            if (splitFields != null)
             {
-                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
+                string filter = string.Join(",", splitFields);
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 

@@ -115,7 +115,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key=key&$select=key%2C%20value", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?key=key&$select=key%2Cvalue", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
