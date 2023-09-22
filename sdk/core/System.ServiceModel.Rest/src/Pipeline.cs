@@ -7,19 +7,9 @@ namespace System.ServiceModel.Rest.Core;
 
 public abstract class Pipeline<TMessage>
 {
-    public abstract TMessage CreateMessage(PipelineOptions options, ResponseErrorClassifier classifier);
+    public abstract TMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier);
 
     public abstract void Send(TMessage message);
 
     public abstract ValueTask SendAsync(TMessage message);
-
-    public static void ProcessNext(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline)
-    {
-        pipeline.Span[0].Process(message, pipeline.Slice(1));
-    }
-
-    public static async ValueTask ProcessNextAsync(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline)
-    {
-        await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
-    }
 }

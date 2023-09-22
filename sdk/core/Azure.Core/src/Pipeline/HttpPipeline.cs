@@ -108,7 +108,7 @@ namespace Azure.Core.Pipeline
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
-            => CreateMessage((PipelineOptions?)context, classifier);
+            => CreateMessage((RequestOptions?)context, classifier);
 
         /// <summary>
         /// TBD.
@@ -118,10 +118,10 @@ namespace Azure.Core.Pipeline
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PipelineMessage CreateMessage(PipelineOptions options, ResponseErrorClassifier classifier)
+        public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
         {
             // TODO: I made a mess here, clean it up.
-            return CreateMessage((PipelineOptions?)options, (ResponseClassifier?)classifier);
+            return CreateMessage((RequestOptions?)options, (ResponseClassifier?)classifier);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.Core.Pipeline
         /// <param name="options">Request options to be used by the pipeline when sending the message request.</param>
         /// <param name="classifier">Classifier to apply to the response.</param>
         /// <returns>The HTTP message.</returns>
-        public HttpMessage CreateMessage(PipelineOptions? options, ResponseClassifier? classifier = default)
+        public HttpMessage CreateMessage(RequestOptions? options, ResponseClassifier? classifier = default)
         {
             HttpMessage message = CreateMessage();
 

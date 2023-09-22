@@ -21,7 +21,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="RequestErrorException"></exception>
-        public static async ValueTask<PipelineResponse> ProcessMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        public static async ValueTask<PipelineResponse> ProcessMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, RequestOptions? requestContext, CancellationToken cancellationToken = default)
         {
             await pipeline.SendAsync(message).ConfigureAwait(false);
 
@@ -47,7 +47,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="RequestErrorException"></exception>
-        public static PipelineResponse ProcessMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, PipelineOptions? requestContext, CancellationToken cancellationToken = default)
+        public static PipelineResponse ProcessMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, RequestOptions? requestContext, CancellationToken cancellationToken = default)
         {
             pipeline.Send(message);
 
@@ -72,7 +72,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="clientDiagnostics"></param>
         /// <param name="requestContext"></param>
         /// <returns></returns>
-        public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions? requestContext)
         {
             PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
             switch (response.Status)
@@ -94,7 +94,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         /// <param name="clientDiagnostics"></param>
         /// <param name="requestContext"></param>
         /// <returns></returns>
-        public static NullableResult<bool> ProcessHeadAsBoolMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, PipelineOptions? requestContext)
+        public static NullableResult<bool> ProcessHeadAsBoolMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions? requestContext)
         {
             PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
             switch (response.Status)
@@ -106,16 +106,6 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
                 default:
                     return new ErrorResult<bool>(response, new RequestErrorException(response));
             }
-        }
-
-        private static (CancellationToken CancellationToken, ResultErrorOptions ErrorOptions) ApplyRequestContext(PipelineOptions? requestContext)
-        {
-            if (requestContext == null)
-            {
-                return (CancellationToken.None, ResultErrorOptions.Default);
-            }
-
-            return (requestContext.CancellationToken, requestContext.ResultErrorOptions);
         }
 
         internal class ErrorResult<T> : NullableResult<T>
