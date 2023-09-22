@@ -254,7 +254,7 @@ namespace System
         public T? ToObjectFromJson<T>(JsonSerializerOptions? options = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (T)JsonSerializer.Deserialize(_bytes.Span, typeof(T), options);
+            return (T?)JsonSerializer.Deserialize(_bytes.Span, typeof(T), options);
         }
 
         /// <summary>
