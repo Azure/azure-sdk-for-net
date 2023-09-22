@@ -4,73 +4,82 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
-using Azure.Storage.Tests;
+using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     internal class MemoryStorageResourceContainer : StorageResourceContainer
     {
-        internal List<StorageResource> Children { get; } = new();
+        public bool ReturnsContainersOnEnumeration { get; set; }
 
-        internal readonly Uri _uri;
-        public override Uri Uri => _uri;
+        public List<StorageResource> Children { get; } = new();
 
-        private MemoryStorageResourceContainer(Uri uri)
+        public override Uri Uri { get; }
+
+        public MemoryStorageResourceContainer(Uri uri)
         {
-            _uri = uri;
-        }
-
-        public static MemoryStorageResourceContainer MakeContainer(
-            Tree<(string Name, bool IsDirectory)> containerStructure,
-            Random random = default,
-            Uri baseUri = default,
-            string basePath = default,
-            int childItemSizes = Constants.KB)
-        {
-            if (containerStructure.Value.IsDirectory)
-            {
-                throw new ArgumentException("MemoryStorageResourceContainer must be a directory");
-            }
-
-            UriBuilder baseUriBuilder = baseUri != default
-                ? new UriBuilder(baseUri)
-                : new UriBuilder()
-                {
-                    Scheme = "memory",
-                    Host = "localhost",
-                };
-
-            baseUriBuilder.Path = string.Join("/", new List<string>()
-            {
-                baseUriBuilder.Path.Trim('/'),
-                basePath.Trim('/'),
-                containerStructure.Value.Name
-            }.Select(s => !string.IsNullOrWhiteSpace(s)));
-
-            MemoryStorageResourceContainer result = new(baseUriBuilder.Uri);
-            foreach (Tree<(string Name, bool IsDirectory)> child in containerStructure)
-            {
-                if (child.Value.IsDirectory)
-                {
-                    result.Children.Add(MakeContainer(child, random, result.Uri, basePath: default, childItemSizes));
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
-            }
-            return result;
+            Uri = uri;
         }
 
         protected internal override StorageResourceItem GetStorageResourceReference(string path)
         {
-            throw new NotImplementedException();
+            UriBuilder builder = new(Uri);
+            builder.Path += string.Join("/", new List<string>()
+            {
+                builder.Path.Trim('/'),
+                path.Trim('/'),
+            }.Select(s => !string.IsNullOrWhiteSpace(s)));
+            Uri expected = builder.Uri;
+
+            foreach (StorageResourceItem item in GetStorageResources(false))
+            {
+                if (item.Uri == expected)
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
-        protected internal override IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(CancellationToken cancellationToken = default)
+        protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            [EnumeratorCancellation]CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            foreach (StorageResource storageResource in GetStorageResources(ReturnsContainersOnEnumeration))
+            {
+                yield return await Task.FromResult(storageResource);
+            }
+        }
+
+        private IEnumerable<StorageResource> GetStorageResources(bool includeContainers)
+        {
+            Queue<MemoryStorageResourceContainer> queue = new();
+            queue.Enqueue(this);
+
+            while (queue.Count > 0)
+            {
+                MemoryStorageResourceContainer container = queue.Dequeue();
+                foreach (var child in container.Children)
+                {
+                    if (child is MemoryStorageResourceItem)
+                    {
+                        yield return child;
+                    }
+                    else if (child is MemoryStorageResourceContainer)
+                    {
+                        queue.Enqueue(child as MemoryStorageResourceContainer);
+                        if (includeContainers)
+                        {
+                            yield return child;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Do not combine other StorageResource implementations with {nameof(MemoryStorageResourceContainer)}");
+                    }
+                }
+            }
         }
     }
 }
