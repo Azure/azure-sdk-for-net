@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
-namespace System.ServiceModel.Rest.Shared.Core
+namespace System.ServiceModel.Rest.Experimental.Core
 {
     /// <summary>
     /// TBD.

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace System.ServiceModel.Rest.Shared
+namespace System.ServiceModel.Rest.Experimental
 {
     public class KeyCredentialPolicy
     {

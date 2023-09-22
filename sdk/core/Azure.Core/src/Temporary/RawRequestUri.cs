@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ServiceModel.Rest.Shared.Core;
+using System.ServiceModel.Rest.Experimental.Core;
 
 namespace Azure.Core
 {
