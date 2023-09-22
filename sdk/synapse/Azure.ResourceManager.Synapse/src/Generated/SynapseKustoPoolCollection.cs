@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kustoPoolName"> The name of the Kusto pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="kustoPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseKustoPoolResource>> GetIfExistsAsync(string kustoPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
+
+            using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseKustoPoolKustoPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseKustoPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseKustoPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kustoPoolName"> The name of the Kusto pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="kustoPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
+        public virtual NullableResponse<SynapseKustoPoolResource> GetIfExists(string kustoPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
+
+            using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseKustoPoolKustoPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseKustoPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseKustoPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SynapseKustoPoolResource> IEnumerable<SynapseKustoPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

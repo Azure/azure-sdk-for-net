@@ -335,6 +335,80 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<KubernetesFluxConfigurationResource>> GetIfExistsAsync(string fluxConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
+
+            using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<KubernetesFluxConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new KubernetesFluxConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
+        public virtual NullableResponse<KubernetesFluxConfigurationResource> GetIfExists(string fluxConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
+
+            using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<KubernetesFluxConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new KubernetesFluxConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<KubernetesFluxConfigurationResource> IEnumerable<KubernetesFluxConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
