@@ -12,7 +12,7 @@ namespace Azure.AI.OpenAI
     /// Generally, `n` choices are generated per provided prompt with a default value of 1.
     /// Token limits and other settings may limit the number of choices generated.
     /// </summary>
-    public partial class ChatChoice
+    internal partial class ChatChoice
     {
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
@@ -48,6 +48,8 @@ namespace Azure.AI.OpenAI
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
         public CompletionsFinishReason? FinishReason { get; }
+        /// <summary> The delta message content for a streaming response. </summary>
+        public ChatMessage InternalStreamingDeltaMessage { get; }
         /// <summary>
         /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that

@@ -73,5 +73,13 @@ namespace Azure.AI.OpenAI
             }
             return new AudioTranscription(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), Optional.ToList(segments));
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AudioTranscription FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAudioTranscription(document.RootElement);
+        }
     }
 }

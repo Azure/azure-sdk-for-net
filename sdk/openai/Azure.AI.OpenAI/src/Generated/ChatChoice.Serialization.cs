@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatChoice
+    internal partial class ChatChoice
     {
         internal static ChatChoice DeserializeChatChoice(JsonElement element)
         {

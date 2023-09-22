@@ -65,6 +65,12 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public string User { get; set; }
         /// <summary>
+        /// The model name to provide as part of this embeddings request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </summary>
+        public string InternalNonAzureModelName { get; set; }
+        /// <summary>
         /// Input texts to get embeddings for, encoded as a an array of strings.
         /// Each input must not exceed 2048 tokens in length.
         ///
