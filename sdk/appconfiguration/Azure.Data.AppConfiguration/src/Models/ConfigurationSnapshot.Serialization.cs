@@ -20,10 +20,10 @@ namespace Azure.Data.AppConfiguration
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(CompositionType))
+            if (Optional.IsDefined(SnapshotComposition))
             {
                 writer.WritePropertyName("composition_type");
-                writer.WriteStringValue(CompositionType.Value.ToString());
+                writer.WriteStringValue(SnapshotComposition.Value.ToString());
             }
             if (Optional.IsDefined(RetentionPeriod))
             {
@@ -49,7 +49,7 @@ namespace Azure.Data.AppConfiguration
             Optional<string> name = default;
             Optional<ConfigurationSnapshotStatus> status = default;
             IList<SnapshotSettingFilter> filters = default;
-            Optional<SnapshotComposition> compositionType = default;
+            Optional<SnapshotComposition> snapshotComposition = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset?> expires = default;
             Optional<long> retentionPeriod = default;
@@ -91,7 +91,7 @@ namespace Azure.Data.AppConfiguration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    compositionType = new SnapshotComposition(property.Value.GetString());
+                    snapshotComposition = new SnapshotComposition(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("created"))
@@ -165,7 +165,7 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationSnapshot(name.Value, Optional.ToNullable(status), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
+            return new ConfigurationSnapshot(name.Value, Optional.ToNullable(status), filters, Optional.ToNullable(snapshotComposition), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
         }
 
         // Mapping raw response to model
