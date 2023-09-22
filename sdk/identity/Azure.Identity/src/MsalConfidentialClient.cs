@@ -104,11 +104,19 @@ namespace Azure.Identity
 
             if (_assertionCallback != null)
             {
+                if (_asyncAssertionCallback != null)
+                {
+                    throw new InvalidOperationException("Cannot set both assertionCallback and asyncAssertionCallback");
+                }
                 confClientBuilder.WithClientAssertion(_assertionCallback);
             }
 
             if (_asyncAssertionCallback != null)
             {
+                if (_assertionCallback != null)
+                {
+                    throw new InvalidOperationException("Cannot set both assertionCallback and asyncAssertionCallback");
+                }
                 confClientBuilder.WithClientAssertion(_asyncAssertionCallback);
             }
 
