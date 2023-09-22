@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     ///   A representation of configuration data for a single Azure OpenAI chat extension. This will be used by a chat
@@ -30,7 +31,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public AzureChatExtensionConfiguration(AzureChatExtensionType type, BinaryData parameters)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            ClientUtilities.AssertNotNull(parameters, nameof(parameters));
 
             Type = type;
             Parameters = parameters;

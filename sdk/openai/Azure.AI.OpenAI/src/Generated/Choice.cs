@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     /// The representation of a single prompt completion as part of an overall completions request.
@@ -25,7 +26,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            ClientUtilities.AssertNotNull(text, nameof(text));
 
             Text = text;
             Index = index;

@@ -8,9 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> Representation of a single embeddings relatedness comparison. </summary>
     public partial class EmbeddingItem
@@ -24,7 +25,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="embedding"/> is null. </exception>
         internal EmbeddingItem(IEnumerable<float> embedding, int index)
         {
-            Argument.AssertNotNull(embedding, nameof(embedding));
+            ClientUtilities.AssertNotNull(embedding, nameof(embedding));
 
             Embedding = embedding.ToList();
             Index = index;

@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     ///   A representation of the additional context information available when Azure OpenAI chat extensions are involved
@@ -20,7 +21,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>
         public AzureChatExtensionsMessageContext()
         {
-            Messages = new ChangeTrackingList<ChatMessage>();
+            Messages = new OptionalList<ChatMessage>();
         }
 
         /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>

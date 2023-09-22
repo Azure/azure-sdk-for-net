@@ -5,19 +5,20 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
 using Azure.Core;
+using System.ServiceModel.Rest;
+using System.Text.Json;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
+using System.ServiceModel.Rest.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
-    internal partial class AzureChatExtensionsMessageContext : IUtf8JsonSerializable
+    internal partial class AzureChatExtensionsMessageContext : IUtf8JsonWriteable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonWriteable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (OptionalProperty.IsCollectionDefined(Messages))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<IList<ChatMessage>> messages = default;
+            OptionalProperty<IList<ChatMessage>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messages"u8))
@@ -54,21 +55,21 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new AzureChatExtensionsMessageContext(Optional.ToList(messages));
+            return new AzureChatExtensionsMessageContext(OptionalProperty.ToList(messages));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureChatExtensionsMessageContext FromResponse(Response response)
+        internal static AzureChatExtensionsMessageContext FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAzureChatExtensionsMessageContext(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <summary> Convert into a Utf8JsonRequestBody. </summary>
+        internal virtual RequestBody ToRequestContent()
         {
-            var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestBody();
             content.JsonWriter.WriteObjectValue(this);
             return content;
         }

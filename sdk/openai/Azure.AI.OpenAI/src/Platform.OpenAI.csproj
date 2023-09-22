@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  
+	  <Description>Platform.OpenAI</Description>
+	  <AssemblyTitle>Platform.OpenAI</AssemblyTitle>
+	  <Version>0.0.1-beta.1</Version>
+	  <PackageTags>OpenAI</PackageTags>
+
+	  <TargetFramework>netstandard2.0</TargetFramework>
+	  <LangVersion>11</LangVersion>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <!-- TODO: These become package references -->
+	  <ProjectReference Include="..\..\..\..\azure-sdk-for-net\sdk\core\Azure.Core\src\Azure.Core.csproj" />
+	  <ProjectReference Include="..\..\..\..\azure-sdk-for-net\sdk\core\System.ServiceModel.Rest\src\System.ServiceModel.Rest.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -8,9 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     /// The configuration information for an embeddings request.
@@ -30,7 +31,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public EmbeddingsOptions(IEnumerable<string> input)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            ClientUtilities.AssertNotNull(input, nameof(input));
 
             Input = input.ToList();
         }

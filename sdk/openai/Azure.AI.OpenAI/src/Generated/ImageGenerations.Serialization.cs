@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Text.Json;
 using Azure;
-using Azure.Core;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
+using System.Text.Json;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     internal partial class ImageGenerations
     {
@@ -40,7 +40,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageGenerations FromResponse(Response response)
+        internal static ImageGenerations FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeImageGenerations(document.RootElement);

@@ -5,34 +5,36 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
-    internal partial class ImageGenerationOptions : IUtf8JsonSerializable
+    internal partial class ImageGenerationOptions : IUtf8JsonWriteable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonWriteable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("prompt"u8);
             writer.WriteStringValue(Prompt);
-            if (Optional.IsDefined(ImageCount))
+            if (OptionalProperty.IsDefined(ImageCount))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ImageCount.Value);
             }
-            if (Optional.IsDefined(Size))
+            if (OptionalProperty.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size.Value.ToString());
             }
-            if (Optional.IsDefined(ResponseFormat))
+            if (OptionalProperty.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Optional.IsDefined(User))
+            if (OptionalProperty.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
@@ -40,10 +42,10 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <summary> Convert into a Utf8JsonRequestBody. </summary>
+        internal virtual RequestBody ToRequestContent()
         {
-            var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestBody();
             content.JsonWriter.WriteObjectValue(this);
             return content;
         }

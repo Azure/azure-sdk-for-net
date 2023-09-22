@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public partial class Choice
     {
@@ -21,7 +23,7 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
-            Optional<ContentFilterResults> contentFilterResults = default;
+            OptionalProperty<ContentFilterResults> contentFilterResults = default;
             CompletionsLogProbabilityModel logprobs = default;
             CompletionsFinishReason? finishReason = default;
             foreach (var property in element.EnumerateObject())
@@ -71,7 +73,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Choice FromResponse(Response response)
+        internal static Choice FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeChoice(document.RootElement);

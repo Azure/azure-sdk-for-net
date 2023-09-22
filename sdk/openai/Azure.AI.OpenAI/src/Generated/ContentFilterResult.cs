@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> Information about filtered content severity level and if it has been filtered or not. </summary>
     public partial class ContentFilterResult

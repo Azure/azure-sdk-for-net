@@ -8,9 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest.Shared;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     /// Representation of the response data from a chat completions request.
@@ -34,14 +36,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
         internal ChatCompletions(string id, DateTimeOffset created, IEnumerable<ChatChoice> choices, CompletionsUsage usage)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(choices, nameof(choices));
-            Argument.AssertNotNull(usage, nameof(usage));
+            ClientUtilities.AssertNotNull(id, nameof(id));
+            ClientUtilities.AssertNotNull(choices, nameof(choices));
+            ClientUtilities.AssertNotNull(usage, nameof(usage));
 
             Id = id;
             Created = created;
             Choices = choices.ToList();
-            PromptFilterResults = new ChangeTrackingList<PromptFilterResult>();
+            PromptFilterResults = new OptionalList<PromptFilterResult>();
             Usage = usage;
         }
 

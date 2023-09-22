@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> Representation of the manner in which a completions response concluded. </summary>
     public readonly partial struct CompletionsFinishReason : IEquatable<CompletionsFinishReason>

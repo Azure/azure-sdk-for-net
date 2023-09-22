@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> The result of the operation if the operation succeeded. </summary>
     internal partial class ImageGenerations
@@ -19,7 +20,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         internal ImageGenerations(DateTimeOffset created, object data)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            ClientUtilities.AssertNotNull(data, nameof(data));
 
             Created = created;
             Data = data;

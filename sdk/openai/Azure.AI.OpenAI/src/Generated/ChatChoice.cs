@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     /// The representation of a single prompt completion as part of an overall chat completions request.

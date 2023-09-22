@@ -5,15 +5,18 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
-    internal partial class FunctionCall : IUtf8JsonSerializable
+    internal partial class FunctionCall : IUtf8JsonWriteable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonWriteable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -49,16 +52,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FunctionCall FromResponse(Response response)
+        internal static FunctionCall FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeFunctionCall(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <summary> Convert into a Utf8JsonRequestBody. </summary>
+        internal virtual RequestBody ToRequestContent()
         {
-            var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestBody();
             content.JsonWriter.WriteObjectValue(this);
             return content;
         }

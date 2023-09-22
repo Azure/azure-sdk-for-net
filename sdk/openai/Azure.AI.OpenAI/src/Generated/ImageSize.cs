@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. </summary>
     internal readonly partial struct ImageSize : IEquatable<ImageSize>

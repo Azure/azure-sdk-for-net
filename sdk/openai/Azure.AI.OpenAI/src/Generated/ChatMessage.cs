@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
     internal partial class ChatMessage

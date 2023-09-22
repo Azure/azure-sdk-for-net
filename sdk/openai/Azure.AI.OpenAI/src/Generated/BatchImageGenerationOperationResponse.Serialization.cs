@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     internal partial class BatchImageGenerationOperationResponse
     {
@@ -22,10 +24,10 @@ namespace Azure.AI.OpenAI
             }
             string id = default;
             DateTimeOffset created = default;
-            Optional<long> expires = default;
-            Optional<ImageGenerations> result = default;
+            OptionalProperty<long> expires = default;
+            OptionalProperty<ImageGenerations> result = default;
             AzureOpenAIOperationState status = default;
-            Optional<ResponseError> error = default;
+            OptionalProperty<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -71,12 +73,12 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new BatchImageGenerationOperationResponse(id, created, Optional.ToNullable(expires), result.Value, status, error.Value);
+            return new BatchImageGenerationOperationResponse(id, created, OptionalProperty.ToNullable(expires), result.Value, status, error.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchImageGenerationOperationResponse FromResponse(Response response)
+        internal static BatchImageGenerationOperationResponse FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeBatchImageGenerationOperationResponse(document.RootElement);

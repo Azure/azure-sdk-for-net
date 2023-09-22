@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
-    internal partial class ChatCompletionsOptions : IUtf8JsonSerializable
+    internal partial class ChatCompletionsOptions : IUtf8JsonWriteable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonWriteable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("messages"u8);
@@ -22,7 +24,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Functions))
+            if (OptionalProperty.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -32,27 +34,27 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FunctionCall))
+            if (OptionalProperty.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
-            if (Optional.IsDefined(MaxTokens))
+            if (OptionalProperty.IsDefined(MaxTokens))
             {
                 writer.WritePropertyName("max_tokens"u8);
                 writer.WriteNumberValue(MaxTokens.Value);
             }
-            if (Optional.IsDefined(Temperature))
+            if (OptionalProperty.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(NucleusSamplingFactor))
+            if (OptionalProperty.IsDefined(NucleusSamplingFactor))
             {
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
-            if (Optional.IsCollectionDefined(InternalStringKeyedTokenSelectionBiases))
+            if (OptionalProperty.IsCollectionDefined(InternalStringKeyedTokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 writer.WriteStartObject();
@@ -63,17 +65,17 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(User))
+            if (OptionalProperty.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(ChoiceCount))
+            if (OptionalProperty.IsDefined(ChoiceCount))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ChoiceCount.Value);
             }
-            if (Optional.IsCollectionDefined(StopSequences))
+            if (OptionalProperty.IsCollectionDefined(StopSequences))
             {
                 writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();
@@ -83,27 +85,27 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PresencePenalty))
+            if (OptionalProperty.IsDefined(PresencePenalty))
             {
                 writer.WritePropertyName("presence_penalty"u8);
                 writer.WriteNumberValue(PresencePenalty.Value);
             }
-            if (Optional.IsDefined(FrequencyPenalty))
+            if (OptionalProperty.IsDefined(FrequencyPenalty))
             {
                 writer.WritePropertyName("frequency_penalty"u8);
                 writer.WriteNumberValue(FrequencyPenalty.Value);
             }
-            if (Optional.IsDefined(InternalShouldStreamResponse))
+            if (OptionalProperty.IsDefined(InternalShouldStreamResponse))
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
             }
-            if (Optional.IsDefined(InternalNonAzureModelName))
+            if (OptionalProperty.IsDefined(InternalNonAzureModelName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(InternalNonAzureModelName);
             }
-            if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
+            if (OptionalProperty.IsCollectionDefined(InternalAzureExtensionsDataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
                 writer.WriteStartArray();
@@ -116,10 +118,10 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <summary> Convert into a Utf8JsonRequestBody. </summary>
+        internal virtual RequestBody ToRequestContent()
         {
-            var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestBody();
             content.JsonWriter.WriteObjectValue(this);
             return content;
         }

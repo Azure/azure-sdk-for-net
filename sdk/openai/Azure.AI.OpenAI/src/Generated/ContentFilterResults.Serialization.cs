@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public partial class ContentFilterResults
     {
@@ -19,11 +21,10 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ContentFilterResult> sexual = default;
-            Optional<ContentFilterResult> violence = default;
-            Optional<ContentFilterResult> hate = default;
-            Optional<ContentFilterResult> selfHarm = default;
-            Optional<ResponseError> error = default;
+            OptionalProperty<ContentFilterResult> sexual = default;
+            OptionalProperty<ContentFilterResult> violence = default;
+            OptionalProperty<ContentFilterResult> hate = default;
+            OptionalProperty<ContentFilterResult> selfHarm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -62,22 +63,13 @@ namespace Azure.AI.OpenAI
                     selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("error"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
-                    continue;
-                }
             }
-            return new ContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value, error.Value);
+            return new ContentFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ContentFilterResults FromResponse(Response response)
+        internal static ContentFilterResults FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeContentFilterResults(document.RootElement);

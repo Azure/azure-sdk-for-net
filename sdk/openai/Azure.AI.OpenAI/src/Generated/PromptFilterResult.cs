@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> Content filtering results for a single prompt in the request. </summary>
     public partial class PromptFilterResult

@@ -5,11 +5,12 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public partial class CompletionsUsage
     {
@@ -45,7 +46,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CompletionsUsage FromResponse(Response response)
+        internal static CompletionsUsage FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeCompletionsUsage(document.RootElement);

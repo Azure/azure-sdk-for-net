@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     ///   A representation of configuration data for a single Azure OpenAI chat extension. This will be used by a chat

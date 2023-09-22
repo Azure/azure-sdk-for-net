@@ -5,15 +5,18 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
-    internal partial class ChatMessage : IUtf8JsonSerializable
+    internal partial class ChatMessage : IUtf8JsonWriteable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonWriteable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
@@ -27,17 +30,17 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("content");
             }
-            if (Optional.IsDefined(Name))
+            if (OptionalProperty.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(FunctionCall))
+            if (OptionalProperty.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
-            if (Optional.IsDefined(AzureExtensionsContext))
+            if (OptionalProperty.IsDefined(AzureExtensionsContext))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(AzureExtensionsContext);
@@ -53,9 +56,9 @@ namespace Azure.AI.OpenAI
             }
             ChatRole role = default;
             string content = default;
-            Optional<string> name = default;
-            Optional<FunctionCall> functionCall = default;
-            Optional<AzureChatExtensionsMessageContext> context = default;
+            OptionalProperty<string> name = default;
+            OptionalProperty<FunctionCall> functionCall = default;
+            OptionalProperty<AzureChatExtensionsMessageContext> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -102,16 +105,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChatMessage FromResponse(Response response)
+        internal static ChatMessage FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeChatMessage(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <summary> Convert into a Utf8JsonRequestBody. </summary>
+        internal virtual RequestBody ToRequestContent()
         {
-            var content = new Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestBody();
             content.JsonWriter.WriteObjectValue(this);
             return content;
         }

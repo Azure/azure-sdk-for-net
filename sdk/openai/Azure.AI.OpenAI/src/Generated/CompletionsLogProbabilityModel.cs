@@ -8,9 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> Representation of a log probabilities model for a completions generation. </summary>
     public partial class CompletionsLogProbabilityModel
@@ -23,10 +24,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="tokens"/>, <paramref name="tokenLogProbabilities"/>, <paramref name="topLogProbabilities"/> or <paramref name="textOffsets"/> is null. </exception>
         internal CompletionsLogProbabilityModel(IEnumerable<string> tokens, IEnumerable<float?> tokenLogProbabilities, IEnumerable<IDictionary<string, float?>> topLogProbabilities, IEnumerable<int> textOffsets)
         {
-            Argument.AssertNotNull(tokens, nameof(tokens));
-            Argument.AssertNotNull(tokenLogProbabilities, nameof(tokenLogProbabilities));
-            Argument.AssertNotNull(topLogProbabilities, nameof(topLogProbabilities));
-            Argument.AssertNotNull(textOffsets, nameof(textOffsets));
+            ClientUtilities.AssertNotNull(tokens, nameof(tokens));
+            ClientUtilities.AssertNotNull(tokenLogProbabilities, nameof(tokenLogProbabilities));
+            ClientUtilities.AssertNotNull(topLogProbabilities, nameof(topLogProbabilities));
+            ClientUtilities.AssertNotNull(textOffsets, nameof(textOffsets));
 
             Tokens = tokens.ToList();
             TokenLogProbabilities = tokenLogProbabilities.ToList();

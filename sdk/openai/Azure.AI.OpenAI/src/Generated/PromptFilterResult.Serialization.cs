@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public partial class PromptFilterResult
     {
@@ -20,7 +22,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             int promptIndex = default;
-            Optional<ContentFilterResults> contentFilterResults = default;
+            OptionalProperty<ContentFilterResults> contentFilterResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prompt_index"u8))
@@ -43,7 +45,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PromptFilterResult FromResponse(Response response)
+        internal static PromptFilterResult FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializePromptFilterResult(document.RootElement);

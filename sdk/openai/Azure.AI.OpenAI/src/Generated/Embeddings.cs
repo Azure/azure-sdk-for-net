@@ -8,9 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     /// Representation of the response data from an embeddings request.
@@ -25,8 +26,8 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="usage"/> is null. </exception>
         internal Embeddings(IEnumerable<EmbeddingItem> data, EmbeddingsUsage usage)
         {
-            Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(usage, nameof(usage));
+            ClientUtilities.AssertNotNull(data, nameof(data));
+            ClientUtilities.AssertNotNull(usage, nameof(usage));
 
             Data = data.ToList();
             Usage = usage;

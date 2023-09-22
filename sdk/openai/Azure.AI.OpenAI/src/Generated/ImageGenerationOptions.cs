@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> Represents the request data used to generate images. </summary>
     internal partial class ImageGenerationOptions
@@ -18,7 +19,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
         public ImageGenerationOptions(string prompt)
         {
-            Argument.AssertNotNull(prompt, nameof(prompt));
+            ClientUtilities.AssertNotNull(prompt, nameof(prompt));
 
             Prompt = prompt;
         }

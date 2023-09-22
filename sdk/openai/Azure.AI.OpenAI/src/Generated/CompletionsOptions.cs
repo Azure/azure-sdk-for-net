@@ -8,9 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest.Shared;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     /// The configuration information for a completions request.
@@ -24,11 +26,11 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="prompts"/> is null. </exception>
         public CompletionsOptions(IEnumerable<string> prompts)
         {
-            Argument.AssertNotNull(prompts, nameof(prompts));
+            ClientUtilities.AssertNotNull(prompts, nameof(prompts));
 
             Prompts = prompts.ToList();
-            InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
-            StopSequences = new ChangeTrackingList<string>();
+            InternalStringKeyedTokenSelectionBiases = new OptionalDictionary<string, int>();
+            StopSequences = new OptionalList<string>();
         }
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>

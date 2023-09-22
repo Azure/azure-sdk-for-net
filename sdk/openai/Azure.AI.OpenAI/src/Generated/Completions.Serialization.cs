@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public partial class Completions
     {
@@ -23,7 +25,7 @@ namespace Azure.AI.OpenAI
             }
             string id = default;
             DateTimeOffset created = default;
-            Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
+            OptionalProperty<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
             IReadOnlyList<Choice> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
@@ -68,12 +70,12 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new Completions(id, created, Optional.ToList(promptAnnotations), choices, usage);
+            return new Completions(id, created, OptionalProperty.ToList(promptAnnotations), choices, usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Completions FromResponse(Response response)
+        internal static Completions FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeCompletions(document.RootElement);

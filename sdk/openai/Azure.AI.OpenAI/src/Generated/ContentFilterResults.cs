@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure;
-
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> Information about the content filtering category, if it has been detected. </summary>
     public partial class ContentFilterResults
@@ -39,17 +37,12 @@ namespace Azure.AI.OpenAI
         /// Describes language related to physical actions intended to purposely hurt, injure,
         /// or damage one’s body, or kill oneself.
         /// </param>
-        /// <param name="error">
-        /// Describes an error returned if the content filtering system is
-        /// down or otherwise unable to complete the operation in time.
-        /// </param>
-        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ResponseError error)
+        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm)
         {
             Sexual = sexual;
             Violence = violence;
             Hate = hate;
             SelfHarm = selfHarm;
-            Error = error;
         }
 
         /// <summary>
@@ -77,10 +70,5 @@ namespace Azure.AI.OpenAI
         /// or damage one’s body, or kill oneself.
         /// </summary>
         public ContentFilterResult SelfHarm { get; }
-        /// <summary>
-        /// Describes an error returned if the content filtering system is
-        /// down or otherwise unable to complete the operation in time.
-        /// </summary>
-        public ResponseError Error { get; }
     }
 }

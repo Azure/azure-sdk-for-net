@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using System.ServiceModel.Rest.Shared;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> A polling status update or final response payload for an image operation. </summary>
     internal partial class BatchImageGenerationOperationResponse
@@ -21,7 +22,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal BatchImageGenerationOperationResponse(string id, DateTimeOffset created, AzureOpenAIOperationState status)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            ClientUtilities.AssertNotNull(id, nameof(id));
 
             Id = id;
             Created = created;

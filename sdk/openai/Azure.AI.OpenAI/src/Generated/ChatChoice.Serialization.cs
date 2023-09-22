@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     internal partial class ChatChoice
     {
@@ -19,11 +21,11 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ChatMessage> message = default;
+            OptionalProperty<ChatMessage> message = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            Optional<ChatMessage> delta = default;
-            Optional<ContentFilterResults> contentFilterResults = default;
+            OptionalProperty<ChatMessage> delta = default;
+            OptionalProperty<ContentFilterResults> contentFilterResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -74,7 +76,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChatChoice FromResponse(Response response)
+        internal static ChatChoice FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeChatChoice(document.RootElement);

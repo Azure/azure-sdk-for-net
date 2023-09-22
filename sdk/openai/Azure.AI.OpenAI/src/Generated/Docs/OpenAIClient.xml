@@ -13,7 +13,7 @@ EmbeddingsOptions embeddingsOptions = new EmbeddingsOptions(new List<string>()
 {
     "<input>"
 });
-Response<Embeddings> response = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
+Result<Embeddings> response = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
 ]]></code>
 This sample shows how to call GetEmbeddingsAsync with all parameters.
 <code><![CDATA[
@@ -29,7 +29,7 @@ EmbeddingsOptions embeddingsOptions = new EmbeddingsOptions(new List<string>()
     User = "<user>",
     InternalNonAzureModelName = "<model>",
 };
-Response<Embeddings> response = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
+Result<Embeddings> response = await client.GetEmbeddingsAsync("<deploymentId>", embeddingsOptions);
 ]]></code></example>
     </member>
     <member name="GetEmbeddings(string,EmbeddingsOptions,CancellationToken)">
@@ -44,7 +44,7 @@ EmbeddingsOptions embeddingsOptions = new EmbeddingsOptions(new List<string>()
 {
     "<input>"
 });
-Response<Embeddings> response = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
+Result<Embeddings> response = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
 ]]></code>
 This sample shows how to call GetEmbeddings with all parameters.
 <code><![CDATA[
@@ -60,7 +60,7 @@ EmbeddingsOptions embeddingsOptions = new EmbeddingsOptions(new List<string>()
     User = "<user>",
     InternalNonAzureModelName = "<model>",
 };
-Response<Embeddings> response = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
+Result<Embeddings> response = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
 ]]></code></example>
     </member>
     <member name="GetEmbeddingsAsync(string,RequestContent,RequestContext)">
@@ -78,7 +78,7 @@ RequestContent content = RequestContent.Create(new
         "<input>"
     },
 });
-Response response = await client.GetEmbeddingsAsync("<deploymentId>", content);
+Result result = await client.GetEmbeddingsAsync("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
@@ -101,7 +101,7 @@ RequestContent content = RequestContent.Create(new
         "<input>"
     },
 });
-Response response = await client.GetEmbeddingsAsync("<deploymentId>", content);
+Result result = await client.GetEmbeddingsAsync("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
@@ -125,7 +125,7 @@ RequestContent content = RequestContent.Create(new
         "<input>"
     },
 });
-Response response = client.GetEmbeddings("<deploymentId>", content);
+Result result = client.GetEmbeddings("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
@@ -148,7 +148,7 @@ RequestContent content = RequestContent.Create(new
         "<input>"
     },
 });
-Response response = client.GetEmbeddings("<deploymentId>", content);
+Result result = client.GetEmbeddings("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("data")[0].GetProperty("embedding")[0].ToString());
@@ -169,7 +169,7 @@ CompletionsOptions completionsOptions = new CompletionsOptions(new List<string>(
 {
     "<prompt>"
 });
-Response<Completions> response = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
+Result<Completions> response = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
 ]]></code>
 This sample shows how to call GetCompletionsAsync with all parameters.
 <code><![CDATA[
@@ -203,7 +203,7 @@ CompletionsOptions completionsOptions = new CompletionsOptions(new List<string>(
     InternalShouldStreamResponse = true,
     InternalNonAzureModelName = "<model>",
 };
-Response<Completions> response = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
+Result<Completions> response = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
 ]]></code></example>
     </member>
     <member name="GetCompletions(string,CompletionsOptions,CancellationToken)">
@@ -218,7 +218,7 @@ CompletionsOptions completionsOptions = new CompletionsOptions(new List<string>(
 {
     "<prompt>"
 });
-Response<Completions> response = client.GetCompletions("<deploymentId>", completionsOptions);
+Result<Completions> response = client.GetCompletions("<deploymentId>", completionsOptions);
 ]]></code>
 This sample shows how to call GetCompletions with all parameters.
 <code><![CDATA[
@@ -252,7 +252,7 @@ CompletionsOptions completionsOptions = new CompletionsOptions(new List<string>(
     InternalShouldStreamResponse = true,
     InternalNonAzureModelName = "<model>",
 };
-Response<Completions> response = client.GetCompletions("<deploymentId>", completionsOptions);
+Result<Completions> response = client.GetCompletions("<deploymentId>", completionsOptions);
 ]]></code></example>
     </member>
     <member name="GetCompletionsAsync(string,RequestContent,RequestContext)">
@@ -270,7 +270,7 @@ RequestContent content = RequestContent.Create(new
         "<prompt>"
     },
 });
-Response response = await client.GetCompletionsAsync("<deploymentId>", content);
+Result result = await client.GetCompletionsAsync("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -319,7 +319,7 @@ RequestContent content = RequestContent.Create(new
     stream = true,
     model = "<model>",
 });
-Response response = await client.GetCompletionsAsync("<deploymentId>", content);
+Result result = await client.GetCompletionsAsync("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -333,10 +333,6 @@ Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("conte
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("text").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("sexual").GetProperty("severity").ToString());
@@ -347,10 +343,6 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_r
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("tokens")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("token_logprobs")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<key>").ToString());
@@ -376,7 +368,7 @@ RequestContent content = RequestContent.Create(new
         "<prompt>"
     },
 });
-Response response = client.GetCompletions("<deploymentId>", content);
+Result result = client.GetCompletions("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -425,7 +417,7 @@ RequestContent content = RequestContent.Create(new
     stream = true,
     model = "<model>",
 });
-Response response = client.GetCompletions("<deploymentId>", content);
+Result result = client.GetCompletions("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -439,10 +431,6 @@ Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("conte
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("text").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("sexual").GetProperty("severity").ToString());
@@ -453,10 +441,6 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_r
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("tokens")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("token_logprobs")[0].ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("logprobs").GetProperty("top_logprobs")[0].GetProperty("<key>").ToString());
@@ -488,7 +472,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
 });
-Response response = await client.GetChatCompletionsAsync("<deploymentId>", content);
+Result result = await client.GetChatCompletionsAsync("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -564,7 +548,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
 });
-Response response = await client.GetChatCompletionsAsync("<deploymentId>", content);
+Result result = await client.GetChatCompletionsAsync("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -589,10 +573,6 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_r
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("prompt_index").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("sexual").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("sexual").GetProperty("filtered").ToString());
@@ -602,10 +582,6 @@ Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("conte
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
@@ -630,7 +606,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
 });
-Response response = client.GetChatCompletions("<deploymentId>", content);
+Result result = client.GetChatCompletions("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -706,7 +682,7 @@ RequestContent content = RequestContent.Create(new
         }
     },
 });
-Response response = client.GetChatCompletions("<deploymentId>", content);
+Result result = client.GetChatCompletions("<deploymentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -731,10 +707,6 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_r
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("prompt_index").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("sexual").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("sexual").GetProperty("filtered").ToString());
@@ -744,10 +716,6 @@ Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("conte
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("hate").GetProperty("filtered").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("severity").ToString());
 Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("self_harm").GetProperty("filtered").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("prompt_annotations")[0].GetProperty("content_filter_results").GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("completion_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("prompt_tokens").ToString());
 Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToString());
@@ -757,578 +725,6 @@ Console.WriteLine(result.GetProperty("usage").GetProperty("total_tokens").ToStri
     <member name="GetChatCompletionsWithAzureExtensions(string,ChatCompletionsOptions,CancellationToken)" />
     <member name="GetChatCompletionsWithAzureExtensionsAsync(string,RequestContent,RequestContext)" />
     <member name="GetChatCompletionsWithAzureExtensions(string,RequestContent,RequestContext)" />
-    <member name="GetAudioTranscriptionAsPlainTextAsync(string,AudioTranscriptionOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsPlainTextAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()));
-Response<string> response = await client.GetAudioTranscriptionAsPlainTextAsync("<deploymentId>", audioTranscriptionOptions);
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsPlainTextAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Language = "<language>",
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<string> response = await client.GetAudioTranscriptionAsPlainTextAsync("<deploymentId>", audioTranscriptionOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranscriptionAsPlainText(string,AudioTranscriptionOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsPlainText.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()));
-Response<string> response = client.GetAudioTranscriptionAsPlainText("<deploymentId>", audioTranscriptionOptions);
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsPlainText with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Language = "<language>",
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<string> response = client.GetAudioTranscriptionAsPlainText("<deploymentId>", audioTranscriptionOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranscriptionAsPlainTextAsync(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsPlainTextAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = await client.GetAudioTranscriptionAsPlainTextAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsPlainTextAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    language = "<language>",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = await client.GetAudioTranscriptionAsPlainTextAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
-    <member name="GetAudioTranscriptionAsPlainText(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsPlainText and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = client.GetAudioTranscriptionAsPlainText("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsPlainText with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    language = "<language>",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = client.GetAudioTranscriptionAsPlainText("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
-    <member name="GetAudioTranscriptionAsResponseObjectAsync(string,AudioTranscriptionOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsResponseObjectAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()));
-Response<AudioTranscription> response = await client.GetAudioTranscriptionAsResponseObjectAsync("<deploymentId>", audioTranscriptionOptions);
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsResponseObjectAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Language = "<language>",
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<AudioTranscription> response = await client.GetAudioTranscriptionAsResponseObjectAsync("<deploymentId>", audioTranscriptionOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranscriptionAsResponseObject(string,AudioTranscriptionOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsResponseObject.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()));
-Response<AudioTranscription> response = client.GetAudioTranscriptionAsResponseObject("<deploymentId>", audioTranscriptionOptions);
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsResponseObject with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranscriptionFormat.Json,
-    Language = "<language>",
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<AudioTranscription> response = client.GetAudioTranscriptionAsResponseObject("<deploymentId>", audioTranscriptionOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranscriptionAsResponseObjectAsync(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsResponseObjectAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = await client.GetAudioTranscriptionAsResponseObjectAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsResponseObjectAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    language = "<language>",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = await client.GetAudioTranscriptionAsResponseObjectAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code></example>
-    </member>
-    <member name="GetAudioTranscriptionAsResponseObject(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranscriptionAsResponseObject and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = client.GetAudioTranscriptionAsResponseObject("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranscriptionAsResponseObject with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    language = "<language>",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = client.GetAudioTranscriptionAsResponseObject("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsPlainTextAsync(string,AudioTranslationOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranslationAsPlainTextAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()));
-Response<string> response = await client.GetAudioTranslationAsPlainTextAsync("<deploymentId>", audioTranslationOptions);
-]]></code>
-This sample shows how to call GetAudioTranslationAsPlainTextAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranslationFormat.Json,
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<string> response = await client.GetAudioTranslationAsPlainTextAsync("<deploymentId>", audioTranslationOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsPlainText(string,AudioTranslationOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranslationAsPlainText.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()));
-Response<string> response = client.GetAudioTranslationAsPlainText("<deploymentId>", audioTranslationOptions);
-]]></code>
-This sample shows how to call GetAudioTranslationAsPlainText with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranslationFormat.Json,
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<string> response = client.GetAudioTranslationAsPlainText("<deploymentId>", audioTranslationOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsPlainTextAsync(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranslationAsPlainTextAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = await client.GetAudioTranslationAsPlainTextAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetAudioTranslationAsPlainTextAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = await client.GetAudioTranslationAsPlainTextAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsPlainText(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranslationAsPlainText and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = client.GetAudioTranslationAsPlainText("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetAudioTranslationAsPlainText with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = client.GetAudioTranslationAsPlainText("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsResponseObjectAsync(string,AudioTranslationOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranslationAsResponseObjectAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()));
-Response<AudioTranslation> response = await client.GetAudioTranslationAsResponseObjectAsync("<deploymentId>", audioTranslationOptions);
-]]></code>
-This sample shows how to call GetAudioTranslationAsResponseObjectAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranslationFormat.Json,
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<AudioTranslation> response = await client.GetAudioTranslationAsResponseObjectAsync("<deploymentId>", audioTranslationOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsResponseObject(string,AudioTranslationOptions,CancellationToken)">
-      <example>
-This sample shows how to call GetAudioTranslationAsResponseObject.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()));
-Response<AudioTranslation> response = client.GetAudioTranslationAsResponseObject("<deploymentId>", audioTranslationOptions);
-]]></code>
-This sample shows how to call GetAudioTranslationAsResponseObject with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(BinaryData.FromObjectAsJson(new object()))
-{
-    ResponseFormat = AudioTranslationFormat.Json,
-    Prompt = "<prompt>",
-    Temperature = 123.45F,
-    InternalNonAzureModelName = "<model>",
-};
-Response<AudioTranslation> response = client.GetAudioTranslationAsResponseObject("<deploymentId>", audioTranslationOptions);
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsResponseObjectAsync(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranslationAsResponseObjectAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = await client.GetAudioTranslationAsResponseObjectAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranslationAsResponseObjectAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = await client.GetAudioTranslationAsResponseObjectAsync("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code></example>
-    </member>
-    <member name="GetAudioTranslationAsResponseObject(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call GetAudioTranslationAsResponseObject and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-});
-Response response = client.GetAudioTranslationAsResponseObject("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-This sample shows how to call GetAudioTranslationAsResponseObject with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-OpenAIClient client = new OpenAIClient(endpoint, credential);
-
-RequestContent content = RequestContent.Create(new
-{
-    file = new object(),
-    response_format = "json",
-    prompt = "<prompt>",
-    temperature = 123.45F,
-    model = "<model>",
-});
-Response response = client.GetAudioTranslationAsResponseObject("<deploymentId>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("task").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("duration").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("start").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("end").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("text").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("temperature").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("avg_logprob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("compression_ratio").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("no_speech_prob").ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("tokens")[0].ToString());
-Console.WriteLine(result.GetProperty("segments")[0].GetProperty("seek").ToString());
-]]></code></example>
-    </member>
     <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)" />
     <member name="BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)" />
     <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,RequestContent,RequestContext)" />

@@ -8,9 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Rest.Shared;
+using System.ServiceModel.Rest.Shared.Core.Serialization;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary>
     /// The configuration information for a chat completions request.
@@ -29,13 +31,13 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
         public ChatCompletionsOptions(IEnumerable<ChatMessage> messages)
         {
-            Argument.AssertNotNull(messages, nameof(messages));
+            ClientUtilities.AssertNotNull(messages, nameof(messages));
 
             Messages = messages.ToList();
-            Functions = new ChangeTrackingList<FunctionDefinition>();
-            InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
-            StopSequences = new ChangeTrackingList<string>();
-            InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatExtensionConfiguration>();
+            Functions = new OptionalList<FunctionDefinition>();
+            InternalStringKeyedTokenSelectionBiases = new OptionalDictionary<string, int>();
+            StopSequences = new OptionalList<string>();
+            InternalAzureExtensionsDataSources = new OptionalList<AzureChatExtensionConfiguration>();
         }
 
         /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>

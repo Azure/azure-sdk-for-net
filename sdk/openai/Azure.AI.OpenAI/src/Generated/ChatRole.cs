@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> A description of the intended purpose of a message within a chat completions interaction. </summary>
     internal readonly partial struct ChatRole : IEquatable<ChatRole>

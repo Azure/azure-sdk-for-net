@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> The state of a job or item. </summary>
     internal readonly partial struct AzureOpenAIOperationState : IEquatable<AzureOpenAIOperationState>

@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ServiceModel.Rest;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     public partial class Embeddings
     {
@@ -45,7 +46,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Embeddings FromResponse(Response response)
+        internal static Embeddings FromResponse(Result response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeEmbeddings(document.RootElement);

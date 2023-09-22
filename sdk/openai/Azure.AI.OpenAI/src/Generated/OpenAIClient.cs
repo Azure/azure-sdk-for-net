@@ -5,32 +5,33 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
+using System.ServiceModel.Rest.Shared;
+using System.ServiceModel.Rest.Shared.Core;
+using System.ServiceModel.Rest.Shared.Core.Pipeline;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     // Data plane generated client.
     /// <summary> Azure OpenAI APIs for completions and search. </summary>
     public partial class OpenAIClient
     {
-        private const string AuthorizationHeader = "api-key";
-        private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
+        private const string AuthorizationHeader = "Authorization";
+        private readonly KeyCredential _keyCredential;
+        private readonly MessagePipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        internal TelemetrySource ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        public virtual MessagePipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of OpenAIClient for mocking. </summary>
         protected OpenAIClient()
@@ -44,18 +45,7 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new OpenAIClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of OpenAIClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new OpenAIClientOptions())
+        public OpenAIClient(Uri endpoint, KeyCredential credential) : this(endpoint, credential, new OpenAIClientOptions())
         {
         }
 
@@ -67,36 +57,15 @@ namespace Azure.AI.OpenAI
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, AzureKeyCredential credential, OpenAIClientOptions options)
+        public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            ClientUtilities.AssertNotNull(endpoint, nameof(endpoint));
+            ClientUtilities.AssertNotNull(credential, nameof(credential));
             options ??= new OpenAIClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+            ClientDiagnostics = new TelemetrySource(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
-        /// <summary> Initializes a new instance of OpenAIClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public OpenAIClient(Uri endpoint, TokenCredential credential, OpenAIClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new OpenAIClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new KeyCredentialPolicy(_keyCredential, AuthorizationHeader, "Bearer") }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -112,14 +81,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddingsAsync(string,EmbeddingsOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(string deploymentId, EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Result<Embeddings>> GetEmbeddingsAsync(string deploymentId, EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEmbeddingsAsync(deploymentId, embeddingsOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Embeddings.FromResponse(response), response);
+            Result result = await GetEmbeddingsAsync(deploymentId, embeddingsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Result.FromValue(Embeddings.FromResponse(result), result);
         }
 
         /// <summary> Return the embeddings for a given prompt. </summary>
@@ -133,14 +102,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="embeddingsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddings(string,EmbeddingsOptions,CancellationToken)']/*" />
-        public virtual Response<Embeddings> GetEmbeddings(string deploymentId, EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
+        public virtual Result<Embeddings> GetEmbeddings(string deploymentId, EmbeddingsOptions embeddingsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEmbeddings(deploymentId, embeddingsOptions.ToRequestContent(), context);
-            return Response.FromValue(Embeddings.FromResponse(response), response);
+            Result result = GetEmbeddings(deploymentId, embeddingsOptions.ToRequestContent(), context);
+            return Result.FromValue(Embeddings.FromResponse(result), result);
         }
 
         /// <summary>
@@ -166,16 +135,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddingsAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetEmbeddingsAsync(string deploymentId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Result> GetEmbeddingsAsync(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetEmbeddings");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEmbeddingsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetEmbeddingsRequest(deploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -208,16 +177,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetEmbeddings(string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetEmbeddings(string deploymentId, RequestContent content, RequestContext context = null)
+        public virtual Result GetEmbeddings(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetEmbeddings");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEmbeddingsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetEmbeddingsRequest(deploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -242,14 +211,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletionsAsync(string,CompletionsOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<Completions>> GetCompletionsAsync(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Result<Completions>> GetCompletionsAsync(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCompletionsAsync(deploymentId, completionsOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Completions.FromResponse(response), response);
+            Result result = await GetCompletionsAsync(deploymentId, completionsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Result.FromValue(Completions.FromResponse(result), result);
         }
 
         /// <summary>
@@ -267,14 +236,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="completionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletions(string,CompletionsOptions,CancellationToken)']/*" />
-        public virtual Response<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+        public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
-            return Response.FromValue(Completions.FromResponse(response), response);
+            Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+            return Result.FromValue(Completions.FromResponse(result), result);
         }
 
         /// <summary>
@@ -302,16 +271,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletionsAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetCompletionsAsync(string deploymentId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Result> GetCompletionsAsync(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -346,16 +315,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetCompletions(string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetCompletions(string deploymentId, RequestContent content, RequestContext context = null)
+        public virtual Result GetCompletions(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -380,14 +349,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsAsync(string,ChatCompletionsOptions,CancellationToken)']/*" />
-        internal virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Result<ChatCompletions>> GetChatCompletionsAsync(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetChatCompletionsAsync(deploymentId, chatCompletionsOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            Result result = await GetChatCompletionsAsync(deploymentId, chatCompletionsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Result.FromValue(ChatCompletions.FromResponse(result), result);
         }
 
         /// <summary>
@@ -405,14 +374,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletions(string,ChatCompletionsOptions,CancellationToken)']/*" />
-        internal virtual Response<ChatCompletions> GetChatCompletions(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
+        internal virtual Result<ChatCompletions> GetChatCompletions(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetChatCompletions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            Result result = GetChatCompletions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
+            return Result.FromValue(ChatCompletions.FromResponse(result), result);
         }
 
         // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
@@ -436,16 +405,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetChatCompletionsAsync(string deploymentId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Result> GetChatCompletionsAsync(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetChatCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetChatCompletionsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetChatCompletionsRequest(deploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -476,16 +445,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletions(string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetChatCompletions(string deploymentId, RequestContent content, RequestContext context = null)
+        public virtual Result GetChatCompletions(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetChatCompletions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetChatCompletionsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetChatCompletionsRequest(deploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -510,14 +479,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensionsAsync(string,ChatCompletionsOptions,CancellationToken)']/*" />
-        internal virtual async Task<Response<ChatCompletions>> GetChatCompletionsWithAzureExtensionsAsync(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
+        internal virtual async Task<Result<ChatCompletions>> GetChatCompletionsWithAzureExtensionsAsync(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetChatCompletionsWithAzureExtensionsAsync(deploymentId, chatCompletionsOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            Result result = await GetChatCompletionsWithAzureExtensionsAsync(deploymentId, chatCompletionsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Result.FromValue(ChatCompletions.FromResponse(result), result);
         }
 
         /// <summary>
@@ -535,14 +504,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="chatCompletionsOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensions(string,ChatCompletionsOptions,CancellationToken)']/*" />
-        internal virtual Response<ChatCompletions> GetChatCompletionsWithAzureExtensions(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
+        internal virtual Result<ChatCompletions> GetChatCompletionsWithAzureExtensions(string deploymentId, ChatCompletionsOptions chatCompletionsOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetChatCompletionsWithAzureExtensions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            Result result = GetChatCompletionsWithAzureExtensions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
+            return Response.FromValue(ChatCompletions.FromResponse(result), result);
         }
 
         // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
@@ -571,16 +540,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensionsAsync(string,RequestContent,RequestContext)']/*" />
-        internal virtual async Task<Response> GetChatCompletionsWithAzureExtensionsAsync(string deploymentId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Result> GetChatCompletionsWithAzureExtensionsAsync(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsWithAzureExtensions");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetChatCompletionsWithAzureExtensions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetChatCompletionsWithAzureExtensionsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetChatCompletionsWithAzureExtensionsRequest(deploymentId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -616,16 +585,16 @@ namespace Azure.AI.OpenAI
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetChatCompletionsWithAzureExtensions(string,RequestContent,RequestContext)']/*" />
-        internal virtual Response GetChatCompletionsWithAzureExtensions(string deploymentId, RequestContent content, RequestContext context = null)
+        internal virtual Result GetChatCompletionsWithAzureExtensions(string deploymentId, RequestBody content, PipelineOptions context = null)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
+            ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            ClientUtilities.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsWithAzureExtensions");
+            using var scope = ClientDiagnostics.CreateSpan("OpenAIClient.GetChatCompletionsWithAzureExtensions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetChatCompletionsWithAzureExtensionsRequest(deploymentId, content, context);
+                using RestMessage message = CreateGetChatCompletionsWithAzureExtensionsRequest(deploymentId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -635,772 +604,108 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary>
-        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranscriptionOptions"> The configuration information for an audio transcription request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranscriptionOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsPlainTextAsync(string,AudioTranscriptionOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<string>> GetAudioTranscriptionAsPlainTextAsync(string deploymentId, AudioTranscriptionOptions audioTranscriptionOptions, CancellationToken cancellationToken = default)
+        internal RestMessage CreateGetEmbeddingsRequest(string deploymentId, RequestBody content, PipelineOptions context)
         {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAudioTranscriptionAsPlainTextAsync(deploymentId, audioTranscriptionOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
-        /// <summary>
-        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranscriptionOptions"> The configuration information for an audio transcription request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranscriptionOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsPlainText(string,AudioTranscriptionOptions,CancellationToken)']/*" />
-        public virtual Response<string> GetAudioTranscriptionAsPlainText(string deploymentId, AudioTranscriptionOptions audioTranscriptionOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAudioTranscriptionAsPlainText(deploymentId, audioTranscriptionOptions.ToRequestContent(), context);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranscriptionAsPlainTextAsync(string,AudioTranscriptionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsPlainTextAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetAudioTranscriptionAsPlainTextAsync(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscriptionAsPlainText");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranscriptionAsPlainTextRequest(deploymentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranscriptionAsPlainText(string,AudioTranscriptionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsPlainText(string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetAudioTranscriptionAsPlainText(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscriptionAsPlainText");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranscriptionAsPlainTextRequest(deploymentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranscriptionOptions"> The configuration information for an audio transcription request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranscriptionOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsResponseObjectAsync(string,AudioTranscriptionOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<AudioTranscription>> GetAudioTranscriptionAsResponseObjectAsync(string deploymentId, AudioTranscriptionOptions audioTranscriptionOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAudioTranscriptionAsResponseObjectAsync(deploymentId, audioTranscriptionOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(AudioTranscription.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranscriptionOptions"> The configuration information for an audio transcription request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranscriptionOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsResponseObject(string,AudioTranscriptionOptions,CancellationToken)']/*" />
-        public virtual Response<AudioTranscription> GetAudioTranscriptionAsResponseObject(string deploymentId, AudioTranscriptionOptions audioTranscriptionOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAudioTranscriptionAsResponseObject(deploymentId, audioTranscriptionOptions.ToRequestContent(), context);
-            return Response.FromValue(AudioTranscription.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranscriptionAsResponseObjectAsync(string,AudioTranscriptionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsResponseObjectAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetAudioTranscriptionAsResponseObjectAsync(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscriptionAsResponseObject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranscriptionAsResponseObjectRequest(deploymentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
-        /// written language corresponding to the language it was spoken in.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranscriptionAsResponseObject(string,AudioTranscriptionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranscriptionAsResponseObject(string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetAudioTranscriptionAsResponseObject(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscriptionAsResponseObject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranscriptionAsResponseObjectRequest(deploymentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranslationOptions"> The configuration information for an audio translation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsPlainTextAsync(string,AudioTranslationOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<string>> GetAudioTranslationAsPlainTextAsync(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAudioTranslationAsPlainTextAsync(deploymentId, audioTranslationOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
-        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranslationOptions"> The configuration information for an audio translation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsPlainText(string,AudioTranslationOptions,CancellationToken)']/*" />
-        public virtual Response<string> GetAudioTranslationAsPlainText(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAudioTranslationAsPlainText(deploymentId, audioTranslationOptions.ToRequestContent(), context);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets English language transcribed text and associated metadata from provided spoken audio data.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranslationAsPlainTextAsync(string,AudioTranslationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsPlainTextAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetAudioTranslationAsPlainTextAsync(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslationAsPlainText");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranslationAsPlainTextRequest(deploymentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets English language transcribed text and associated metadata from provided spoken audio data.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranslationAsPlainText(string,AudioTranslationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsPlainText(string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetAudioTranslationAsPlainText(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslationAsPlainText");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranslationAsPlainTextRequest(deploymentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranslationOptions"> The configuration information for an audio translation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsResponseObjectAsync(string,AudioTranslationOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<AudioTranslation>> GetAudioTranslationAsResponseObjectAsync(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAudioTranslationAsResponseObjectAsync(deploymentId, audioTranslationOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(AudioTranslation.FromResponse(response), response);
-        }
-
-        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="audioTranslationOptions"> The configuration information for an audio translation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsResponseObject(string,AudioTranslationOptions,CancellationToken)']/*" />
-        public virtual Response<AudioTranslation> GetAudioTranslationAsResponseObject(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAudioTranslationAsResponseObject(deploymentId, audioTranslationOptions.ToRequestContent(), context);
-            return Response.FromValue(AudioTranslation.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets English language transcribed text and associated metadata from provided spoken audio data.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranslationAsResponseObjectAsync(string,AudioTranslationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsResponseObjectAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetAudioTranslationAsResponseObjectAsync(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslationAsResponseObject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranslationAsResponseObjectRequest(deploymentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets English language transcribed text and associated metadata from provided spoken audio data.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAudioTranslationAsResponseObject(string,AudioTranslationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='GetAudioTranslationAsResponseObject(string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetAudioTranslationAsResponseObject(string deploymentId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslationAsResponseObject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAudioTranslationAsResponseObjectRequest(deploymentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Starts the generation of a batch of images from a text caption. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
-        internal virtual async Task<Operation<BatchImageGenerationOperationResponse>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
-        }
-
-        /// <summary> Starts the generation of a batch of images from a text caption. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
-        internal virtual Operation<BatchImageGenerationOperationResponse> BeginAzureBatchImageGeneration(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions.ToRequestContent(), context);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
-        }
-
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
-        /// <summary>
-        /// [Protocol Method] Starts the generation of a batch of images from a text caption
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGenerationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
-        internal virtual async Task<Operation<BinaryData>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.BeginAzureBatchImageGeneration");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateBeginAzureBatchImageGenerationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
-        /// <summary>
-        /// [Protocol Method] Starts the generation of a batch of images from a text caption
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGeneration(WaitUntil,RequestContent,RequestContext)']/*" />
-        internal virtual Operation<BinaryData> BeginAzureBatchImageGeneration(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.BeginAzureBatchImageGeneration");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateBeginAzureBatchImageGenerationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateGetEmbeddingsRequest(string deploymentId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = new HttpMessage(_pipeline.CreateRestMessage(context, ResponseClassifier200));
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
+            uri.AppendRawPathOrQueryOrHostOrScheme("/openai", false);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentId, true);
             uri.AppendPath("/embeddings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = new RawRequestUri(uri);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
+            request.Content = new RequestBodyContent(content);
             return message;
         }
 
-        internal HttpMessage CreateGetCompletionsRequest(string deploymentId, RequestContent content, RequestContext context)
+        internal RestMessage CreateGetCompletionsRequest(string deploymentId, RequestBody content, PipelineOptions context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = new HttpMessage(_pipeline.CreateRestMessage(context, ResponseClassifier200));
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
+
+            // TODO: This is a manual hack to make the endpoint point to the
+            // public non-Azure service.
+            // Note: Possible need to change generation to add the version differently,
+            // because they don't use the Azure `?api-version=<version>` convention?
+
+            //uri.AppendRaw("/openai", false);
+            //uri.AppendPath("/deployments/", false);
+            //uri.AppendPath(deploymentId, true);
+            //uri.AppendPath("/completions", false);
+            //uri.AppendQuery("api-version", _apiVersion, true);
+
+            // <hack>
+            uri.AppendPath("v1"); // <-- Note different service version convention.
             uri.AppendPath("/completions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            // </hack>
+
+            request.Uri = new RawRequestUri(uri);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
+            request.Content = new RequestBodyContent(content);
             return message;
         }
 
-        internal HttpMessage CreateGetChatCompletionsRequest(string deploymentId, RequestContent content, RequestContext context)
+        internal RestMessage CreateGetChatCompletionsRequest(string deploymentId, RequestBody content, PipelineOptions context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = new HttpMessage(_pipeline.CreateRestMessage(context, ResponseClassifier200));
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
+            uri.AppendRawPathOrQueryOrHostOrScheme("/openai", false);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentId, true);
             uri.AppendPath("/chat/completions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = new RawRequestUri(uri);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
+            request.Content = new RequestBodyContent(content);
             return message;
         }
 
-        internal HttpMessage CreateGetChatCompletionsWithAzureExtensionsRequest(string deploymentId, RequestContent content, RequestContext context)
+        internal RestMessage CreateGetChatCompletionsWithAzureExtensionsRequest(string deploymentId, RequestBody content, PipelineOptions context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = new HttpMessage(_pipeline.CreateRestMessage(context, ResponseClassifier200));
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
+            uri.AppendRawPathOrQueryOrHostOrScheme("/openai", false);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentId, true);
             uri.AppendPath("/extensions/chat/completions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = new RawRequestUri(uri);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
+            request.Content = new RequestBodyContent(content);
             return message;
         }
 
-        internal HttpMessage CreateBeginAzureBatchImageGenerationRequest(RequestContent content, RequestContext context)
+        internal RestMessage CreateBeginAzureBatchImageGenerationRequest(RequestBody content, PipelineOptions context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var message = new HttpMessage(_pipeline.CreateRestMessage(context, ResponseClassifier202));
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
+            uri.AppendRawPathOrQueryOrHostOrScheme("/openai", false);
             uri.AppendPath("/images/generations:submit", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = new RawRequestUri(uri);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAudioTranscriptionAsPlainTextRequest(string deploymentId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
-            uri.AppendPath("/audio/transcriptions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAudioTranscriptionAsResponseObjectRequest(string deploymentId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
-            uri.AppendPath("/audio/transcriptions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "multipart/form-data");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAudioTranslationAsPlainTextRequest(string deploymentId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
-            uri.AppendPath("/audio/translations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAudioTranslationAsResponseObjectRequest(string deploymentId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
-            uri.AppendPath("/audio/translations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "multipart/form-data");
-            request.Content = content;
+            request.Content = new RequestBodyContent(content);
             return message;
         }
 

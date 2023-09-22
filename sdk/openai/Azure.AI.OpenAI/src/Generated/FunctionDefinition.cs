@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
+using System.ServiceModel.Rest.Shared;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Platform.OpenAI
 {
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
     internal partial class FunctionDefinition
@@ -18,7 +19,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FunctionDefinition(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            ClientUtilities.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
