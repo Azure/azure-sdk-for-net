@@ -251,7 +251,7 @@ namespace System
         /// <param name="options">The <see cref="JsonSerializerOptions"/> to use when serializing to JSON.</param>
         /// <returns>The data converted to the specified type.</returns>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public T ToObjectFromJson<T>(JsonSerializerOptions? options = default)
+        public T? ToObjectFromJson<T>(JsonSerializerOptions? options = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             return (T)JsonSerializer.Deserialize(_bytes.Span, typeof(T), options);
