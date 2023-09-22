@@ -18,8 +18,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("slice"u8);
-            JsonSerializer.Serialize(writer, Slice); writer.WritePropertyName("defaultDataNetwork"u8);
-            JsonSerializer.Serialize(writer, DefaultDataNetwork); writer.WritePropertyName("dataNetworkConfigurations"u8);
+            JsonSerializer.Serialize(writer, Slice);
+            writer.WritePropertyName("defaultDataNetwork"u8);
+            JsonSerializer.Serialize(writer, DefaultDataNetwork);
+            writer.WritePropertyName("dataNetworkConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
             {
