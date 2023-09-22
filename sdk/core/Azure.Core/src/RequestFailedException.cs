@@ -94,6 +94,10 @@ namespace Azure
                 set => throw new NotImplementedException();
             }
 
+            public override void Dispose()
+            {
+            }
+
             protected override bool TryGetHeader(string name, out string? value) => throw new NotImplementedException();
         }
 
