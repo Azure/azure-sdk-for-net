@@ -44,6 +44,14 @@ The `DeploymentEnvironmentsClient` is scoped to a single project, and provides a
 
 Use these clients to interact with DevCenter resources based on your scenario.
 
+```C# Snippet:Azure_DevCenter_CreateClients_Scenario
+var credential = new DefaultAzureCredential();
+
+var devCenterClient = new DevCenterClient(endpoint, credential);
+var devBoxesClient = new DevBoxesClient(endpoint, credential);
+var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
+```
+
 ### Thread safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
