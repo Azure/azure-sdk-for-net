@@ -18,7 +18,7 @@ public class OpenAIClient
     {
         _options = options ?? new OpenAIClientOptions();
         _credential = credential;
-        _pipeline = MessagePipeline.Create(_options);
+        _pipeline = MessagePipeline.Create(new MessagePipelineTransport(), _options);
     }
 
     public Result GetCompletions(string prompt, RequestOptions options)

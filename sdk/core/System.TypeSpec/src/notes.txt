@@ -1,21 +1,26 @@
+Architecture:
+
 Allow efficient custom policies per request, i..e pipleline in options
 Allow UTF8 implementations
-Allow System.IO.Pipelines
 Enable HTTP/2, maybe 3
-Change IResponse to class
-Change IPipelinePolicy to class
+Freeze options
+Can we make some policies be read-only, i.e. prevent them from mutating the message
+
+Change IPipelinePolicy to class, but this means all existing policies need to inherit from it.
+
 Solve buffering problem
 Make options configurable
 Add expando properties to messages
-Freeze options
+
 Make policies public
 Measure perfromance and allocation
 Verify that LROs can be added
 Verify that pageables can be added
 Allow rotating client and process-wide cancellation tokens
 Model serialization
-Can we make some policies be read-only, i.e. prevent them from mutating the message
+
 Can we support custom pipelines?
+Allow System.IO.Pipelines
 What about:
 - ETag, conditions, etc.
 - dynamic

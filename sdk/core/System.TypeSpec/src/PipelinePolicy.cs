@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core;
 
-// TODO: can we make it a class?
+// TODO: can we make it a class? ... but it means all existing polices need to inherit from it.
 public interface IPipelinePolicy<TMessage>
 {
     void Process(TMessage message, ReadOnlyMemory<IPipelinePolicy<TMessage>> pipeline);

@@ -10,14 +10,26 @@ using Azure.Core.Pipeline;
 
 namespace System.ServiceModel.Rest;
 
-internal class MessagePipelineTransport
+/// <summary>
+/// TBD.
+/// </summary>
+public class MessagePipelineTransport
     : PipelineTransport<PipelineMessage>, IDisposable
 {
     private HttpClientTransport _transport;
 
+    /// <summary>
+    /// TBD.
+    /// </summary>
     public MessagePipelineTransport()
         => _transport = new HttpClientTransport();
 
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="verb"></param>
+    /// <param name="uri"></param>
+    /// <returns></returns>
     public override PipelineMessage CreateMessage(string verb, Uri uri)
     {
         Request request = _transport.CreateRequest();
@@ -27,8 +39,15 @@ internal class MessagePipelineTransport
         return message;
     }
 
+    /// <summary>
+    /// TBD.
+    /// </summary>
     public void Dispose() => _transport.Dispose();
 
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="message"></param>
     public override void Process(PipelineMessage message)
     {
         HttpMessage adapted = ToHttpMessage(message);
@@ -36,6 +55,11 @@ internal class MessagePipelineTransport
         message.Response = FromHttpMessage(adapted);
     }
 
+    /// <summary>
+    /// TBD>
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
     public async override ValueTask ProcessAsync(PipelineMessage message)
     {
         HttpMessage adapted = ToHttpMessage(message);
