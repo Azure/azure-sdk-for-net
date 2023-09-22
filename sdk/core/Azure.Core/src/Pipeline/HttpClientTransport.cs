@@ -709,6 +709,7 @@ namespace Azure.Core.Pipeline
             }
 
             // ServerCertificateCustomValidationCallback
+#if !NET462
             if (options.ServerCertificateCustomValidationCallback != null)
             {
                 httpHandler.ServerCertificateCustomValidationCallback = (_, certificate2, x509Chain, sslPolicyErrors) =>
@@ -720,8 +721,9 @@ namespace Azure.Core.Pipeline
             // Set ClientCertificates
             foreach (var cert in options.ClientCertificates)
             {
-               httpHandler.ClientCertificates.Add(cert);
+                httpHandler.ClientCertificates.Add(cert);
             }
+#endif
             return httpHandler;
         }
 #endif

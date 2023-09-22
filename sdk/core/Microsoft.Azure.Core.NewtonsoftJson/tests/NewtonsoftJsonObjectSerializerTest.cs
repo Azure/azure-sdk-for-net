@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
                 ContractResolver = _resolver,
                 Converters = new[]
                 {
-                    new StringEnumConverter(true),
+                    new StringEnumConverter(new CamelCaseNamingStrategy(), true)
                 },
             });
 

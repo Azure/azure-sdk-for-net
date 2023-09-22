@@ -71,10 +71,10 @@ namespace Azure.Core.Pipeline
                 {
                     case HttpClientHandler httpClientHandler:
                         // Only change when the default runtime limit is used
-                        if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
-                        {
-                            httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
-                        }
+                        // if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+                        // {
+                        //     httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+                        // }
                         break;
 #if NETCOREAPP
                 case SocketsHttpHandler socketsHttpHandler:

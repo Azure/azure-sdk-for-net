@@ -62,7 +62,7 @@ namespace Azure.Core.Serialization
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> or <paramref name="returnType"/> is null.</exception>
-        public override object Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
+        public override object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(stream, nameof(stream));
             Argument.AssertNotNull(returnType, nameof(returnType));
