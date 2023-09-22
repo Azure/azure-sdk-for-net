@@ -28,6 +28,12 @@ namespace System.ServiceModel.Rest
         protected RequestErrorException(System.ServiceModel.Rest.Result result, string message, System.Exception? innerException) { }
         public int Status { get { throw null; } }
     }
+    public abstract partial class RestRequest : System.IDisposable
+    {
+        protected RestRequest() { }
+        public abstract void Dispose();
+        protected internal abstract void SetHeader(string name, string value);
+    }
     public abstract partial class Result : System.IDisposable
     {
         protected Result() { }
