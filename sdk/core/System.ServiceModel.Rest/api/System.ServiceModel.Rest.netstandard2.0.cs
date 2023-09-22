@@ -109,7 +109,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         protected PipelinePolicy() { }
     }
 }
-namespace System.ServiceModel.Rest.Shared
+namespace System.ServiceModel.Rest.Experimental
 {
     public partial class ClientUtilities
     {
@@ -123,7 +123,7 @@ namespace System.ServiceModel.Rest.Shared
         public KeyCredentialPolicy() { }
     }
 }
-namespace System.ServiceModel.Rest.Shared.Core
+namespace System.ServiceModel.Rest.Experimental.Core
 {
     public partial class RequestUri
     {
@@ -148,7 +148,7 @@ namespace System.ServiceModel.Rest.Shared.Core
         public virtual System.Uri ToUri() { throw null; }
     }
 }
-namespace System.ServiceModel.Rest.Shared.Core.Pipeline
+namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 {
     public static partial class PipelineProtocolExtensions
     {
@@ -158,7 +158,7 @@ namespace System.ServiceModel.Rest.Shared.Core.Pipeline
         public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Result> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.MessagePipeline pipeline, System.ServiceModel.Rest.Core.RestMessage message, System.ServiceModel.Rest.PipelineOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
-namespace System.ServiceModel.Rest.Shared.Core.Serialization
+namespace System.ServiceModel.Rest.Experimental.Core.Serialization
 {
     public partial interface IUtf8JsonWriteable
     {
@@ -179,8 +179,8 @@ namespace System.ServiceModel.Rest.Shared.Core.Serialization
     public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
     {
         public OptionalDictionary() { }
-        public OptionalDictionary(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optionalDictionary) { }
-        public OptionalDictionary(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optionalDictionary) { }
+        public OptionalDictionary(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optionalDictionary) { }
+        public OptionalDictionary(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optionalDictionary) { }
         public int Count { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public bool IsUndefined { get { throw null; } }
@@ -204,8 +204,8 @@ namespace System.ServiceModel.Rest.Shared.Core.Serialization
     public partial class OptionalList<T> : System.Collections.Generic.ICollection<T>, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T>, System.Collections.IEnumerable
     {
         public OptionalList() { }
-        public OptionalList(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optionalList) { }
-        public OptionalList(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optionalList) { }
+        public OptionalList(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optionalList) { }
+        public OptionalList(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optionalList) { }
         public int Count { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public bool IsUndefined { get { throw null; } }
@@ -231,12 +231,12 @@ namespace System.ServiceModel.Rest.Shared.Core.Serialization
         public static bool IsDefined(string value) { throw null; }
         public static bool IsDefined(System.Text.Json.JsonElement value) { throw null; }
         public static bool IsDefined<T>(T? value) where T : struct { throw null; }
-        public static System.Collections.Generic.IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optional) { throw null; }
-        public static System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optional) { throw null; }
-        public static System.Collections.Generic.IList<T> ToList<T>(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optional) { throw null; }
-        public static System.Collections.Generic.IReadOnlyList<T> ToList<T>(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optional) { throw null; }
-        public static T? ToNullable<T>(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<T?> optional) where T : struct { throw null; }
-        public static T? ToNullable<T>(System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<T> optional) where T : struct { throw null; }
+        public static System.Collections.Generic.IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optional) { throw null; }
+        public static System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optional) { throw null; }
+        public static System.Collections.Generic.IList<T> ToList<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optional) { throw null; }
+        public static System.Collections.Generic.IReadOnlyList<T> ToList<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optional) { throw null; }
+        public static T? ToNullable<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T?> optional) where T : struct { throw null; }
+        public static T? ToNullable<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T> optional) where T : struct { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OptionalProperty<T>
@@ -246,8 +246,8 @@ namespace System.ServiceModel.Rest.Shared.Core.Serialization
         public OptionalProperty(T value) { throw null; }
         public bool HasValue { get { throw null; } }
         public T Value { get { throw null; } }
-        public static implicit operator T (System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<T> optional) { throw null; }
-        public static implicit operator System.ServiceModel.Rest.Shared.Core.Serialization.OptionalProperty<T> (T value) { throw null; }
+        public static implicit operator T (System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T> optional) { throw null; }
+        public static implicit operator System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T> (T value) { throw null; }
     }
     public partial class Utf8JsonRequestBody : System.ServiceModel.Rest.Core.RequestBody
     {

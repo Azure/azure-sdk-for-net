@@ -516,7 +516,7 @@ namespace Azure.Core
     }
     public partial class RawRequestUri : Azure.Core.RequestUriBuilder
     {
-        public RawRequestUri(System.ServiceModel.Rest.Shared.Core.RequestUri uri) { }
+        public RawRequestUri(System.ServiceModel.Rest.Experimental.Core.RequestUri uri) { }
         public override void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
         public override void AppendPath(string value) { }
         public override void AppendPath(string value, bool escape) { }
@@ -604,7 +604,7 @@ namespace Azure.Core
         public static Azure.Core.RequestMethod Parse(string method) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestUriBuilder : System.ServiceModel.Rest.Shared.Core.RequestUri
+    public partial class RequestUriBuilder : System.ServiceModel.Rest.Experimental.Core.RequestUri
     {
         public RequestUriBuilder() { }
     }
