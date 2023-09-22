@@ -30,14 +30,6 @@ namespace Azure.Communication.CallAutomation
             return new MuteParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of UnmuteParticipantsResult. </summary>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResult"/> instance for mocking. </returns>
-        public static UnmuteParticipantsResult UnmuteParticipantsResult(string operationContext = null)
-        {
-            return new UnmuteParticipantsResult(operationContext);
-        }
-
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
@@ -79,12 +71,24 @@ namespace Azure.Communication.CallAutomation
             return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
+        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new CallTransferAccepted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
+
         /// <summary> Initializes a new instance of CallTransferFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <returns> A new <see cref="CallAutomation.CallTransferFailed"/> instance for mocking. </returns>
         public static CallTransferFailed CallTransferFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
@@ -137,16 +141,6 @@ namespace Azure.Communication.CallAutomation
         public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
             return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
-        }
-
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
-        /// <param name="tones"></param>
-        /// <returns> A new <see cref="CallAutomation.CollectTonesResult"/> instance for mocking. </returns>
-        public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
-        {
-            tones ??= new List<DtmfTone>();
-
-            return new CollectTonesResult(tones?.ToList());
         }
 
         /// <summary> Initializes a new instance of DtmfResult. </summary>
@@ -202,14 +196,6 @@ namespace Azure.Communication.CallAutomation
             return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
-        /// <summary> Initializes a new instance of UserConsent. </summary>
-        /// <param name="recording"></param>
-        /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
-        public static UserConsent UserConsent(int? recording = null)
-        {
-            return new UserConsent(recording);
-        }
-
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -254,30 +240,6 @@ namespace Azure.Communication.CallAutomation
         public static ContinuousDtmfRecognitionStopped ContinuousDtmfRecognitionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             return new ContinuousDtmfRecognitionStopped(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
-        /// <summary> Initializes a new instance of SendDtmfCompleted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <returns> A new <see cref="CallAutomation.SendDtmfCompleted"/> instance for mocking. </returns>
-        public static SendDtmfCompleted SendDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new SendDtmfCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
-        /// <summary> Initializes a new instance of SendDtmfFailed. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <returns> A new <see cref="CallAutomation.SendDtmfFailed"/> instance for mocking. </returns>
-        public static SendDtmfFailed SendDtmfFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new SendDtmfFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
     }
 }

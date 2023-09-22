@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,9 +12,9 @@ namespace Azure.Communication.CallAutomation
     public class PlayOptions
     {
         /// <summary>
-        /// A PlaySource object representing the source to play.
+        /// PlaySource objects representing the sources to play.
         /// </summary>
-        public PlaySource PlaySource { get; }
+        public IReadOnlyList<PlaySource> PlaySources { get; }
 
         /// <summary>
         /// A list of target identifiers to play the file to.
@@ -33,16 +32,20 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// The callback URI override for this transfer call request.
+        /// Creates a new PlayOptions object.
         /// </summary>
-        public Uri CallbackUri { get; set; }
+        public PlayOptions(IEnumerable<PlaySource> playSources, IEnumerable<CommunicationIdentifier> playTo)
+        {
+            PlaySources = playSources.ToList();
+            PlayTo = playTo.ToList();
+        }
 
         /// <summary>
         /// Creates a new PlayOptions object.
         /// </summary>
         public PlayOptions(PlaySource playSource, IEnumerable<CommunicationIdentifier> playTo)
         {
-            PlaySource = playSource;
+            PlaySources = new List<PlaySource> { playSource };
             PlayTo = playTo.ToList();
         }
     }

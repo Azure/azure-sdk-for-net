@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -27,10 +25,5 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
-
-        /// <summary>
-        /// The callback URI override for this transfer call request.
-        /// </summary>
-        public Uri CallbackUri { get; set; }
     }
 }
