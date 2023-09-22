@@ -12,9 +12,9 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting> AddConfigurationSetting(string key, string value, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> AddConfigurationSettingAsync(Azure.Data.AppConfiguration.ConfigurationSetting setting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> AddConfigurationSettingAsync(string key, string value, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> ArchiveSnapshot(Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> ArchiveSnapshot(string name, Azure.MatchConditions matchConditions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> ArchiveSnapshot(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(string name, Azure.MatchConditions matchConditions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.AppConfiguration.CreateSnapshotOperation CreateSnapshot(Azure.WaitUntil wait, string name, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Data.AppConfiguration.CreateSnapshotOperation> CreateSnapshotAsync(Azure.WaitUntil wait, string name, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -46,9 +46,9 @@ namespace Azure.Data.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> GetSnapshotAsync(string name, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSnapshot> GetSnapshots(Azure.Data.AppConfiguration.SnapshotSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSnapshot> GetSnapshotsAsync(Azure.Data.AppConfiguration.SnapshotSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> RecoverSnapshot(Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> RecoverSnapshot(string name, Azure.MatchConditions matchConditions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> RecoverSnapshot(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> RecoverSnapshotAsync(Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> RecoverSnapshotAsync(string name, Azure.MatchConditions matchConditions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> RecoverSnapshotAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting> SetConfigurationSetting(Azure.Data.AppConfiguration.ConfigurationSetting setting, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting> SetConfigurationSetting(string key, string value, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -101,7 +101,6 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationSnapshot
     {
         public ConfigurationSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotSettingFilter> filters) { }
-        public Azure.Data.AppConfiguration.SnapshotComposition? CompositionType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
@@ -110,6 +109,7 @@ namespace Azure.Data.AppConfiguration
         public string Name { get { throw null; } }
         public System.TimeSpan? RetentionPeriod { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } }
+        public Azure.Data.AppConfiguration.SnapshotComposition? SnapshotComposition { get { throw null; } set { } }
         public Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -222,7 +222,6 @@ namespace Azure.Data.AppConfiguration
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SnapshotFields(string value) { throw null; }
-        public static Azure.Data.AppConfiguration.SnapshotFields CompositionType { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields CreatedOn { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields ETag { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields ExpiresOn { get { throw null; } }
@@ -231,6 +230,7 @@ namespace Azure.Data.AppConfiguration
         public static Azure.Data.AppConfiguration.SnapshotFields Name { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields RetentionPeriod { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields SizeInBytes { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields SnapshotComposition { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Status { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Tags { get { throw null; } }
         public bool Equals(Azure.Data.AppConfiguration.SnapshotFields other) { throw null; }
@@ -247,7 +247,7 @@ namespace Azure.Data.AppConfiguration
     {
         public SnapshotSelector() { }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotFields> Fields { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string NameFilter { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.ConfigurationSnapshotStatus> Status { get { throw null; } }
     }
     public partial class SnapshotSettingFilter
