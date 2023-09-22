@@ -84,12 +84,7 @@ namespace System.ServiceModel.Rest.Core
     {
         protected PipelineRequest() { }
         public abstract string ClientRequestId { get; set; }
-        public abstract bool IsHttps { get; }
         public abstract void Dispose();
-        public abstract bool RemoveHeaderValue(string name);
-        public abstract void SetContent(System.BinaryData content);
-        public abstract void SetHeaderValue(string key, string value);
-        public abstract bool TryGetHeaderValue(string name, out string? value);
     }
     public abstract partial class PipelineResponse
     {
