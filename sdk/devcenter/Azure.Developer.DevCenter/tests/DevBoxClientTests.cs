@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    [PlaybackOnly("It takes roughly 15-30 minutes to create a dev-box")]
+    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class DevBoxClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         public const string DevBoxName = "MyDevBox";
