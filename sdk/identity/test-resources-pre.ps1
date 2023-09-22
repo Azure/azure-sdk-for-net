@@ -13,6 +13,8 @@ $sshKey = Get-Content $PSScriptRoot/sshKey.pub
 $templateFileParameters['sshPubKey'] = $sshKey
 
 # Get the max version that is not preview and then get the name of the patch version with the max value
+
+az login --service-principal -u $EnvironmentVariables['IDENTITY_CLIENT_ID'] -p $EnvironmentVariables['IDENTITY_CLIENT_SECRET'] --tenant $EnvironmentVariables['IDENTITY_TENANT_ID']
 $versions = az aks get-versions -o json | ConvertFrom-Json
 Write-Host "AKS versions: $($versions | ConvertTo-Json -Depth 100)"
 $patchVersions = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions
