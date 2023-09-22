@@ -4,17 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.ResourceManager.Sql.Models;
 
-namespace Azure.ResourceManager.Sql
+namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class FailoverGroupData
+    public partial class FailoverGroupPatch
     {
-        /// <summary> List of databases in the failover group. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release", false)]
-        public IList<string> Databases { get; }
-
         /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy
@@ -27,5 +21,10 @@ namespace Azure.ResourceManager.Sql
                 ReadOnlyEndpoint.FailoverPolicy = value;
             }
         }
+
+        /// <summary> List of databases in the failover group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release, please use FailoverDatabases instead.", false)]
+        public IList<string> Databases { get; }
     }
 }
