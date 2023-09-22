@@ -25,7 +25,7 @@ $templateFileParameters['sshPubKey'] = $sshKey
 
 # Get the max version that is not preview and then get the name of the patch version with the max value
 az login --service-principal -u $TestApplicationId -p $TestApplicationSecret --tenant $TenantId
-$versions = az aks get-versions -o json | ConvertFrom-Json
+$versions = az aks get-versions -l westus -o json | ConvertFrom-Json
 Write-Host "AKS versions: $($versions | ConvertTo-Json -Depth 100)"
 $patchVersions = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions
 Write-Host "AKS patch versions: $($patchVersions | ConvertTo-Json -Depth 100)"
