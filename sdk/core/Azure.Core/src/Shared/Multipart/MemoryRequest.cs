@@ -25,9 +25,9 @@ namespace Azure.Core
             }
         }
 
-#if HAS_INTERNALS_VISIBLE_CORE
-        internal
-#endif
+//#if HAS_INTERNALS_VISIBLE_CORE
+//        internal
+//#endif
 
        protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 

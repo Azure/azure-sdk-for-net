@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core.Pipeline;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
@@ -46,8 +47,8 @@ namespace Azure.Core.Pipeline
         /// <param name="options">The customer provided pipeline options object.</param>
         /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        public static HttpPipeline Build(PipelineOptions options, params HttpPipelinePolicy[] perRetryPolicies)
-            => Build(options, Array.Empty<HttpPipelinePolicy>(), perRetryPolicies, ResponseClassifier.Shared);
+        public static HttpPipeline Build(PipelineOptions options, params PipelinePolicy[] perRetryPolicies)
+            => Build(options, Array.Empty<PipelinePolicy>(), perRetryPolicies, ResponseClassifier.Shared);
 
         /// <summary>
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
@@ -59,15 +60,15 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(
             PipelineOptions options,
-            HttpPipelinePolicy[] perCallPolicies,
-            HttpPipelinePolicy[] perRetryPolicies,
+            PipelinePolicy[] perCallPolicies,
+            PipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier)
         {
             ClientOptions clientOptions = FromPipelineOptions(options);
 
-            HttpPipelineOptions pipelineOptions = new HttpPipelineOptions(clientOptions) { ResponseClassifier = responseClassifier };
-            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
-            ((List<HttpPipelinePolicy>)pipelineOptions.PerRetryPolicies).AddRange(perRetryPolicies);
+            InternalPipelineBuilderOptions pipelineOptions = new InternalPipelineBuilderOptions(clientOptions) { ResponseClassifier = responseClassifier };
+            ((List<PipelinePolicy>)pipelineOptions.PerCallPipelinePolicies).AddRange(perCallPolicies);
+            ((List<PipelinePolicy>)pipelineOptions.PerRetryPipelinePolicies).AddRange(perRetryPolicies);
             BuildInternalContext result = BuildInternal(pipelineOptions, null);
 
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
@@ -96,9 +97,9 @@ namespace Azure.Core.Pipeline
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));
 
-            var pipelineOptions = new HttpPipelineOptions(options) { ResponseClassifier = responseClassifier };
-            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
-            ((List<HttpPipelinePolicy>)pipelineOptions.PerRetryPolicies).AddRange(perRetryPolicies);
+            var pipelineOptions = new InternalPipelineBuilderOptions(options) { ResponseClassifier = responseClassifier };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPipelinePolicies).AddRange(perCallPolicies);
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPipelinePolicies).AddRange(perRetryPolicies);
             var result = BuildInternal(pipelineOptions, transportOptions);
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
@@ -110,7 +111,7 @@ namespace Azure.Core.Pipeline
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(HttpPipelineOptions options)
         {
-            var result = BuildInternal(options, null);
+            var result = BuildInternal(new InternalPipelineBuilderOptions(options), null);
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
         }
 
@@ -123,21 +124,21 @@ namespace Azure.Core.Pipeline
         public static DisposableHttpPipeline Build(HttpPipelineOptions options, HttpPipelineTransportOptions transportOptions)
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));
-            var result = BuildInternal(options, transportOptions);
+            var result = BuildInternal(new InternalPipelineBuilderOptions(options), transportOptions);
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
 
         private static BuildInternalContext BuildInternal(
-            HttpPipelineOptions buildOptions,
+            InternalPipelineBuilderOptions buildOptions,
             HttpPipelineTransportOptions? defaultTransportOptions)
         {
-            Argument.AssertNotNull(buildOptions.PerCallPolicies, nameof(buildOptions.PerCallPolicies));
-            Argument.AssertNotNull(buildOptions.PerRetryPolicies, nameof(buildOptions.PerRetryPolicies));
+            Argument.AssertNotNull(buildOptions.PerCallPipelinePolicies, nameof(buildOptions.PerCallPipelinePolicies));
+            Argument.AssertNotNull(buildOptions.PerRetryPipelinePolicies, nameof(buildOptions.PerRetryPipelinePolicies));
 
-            var policies = new List<HttpPipelinePolicy>(8 +
-                                                        (buildOptions.ClientOptions.Policies?.Count ?? 0) +
-                                                        buildOptions.PerCallPolicies.Count +
-                                                        buildOptions.PerRetryPolicies.Count);
+            var policies = new List<PipelinePolicy>(8 +
+                                                    (buildOptions.ClientOptions.Policies?.Count ?? 0) +
+                                                    buildOptions.PerCallPipelinePolicies.Count +
+                                                    buildOptions.PerRetryPipelinePolicies.Count);
 
             void AddCustomerPolicies(HttpPipelinePosition position)
             {
@@ -156,7 +157,7 @@ namespace Azure.Core.Pipeline
 
             // A helper to ensure that we only add non-null policies to the policies list
             // This ensures that calculations for perCallIndex and perRetryIndex are accurate
-            void AddNonNullPolicies(HttpPipelinePolicy[] policiesToAdd)
+            void AddNonNullPolicies(PipelinePolicy[] policiesToAdd)
             {
                 for (int i = 0; i < policiesToAdd.Length; i++)
                 {
@@ -176,7 +177,7 @@ namespace Azure.Core.Pipeline
 
             policies.Add(ReadClientRequestIdPolicy.Shared);
 
-            AddNonNullPolicies(buildOptions.PerCallPolicies.ToArray());
+            AddNonNullPolicies(buildOptions.PerCallPipelinePolicies.ToArray());
 
             AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
@@ -205,7 +206,7 @@ namespace Azure.Core.Pipeline
             };
             policies.Add(redirectPolicy);
 
-            AddNonNullPolicies(buildOptions.PerRetryPolicies.ToArray());
+            AddNonNullPolicies(buildOptions.PerRetryPipelinePolicies.ToArray());
 
             AddCustomerPolicies(HttpPipelinePosition.PerRetry);
 
@@ -256,7 +257,7 @@ namespace Azure.Core.Pipeline
                 HttpPipelineTransport transport,
                 int perCallIndex,
                 int perRetryIndex,
-                HttpPipelinePolicy[] policies,
+                PipelinePolicy[] policies,
                 bool isTransportOwned)
             {
                 Classifier = classifier;
@@ -271,7 +272,7 @@ namespace Azure.Core.Pipeline
             public HttpPipelineTransport Transport { get; }
             public int PerCallIndex { get; }
             public int PerRetryIndex { get; }
-            public HttpPipelinePolicy[] Policies { get; }
+            public PipelinePolicy[] Policies { get; }
             public bool IsTransportOwned { get; }
         }
 

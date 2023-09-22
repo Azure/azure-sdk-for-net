@@ -10,9 +10,9 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     /// </summary>
     public abstract class PipelinePolicy
     {
-        protected abstract ValueTask ProcessAsync(RestMessage message, ReadOnlyMemory<PipelinePolicy> pipeline);
+        public abstract ValueTask ProcessAsync(RestMessage message, ReadOnlyMemory<PipelinePolicy> pipeline);
 
-        protected abstract void Process(RestMessage message, ReadOnlyMemory<PipelinePolicy> pipeline);
+        public abstract void Process(RestMessage message, ReadOnlyMemory<PipelinePolicy> pipeline);
 
         protected static ValueTask ProcessNextAsync(RestMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
         {

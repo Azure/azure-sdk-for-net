@@ -23,7 +23,7 @@ namespace Azure.Core.Pipeline
 
         private protected readonly HttpPipelineTransport _transport;
 
-        private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
+        private readonly ReadOnlyMemory<PipelinePolicy> _pipeline;
 
         /// <summary>
         /// Indicates whether or not the pipeline was created using its internal constructor.
@@ -50,7 +50,7 @@ namespace Azure.Core.Pipeline
         /// <param name="transport">The <see cref="HttpPipelineTransport"/> to use for sending the requests.</param>
         /// <param name="policies">Policies to be invoked as part of the pipeline in order.</param>
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
+        public HttpPipeline(HttpPipelineTransport transport, PipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             ResponseClassifier = responseClassifier ?? ResponseClassifier.Shared;
@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
             HttpPipelineTransport transport,
             int perCallIndex,
             int perRetryIndex,
-            HttpPipelinePolicy[] pipeline,
+            PipelinePolicy[] pipeline,
             ResponseClassifier responseClassifier)
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
@@ -175,7 +175,7 @@ namespace Azure.Core.Pipeline
         private async ValueTask SendAsync(HttpMessage message)
         {
             var length = _pipeline.Length + message.Policies!.Count;
-            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+            var policies = ArrayPool<PipelinePolicy>.Shared.Rent(length);
             try
             {
                 var pipeline = CreateRequestPipeline(policies, message.Policies);
@@ -183,7 +183,7 @@ namespace Azure.Core.Pipeline
             }
             finally
             {
-                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
+                ArrayPool<PipelinePolicy>.Shared.Return(policies);
             }
         }
 
@@ -278,7 +278,7 @@ namespace Azure.Core.Pipeline
             return CurrentHttpMessagePropertiesScope.Value;
         }
 
-        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
+        private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(PipelinePolicy[] policies, List<(HttpPipelinePosition Position, PipelinePolicy Policy)> customPolicies)
         {
             if (!_internallyConstructed)
             {
@@ -314,7 +314,7 @@ namespace Azure.Core.Pipeline
             return new ReadOnlyMemory<HttpPipelinePolicy>(policies, 0, index + 1);
         }
 
-        private static int AddCustomPolicies(List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> source, HttpPipelinePolicy[] target, HttpPipelinePosition position, int start)
+        private static int AddCustomPolicies(List<(HttpPipelinePosition Position, PipelinePolicy Policy)> source, PipelinePolicy[] target, HttpPipelinePosition position, int start)
         {
             int count = 0;
             if (source != null)
