@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/alertSettings/{emailConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailConfiguration_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailConfigurationName"> The email configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataReplicationEmailConfigurationResource>> GetIfExistsAsync(string emailConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
+
+            using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataReplicationEmailConfigurationEmailConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, emailConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationEmailConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationEmailConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/alertSettings/{emailConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailConfiguration_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="emailConfigurationName"> The email configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="emailConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
+        public virtual NullableResponse<DataReplicationEmailConfigurationResource> GetIfExists(string emailConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
+
+            using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataReplicationEmailConfigurationEmailConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, emailConfigurationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationEmailConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationEmailConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataReplicationEmailConfigurationResource> IEnumerable<DataReplicationEmailConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

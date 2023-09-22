@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="revisionId"> The id of the workbook's revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<WorkbookRevisionResource>> GetIfExistsAsync(string revisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
+
+            using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _workbookRevisionWorkbooksRestClient.RevisionGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkbookRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkbookRevisionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="revisionId"> The id of the workbook's revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        public virtual NullableResponse<WorkbookRevisionResource> GetIfExists(string revisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
+
+            using var scope = _workbookRevisionWorkbooksClientDiagnostics.CreateScope("WorkbookRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _workbookRevisionWorkbooksRestClient.RevisionGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkbookRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkbookRevisionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<WorkbookRevisionResource> IEnumerable<WorkbookRevisionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

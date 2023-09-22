@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrincipalAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseClusterPrincipalAssignmentResource>> GetIfExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+
+            using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseClusterPrincipalAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseClusterPrincipalAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolPrincipalAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        public virtual NullableResponse<SynapseClusterPrincipalAssignmentResource> GetIfExists(string principalAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+
+            using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseClusterPrincipalAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseClusterPrincipalAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseClusterPrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SynapseClusterPrincipalAssignmentResource> IEnumerable<SynapseClusterPrincipalAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

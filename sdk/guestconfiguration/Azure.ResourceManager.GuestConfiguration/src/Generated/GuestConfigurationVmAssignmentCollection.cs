@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GuestConfigurationVmAssignmentResource>> GetIfExistsAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GuestConfigurationVmAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GuestConfigurationAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        public virtual NullableResponse<GuestConfigurationVmAssignmentResource> GetIfExists(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GuestConfigurationVmAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<GuestConfigurationVmAssignmentResource> IEnumerable<GuestConfigurationVmAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

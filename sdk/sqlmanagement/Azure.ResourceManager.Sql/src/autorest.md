@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/eba34b9c764e877193788a87a81cebfa915eb858/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/fb1e2c65b2dd52ebb18bb835a3d0f0289875858e/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -340,6 +340,7 @@ rename-mapping:
   FailoverGroup.properties.databases: FailoverDatabases
   ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
+  FailoverGroupUpdate.properties.databases: FailoverDatabases
 
 # mgmt-debug: 
 #  show-serialized-names: true

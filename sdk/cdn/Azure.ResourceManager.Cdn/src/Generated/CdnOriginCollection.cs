@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnOrigins_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CdnOriginResource>> GetIfExistsAsync(string originName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
+
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cdnOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CdnOriginResource>(response.GetRawResponse());
+                return Response.FromValue(new CdnOriginResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CdnOrigins_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        public virtual NullableResponse<CdnOriginResource> GetIfExists(string originName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(originName, nameof(originName));
+
+            using var scope = _cdnOriginClientDiagnostics.CreateScope("CdnOriginCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cdnOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, originName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CdnOriginResource>(response.GetRawResponse());
+                return Response.FromValue(new CdnOriginResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<CdnOriginResource> IEnumerable<CdnOriginResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -187,5 +187,75 @@ namespace Azure.ResourceManager.TrafficManager
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
+        /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<TrafficManagerHeatMapResource>> GetIfExistsAsync(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _trafficManagerHeatMapHeatMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TrafficManagerHeatMapResource>(response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
+        /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<TrafficManagerHeatMapResource> GetIfExists(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _trafficManagerHeatMapHeatMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TrafficManagerHeatMapResource>(response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

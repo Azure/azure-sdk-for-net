@@ -331,6 +331,80 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRelease_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiReleaseResource>> GetIfExistsAsync(string releaseId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
+
+            using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiReleaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiReleaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiReleaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiRelease_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseId"> Release identifier within an API. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
+        public virtual NullableResponse<ApiReleaseResource> GetIfExists(string releaseId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(releaseId, nameof(releaseId));
+
+            using var scope = _apiReleaseClientDiagnostics.CreateScope("ApiReleaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiReleaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, releaseId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiReleaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiReleaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApiReleaseResource> IEnumerable<ApiReleaseResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

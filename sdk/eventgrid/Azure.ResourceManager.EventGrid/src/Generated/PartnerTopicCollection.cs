@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerTopicName"> Name of the partner topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PartnerTopicResource>> GetIfExistsAsync(string partnerTopicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
+
+            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _partnerTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerTopicName"> Name of the partner topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        public virtual NullableResponse<PartnerTopicResource> GetIfExists(string partnerTopicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
+
+            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _partnerTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PartnerTopicResource> IEnumerable<PartnerTopicResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

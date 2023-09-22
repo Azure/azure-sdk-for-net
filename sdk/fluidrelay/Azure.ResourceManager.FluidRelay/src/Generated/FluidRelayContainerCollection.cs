@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.FluidRelay
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FluidRelayContainerResource>> GetIfExistsAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
+
+            using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _fluidRelayContainerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fluidRelayContainerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FluidRelayContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        public virtual NullableResponse<FluidRelayContainerResource> GetIfExists(string fluidRelayContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
+
+            using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _fluidRelayContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fluidRelayContainerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FluidRelayContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FluidRelayContainerResource> IEnumerable<FluidRelayContainerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
