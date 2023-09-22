@@ -34,7 +34,7 @@ param(
     [Parameter(Mandatory=$False)][array]$MatrixNonSparseParameters,
 
     # Prevent kubernetes from deleting nodes or rebalancing pods related to this test for N days
-    [Parameter(Mandatory=$False)][int]$LockDeletionForDays
+    [Parameter(Mandatory=$False)][ValidateRange(1, 14)][int]$LockDeletionForDays
 )
 
 . $PSScriptRoot/stress-test-deployment-lib.ps1
