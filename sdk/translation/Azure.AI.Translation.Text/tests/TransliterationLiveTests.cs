@@ -36,12 +36,12 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task VerifyTransliterationTestOptions()
         {
             TextTranslationClient client = GetClient();
-            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions();
-            options.Content = new[] { "这里怎么一回事?" };
-            options.Language = "zh-Hans";
-            options.FromScript = "Hans";
-            options.ToScript = "Latn";
-
+            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
+                language: "zh-Hans",
+                fromScript: "Hans",
+                toScript: "Latn",
+                content: new[] { "这里怎么一回事?" }
+            );
             Response<IReadOnlyList<TransliteratedText>> response =
                 await client.TransliterateAsync(options).ConfigureAwait(false);
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -67,15 +67,16 @@ namespace Azure.AI.Translation.Text.Tests
         public async Task VerifyTransliterationWithMultipleTextArrayOptions()
         {
             TextTranslationClient client = GetClient();
-            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions();
-            options.Language = "hi";
-            options.FromScript = "Deva";
-            options.ToScript = "Latn";
-            options.Content = new[]
-            {
-                "यहएककसौटीहैयहएककसौटीहै",
-                "यहएककसौटीहै"
-            };
+            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
+                language: "hi",
+                fromScript: "Deva",
+                toScript: "Latn",
+                content: new[]
+                {
+                    "यहएककसौटीहैयहएककसौटीहै",
+                    "यहएककसौटीहै"
+                }
+            );
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -116,16 +117,17 @@ namespace Azure.AI.Translation.Text.Tests
         {
             TextTranslationClient client = GetClient();
 
-            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions();
-            options.Language = "gu";
-            options.FromScript = "latn";
-            options.ToScript = "gujr";
-            options.Content = new[]
-            {
-                "gujarat",
-                "hadman",
-                "hukkabar"
-            };
+            TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
+                language: "gu",
+                fromScript: "latn",
+                toScript: "gujr",
+                content: new[]
+                {
+                    "gujarat",
+                    "hadman",
+                    "hukkabar"
+                }
+            );
             Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);

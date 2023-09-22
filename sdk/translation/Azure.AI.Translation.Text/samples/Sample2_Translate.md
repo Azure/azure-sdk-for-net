@@ -90,16 +90,13 @@ A convenience overload of Translate is provided using a single TextTranslationTr
 ```C# Snippet:GetTranslationTextTransliteratedOptions
 try
 {
-    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions()
+    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+        targetLanguage: "zh-Hans",
+        content: "hudha akhtabar.")
     {
         FromScript = "Latn",
         SourceLanguage = "ar",
-        ToScript = "Latn",
-        TargetLanguages = new[] { "zh-Hans" },
-        Content = new[]
-        {
-            "hudha akhtabar."
-        }
+        ToScript = "Latn"
     };
 
     Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
@@ -121,18 +118,20 @@ catch (RequestFailedException exception)
 
 You can translate multiple text elements. Each input element can be in different language (source language parameter needs to be omitted and language auto-detection is used). Refer to [Request limits for Translator](https://learn.microsoft.com/azure/cognitive-services/translator/request-limits) for current limits.
 
-```C# Snippet:GetMultipleTextTranslations
+```C# Snippet:GetMultipleTextTranslationsOptions
 try
 {
-    IEnumerable<string> targetLanguages = new[] { "cs" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "This is a test.",
-        "Esto es una prueba.",
-        "Dies ist ein Test."
-    };
+    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+        targetLanguages: new[] { "cs" },
+        content: new[]
+        {
+            "This is a test.",
+            "Esto es una prueba.",
+            "Dies ist ein Test."
+        }
+    );
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements);
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextItem translation in translations)

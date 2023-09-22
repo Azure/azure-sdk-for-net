@@ -7,26 +7,26 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Client options for TextTranslationClient.Translate </summary>
-    public partial class TextTranslationTranslateOptions : ClientOptions
+    public partial class TextTranslationTranslateOptions
     {
         /// <summary>
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. For example, use to=de to translate to German.
-        /// It's possible to translate to multiple languages simultaneously by repeating the parameter in the query string.
+        /// It&apos;s possible to translate to multiple languages simultaneously by repeating the parameter in the query string.
         /// For example, use to=de and to=it to translate to German and Italian.
         /// </summary>
-        public IEnumerable<string> TargetLanguages { get; set; }
+        public IEnumerable<string> TargetLanguages { get; }
         /// <summary>
         /// Array of the text to be translated.
         /// </summary>
-        public IEnumerable<string> Content { get; set; }
+        public IEnumerable<string> Content { get; }
         /// <summary>
         /// A client-generated GUID to uniquely identify the request.
         /// </summary>
         public string ClientTraceId { get; set; }
         /// <summary>
         /// Specifies the language of the input text. Find which languages are available to translate from by
-        /// looking up supported languages using the translation scope. If the from parameter isn't specified,
+        /// looking up supported languages using the translation scope. If the from parameter isn&apos;t specified,
         /// automatic language detection is applied to determine the source language.
         ///
         /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature.
@@ -65,7 +65,7 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         public bool? IncludeSentenceLength { get; set; }
         /// <summary>
-        /// Specifies a fallback language if the language of the input text can't be identified.
+        /// Specifies a fallback language if the language of the input text can&apos;t be identified.
         /// Language autodetection is applied when the from parameter is omitted. If detection fails,
         /// the SuggestedFrom language will be assumed.
         /// </summary>
@@ -86,13 +86,38 @@ namespace Azure.AI.Translation.Text
         /// by the request. If a translation for language X to language Y requires chaining through a pivot language E,
         /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category.
         /// If no system is found with the specific category, the request will return a 400 status code. AllowFallback=true
-        /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        /// specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist.
         /// </summary>
         public bool? AllowFallback { get; set; }
 
         /// <summary> Initializes new instance of TextTranslationTranslateOptions. </summary>
-        public TextTranslationTranslateOptions(): base()
+        /// <param name="targetLanguages">
+        /// Specifies the language of the output text. The target language must be one of the supported languages included
+        /// in the translation scope. For example, use to=de to translate to German.
+        /// It&apos;s possible to translate to multiple languages simultaneously by repeating the parameter in the query string.
+        /// For example, use to=de&amp;to=it to translate to German and Italian.
+        /// </param>
+        /// <param name="content"> Array of the text to be translated.</param>
+        public TextTranslationTranslateOptions(IEnumerable<string> targetLanguages, IEnumerable<string> content)
         {
+            Argument.AssertNotNull(targetLanguages, nameof(targetLanguages));
+            Argument.AssertNotNull(content, nameof(content));
+            TargetLanguages = targetLanguages;
+            Content = content;
+        }
+
+        /// <summary> Initializes new instance of TextTranslationTranslateOptions. </summary>
+        /// <param name="targetLanguage">
+        /// Specifies the language of the output text. The target language must be one of the supported languages included
+        /// in the translation scope. For example, use to=de to translate to German.
+        /// </param>
+        /// <param name="content">Text to be translated.</param>
+        public TextTranslationTranslateOptions(string targetLanguage, string content)
+        {
+            Argument.AssertNotNullOrWhiteSpace(targetLanguage, nameof(targetLanguage));
+            Argument.AssertNotNullOrWhiteSpace(content, nameof(content));
+            TargetLanguages = new[] { targetLanguage };
+            Content = new[] { content };
         }
 
         /// <summary> Initializes new instance of TextTranslationTranslateOptions. </summary>
@@ -152,7 +177,7 @@ namespace Azure.AI.Translation.Text
         /// by the request. If a translation for language X to language Y requires chaining through a pivot language E,
         /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category.
         /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true
-        /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        /// specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist.
         /// </param>
         public TextTranslationTranslateOptions(IEnumerable<string> targetLanguages, IEnumerable<string> content, string clientTraceId = null, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null): base()
         {

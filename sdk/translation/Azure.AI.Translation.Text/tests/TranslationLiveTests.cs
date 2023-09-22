@@ -42,12 +42,13 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateBasicOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.SourceLanguage = "es";
-            options.TargetLanguages = new[] { "cs" };
-            options.Content = new[] {"Hola mundo" };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(targetLanguage: "cs", content: "Hola mundo")
+            {
+                SourceLanguage = "es",
+            };
             TextTranslationClient client = GetClient();
-            var response = await client.TranslateAsync(options).ConfigureAwait(false);
+            var response = await client.TranslateAsync(
+                options).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(1, response.Value.Count);
@@ -75,9 +76,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithAutoDetectOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.TargetLanguages = new[] { "cs" };
-            options.Content = new[] { "This is a test." };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(targetLanguage: "cs", content: "This is a test.");
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -107,11 +106,11 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithNoTranslateTagOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.SourceLanguage = "zh-chs";
-            options.TargetLanguages =  new[] { "en" };
-            options.Content = new[] { "<span class=notranslate>今天是怎么回事是</span>非常可怕的" };
-            options.TextType = TextType.Html;
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(targetLanguage: "en", content: "<span class=notranslate>今天是怎么回事是</span>非常可怕的")
+            {
+                SourceLanguage = "zh-chs",
+                TextType = TextType.Html
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -140,10 +139,10 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithDictionaryTagOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.SourceLanguage = "en";
-            options.TargetLanguages = new[] { "es" };
-            options.Content = new[] { "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry." };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(targetLanguage: "en", content: "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.")
+            {
+                SourceLanguage = "en"
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -173,12 +172,12 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithTransliterationOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.TargetLanguages = new[] { "zh-Hans" };
-            options.Content = new[] { "hudha akhtabar." };
-            options.SourceLanguage = "ar";
-            options.FromScript = "Latn";
-            options.ToScript = "Latn";
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(targetLanguage: "zh-Hans", content: "hudha akhtabar.")
+            {
+                SourceLanguage = "ar",
+                FromScript = "Latn",
+                ToScript = "Latn"
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -206,12 +205,14 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateFromLatinToLatinScriptOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.TargetLanguages = new[] { "ta" };
-            options.Content = new[] { "ap kaise ho" };
-            options.SourceLanguage = "hi";
-            options.FromScript = "Latn";
-            options.ToScript = "Latn";
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguage: "ta",
+                content: "ap kaise ho")
+            {
+                SourceLanguage = "hi",
+                FromScript = "Latn",
+                ToScript = "Latn",
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -252,14 +253,15 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithMultipleInputTextsOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.TargetLanguages = new[] { "cs" };
-            options.Content = new[]
-            {
-                "This is a test.",
-                "Esto es una prueba.",
-                "Dies ist ein Test."
-            };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguages: new[] { "cs" },
+                content: new[]
+                {
+                    "This is a test.",
+                    "Esto es una prueba.",
+                    "Dies ist ein Test."
+                }
+            );
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -302,9 +304,10 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateMultipleTargetLanguagesOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.TargetLanguages = new[] { "cs", "es", "de" };
-            options.Content = new[] { "This is a test." };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguages: new[] { "cs", "es", "de" },
+                content: new[] { "This is a test." }
+            );
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -339,10 +342,12 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateDifferentTextTypesOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.TargetLanguages = new[] { "cs" };
-            options.Content = new[] { "<html><body>This <b>is</b> a test.</body></html>" };
-            options.TextType = TextType.Html;
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguages: new[] { "cs" },
+                content: new[] { "<html><body>This <b>is</b> a test.</body></html>" })
+            {
+                TextType = TextType.Html
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -375,11 +380,13 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithProfanityOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.ProfanityAction = ProfanityAction.Marked;
-            options.ProfanityMarker = ProfanityMarker.Asterisk;
-            options.TargetLanguages = new[] { "zh-cn" };
-            options.Content = new[] { "shit this is fucking crazy" };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguage: "zh-cn",
+                content: "shit this is fucking crazy")
+            {
+                ProfanityAction = ProfanityAction.Marked,
+                ProfanityMarker = ProfanityMarker.Asterisk,
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -410,10 +417,12 @@ namespace Azure.AI.Translation.Text.Tests
 
         public async Task TranslateWithAlignmentOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.IncludeAlignment = true;
-            options.TargetLanguages = new[] { "cs" };
-            options.Content = new[] { "It is a beautiful morning" };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguage: "cs",
+                content: "It is a beautiful morning")
+            {
+                IncludeAlignment = true,
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -446,10 +455,12 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithIncludeSentenceLengthOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.IncludeSentenceLength = true;
-            options.TargetLanguages = new[] { "fr" };
-            options.Content = new[] { "La réponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un site ou des utilisateurs comme un être humain. Il suffit de copier et coller un extrait de code n'importe où." };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguage: "fr",
+                content: "La réponse se trouve dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un site ou des utilisateurs comme un être humain. Il suffit de copier et coller un extrait de code n'importe où.")
+            {
+                IncludeSentenceLength = true
+            };
             TextTranslationClient client = GetClient();
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -481,9 +492,10 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithCustomEndpointOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.TargetLanguages = new[] { "cs" };
-            options.Content = new[] { "It is a beautiful morning" };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguage: "cs",
+                content: "It is a beautiful morning"
+            );
             TextTranslationClient client = GetClient(endpoint: new Uri(TestEnvironment.CustomEndpoint));
             var response = await client.TranslateAsync(options).ConfigureAwait(false);
 
@@ -534,9 +546,10 @@ namespace Azure.AI.Translation.Text.Tests
             TokenCredential token = new StaticAccessTokenCredential(new AccessToken(accessToken, DateTimeOffset.Now.AddDays(1)));
 
             TextTranslationClient client = GetClient(token: token);
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions();
-            options.Content = new[] { "This is a test." };
-            options.TargetLanguages = new[] { "cs" };
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguage: "cs",
+                content: "This is a test."
+            );
             var translate = await client.TranslateAsync(options).ConfigureAwait(false);
 
             Assert.AreEqual(200, translate.GetRawResponse().Status);

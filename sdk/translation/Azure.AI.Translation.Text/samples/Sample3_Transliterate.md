@@ -33,13 +33,12 @@ A convenience overload of Transliterate is provided using a single TextTranslati
 ```C# Snippet:GetTransliteratedTextOptions
 try
 {
-    TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions()
-    {
-        Language = "zh-Hans",
-        FromScript = "Hans",
-        ToScript = "Latn",
-        Content = new[] { "这是个测试。" }
-    };
+    TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
+        language: "zh-Hans",
+        fromScript: "Hans",
+        toScript: "Latn",
+        content: "这是个测试。"
+    );
 
     Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(options);
     IReadOnlyList<TransliteratedText> transliterations = response.Value;
