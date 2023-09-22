@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -235,7 +236,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeSecondSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeSecondSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeSecondSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeSecondSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeSecondSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _nestedResourceTypeSecondSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeSecondSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -322,6 +323,80 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 var response = _nestedResourceTypeSecondSkuSkusRestClient.GetNestedResourceTypeSecond(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeSecond</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public virtual async Task<NullableResponse<NestedResourceTypeSecondSkuResource>> GetIfExistsAsync(string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _nestedResourceTypeSecondSkuSkusRestClient.GetNestedResourceTypeSecondAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NestedResourceTypeSecondSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeSecond</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public virtual NullableResponse<NestedResourceTypeSecondSkuResource> GetIfExists(string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _nestedResourceTypeSecondSkuSkusRestClient.GetNestedResourceTypeSecond(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NestedResourceTypeSecondSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new NestedResourceTypeSecondSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

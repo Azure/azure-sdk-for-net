@@ -49,13 +49,17 @@ When a secure string is used, the value is return masked with '*' characters whe
 
 ```json
 "folderpath": {
-  "type": "AzureKeyVaultSecretReference",
-  "value": "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"
+  "type": "AzureKeyVaultSecret",
+  "store": {
+    "type": "LinkedServiceReference",
+    "referenceName": "someReferenceName"
+  },
+  "secretName": "someSecretName",
+  "secretVersion": "someSecretVersion"
 }
 ```
 
 A Key Vault Reference can be used to specify a Key Vault where the value of the property is stored. 
-
 
 ### DataFactoryElement<T>
 

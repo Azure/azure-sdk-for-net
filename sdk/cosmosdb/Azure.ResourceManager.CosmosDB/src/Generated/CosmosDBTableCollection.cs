@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableTableResourcesRestClient.CreateListTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBTableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableTableResourcesRestClient.CreateListTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBTableResource(Client, CosmosDBTableData.DeserializeCosmosDBTableData(e)), _cosmosDBTableTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cosmosDBTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TableResources_GetTable</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tableName"> Cosmos DB table name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CosmosDBTableResource>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBTableTableResourcesRestClient.GetTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBTableResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TableResources_GetTable</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tableName"> Cosmos DB table name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual NullableResponse<CosmosDBTableResource> GetIfExists(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            using var scope = _cosmosDBTableTableResourcesClientDiagnostics.CreateScope("CosmosDBTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBTableTableResourcesRestClient.GetTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBTableResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

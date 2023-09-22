@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/loadtestservice/Azure.ResourceManager.LoadTesting",
+  "Tag": "net/loadtestservice/Azure.ResourceManager.LoadTesting_5bb19da025"
+}

@@ -203,12 +203,47 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // Gets a list of databases in an elastic pool.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetDatabases_GetsAListOfDatabasesInAnElasticPool()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/ListDatabasesByElasticPool.json
+            // this example is just showing the usage of "Databases_ListByElasticPool" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticPoolResource created on azure
+            // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default-SQL-SouthEastAsia";
+            string serverName = "testsvr";
+            string elasticPoolName = "pool1";
+            ResourceIdentifier elasticPoolResourceId = ElasticPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, elasticPoolName);
+            ElasticPoolResource elasticPool = client.GetElasticPoolResource(elasticPoolResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SqlDatabaseResource item in elasticPool.GetDatabasesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SqlDatabaseData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // Get a Hyperscale elastic pool
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAHyperscaleElasticPool()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/HyperscaleElasticPoolGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/HyperscaleElasticPoolGet.json
             // this example is just showing the usage of "ElasticPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -240,7 +275,71 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnElasticPool()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/ElasticPoolGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolGet.json
+            // this example is just showing the usage of "ElasticPools_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticPoolResource created on azure
+            // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-2369";
+            string serverName = "sqlcrudtest-8069";
+            string elasticPoolName = "sqlcrudtest-8102";
+            ResourceIdentifier elasticPoolResourceId = ElasticPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, elasticPoolName);
+            ElasticPoolResource elasticPool = client.GetElasticPoolResource(elasticPoolResourceId);
+
+            // invoke the operation
+            ElasticPoolResource result = await elasticPool.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ElasticPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get an elastic pool with Availability Zone
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetAnElasticPoolWithAvailabilityZone()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/GetElasticPoolWithAvailabilityZone.json
+            // this example is just showing the usage of "ElasticPools_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticPoolResource created on azure
+            // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-2369";
+            string serverName = "sqlcrudtest-8069";
+            string elasticPoolName = "sqlcrudtest-8102";
+            ResourceIdentifier elasticPoolResourceId = ElasticPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, elasticPoolName);
+            ElasticPoolResource elasticPool = client.GetElasticPoolResource(elasticPoolResourceId);
+
+            // invoke the operation
+            ElasticPoolResource result = await elasticPool.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ElasticPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get an elastic pool with preferred enclave type parameter
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetAnElasticPoolWithPreferredEnclaveTypeParameter()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolGetWithPreferredEnclaveType.json
             // this example is just showing the usage of "ElasticPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -272,7 +371,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAnElasticPool()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/ElasticPoolDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolDelete.json
             // this example is just showing the usage of "ElasticPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -300,7 +399,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AssignsMaintenanceConfigurationToAnElasticPool()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/ElasticPoolUpdateAssignMaintenanceConfiguration.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolUpdateAssignMaintenanceConfiguration.json
             // this example is just showing the usage of "ElasticPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,12 +431,88 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Create or update elastic pool with preferred enclave type parameter as Default
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_CreateOrUpdateElasticPoolWithPreferredEnclaveTypeParameterAsDefault()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolUpdateWithDefaultPreferredEnclaveType.json
+            // this example is just showing the usage of "ElasticPools_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticPoolResource created on azure
+            // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-2369";
+            string serverName = "sqlcrudtest-8069";
+            string elasticPoolName = "sqlcrudtest-8102";
+            ResourceIdentifier elasticPoolResourceId = ElasticPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, elasticPoolName);
+            ElasticPoolResource elasticPool = client.GetElasticPoolResource(elasticPoolResourceId);
+
+            // invoke the operation
+            ElasticPoolPatch patch = new ElasticPoolPatch()
+            {
+                Sku = new SqlSku("GP_Gen5_4"),
+                PreferredEnclaveType = SqlAlwaysEncryptedEnclaveType.Default,
+            };
+            ArmOperation<ElasticPoolResource> lro = await elasticPool.UpdateAsync(WaitUntil.Completed, patch);
+            ElasticPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ElasticPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create or update elastic pool with preferred enclave type parameter as VBS
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_CreateOrUpdateElasticPoolWithPreferredEnclaveTypeParameterAsVBS()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolUpdateWithVBSPreferredEnclaveType.json
+            // this example is just showing the usage of "ElasticPools_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticPoolResource created on azure
+            // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-2369";
+            string serverName = "sqlcrudtest-8069";
+            string elasticPoolName = "sqlcrudtest-8102";
+            ResourceIdentifier elasticPoolResourceId = ElasticPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, elasticPoolName);
+            ElasticPoolResource elasticPool = client.GetElasticPoolResource(elasticPoolResourceId);
+
+            // invoke the operation
+            ElasticPoolPatch patch = new ElasticPoolPatch()
+            {
+                Sku = new SqlSku("GP_Gen5_4"),
+                PreferredEnclaveType = SqlAlwaysEncryptedEnclaveType.Vbs,
+            };
+            ArmOperation<ElasticPoolResource> lro = await elasticPool.UpdateAsync(WaitUntil.Completed, patch);
+            ElasticPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ElasticPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Resets maintenance configuration of an elastic pool to default.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ResetsMaintenanceConfigurationOfAnElasticPoolToDefault()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/ElasticPoolUpdateResetMaintenanceConfiguration.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolUpdateResetMaintenanceConfiguration.json
             // this example is just showing the usage of "ElasticPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -374,7 +549,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAnElasticPoolWithAllParameter()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/ElasticPoolUpdateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolUpdateMax.json
             // this example is just showing the usage of "ElasticPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -422,7 +597,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAnElasticPoolWithMinimumParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/ElasticPoolUpdateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ElasticPoolUpdateMin.json
             // this example is just showing the usage of "ElasticPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -456,7 +631,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateHighAvailabilityReplicaCountOfAHyperscaleElasticPool()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/HyperscaleElasticPoolUpdateSetHighAvailabilityReplicaCount.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/HyperscaleElasticPoolUpdateSetHighAvailabilityReplicaCount.json
             // this example is just showing the usage of "ElasticPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -493,7 +668,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Failover_FailoverAnElasticPool()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-08-01-preview/examples/FailoverElasticPool.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/FailoverElasticPool.json
             // this example is just showing the usage of "ElasticPools_Failover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -512,41 +687,6 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             await elasticPool.FailoverAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Gets a list of databases in an elastic pool.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetDatabases_GetsAListOfDatabasesInAnElasticPool()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ListDatabasesByElasticPool.json
-            // this example is just showing the usage of "Databases_ListByElasticPool" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ElasticPoolResource created on azure
-            // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default-SQL-SouthEastAsia";
-            string serverName = "testsvr";
-            string elasticPoolName = "pool1";
-            ResourceIdentifier elasticPoolResourceId = ElasticPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, elasticPoolName);
-            ElasticPoolResource elasticPool = client.GetElasticPoolResource(elasticPoolResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SqlDatabaseResource item in elasticPool.GetDatabasesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SqlDatabaseData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
 
             Console.WriteLine($"Succeeded");
         }

@@ -21,18 +21,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> diskId = default;
             Optional<string> diskName = default;
-            Optional<DiskAccountType> diskType = default;
+            Optional<SiteRecoveryDiskAccountType> diskType = default;
             Optional<string> diskPath = default;
             Optional<string> isOSDisk = default;
             Optional<long> capacityInBytes = default;
-            Optional<string> logStorageAccountId = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
             Optional<string> logStorageAccountSasSecretName = default;
-            Optional<string> diskEncryptionSetId = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<string> seedManagedDiskId = default;
             Optional<Uri> seedBlobUri = default;
             Optional<string> targetManagedDiskId = default;
             Optional<Uri> targetBlobUri = default;
             Optional<string> targetDiskName = default;
+            Optional<GatewayOperationDetails> gatewayOperationDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskType = new DiskAccountType(property.Value.GetString());
+                    diskType = new SiteRecoveryDiskAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskPath"u8))
@@ -75,7 +76,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("logStorageAccountId"u8))
                 {
-                    logStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("logStorageAccountSasSecretName"u8))
@@ -85,7 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("diskEncryptionSetId"u8))
                 {
-                    diskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("seedManagedDiskId"u8))
@@ -121,8 +130,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetDiskName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("gatewayOperationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    continue;
+                }
             }
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value);
+            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value, gatewayOperationDetails.Value);
         }
     }
 }

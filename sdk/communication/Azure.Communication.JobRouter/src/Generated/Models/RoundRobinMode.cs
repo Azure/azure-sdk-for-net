@@ -10,7 +10,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Jobs are distributed in order to workers, starting with the worker that is after the last worker to receive a job. </summary>
     public partial class RoundRobinMode : DistributionMode
     {
-
         /// <summary> Initializes a new instance of RoundRobinMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Mode. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>

@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.Kusto.Models
 
         private const string RValue = "R";
         private const string Python3_6_5Value = "Python3_6_5";
-        private const string Python3_9_12Value = "Python3_9_12";
-        private const string Python3_9_12IncludeDeepLearningValue = "Python3_9_12IncludeDeepLearning";
         private const string Python3_10_8Value = "Python3_10_8";
 
         /// <summary> R. </summary>

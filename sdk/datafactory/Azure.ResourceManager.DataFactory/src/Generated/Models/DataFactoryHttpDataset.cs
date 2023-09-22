@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A file in an HTTP web server. </summary>
-    public partial class DataFactoryHttpDataset : DataFactoryDatasetDefinition
+    public partial class DataFactoryHttpDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of DataFactoryHttpDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         internal TargetBranchConfiguration BranchConfiguration { get; set; }
         /// <summary>
         /// Gets or sets branches that should have annotations.
-        /// 
+        ///
         /// For Ignite, we will be supporting a single default branch configuration in the UX.
         /// </summary>
         public IList<string> BranchNames

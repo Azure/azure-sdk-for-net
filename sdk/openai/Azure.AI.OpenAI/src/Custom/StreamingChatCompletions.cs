@@ -18,9 +18,9 @@ namespace Azure.AI.OpenAI
         private readonly Response _baseResponse;
         private readonly SseReader _baseResponseReader;
         private readonly IList<ChatCompletions> _baseChatCompletions;
-        private readonly object _baseCompletionsLock = new object();
+        private readonly object _baseCompletionsLock = new();
         private readonly IList<StreamingChatChoice> _streamingChatChoices;
-        private readonly object _streamingChoicesLock = new object();
+        private readonly object _streamingChoicesLock = new();
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
         private bool _streamingTaskComplete;
         private bool _disposedValue;
@@ -29,12 +29,25 @@ namespace Azure.AI.OpenAI
         /// <summary>
         /// Gets the earliest Completion creation timestamp associated with this streamed response.
         /// </summary>
-        public DateTimeOffset Created => GetLocked(() => _baseChatCompletions.First().Created);
+        public DateTimeOffset Created => GetLocked(() => _baseChatCompletions.Last().Created);
 
         /// <summary>
         /// Gets the unique identifier associated with this streaming Completions response.
         /// </summary>
-        public string Id => GetLocked(() => _baseChatCompletions.First().Id);
+        public string Id => GetLocked(() => _baseChatCompletions.Last().Id);
+
+        /// <summary>
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </summary>
+        public IReadOnlyList<PromptFilterResult> PromptFilterResults
+            => GetLocked(() =>
+            {
+                return _baseChatCompletions.Where(singleBaseChatCompletion => singleBaseChatCompletion.PromptFilterResults != null)
+                    .SelectMany(singleBaseChatCompletion => singleBaseChatCompletion.PromptFilterResults)
+                    .OrderBy(singleBaseCompletion => singleBaseCompletion.PromptIndex)
+                    .ToList();
+            });
 
         internal StreamingChatCompletions(Response response)
         {
@@ -84,7 +97,7 @@ namespace Azure.AI.OpenAI
                                     .FirstOrDefault(chatChoice => chatChoice.Index == chatChoiceFromSse.Index);
                                 if (existingStreamingChoice == null)
                                 {
-                                    StreamingChatChoice newStreamingChatChoice = new StreamingChatChoice(chatChoiceFromSse);
+                                    StreamingChatChoice newStreamingChatChoice = new(chatChoiceFromSse);
                                     _streamingChatChoices.Add(newStreamingChatChoice);
                                     _updateAvailableEvent.Set();
                                 }
@@ -95,16 +108,6 @@ namespace Azure.AI.OpenAI
                             }
                         }
                     }
-
-                    // Non-Azure OpenAI doesn't always set the FinishReason on streaming choices when multiple prompts are
-                    // provided.
-                    lock (_streamingChoicesLock)
-                    {
-                        foreach (StreamingChatChoice streamingChatChoice in _streamingChatChoices)
-                        {
-                            streamingChatChoice.StreamingDoneSignalReceived = true;
-                        }
-                    }
                 }
                 catch (Exception pumpException)
                 {
@@ -112,6 +115,16 @@ namespace Azure.AI.OpenAI
                 }
                 finally
                 {
+                    lock (_streamingChoicesLock)
+                    {
+                        // If anything went wrong and a StreamingChatChoice didn't naturally determine it was complete
+                        // based on a non-null finish reason, ensure that nothing's left incomplete (and potentially
+                        // hanging!) now.
+                        foreach (StreamingChatChoice streamingChatChoice in _streamingChatChoices)
+                        {
+                            streamingChatChoice.EnsureFinishStreaming(_pumpException);
+                        }
+                    }
                     _streamingTaskComplete = true;
                     _updateAvailableEvent.Set();
                 }
@@ -124,11 +137,6 @@ namespace Azure.AI.OpenAI
             bool isFinalIndex = false;
             for (int i = 0; !isFinalIndex && !cancellationToken.IsCancellationRequested; i++)
             {
-                if (_pumpException != null)
-                {
-                    throw _pumpException;
-                }
-
                 bool doneWaiting = false;
                 while (!doneWaiting)
                 {
@@ -142,6 +150,11 @@ namespace Azure.AI.OpenAI
                     {
                         await _updateAvailableEvent.WaitAsync(cancellationToken).ConfigureAwait(false);
                     }
+                }
+
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
                 }
 
                 StreamingChatChoice newChatChoice = null;
@@ -158,6 +171,15 @@ namespace Azure.AI.OpenAI
                     yield return newChatChoice;
                 }
             }
+        }
+
+        internal StreamingChatCompletions(
+            ChatCompletions baseChatCompletions = null,
+            List<StreamingChatChoice> streamingChatChoices = null)
+        {
+            _baseChatCompletions.Add(baseChatCompletions);
+            _streamingChatChoices = streamingChatChoices;
+            _streamingTaskComplete = true;
         }
 
         public void Dispose()

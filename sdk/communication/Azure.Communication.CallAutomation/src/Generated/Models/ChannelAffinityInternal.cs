@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of ChannelAffinityInternal. </summary>
         /// <param name="participant">
-        /// The identifier for the participant whose bitstream will be written to the channel 
+        /// The identifier for the participant whose bitstream will be written to the channel
         /// represented by the channel number.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Channel number to which bitstream from a particular participant will be written. </summary>
         public int? Channel { get; set; }
         /// <summary>
-        /// The identifier for the participant whose bitstream will be written to the channel 
+        /// The identifier for the participant whose bitstream will be written to the channel
         /// represented by the channel number.
         /// </summary>
         public CommunicationIdentifierModel Participant { get; }

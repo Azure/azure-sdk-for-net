@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
         internal RcmProxyDetails()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fqdn"> The RCM proxy Fqdn. </param>
         /// <param name="clientAuthenticationType"> The client authentication type. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the RCM proxy. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the RCM proxy. </param>
         /// <param name="health"> The health of the RCM proxy. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        internal RcmProxyDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string clientAuthenticationType, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
+        internal RcmProxyDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string clientAuthenticationType, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
         {
             Id = id;
             Name = name;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Fqdn = fqdn;
             ClientAuthenticationType = clientAuthenticationType;
             Version = version;
-            LastHeartbeatUtc = lastHeartbeatUtc;
+            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             Health = health;
             HealthErrors = healthErrors;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The RCM proxy Bios Id. </summary>
         public string BiosId { get; }
         /// <summary> The fabric object Id. </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary> The RCM proxy Fqdn. </summary>
         public string Fqdn { get; }
         /// <summary> The client authentication type. </summary>
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The version. </summary>
         public string Version { get; }
         /// <summary> The last heartbeat received from the RCM proxy. </summary>
-        public DateTimeOffset? LastHeartbeatUtc { get; }
+        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
         /// <summary> The health of the RCM proxy. </summary>
-        public ProtectionHealth? Health { get; }
+        public SiteRecoveryProtectionHealth? Health { get; }
         /// <summary> The health errors. </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
     }
 }

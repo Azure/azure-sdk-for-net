@@ -25,11 +25,11 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var sentShareClient = new SentSharesClient(endPoint, credential);
 
-            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId").ToEnumerableAsync();
+            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId", null, null, new()).ToEnumerableAsync();
 #else
             var sentShareClient = GetSentSharesClient();
 
-            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("fe11781e-9a7d-488d-bd22-cc2c95536e96").ToEnumerableAsync();
+            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("fe11781e-9a7d-488d-bd22-cc2c95536e96", null, null, new()).ToEnumerableAsync();
 #endif
 
             #endregion

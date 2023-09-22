@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="status"> Status of an async operation. </param>
         /// <param name="startedOn">
         /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="updatedOn">
         /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="resultInfo"> Optional result info. </param>
         /// <param name="error"> Error Body Contract. </param>
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public AsyncOperationStatus? Status { get; set; }
         /// <summary>
         /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? StartedOn { get; set; }
         /// <summary>
         /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Optional result info. </summary>

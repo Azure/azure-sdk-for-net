@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The replica disk type before failover. </summary>
         public string RecoveryReplicaDiskAccountType { get; set; }
         /// <summary> The recovery os disk encryption information. </summary>
-        public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
+        public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
         /// <summary> The target disk name for unplanned failover operation. </summary>
         public string FailoverDiskName { get; set; }
         /// <summary> The target disk name for test failover operation. </summary>

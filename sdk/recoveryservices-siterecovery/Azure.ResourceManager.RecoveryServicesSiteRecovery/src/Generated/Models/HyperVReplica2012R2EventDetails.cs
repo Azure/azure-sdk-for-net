@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Model class for event details of a HyperVReplica blue E2E event. </summary>
-    public partial class HyperVReplica2012R2EventDetails : EventProviderSpecificDetails
+    public partial class HyperVReplica2012R2EventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of HyperVReplica2012R2EventDetails. </summary>
         internal HyperVReplica2012R2EventDetails()

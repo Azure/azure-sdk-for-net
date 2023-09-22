@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="anomalySeverity"> anomaly severity. </param>
         /// <param name="anomalyStatus">
         /// anomaly status
-        /// 
+        ///
         /// only return for alerting anomaly result
         /// </param>
         /// <param name="value"> value of the anomaly. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalySeverity AnomalySeverity { get; }
         /// <summary>
         /// anomaly status
-        /// 
+        ///
         /// only return for alerting anomaly result
         /// </summary>
         public AnomalyStatus? AnomalyStatus { get; }

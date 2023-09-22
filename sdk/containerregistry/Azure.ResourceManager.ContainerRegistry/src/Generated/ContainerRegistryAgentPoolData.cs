@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A class representing the ContainerRegistryAgentPool data model.
-    /// The agentpool that has the ARM resource and properties. 
+    /// The agentpool that has the ARM resource and properties.
     /// The agentpool will have all information to create an agent pool.
     /// </summary>
     public partial class ContainerRegistryAgentPoolData : TrackedResourceData

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> skippedReason = default;
             Optional<string> skippedReasonString = default;
-            Optional<JobEntity> jobTask = default;
+            Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    jobTask = JobEntity.DeserializeJobEntity(property.Value);
+                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

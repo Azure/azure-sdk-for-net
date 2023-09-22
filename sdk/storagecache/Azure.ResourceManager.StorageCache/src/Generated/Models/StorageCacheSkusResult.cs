@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheSkusResult. </summary>
-        /// <param name="nextLink"> The URI to fetch the next page of Cache SKUs. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of cache SKUs. </param>
         /// <param name="value"> The list of SKUs available for the subscription. </param>
         internal StorageCacheSkusResult(string nextLink, IReadOnlyList<StorageCacheSku> value)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Value = value;
         }
 
-        /// <summary> The URI to fetch the next page of Cache SKUs. </summary>
+        /// <summary> The URI to fetch the next page of cache SKUs. </summary>
         public string NextLink { get; }
         /// <summary> The list of SKUs available for the subscription. </summary>
         public IReadOnlyList<StorageCacheSku> Value { get; }

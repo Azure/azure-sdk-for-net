@@ -119,7 +119,7 @@ namespace Azure
     {
         protected NullableResponse() { }
         public abstract bool HasValue { get; }
-        public abstract T Value { get; }
+        public abstract T? Value { get; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -267,6 +267,7 @@ namespace Azure
         protected Response() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
+        public override T Value { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -744,8 +745,10 @@ namespace Azure.Core
         private readonly int _dummyPrimitive;
         public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims) { throw null; }
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false) { throw null; }
         public string? Claims { get { throw null; } }
+        public bool IsCaeEnabled { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
         public string? TenantId { get { throw null; } }

@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="searchBaseDistinguishedName"> Distinguished name of the object to start the recursive search of users from. </param>
         /// <param name="searchFilterTemplate"> Template to use for searching. Defaults to (cn=%s) where %s will be replaced by the username used to login. </param>
         /// <param name="serverCertificates"></param>
-        internal AuthenticationMethodLdapProperties(string serverHostname, int? serverPort, string serviceUserDistinguishedName, string serviceUserPassword, string searchBaseDistinguishedName, string searchFilterTemplate, IList<CassandraCertificate> serverCertificates)
+        /// <param name="connectionTimeoutInMs"> Timeout for connecting to the LDAP server in miliseconds. The default is 5000 ms. </param>
+        internal AuthenticationMethodLdapProperties(string serverHostname, int? serverPort, string serviceUserDistinguishedName, string serviceUserPassword, string searchBaseDistinguishedName, string searchFilterTemplate, IList<CassandraCertificate> serverCertificates, int? connectionTimeoutInMs)
         {
             ServerHostname = serverHostname;
             ServerPort = serverPort;
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             SearchBaseDistinguishedName = searchBaseDistinguishedName;
             SearchFilterTemplate = searchFilterTemplate;
             ServerCertificates = serverCertificates;
+            ConnectionTimeoutInMs = connectionTimeoutInMs;
         }
 
         /// <summary> Hostname of the LDAP server. </summary>
@@ -52,5 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string SearchFilterTemplate { get; set; }
         /// <summary> Gets the server certificates. </summary>
         public IList<CassandraCertificate> ServerCertificates { get; }
+        /// <summary> Timeout for connecting to the LDAP server in miliseconds. The default is 5000 ms. </summary>
+        public int? ConnectionTimeoutInMs { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMySqlModelFactory
     {
-
         /// <summary> Initializes a new instance of MySqlServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

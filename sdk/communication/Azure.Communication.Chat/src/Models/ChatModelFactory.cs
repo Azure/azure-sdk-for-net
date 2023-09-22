@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary>
     /// Model factory that enables mocking for the Chat library.
     /// </summary>
+    [CodeGenType("CommunicationChatModelFactory")]
     public static partial class ChatModelFactory
     {
         /// <summary>

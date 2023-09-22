@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<RolloutResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<RolloutResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolloutRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RolloutResource(Client, RolloutData.DeserializeRolloutData(e)), _rolloutClientDiagnostics, Pipeline, "RolloutCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -318,6 +319,82 @@ namespace Azure.ResourceManager.DeploymentManager
             {
                 var response = _rolloutRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, retryAttempt, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RolloutResource>> GetIfExistsAsync(string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+
+            using var scope = _rolloutClientDiagnostics.CreateScope("RolloutCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _rolloutRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, retryAttempt, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RolloutResource>(response.GetRawResponse());
+                return Response.FromValue(new RolloutResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Rollouts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rolloutName"> The rollout name. </param>
+        /// <param name="retryAttempt"> Rollout retry attempt ordinal to get the result of. If not specified, result of the latest attempt will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        public virtual NullableResponse<RolloutResource> GetIfExists(string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+
+            using var scope = _rolloutClientDiagnostics.CreateScope("RolloutCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _rolloutRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rolloutName, retryAttempt, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RolloutResource>(response.GetRawResponse());
+                return Response.FromValue(new RolloutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

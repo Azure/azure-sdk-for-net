@@ -53,7 +53,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="kedaConfiguration"> The configuration of Keda component. </param>
         /// <param name="daprConfiguration"> The configuration of Dapr component. </param>
         /// <param name="infrastructureResourceGroup"> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="peerAuthentication"> Peer authentication settings for the Managed Environment. </param>
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.AppContainers
             KedaConfiguration = kedaConfiguration;
             DaprConfiguration = daprConfiguration;
             InfrastructureResourceGroup = infrastructureResourceGroup;
+            PeerAuthentication = peerAuthentication;
         }
 
         /// <summary> Kind of the Environment. </summary>
@@ -121,5 +123,18 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </summary>
         public string InfrastructureResourceGroup { get; set; }
+        /// <summary> Peer authentication settings for the Managed Environment. </summary>
+        internal ManagedEnvironmentPropertiesPeerAuthentication PeerAuthentication { get; set; }
+        /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
+        public bool? IsMtlsEnabled
+        {
+            get => PeerAuthentication is null ? default : PeerAuthentication.IsMtlsEnabled;
+            set
+            {
+                if (PeerAuthentication is null)
+                    PeerAuthentication = new ManagedEnvironmentPropertiesPeerAuthentication();
+                PeerAuthentication.IsMtlsEnabled = value;
+            }
+        }
     }
 }

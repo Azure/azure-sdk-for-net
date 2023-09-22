@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("scheduleTriggerConfig"u8);
                 writer.WriteObjectValue(ScheduleTriggerConfig);
             }
+            if (Optional.IsDefined(EventTriggerConfig))
+            {
+                writer.WritePropertyName("eventTriggerConfig"u8);
+                writer.WriteObjectValue(EventTriggerConfig);
+            }
             if (Optional.IsCollectionDefined(Registries))
             {
                 writer.WritePropertyName("registries"u8);
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> replicaRetryLimit = default;
             Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
             Optional<JobConfigurationScheduleTriggerConfig> scheduleTriggerConfig = default;
+            Optional<EventTriggerConfiguration> eventTriggerConfig = default;
             Optional<IList<ContainerAppRegistryCredentials>> registries = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -124,6 +130,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     scheduleTriggerConfig = JobConfigurationScheduleTriggerConfig.DeserializeJobConfigurationScheduleTriggerConfig(property.Value);
                     continue;
                 }
+                if (property.NameEquals("eventTriggerConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventTriggerConfig = EventTriggerConfiguration.DeserializeEventTriggerConfiguration(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("registries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -139,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJobConfiguration(Optional.ToList(secrets), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, Optional.ToList(registries));
+            return new ContainerAppJobConfiguration(Optional.ToList(secrets), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, eventTriggerConfig.Value, Optional.ToList(registries));
         }
     }
 }

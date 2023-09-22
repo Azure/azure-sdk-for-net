@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="RecoveryPlanGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
     /// </summary>
-    public partial class RecoveryPlanGroupTaskDetails : GroupTaskDetails
+    public partial class RecoveryPlanGroupTaskDetails : SiteRecoveryGroupTaskDetails
     {
         /// <summary> Initializes a new instance of RecoveryPlanGroupTaskDetails. </summary>
         internal RecoveryPlanGroupTaskDetails()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="rpGroupType"> The group type. </param>
-        internal RecoveryPlanGroupTaskDetails(string instanceType, IReadOnlyList<ASRTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks)
+        internal RecoveryPlanGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks)
         {
             Name = name;
             GroupId = groupId;

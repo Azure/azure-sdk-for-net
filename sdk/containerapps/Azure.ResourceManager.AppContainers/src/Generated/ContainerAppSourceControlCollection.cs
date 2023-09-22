@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.AppContainers
             {
                 var response = _containerAppSourceControlContainerAppsSourceControlsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSourceControls_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppSourceControlResource>> GetIfExistsAsync(string sourceControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+
+            using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppSourceControlContainerAppsSourceControlsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppSourceControlResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppSourceControlResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSourceControls_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppSourceControlResource> GetIfExists(string sourceControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+
+            using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppSourceControlContainerAppsSourceControlsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppSourceControlResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -774,6 +775,82 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary>
+        /// Migrate data from a Kusto cluster to another cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Migrate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The cluster migrate request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> MigrateAsync(WaitUntil waitUntil, ClusterMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.Migrate");
+            scope.Start();
+            try
+            {
+                var response = await _kustoClusterClustersRestClient.MigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate data from a Kusto cluster to another cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Migrate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The cluster migrate request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Migrate(WaitUntil waitUntil, ClusterMigrateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.Migrate");
+            scope.Start();
+            try
+            {
+                var response = _kustoClusterClustersRestClient.Migrate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new KustoArmOperation(_kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Returns a list of databases that are owned by this cluster and were followed by another cluster.
         /// <list type="bullet">
         /// <item>
@@ -791,7 +868,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -812,7 +889,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -977,7 +1054,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoAvailableSkuDetails> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -998,7 +1075,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoAvailableSkuDetails> GetAvailableSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1020,7 +1097,7 @@ namespace Azure.ResourceManager.Kusto
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1042,7 +1119,7 @@ namespace Azure.ResourceManager.Kusto
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1063,7 +1140,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoLanguageExtension.DeserializeKustoLanguageExtension, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoLanguageExtension.DeserializeKustoLanguageExtension, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1084,7 +1161,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoLanguageExtension.DeserializeKustoLanguageExtension, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoLanguageExtension.DeserializeKustoLanguageExtension, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>

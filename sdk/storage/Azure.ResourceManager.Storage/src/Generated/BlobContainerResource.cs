@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Gets properties of a specified container. 
+        /// Gets properties of a specified container.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Gets properties of a specified container. 
+        /// Gets properties of a specified container.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn't already exist. 
+        /// Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn't already exist.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn't already exist. 
+        /// Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn't already exist.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

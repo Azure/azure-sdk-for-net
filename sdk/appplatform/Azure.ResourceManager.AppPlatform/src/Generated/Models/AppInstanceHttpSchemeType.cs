@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
     /// Scheme to use for connecting to the host. Defaults to HTTP.
-    /// 
+    ///
     /// Possible enum values:
     ///  - `"HTTP"` means that the scheme used will be http://
     ///  - `"HTTPS"` means that the scheme used will be https://

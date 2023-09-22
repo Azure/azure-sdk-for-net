@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 if (result == null)
                 {
-                    throw new ArgumentNullException(AuthenticationEventResource.Ex_Invalid_Return);
+                    throw new ResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
                 }
 
                 if (result is AuthenticationEventResponse action)
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (Exception ex)
             {
-                Response = Request.Failed(ex, !(ex is ValidationException)).Result;
+                Response = Request.Failed(ex, true).Result;
             }
 
             return Task.CompletedTask;

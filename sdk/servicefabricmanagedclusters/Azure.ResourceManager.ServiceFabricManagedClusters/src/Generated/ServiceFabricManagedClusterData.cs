@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// <summary>
     /// A class representing the ServiceFabricManagedCluster data model.
     /// The managed cluster resource
-    /// 
+    ///
     /// </summary>
     public partial class ServiceFabricManagedClusterData : TrackedResourceData
     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="clusterUpgradeMode">
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-        /// 
+        ///
         /// </param>
         /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public string ClusterCodeVersion { get; set; }
         /// <summary>
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-        /// 
+        ///
         /// </summary>
         public ManagedClusterUpgradeMode? ClusterUpgradeMode { get; set; }
         /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </summary>

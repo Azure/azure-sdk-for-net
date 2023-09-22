@@ -86,6 +86,7 @@
     "lucene",
     "mgmt",
     "msal",
+    "Mtls",
     "northcentralus",
     "nunit",
     "odata",
@@ -228,7 +229,8 @@
         "swappable",
         "ssdzrs",
         "dscp",
-        "vmguest"
+        "vmguest",
+        "vhdx"
       ]
     },
     {
@@ -293,7 +295,8 @@
         "Ipvs",
         "Keda",
         "Kata",
-        "Mshv"
+        "Mshv",
+        "Fips"
       ]
     },
     {
@@ -423,6 +426,12 @@
       ]
     },
     {
+      "filename": "**/sdk/defendereasm/**/*.cs",
+      "words": [
+        "easm"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -487,11 +496,22 @@
       ]
     },
     {
+      "filename": "**/sdk/hardwaresecuritymodules/**/*.cs",
+      "words": [
+        "fips",
+        "klmk",
+        "hsma"
+      ]
+    },
+    {
       "filename": "**/sdk/hdinsight/**/*.cs",
       "words": [
         "aadds",
+        "flink",
         "ldaps",
-        "oaep"
+        "llap",
+        "oaep",
+        "trino"
       ]
     },
     {
@@ -584,13 +604,13 @@
       "words": [
         "Azfw",
         "Conditon",
+        "Diffie",
         "Ddos",
-        "ddos",
         "Dnat",
         "Dscp",
-        "dscp",
         "Eapmscha",
         "Eaptls",
+        "Fips",
         "Fqdns",
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
@@ -611,7 +631,6 @@
         "WAFV",
         "Wans",
         "Idps",
-        "idps",
         "Ocsp",
         "Afri",
         "Apac",
@@ -632,7 +651,9 @@
         "Dpdk",
         "Sriov",
         "Sata",
-        "Uefi"
+        "Uefi",
+        "Ipvlan",
+        "Macvlan"
       ]
     },
     {
@@ -670,7 +691,8 @@
       "words": [
         "evpn",
         "mbps",
-        "gshut"
+        "gshut",
+        "dscp"
       ]
     },
     {
@@ -865,6 +887,7 @@
         "ahub",
         "payg",
         "vcpus",
+        "esxi",
         "seleted",
         "dras"
       ]
@@ -873,6 +896,14 @@
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/*.cs",
+      "words": [
+        "capi",
+        "kvaio",
+        "scvmm"
       ]
     },
     {
@@ -926,6 +957,12 @@
         "Stix",
         "Whois",
         "Nlstext"
+      ]
+    },
+    {
+      "filename": "**/sdk/sphere/**/*.cs",
+      "words": [
+        "Nwfs"
       ]
     },
     {
@@ -1019,6 +1056,8 @@
         "byoa",
         "distcp",
         "eloqua",
+        "ename",
+        "evalue",
         "exfiltration",
         "fqdns",
         "hana",
@@ -1040,6 +1079,8 @@
         "vertica",
         "xero",
         "Asana",
+        "Ename",
+        "Evalue",
         "Twilio"
       ]
     },
@@ -1085,7 +1126,8 @@
         "Zilla",
         "Guage",
         "Plex",
-        "Vstsrm"
+        "Vstsrm",
+        "Localizable"
       ]
     },
     {

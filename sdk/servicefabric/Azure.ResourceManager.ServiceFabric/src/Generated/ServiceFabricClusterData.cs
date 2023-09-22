@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabric
     /// <summary>
     /// A class representing the ServiceFabricCluster data model.
     /// The cluster resource
-    /// 
+    ///
     /// </summary>
     public partial class ServiceFabricClusterData : TrackedResourceData
     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
         /// <param name="clusterState">
         /// The current state of the cluster.
-        /// 
+        ///
         ///   - WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.
         ///   - Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.
         ///   - BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric
         ///   - UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.
         ///   - AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.
         ///   - Ready - Indicates that the cluster is in a stable state.
-        /// 
+        ///
         /// </param>
         /// <param name="diagnosticsStorageAccountConfig"> The storage account information for storing Service Fabric diagnostic logs. </param>
         /// <param name="isEventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="provisioningState"> The provisioning state of the cluster resource. </param>
         /// <param name="reliabilityLevel">
         /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        /// 
+        ///
         ///   - None - Run the System services with a target replica set count of 1. This should only be used for test clusters.
         ///   - Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.
         ///   - Silver - Run the System services with a target replica set count of 5.
         ///   - Gold - Run the System services with a target replica set count of 7.
         ///   - Platinum - Run the System services with a target replica set count of 9.
-        /// 
+        ///
         /// </param>
         /// <param name="reverseProxyCertificate"> The server certificate used by reverse proxy. </param>
         /// <param name="reverseProxyCertificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public Guid? ClusterId { get; }
         /// <summary>
         /// The current state of the cluster.
-        /// 
+        ///
         ///   - WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.
         ///   - Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.
         ///   - BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceFabric
         ///   - UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.
         ///   - AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.
         ///   - Ready - Indicates that the cluster is in a stable state.
-        /// 
+        ///
         /// </summary>
         public ServiceFabricClusterState? ClusterState { get; }
         /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
@@ -184,13 +184,13 @@ namespace Azure.ResourceManager.ServiceFabric
         public ServiceFabricProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        /// 
+        ///
         ///   - None - Run the System services with a target replica set count of 1. This should only be used for test clusters.
         ///   - Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.
         ///   - Silver - Run the System services with a target replica set count of 5.
         ///   - Gold - Run the System services with a target replica set count of 7.
         ///   - Platinum - Run the System services with a target replica set count of 9.
-        /// 
+        ///
         /// </summary>
         public ClusterReliabilityLevel? ReliabilityLevel { get; set; }
         /// <summary> The server certificate used by reverse proxy. </summary>

@@ -530,6 +530,80 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task GetPurchasedPhoneNumbersAsPagesAsync()
+        {
+            var client = CreateClient();
+            var phoneNumbers = await client.GetPurchasedPhoneNumbersAsync().ToEnumerableAsync();
+            var phoneNumbersCount = phoneNumbers.Count;
+            var expectedPageSize = phoneNumbersCount;
+
+            if (phoneNumbersCount >= 2)
+            {
+                expectedPageSize = phoneNumbersCount / 2;
+            }
+
+            var pages = client.GetPurchasedPhoneNumbersAsync().AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(phoneNumbersCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetPurchasedPhoneNumbersAsPages()
+        {
+            var client = CreateClient();
+            var phoneNumbers = client.GetPurchasedPhoneNumbers().ToList();
+            var phoneNumbersCount = phoneNumbers.Count;
+            var expectedPageSize = phoneNumbersCount;
+
+            if (phoneNumbersCount >= 2)
+            {
+                expectedPageSize = phoneNumbersCount / 2;
+            }
+
+            var pages = client.GetPurchasedPhoneNumbers().AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(phoneNumbersCount, actual);
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task UpdateCapabilitiesAsync()
         {
             if (TestEnvironment.ShouldIgnorePhoneNumbersTests || SkipUpdateCapabilitiesLiveTest)
@@ -645,6 +719,79 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task GetTollFreeAreaCodesAsyncAsPages()
+        {
+            var client = CreateClient();
+            var areaCodes = await client.GetAvailableAreaCodesTollFreeAsync("US").ToEnumerableAsync();
+            var areaCodesCount = areaCodes.Count;
+            var expectedPageSize = areaCodesCount;
+
+            if (areaCodesCount >= 2)
+            {
+                expectedPageSize = areaCodesCount / 2;
+            }
+            var pages = client.GetAvailableAreaCodesTollFreeAsync("US").AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(areaCodesCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetTollFreeAreaCodesAsPages()
+        {
+            var client = CreateClient();
+            var areaCodes = client.GetAvailableAreaCodesTollFree("US").ToList();
+            var areaCodesCount = areaCodes.Count;
+
+            var expectedPageSize = areaCodesCount;
+
+            if (areaCodesCount >= 2)
+            {
+                expectedPageSize = areaCodesCount / 2;
+            }
+            var pages = client.GetAvailableAreaCodesTollFree("US").AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(areaCodesCount, actual);
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task GetGeographicAreaCodesAsync()
         {
             var client = CreateClient();
@@ -677,6 +824,81 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Assert.IsNotNull(areaCodes);
                 break;
             }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetGeographicAreaCodesAsyncAsPages()
+        {
+            var client = CreateClient();
+            var availableLocalities = await client.GetAvailableLocalitiesAsync("US").ToEnumerableAsync();
+            var areaCodes = await client.GetAvailableAreaCodesGeographicAsync("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).ToEnumerableAsync();
+            var areaCodesCount = areaCodes.Count;
+            var expectedPageSize = areaCodesCount;
+
+            if (areaCodesCount >= 2)
+            {
+                expectedPageSize = areaCodesCount / 2;
+            }
+            var pages = client.GetAvailableAreaCodesGeographicAsync("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(areaCodesCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetGeographicAreaCodesAsPages()
+        {
+            var client = CreateClient();
+            var availableLocalities = client.GetAvailableLocalities("US");
+            var areaCodes = client.GetAvailableAreaCodesGeographic("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).ToList();
+            var areaCodesCount = areaCodes.Count;
+
+            var expectedPageSize = areaCodesCount;
+
+            if (areaCodesCount >= 2)
+            {
+                expectedPageSize = areaCodesCount / 2;
+            }
+            var pages = client.GetAvailableAreaCodesGeographic("US", "person", availableLocalities.First().LocalizedName, availableLocalities.First().AdministrativeDivision.AbbreviatedName).AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(areaCodesCount, actual);
         }
 
         [Test]
@@ -723,6 +945,80 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task GetCountriesAsyncAsPages()
+        {
+            var client = CreateClient();
+            var countries = await client.GetAvailableCountriesAsync().ToEnumerableAsync();
+            var countriesCount = countries.Count;
+
+            var expectedPageSize = countriesCount;
+
+            if (countriesCount >= 2)
+            {
+                expectedPageSize = countriesCount / 2;
+            }
+            var pages = client.GetAvailableCountriesAsync().AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(countriesCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetCountriesAsPages()
+        {
+            var client = CreateClient();
+            var countries = client.GetAvailableCountries().ToList();
+            var countriesCount = countries.Count;
+
+            var expectedPageSize = countriesCount;
+
+            if (countriesCount >= 2)
+            {
+                expectedPageSize = countriesCount / 2;
+            }
+            var pages = client.GetAvailableCountries().AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(countriesCount, actual);
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task GetLocalitiesAsync()
         {
             var client = CreateClient();
@@ -747,6 +1043,78 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Locality " + locality.LocalizedName);
             }
             Assert.IsNotNull(localities);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetLocalitiesAsyncAsPages()
+        {
+            var client = CreateClient();
+            var localities = await client.GetAvailableLocalitiesAsync("US").ToEnumerableAsync();
+            var localitiesCount = localities.Count;
+            var expectedPageSize = localitiesCount;
+
+            if (localitiesCount >= 2)
+            {
+                expectedPageSize = localitiesCount / 2;
+            }
+            var pages = client.GetAvailableLocalitiesAsync("US").AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(localitiesCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetLocalitiesAsPages()
+        {
+            var client = CreateClient();
+            var localities = client.GetAvailableLocalities("US").ToList();
+            var localitiesCount = localities.Count;
+            var expectedPageSize = localitiesCount;
+
+            if (localitiesCount >= 2)
+            {
+                expectedPageSize = localitiesCount / 2;
+            }
+            var pages = client.GetAvailableLocalities("US").AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(localitiesCount, actual);
         }
 
         [Test]
@@ -813,6 +1181,78 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Offering " + offering.ToString());
             }
             Assert.IsNotNull(offerings);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetOfferingsAsyncAsPages()
+        {
+            var client = CreateClient();
+            var offerings = await client.GetAvailableOfferingsAsync("US").ToEnumerableAsync();
+            var offeringsCount = offerings.Count;
+            var expectedPageSize = offeringsCount;
+
+            if (offeringsCount >= 2)
+            {
+                expectedPageSize = offeringsCount / 2;
+            }
+            var pages = client.GetAvailableOfferingsAsync("US").AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            await foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(offeringsCount, actual);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetOfferingsAsPages()
+        {
+            var client = CreateClient();
+            var offerings = client.GetAvailableOfferings("US").ToList();
+            var offeringsCount = offerings.Count;
+            var expectedPageSize = offeringsCount;
+
+            if (offeringsCount >= 2)
+            {
+                expectedPageSize = offeringsCount / 2;
+            }
+            var pages = client.GetAvailableOfferings("US").AsPages(pageSizeHint: expectedPageSize);
+            var actual = 0;
+            foreach (var page in pages)
+            {
+                if (page == null || expectedPageSize == 0)
+                {
+                    break;
+                }
+                // Validate only the size of the first page as it's the only one
+                // guaranteed to be of expectedPageSize
+                if (actual == 0)
+                {
+                    Assert.AreEqual(expectedPageSize, page.Values.Count);
+                }
+                foreach (var phoneNumber in page.Values)
+                {
+                    actual++;
+                }
+            }
+
+            Assert.AreEqual(offeringsCount, actual);
         }
 
         [Test]

@@ -64,6 +64,13 @@ namespace Azure.Core.Expressions.DataFactory
         public static bool operator !=(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType left, Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class DataFactoryModelFactory
+    {
+        public static Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecretReference DataFactoryKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference store, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> secretName, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> secretVersion) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference DataFactoryLinkedServiceReference(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType referenceType, string? referenceName, System.Collections.Generic.IDictionary<string, System.BinaryData?> parameters) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition DataFactorySecretBaseDefinition(string secretBaseType) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactorySecretString DataFactorySecretString(string value) { throw null; }
+    }
     public abstract partial class DataFactorySecretBaseDefinition
     {
         protected DataFactorySecretBaseDefinition() { }

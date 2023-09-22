@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.GraphServices
         public virtual Azure.Pageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData GraphServicesAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties GraphServicesAccountResourceProperties(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState? provisioningState = default(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState?), string appId = null, string billingPlanId = null) { throw null; }
     }
-    public partial class GraphServicesAccountResourcePatch : Azure.ResourceManager.GraphServices.Models.TagUpdate
+    public partial class GraphServicesAccountResourcePatch : Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate
     {
         public GraphServicesAccountResourcePatch() { }
     }
@@ -87,9 +89,9 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static bool operator !=(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState left, Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TagUpdate
+    public partial class GraphServicesTagUpdate
     {
-        public TagUpdate() { }
+        public GraphServicesTagUpdate() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }

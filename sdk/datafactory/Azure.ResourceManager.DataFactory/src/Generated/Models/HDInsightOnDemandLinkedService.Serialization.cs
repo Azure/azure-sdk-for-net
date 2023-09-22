@@ -69,8 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("version"u8);
             JsonSerializer.Serialize(writer, Version);
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
-            writer.WritePropertyName("hostSubscriptionId"u8);
+            JsonSerializer.Serialize(writer, LinkedServiceName); writer.WritePropertyName("hostSubscriptionId"u8);
             JsonSerializer.Serialize(writer, HostSubscriptionId);
             if (Optional.IsDefined(ServicePrincipalId))
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant"u8);
             JsonSerializer.Serialize(writer, Tenant);
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClusterPassword))
             {
                 writer.WritePropertyName("clusterPassword"u8);
-                writer.WriteObjectValue(ClusterPassword);
+                JsonSerializer.Serialize(writer, ClusterPassword);
             }
             if (Optional.IsDefined(ClusterSshUserName))
             {
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClusterSshPassword))
             {
                 writer.WritePropertyName("clusterSshPassword"u8);
-                writer.WriteObjectValue(ClusterSshPassword);
+                JsonSerializer.Serialize(writer, ClusterSshPassword);
             }
             if (Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
             {
@@ -117,14 +116,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLinkedServiceNames)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(HcatalogLinkedServiceName))
             {
                 writer.WritePropertyName("hcatalogLinkedServiceName"u8);
-                writer.WriteObjectValue(HcatalogLinkedServiceName);
+                JsonSerializer.Serialize(writer, HcatalogLinkedServiceName);
             }
             if (Optional.IsDefined(ClusterType))
             {
@@ -211,11 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(HeadNodeSize))
             {
@@ -319,11 +314,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> oozieConfiguration = default;
             Optional<BinaryData> stormConfiguration = default;
             Optional<BinaryData> yarnConfiguration = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             Optional<BinaryData> headNodeSize = default;
             Optional<BinaryData> dataNodeSize = default;
             Optional<BinaryData> zookeeperNodeSize = default;
-            Optional<IList<ScriptAction>> scriptActions = default;
+            Optional<IList<DataFactoryScriptAction>> scriptActions = default;
             Optional<DataFactoryElement<string>> virtualNetworkId = default;
             Optional<DataFactoryElement<string>> subnetName = default;
             Optional<DataFactoryCredentialReference> credential = default;
@@ -411,7 +406,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
+                            linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hostSubscriptionId"u8))
@@ -434,7 +429,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -471,7 +466,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterPassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            clusterPassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterSshUserName"u8))
@@ -489,7 +484,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterSshPassword = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            clusterSshPassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalLinkedServiceNames"u8))
@@ -501,7 +496,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(item));
+                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
                             }
                             additionalLinkedServiceNames = array;
                             continue;
@@ -512,7 +507,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            hcatalogLinkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
+                            hcatalogLinkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterType"u8))
@@ -607,11 +602,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("headNodeSize"u8))
@@ -647,10 +638,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<ScriptAction> array = new List<ScriptAction>();
+                            List<DataFactoryScriptAction> array = new List<DataFactoryScriptAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptAction.DeserializeScriptAction(item));
+                                array.Add(DataFactoryScriptAction.DeserializeDataFactoryScriptAction(item));
                             }
                             scriptActions = array;
                             continue;
@@ -688,7 +679,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey.Value, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword.Value, clusterSshUserName.Value, clusterSshPassword.Value, Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName.Value, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value, credential.Value);
+            return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword, clusterSshUserName.Value, clusterSshPassword, Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value, credential.Value);
         }
     }
 }

@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="properties">
         /// object which contains secret parameters
         /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
+        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="Models.CustomerCertificateProperties"/>, <see cref="Models.ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecretData"/> instance for mocking. </returns>
         public static FrontDoorSecretData FrontDoorSecretData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, FrontDoorSecretProperties properties = null)

@@ -37,5 +37,7 @@ namespace Azure.Communication.CallAutomation
         /// Refer to available Text-to-speech voices here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
         /// </summary>
         public string VoiceName { get; set; }
+        /// <summary> Endpoint where the custom voice was deployed. </summary>
+        public string CustomVoiceEndpointId { get; set; }
     }
 }

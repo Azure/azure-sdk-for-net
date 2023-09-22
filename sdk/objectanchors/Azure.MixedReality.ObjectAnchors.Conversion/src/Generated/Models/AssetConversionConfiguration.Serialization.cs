@@ -161,7 +161,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyFrameIndexes = null;
                         continue;
                     }
                     List<int> array = new List<int>();

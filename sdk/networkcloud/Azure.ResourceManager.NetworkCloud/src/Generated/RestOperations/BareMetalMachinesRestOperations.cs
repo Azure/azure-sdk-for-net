@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-12-preview";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Get a list of bare metal machines in the provided subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Get a list of bare metal machines in the provided subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Get a list of bare metal machines in the provided resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Get a list of bare metal machines in the provided resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Get properties of the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BareMetalMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string bareMetalMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkCloudBareMetalMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,26 +216,26 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        BareMetalMachineData value = default;
+                        NetworkCloudBareMetalMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BareMetalMachineData.DeserializeBareMetalMachineData(document.RootElement);
+                        value = NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BareMetalMachineData)null, message.Response);
+                    return Response.FromValue((NetworkCloudBareMetalMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get properties of the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BareMetalMachineData> Get(string subscriptionId, string resourceGroupName, string bareMetalMachineName, CancellationToken cancellationToken = default)
+        public Response<NetworkCloudBareMetalMachineData> Get(string subscriptionId, string resourceGroupName, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -247,19 +247,19 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        BareMetalMachineData value = default;
+                        NetworkCloudBareMetalMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BareMetalMachineData.DeserializeBareMetalMachineData(document.RootElement);
+                        value = NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BareMetalMachineData)null, message.Response);
+                    return Response.FromValue((NetworkCloudBareMetalMachineData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachinePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, NetworkCloudBareMetalMachinePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bareMetalMachineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachinePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string bareMetalMachineName, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -311,14 +311,14 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bareMetalMachineName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachinePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string bareMetalMachineName, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Cordon the provided bare metal machine's Kubernetes node. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -383,6 +383,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -392,7 +393,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Cordon the provided bare metal machine's Kubernetes node. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -409,6 +410,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -446,7 +448,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Power off the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -463,6 +465,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -472,7 +475,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Power off the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -489,6 +492,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -519,7 +523,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Reimage the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -535,6 +539,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -544,7 +549,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Reimage the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -560,6 +565,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -597,7 +603,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Replace the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -614,6 +620,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -623,7 +630,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Replace the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -640,6 +647,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -670,7 +678,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Restart the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -686,6 +694,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -695,7 +704,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Restart the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -711,6 +720,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -745,7 +755,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Run the command or the script on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -763,6 +773,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -772,7 +783,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Run the command or the script on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -790,6 +801,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -824,7 +836,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Run one or more data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -842,6 +854,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -851,7 +864,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Run one or more data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -869,6 +882,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -903,7 +917,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Run one or more read-only commands on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -921,6 +935,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -930,7 +945,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Run one or more read-only commands on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="content"> The request body. </param>
@@ -948,6 +963,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -978,7 +994,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Start the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -994,6 +1010,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -1003,7 +1020,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Start the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1019,6 +1036,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -1049,7 +1067,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Uncordon the provided bare metal machine's Kubernetes node. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1065,6 +1083,7 @@ namespace Azure.ResourceManager.NetworkCloud
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -1074,7 +1093,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Uncordon the provided bare metal machine's Kubernetes node. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1090,85 +1109,7 @@ namespace Azure.ResourceManager.NetworkCloud
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateValidateHardwareRequest(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineValidateHardwareContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.NetworkCloud/bareMetalMachines/", false);
-            uri.AppendPath(bareMetalMachineName, true);
-            uri.AppendPath("/validateHardware", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Validate the hardware of the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bareMetalMachineName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateHardwareAsync(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineValidateHardwareContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateValidateHardwareRequest(subscriptionId, resourceGroupName, bareMetalMachineName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Validate the hardware of the provided bare metal machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bareMetalMachineName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateHardware(string subscriptionId, string resourceGroupName, string bareMetalMachineName, BareMetalMachineValidateHardwareContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(bareMetalMachineName, nameof(bareMetalMachineName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateValidateHardwareRequest(subscriptionId, resourceGroupName, bareMetalMachineName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -1193,7 +1134,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Get a list of bare metal machines in the provided subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1220,7 +1161,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Get a list of bare metal machines in the provided subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1261,7 +1202,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Get a list of bare metal machines in the provided resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -1290,7 +1231,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Get a list of bare metal machines in the provided resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

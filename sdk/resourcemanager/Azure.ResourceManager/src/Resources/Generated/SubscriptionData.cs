@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of SubscriptionData. </summary>
-        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
         /// <param name="tenantId"> The subscription tenant ID. </param>

@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ExecutionType> executionType = default;
-            Optional<ExecutionStatus> status = default;
+            Optional<ExportRunExecutionType> executionType = default;
+            Optional<ExportRunExecutionStatus> status = default;
             Optional<string> submittedBy = default;
             Optional<DateTimeOffset> submittedTime = default;
             Optional<DateTimeOffset> processingStartTime = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            executionType = new ExecutionType(property0.Value.GetString());
+                            executionType = new ExportRunExecutionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            status = new ExecutionStatus(property0.Value.GetString());
+                            status = new ExportRunExecutionStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("submittedBy"u8))

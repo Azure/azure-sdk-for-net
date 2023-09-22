@@ -6,11 +6,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Analytics.Purview.Catalog;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,13 +22,27 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Create()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.Create(content);
 
-            Response response = client.Create(RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Create_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -39,93 +52,49 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Create_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                createTime = 123.45f,
+                createTime = 123.45F,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipAttributes = new
-                    {
-                        entityGuid = "<entityGuid>",
-                        entityStatus = "ACTIVE",
-                        removePropagationsOnEntityDelete = true,
-                        validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-                        source = "<source>",
-                        sourceDetails = new
-                        {
-                            key = new { },
-                        },
-                        attributes = new
-                        {
-                            key = new { },
-                        },
-                        typeName = "<typeName>",
-                        lastModifiedTS = "<lastModifiedTS>",
-                    },
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
                     guid = "<guid>",
                     typeName = "<typeName>",
                     uniqueAttributes = new
                     {
-                        key = new { },
-                    },
-                },
-                end2 = new
-                {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new { },
+                        key = new object(),
                     },
                 },
                 guid = "<guid>",
                 homeId = "<homeId>",
                 label = "<label>",
-                provenanceType = 123.45f,
+                provenanceType = 123.45F,
                 status = "ACTIVE",
-                updateTime = 123.45f,
+                updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
-                version = 123.45f,
+                version = 123.45F,
                 attributes = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-            };
-
-            Response response = client.Create(RequestContent.Create(data));
+            });
+            Response response = client.Create(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -134,118 +103,58 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Create_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            var data = new { };
-
-            Response response = await client.CreateAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Create_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                createTime = 123.45f,
+                createTime = 123.45F,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipAttributes = new
-                    {
-                        entityGuid = "<entityGuid>",
-                        entityStatus = "ACTIVE",
-                        removePropagationsOnEntityDelete = true,
-                        validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-                        source = "<source>",
-                        sourceDetails = new
-                        {
-                            key = new { },
-                        },
-                        attributes = new
-                        {
-                            key = new { },
-                        },
-                        typeName = "<typeName>",
-                        lastModifiedTS = "<lastModifiedTS>",
-                    },
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
                     guid = "<guid>",
                     typeName = "<typeName>",
                     uniqueAttributes = new
                     {
-                        key = new { },
-                    },
-                },
-                end2 = new
-                {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new { },
+                        key = new object(),
                     },
                 },
                 guid = "<guid>",
                 homeId = "<homeId>",
                 label = "<label>",
-                provenanceType = 123.45f,
+                provenanceType = 123.45F,
                 status = "ACTIVE",
-                updateTime = 123.45f,
+                updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
-                version = 123.45f,
+                version = 123.45F,
                 attributes = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-            };
-
-            Response response = await client.CreateAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -254,7 +163,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
@@ -263,13 +172,27 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Update()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.Update(content);
 
-            Response response = client.Update(RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Update_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -279,93 +202,49 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Update_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                createTime = 123.45f,
+                createTime = 123.45F,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipAttributes = new
-                    {
-                        entityGuid = "<entityGuid>",
-                        entityStatus = "ACTIVE",
-                        removePropagationsOnEntityDelete = true,
-                        validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-                        source = "<source>",
-                        sourceDetails = new
-                        {
-                            key = new { },
-                        },
-                        attributes = new
-                        {
-                            key = new { },
-                        },
-                        typeName = "<typeName>",
-                        lastModifiedTS = "<lastModifiedTS>",
-                    },
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
                     guid = "<guid>",
                     typeName = "<typeName>",
                     uniqueAttributes = new
                     {
-                        key = new { },
-                    },
-                },
-                end2 = new
-                {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new { },
+                        key = new object(),
                     },
                 },
                 guid = "<guid>",
                 homeId = "<homeId>",
                 label = "<label>",
-                provenanceType = 123.45f,
+                provenanceType = 123.45F,
                 status = "ACTIVE",
-                updateTime = 123.45f,
+                updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
-                version = 123.45f,
+                version = 123.45F,
                 attributes = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-            };
-
-            Response response = client.Update(RequestContent.Create(data));
+            });
+            Response response = client.Update(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -374,118 +253,58 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Update_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            var data = new { };
-
-            Response response = await client.UpdateAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_Update_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
-                createTime = 123.45f,
+                createTime = 123.45F,
                 createdBy = "<createdBy>",
                 end1 = new
                 {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipAttributes = new
-                    {
-                        entityGuid = "<entityGuid>",
-                        entityStatus = "ACTIVE",
-                        removePropagationsOnEntityDelete = true,
-                        validityPeriods = new[] {
-                new {
-                    endTime = "<endTime>",
-                    startTime = "<startTime>",
-                    timeZone = "<timeZone>",
-                }
-            },
-                        source = "<source>",
-                        sourceDetails = new
-                        {
-                            key = new { },
-                        },
-                        attributes = new
-                        {
-                            key = new { },
-                        },
-                        typeName = "<typeName>",
-                        lastModifiedTS = "<lastModifiedTS>",
-                    },
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
                     guid = "<guid>",
                     typeName = "<typeName>",
                     uniqueAttributes = new
                     {
-                        key = new { },
-                    },
-                },
-                end2 = new
-                {
-                    displayText = "<displayText>",
-                    entityStatus = "ACTIVE",
-                    relationshipType = "<relationshipType>",
-                    relationshipGuid = "<relationshipGuid>",
-                    relationshipStatus = "ACTIVE",
-                    guid = "<guid>",
-                    typeName = "<typeName>",
-                    uniqueAttributes = new
-                    {
-                        key = new { },
+                        key = new object(),
                     },
                 },
                 guid = "<guid>",
                 homeId = "<homeId>",
                 label = "<label>",
-                provenanceType = 123.45f,
+                provenanceType = 123.45F,
                 status = "ACTIVE",
-                updateTime = 123.45f,
+                updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
-                version = 123.45f,
+                version = 123.45F,
                 attributes = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
                 typeName = "<typeName>",
                 lastModifiedTS = "<lastModifiedTS>",
-            };
-
-            Response response = await client.UpdateAsync(RequestContent.Create(data));
+            });
+            Response response = await client.UpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -494,7 +313,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         }
@@ -503,11 +322,25 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetPurviewRelationship()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = client.GetPurviewRelationship("<guid>");
+            Response response = client.GetPurviewRelationship("<guid>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPurviewRelationship_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            Response response = await client.GetPurviewRelationshipAsync("<guid>", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -517,52 +350,52 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetPurviewRelationship_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = client.GetPurviewRelationship("<guid>", true);
+            Response response = client.GetPurviewRelationship("<guid>", true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("label").ToString());
@@ -571,75 +404,61 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationship").GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPurviewRelationship_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            Response response = await client.GetPurviewRelationshipAsync("<guid>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetPurviewRelationship_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
-            Response response = await client.GetPurviewRelationshipAsync("<guid>", true);
+            Response response = await client.GetPurviewRelationshipAsync("<guid>", true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meaningNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classificationNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("guid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("isIncomplete").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("labels")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meaningNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("attributes").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("typeName").ToString());
+            Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("createTime").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("guid").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("homeId").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("label").ToString());
@@ -648,7 +467,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             Console.WriteLine(result.GetProperty("relationship").GetProperty("updateTime").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("updatedBy").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("typeName").ToString());
             Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS").ToString());
         }
@@ -657,21 +476,9 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
-
-            Response response = client.Delete("<guid>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = client.Delete("<guid>");
             Console.WriteLine(response.Status);
@@ -681,9 +488,9 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = await client.DeleteAsync("<guid>");
             Console.WriteLine(response.Status);
@@ -691,11 +498,23 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_Delete_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+
+            Response response = client.Delete("<guid>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = await client.DeleteAsync("<guid>");
             Console.WriteLine(response.Status);

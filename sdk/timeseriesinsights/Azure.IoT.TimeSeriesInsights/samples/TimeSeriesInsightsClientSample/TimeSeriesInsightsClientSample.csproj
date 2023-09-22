@@ -16,6 +16,7 @@
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.32.0" />
     <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.37.0" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.24" />
   </ItemGroup>
 
   <ItemGroup>

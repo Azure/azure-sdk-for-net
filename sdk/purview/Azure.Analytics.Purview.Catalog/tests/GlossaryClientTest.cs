@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.Catalog.Tests
         public async Task GetGlossaryCategory()
         {
             var client = GetGlossariesClient();
-            Response fetchResponse = await client.GetGlossariesAsync();
+            Response fetchResponse = await client.GetGlossariesAsync(null, null, null, null, new());
             Assert.AreEqual(200, fetchResponse.Status);
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
             JsonElement fetchBodyJson = jsonDocument.RootElement;

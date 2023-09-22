@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

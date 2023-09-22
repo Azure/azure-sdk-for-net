@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Properties describing the software upgrade state of the Cache. </summary>
+    /// <summary> Properties describing the software upgrade state of the cache. </summary>
     public partial class StorageCacheUpgradeStatus
     {
         /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUpgradeStatus. </summary>
-        /// <param name="currentFirmwareVersion"> Version string of the firmware currently installed on this Cache. </param>
-        /// <param name="firmwareUpdateStatus"> True if there is a firmware update ready to install on this Cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
-        /// <param name="firmwareUpdateDeadline"> Time at which the pending firmware update will automatically be installed on the Cache. </param>
+        /// <param name="currentFirmwareVersion"> Version string of the firmware currently installed on this cache. </param>
+        /// <param name="firmwareUpdateStatus"> True if there is a firmware update ready to install on this cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </param>
+        /// <param name="firmwareUpdateDeadline"> Time at which the pending firmware update will automatically be installed on the cache. </param>
         /// <param name="lastFirmwareUpdate"> Time of the last successful firmware update. </param>
         /// <param name="pendingFirmwareVersion"> When firmwareUpdateAvailable is true, this field holds the version string for the update. </param>
         internal StorageCacheUpgradeStatus(string currentFirmwareVersion, StorageCacheFirmwareStatusType? firmwareUpdateStatus, DateTimeOffset? firmwareUpdateDeadline, DateTimeOffset? lastFirmwareUpdate, string pendingFirmwareVersion)
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             PendingFirmwareVersion = pendingFirmwareVersion;
         }
 
-        /// <summary> Version string of the firmware currently installed on this Cache. </summary>
+        /// <summary> Version string of the firmware currently installed on this cache. </summary>
         public string CurrentFirmwareVersion { get; }
-        /// <summary> True if there is a firmware update ready to install on this Cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </summary>
+        /// <summary> True if there is a firmware update ready to install on this cache. The firmware will automatically be installed after firmwareUpdateDeadline if not triggered earlier via the upgrade operation. </summary>
         public StorageCacheFirmwareStatusType? FirmwareUpdateStatus { get; }
-        /// <summary> Time at which the pending firmware update will automatically be installed on the Cache. </summary>
+        /// <summary> Time at which the pending firmware update will automatically be installed on the cache. </summary>
         public DateTimeOffset? FirmwareUpdateDeadline { get; }
         /// <summary> Time of the last successful firmware update. </summary>
         public DateTimeOffset? LastFirmwareUpdate { get; }

@@ -5,6 +5,10 @@ parameters:
   - name: SubscriptionConfigurations
     type: object
     default: null
+  # EnvVars is used to help diagnose variable conflict issues early
+  - name: EnvVars
+    type: object
+    default: null
 
 steps:
   - ${{ if parameters.SubscriptionConfiguration }}:
@@ -16,6 +20,8 @@ steps:
         . ./eng/common/TestResources/SubConfig-Helpers.ps1
         SetSubscriptionConfiguration $config
       displayName: Initialize SubscriptionConfiguration variable
+      ${{ if parameters.EnvVars }}:
+        env: ${{ parameters.EnvVars }}
 
   - ${{ if parameters.SubscriptionConfigurations }}:
     - pwsh: |
@@ -36,3 +42,5 @@ steps:
           UpdateSubscriptionConfiguration $configBase $config
 
         displayName: Merge Test Resource Configurations
+        ${{ if parameters.EnvVars }}:
+          env: ${{ parameters.EnvVars }}

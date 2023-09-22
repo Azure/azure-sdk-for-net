@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of TargetBranchConfiguration. </summary>
         /// <param name="names">
         /// Gets or sets branches that should have annotations.
-        /// 
+        ///
         /// For Ignite, we will be supporting a single default branch configuration in the UX.
         /// </param>
         internal TargetBranchConfiguration(IList<string> names)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         /// <summary>
         /// Gets or sets branches that should have annotations.
-        /// 
+        ///
         /// For Ignite, we will be supporting a single default branch configuration in the UX.
         /// </summary>
         public IList<string> Names { get; }

@@ -17,11 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password">
-        /// The password for Basic authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password for Basic authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public WebBasicAuthentication(DataFactoryElement<string> uri, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password) : base(uri)
         {
@@ -38,11 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password">
-        /// The password for Basic authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password for Basic authentication. </param>
         internal WebBasicAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password) : base(uri, authenticationType)
         {
             Username = username;
@@ -52,11 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
-        /// <summary>
-        /// The password for Basic authentication.
-        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
+        /// <summary> The password for Basic authentication. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
     }
 }

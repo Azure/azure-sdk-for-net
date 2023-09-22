@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-29";
+            _apiVersion = apiVersion ?? "2023-05-02";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the attached database configuration resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the attached database configuration resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of attached database configurations of the given Kusto cluster. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of attached database configurations of the given Kusto cluster. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns an attached database configuration. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns an attached database configuration. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,8 +318,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates or updates an attached database configuration. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
@@ -348,8 +348,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates or updates an attached database configuration. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
@@ -400,8 +400,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes the attached database configuration with the given name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -428,8 +428,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes the attached database configuration with the given name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

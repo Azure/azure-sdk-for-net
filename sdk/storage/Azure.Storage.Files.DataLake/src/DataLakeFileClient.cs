@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
+            : this(fileUri, credential, new DataLakeClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -258,7 +258,13 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(options), options, storageSharedKeyCredential:null)
+            : this(
+                fileUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                credential)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -288,7 +294,13 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
-            : base(fileUri, authentication, options, storageSharedKeyCredential)
+            : base(
+                  fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: storageSharedKeyCredential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -317,7 +329,46 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             AzureSasCredential sasCredential)
-            : base(fileUri, authentication, options, sasCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: sasCredential,
+                  tokenCredential: null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Token credential.
+        /// </param>
+        internal DataLakeFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            TokenCredential tokenCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: tokenCredential)
         {
         }
 
@@ -1135,11 +1186,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = base.Rename(
-                    destinationFileSystem,
-                    destinationPath,
-                    sourceConditions,
-                    destinationConditions,
-                    cancellationToken);
+                    destinationPath: destinationPath,
+                    destinationFileSystem: destinationFileSystem,
+                    sourceConditions: sourceConditions,
+                    destinationConditions: destinationConditions,
+                    cancellationToken: cancellationToken);
 
                 return Response.FromValue(
                     new DataLakeFileClient(response.Value.DfsUri, response.Value.ClientConfiguration),
@@ -1202,11 +1253,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = await base.RenameAsync(
-                    destinationFileSystem,
-                    destinationPath,
-                    sourceConditions,
-                    destinationConditions,
-                    cancellationToken)
+                    destinationPath: destinationPath,
+                    destinationFileSystem: destinationFileSystem,
+                    sourceConditions: sourceConditions,
+                    destinationConditions: destinationConditions,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(

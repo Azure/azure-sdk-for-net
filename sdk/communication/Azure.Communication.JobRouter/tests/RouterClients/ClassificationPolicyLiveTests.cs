@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createQueueResponse = await CreateQueueAsync(nameof(CreateClassificationPolicyTest));
 
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateClassificationPolicyTest)}");
-            var prioritizationRule = new StaticRule(new LabelValue(1));
+            var prioritizationRule = new StaticRouterRule(new LabelValue(1));
 
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(LabelOperator.Equal, staticWSelector.WorkerSelector.LabelOperator);
                 Assert.AreEqual("value", staticWSelector.WorkerSelector.Value.Value);
             });
-            Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRule));
+            Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRouterRule));
             Assert.IsTrue(string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId));
             Assert.IsTrue(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
 
@@ -104,7 +104,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(LabelOperator.Equal, staticWSelector.WorkerSelector.LabelOperator);
                 Assert.AreEqual("value", staticWSelector.WorkerSelector.Value.Value);
             });
-            Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRule));
+            Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRouterRule));
             Assert.IsTrue(!string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId) && createClassificationPolicy.FallbackQueueId == createQueueResponse.Value.Id);
             Assert.IsFalse(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
 
@@ -117,8 +117,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
 
             var updateClassificationPolicy = updateClassificationPolicyResponse.Value;
-            Assert.IsFalse(updateClassificationPolicy.QueueSelectors.Any());
-            Assert.IsFalse(updateClassificationPolicy.WorkerSelectors.Any());
+            Assert.IsTrue(updateClassificationPolicy.QueueSelectors.Any());
+            Assert.IsTrue(updateClassificationPolicy.WorkerSelectors.Any());
             Assert.AreEqual(updateClassificationPolicy.Name, $"{classificationPolicyName}-updated");
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var classificationPolicyId = $"{IdPrefix}-CPPri";
             var classificationPolicyName = $"Priority-ClassificationPolicy";
-            var priorityRule = new StaticRule(new LabelValue(10));
+            var priorityRule = new StaticRouterRule(new LabelValue(10));
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
@@ -164,7 +164,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
             Assert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
             Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectors);
-            Assert.IsTrue(getClassificationPolicyResponse.Value.PrioritizationRule.GetType() == typeof(StaticRule));
+            Assert.IsTrue(getClassificationPolicyResponse.Value.PrioritizationRule.GetType() == typeof(StaticRouterRule));
             Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectors);
         }
 

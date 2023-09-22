@@ -123,6 +123,50 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get details of the user provided function app registered with a static site build.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetDetailsOfTheUserProvidedFunctionAppRegisteredWithAStaticSiteBuild()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetUserProvidedFunctionAppForStaticSiteBuild.json
+            // this example is just showing the usage of "StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StaticSiteBuildResource created on azure
+            // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testStaticSite0";
+            string environmentName = "default";
+            ResourceIdentifier staticSiteBuildResourceId = StaticSiteBuildResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, environmentName);
+            StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
+
+            // get the collection of this StaticSiteBuildUserProvidedFunctionAppResource
+            StaticSiteBuildUserProvidedFunctionAppCollection collection = staticSiteBuild.GetStaticSiteBuildUserProvidedFunctionApps();
+
+            // invoke the operation
+            string functionAppName = "testFunctionApp";
+            NullableResponse<StaticSiteBuildUserProvidedFunctionAppResource> response = await collection.GetIfExistsAsync(functionAppName);
+            StaticSiteBuildUserProvidedFunctionAppResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StaticSiteUserProvidedFunctionAppData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Register a user provided function app with a static site build
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

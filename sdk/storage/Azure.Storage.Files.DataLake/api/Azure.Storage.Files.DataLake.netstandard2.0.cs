@@ -2,7 +2,8 @@ namespace Azure.Storage.Files.DataLake
 {
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2023_01_03) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2023_08_03) { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
@@ -27,6 +28,9 @@ namespace Azure.Storage.Files.DataLake
             V2021_12_02 = 15,
             V2022_11_02 = 16,
             V2023_01_03 = 17,
+            V2023_05_03 = 18,
+            V2023_08_03 = 19,
+            V2023_11_03 = 20,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
@@ -528,6 +532,24 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Version { get { throw null; } set { } }
         public bool Write { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataLakeAudience : System.IEquatable<Azure.Storage.Files.DataLake.Models.DataLakeAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataLakeAudience(string value) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience PublicAudience { get { throw null; } }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience DataLakeServiceAccountAudience(string storageAccountName) { throw null; }
+        public bool Equals(Azure.Storage.Files.DataLake.Models.DataLakeAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.DataLake.Models.DataLakeAudience left, Azure.Storage.Files.DataLake.Models.DataLakeAudience right) { throw null; }
+        public static implicit operator Azure.Storage.Files.DataLake.Models.DataLakeAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.DataLake.Models.DataLakeAudience left, Azure.Storage.Files.DataLake.Models.DataLakeAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DataLakeCorsRule
     {
         public DataLakeCorsRule() { }
@@ -932,23 +954,6 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         None = 0,
         Metadata = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ListBlobsShowOnly : System.IEquatable<Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ListBlobsShowOnly(string value) { throw null; }
-        public static Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly Deleted { get { throw null; } }
-        public bool Equals(Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly left, Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly right) { throw null; }
-        public static implicit operator Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly (string value) { throw null; }
-        public static bool operator !=(Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly left, Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class PathAccessControl
     {

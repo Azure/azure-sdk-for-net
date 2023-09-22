@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.Rooms
 {
     /// <summary> Model factory for read-only models. </summary>
-    [CodeGenModel("RoomsModelFactory")]
+    [CodeGenModel("CommunicationRoomsModelFactory")]
     public static partial class RoomsModelFactory
     {
         /// <summary> Initializes a new instance of RoomParticipant. </summary>

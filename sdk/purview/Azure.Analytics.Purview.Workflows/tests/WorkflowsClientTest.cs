@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         {
             var client = GetWorkflowClient();
             Guid workflowId = new Guid("8af1ecae-16ee-4b2d-8972-00d611dd2f99");
-            Response getResult = await client.GetWorkflowAsync(workflowId);
+            Response getResult = await client.GetWorkflowAsync(workflowId, new());
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResult));
             JsonElement getBodyJson = jsonDocument.RootElement;
             Assert.AreEqual(workflowId.ToString(), getBodyJson.GetProperty("id").GetString());

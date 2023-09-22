@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -64,8 +65,14 @@ namespace Azure.Communication.JobRouter
             Kind = kind ?? "best-worker";
         }
 
-        internal ScoringRuleOptions ScoringRuleOptions { get; set; }
+        /// <summary>
+        /// Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode.
+        /// </summary>
+        public ScoringRuleOptions ScoringRuleOptions { get; internal set; }
 
-        internal RouterRule ScoringRule { get; set; }
+        /// <summary>
+        /// Defines a scoring rule to use, when calculating a score to determine the best worker.
+        /// </summary>
+        public RouterRule ScoringRule { get; internal set; }
     }
 }

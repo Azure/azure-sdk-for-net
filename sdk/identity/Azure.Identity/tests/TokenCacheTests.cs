@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -91,16 +88,17 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task RegisterCacheInitializesCacheWithName()
+        public async Task RegisterCacheInitializesCacheWithName(
+            [Values(true, false)] bool enableCae)
         {
             string cacheName = Guid.NewGuid().ToString();
-            cache = new TokenCache(new TokenCachePersistenceOptions() { Name = cacheName }, mockWrapper.Object);
+            cache = new TokenCache(new TokenCachePersistenceOptions() { Name = cacheName }, mockWrapper.Object, enableCae: enableCae);
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.CacheFileName == cacheName &&
+                    p.CacheFileName == cacheName + (enableCae ? Constants.CaeEnabledCacheSuffix : Constants.CaeDisabledCacheSuffix) &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null));
@@ -110,13 +108,16 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task RegisterCacheInitializesCache()
+        public async Task RegisterCacheInitializesCacheWithNameSuffix(
+            [Values(true, false)] bool enableCae)
         {
+            cache = new TokenCache(new TokenCachePersistenceOptions(), mockWrapper.Object, enableCae: enableCae);
+
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName + (enableCae ? Constants.CaeEnabledCacheSuffix : Constants.CaeDisabledCacheSuffix) &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null));
@@ -126,14 +127,16 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task RegisterCacheInitializesCacheOnlyOnce()
+        public async Task RegisterCacheInitializesCacheOnlyOnce(
+            [Values(true, false)] bool enableCae)
         {
+            cache = new TokenCache(new TokenCachePersistenceOptions(), mockWrapper.Object, enableCae: enableCae);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName + (enableCae ? Constants.CaeEnabledCacheSuffix : Constants.CaeDisabledCacheSuffix) &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null), Times.Once);
@@ -143,8 +146,10 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public void RegisterCacheInitializesCacheAndIsThreadSafe()
+        public void RegisterCacheInitializesCacheAndIsThreadSafe(
+            [Values(true, false)] bool enableCae)
         {
+            cache = new TokenCache(new TokenCachePersistenceOptions(), mockWrapper.Object, enableCae: enableCae);
             ManualResetEventSlim resetEvent2 = new();
             ManualResetEventSlim resetEvent1 = new();
 
@@ -171,7 +176,7 @@ namespace Azure.Identity.Tests
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName + (enableCae ? Constants.CaeEnabledCacheSuffix : Constants.CaeDisabledCacheSuffix) &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
                 null));
@@ -190,18 +195,20 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task RegisterCacheInitializesCacheIfEncryptionIsUnavailableAndAllowUnencryptedStorageIsTrue()
+        public async Task RegisterCacheInitializesCacheIfEncryptionIsUnavailableAndAllowUnencryptedStorageIsTrue(
+            [Values(true, false)] bool enableCae)
         {
+            cache = new TokenCache(new TokenCachePersistenceOptions(), mockWrapper.Object, enableCae: enableCae);
             mockWrapper.SetupSequence(m => m.VerifyPersistence())
             .Throws<MsalCachePersistenceException>()
             .Pass();
-            cache = new TokenCache(new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true }, mockWrapper.Object);
+            cache = new TokenCache(new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true }, mockWrapper.Object, enableCae: enableCae);
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
+                    p.CacheFileName == Constants.DefaultMsalTokenCacheName + (enableCae ? Constants.CaeEnabledCacheSuffix : Constants.CaeDisabledCacheSuffix) &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.UseLinuxUnencryptedFallback),
                 null));
@@ -250,9 +257,10 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task RegisteredEventsAreCalledOnFirstUpdate()
+        public async Task RegisteredEventsAreCalledOnFirstUpdate(
+            [Values(true, false)] bool enableCae)
         {
-            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes), enableCae: enableCae);
 
             TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
             bool updatedCalled = false;
@@ -269,7 +277,14 @@ namespace Azure.Identity.Tests
             cache.TokenCacheUpdatedAsync += (args) =>
             {
                 updatedCalled = true;
+                Assert.AreEqual(enableCae, args.IsCaeEnabled);
                 return Task.CompletedTask;
+            };
+
+            cache.RefreshCacheFromOptionsAsync += (args, cancellationToken) =>
+            {
+                Assert.AreEqual(enableCae, args.IsCaeEnabled);
+                return Task.FromResult(new TokenCacheData(bytes));
             };
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
@@ -352,7 +367,8 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task Serialize()
+        public async Task Serialize(
+            [Values(true, false)] bool enableCae)
         {
             var evt = new ManualResetEventSlim();
             var mockPublicClient = new Mock<IPublicClientApplication>();
@@ -367,7 +383,10 @@ namespace Azure.Identity.Tests
                 .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
                 .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
 
-            var cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes, updateHandler), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
+            var cache = new TokenCache(new TestInMemoryTokenCacheOptions(
+                bytes,
+                updateHandler), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object),
+                enableCae: enableCae);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
@@ -376,6 +395,7 @@ namespace Azure.Identity.Tests
             Task updateHandler(TokenCacheUpdatedArgs args)
             {
                 Assert.That(args.UnsafeCacheData.ToArray(), Is.EqualTo(updatedBytes));
+                Assert.AreEqual(enableCae, args.IsCaeEnabled);
                 evt.Set();
                 return Task.CompletedTask;
             };
@@ -402,7 +422,7 @@ namespace Azure.Identity.Tests
             mockMSALCache
                 .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
                 .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
-            var mockUnsafeOptions = new MockInMemoryTokenCacheOptions( new[]{bytes1, bytes2, bytes3});
+            var mockUnsafeOptions = new MockInMemoryTokenCacheOptions(new[] { bytes1, bytes2, bytes3 });
 
             var cache = new TokenCache(mockUnsafeOptions, default, () => mockPublicClient.Object);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
@@ -418,7 +438,7 @@ namespace Azure.Identity.Tests
 
         private static TokenCacheNotificationArgs GetMockArgs(Mock<ITokenCacheSerializer> mockSerializer, bool hasStateChanged)
         {
-            var mockArgs = new TokenCacheNotificationArgs(mockSerializer.Object, "foo", null, hasStateChanged, true, "key", true, null, default );
+            var mockArgs = new TokenCacheNotificationArgs(mockSerializer.Object, "foo", null, hasStateChanged, true, "key", true, null, default);
             return mockArgs;
         }
 
