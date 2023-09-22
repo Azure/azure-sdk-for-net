@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
-using System.Reflection;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -11,51 +11,22 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a <see cref="HttpPipelinePolicy"/> that doesn't do any asynchronous or synchronously blocking operations.
     /// </summary>
-    public abstract class HttpPipelineSynchronousPolicy : HttpPipelinePolicy
+    public abstract class HttpPipelineSynchronousPolicy : PipelineSynchronousPolicy
     {
-        private static Type[] _onReceivedResponseParameters = new[] { typeof(HttpMessage) };
-
-        private readonly bool _hasOnReceivedResponse = true;
-
         /// <summary>
         /// Initializes a new instance of <see cref="HttpPipelineSynchronousPolicy"/>
         /// </summary>
-        protected HttpPipelineSynchronousPolicy()
+        protected HttpPipelineSynchronousPolicy() : base()
         {
-            var onReceivedResponseMethod = GetType().GetMethod(nameof(OnReceivedResponse), BindingFlags.Instance | BindingFlags.Public, null, _onReceivedResponseParameters, null);
-            if (onReceivedResponseMethod != null)
-            {
-                _hasOnReceivedResponse = onReceivedResponseMethod.GetBaseDefinition().DeclaringType != onReceivedResponseMethod.DeclaringType;
-            }
         }
 
         /// <inheritdoc />
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            OnSendingRequest(message);
-            ProcessNext(message, pipeline);
-            OnReceivedResponse(message);
-        }
+            => Process((RestMessage)message, pipeline);
 
         /// <inheritdoc />
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            if (!_hasOnReceivedResponse)
-            {
-                // If OnReceivedResponse was not overridden we can avoid creating a state machine and return the task directly
-                OnSendingRequest(message);
-                return ProcessNextAsync(message, pipeline);
-            }
-
-            return InnerProcessAsync(message, pipeline);
-        }
-
-        private async ValueTask InnerProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            OnSendingRequest(message);
-            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            OnReceivedResponse(message);
-        }
+            => ProcessAsync((RestMessage)message, pipeline);
 
         /// <summary>
         /// Method is invoked before the request is sent.

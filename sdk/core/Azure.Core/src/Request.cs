@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
+using System.ServiceModel.Rest;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -13,7 +12,7 @@ namespace Azure.Core
     /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Request : IDisposable
+    public abstract class Request : RestRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private RequestUriBuilder? _uri;
@@ -79,11 +78,13 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="value">The header value.</param>
-        protected internal virtual void SetHeader(string name, string value)
+        protected override void SetHeader(string name, string value)
         {
             RemoveHeader(name);
             AddHeader(name, value);
         }
+
+        internal void SetHeaderInternal(string name, string value) => SetHeader(name, value);
 
         /// <summary>
         /// Removes the header from the collection.
@@ -106,10 +107,5 @@ namespace Azure.Core
         /// Gets the response HTTP headers.
         /// </summary>
         public RequestHeaders Headers => new(this);
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
     }
 }

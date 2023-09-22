@@ -26,10 +26,9 @@ namespace Azure.Core
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
-        public HttpMessage(Request request, ResponseClassifier responseClassifier)
+        public HttpMessage(Request request, ResponseClassifier responseClassifier) : base(request)
         {
             Argument.AssertNotNull(request, nameof(Request));
-            Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
@@ -41,14 +40,13 @@ namespace Azure.Core
         /// <param name="message"></param>
         /// <exception cref="ArgumentException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpMessage(RestMessage message)
+        public HttpMessage(RestMessage message) : base(message.RestRequest)
         {
             if (message is not HttpMessage httpMessage)
             {
                 throw new ArgumentException("Unsupported type.");
             }
 
-            Request = httpMessage.Request;
             ResponseClassifier = httpMessage.ResponseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
@@ -57,7 +55,8 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        // TODO: what is the risk of a downcast?
+        public Request Request { get => (Request)RestRequest; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
