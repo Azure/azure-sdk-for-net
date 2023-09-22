@@ -751,12 +751,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Gets a single configuration snapshot. </summary>
-        /// <param name="name"> The name of the configuration snapshot to retrieve. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to retrieve. </param>
         /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSnapshot>> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> GetSnapshotAsync(string snapshotName, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
@@ -773,7 +773,7 @@ namespace Azure.Data.AppConfiguration
                     }
                 }
 
-                Response response = await GetSnapshotAsync(name, snapshotFields, new MatchConditions(), context).ConfigureAwait(false);
+                Response response = await GetSnapshotAsync(snapshotName, snapshotFields, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -785,12 +785,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Gets a single configuration snapshot. </summary>
-        /// <param name="name"> The name of the configuration snapshot to retrieve. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to retrieve. </param>
         /// <param name="fields"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSnapshot> GetSnapshot(string name, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> GetSnapshot(string snapshotName, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
@@ -807,7 +807,7 @@ namespace Azure.Data.AppConfiguration
                     }
                 }
 
-                Response response = GetSnapshot(name, snapshotFields, new MatchConditions(), context);
+                Response response = GetSnapshot(snapshotName, snapshotFields, new MatchConditions(), context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -823,12 +823,12 @@ namespace Azure.Data.AppConfiguration
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation
         /// </param>
-        /// <param name="name"> The name of the configuration snapshot to create. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to create. </param>
         /// <param name="snapshot"> The configuration snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string name, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string snapshotName, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
@@ -840,9 +840,9 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
-                var operationT = await CreateSnapshotAsync(wait, name, content, contentType, context).ConfigureAwait(false);
+                var operationT = await CreateSnapshotAsync(wait, snapshotName, content, contentType, context).ConfigureAwait(false);
 
-                var createSnapshotOperation = new CreateSnapshotOperation(name, ClientDiagnostics, operationT);
+                var createSnapshotOperation = new CreateSnapshotOperation(snapshotName, ClientDiagnostics, operationT);
 
                 if (wait == WaitUntil.Completed)
                 {
@@ -863,12 +863,12 @@ namespace Azure.Data.AppConfiguration
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="name"> The name of the configuration snapshot to create. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to create. </param>
         /// <param name="snapshot"> The configuration snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string name, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
+        public virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string snapshotName, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
@@ -880,9 +880,9 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
-                var operationT = CreateSnapshot(wait, name, content, contentType, context);
+                var operationT = CreateSnapshot(wait, snapshotName, content, contentType, context);
 
-                var createSnapshotOperation = new CreateSnapshotOperation(name, ClientDiagnostics, operationT);
+                var createSnapshotOperation = new CreateSnapshotOperation(snapshotName, ClientDiagnostics, operationT);
 
                 if (wait == WaitUntil.Completed)
                 {
@@ -899,11 +899,11 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to archive. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to archive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -918,7 +918,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(name, content, contentType, new MatchConditions(), context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -930,11 +930,11 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to archive. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to archive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -949,7 +949,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(name, content, contentType, new MatchConditions(), context);
+                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, new MatchConditions(), context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -961,12 +961,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to archive. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to archive. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string name, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -981,7 +981,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(name, content, contentType, matchConditions, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, matchConditions, context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -993,12 +993,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to archive. </summary>
-        /// <param name="name"> The name of the configuration snapshot to archive. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to archive. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string name, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -1013,7 +1013,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(name, content, contentType, matchConditions, context);
+                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, matchConditions, context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1025,11 +1025,11 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration snapshot to recover. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1044,7 +1044,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(name, content, contentType, new MatchConditions(), context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1056,11 +1056,11 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration snapshot to recover. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to recover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSnapshot> RecoverSnapshot(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> RecoverSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1075,7 +1075,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(name, content, contentType, new MatchConditions(), context);
+                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, new MatchConditions(), context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1087,12 +1087,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration snapshot to recover. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to recover. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(string name, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1107,7 +1107,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(name, content, contentType, matchConditions, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, matchConditions, context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1119,12 +1119,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Updates the state of a configuration snapshot to ready. </summary>
-        /// <param name="name"> The name of the configuration snapshot to recover. </param>
+        /// <param name="snapshotName"> The name of the configuration snapshot to recover. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigurationSnapshot> RecoverSnapshot(string name, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSnapshot> RecoverSnapshot(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1139,7 +1139,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(name, content, contentType, matchConditions, context);
+                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, matchConditions, context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
