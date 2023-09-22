@@ -242,6 +242,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricInternetGatewayResource>> GetIfExistsAsync(string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            using var scope = _networkFabricInternetGatewayInternetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricInternetGatewayInternetGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, internetGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternetGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternetGatewayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricInternetGatewayResource> GetIfExists(string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            using var scope = _networkFabricInternetGatewayInternetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricInternetGatewayInternetGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, internetGatewayName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternetGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternetGatewayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFabricInternetGatewayResource> IEnumerable<NetworkFabricInternetGatewayResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

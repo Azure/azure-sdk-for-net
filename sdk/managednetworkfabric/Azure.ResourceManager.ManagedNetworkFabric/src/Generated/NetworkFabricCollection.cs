@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricResource>> GetIfExistsAsync(string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkFabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFabrics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFabricName"> Name of the Network Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricResource> GetIfExists(string networkFabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkFabricName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFabricResource> IEnumerable<NetworkFabricResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

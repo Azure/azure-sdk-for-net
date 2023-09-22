@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationName"> The security automation name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityAutomationResource>> GetIfExistsAsync(string automationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
+
+            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityAutomationAutomationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAutomationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationName"> The security automation name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        public virtual NullableResponse<SecurityAutomationResource> GetIfExists(string automationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
+
+            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityAutomationAutomationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAutomationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SecurityAutomationResource> IEnumerable<SecurityAutomationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

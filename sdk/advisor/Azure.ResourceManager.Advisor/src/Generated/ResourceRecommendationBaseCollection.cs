@@ -237,6 +237,80 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceRecommendationBaseResource>> GetIfExistsAsync(string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceRecommendationBaseRecommendationsRestClient.GetAsync(Id, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceRecommendationBaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recommendationId"> The recommendation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        public virtual NullableResponse<ResourceRecommendationBaseResource> GetIfExists(string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceRecommendationBaseRecommendationsRestClient.Get(Id, recommendationId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceRecommendationBaseResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ResourceRecommendationBaseResource> IEnumerable<ResourceRecommendationBaseResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

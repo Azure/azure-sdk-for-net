@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlPrivateEndpointConnectionData. </summary>
         public SqlPrivateEndpointConnectionData()
         {
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SqlPrivateEndpointConnectionData. </summary>
@@ -29,11 +31,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
+        /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal SqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal SqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
+            GroupIds = groupIds;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
@@ -52,6 +56,8 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> Group IDs. </summary>
+        public IReadOnlyList<string> GroupIds { get; }
         /// <summary> Connection state of the private endpoint connection. </summary>
         public SqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> State of the private endpoint connection. </summary>
