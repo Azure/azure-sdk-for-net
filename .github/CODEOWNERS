@@ -147,7 +147,7 @@
 
 # ServiceLabel: %Batch %Service Attention
 # PRLabel: %Batch
-/sdk/batch/                                                        @jingjlii @ljiaqi1998 @paterasMSFT @dpwatrous @NickKouds
+/sdk/batch/                                                        @wiboris @dpwatrous
 
 # ServiceLabel: %BatchAI %Service Attention
 /sdk/batchai/Microsoft.Azure.Management.BatchAI/                   @matthchr
