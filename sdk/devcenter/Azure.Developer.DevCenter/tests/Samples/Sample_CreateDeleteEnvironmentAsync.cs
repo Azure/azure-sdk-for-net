@@ -28,8 +28,10 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 throw new InvalidOperationException($"No valid project resources found in DevCenter {endpoint}.");
             }
 
-            #region Snippet:Azure_DevCenter_GetCatalogs_Scenario
+            // Create deployment environments client
             var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            #region Snippet:Azure_DevCenter_GetCatalogs_Scenario
             string catalogName = null;
 
             await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName))

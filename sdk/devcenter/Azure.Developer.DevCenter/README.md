@@ -71,16 +71,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/devcenter/Azure.Developer.DevCenter/samples).
 
-### Build a client and get all projects in a dev center
+### Get all projects in a dev center
 
-To instantiate the client, you would need to provide a DevCenter URL and credentials.
-
-```C# Snippet:Azure_DevCenter_CreateClient_Scenario
-var credential = new DefaultAzureCredential();
-var devCenterClient = new DevCenterClient(endpoint, credential);
-```
-
-The resulting client allows you to list projects and retrieve projects by their name.
+`DevCenterClient` allows you to list projects and retrieve projects by their name.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 string targetProjectName = null;
@@ -93,10 +86,9 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 
 ### List available Dev Box Pools
 
-Interaction with DevBox pools is facilitated through the DevBoxesClient. Pools can be listed for a specific project or fetched individually.
+Interaction with DevBox pools is facilitated through the `DevBoxesClient`. Pools can be listed for a specific project or fetched individually.
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
-var devBoxesClient = new DevBoxesClient(endpoint, credential);
 string targetPoolName = null;
 await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
 {
@@ -156,10 +148,9 @@ Console.WriteLine($"Completed dev box deletion.");
 
 ## Get project catalogs
 
-Create an `DeploymentEnvironmentsClient` and issue a request to get all catalogs in a project.
+`DeploymentEnvironmentsClient` can be used to issue a request to get all catalogs in a project.
 
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
-var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
 string catalogName = null;
 
 await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName))

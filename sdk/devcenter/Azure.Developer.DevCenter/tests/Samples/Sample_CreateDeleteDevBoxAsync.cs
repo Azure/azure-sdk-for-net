@@ -14,10 +14,8 @@ namespace Azure.Developer.DevCenter.Tests.Samples
         public async Task CreateDeleteDevBoxAsync(Uri endpoint)
         {
             // Create and delete a user devbox
-            #region Snippet:Azure_DevCenter_CreateClient_Scenario
             var credential = new DefaultAzureCredential();
             var devCenterClient = new DevCenterClient(endpoint, credential);
-            #endregion
 
             #region Snippet:Azure_DevCenter_GetProjects_Scenario
             string targetProjectName = null;
@@ -33,9 +31,12 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 throw new InvalidOperationException($"No valid project resources found in DevCenter {endpoint}.");
             }
 
+
+            // Create DevBox-es client
+            var devBoxesClient = new DevBoxesClient(endpoint, credential);
+
             // Grab a pool
             #region Snippet:Azure_DevCenter_GetPools_Scenario
-            var devBoxesClient = new DevBoxesClient(endpoint, credential);
             string targetPoolName = null;
             await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
             {

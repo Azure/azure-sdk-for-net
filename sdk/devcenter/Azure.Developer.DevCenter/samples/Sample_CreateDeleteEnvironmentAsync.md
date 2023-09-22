@@ -20,7 +20,6 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 Create an `EnvironmentsClient` and issue a request to get all catalogs in a project.
 
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
-var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
 string catalogName = null;
 
 await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName))

@@ -20,7 +20,6 @@ await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
 Create a `DevBoxesClient` and issue a request to get all pools in a project.
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
-var devBoxesClient = new DevBoxesClient(endpoint, credential);
 string targetPoolName = null;
 await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
 {
