@@ -1358,29 +1358,29 @@ namespace Azure.Communication.CallAutomation
         public int SequenceId { get { throw null; } }
         public Azure.Communication.CallAutomation.DtmfTone Tone { get { throw null; } }
     }
-    public partial class TranscriptionConfiguration
+    public partial class TranscriptionOptions
     {
-        public TranscriptionConfiguration(string transportUrl, Azure.Communication.CallAutomation.TranscriptionTransportType transportType, string locale, bool startTranscription) { }
+        public TranscriptionOptions(System.Uri transportUrl, Azure.Communication.CallAutomation.TranscriptionTransport transportType, string locale, bool startTranscription) { }
         public string Locale { get { throw null; } }
         public bool StartTranscription { get { throw null; } }
-        public Azure.Communication.CallAutomation.TranscriptionTransportType TransportType { get { throw null; } }
-        public string TransportUrl { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionTransport TransportType { get { throw null; } }
+        public System.Uri TransportUrl { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TranscriptionTransportType : System.IEquatable<Azure.Communication.CallAutomation.TranscriptionTransportType>
+    public readonly partial struct TranscriptionTransport : System.IEquatable<Azure.Communication.CallAutomation.TranscriptionTransport>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TranscriptionTransportType(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionTransportType Websocket { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.TranscriptionTransportType other) { throw null; }
+        public TranscriptionTransport(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionTransport Websocket { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.TranscriptionTransport other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.TranscriptionTransportType left, Azure.Communication.CallAutomation.TranscriptionTransportType right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.TranscriptionTransportType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.TranscriptionTransportType left, Azure.Communication.CallAutomation.TranscriptionTransportType right) { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.TranscriptionTransport left, Azure.Communication.CallAutomation.TranscriptionTransport right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.TranscriptionTransport (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.TranscriptionTransport left, Azure.Communication.CallAutomation.TranscriptionTransport right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class TransferCallToParticipantEventResult
