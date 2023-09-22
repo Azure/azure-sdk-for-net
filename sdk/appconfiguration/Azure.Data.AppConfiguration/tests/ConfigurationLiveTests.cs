@@ -1129,7 +1129,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
-        public async Task GetBatchSettingWithAllFieldsSetIndividually()
+        public async Task GetBatchSettingWithAllFieldsSetExplicitly()
         {
             ConfigurationClient service = GetClient();
             string key = GenerateKeyId("keyFields-");
