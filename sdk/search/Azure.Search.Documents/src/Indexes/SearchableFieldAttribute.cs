@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes
         /// <summary>
         /// The name of the vector search algorithm configuration that specifies the algorithm and optional parameters for searching the vector field.
         /// </summary>
-        public string VectorSearchConfiguration { get; set; }
+        public string VectorSearchProfile { get; set; }
 
         /// <summary>
         /// Gets or sets a list of names of synonym maps to associate with this field.
@@ -91,9 +91,9 @@ namespace Azure.Search.Documents.Indexes
                 field.VectorSearchDimensions = dimensions;
             }
 
-            if (VectorSearchConfiguration != null)
+            if (VectorSearchProfile != null)
             {
-                field.VectorSearchConfiguration = VectorSearchConfiguration;
+                field.VectorSearchProfile = VectorSearchProfile;
             }
         }
     }

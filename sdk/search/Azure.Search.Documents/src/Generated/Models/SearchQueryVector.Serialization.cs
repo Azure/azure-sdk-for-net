@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,16 +15,8 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             if (Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
@@ -36,6 +27,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStringValue(FieldsRaw);
             }
+            if (Optional.IsDefined(Exhaustive))
+            {
+                writer.WritePropertyName("exhaustive"u8);
+                writer.WriteBooleanValue(Exhaustive.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -45,41 +41,15 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<float>> value = default;
-            Optional<int> k = default;
-            Optional<string> fields = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("value"u8))
+                switch (discriminator.GetString())
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<float> array = new List<float>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    value = array;
-                    continue;
-                }
-                if (property.NameEquals("k"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    k = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("fields"u8))
-                {
-                    fields = property.Value.GetString();
-                    continue;
+                    case "text": return VectorizableTextQuery.DeserializeVectorizableTextQuery(element);
+                    case "vector": return RawVector.DeserializeRawVector(element);
                 }
             }
-            return new SearchQueryVector(Optional.ToList(value), Optional.ToNullable(k), fields.Value);
+            return UnknownSearchQueryVector.DeserializeUnknownSearchQueryVector(element);
         }
     }
 }

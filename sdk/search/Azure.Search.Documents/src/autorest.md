@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/89b513cacdafda3c91b772aded35981825c1be4d/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/89b513cacdafda3c91b772aded35981825c1be4d/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```

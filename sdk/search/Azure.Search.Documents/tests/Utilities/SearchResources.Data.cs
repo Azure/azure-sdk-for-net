@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         IsSearchable = true,
                         VectorSearchDimensions = 1536,
-                        VectorSearchConfiguration = "my-vector-config"
+                        VectorSearchProfile = "my-vector-profile"
                     },
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
@@ -81,9 +81,28 @@ namespace Azure.Search.Documents.Tests
                 },
                 VectorSearch = new()
                 {
-                    AlgorithmConfigurations =
+                    Profiles =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                        {
+                            Vectorizer = "openai"
+                        }
+                    },
+                    Algorithms =
+                    {
+                        new HnswVectorSearchAlgorithmConfiguration( "my-hsnw-vector-config")
+                    },
+                    Vectorizers =
+                    {
+                        new AzureOpenAIVectorizer("openai")
+                        {
+                            AzureOpenAIParameters  = new AzureOpenAIParameters()
+                            {
+                                ResourceUri = "Endpoint",
+                                ApiKey = "key",
+                                DeploymentId = "gpt-4-32k",
+                            }
+                        }
                     }
                 },
                 SemanticSettings = new()

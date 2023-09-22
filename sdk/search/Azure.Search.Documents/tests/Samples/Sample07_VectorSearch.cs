@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+                        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                     });
 
                 int count = 0;
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+                        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                         Filter = "Category eq 'Luxury'"
                     });
 
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Tests.Samples
                         "Top hotels in town",
                         new SearchOptions
                         {
-                            Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+                            Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                         });
 
                 int count = 0;
@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
                         SemanticConfigurationName = "my-semantic-config",
@@ -243,8 +243,8 @@ namespace Azure.Search.Documents.Tests.Samples
                     new SearchOptions
                     {
                         Vectors = {
-                            new() { Value = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
-                            new() { Value = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
+                            new RawVector() { Value = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+                            new RawVector() { Value = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
                         },
                     });
 
@@ -287,7 +287,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vectors = { new() {
+                        Vectors = { new RawVector() {
                             Value = vectorizedResult,
                             KNearestNeighborsCount = 3,
                             Fields = { "DescriptionVector", "CategoryVector" } } }
@@ -314,7 +314,8 @@ namespace Azure.Search.Documents.Tests.Samples
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index
-            string vectorSearchConfigName = "my-vector-config";
+            string vectorSearchProfile = "my-vector-profile";
+            string vectorSearchHnswConfig = "my-hsnw-vector-config";
             int modelDimensions = 1536;
 
             string indexName = "Hotel";
@@ -332,23 +333,42 @@ namespace Azure.Search.Documents.Tests.Samples
                     {
                         IsSearchable = true,
                         VectorSearchDimensions = modelDimensions,
-                        VectorSearchConfiguration = vectorSearchConfigName
+                        VectorSearchProfile = vectorSearchProfile
                     },
                     new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
                     {
                         IsSearchable = true,
                         VectorSearchDimensions = modelDimensions,
-                        VectorSearchConfiguration = vectorSearchConfigName
+                        VectorSearchProfile = vectorSearchProfile
                     },
                 },
                 VectorSearch = new()
                 {
-                    AlgorithmConfigurations =
+                    Profiles =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration(vectorSearchConfigName)
+                        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+                        {
+                            Vectorizer = "openai"
+                        }
+                    },
+                    Algorithms =
+                    {
+                        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+                    },
+                    Vectorizers =
+                    {
+                        new AzureOpenAIVectorizer("openai")
+                        {
+                            AzureOpenAIParameters  = new AzureOpenAIParameters()
+                            {
+                                ResourceUri = "Endpoint",
+                                ApiKey = "key",
+                                DeploymentId = "gpt-4-32k",
+                            }
+                        }
                     }
-                }
+                },
             };
             #endregion
 

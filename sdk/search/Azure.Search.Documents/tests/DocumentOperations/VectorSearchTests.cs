@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                       Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
@@ -186,13 +186,13 @@ namespace Azure.Search.Documents.Tests
             {
                 IsSearchable = true,
                 VectorSearchDimensions = 1536,
-                VectorSearchConfiguration = "my-vector-config"
+                VectorSearchProfile = "profile"
             };
             createdIndex.Fields.Add(vectorField);
 
             createdIndex.VectorSearch = new()
             {
-                AlgorithmConfigurations =
+                Algorithms =
                     {
                         new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
                     }
@@ -237,7 +237,7 @@ namespace Azure.Search.Documents.Tests
                 Fields = new FieldBuilder().Build(typeof(Model)),
                 VectorSearch = new()
                 {
-                    AlgorithmConfigurations =
+                    Algorithms =
                     {
                         new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
                     }
@@ -263,7 +263,7 @@ namespace Azure.Search.Documents.Tests
             [SearchableField(AnalyzerName = "en.microsoft")]
             public string Description { get; set; }
 
-            [SearchableField(VectorSearchDimensions = "1536", VectorSearchConfiguration = "my-vector-config")]
+            [SearchableField(VectorSearchDimensions = "1536", VectorSearchProfile = "my-vector-profile")]
             public IReadOnlyList<float> DescriptionVector { get; set; }
         }
     }
