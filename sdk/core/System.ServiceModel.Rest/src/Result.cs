@@ -59,13 +59,13 @@ public abstract class Result : PipelineResponse
     //    }
     //}
 
-    /// <summary>
-    /// Returns header value if the header is stored in the collection. If header has multiple values they will be joined with a comma.
-    /// </summary>
-    /// <param name="name">The header name.</param>
-    /// <param name="value">The reference to populate with value.</param>
-    /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-    public bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value) => TryGetHeader(name, out value);
+    ///// <summary>
+    ///// Returns header value if the header is stored in the collection. If header has multiple values they will be joined with a comma.
+    ///// </summary>
+    ///// <param name="name">The header name.</param>
+    ///// <param name="value">The reference to populate with value.</param>
+    ///// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+    //public bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value) => TryGetHeader(name, out value);
 
     /// <summary>
     /// Returns header value if the header is stored in the collection. If header has multiple values they will be joined with a comma.

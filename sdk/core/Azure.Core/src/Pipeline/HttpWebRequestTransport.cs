@@ -306,7 +306,7 @@ namespace Azure.Core.Pipeline
                 DisposeStreamIfNotBuffered(ref _contentStream);
             }
 
-            protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
             {
                 value = _webResponse.Headers.Get(name);
                 return value != null;
@@ -341,6 +341,12 @@ namespace Azure.Core.Pipeline
 
             private string? _clientRequestId;
             private readonly DictionaryHeaders _headers = new();
+
+            public override bool IsHttps => Uri.Scheme == System.Uri.UriSchemeHttps;
+            public sealed override bool RemoveHeaderValue(string name) => RemoveHeader(name);
+            public sealed override void SetContent(BinaryData content) => Content = content;
+            public sealed override void SetHeaderValue(string key, string value) => SetHeader(key, value);
+            public override bool TryGetHeaderValue(string name, out string? value) => TryGetHeader(name, out value);
 
             protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 

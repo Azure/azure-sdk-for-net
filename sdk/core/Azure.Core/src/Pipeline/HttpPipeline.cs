@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline : MessagePipeline
+    public class HttpPipeline
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -132,19 +131,6 @@ namespace Azure.Core.Pipeline
             }
 
             return message;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="classifier"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PipelineMessage CreateRestMessage(PipelineOptions options, ResponseErrorClassifier classifier)
-        {
-            return CreateMessage((PipelineOptions?)options, (ResponseClassifier?)classifier);
         }
 
         /// <summary>
@@ -345,25 +331,6 @@ namespace Azure.Core.Pipeline
                 }
             }
         }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ValueTask SendAsync(PipelineMessage message, CancellationToken cancellationToken)
-            => SendAsync((HttpMessage)message, cancellationToken);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override void Send(PipelineMessage message, CancellationToken cancellationToken)
-            => Send((HttpMessage)message, cancellationToken);
 
         private class HttpMessagePropertiesScope : IDisposable
         {

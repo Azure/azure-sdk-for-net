@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
@@ -15,7 +14,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : PipelineMessage
+    public class HttpMessage : PipelineMessage, IDisposable
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
@@ -26,7 +25,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
-        public HttpMessage(Request request, ResponseClassifier responseClassifier)
+        public HttpMessage(Request request, ResponseClassifier responseClassifier) : base(request)
         {
             Argument.AssertNotNull(request, nameof(Request));
             Request = request;
@@ -41,7 +40,7 @@ namespace Azure.Core
         /// <param name="message"></param>
         /// <exception cref="ArgumentException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpMessage(PipelineMessage message)
+        public HttpMessage(PipelineMessage message) : base(message.Request)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -57,13 +56,13 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        public new Request Request { get; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
         {
             get
             {
@@ -132,12 +131,6 @@ namespace Azure.Core
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Result? Result => _response;
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -221,7 +214,7 @@ namespace Azure.Core
         /// <summary>
         /// Disposes the request and response.
         /// </summary>
-        public override void Dispose()
+        public void Dispose()
         {
             Request.Dispose();
             _propertyBag.Dispose();

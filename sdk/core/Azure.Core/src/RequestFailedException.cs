@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
@@ -94,11 +95,23 @@ namespace Azure
                 set => throw new NotImplementedException();
             }
 
+            public override BinaryData Content => throw new NotImplementedException();
+
+            public override string ReasonPhrase => throw new NotImplementedException();
+
             public override void Dispose()
             {
             }
 
-            protected override bool TryGetHeader(string name, out string? value) => throw new NotImplementedException();
+            public override bool TryGetHeaderValue(string name, [NotNullWhenAttribute(true)] out string? value)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool TryGetHeader(string name, [NotNullWhenAttribute(true)] out string? value)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :

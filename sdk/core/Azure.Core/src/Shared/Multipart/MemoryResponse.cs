@@ -128,7 +128,7 @@ namespace Azure.Core
             _headers.Select(header => new HttpHeader(header.Key, JoinHeaderValues(header.Value)));
 
         /// <inheritdoc />
-        protected override bool TryGetHeader(string name, out string value)
+        protected internal override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out List<string> headers))
             {
