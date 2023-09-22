@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Xml;
 
-namespace System.ServiceModel.Rest.Shared.Core.Serialization
+namespace System.ServiceModel.Rest.Experimental.Core.Serialization
 {
     public static class ModelSerializationExtensions
     {

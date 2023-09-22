@@ -6,7 +6,7 @@ using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest.Shared.Core.Pipeline
+namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 {
     /// <summary>
     /// TBD.

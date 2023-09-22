@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace System.ServiceModel.Rest.Shared.Core.Serialization
+namespace System.ServiceModel.Rest.Experimental.Core.Serialization
 {
     public static class OptionalProperty
     {
