@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Search.Models
         private BinaryData SerializeBicep(ModelSerializerOptions options)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"  name: '{Name}'");
+            sb.AppendLine($"  name: '{Name.ToLower()}'");
             return new BinaryData(sb.ToString());
         }
     }
