@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sqlPoolName"> SQL pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseSqlPoolResource>> GetIfExistsAsync(string sqlPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+
+            using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseSqlPoolSqlPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sqlPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseSqlPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sqlPoolName"> SQL pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
+        public virtual NullableResponse<SynapseSqlPoolResource> GetIfExists(string sqlPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+
+            using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseSqlPoolSqlPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sqlPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseSqlPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SynapseSqlPoolResource> IEnumerable<SynapseSqlPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataNetworkName"> The name of the data network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileDataNetworkResource>> GetIfExistsAsync(string dataNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+
+            using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileDataNetworkDataNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileDataNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileDataNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataNetworkName"> The name of the data network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
+        public virtual NullableResponse<MobileDataNetworkResource> GetIfExists(string dataNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+
+            using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileDataNetworkDataNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileDataNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileDataNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MobileDataNetworkResource> IEnumerable<MobileDataNetworkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

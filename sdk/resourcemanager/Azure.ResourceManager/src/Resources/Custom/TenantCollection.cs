@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Resources
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
     [CodeGenSuppress("Exists", typeof(CancellationToken))]
     [CodeGenSuppress("ExistsAsync", typeof(CancellationToken))]
+    [CodeGenSuppress("GetIfExists", typeof(CancellationToken))]
+    [CodeGenSuppress("GetIfExistsAsync", typeof(CancellationToken))]
     public partial class TenantCollection : ArmCollection, IEnumerable<TenantResource>, IAsyncEnumerable<TenantResource>
     {
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class. </summary>
