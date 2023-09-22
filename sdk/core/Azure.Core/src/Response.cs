@@ -139,6 +139,7 @@ namespace Azure
             }
         }
 
+        /// <inheritdoc/>
         public abstract void Dispose();
     }
 }
