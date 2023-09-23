@@ -31,7 +31,6 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 throw new InvalidOperationException($"No valid project resources found in DevCenter {endpoint}.");
             }
 
-
             // Create DevBox-es client
             var devBoxesClient = new DevBoxesClient(endpoint, credential);
 
