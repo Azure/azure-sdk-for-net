@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("servicePrincipalId"u8);
             JsonSerializer.Serialize(writer, ServicePrincipalId);
             writer.WritePropertyName("servicePrincipalKey"u8);
-            JsonSerializer.Serialize(writer, ServicePrincipalKey); if (Optional.IsDefined(EncryptedCredential))
+            JsonSerializer.Serialize(writer, ServicePrincipalKey);
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
