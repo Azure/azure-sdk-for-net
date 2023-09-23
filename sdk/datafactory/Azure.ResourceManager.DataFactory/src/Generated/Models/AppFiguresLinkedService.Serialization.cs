@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("userName"u8);
             JsonSerializer.Serialize(writer, UserName);
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); writer.WritePropertyName("clientKey"u8);
-            JsonSerializer.Serialize(writer, ClientKey); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, Password);
+            writer.WritePropertyName("clientKey"u8);
+            JsonSerializer.Serialize(writer, ClientKey);
+            writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
