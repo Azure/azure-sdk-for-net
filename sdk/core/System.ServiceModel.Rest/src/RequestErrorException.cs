@@ -20,7 +20,7 @@ namespace System.ServiceModel.Rest
         /// TBD
         /// </summary>
         /// <param name="response"></param>
-        public RequestErrorException(PipelineResponse response) : base(GetMessageFromresponse(response))
+        public RequestErrorException(PipelineResponse response) : base(GetMessageFromResponse(response))
         {
             Status = response.Status;
         }
@@ -39,7 +39,12 @@ namespace System.ServiceModel.Rest
             Status = response.Status;
         }
 
-        private static string GetMessageFromresponse(PipelineResponse response)
+        internal RequestErrorException(string message, Exception? innerException) : base(message, innerException)
+        {
+            // TODO: What is the experience if someone tries to access this.Response?
+        }
+
+        private static string GetMessageFromResponse(PipelineResponse response)
         {
             // TODO: implement for real
             return $"Service error: {response.Status}";

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Rest.Core;
 using System.Threading;
@@ -58,92 +60,81 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    public override ValueTask ProcessAsync(PipelineMessage message)
+    public override async ValueTask ProcessAsync(PipelineMessage message)
     {
-        throw new NotImplementedException();
+        #region Create the request
+        // TODO: optimize?
+        HttpMethod method = message.PipelineRequest.Method;
+
+        // TODO: clean up
+        if (!message.PipelineRequest.TryGetUri(out Uri uri))
+        {
+            throw new NotSupportedException("TODO");
+        }
+
+        if (message.PipelineRequest.TryGetContent(out RequestBody content))
+        {
+            throw new NotSupportedException("TODO");
+        }
+
+        using HttpRequestMessage netRequest = new HttpRequestMessage(method, uri);
+
+        // TODO: CancellationToken
+        netRequest.Content = new HttpContentAdapter(content, CancellationToken.None);
+
+        // TODO: Request Headers
+
+        #endregion
+
+        #region Send the response
+
+        HttpResponseMessage responseMessage;
+        Stream? contentStream = null;
+
+        // TODO: Why message.ClearReponse() ?
+
+        try
+        {
+            // TODO: Why does Azure.Core use HttpCompletionOption.ResponseHeadersRead?
+            responseMessage = await _transport.SendAsync(netRequest).ConfigureAwait(false);
+
+            #endregion
+
+            #region Make the message response
+
+            if (responseMessage.Content != null)
+            {
+                contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+            }
+        }
+
+        // TODO: CancellationToken: catch(OperationCanceledException e) { ... }
+
+        catch (HttpRequestException e)
+        {
+            throw new RequestErrorException(e.Message, e);
+        }
+
+        message.PipelineResponse = // YOU ARE HERE
+
+        #endregion
     }
 
-    ///// <summary>
-    ///// TBD.
-    ///// </summary>
-    ///// <param name="options"></param>
-    ///// <param name="classifier"></param>
-    ///// <returns></returns>
-    //public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
-    //{
-    //    Request request = _transport.CreateRequest();
-    //    HttpMessage message = new HttpMessage(request, classifier);
-    //    message.CancellationToken = options.CancellationToken;
-    //    return message;
-    //}
+    private sealed class HttpContentAdapter : HttpContent
+    {
+        private readonly RequestBody _content;
+        private readonly CancellationToken _cancellationToken;
 
-    ///// <summary>
-    ///// TBD.
-    ///// </summary>
-    //public void Dispose() => _transport.Dispose();
+        public HttpContentAdapter(RequestBody content, CancellationToken cancellationToken)
+        {
+            _content = content;
+            _cancellationToken = cancellationToken;
+        }
 
-    ///// <summary>
-    ///// TBD.
-    ///// </summary>
-    ///// <param name="message"></param>
-    //public override void Process(PipelineMessage message)
-    //{
-    //    HttpMessage adapted = ToHttpMessage(message);
-    //    _transport.Process(adapted);
-    //    message.PipelineResponse = FromHttpMessage(adapted);
-    //}
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
+            => await _content.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
 
-    ///// <summary>
-    ///// TBD>
-    ///// </summary>
-    ///// <param name="message"></param>
-    ///// <returns></returns>
-    //public async override ValueTask ProcessAsync(PipelineMessage message)
-    //{
-    //    HttpMessage adapted = ToHttpMessage(message);
-    //    await _transport.ProcessAsync(adapted).ConfigureAwait(false);
-    //    message.PipelineResponse = await FromHttpMessageAsync(adapted).ConfigureAwait(false);
-    //}
-
-    //private static HttpMessage ToHttpMessage(PipelineMessage message)
-    //{
-    //    var tam = message as HttpMessage;
-    //    if (tam == null)
-    //        throw new Exception("this message is not mine");
-
-    //    var rq = tam.PipelineRequest as Request;
-    //    if (rq == null)
-    //        throw new InvalidOperationException("not my request");
-
-    //    var m = new HttpMessage(rq, new ResponseClassifier());
-    //    m.BufferResponse = true;
-    //    return m;
-    //}
-    //private static PipelineResponse FromHttpMessage(HttpMessage message)
-    //{
-    //    Response response = message.Response;
-    //    if (response.ContentStream != null)
-    //    {
-    //        using var liveStream = response.ContentStream;
-    //        var buffer = new MemoryStream();
-    //        liveStream.CopyTo(buffer);
-    //        buffer.Position = 0;
-    //        response.ContentStream = buffer;
-    //    }
-    //    return response;
-    //}
-
-    //private static async Task<PipelineResponse> FromHttpMessageAsync(HttpMessage message)
-    //{
-    //    Response response = message.Response;
-    //    if (response.ContentStream != null)
-    //    {
-    //        using var liveStream = response.ContentStream;
-    //        var buffer = new MemoryStream();
-    //        await liveStream.CopyToAsync(buffer).ConfigureAwait(false);
-    //        buffer.Position = 0;
-    //        response.ContentStream = buffer;
-    //    }
-    //    return response;
-    //}
+        protected override bool TryComputeLength(out long length)
+            => _content.TryComputeLength(out length);
+    }
 }

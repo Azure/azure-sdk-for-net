@@ -40,7 +40,6 @@ namespace Azure.Core.Pipeline
                 }
 #endif
             }
-
         }
     }
 }
