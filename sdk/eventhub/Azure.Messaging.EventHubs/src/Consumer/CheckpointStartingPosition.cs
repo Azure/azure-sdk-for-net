@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Messaging.EventHubs.Consumer
 {
     /// <summary>
-    ///   The position in a partition's event stream to use when updating a checkpoint, indicates that an event processor should begin reading from the next event.
+    ///   The position in a partition's event stream to use when updating a checkpoint, indicating that an event processor should begin reading from the next event.
     /// </summary>
     ///
     public struct CheckpointStartingPosition
