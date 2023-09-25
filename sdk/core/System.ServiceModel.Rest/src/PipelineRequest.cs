@@ -8,14 +8,11 @@ namespace System.ServiceModel.Rest.Core;
 
 public abstract class PipelineRequest : IDisposable
 {
-    public PipelineRequest(HttpMethod method)
-    {
-        Method = method;
-    }
-
     //public abstract bool IsHttps { get; }
 
-    public HttpMethod Method { get; }
+    // TODO: rework Method setting; adding a constructor to an abstract class
+    // is a problem. It would be better not to make Method nullable.
+    public HttpMethod? Method { get; set;  }
 
     public abstract string ClientRequestId { get; set; }
 

@@ -48,7 +48,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
-        public virtual RequestMethod Method { get; set; }
+        public new virtual RequestMethod Method { get; set; }
 
         /// <summary>
         /// TBD.
@@ -85,6 +85,28 @@ namespace Azure.Core
         public override void SetContent(RequestBody content)
         {
             Content = new RequestBodyContent(content);
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        public override bool TryGetUri(out Uri uri)
+        {
+            uri = Uri.ToUri();
+            return true;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public override bool TryGetContent(out RequestBody content)
+        {
+            content = Content!;
+            return true;
         }
 
         /// <summary>
