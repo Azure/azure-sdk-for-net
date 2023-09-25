@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private MetricsTestData _testData;
 
-        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync)
+        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -339,37 +339,47 @@ namespace Azure.Monitor.Query.Tests
         }
 
         //[RecordedTest]
-        //public void MetricsBatchQuery()
-        //{
-        //    MetricsBatchQueryClient client = CreateBatchClient();
-        //    string resourceId = TestEnvironment.ResourceId;
-        //    resourceId = resourceId.Substring(resourceId.IndexOf("/subscriptions"));
+        [Test]
+        public async Task MetricsBatchQueryAsync()
+        {
+            MetricsBatchQueryClient client = CreateBatchClient();
+            string resourceId = TestEnvironment.ResourceId;
+            resourceId = resourceId.Substring(resourceId.IndexOf("/subscriptions"));
 
-        //    try
-        //    {
-        //        client.GetComponentType(resourceId);
-        //        configClient.getConfigurationSetting("foo", "bar");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // ignore as this is only to generate some metrics
-        //    }
+            //try
+            //{
+            //    client.GetComponentType(resourceId);
+            //    configClient.getConfigurationSetting("foo", "bar");
+            //}
+            //catch (Exception)
+            //{
+            //    // ignore as this is only to generate some metrics
+            //}
 
-        //    MetricsQueryOptions options = new MetricsQueryOptions();
-        //    options.Granularity = TimeSpan.FromMinutes(10);
-        //    options.Size = 10;
-        //    options.TimeRange = new QueryTimeRange(TimeSpan.FromDays(1));
-        //    //lic Mono<MetricsBatchResult> queryBatch(List<String> resourceUris, List<String> metricsNames, String metricsNamespace)
-        //    var metricsQueryResults = client.BatchAsync(
-        //        TestEnvironment.SubscriptionId,
-        //        "microsoft.appconfiguration/configurationstores",
-        //        new List<string> { resourceId },
-        //        options).getValue();
-        //    Assert.AreEqual(1, metricsQueryResults.getMetricsQueryResults().size());
-        //    Assert.AreEqual(1, metricsQueryResults.getMetricsQueryResults().get(0).getMetrics().size());
-        //    MetricResult metricResult = metricsQueryResults.getMetricsQueryResults().get(0).getMetrics().get(0);
-        //    Assert.AreEqual("HttpIncomingRequestCount", metricResult.Name);
-        //    Assert.NotNull(metricResult.TimeSeries);
-        //}
+            //MetricsQueryOptions options = new MetricsQueryOptions();
+            //options.Granularity = TimeSpan.FromMinutes(10);
+            //options.Size = 10;
+            //options.TimeRange = new QueryTimeRange(TimeSpan.FromDays(1));
+            ////lic Mono<MetricsBatchResult> queryBatch(List<String> resourceUris, List<String> metricsNames, String metricsNamespace)
+            //var metricsQueryResults = client.BatchAsync(
+            //    TestEnvironment.SubscriptionId,
+            //    "microsoft.appconfiguration/configurationstores",
+            //    new List<string> { resourceId },
+            //    options).getValue();
+
+            Response<MetricResultsResponse> metricsResultsResponse = await client.BatchAsync(
+                resourceIds: new List<string> { resourceId },
+                metricNames: new List<string> { "HttpIncomingRequestCount" },
+                metricNamespace: "microsoft.insights/components").ConfigureAwait(false);
+
+            MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            //Assert.AreEqual(1, metricsQueryResults.getMetricsQueryResults().get(0).getMetrics().size());
+            MetricResultsResponseValuesItem metricResultResponse = metricsQueryResults.Values.ElementAtOrDefault(0);
+            QueryBatchMetric metric = metricResultResponse.Value.ElementAtOrDefault(0);
+            Assert.AreEqual("HttpIncomingRequestCount", metric.Name);
+            Assert.NotNull(metric.Timeseries);
+        }
     }
 }

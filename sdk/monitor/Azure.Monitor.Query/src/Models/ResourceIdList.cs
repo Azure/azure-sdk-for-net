@@ -18,6 +18,7 @@ namespace Azure.Monitor.Query.Models
         {
             for (int i = 0; i < resourceIds.Count; i++)
             {
+                Resourceids = new ChangeTrackingList<ResourceIdentifier>();
                 Resourceids.Add(new ResourceIdentifier(resourceIds[i]));
             }
         }
