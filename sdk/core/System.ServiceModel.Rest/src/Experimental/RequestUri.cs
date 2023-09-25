@@ -33,7 +33,7 @@ namespace System.ServiceModel.Rest.Experimental.Core
         /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// </summary>
-        public string? Scheme
+        public virtual string? Scheme
         {
             get => _scheme;
             set
@@ -46,7 +46,7 @@ namespace System.ServiceModel.Rest.Experimental.Core
         /// <summary>
         /// Gets or sets the Domain Name System (DNS) host name or IP address of a server.
         /// </summary>
-        public string? Host
+        public virtual string? Host
         {
             get => _host;
             set
@@ -59,7 +59,7 @@ namespace System.ServiceModel.Rest.Experimental.Core
         /// <summary>
         /// Gets or sets the port number of the URI.
         /// </summary>
-        public int Port
+        public virtual int Port
         {
             get => _port;
             set
@@ -72,7 +72,7 @@ namespace System.ServiceModel.Rest.Experimental.Core
         /// <summary>
         /// Gets or sets any query information included in the URI.
         /// </summary>
-        public string Query
+        public virtual string Query
         {
             get => HasQuery ? _pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex) : string.Empty;
             set
@@ -99,7 +99,7 @@ namespace System.ServiceModel.Rest.Experimental.Core
         /// <summary>
         /// Gets or sets the path to the resource referenced by the URI.
         /// </summary>
-        public string Path
+        public virtual string Path
         {
             get => HasQuery ? _pathAndQuery.ToString(0, _queryIndex) : _pathAndQuery.ToString();
             set

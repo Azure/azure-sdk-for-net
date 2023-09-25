@@ -72,8 +72,11 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         if (options.PerCallPolicies != null) pipelineLength += options.PerCallPolicies.Length;
         pipelineLength += options.RetryPolicy == null ? 0 : 1;
         pipelineLength += options.LoggingPolicy == null ? 0 : 1;
+
         pipelineLength++; // for transport
-        var pipeline = new IPipelinePolicy<PipelineMessage>[pipelineLength];
+
+        IPipelinePolicy<PipelineMessage>[] pipeline
+            = new IPipelinePolicy<PipelineMessage>[pipelineLength];
 
         int index = 0;
 
@@ -85,10 +88,12 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             options.PerCallPolicies.CopyTo(pipeline.AsSpan());
             index += options.PerCallPolicies.Length;
         }
+
         if (options.RetryPolicy != null)
         {
             pipeline[index++] = options.RetryPolicy;
         }
+
         if (options.PerTryPolicies != null)
         {
             options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
@@ -96,7 +101,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         }
 
         clientPerTryPolicies.CopyTo(pipeline.AsSpan(index));
-        index += clientPerCallPolicies.Length;
+        index += clientPerTryPolicies.Length;
 
         if (options.LoggingPolicy != null)
         {
@@ -115,7 +120,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
     public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
-        throw new NotImplementedException();
+        return _transport.CreateMessage(options, classifier);
     }
 
     ///// <summary>
@@ -139,11 +144,18 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     {
         var enumerator = new MessagePipelineExecutor(_policies, message);
         enumerator.ProcessNext();
+
+        // Send is complete, we can annotate the response.
+        message.PipelineResponse!.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
-    public override ValueTask SendAsync(PipelineMessage message)
+    public override async ValueTask SendAsync(PipelineMessage message)
     {
-        throw new NotImplementedException();
+        var enumerator = new MessagePipelineExecutor(_policies, message);
+        await enumerator.ProcessNextAsync().ConfigureAwait(false);
+
+        // Send is complete, we can annotate the response.
+        message.PipelineResponse!.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
     internal class MessagePipelineExecutor : PipelineEnumerator
