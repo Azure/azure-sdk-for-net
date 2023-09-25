@@ -52,32 +52,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            if (!string.IsNullOrEmpty(selector.KeyFilter))
-            {
-                builder.AppendQuery(KeyQueryFilter, selector.KeyFilter);
-            }
-
-            if (!string.IsNullOrEmpty(selector.LabelFilter))
-            {
-                builder.AppendQuery(LabelQueryFilter, selector.LabelFilter);
-            }
-
-            IEnumerable<string> splitFields = selector.Fields.Split();
-
-            if (splitFields != null)
-            {
-                string filter = string.Join(",", splitFields);
-                builder.AppendQuery(FieldsQueryFilter, filter);
-            }
-
-            if (!string.IsNullOrEmpty(pageLink))
-            {
-                builder.AppendQuery("after", pageLink, escapeValue: false);
-            }
-        }
-
         #region nobody wants to see these
         /// <summary>
         /// Check if two ConfigurationSetting instances are equal.

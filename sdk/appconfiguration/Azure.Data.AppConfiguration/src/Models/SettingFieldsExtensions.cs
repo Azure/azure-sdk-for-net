@@ -22,6 +22,11 @@ namespace Azure.Data.AppConfiguration
             { SettingFields.Tags        , "tags"          }
         };
 
+        /// <summary>
+        /// Splits <see cref="SettingFields"/> flags into their corresponding service names.
+        /// </summary>
+        /// <param name="fields">The flags to split.</param>
+        /// <returns>An enumerable containing the names of the flags. The method returns <c>null</c> for <see cref="SettingFields.All"/>.</returns>
         public static IEnumerable<string> Split(this SettingFields fields)
         {
             if (fields == SettingFields.All)
