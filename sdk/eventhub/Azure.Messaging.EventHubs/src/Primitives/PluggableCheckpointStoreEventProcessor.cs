@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                       long offset,
                                                       long? sequenceNumber,
                                                       CancellationToken cancellationToken) =>
-            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, new CheckpointStartingPosition(offset, sequenceNumber), cancellationToken);
+            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, new CheckpointStartingPosition(sequenceNumber, null, offset), cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream

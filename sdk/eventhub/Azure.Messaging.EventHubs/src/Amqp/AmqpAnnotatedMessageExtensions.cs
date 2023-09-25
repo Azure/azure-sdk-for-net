@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="properties">The set of free-form application properties to send with the event.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
-        /// <param name="replicationGroupEpoch">The replication group epoch associated with this event. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
+        /// <param name="replicationSegment">The replication group epoch associated with this event. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                        IDictionary<string, object> properties = null,
                                                        long? sequenceNumber = null,
                                                        long? offset = null,
-                                                       string replicationGroupEpoch = null,
+                                                       string replicationSegment = null,
                                                        DateTimeOffset? enqueuedTime = null,
                                                        string partitionKey = null,
                                                        long? lastPartitionSequenceNumber = null,
@@ -58,9 +58,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset.Value;
            }
 
-           if (replicationGroupEpoch != null)
+           if (replicationSegment != null)
            {
-               instance.MessageAnnotations[AmqpProperty.ReplicationGroupEpoch.ToString()] = replicationGroupEpoch;
+               instance.MessageAnnotations[AmqpProperty.ReplicationSegment.ToString()] = replicationSegment;
            }
 
            if (enqueuedTime.HasValue)
@@ -208,19 +208,19 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
-        ///   Retrieves the replication epoch of an event from an <see cref="AmqpAnnotatedMessage" />.
+        ///   Retrieves the replication segment of an event from an <see cref="AmqpAnnotatedMessage" />.
         /// </summary>
         ///
         /// <param name="instance">The instance that this method was invoked on.</param>
-        /// <param name="defaultValue">The value to return if the replication group epoch is not represented in the <paramref name="instance"/>.</param>
+        /// <param name="defaultValue">The value to return if the replication segment is not represented in the <paramref name="instance"/>.</param>
         ///
-        /// <returns>The replication group epoch, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
+        /// <returns>The replication segment, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static string GetReplicationGroupEpoch(this AmqpAnnotatedMessage instance,
+        public static string GetReplicationSegment(this AmqpAnnotatedMessage instance,
                                      string defaultValue = null)
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
-                && (instance.MessageAnnotations.TryGetValue(AmqpProperty.ReplicationGroupEpoch.ToString(), out var value)))
+                && (instance.MessageAnnotations.TryGetValue(AmqpProperty.ReplicationSegment.ToString(), out var value)))
             {
                 return (string)value;
             }

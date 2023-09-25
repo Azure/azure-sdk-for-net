@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs
         ///   The replication group epoch of a message.
         /// </summary>
         ///
-        public static AmqpSymbol ReplicationGroupEpoch { get; } = "x-opt-replicationgroupepoch";
+        public static AmqpSymbol ReplicationSegment { get; } = "x-opt-replicationgroupepoch";
 
         /// <summary>
         ///   The partition hashing key used for grouping a batch of events together with the intent of routing to a single partition.

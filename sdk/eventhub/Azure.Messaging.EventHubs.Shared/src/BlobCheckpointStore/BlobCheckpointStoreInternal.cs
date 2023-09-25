@@ -439,16 +439,21 @@ namespace Azure.Messaging.EventHubs.Primitives
             var offset = default(long?);
             var sequenceNumber = default(long?);
             var clientIdentifier = default(string);
+            var replicationSegment = default(string);
 
-            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
+            if (metadata.TryGetValue(BlobMetadataKey.ReplicationSegment, out var str))
             {
-                offset = result;
-                startingPosition = EventPosition.FromOffset(result, false);
+                replicationSegment = str;
             }
-            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
+            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
             {
                 sequenceNumber = result;
-                startingPosition ??= EventPosition.FromSequenceNumber(result, false);
+                startingPosition = EventPosition.FromSequenceNumber(result, replicationSegment, false);
+            }
+            if (metadata.TryGetValue(BlobMetadataKey.Offset, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
+            {
+                offset = result;
+                startingPosition ??= EventPosition.FromOffset(result, false);
             }
             if (metadata.TryGetValue(BlobMetadataKey.ClientIdentifier, out str))
             {

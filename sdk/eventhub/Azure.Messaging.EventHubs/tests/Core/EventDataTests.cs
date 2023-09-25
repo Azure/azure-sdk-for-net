@@ -146,19 +146,21 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sequenceNumber = 123L;
             var offset = 456L;
+            var replicationSegment = "1";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
             var lastOffset = 654L;
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
-            var message = CreateFullyPopulatedAmqpMessage(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
+            var message = CreateFullyPopulatedAmqpMessage(sequenceNumber, lastSequence, offset, lastOffset, replicationSegment, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
             var eventData = new EventData(message);
 
             Assert.That(message.Body.TryGetData(out var messageBody), Is.True, "The message body should have been read.");
             Assert.That(eventData.EventBody.ToArray(), Is.EquivalentTo(messageBody.First().ToArray()), "The message body should match.");
             Assert.That(eventData.Properties, Is.EquivalentTo(message.ApplicationProperties), "The application properties should match.");
             Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
+            Assert.That(eventData.ReplicationSegment, Is.EqualTo(replicationSegment), "The replication segment should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The enqueued time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
@@ -246,7 +248,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
-                "",
+                "1",
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 "TestKey",
                 111222,
@@ -277,7 +279,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 null,
                 33334444,
                 666777,
-                "",
+                "1",
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 "TestKey",
                 111222,
@@ -307,7 +309,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
-                "",
+                "1",
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 "TestKey",
                 111222,
@@ -335,6 +337,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="lastSequenceNumber">The sequence number that was last enqueued in the partition; if null, this will not be populated.</param>
         /// <param name="offset">The offset of the event; if null, this will not be populated.</param>
         /// <param name="lastOffset">The offset that was last enqueued in the partition; if null, this will not be populated.</param>
+        /// <param name="replicationSegment">The replication segment of the event; if null, this will not be populated.</param>
         /// <param name="partitionKey">The partition key of the event; if null, this will not be populated.</param>
         /// <param name="enqueueTime">The time that the event was enqueued in the partition; if null, this will not be populated.</param>
         /// <param name="lastEnqueueTime">The time that an event was last enqueued in the partition; if null, this will not be populated.</param>
@@ -346,6 +349,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                             long lastSequenceNumber,
                                                                             long offset,
                                                                             long lastOffset,
+                                                                            string replicationSegment,
                                                                             string partitionKey,
                                                                             DateTimeOffset enqueueTime,
                                                                             DateTimeOffset lastEnqueueTime,
@@ -387,6 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             message.MessageAnnotations.Add(AmqpProperty.SequenceNumber.ToString(), sequenceNumber);
             message.MessageAnnotations.Add(AmqpProperty.Offset.ToString(), offset);
+            message.MessageAnnotations.Add(AmqpProperty.ReplicationSegment.ToString(), replicationSegment);
             message.MessageAnnotations.Add(AmqpProperty.EnqueuedTime.ToString(), enqueueTime);
             message.MessageAnnotations.Add(AmqpProperty.PartitionKey.ToString(), partitionKey);
 

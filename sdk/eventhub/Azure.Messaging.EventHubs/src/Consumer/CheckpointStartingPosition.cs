@@ -8,44 +8,60 @@ using System.Text;
 namespace Azure.Messaging.EventHubs.Consumer
 {
     /// <summary>
-    /// TODO.
+    ///   The position in a partition's event stream to use when updating a checkpoint, indicates that an event processor should begin reading from the next event.
     /// </summary>
+    ///
     public struct CheckpointStartingPosition
     {
         /// <summary>
-        /// The offset associated with this checkpoint. If a sequence number is not provided, then this indicates that a processor should begin reading from the next event in the stream.
+        ///   The offset to associate with the checkpoint. If there is a <see cref="SequenceNumber"/> associated with this checkpoint, then this value will be used for
+        ///   informational metadata. If no <see cref="SequenceNumber"/> is associated, then this will be used for positioning when events are read.
         /// </summary>
+        ///
         public long? Offset { get; }
 
         /// <summary>
-        /// TODO.
+        ///   The replication segment to associate with the checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.
         /// </summary>
+        ///
         public string ReplicationSegment { get; }
 
         /// <summary>
-        /// TODO.
+        ///   The sequence number to associate with the checkpoint. If populated, it indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
+        ///
         public long? SequenceNumber { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckpointStartingPosition"/> struct.
+        ///   Initializes a new instance of the <see cref="CheckpointStartingPosition"/> struct.
         /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="sequenceNumber"></param>
-        public CheckpointStartingPosition(long offset, long? sequenceNumber)
+        ///
+        /// <remarks>
+        ///   This constructor is generally used when updating checkpoints for non-Geo-DR enabled namespaces.
+        /// </remarks>
+        ///
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        ///
+        public CheckpointStartingPosition(long offset)
         {
             Offset = offset;
-            SequenceNumber = sequenceNumber;
+            SequenceNumber = null;
             ReplicationSegment = null;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckpointStartingPosition"/> struct.
+        ///   Initializes a new instance of the <see cref="CheckpointStartingPosition"/> struct.
         /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="sequenceNumber"></param>
-        /// <param name="replicationSegment"></param>
-        public CheckpointStartingPosition(long? offset, long sequenceNumber, string replicationSegment)
+        ///
+        /// <remarks>
+        ///   This constructor is generally used when updating checkpoints for Geo-DR enabled namespaces.
+        /// </remarks>
+        ///
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="replicationSegment">The replication segment to associate with this checkpoint</param>
+        /// <param name="offset">An optional offset to associate with the checkpoint, intended as informational metadata.</param>
+        ///
+        public CheckpointStartingPosition(long? sequenceNumber, string replicationSegment, long? offset = null)
         {
             Offset = offset;
             SequenceNumber = sequenceNumber;
@@ -53,13 +69,14 @@ namespace Azure.Messaging.EventHubs.Consumer
         }
 
         /// <summary>
-        /// TODO.
+        ///   Initializes a new instance of the <see cref="CheckpointStartingPosition"/> from an <see cref="EventData"/> instance.
         /// </summary>
-        /// <param name="eventData"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="eventData">The <see cref="EventData"/> to use to determine the starting point of a checkpoint, indicating that an event processor should begin reading from the next event in the stream.</param>
+        ///
         public static CheckpointStartingPosition FromEvent(EventData eventData)
         {
-            throw new NotImplementedException();
+            return new CheckpointStartingPosition(eventData.SequenceNumber, eventData.ReplicationSegment, eventData.Offset);
         }
     }
 }

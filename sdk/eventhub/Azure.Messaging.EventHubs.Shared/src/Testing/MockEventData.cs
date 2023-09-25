@@ -22,6 +22,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="replicationSegment">The replication segment associated with this event. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         ///
@@ -30,8 +31,9 @@ namespace Azure.Messaging.EventHubs.Tests
                              IReadOnlyDictionary<string, object> systemProperties = null,
                              long sequenceNumber = long.MinValue,
                              long offset = long.MinValue,
+                             string replicationSegment = null,
                              DateTimeOffset enqueuedTime = default,
-                             string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
+                             string partitionKey = null) : base(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, replicationSegment, enqueuedTime, partitionKey)
         {
         }
     }

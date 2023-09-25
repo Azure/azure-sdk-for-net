@@ -359,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenPresent()
+        public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenNoSequenceNumberIsPresent()
         {
             var expectedOffset = 13;
             var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
@@ -374,8 +374,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, expectedOffset.ToString()},
-                                               {BlobMetadataKey.SequenceNumber, "7777"}
+                                               {BlobMetadataKey.Offset, expectedOffset.ToString()}
                                            })
             };
             var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
@@ -419,6 +418,69 @@ namespace Azure.Messaging.EventHubs.Tests
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
             Assert.That(blobCheckpoint.Offset, Is.Null, "The offset should have been null.");
             Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointPrefersSequenceNumberAsTheStartingPosition()
+        {
+            var expectedOffset = 13;
+            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
+            var partition = Guid.NewGuid().ToString();
+
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partition}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, expectedOffset.ToString()},
+                                               {BlobMetadataKey.SequenceNumber, "7777"}
+                                           })
+            };
+            var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
+
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+        }
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetCheckpointSetsReplicationSegmentWhenPresent()
+        {
+            var expectedSequenceNumber = 13;
+            var expectedReplicationSegment = "1";
+            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequenceNumber, expectedReplicationSegment,  false);
+            var partition = Guid.NewGuid().ToString();
+
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partition}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, "13"},
+                                               {BlobMetadataKey.SequenceNumber, expectedSequenceNumber.ToString()},
+                                               {BlobMetadataKey.ReplicationSegment, expectedReplicationSegment}
+                                           })
+            };
+            var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
+
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
         }
 
         /// <summary>
@@ -1042,7 +1104,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10, 20), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
         }
@@ -1071,7 +1133,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10, 20), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
         }
 
@@ -1106,7 +1168,7 @@ namespace Azure.Messaging.EventHubs.Tests
             });
 
             var checkpointStore = new BlobCheckpointStoreInternal(mockContainerClient);
-            await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10, 20), cancellationSource.Token);
+            await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10), cancellationSource.Token);
 
             Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
             Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
@@ -1142,7 +1204,7 @@ namespace Azure.Messaging.EventHubs.Tests
             });
 
             var checkpointStore = new BlobCheckpointStoreInternal(mockContainerClient);
-            await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10, 20), cancellationSource.Token);
+            await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointStartingPosition(10), cancellationSource.Token);
 
             Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
             Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
@@ -1163,7 +1225,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("ns", "eh", "cg", "p0", "Id", new CheckpointStartingPosition(10, 20), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("ns", "eh", "cg", "p0", "Id", new CheckpointStartingPosition(10), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
