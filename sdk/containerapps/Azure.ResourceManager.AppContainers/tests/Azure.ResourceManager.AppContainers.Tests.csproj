@@ -3,6 +3,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.AppContainers.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="TestCase\" />
+    <Folder Include="Scenario\" />
   </ItemGroup>
 </Project>

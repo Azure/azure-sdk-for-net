@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
                 {
                     Facebook = new ContainerAppFacebookConfiguration()
                     {
-                        Registration = new ContainerAppRegistration()
+                        /*Registration = new ContainerAppRegistration()
                         {
                             AppId = "123",
                             AppSecretSettingName = "facebook-secret",
-                        },
+                        },*/
                     },
                 },
             };
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         public static void AssertContainerAppAuthConfigData(ContainerAppAuthConfigData data1, ContainerAppAuthConfigData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.HttpSettings.RequireHttps, data2.HttpSettings.RequireHttps);
             Assert.AreEqual(data1.GlobalValidation.UnauthenticatedClientAction, data2.GlobalValidation.UnauthenticatedClientAction);
-            Assert.AreEqual(data1.Login.AllowedExternalRedirectUrls, data2.Login.AllowedExternalRedirectUrls);
+            Assert.AreEqual(data1.Platform.IsEnabled, data2.Platform.IsEnabled);
+            Assert.AreEqual(data1.GlobalValidation.UnauthenticatedClientAction, data2.GlobalValidation.UnauthenticatedClientAction);
         }
         #endregion
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         #region Certificate
         public static ContainerAppCertificateData GetCertificateData()
         {
-            ContainerAppCertificateData data = new ContainerAppCertificateData(new AzureLocation("East US"))
+            ContainerAppCertificateData data = new ContainerAppCertificateData(AzureLocation.EastUS)
             {
                 Properties = new ContainerAppCertificateProperties()
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         #region enviroment
         public static ContainerAppConnectedEnvironmentData GetEnvironmentData()
         {
-            ContainerAppConnectedEnvironmentData data = new ContainerAppConnectedEnvironmentData(new AzureLocation("East US"))
+            ContainerAppConnectedEnvironmentData data = new ContainerAppConnectedEnvironmentData(AzureLocation.EastUS)
             {
                 StaticIP = IPAddress.Parse("1.2.3.4"),
                 DaprAIConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://northcentralus-0.in.applicationinsights.azure.com/",
@@ -247,7 +247,7 @@ SecretRef = "masterkey",
         #endregion
 
         #region ContainerAppConnectedEnvironmentStorageData
-        public static ContainerAppConnectedEnvironmentStorageData GetEnvironmentStorageData()
+        public static ContainerAppConnectedEnvironmentStorageData GetConnectedEnvironmentStorageData()
         {
             ContainerAppConnectedEnvironmentStorageData data = new ContainerAppConnectedEnvironmentStorageData()
             {
@@ -262,7 +262,7 @@ SecretRef = "masterkey",
             return data;
         }
 
-        public static void AssertEnviromentStorageData(ContainerAppConnectedEnvironmentStorageData data1, ContainerAppConnectedEnvironmentStorageData data2)
+        public static void AssertConnectedEnviromentStorageData(ContainerAppConnectedEnvironmentStorageData data1, ContainerAppConnectedEnvironmentStorageData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.ConnectedEnvironmentStorageAzureFile.AccountName, data2.ConnectedEnvironmentStorageAzureFile.AccountName);
@@ -272,12 +272,38 @@ SecretRef = "masterkey",
         }
         #endregion
 
+        #region ContainerAppConnectedEnvironmentStorageData
+        public static ContainerAppManagedEnvironmentStorageData GetManagedEnvironmentStorageData()
+        {
+            ContainerAppManagedEnvironmentStorageData data = new ContainerAppManagedEnvironmentStorageData()
+            {
+                ManagedEnvironmentStorageAzureFile = new ContainerAppAzureFileProperties()
+                {
+                    AccountName = "account1",
+                    AccountKey = "key",
+                    AccessMode = ContainerAppAccessMode.ReadOnly,
+                    ShareName = "share1",
+                },
+            };
+            return data;
+        }
+
+        public static void AssertManagedEnviromentStorageData(ContainerAppManagedEnvironmentStorageData data1, ContainerAppManagedEnvironmentStorageData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccountName, data2.ManagedEnvironmentStorageAzureFile.AccountName);
+            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccountKey, data2.ManagedEnvironmentStorageAzureFile.AccountKey);
+            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.ShareName, data2.ManagedEnvironmentStorageAzureFile.ShareName);
+            Assert.AreEqual(data1.ManagedEnvironmentStorageAzureFile.AccessMode, data2.ManagedEnvironmentStorageAzureFile.AccessMode);
+        }
+        #endregion
+
         #region ContainerAppJobData
-        public static ContainerAppJobData GetJobData()
+        public static ContainerAppJobData GetJobData(string envId)
         {
             ContainerAppJobData data = new ContainerAppJobData(new AzureLocation("East US"))
             {
-                EnvironmentId = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube",
+                EnvironmentId = envId,
                 Configuration = new ContainerAppJobConfiguration(ContainerAppJobTriggerType.Manual, 10)
                 {
                     ReplicaRetryLimit = 10,
@@ -364,6 +390,14 @@ Name = "testcontainerAppsJob0",
             };
             return data;
         }
+
+        public static void AssertCertificateData(ContainerAppManagedCertificateData data1, ContainerAppManagedCertificateData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Location, data2.Location);
+            Assert.AreEqual(data1.Properties.SubjectName, data2.Properties.SubjectName);
+            Assert.AreEqual(data1.Properties.DomainControlValidation, data2.Properties.DomainControlValidation);
+        }
         #endregion
 
         #region ContainerAppManagedEnvironmentData
@@ -410,13 +444,14 @@ Name = "testcontainerAppsJob0",
                     {
                         RegistryServer = "xwang971reg.azurecr.io",
                         RegistryUserName = "xwang971reg",
-                        RegistryPassword = "<registrypassword>",
+                        RegistryPassword = "123456",
                     },
                     AzureCredentials = new ContainerAppCredentials()
                     {
-                        ClientId = "<clientid>",
-                        ClientSecret = "<clientsecret>",
-                        TenantId = Guid.Parse("<tenantid>"),
+                        ClientId = "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+                        ClientSecret = "lVa7Q~mDi9zRplCbDikYkNUpjjPw5XRiDdpol",
+                        TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
+                        Kind = "feaderated",
                     },
                     ContextPath = "./",
                     Image = "image/tag",

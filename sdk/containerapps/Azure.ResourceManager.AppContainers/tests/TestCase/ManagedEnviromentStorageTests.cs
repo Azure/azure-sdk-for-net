@@ -8,15 +8,17 @@ using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.AppContainers.Tests.Helpers;
-using System.ComponentModel;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Azure.ResourceManager.AppContainers.Tests
+namespace Azure.ResourceManager.AppContainers.Tests.TestCase
 {
-    public class ContainerAppCollectionTests: AppContainersManagementTestBase
+    public class ManagedEnviromentStorageTests : AppContainersManagementTestBase
     {
-        public ContainerAppCollectionTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+        public ManagedEnviromentStorageTests(bool isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -25,32 +27,29 @@ namespace Azure.ResourceManager.AppContainers.Tests
         public async Task CreateOrUpdate()
         {
             string envName = Recording.GenerateAssetName("env");
-            string name = Recording.GenerateAssetName("appcontainer");
-            string name2 = Recording.GenerateAssetName("appcontainer");
-            string name3 = Recording.GenerateAssetName("appcontainer");
+            string name = Recording.GenerateAssetName("storage");
+            string name2 = Recording.GenerateAssetName("storage");
+            string name3 = Recording.GenerateAssetName("storage");
             ResourceGroupResource rg = await CreateResourceGroupAsync();
-            var data = ResourceDataHelpers.GetManagedEnvironmentData();
+            var envdata = ResourceDataHelpers.GetManagedEnvironmentData();
 
             var containerAppManagedEnvironmentCollection = rg.GetContainerAppManagedEnvironments();
-            var envResource_lro = await containerAppManagedEnvironmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, envName, data);
+            var envResource_lro = await containerAppManagedEnvironmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, envName, envdata);
             var envResource = envResource_lro.Value;
-            Assert.AreEqual(envName, envResource.Data.Name);
 
-            var appData = ResourceDataHelpers.GetContainerAppData(envResource);
-
-            // 1.Create
-            var collection = rg.GetContainerApps();
-            var resource_lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, appData);
+            //1.Create
+            var data = ResourceDataHelpers.GetManagedEnvironmentStorageData();
+            var collection = envResource.GetContainerAppManagedEnvironmentStorages();
+            var resource_lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             var resource = resource_lro.Value;
             Assert.AreEqual(name, resource.Data.Name);
-
             //2.Get
             var resource2 = await resource.GetAsync();
-            ResourceDataHelpers.AssertContainerAppData(resource.Data, resource2.Value.Data);
+            ResourceDataHelpers.AssertManagedEnviromentStorageData(resource.Data, resource2.Value.Data);
             //3.GetAll
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, appData);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, appData);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, appData);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, data);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, data);
             int count = 0;
             await foreach (var num in collection.GetAllAsync())
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Tests
             //Resource
             //5.Get
             var resource3 = await resource.GetAsync();
-            ResourceDataHelpers.AssertContainerAppData(resource.Data, resource3.Value.Data);
+            ResourceDataHelpers.AssertManagedEnviromentStorageData(resource.Data, resource3.Value.Data);
             //6.Delete
             await resource.DeleteAsync(WaitUntil.Completed);
         }
