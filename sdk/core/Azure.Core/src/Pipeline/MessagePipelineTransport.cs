@@ -47,7 +47,7 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
     public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
         Request request = _transport.CreateRequest();
-        HttpMessage message = new HttpMessage(request, (ResponseClassifier)classifier);
+        HttpMessage message = new HttpMessage(request, classifier);
         message.CancellationToken = options.CancellationToken;
         return message;
     }

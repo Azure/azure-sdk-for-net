@@ -24,7 +24,8 @@ namespace Azure.Core
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
-        public HttpMessage(Request request, ResponseClassifier responseClassifier) : base(request, responseClassifier)
+        public HttpMessage(Request request, ResponseClassifier responseClassifier)
+            : base(request, responseClassifier)
         {
             Argument.AssertNotNull(request, nameof(Request));
 
@@ -34,15 +35,17 @@ namespace Azure.Core
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
-        internal HttpMessage(PipelineMessage message, ResponseErrorClassifier classifier) : base(message.PipelineRequest, message.ResponseErrorClassifier)
+        internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+            : base(request, classifier)
         {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new ArgumentException("Unsupported type.");
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
-            Request = (Request)message.PipelineRequest;
-            ResponseClassifier = (ResponseClassifier)classifier;
+            Request = (Request)request;
+
+            // TODO: when we get here, the base class has already initialized
+            // the ResponseClassifier property, so this makes a second allocation
+            // that isn't needed.  Address this.
+            ResponseClassifier = new ResponseClassifierAdapter(classifier);
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -110,7 +113,7 @@ namespace Azure.Core
         public override ResponseErrorClassifier ResponseErrorClassifier
         {
             get => ResponseClassifier;
-            set => ResponseClassifier = (ResponseClassifier)value;
+            set => ResponseClassifier = new ResponseClassifierAdapter(value);
         }
 
         /// <summary>
