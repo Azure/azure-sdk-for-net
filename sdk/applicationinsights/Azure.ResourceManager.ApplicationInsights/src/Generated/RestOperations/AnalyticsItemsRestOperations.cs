@@ -22,19 +22,16 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AnalyticsItemsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AnalyticsItemsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public AnalyticsItemsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -53,7 +50,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/", false);
             uri.AppendPath(scopePath.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             if (scope != null)
             {
                 uri.AppendQuery("scope", scope.Value.ToString(), true);
@@ -164,7 +161,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/", false);
             uri.AppendPath(scopePath.ToString(), true);
             uri.AppendPath("/item", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             if (id != null)
             {
                 uri.AppendQuery("id", id, true);
@@ -259,7 +256,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/", false);
             uri.AppendPath(scopePath.ToString(), true);
             uri.AppendPath("/item", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             if (overrideItem != null)
             {
                 uri.AppendQuery("overrideItem", overrideItem.Value, true);
@@ -356,7 +353,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/", false);
             uri.AppendPath(scopePath.ToString(), true);
             uri.AppendPath("/item", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             if (id != null)
             {
                 uri.AppendQuery("id", id, true);

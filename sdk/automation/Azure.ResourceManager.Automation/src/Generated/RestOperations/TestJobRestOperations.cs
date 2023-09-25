@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.Automation
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of TestJobRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TestJobRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public TestJobRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2018-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -53,7 +50,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/runbooks/", false);
             uri.AppendPath(runbookName, true);
             uri.AppendPath("/draft/testJob", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-06-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/runbooks/", false);
             uri.AppendPath(runbookName, true);
             uri.AppendPath("/draft/testJob", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-06-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -231,7 +228,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/runbooks/", false);
             uri.AppendPath(runbookName, true);
             uri.AppendPath("/draft/testJob/resume", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-06-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -306,7 +303,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/runbooks/", false);
             uri.AppendPath(runbookName, true);
             uri.AppendPath("/draft/testJob/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-06-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -381,7 +378,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/runbooks/", false);
             uri.AppendPath(runbookName, true);
             uri.AppendPath("/draft/testJob/suspend", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2018-06-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

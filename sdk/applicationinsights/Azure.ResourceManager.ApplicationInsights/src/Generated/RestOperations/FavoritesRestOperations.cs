@@ -22,19 +22,16 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of FavoritesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FavoritesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public FavoritesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -52,7 +49,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             if (favoriteType != null)
             {
                 uri.AppendQuery("favoriteType", favoriteType.Value.ToSerialString(), true);
@@ -166,7 +163,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -250,7 +247,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -342,7 +339,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -434,7 +431,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2015-05-01", true);
             request.Uri = uri;
             _userAgent.Apply(message);
             return message;

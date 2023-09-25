@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.Automation
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of WatcherRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public WatcherRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public WatcherRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-01-13-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -52,7 +49,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(automationAccountName, true);
             uri.AppendPath("/watchers/", false);
             uri.AppendPath(watcherName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-13-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -146,7 +143,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(automationAccountName, true);
             uri.AppendPath("/watchers/", false);
             uri.AppendPath(watcherName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-13-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -234,7 +231,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(automationAccountName, true);
             uri.AppendPath("/watchers/", false);
             uri.AppendPath(watcherName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-13-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -326,7 +323,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(automationAccountName, true);
             uri.AppendPath("/watchers/", false);
             uri.AppendPath(watcherName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-13-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -401,7 +398,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/watchers/", false);
             uri.AppendPath(watcherName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-13-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -476,7 +473,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/watchers/", false);
             uri.AppendPath(watcherName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-13-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -553,7 +550,7 @@ namespace Azure.ResourceManager.Automation
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-13-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

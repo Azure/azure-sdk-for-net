@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.AlertsManagement
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AlertsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AlertsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public AlertsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-05-05-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -45,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alertsMetaData", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2019-05-05-preview", true);
             uri.AppendQuery("identifier", identifier.ToString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -173,7 +170,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 uri.AppendQuery("customTimeRange", customTimeRange, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2019-05-05-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -275,7 +272,7 @@ namespace Azure.ResourceManager.AlertsManagement
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
             uri.AppendPath(alertId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2019-05-05-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -350,7 +347,7 @@ namespace Azure.ResourceManager.AlertsManagement
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
             uri.AppendPath(alertId, true);
             uri.AppendPath("/changestate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2019-05-05-preview", true);
             uri.AppendQuery("newState", newState.ToString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -433,7 +430,7 @@ namespace Azure.ResourceManager.AlertsManagement
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
             uri.AppendPath(alertId, true);
             uri.AppendPath("/history", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2019-05-05-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -547,7 +544,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 uri.AppendQuery("customTimeRange", customTimeRange, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2019-05-05-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
