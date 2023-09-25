@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.HeaderKeys.Runtime));
 
             Assert.AreEqual("windows", headers.GetValues(EventTriggerMetrics.HeaderKeys.Platform).First(), "Verify the platform");
-            Assert.AreEqual("1.0.0.4", headers.GetValues(EventTriggerMetrics.HeaderKeys.ProductVersion).First(), "Verify the version. Needs to be updated when version is updated.");
+            Assert.AreEqual("1.0.0.0", headers.GetValues(EventTriggerMetrics.HeaderKeys.ProductVersion).First(), "Verify the version. Needs to be updated when version is updated.");
             Assert.AreEqual(".NET", headers.GetValues(EventTriggerMetrics.HeaderKeys.Runtime).First(), "Verify the runtime.");
         }
 
