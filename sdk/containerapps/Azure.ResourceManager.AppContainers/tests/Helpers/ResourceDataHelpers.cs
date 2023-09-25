@@ -449,7 +449,7 @@ Name = "testcontainerAppsJob0",
                     AzureCredentials = new ContainerAppCredentials()
                     {
                         ClientId = "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
-                        ClientSecret = "lVa7Q~mDi9zRplCbDikYkNUpjjPw5XRiDdpol",
+                        ClientSecret = "aCL8Q~tRxT~r3yyWr5~UUIpS47KbbgvQfMnekaKT",
                         TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
                         Kind = "feaderated",
                     },
