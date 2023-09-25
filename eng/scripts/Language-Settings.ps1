@@ -419,7 +419,7 @@ function EnsureCustomSource($package) {
       -AllVersions `
       -AllowPrereleaseVersions
 
-      if (!$? -or !$existingVersions) {
+      if (!$? -or !$existingVersions) { 
         Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
         return $package
       }
@@ -495,19 +495,19 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       continue
     }
 
-    if ($matchingPublishedPackage.Support -eq 'deprecated') {
-      if ($Mode -eq 'legacy') {
+    if ($matchingPublishedPackage.Support -eq 'deprecated') { 
+      if ($Mode -eq 'legacy') { 
 
         # Select the GA version, if none use the preview version
         $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
-        if (!$updatedVersion) {
+        if (!$updatedVersion) { 
           $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
         }
         $package.Versions = @($updatedVersion)
 
         Write-Host "Add deprecated package to legacy moniker: $($package.Name)"
         $outputPackages += $package
-      } else {
+      } else { 
         Write-Host "Removing deprecated package: $($package.Name)"
       }
 
