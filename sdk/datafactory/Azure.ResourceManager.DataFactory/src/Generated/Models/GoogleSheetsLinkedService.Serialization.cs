@@ -63,7 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("apiToken"u8);
-            JsonSerializer.Serialize(writer, ApiToken); if (Optional.IsDefined(EncryptedCredential))
+            JsonSerializer.Serialize(writer, ApiToken);
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
