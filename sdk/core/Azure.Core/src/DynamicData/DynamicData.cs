@@ -479,14 +479,11 @@ namespace Azure.Core.Serialization
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
-#if !NET5_0
-        // Since this type is used in an attribute it cannot be annotated correctly through the call chain.
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = DynamicDataJsonConverterSuppression)]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL3050", Justification = DynamicDataJsonConverterSuppression)]
-#endif
+        [RequiresUnreferencedCode(ClassIsIncompatibleWithTrimming)]
+        [RequiresDynamicCode(ClassIsIncompatibleWithTrimming)]
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
-            internal const string DynamicDataJsonConverterSuppression = "This JsonConverter is only used with its parent class DynamicData class which is already marked as RequiresUnreferencedCode.";
+            public const string ClassIsIncompatibleWithTrimming = "Using DynamicData or DynamicDataConverter is not compatible with trimming due to reflection-based serialization.";
 
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -1413,10 +1413,7 @@ namespace Azure.Core.Json
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
 
-#if !NET5_0
-        // Since this type is used in an attribute it cannot be annotated correctly through the call chain.
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is used only with its parent struct MutableJsonElement, which is already annotated as RequiresUnreferencedCode via the constructor.")]
-#endif
+        [RequiresUnreferencedCode("Using MutableJsonElement or MutableJsonElementConverter is not compatible with trimming due to reflection-based serialization.")]
         private class MutableJsonElementConverter : JsonConverter<MutableJsonElement>
         {
             public override MutableJsonElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
