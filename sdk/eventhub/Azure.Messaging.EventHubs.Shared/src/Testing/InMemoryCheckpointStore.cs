@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     ConsumerGroup = data.ConsumerGroup,
                     PartitionId = data.PartitionId,
                     ClientIdentifier = data.ClientIdentifier,
-                    StartingPosition = EventPosition.FromSequenceNumber(data.StartingPosition.SequenceNumber.Value, data.StartingPosition.ReplicationSegment, false),
+                    StartingPosition = EventPosition.FromSequenceNumber(data.StartingPosition.SequenceNumber, data.StartingPosition.ReplicationSegment, false),
                     LastModified = DateTimeOffset.Parse(data.LastModified)
                 };
 
@@ -228,7 +228,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                    string consumerGroup,
                                                    string partitionId,
                                                    string clientIdentifier,
-                                                   CheckpointStartingPosition checkpointStartingPosition,
+                                                   CheckpointPosition checkpointStartingPosition,
                                                    CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)
@@ -271,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public string EventHubName { get; }
             public string ConsumerGroup { get; }
             public string PartitionId { get; }
-            public CheckpointStartingPosition StartingPosition { get; }
+            public CheckpointPosition StartingPosition { get; }
             public string LastModified { get; }
             public string ClientIdentifier { get; }
 
@@ -280,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                   string consumerGroup,
                                   string partitionId,
                                   string clientIdentifier,
-                                  CheckpointStartingPosition startingPosition,
+                                  CheckpointPosition startingPosition,
                                   string lastModified)
             {
                FullyQualifiedNamespace = fullyQualifiedNamespace;

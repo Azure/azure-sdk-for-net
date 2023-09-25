@@ -1078,7 +1078,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
-                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointStartingPosition(sequenceNumber, null, offset), cancellationToken);
+                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition { SequenceNumber = sequenceNumber ?? long.MinValue, Offset = offset }, cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -1089,7 +1089,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         protected virtual Task UpdateCheckpointAsync(string partitionId,
-                                                     CheckpointStartingPosition checkpointStartingPosition,
+                                                     CheckpointPosition checkpointStartingPosition,
                                                      CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
@@ -2217,7 +2217,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                              string consumerGroup,
                                                              string partitionId,
                                                              string clientIdentifier,
-                                                             CheckpointStartingPosition checkpointStartingPosition,
+                                                             CheckpointPosition checkpointStartingPosition,
                                                              CancellationToken cancellationToken)
             {
                 await Processor.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken).ConfigureAwait(false);

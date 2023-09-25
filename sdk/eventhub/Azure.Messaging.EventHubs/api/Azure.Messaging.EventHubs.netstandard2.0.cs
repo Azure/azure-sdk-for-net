@@ -8,7 +8,7 @@ namespace Azure.Messaging.EventHubs
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, string replicationSegment = null, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
+        protected EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, string replicationSegment = "-1", System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
         public EventData(System.ReadOnlyMemory<byte> eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.ReadOnlyMemory<byte> eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
@@ -206,16 +206,16 @@ namespace Azure.Messaging.EventHubs
 namespace Azure.Messaging.EventHubs.Consumer
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct CheckpointStartingPosition
+    public partial struct CheckpointPosition
     {
         private object _dummy;
         private int _dummyPrimitive;
-        public CheckpointStartingPosition(long offset) { throw null; }
-        public CheckpointStartingPosition(long? sequenceNumber, string replicationSegment, long? offset = default(long?)) { throw null; }
+        public CheckpointPosition(long sequenceNumber, long? offset = default(long?)) { throw null; }
+        public CheckpointPosition(long sequenceNumber, string replicationSegment, long? offset = default(long?)) { throw null; }
         public long? Offset { get { throw null; } }
         public string ReplicationSegment { get { throw null; } }
-        public long? SequenceNumber { get { throw null; } }
-        public static Azure.Messaging.EventHubs.Consumer.CheckpointStartingPosition FromEvent(Azure.Messaging.EventHubs.EventData eventData) { throw null; }
+        public long SequenceNumber { get { throw null; } }
+        public static Azure.Messaging.EventHubs.Consumer.CheckpointPosition FromEvent(Azure.Messaging.EventHubs.EventData eventData) { throw null; }
     }
     public partial class EventHubConsumerClient : System.IAsyncDisposable
     {
@@ -349,7 +349,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, System.Threading.CancellationToken cancellationToken);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, Azure.Messaging.EventHubs.Consumer.CheckpointStartingPosition checkpointStartingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, Azure.Messaging.EventHubs.Consumer.CheckpointPosition checkpointStartingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class EventProcessorCheckpoint
     {
@@ -435,7 +435,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public virtual System.Threading.Tasks.Task StopProcessingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
-        protected virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Consumer.CheckpointStartingPosition checkpointStartingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Consumer.CheckpointPosition checkpointStartingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected internal virtual System.Threading.Tasks.Task ValidateProcessingPreconditions(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -498,7 +498,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Consumer.CheckpointStartingPosition checkpointStartingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Consumer.CheckpointPosition checkpointStartingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
     }

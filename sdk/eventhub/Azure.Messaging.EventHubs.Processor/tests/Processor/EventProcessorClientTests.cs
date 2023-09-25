@@ -926,7 +926,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<CheckpointStartingPosition>(),
+                    It.IsAny<CheckpointPosition>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
@@ -960,7 +960,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         processorClient.ConsumerGroup,
                         capturedEventArgs[index].Partition.PartitionId,
                         processorClient.Identifier,
-                        It.Is<CheckpointStartingPosition>(csp =>
+                        It.Is<CheckpointPosition>(csp =>
                             csp.Offset == capturedEventArgs[index].Data.Offset
                             && csp.SequenceNumber == capturedEventArgs[index].Data.SequenceNumber
                             && csp.ReplicationSegment == capturedEventArgs[index].Data.ReplicationSegment),
@@ -1013,7 +1013,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<CheckpointStartingPosition>(),
+                    It.IsAny<CheckpointPosition>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
 
@@ -1456,7 +1456,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var offset = 456;
             var sequenceNumber = 789;
             var replicationSegment = "-1";
-            var checkpointStartingPosition = new CheckpointStartingPosition(sequenceNumber, replicationSegment, offset);
+            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber, replicationSegment, offset);
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
@@ -1469,7 +1469,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.ConsumerGroup,
                     partitionId,
                     processorClient.Identifier,
-                    It.Is<CheckpointStartingPosition>(csp =>
+                    It.Is<CheckpointPosition>(csp =>
                         csp.Offset == offset
                         && csp.SequenceNumber == sequenceNumber
                         && csp.ReplicationSegment == replicationSegment),
@@ -1505,7 +1505,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.ConsumerGroup,
                     partitionId,
                     processorClient.Identifier,
-                    It.Is<CheckpointStartingPosition>(csp =>
+                    It.Is<CheckpointPosition>(csp =>
                         csp.Offset == offset
                         && csp.SequenceNumber == sequenceNumber),
                     It.IsAny<CancellationToken>()),
@@ -1526,7 +1526,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.Cancel();
 
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
-            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", new CheckpointStartingPosition(123, default), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", new CheckpointPosition(123, default), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -1544,7 +1544,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var offset = 456;
             var sequenceNumber = 789;
             var replicationSegment = "-1";
-            var checkpointStartingPosition = new CheckpointStartingPosition(sequenceNumber, replicationSegment, offset);
+            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber, replicationSegment, offset);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
@@ -1583,7 +1583,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new NotImplementedException("This didn't work.");
             var partitionId = "3";
-            var checkpointStartingPosition = new CheckpointStartingPosition(789, "-1", 456);
+            var checkpointStartingPosition = new CheckpointPosition(789, "-1", 456);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
@@ -1595,7 +1595,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<CheckpointStartingPosition>(),
+                    It.IsAny<CheckpointPosition>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
 
@@ -1723,7 +1723,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeListOwnershipAsync(CancellationToken cancellationToken) => base.ListOwnershipAsync(cancellationToken);
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => base.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
             public Task InvokeOldUpdateCheckpointAsync(string partitionId, long offset, long sequenceNumber, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
-            public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointStartingPosition checkpointStartingPosition, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken);
+            public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointPosition checkpointStartingPosition, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken);
             protected override EventHubConnection CreateConnection() => InjectedConnection;
             protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
         }

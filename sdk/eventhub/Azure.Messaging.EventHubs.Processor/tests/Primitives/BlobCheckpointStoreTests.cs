@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);
 
-            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedProcessorId, new CheckpointStartingPosition(expectedSequence, expectedReplicationSegment, expectedOffset), cancellationSource.Token);
+            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedProcessorId, new CheckpointPosition(expectedSequence, expectedReplicationSegment, expectedOffset), cancellationSource.Token);
 
             mockCheckpointStore.Verify(store => store.UpdateCheckpointAsync(
                 expectedNamespace,
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 expectedConsumerGroup,
                 expectedPartition,
                 expectedProcessorId,
-                It.Is<CheckpointStartingPosition>(csp =>
+                It.Is<CheckpointPosition>(csp =>
                     csp.Offset == expectedOffset
                     && csp.SequenceNumber == expectedSequence
                     && csp.ReplicationSegment == expectedReplicationSegment),

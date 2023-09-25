@@ -366,7 +366,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          string consumerGroup,
                                                          string partitionId,
                                                          string clientIdentifier,
-                                                         CheckpointStartingPosition checkpointStartingPosition,
+                                                         CheckpointPosition checkpointStartingPosition,
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -378,7 +378,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             var metadata = new Dictionary<string, string>()
             {
                 { BlobMetadataKey.Offset, checkpointStartingPosition.Offset.ToString() },
-                { BlobMetadataKey.SequenceNumber, (checkpointStartingPosition.SequenceNumber ?? long.MinValue).ToString(CultureInfo.InvariantCulture) },
+                { BlobMetadataKey.SequenceNumber, (checkpointStartingPosition.SequenceNumber).ToString(CultureInfo.InvariantCulture) },
                 { BlobMetadataKey.ClientIdentifier, clientIdentifier },
                 { BlobMetadataKey.ReplicationSegment,  checkpointStartingPosition.ReplicationSegment ?? "-1" }
             };

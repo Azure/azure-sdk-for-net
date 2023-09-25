@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.ConsumerGroup,
                     partitionId,
                     mockProcessor.Identifier,
-                    It.Is<CheckpointStartingPosition>(csp =>
+                    It.Is<CheckpointPosition>(csp =>
                         csp.Offset == offset
                         && csp.SequenceNumber == sequence),
                     cancellationSource.Token))

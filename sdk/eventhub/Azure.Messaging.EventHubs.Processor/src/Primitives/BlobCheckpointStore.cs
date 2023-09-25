@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                    string consumerGroup,
                                                    string partitionId,
                                                    string clientIdentifier,
-                                                   CheckpointStartingPosition checkpointStartingPosition,
+                                                   CheckpointPosition checkpointStartingPosition,
                                                    CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, checkpointStartingPosition, cancellationToken);
     }
 }

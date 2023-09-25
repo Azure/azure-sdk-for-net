@@ -636,7 +636,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, null, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(eventBody: eventBody, properties: properties, systemProperties: systemProperties, sequenceNumber: sequenceNumber, offset: offset, enqueuedTime: enqueuedTime, partitionKey: partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 

@@ -879,7 +879,7 @@ namespace Azure.Messaging.EventHubs
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
-                                                      CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointStartingPosition(sequenceNumber, null, offset), cancellationToken);
+                                                      CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -891,7 +891,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         protected override Task UpdateCheckpointAsync(string partitionId,
-                                                      CheckpointStartingPosition checkpointStartingPosition,
+                                                      CheckpointPosition checkpointStartingPosition,
                                                       CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -1064,7 +1064,7 @@ namespace Azure.Messaging.EventHubs
                         Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
 
                         context ??= new ProcessorPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
-                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(partition.PartitionId, CheckpointStartingPosition.FromEvent(eventData), updateToken), cancellationToken);
+                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(partition.PartitionId, CheckpointPosition.FromEvent(eventData), updateToken), cancellationToken);
 
                         await _processEventAsync(eventArgs).ConfigureAwait(false);
                     }

@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
-                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(string), typeof(CheckpointStartingPosition), typeof(CancellationToken) }, null)
-                    .Invoke(target, new object[] { partitionId, new CheckpointStartingPosition(sequenceNumber, null, offset), cancellationToken });
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) }, null)
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken });
     }
 }
