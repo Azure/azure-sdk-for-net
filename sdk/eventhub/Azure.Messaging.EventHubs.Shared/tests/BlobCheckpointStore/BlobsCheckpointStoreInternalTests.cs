@@ -428,7 +428,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetCheckpointPrefersSequenceNumberAsTheStartingPosition()
         {
             var expectedOffset = 13;
-            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
+            var expectedSequenceNumber = 7777;
+            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequenceNumber, false);
             var partition = Guid.NewGuid().ToString();
 
             var blobList = new List<BlobItem>
@@ -441,7 +442,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
                                                {BlobMetadataKey.Offset, expectedOffset.ToString()},
-                                               {BlobMetadataKey.SequenceNumber, "7777"}
+                                               {BlobMetadataKey.SequenceNumber, expectedSequenceNumber.ToString()}
                                            })
             };
             var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
@@ -1272,7 +1273,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(14, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960182, false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
@@ -1314,7 +1315,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A set of checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(13, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
         }
 

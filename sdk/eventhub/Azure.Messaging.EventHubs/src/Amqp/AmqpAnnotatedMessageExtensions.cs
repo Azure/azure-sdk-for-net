@@ -217,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <returns>The replication segment, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
         public static string GetReplicationSegment(this AmqpAnnotatedMessage instance,
-                                     string defaultValue = null)
+                                     string defaultValue = "-1")
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.ReplicationSegment.ToString(), out var value)))

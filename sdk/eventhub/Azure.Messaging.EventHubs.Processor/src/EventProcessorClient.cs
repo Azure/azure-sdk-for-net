@@ -1064,7 +1064,7 @@ namespace Azure.Messaging.EventHubs
                         Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
 
                         context ??= new ProcessorPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
-                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(partition.PartitionId, eventData.Offset, eventData.SequenceNumber, updateToken), cancellationToken);
+                        eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(partition.PartitionId, CheckpointStartingPosition.FromEvent(eventData), updateToken), cancellationToken);
 
                         await _processEventAsync(eventArgs).ConfigureAwait(false);
                     }

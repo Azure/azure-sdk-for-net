@@ -298,11 +298,11 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <value>
-        ///   This value is read-only and will only be populated for events that have been read from geo replication enabled Event Hubs. The default value
-        ///   when not populated is null.
+        ///   This value is read-only and is only meaningful for events that have been read from geo replication enabled Event Hubs. The default value
+        ///   is "-1".
         /// </value>
         ///
-        public string ReplicationSegment => _amqpMessage.GetReplicationSegment(null);
+        public string ReplicationSegment => _amqpMessage.GetReplicationSegment("-1");
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
@@ -565,7 +565,7 @@ namespace Azure.Messaging.EventHubs
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long? sequenceNumber = null,
                            long? offset = null,
-                           string replicationSegment = null,
+                           string replicationSegment = "-1",
                            DateTimeOffset? enqueuedTime = null,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
@@ -668,7 +668,7 @@ namespace Azure.Messaging.EventHubs
                             IReadOnlyDictionary<string, object> systemProperties = null,
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
-                            string replicationSegment = null,
+                            string replicationSegment = "-1",
                             DateTimeOffset enqueuedTime = default,
                             string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, replicationSegment, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {

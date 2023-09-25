@@ -220,8 +220,8 @@ namespace Azure.Messaging.EventHubs.Consumer
                 _ when (Offset == EndOfStreamOffset) => nameof(Latest),
                 _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
                 _ when (SequenceNumber.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
+                _ when (!string.IsNullOrEmpty(ReplicationSegment)) => $"Replication Segment: [{ReplicationSegment}] |",
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
-                _ when (!string.IsNullOrEmpty(ReplicationSegment)) => $"Replication Segment: [{ReplicationSegment}]",
                 _ => base.ToString()
             };
 

@@ -514,9 +514,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 out long? offset,
                 out long? sequenceNumber))
             {
+                if (sequenceNumber.HasValue)
+                {
+                    startingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
+                }
                 if (offset.HasValue)
                 {
-                    startingPosition = EventPosition.FromOffset(offset.Value, false);
+                    startingPosition ??= EventPosition.FromOffset(offset.Value, false);
                 }
                 else
                 {
