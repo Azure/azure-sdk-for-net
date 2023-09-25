@@ -10,10 +10,9 @@ namespace Azure.Storage.DataMovement.Tests
 {
     internal class MemoryStorageResourceItem : StorageResourceItem
     {
-        private Memory<byte> _buffer = Memory<byte>.Empty;
+        public Memory<byte> Buffer { get; set; } = Memory<byte>.Empty;
 
-        private readonly Uri _uri;
-        public override Uri Uri => _uri;
+        public override Uri Uri { get; }
 
         protected internal override string ResourceId => "MemoryBuffer";
 
@@ -21,7 +20,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long MaxChunkSize => long.MaxValue;
 
-        protected internal override long? Length => _buffer.Length;
+        protected internal override long? Length => Buffer.Length;
+
+        public MemoryStorageResourceItem(Uri uri = default)
+        {
+            Uri = uri ?? new Uri($"memory://localhost/mycontainer/mypath/resource-item-{Guid.NewGuid()}");
+        }
 
         protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
@@ -35,13 +39,14 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (!overwrite && !_buffer.IsEmpty)
+            if (!overwrite && !Buffer.IsEmpty)
             {
                 return;
             }
-            MemoryStream dest = new();
+            byte[] buf = new byte[streamLength];
+            MemoryStream dest = new(buf);
             await stream.CopyToAsync(dest);
-            _buffer = new Memory<byte>(dest.ToArray());
+            Buffer = new Memory<byte>(buf);
         }
 
         protected internal override Task CopyFromUriAsync(StorageResourceItem sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
@@ -51,8 +56,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            bool result = _buffer.IsEmpty;
-            _buffer = Memory<byte>.Empty;
+            bool result = !Buffer.IsEmpty;
+            Buffer = Memory<byte>.Empty;
             return Task.FromResult(result);
         }
 
@@ -68,7 +73,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default)
         {
-            return Task.FromResult(new StorageResourceProperties(default, default, _buffer.Length, default));
+            return Task.FromResult(new StorageResourceProperties(default, default, Buffer.Length, default));
         }
 
         protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
@@ -78,7 +83,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceReadStreamResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)
         {
-            var slice = length.HasValue ? _buffer.Slice((int)position, (int)length.Value) : _buffer.Slice((int)position);
+            var slice = length.HasValue ? Buffer.Slice((int)position, (int)length.Value) : Buffer.Slice((int)position);
             return Task.FromResult(new StorageResourceReadStreamResult(new MemoryStream(slice.ToArray())));
         }
     }
