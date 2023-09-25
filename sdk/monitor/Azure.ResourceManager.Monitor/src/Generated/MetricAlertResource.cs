@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -384,7 +385,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
         }
 
         /// <summary>

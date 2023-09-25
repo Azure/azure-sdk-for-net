@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceTopicRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicResource(Client, NamespaceTopicData.DeserializeNamespaceTopicData(e)), _namespaceTopicClientDiagnostics, Pipeline, "NamespaceTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicResource(Client, NamespaceTopicData.DeserializeNamespaceTopicData(e)), _namespaceTopicClientDiagnostics, Pipeline, "NamespaceTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceTopicRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicResource(Client, NamespaceTopicData.DeserializeNamespaceTopicData(e)), _namespaceTopicClientDiagnostics, Pipeline, "NamespaceTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceTopicResource(Client, NamespaceTopicData.DeserializeNamespaceTopicData(e)), _namespaceTopicClientDiagnostics, Pipeline, "NamespaceTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,6 +319,80 @@ namespace Azure.ResourceManager.EventGrid
             {
                 var response = _namespaceTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamespaceTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Name of the namespace topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NamespaceTopicResource>> GetIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            using var scope = _namespaceTopicClientDiagnostics.CreateScope("NamespaceTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _namespaceTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NamespaceTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamespaceTopics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Name of the namespace topic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual NullableResponse<NamespaceTopicResource> GetIfExists(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            using var scope = _namespaceTopicClientDiagnostics.CreateScope("NamespaceTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _namespaceTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NamespaceTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

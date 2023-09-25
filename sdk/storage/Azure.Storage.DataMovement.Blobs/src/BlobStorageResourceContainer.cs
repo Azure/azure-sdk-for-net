@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -16,7 +15,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The Storage Resource class for the Blob Client. Supports blob prefix directories as well as the root container.
     /// </summary>
-    public class BlobStorageResourceContainer : StorageResourceContainer
+    internal class BlobStorageResourceContainer : StorageResourceContainer
     {
         internal BlobContainerClient BlobContainerClient { get; }
         internal string DirectoryPrefix { get; }

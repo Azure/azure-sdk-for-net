@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentKeyPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentKeyPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentKeyPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentKeyPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContentKeyPolicyResource(Client, ContentKeyPolicyData.DeserializeContentKeyPolicyData(e)), _contentKeyPolicyClientDiagnostics, Pipeline, "ContentKeyPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,6 +321,80 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _contentKeyPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentKeyPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentKeyPolicyName"> The Content Key Policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContentKeyPolicyResource>> GetIfExistsAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+
+            using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _contentKeyPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContentKeyPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ContentKeyPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentKeyPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentKeyPolicyName"> The Content Key Policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentKeyPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
+        public virtual NullableResponse<ContentKeyPolicyResource> GetIfExists(string contentKeyPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+
+            using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _contentKeyPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContentKeyPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ContentKeyPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(DefaultAction))
+            {
+                writer.WritePropertyName("defaultAction"u8);
+                writer.WriteStringValue(DefaultAction.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Statements))
             {
                 writer.WritePropertyName("statements"u8);

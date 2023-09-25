@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), _partnerNamespaceClientDiagnostics, Pipeline, "PartnerNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -319,6 +320,80 @@ namespace Azure.ResourceManager.EventGrid
             {
                 var response = _partnerNamespaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerNamespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PartnerNamespaceResource>> GetIfExistsAsync(string partnerNamespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerNamespaceName, nameof(partnerNamespaceName));
+
+            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _partnerNamespaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerNamespaceResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerNamespaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerNamespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerNamespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerNamespaceName"/> is null. </exception>
+        public virtual NullableResponse<PartnerNamespaceResource> GetIfExists(string partnerNamespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerNamespaceName, nameof(partnerNamespaceName));
+
+            using var scope = _partnerNamespaceClientDiagnostics.CreateScope("PartnerNamespaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _partnerNamespaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerNamespaceResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

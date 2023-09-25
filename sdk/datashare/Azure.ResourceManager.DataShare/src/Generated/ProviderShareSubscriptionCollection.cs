@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,6 +235,80 @@ namespace Azure.ResourceManager.DataShare
             {
                 var response = _providerShareSubscriptionRestClient.GetByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerShareSubscriptionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProviderShareSubscriptionResource>> GetIfExistsAsync(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+
+            using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _providerShareSubscriptionRestClient.GetByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerShareSubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProviderShareSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
+        public virtual NullableResponse<ProviderShareSubscriptionResource> GetIfExists(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+
+            using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _providerShareSubscriptionRestClient.GetByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerShareSubscriptionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProviderShareSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ProviderShareSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

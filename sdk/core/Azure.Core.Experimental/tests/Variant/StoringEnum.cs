@@ -5,7 +5,7 @@ using System;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringEnum
     {

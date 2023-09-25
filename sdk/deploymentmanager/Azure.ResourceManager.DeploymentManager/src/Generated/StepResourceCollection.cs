@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<StepResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<StepResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.DeploymentManager
             {
                 var response = _stepResourceStepsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, stepName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/steps/{stepName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Steps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="stepName"> The name of the deployment step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StepResource>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+
+            using var scope = _stepResourceStepsClientDiagnostics.CreateScope("StepResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _stepResourceStepsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, stepName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StepResource>(response.GetRawResponse());
+                return Response.FromValue(new StepResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/steps/{stepName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Steps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="stepName"> The name of the deployment step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        public virtual NullableResponse<StepResource> GetIfExists(string stepName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+
+            using var scope = _stepResourceStepsClientDiagnostics.CreateScope("StepResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _stepResourceStepsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, stepName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StepResource>(response.GetRawResponse());
+                return Response.FromValue(new StepResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

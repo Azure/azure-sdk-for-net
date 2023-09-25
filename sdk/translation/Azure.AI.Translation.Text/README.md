@@ -97,16 +97,16 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The following section provides several code snippets using the `client` [created above](#create-a-texttranslationclient-using-an-api-key-and-region-credential), and covers the main features present in this client library. Although most of the snippets below make use of asynchronous service calls, keep in mind that the `Azure.AI.Translation.Text` package supports both synchronous and asynchronous APIs.
+The following section provides several code snippets using the `client` [created above](#create-a-texttranslationclient-using-an-api-key-and-region-credential), and covers the main features present in this client library. Although the snippets below make use of synchronous service calls, keep in mind that the `Azure.AI.Translation.Text` package supports both synchronous and asynchronous APIs.
 
 ### Get Supported Languages
 
 Gets the set of languages currently supported by other operations of the Translator.
 
-```C# Snippet:GetTextTranslationLanguagesAsync
+```C# Snippet:GetTextTranslationLanguages
 try
 {
-    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
+    Response<GetLanguagesResult> response = client.GetLanguages(cancellationToken: CancellationToken.None);
     GetLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
@@ -126,13 +126,13 @@ Please refer to the service documentation for a conceptual discussion of [langua
 
 Renders single source-language text to multiple target-language texts with a single request.
 
-```C# Snippet:GetTextTranslationAsync
+```C# Snippet:GetTextTranslation
 try
 {
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -154,7 +154,7 @@ Please refer to the service documentation for a conceptual discussion of [transl
 
 Converts characters or letters of a source language to the corresponding characters or letters of a target language.
 
-```C# Snippet:GetTransliteratedTextAsync
+```C# Snippet:GetTransliteratedText
 try
 {
     string language = "zh-Hans";
@@ -163,7 +163,7 @@ try
 
     string inputText = "这是个测试。";
 
-    Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(language, fromScript, toScript, inputText).ConfigureAwait(false);
+    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(language, fromScript, toScript, inputText);
     IReadOnlyList<TransliteratedText> transliterations = response.Value;
     TransliteratedText transliteration = transliterations.FirstOrDefault();
 
@@ -184,12 +184,12 @@ Please refer to the service documentation for a conceptual discussion of [transl
 
 Identifies the positioning of sentence boundaries in a piece of text.
 
-```C# Snippet:FindTextSentenceBoundariesAsync
+```C# Snippet:FindTextSentenceBoundaries
 try
 {
     string inputText = "How are you? I am fine. What did you do today?";
 
-    Response<IReadOnlyList<BreakSentenceItem>> response = await client.FindSentenceBoundariesAsync(inputText).ConfigureAwait(false);
+    Response<IReadOnlyList<BreakSentenceItem>> response = client.FindSentenceBoundaries(inputText);
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
@@ -211,14 +211,14 @@ Please refer to the service documentation for a conceptual discussion of [break 
 
 Returns equivalent words for the source term in the target language.
 
-```C# Snippet:LookupDictionaryEntriesAsync
+```C# Snippet:LookupDictionaryEntries
 try
 {
     string sourceLanguage = "en";
     string targetLanguage = "es";
     string inputText = "fly";
 
-    Response<IReadOnlyList<DictionaryLookupItem>> response = await client.LookupDictionaryEntriesAsync(sourceLanguage, targetLanguage, inputText).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryLookupItem>> response = client.LookupDictionaryEntries(sourceLanguage, targetLanguage, inputText);
     IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
     DictionaryLookupItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
@@ -240,7 +240,7 @@ Please refer to the service documentation for a conceptual discussion of [dictio
 
 Returns grammatical structure and context examples for the source term and target term pair.
 
-```C# Snippet:GetGrammaticalStructureAsync
+```C# Snippet:GetGrammaticalStructure
 try
 {
     string sourceLanguage = "en";
@@ -250,7 +250,7 @@ try
         new InputTextWithTranslation("fly", "volar")
     };
 
-    Response<IReadOnlyList<DictionaryExampleItem>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryExampleItem>> response = client.LookupDictionaryExamples(sourceLanguage, targetLanguage, inputTextElements);
     IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
     DictionaryExampleItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
@@ -275,10 +275,10 @@ When you interact with the Translator Service using the Text Translation client 
 
 For example, if you submit a translation request without a target translate language, a `400` error is returned, indicating "Bad Request".
 
-```C# Snippet:HandleBadRequestAsync
+```C# Snippet:HandleBadRequest
 try
 {
-    var translation = await client.TranslateAsync(Array.Empty<string>(), new[] { "This is a Test" }).ConfigureAwait(false);
+    var translation = client.Translate(Array.Empty<string>(), new[] { "This is a Test" });
 }
 catch (RequestFailedException e)
 {
