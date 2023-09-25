@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public MemoryStorageResourceItem(Uri uri = default)
         {
-            Uri = uri ?? new Uri($"memory://localhost/mycontainer/mypath/resource-item-{Guid.NewGuid()}");
+            Uri = uri ?? new Uri($"memory://localhost/mycontainer/mypath-{Guid.NewGuid()}/resource-item-{Guid.NewGuid()}");
         }
 
         protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)

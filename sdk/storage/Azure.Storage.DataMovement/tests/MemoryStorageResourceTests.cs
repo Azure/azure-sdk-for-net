@@ -97,5 +97,69 @@ namespace Azure.Storage.DataMovement.Tests
                 : new Memory<byte>(data).Slice(position);
             Assert.That(dest.ToArray(), Is.EquivalentTo(expectedData.ToArray()));
         }
+
+        [Test]
+        public async Task MemoryContainerEnumerate([Values(true, false)] bool returnsContainers)
+        {
+            const string baseUri = "memory://localhost/my/path";
+            List<StorageResource> allChildren = new();
+
+            MemoryStorageResourceContainer baseContainer = new(new Uri(baseUri))
+            {
+                ReturnsContainersOnEnumeration = returnsContainers,
+            };
+
+            MemoryStorageResourceItem child1 = new(new Uri(baseUri + "/item"));
+            baseContainer.Children.Add(child1);
+            allChildren.Add(child1);
+
+            MemoryStorageResourceContainer child2 = new(new Uri(baseUri + "/container"));
+            baseContainer.Children.Add(child2);
+            allChildren.Add(child2);
+
+            MemoryStorageResourceItem child2_1 = new(new Uri(baseUri + "/container/item1"));
+            child2.Children.Add(child1);
+            allChildren.Add(child1);
+
+            MemoryStorageResourceItem child2_2 = new(new Uri(baseUri + "/container/item2"));
+            child2.Children.Add(child2_2);
+            allChildren.Add(child2_2);
+
+            MemoryStorageResourceContainer child2_3 = new(new Uri(baseUri + "/container/container3"));
+            child2.Children.Add(child2_3);
+            allChildren.Add(child2_3);
+
+            List<StorageResource> result = new();
+            await foreach (StorageResource resource in baseContainer.GetStorageResourcesAsync())
+            {
+                result.Add(resource);
+            }
+
+            List<StorageResource> expected = allChildren
+                .Where(sr => returnsContainers ? true : sr is MemoryStorageResourceItem)
+                .ToList();
+            Assert.That(result, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void MemoryContainerGetResource()
+        {
+            const string baseUri = "memory://localhost/my/path";
+            List<StorageResource> allChildren = new();
+
+            MemoryStorageResourceContainer baseContainer = new(new Uri(baseUri));
+
+            MemoryStorageResourceItem foo = new(new Uri(baseUri + "/foo"));
+            baseContainer.Children.Add(foo);
+
+            MemoryStorageResourceContainer fizz = new(new Uri(baseUri + "/fizz"));
+            baseContainer.Children.Add(fizz);
+
+            MemoryStorageResourceItem buzz = new(new Uri(baseUri + "/fizz/buzz"));
+            fizz.Children.Add(buzz);
+
+            Assert.That(baseContainer.GetStorageResourceReference("foo"), Is.EqualTo(foo));
+            Assert.That(baseContainer.GetStorageResourceReference("fizz/buzz"), Is.EqualTo(buzz));
+        }
     }
 }
