@@ -12,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Base type for all client option types, exposes various common client options like <see cref="Diagnostics"/>, <see cref="Retry"/>, <see cref="Transport"/>.
     /// </summary>
-    public abstract class ClientOptions : PipelineOptions
+    public abstract class ClientOptions //: PipelineOptions
     {
         private HttpPipelineTransport _transport;
         internal bool IsCustomTransportSet { get; private set; }

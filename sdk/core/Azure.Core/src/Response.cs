@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using Azure.Core;
 
 namespace Azure
@@ -14,14 +14,9 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : Result
+    public abstract class Response : PipelineResponse, IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        /// <summary>
-        /// Gets the HTTP reason phrase.
-        /// </summary>
-        public abstract string ReasonPhrase { get; }
-
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
@@ -35,6 +30,23 @@ namespace Azure
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
+
+        /// <summary>
+        /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
+        /// </summary>
+        /// <param name="name">The header name.</param>
+        /// <param name="value">The reference to populate with value.</param>
+        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool TryGetHeaderValue(string name, out string? value)
+            => TryGetHeader(name, out value);
 
         /// <summary>
         /// Returns header values if the header is stored in the collection.
@@ -90,5 +102,44 @@ namespace Azure
                 stream = null;
             }
         }
+
+        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
+
+        /// <summary>
+        /// Gets the contents of HTTP response, if it is available.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
+        /// </remarks>
+        public override BinaryData Content
+        {
+            get
+            {
+                if (ContentStream == null)
+                {
+                    return s_EmptyBinaryData;
+                }
+
+                MemoryStream? memoryContent = ContentStream as MemoryStream;
+
+                if (memoryContent == null)
+                {
+                    throw new InvalidOperationException($"The response is not fully buffered.");
+                }
+
+                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+                {
+                    return new BinaryData(segment.AsMemory());
+                }
+                else
+                {
+                    return new BinaryData(memoryContent.ToArray());
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public abstract void Dispose();
     }
 }

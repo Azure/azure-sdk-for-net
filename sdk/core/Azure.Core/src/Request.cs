@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Experimental.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -13,7 +14,7 @@ namespace Azure.Core
     /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Request : IDisposable
+    public abstract class Request : PipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private RequestUriBuilder? _uri;
@@ -35,14 +36,56 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="uri"></param>
+        public override void SetUri(RequestUri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            _uri = new RequestUriBuilderAdapter(uri);
+        }
+
+        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
         public virtual RequestMethod Method { get; set; }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="method"></param>
+        public override void SetMethod(string method)
+        {
+            Method = VerbToMethod(method);
+        }
+
+        private static RequestMethod VerbToMethod(string verb)
+        {
+            return verb switch
+            {
+                "GET" => RequestMethod.Get,
+                "POST" => RequestMethod.Post,
+                "PUT" => RequestMethod.Put,
+                "HEAD" => RequestMethod.Head,
+                "DELETE" => RequestMethod.Delete,
+                "PATCH" => RequestMethod.Patch,
+                _ => throw new ArgumentOutOfRangeException(nameof(verb)),
+            };
+        }
+
+        /// <summary>
         /// Gets or sets the request content.
         /// </summary>
         public virtual RequestContent? Content { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="content"></param>
+        public override void SetContent(RequestBody content)
+        {
+            Content = new RequestBodyContent(content);
+        }
 
         /// <summary>
         /// Adds a header value to the header collection.
@@ -86,6 +129,14 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public override void SetHeaderValue(string name, string value)
+            => SetHeader(name, value);
+
+        /// <summary>
         /// Removes the header from the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
@@ -98,18 +149,8 @@ namespace Azure.Core
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
         /// <summary>
-        /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
-        /// </summary>
-        public abstract string ClientRequestId { get; set; }
-
-        /// <summary>
         /// Gets the response HTTP headers.
         /// </summary>
         public RequestHeaders Headers => new(this);
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
     }
 }

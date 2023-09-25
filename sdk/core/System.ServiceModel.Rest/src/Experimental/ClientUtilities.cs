@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest.Shared
+namespace System.ServiceModel.Rest.Experimental
 {
     /// <summary>
     /// TBD.

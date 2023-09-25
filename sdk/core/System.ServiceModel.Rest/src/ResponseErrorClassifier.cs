@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
-
 namespace System.ServiceModel.Rest.Core
 {
     /// <summary>
@@ -13,14 +11,14 @@ namespace System.ServiceModel.Rest.Core
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
-        public virtual bool IsErrorResponse(RestMessage message)
+        public virtual bool IsErrorResponse(PipelineMessage message)
         {
-            if (message.Result is null)
+            if (message.PipelineResponse is null)
             {
                 throw new InvalidOperationException("IsErrorResponse must be called on a message where the Result is populated.");
             }
 
-            int statusKind = message.Result.Status / 100;
+            int statusKind = message.PipelineResponse.Status / 100;
             return statusKind == 4 || statusKind == 5;
         }
     }
