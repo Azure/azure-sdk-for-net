@@ -1046,7 +1046,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 Assert.IsNotNull(batch[0].Key);
                 Assert.IsNotNull(batch[0].Label);
-                Assert.IsNotNull(batch[0].ETag);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
                 Assert.IsNull(batch[0].Value);
                 Assert.IsNull(batch[0].ContentType);
                 Assert.IsNull(batch[0].LastModified);
@@ -1118,9 +1118,49 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsNotNull(batch[0].Label);
                 Assert.IsNotNull(batch[0].Value);
                 Assert.IsNotNull(batch[0].ContentType);
-                Assert.IsNotNull(batch[0].ETag);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
                 Assert.IsNotNull(batch[0].LastModified);
                 Assert.IsNotNull(batch[0].IsReadOnly);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetBatchSettingWithAllFieldsSetExplicitly()
+        {
+            ConfigurationClient service = GetClient();
+            string key = GenerateKeyId("keyFields-");
+            ConfigurationSetting setting = await service.AddConfigurationSettingAsync(new ConfigurationSetting(key, "my_value", "my_label")
+            {
+                ContentType = "content-type",
+                Tags = { { "my_tag", "my_tag_value" } }
+            });
+
+            try
+            {
+                SettingSelector selector = new SettingSelector
+                {
+                    KeyFilter = key,
+                    Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value | SettingFields.ContentType
+                        | SettingFields.ETag | SettingFields.LastModified | SettingFields.IsReadOnly | SettingFields.Tags
+                };
+
+                ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
+
+                Assert.AreEqual(1, batch.Length);
+
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].Value);
+                Assert.IsNotNull(batch[0].ContentType);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
+                Assert.IsNotNull(batch[0].LastModified);
+                Assert.IsNotNull(batch[0].IsReadOnly);
+                Assert.IsNotEmpty(batch[0].Tags);
             }
             finally
             {
