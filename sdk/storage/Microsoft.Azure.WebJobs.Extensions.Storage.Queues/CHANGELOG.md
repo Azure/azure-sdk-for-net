@@ -1,14 +1,8 @@
 # Release History
 
-## 5.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
+## 5.2.0 (2023-09-25)
 ### Other Changes
+- This release contains bug fixes to improve quality.
 
 ## 5.1.3 (2023-06-26)
 - Trigger binding support for ParameterBindingData reference type

@@ -3,7 +3,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>5.2.0-beta.1</Version>
+    <Version>5.2.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>5.1.3</ApiCompatVersion>
     <Description>This extension adds bindings for Storage</Description>
