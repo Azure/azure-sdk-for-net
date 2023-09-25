@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("version"u8);
             JsonSerializer.Serialize(writer, Version);
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); writer.WritePropertyName("hostSubscriptionId"u8);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
+            writer.WritePropertyName("hostSubscriptionId"u8);
             JsonSerializer.Serialize(writer, HostSubscriptionId);
             if (Optional.IsDefined(ServicePrincipalId))
             {
@@ -210,11 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(HeadNodeSize))
             {
@@ -318,11 +315,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> oozieConfiguration = default;
             Optional<BinaryData> stormConfiguration = default;
             Optional<BinaryData> yarnConfiguration = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             Optional<BinaryData> headNodeSize = default;
             Optional<BinaryData> dataNodeSize = default;
             Optional<BinaryData> zookeeperNodeSize = default;
-            Optional<IList<ScriptAction>> scriptActions = default;
+            Optional<IList<DataFactoryScriptAction>> scriptActions = default;
             Optional<DataFactoryElement<string>> virtualNetworkId = default;
             Optional<DataFactoryElement<string>> subnetName = default;
             Optional<DataFactoryCredentialReference> credential = default;
@@ -606,11 +603,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("headNodeSize"u8))
@@ -646,10 +639,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<ScriptAction> array = new List<ScriptAction>();
+                            List<DataFactoryScriptAction> array = new List<DataFactoryScriptAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptAction.DeserializeScriptAction(item));
+                                array.Add(DataFactoryScriptAction.DeserializeDataFactoryScriptAction(item));
                             }
                             scriptActions = array;
                             continue;

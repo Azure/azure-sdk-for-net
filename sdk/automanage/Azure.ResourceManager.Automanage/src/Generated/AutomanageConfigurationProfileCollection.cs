@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageConfigurationProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileConfigurationProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageConfigurationProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageConfigurationProfileConfigurationProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), _automanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.Automanage
             {
                 var response = _automanageConfigurationProfileConfigurationProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationProfileName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationProfileName"> The configuration profile name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageConfigurationProfileResource>> GetIfExistsAsync(string configurationProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageConfigurationProfileConfigurationProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageConfigurationProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationProfileName"> The configuration profile name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageConfigurationProfileResource> GetIfExists(string configurationProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationProfileName, nameof(configurationProfileName));
+
+            using var scope = _automanageConfigurationProfileConfigurationProfilesClientDiagnostics.CreateScope("AutomanageConfigurationProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageConfigurationProfileConfigurationProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationProfileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageConfigurationProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageConfigurationProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

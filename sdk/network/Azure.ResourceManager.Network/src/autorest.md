@@ -6,10 +6,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md
-# tag: package-2023-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/0762e82bcccef4a032e29dda5e4c07fd7cc822a6/specification/network/resource-manager/readme.md
+# tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -27,7 +30,7 @@ rename-mapping:
   PacketCapture: PacketCaptureInput
   PacketCaptureResult: PacketCapture
   IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
-  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType   # VirtualNetworkGatewayNatRuleProperties is flatten in VirtualNetworkGatewayNatRule
+  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType
   SubResource: NetworkSubResource
   ProvisioningState: NetworkProvisioningState
   IpAllocation.properties.type: IPAllocationType
@@ -175,6 +178,9 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
   AdminState: ExpressRouteGatewayAdminState
+  SyncMode: BackendAddressSyncMode
+  MigratedPools: MigrateLoadBalancerToIPBasedResult
+  IPRule: BastionHostIPRule
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -207,7 +213,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -266,6 +272,7 @@ override-operation-name:
   VirtualHubs_GetEffectiveVirtualHubRoutes: GetVirtualHubEffectiveRoutes
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
+  generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

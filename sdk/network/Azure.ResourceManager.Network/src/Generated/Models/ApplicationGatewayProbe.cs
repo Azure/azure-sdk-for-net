@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="minServers"> Minimum number of servers that are always marked healthy. Default value is 0. </param>
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only. </param>
+        /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </param>
         internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType)
         {
             ETag = etag;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
         /// <summary> The provisioning state of the probe resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only. </summary>
+        /// <summary> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </summary>
         public int? Port { get; set; }
     }
 }

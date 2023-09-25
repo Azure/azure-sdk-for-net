@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningJobResource(Client, MachineLearningJobData.DeserializeMachineLearningJobData(e)), _machineLearningJobJobsClientDiagnostics, Pipeline, "MachineLearningJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningJobResource(Client, MachineLearningJobData.DeserializeMachineLearningJobData(e)), _machineLearningJobJobsClientDiagnostics, Pipeline, "MachineLearningJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningJobResource(Client, MachineLearningJobData.DeserializeMachineLearningJobData(e)), _machineLearningJobJobsClientDiagnostics, Pipeline, "MachineLearningJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningJobResource(Client, MachineLearningJobData.DeserializeMachineLearningJobData(e)), _machineLearningJobJobsClientDiagnostics, Pipeline, "MachineLearningJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -323,6 +324,80 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 var response = _machineLearningJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual async Task<NullableResponse<MachineLearningJobResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningJobResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual NullableResponse<MachineLearningJobResource> GetIfExists(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningJobResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

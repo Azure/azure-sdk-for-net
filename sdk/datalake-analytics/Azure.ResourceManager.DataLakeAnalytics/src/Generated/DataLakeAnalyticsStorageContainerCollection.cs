@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListStorageContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListStorageContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageContainerResource(Client, DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(e)), _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageContainerResource(Client, DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(e)), _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListStorageContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListStorageContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageContainerResource(Client, DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(e)), _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageContainerResource(Client, DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(e)), _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,6 +233,80 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 var response = _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.GetStorageContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_GetStorageContainer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerName"> The name of the Azure storage container to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataLakeAnalyticsStorageContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
+            using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.GetStorageContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataLakeAnalyticsStorageContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsStorageContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_GetStorageContainer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="containerName"> The name of the Azure storage container to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        public virtual NullableResponse<DataLakeAnalyticsStorageContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
+            using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.GetStorageContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataLakeAnalyticsStorageContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new DataLakeAnalyticsStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _scriptExecutionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionName"> Name of the user-invoked script execution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScriptExecutionResource>> GetIfExistsAsync(string scriptExecutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptExecutionName, nameof(scriptExecutionName));
+
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scriptExecutionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScriptExecutionResource>(response.GetRawResponse());
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecutions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionName"> Name of the user-invoked script execution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        public virtual NullableResponse<ScriptExecutionResource> GetIfExists(string scriptExecutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptExecutionName, nameof(scriptExecutionName));
+
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scriptExecutionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScriptExecutionResource>(response.GetRawResponse());
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

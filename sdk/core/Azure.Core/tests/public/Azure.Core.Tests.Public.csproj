@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -8,16 +11,17 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Azure.Core.NewtonsoftJson" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\common\Azure.Core.Tests.Common.csproj" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
 </Project>

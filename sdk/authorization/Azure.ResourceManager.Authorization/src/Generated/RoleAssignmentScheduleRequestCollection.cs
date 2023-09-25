@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleRequestResource(Client, RoleAssignmentScheduleRequestData.DeserializeRoleAssignmentScheduleRequestData(e)), _roleAssignmentScheduleRequestClientDiagnostics, Pipeline, "RoleAssignmentScheduleRequestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -306,6 +307,80 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _roleAssignmentScheduleRequestRestClient.Get(Id, roleAssignmentScheduleRequestName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoleAssignmentScheduleRequestResource>> GetIfExistsAsync(string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleRequestName, nameof(roleAssignmentScheduleRequestName));
+
+            using var scope = _roleAssignmentScheduleRequestClientDiagnostics.CreateScope("RoleAssignmentScheduleRequestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _roleAssignmentScheduleRequestRestClient.GetAsync(Id, roleAssignmentScheduleRequestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleRequestResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleRequestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        public virtual NullableResponse<RoleAssignmentScheduleRequestResource> GetIfExists(string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleRequestName, nameof(roleAssignmentScheduleRequestName));
+
+            using var scope = _roleAssignmentScheduleRequestClientDiagnostics.CreateScope("RoleAssignmentScheduleRequestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _roleAssignmentScheduleRequestRestClient.Get(Id, roleAssignmentScheduleRequestName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleRequestResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

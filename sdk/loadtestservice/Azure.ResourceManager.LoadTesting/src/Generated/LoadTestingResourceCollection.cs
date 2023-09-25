@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 var response = _loadTestingResourceLoadTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LoadTestingResource>> GetIfExistsAsync(string loadTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _loadTestingResourceLoadTestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LoadTestingResource>(response.GetRawResponse());
+                return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loadTestName"> Load Test name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
+        public virtual NullableResponse<LoadTestingResource> GetIfExists(string loadTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _loadTestingResourceLoadTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LoadTestingResource>(response.GetRawResponse());
+                return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

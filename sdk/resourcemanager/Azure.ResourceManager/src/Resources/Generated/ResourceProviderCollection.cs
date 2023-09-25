@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceProviderResource(Client, ResourceProviderData.DeserializeResourceProviderData(e)), _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -225,6 +226,82 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceProviderProvidersRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceProviderResource>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceProviderProvidersRestClient.GetAsync(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual NullableResponse<ResourceProviderResource> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceProviderProvidersRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

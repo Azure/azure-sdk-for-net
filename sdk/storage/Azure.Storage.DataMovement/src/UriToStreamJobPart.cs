@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.DataMovement.Models;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
@@ -35,8 +34,8 @@ namespace Azure.Storage.DataMovement
                   destinationResource: job._destinationResource,
                   maximumTransferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
-                  errorHandling: job._errorHandling,
-                  createMode: job._createMode,
+                  errorHandling: job._errorMode,
+                  createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
@@ -45,7 +44,7 @@ namespace Azure.Storage.DataMovement
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
-                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
                   clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken)
         { }
@@ -56,10 +55,10 @@ namespace Azure.Storage.DataMovement
         private UriToStreamJobPart(
             UriToStreamTransferJob job,
             int partNumber,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
             bool isFinalPart,
-            StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
+            DataTransferStatus jobPartStatus = default,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
@@ -67,8 +66,8 @@ namespace Azure.Storage.DataMovement
                   destinationResource: destinationResource,
                   maximumTransferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
-                  errorHandling: job._errorHandling,
-                  createMode: job._createMode,
+                  errorHandling: job._errorMode,
+                  createMode: job._creationPreference,
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
@@ -77,7 +76,7 @@ namespace Azure.Storage.DataMovement
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
-                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
                   clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken,
                   jobPartStatus: jobPartStatus,
@@ -103,10 +102,10 @@ namespace Azure.Storage.DataMovement
         public static async Task<UriToStreamJobPart> CreateJobPartAsync(
             UriToStreamTransferJob job,
             int partNumber,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
             bool isFinalPart,
-            StorageTransferStatus jobPartStatus = default,
+            DataTransferStatus jobPartStatus = default,
             long? length = default,
             bool partPlanFileExists = false)
         {
@@ -148,7 +147,7 @@ namespace Azure.Storage.DataMovement
         {
             // we can default the length to 0 because we know the destination is local and
             // does not require a length to be created.
-            await OnTransferStatusChanged(StorageTransferStatus.InProgress).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             try
             {
@@ -170,14 +169,14 @@ namespace Azure.Storage.DataMovement
 
         internal async Task UnknownDownloadInternal()
         {
-            Task<ReadStreamStorageResourceResult> initialTask = _sourceResource.ReadStreamAsync(
+            Task<StorageResourceReadStreamResult> initialTask = _sourceResource.ReadStreamAsync(
                         position: 0,
                         length: _initialTransferSize,
                         _cancellationToken);
 
             try
             {
-                ReadStreamStorageResourceResult initialResult = default;
+                StorageResourceReadStreamResult initialResult = default;
                 try
                 {
                     initialResult = await initialTask.ConfigureAwait(false);
@@ -248,7 +247,7 @@ namespace Azure.Storage.DataMovement
                 }
                 else
                 {
-                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -269,7 +268,7 @@ namespace Azure.Storage.DataMovement
             {
                 // To prevent requesting a range that is invalid when
                 // we already know the length we can just make one get blob request.
-                ReadStreamStorageResourceResult result = await _sourceResource.
+                StorageResourceReadStreamResult result = await _sourceResource.
                     ReadStreamAsync(cancellationToken: _cancellationToken)
                     .ConfigureAwait(false);
 
@@ -334,14 +333,14 @@ namespace Azure.Storage.DataMovement
 
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
-                    overwrite: _createMode == StorageResourceCreateMode.Overwrite,
+                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
                 await DisposeHandlers().ConfigureAwait(false);
 
                 // Update the transfer status
-                await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -353,7 +352,7 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                ReadStreamStorageResourceResult result = await _sourceResource.ReadStreamAsync(
+                StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     range.Offset,
                     (long)range.Length,
                     _cancellationToken).ConfigureAwait(false);
@@ -402,18 +401,20 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // TODO: change to custom offset based on chunk offset
-                await _destinationResource.WriteFromStreamAsync(
+                await _destinationResource.CopyFromStreamAsync(
                     stream: source,
-                    overwrite: _createMode == StorageResourceCreateMode.Overwrite,
-                    position: offset,
+                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
                     streamLength: sourceLength,
                     completeLength: expectedLength,
-                    options: default,
+                    options: new StorageResourceWriteToOffsetOptions()
+                    {
+                        Position = offset,
+                    },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
                 return true;
             }
             catch (IOException ex)
-            when (_createMode == StorageResourceCreateMode.Skip &&
+            when (_createMode == StorageResourceCreationPreference.SkipIfExists &&
                 ex.Message.Contains("Cannot overwrite file."))
             {
                 // Skip file that already exists on the destination.
@@ -511,7 +512,7 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
         }
     }

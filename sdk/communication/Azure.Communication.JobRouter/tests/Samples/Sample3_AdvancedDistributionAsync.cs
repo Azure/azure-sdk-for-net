@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     AvailableForOffers = true,
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
                     Labels = { ["HandleEscalation"] = new LabelValue(true), ["IT_Support"] = new LabelValue(true) },
-                    QueueIds = { [jobQueueId] = new RouterQueueAssignment(), }
+                    QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), }
                 });
 
             // Worker 2 cannot handle escalation
@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     AvailableForOffers = true,
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
                     Labels = { ["IT_Support"] = new LabelValue(true), },
-                    QueueIds = { [jobQueueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), },
                 });
 
             // Create job
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
                 {
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["HighPrioritySupport"] = new LabelValue(true),
@@ -147,7 +147,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
                 {
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["HighPrioritySupport"] = new LabelValue(true),
@@ -169,7 +169,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: workerId3, totalCapacity: 100)
                 {
-                    QueueIds = { [queueId] = new RouterQueueAssignment(), },
+                    QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
                         ["HighPrioritySupport"] = new LabelValue(false),

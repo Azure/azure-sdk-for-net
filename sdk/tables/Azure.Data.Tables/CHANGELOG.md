@@ -1,6 +1,24 @@
 # Release History
 
-## 12.8.1 (2023-07-11)
+## 12.9.0-beta.1 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- metjuperry _([GitHub](https://github.com/metjuperry))_
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed an issue where custom models decorated with the `DataMemberAttribute` were not properly considered in query filters (A community contribution, courtesy of _[metjuperry]_ ([#38884](https://github.com/Azure/azure-sdk-for-net/issues/38884))
+
+### Other Changes
+
+## 12.8.1 (2023-08-15)
 
 ### Bugs Fixed
 - Fixed the URL returned by `TableClient.Uri` when connecting to Azurite

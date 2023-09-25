@@ -1,6 +1,24 @@
 # Release History
 
-## 7.16.0-beta.1 (Unreleased)
+## 7.17.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3. This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
+
+## 7.16.1 (2023-08-15)
+
+### Bugs Fixed
+
+- Fixed race condition that could lead to an `ObjectDisposedException` when using the `ServiceBusSessionProcessor`.
+
+## 7.16.0 (2023-08-07)
 
 ### Acknowledgments
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
@@ -9,14 +27,16 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Features Added
 
-- `ProcessMessageEventArgs` provides a `MessageLockCancellationToken` that gets cancelled when the `ServiceBusReceivedMessage.LockUntil` time expired or the processor detected the lock was lost.
-- `ProcessSessionMessageEventArgs` provides a `SessionLockCancellationToken` that gets cancelled when the `ServiceBusSessionProcessor.SessionLockedUntil` time expired or the session processor detected the lock was lost.
-
-### Breaking Changes
+- `ProcessMessageEventArgs` provides a `MessageLockLostAsync` event that can be subscribed to in 
+  order to be notified when the message lock is lost.
+- `ProcessSessionMessageEventArgs` provides a `SessionLockLostAsync` event that can be subscribed to in
+  order to be notified when the session lock is lost.
+- A constructor for `ServiceBusMessage` taking an `AmqpAnnotatedMessage` has been added.
 
 ### Bugs Fixed
 
-### Other Changes
+- The `CancellationTokenSource` used by the `ServiceBusSessionProcessor` in order to renew session 
+  locks is now disposed when the session is no longer being processed, thereby preventing a memory leak.
 
 ## 7.15.0 (2023-06-06)
 

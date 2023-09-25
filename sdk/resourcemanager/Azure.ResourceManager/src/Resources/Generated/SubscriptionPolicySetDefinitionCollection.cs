@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPolicySetDefinitionResource(Client, PolicySetDefinitionData.DeserializePolicySetDefinitionData(e)), _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics, Pipeline, "SubscriptionPolicySetDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,6 +319,80 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SubscriptionPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, policySetDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionPolicySetDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicySetDefinitions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        public virtual NullableResponse<SubscriptionPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, policySetDefinitionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionPolicySetDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

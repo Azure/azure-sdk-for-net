@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownCredential. </summary>
-    internal partial class UnknownCredential : Credential
+    internal partial class UnknownCredential : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of UnknownCredential. </summary>
         /// <param name="credentialType"> Type of credential. </param>

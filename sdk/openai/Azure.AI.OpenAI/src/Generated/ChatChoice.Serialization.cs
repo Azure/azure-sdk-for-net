@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
             }
             Optional<ChatMessage> message = default;
             int index = default;
-            CompletionsFinishReason finishReason = default;
+            CompletionsFinishReason? finishReason = default;
             Optional<ChatMessage> delta = default;
             Optional<ContentFilterResults> contentFilterResults = default;
             foreach (var property in element.EnumerateObject())
@@ -42,6 +42,11 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("finish_reason"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        finishReason = null;
+                        continue;
+                    }
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }

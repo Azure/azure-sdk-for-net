@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of IPv4 and IPv6 route configurations. </summary>
+    /// <summary> List of IPv4 and IPv6 aggregate routes. </summary>
     public partial class AggregateRouteConfiguration
     {
         /// <summary> Initializes a new instance of AggregateRouteConfiguration. </summary>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of AggregateRouteConfiguration. </summary>
         /// <param name="ipv4Routes"> List of IPv4 Route prefixes. </param>
-        /// <param name="ipv6Routes"> List of IPv6 Routes prefixes. </param>
+        /// <param name="ipv6Routes"> List of Ipv6Routes prefixes. </param>
         internal AggregateRouteConfiguration(IList<AggregateRoute> ipv4Routes, IList<AggregateRoute> ipv6Routes)
         {
             IPv4Routes = ipv4Routes;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> List of IPv4 Route prefixes. </summary>
         public IList<AggregateRoute> IPv4Routes { get; }
-        /// <summary> List of IPv6 Routes prefixes. </summary>
+        /// <summary> List of Ipv6Routes prefixes. </summary>
         public IList<AggregateRoute> IPv6Routes { get; }
     }
 }

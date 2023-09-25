@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _farmBeatFarmBeatsModelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), _farmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "FarmBeatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -325,6 +326,80 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 var response = _farmBeatFarmBeatsModelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FarmBeatResource>> GetIfExistsAsync(string farmBeatsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+
+            using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _farmBeatFarmBeatsModelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FarmBeatResource>(response.GetRawResponse());
+                return Response.FromValue(new FarmBeatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="farmBeatsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsResourceName"/> is null. </exception>
+        public virtual NullableResponse<FarmBeatResource> GetIfExists(string farmBeatsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(farmBeatsResourceName, nameof(farmBeatsResourceName));
+
+            using var scope = _farmBeatFarmBeatsModelsClientDiagnostics.CreateScope("FarmBeatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _farmBeatFarmBeatsModelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, farmBeatsResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FarmBeatResource>(response.GetRawResponse());
+                return Response.FromValue(new FarmBeatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

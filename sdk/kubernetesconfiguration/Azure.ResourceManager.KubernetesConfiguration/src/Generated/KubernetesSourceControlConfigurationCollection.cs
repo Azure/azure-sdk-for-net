@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -326,6 +327,80 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 var response = _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, sourceControlConfigurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControlConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlConfigurationName"> Name of the Source Control Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<KubernetesSourceControlConfigurationResource>> GetIfExistsAsync(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+
+            using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, sourceControlConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<KubernetesSourceControlConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new KubernetesSourceControlConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControlConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlConfigurationName"> Name of the Source Control Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlConfigurationName"/> is null. </exception>
+        public virtual NullableResponse<KubernetesSourceControlConfigurationResource> GetIfExists(string sourceControlConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlConfigurationName, nameof(sourceControlConfigurationName));
+
+            using var scope = _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics.CreateScope("KubernetesSourceControlConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, sourceControlConfigurationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<KubernetesSourceControlConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new KubernetesSourceControlConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

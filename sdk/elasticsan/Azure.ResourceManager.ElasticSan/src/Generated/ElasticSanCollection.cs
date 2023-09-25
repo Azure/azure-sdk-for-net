@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = await _elasticSanRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = _elasticSanRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, data, cancellationToken);
-                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), _elasticSanClientDiagnostics, Pipeline, "ElasticSanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 var response = _elasticSanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ElasticSanResource>> GetIfExistsAsync(string elasticSanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+
+            using var scope = _elasticSanClientDiagnostics.CreateScope("ElasticSanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _elasticSanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ElasticSanResource>(response.GetRawResponse());
+                return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/> is null. </exception>
+        public virtual NullableResponse<ElasticSanResource> GetIfExists(string elasticSanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+
+            using var scope = _elasticSanClientDiagnostics.CreateScope("ElasticSanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _elasticSanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ElasticSanResource>(response.GetRawResponse());
+                return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

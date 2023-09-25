@@ -209,10 +209,9 @@ namespace Azure.Identity
             try
             {
                 Exception inner = null;
-
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                if (Record != null)
+                if (Record is not null)
                 {
                     try
                     {
@@ -247,7 +246,6 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
 

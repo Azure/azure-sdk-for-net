@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 var response = _globalRulestackRestClient.Get(globalRulestackName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalRulestack_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GlobalRulestackResource>> GetIfExistsAsync(string globalRulestackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _globalRulestackRestClient.GetAsync(globalRulestackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GlobalRulestackResource>(response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalRulestack_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
+        public virtual NullableResponse<GlobalRulestackResource> GetIfExists(string globalRulestackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _globalRulestackRestClient.Get(globalRulestackName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GlobalRulestackResource>(response.GetRawResponse());
+                return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

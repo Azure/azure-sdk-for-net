@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_GetApprovalRequestsList()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/GetApprovalRequestsList.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetApprovalRequestsList.json
             // this example is just showing the usage of "PrivateStore_GetApprovalRequestsList" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetApprovalRequest()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/GetRequestApproval.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetRequestApproval.json
             // this example is just showing the usage of "PrivateStore_GetRequestApproval" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetApprovalRequest()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/GetRequestApproval.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetRequestApproval.json
             // this example is just showing the usage of "PrivateStore_GetRequestApproval" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,12 +114,53 @@ namespace Azure.ResourceManager.Marketplace.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // GetApprovalRequest
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetApprovalRequest()
+        {
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetRequestApproval.json
+            // this example is just showing the usage of "PrivateStore_GetRequestApproval" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateStoreResource created on azure
+            // for more information of creating PrivateStoreResource, please refer to the document of PrivateStoreResource
+            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
+            ResourceIdentifier privateStoreResourceId = PrivateStoreResource.CreateResourceIdentifier(privateStoreId);
+            PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
+
+            // get the collection of this MarketplaceApprovalRequestResource
+            MarketplaceApprovalRequestCollection collection = privateStore.GetMarketplaceApprovalRequests();
+
+            // invoke the operation
+            string requestApprovalId = "marketplacetestthirdparty.md-test-third-party-2";
+            NullableResponse<MarketplaceApprovalRequestResource> response = await collection.GetIfExistsAsync(requestApprovalId);
+            MarketplaceApprovalRequestResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MarketplaceApprovalRequestData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // CreateApprovalRequest
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateApprovalRequest()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/CreateApprovalRequest.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/CreateApprovalRequest.json
             // this example is just showing the usage of "PrivateStore_CreateApprovalRequest" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

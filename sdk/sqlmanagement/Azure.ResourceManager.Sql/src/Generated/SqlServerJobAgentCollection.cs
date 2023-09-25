@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobAgentJobAgentsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobAgentJobAgentsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobAgentResource(Client, SqlServerJobAgentData.DeserializeSqlServerJobAgentData(e)), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, "SqlServerJobAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobAgentResource(Client, SqlServerJobAgentData.DeserializeSqlServerJobAgentData(e)), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, "SqlServerJobAgentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobAgentJobAgentsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobAgentJobAgentsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobAgentResource(Client, SqlServerJobAgentData.DeserializeSqlServerJobAgentData(e)), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, "SqlServerJobAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobAgentResource(Client, SqlServerJobAgentData.DeserializeSqlServerJobAgentData(e)), _sqlServerJobAgentJobAgentsClientDiagnostics, Pipeline, "SqlServerJobAgentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerJobAgentJobAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobAgents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerJobAgentResource>> GetIfExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+
+            using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerJobAgentJobAgentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobAgentResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobAgentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobAgents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerJobAgentResource> GetIfExists(string jobAgentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+
+            using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerJobAgentJobAgentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobAgentResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

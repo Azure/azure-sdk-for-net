@@ -6,10 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 ``` yaml
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/2f7a3cbda00c6ae4199940d500e5212b6481d9ea/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/preview/2022-11-01-preview/appconfiguration.json
+- https://github.com/Azure/azure-rest-api-specs/blob/dacba58ef1d48851ecd6ca93bc329ac63ba1f662/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/stable/2023-10-01/appconfiguration.json
 namespace: Azure.Data.AppConfiguration
 title: ConfigurationClient
-keep-non-overloadable-protocol-signature: true
 ```
 
 ### Change Endpoint type to Uri

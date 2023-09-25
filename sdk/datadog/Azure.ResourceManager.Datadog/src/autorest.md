@@ -11,6 +11,9 @@ namespace: Azure.ResourceManager.Datadog
 require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b6700c67693eef5f79ea9/specification/datadog/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -22,7 +25,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -44,5 +47,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  DatadogAgreementResource: DatadogAgreementResourceProperties
+  MonitoredResource: MonitoredResourceContent
 
 ```

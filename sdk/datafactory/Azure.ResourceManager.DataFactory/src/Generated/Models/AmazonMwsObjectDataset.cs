@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Amazon Marketplace Web Service dataset. </summary>
-    public partial class AmazonMwsObjectDataset : DataFactoryDatasetDefinition
+    public partial class AmazonMwsObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AmazonMwsObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

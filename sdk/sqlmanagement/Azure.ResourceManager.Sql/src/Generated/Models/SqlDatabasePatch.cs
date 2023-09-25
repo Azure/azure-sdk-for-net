@@ -127,6 +127,16 @@ namespace Azure.ResourceManager.Sql.Models
         public string EncryptionProtector { get; set; }
         /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
+        /// <summary> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </summary>
+        public bool? UseFreeLimit { get; set; }
+        /// <summary>
+        /// Specifies the behavior when monthly free limits are exhausted for the free database.
+        ///
+        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
+        ///
+        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
+        /// </summary>
+        public FreeLimitExhaustionBehavior? FreeLimitExhaustionBehavior { get; set; }
         /// <summary>
         /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
         ///
@@ -147,5 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
         /// </summary>
         public bool? PerformCutover { get; set; }
+        /// <summary> The flag to enable or disable auto rotation of database encryption protector AKV key. </summary>
+        public bool? EncryptionProtectorAutoRotation { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<ArtifactSourceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactSourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<ArtifactSourceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactSourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ArtifactSourceResource(Client, ArtifactSourceData.DeserializeArtifactSourceData(e)), _artifactSourceClientDiagnostics, Pipeline, "ArtifactSourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.DeploymentManager
             {
                 var response = _artifactSourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, artifactSourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/artifactSources/{artifactSourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactSources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ArtifactSourceResource>> GetIfExistsAsync(string artifactSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+
+            using var scope = _artifactSourceClientDiagnostics.CreateScope("ArtifactSourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _artifactSourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, artifactSourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ArtifactSourceResource>(response.GetRawResponse());
+                return Response.FromValue(new ArtifactSourceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/artifactSources/{artifactSourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactSources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactSourceName"> The name of the artifact source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactSourceName"/> is null. </exception>
+        public virtual NullableResponse<ArtifactSourceResource> GetIfExists(string artifactSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactSourceName, nameof(artifactSourceName));
+
+            using var scope = _artifactSourceClientDiagnostics.CreateScope("ArtifactSourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _artifactSourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, artifactSourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ArtifactSourceResource>(response.GetRawResponse());
+                return Response.FromValue(new ArtifactSourceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

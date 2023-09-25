@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The custom dataset. </summary>
-    public partial class CustomDataset : DataFactoryDatasetDefinition
+    public partial class CustomDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of CustomDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

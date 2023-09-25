@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedServerDnsAliasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedServerDnsAliases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsAliasName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedServerDnsAliasResource>> GetIfExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
+
+            using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedServerDnsAliasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServerDnsAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServerDnsAliasResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedServerDnsAliases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsAliasName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        public virtual NullableResponse<ManagedServerDnsAliasResource> GetIfExists(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
+
+            using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedServerDnsAliasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServerDnsAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServerDnsAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -24,8 +24,9 @@ namespace Azure.Storage
         /// <summary>
         /// Gets the default service version to use when building shared access
         /// signatures.
+        /// TODO https://github.com/Azure/azure-sdk-for-net/issues/38841.
         /// </summary>
-        public const string DefaultSasVersion = "2023-01-03";
+        public const string DefaultSasVersion = "2023-08-03";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -653,6 +654,9 @@ namespace Azure.Storage
 
         internal static class ClientSideEncryption
         {
+            public const string HttpMessagePropertyKeyV1 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V1";
+            public const string HttpMessagePropertyKeyV2 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V2";
+
             public const string AgentMetadataKey = "EncryptionLibrary";
 
             public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlRecommendationActionResource(Client, MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e)), _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlRecommendationActionResource(Client, MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e)), _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlRecommendationActionResource(Client, MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e)), _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlRecommendationActionResource(Client, MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(e)), _mySqlRecommendationActionRecommendedActionsClientDiagnostics, Pipeline, "MySqlRecommendationActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,6 +235,80 @@ namespace Azure.ResourceManager.MySql
             {
                 var response = _mySqlRecommendationActionRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendedActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recommendedActionName"> The recommended action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MySqlRecommendationActionResource>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+
+            using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mySqlRecommendationActionRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlRecommendationActionResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlRecommendationActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecommendedActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recommendedActionName"> The recommended action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        public virtual NullableResponse<MySqlRecommendationActionResource> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+
+            using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mySqlRecommendationActionRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlRecommendationActionResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlRecommendationActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

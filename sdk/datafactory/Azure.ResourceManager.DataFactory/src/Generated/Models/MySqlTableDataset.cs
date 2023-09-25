@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The MySQL table dataset. </summary>
-    public partial class MySqlTableDataset : DataFactoryDatasetDefinition
+    public partial class MySqlTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of MySqlTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

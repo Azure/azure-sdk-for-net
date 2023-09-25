@@ -14,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static string? s_prefix;
         internal static string? s_sdkVersion = GetSdkVersion();
+        internal static bool s_isDistro = false;
 
         internal static string? SdkVersionPrefix
         {
@@ -25,19 +26,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
+        internal static bool IsDistro
+        {
+            get => s_isDistro;
+            set
+            {
+                s_isDistro = value;
+                s_sdkVersion = GetSdkVersion();
+            }
+        }
+
         internal static string? GetVersion(Type type)
         {
             try
             {
                 string versionString = type
-                .Assembly
-                .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
-                .First()
-                .InformationalVersion;
+                    .Assembly
+                    .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
+                    .First()
+                    .InformationalVersion;
 
-                // Informational version will be something like 1.1.0-beta2+a25741030f05c60c85be102ce7c33f3899290d49.
-                // Ignoring part after '+' if it is present.
-                string? shortVersion = versionString?.Split('+')[0];
+                // Informational version may contain extra information.
+                // 1) "1.1.0-beta2+a25741030f05c60c85be102ce7c33f3899290d49". Ignoring part after '+' if it is present.
+                // 2) "4.6.30411.01 @BuiltBy: XXXXXX @Branch: XXXXXX @srccode: XXXXXX XXXXXX" Ignoring part after '@' if it is present.
+                string shortVersion = versionString.Split('+', '@', ' ')[0];
+
+                if (shortVersion.Length > 20)
+                {
+                    AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
+                    return shortVersion.Substring(0, 20);
+                }
 
                 return shortVersion;
             }
@@ -56,6 +74,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? dotnetSdkVersion = GetVersion(typeof(object));
                 string? otelSdkVersion = GetVersion(typeof(Sdk));
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
+
+                if (IsDistro)
+                {
+                    extensionVersion += "-d";
+                }
 
                 return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:ext{extensionVersion}");
             }

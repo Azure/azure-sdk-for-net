@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The reseller properties.
-    /// Serialized Name: Reseller
-    /// </summary>
+    /// <summary> The reseller properties. </summary>
     public partial class ConsumptionReseller
     {
         /// <summary> Initializes a new instance of ConsumptionReseller. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionReseller. </summary>
-        /// <param name="resellerId">
-        /// The reseller property ID.
-        /// Serialized Name: Reseller.resellerId
-        /// </param>
-        /// <param name="resellerDescription">
-        /// The reseller property description.
-        /// Serialized Name: Reseller.resellerDescription
-        /// </param>
+        /// <param name="resellerId"> The reseller property ID. </param>
+        /// <param name="resellerDescription"> The reseller property description. </param>
         internal ConsumptionReseller(ResourceIdentifier resellerId, string resellerDescription)
         {
             ResellerId = resellerId;
             ResellerDescription = resellerDescription;
         }
 
-        /// <summary>
-        /// The reseller property ID.
-        /// Serialized Name: Reseller.resellerId
-        /// </summary>
+        /// <summary> The reseller property ID. </summary>
         public ResourceIdentifier ResellerId { get; }
-        /// <summary>
-        /// The reseller property description.
-        /// Serialized Name: Reseller.resellerDescription
-        /// </summary>
+        /// <summary> The reseller property description. </summary>
         public string ResellerDescription { get; }
     }
 }

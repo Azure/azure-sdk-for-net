@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListEnvironmentsStoragesBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ConnectedEnvironmentsStorages_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ConnectedEnvironmentsStorages_List.json
             // this example is just showing the usage of "ConnectedEnvironmentsStorages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAEnvironmentsStoragePropertiesBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ConnectedEnvironmentsStorages_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ConnectedEnvironmentsStorages_Get.json
             // this example is just showing the usage of "ConnectedEnvironmentsStorages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAEnvironmentsStoragePropertiesBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ConnectedEnvironmentsStorages_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ConnectedEnvironmentsStorages_Get.json
             // this example is just showing the usage of "ConnectedEnvironmentsStorages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,12 +121,55 @@ namespace Azure.ResourceManager.AppContainers.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // get a environments storage properties by subscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAEnvironmentsStoragePropertiesBySubscription()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ConnectedEnvironmentsStorages_Get.json
+            // this example is just showing the usage of "ConnectedEnvironmentsStorages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerAppConnectedEnvironmentResource created on azure
+            // for more information of creating ContainerAppConnectedEnvironmentResource, please refer to the document of ContainerAppConnectedEnvironmentResource
+            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string resourceGroupName = "examplerg";
+            string connectedEnvironmentName = "env";
+            ResourceIdentifier containerAppConnectedEnvironmentResourceId = ContainerAppConnectedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, connectedEnvironmentName);
+            ContainerAppConnectedEnvironmentResource containerAppConnectedEnvironment = client.GetContainerAppConnectedEnvironmentResource(containerAppConnectedEnvironmentResourceId);
+
+            // get the collection of this ContainerAppConnectedEnvironmentStorageResource
+            ContainerAppConnectedEnvironmentStorageCollection collection = containerAppConnectedEnvironment.GetContainerAppConnectedEnvironmentStorages();
+
+            // invoke the operation
+            string storageName = "jlaw-demo1";
+            NullableResponse<ContainerAppConnectedEnvironmentStorageResource> response = await collection.GetIfExistsAsync(storageName);
+            ContainerAppConnectedEnvironmentStorageResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ContainerAppConnectedEnvironmentStorageData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Create or update environments storage
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateEnvironmentsStorage()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ConnectedEnvironmentsStorages_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ConnectedEnvironmentsStorages_CreateOrUpdate.json
             // this example is just showing the usage of "ConnectedEnvironmentsStorages_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

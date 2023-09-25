@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<long> totalIops = default;
             Optional<long> totalMbps = default;
             Optional<long> totalSizeTiB = default;
+            Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -212,11 +213,25 @@ namespace Azure.ResourceManager.ElasticSan
                             totalSizeTiB = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ElasticSanPrivateEndpointConnectionData> array = new List<ElasticSanPrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB));
+            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), Optional.ToList(privateEndpointConnections));
         }
     }
 }

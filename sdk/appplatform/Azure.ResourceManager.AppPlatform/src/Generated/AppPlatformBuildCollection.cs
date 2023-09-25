@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildBuildServiceRestClient.CreateListBuildsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildResource(Client, AppPlatformBuildData.DeserializeAppPlatformBuildData(e)), _appPlatformBuildBuildServiceClientDiagnostics, Pipeline, "AppPlatformBuildCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 var response = _appPlatformBuildBuildServiceRestClient.GetBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildName"> The name of the build resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformBuildResource>> GetIfExistsAsync(string buildName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
+
+            using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformBuildBuildServiceRestClient.GetBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildName"> The name of the build resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformBuildResource> GetIfExists(string buildName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
+
+            using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformBuildBuildServiceRestClient.GetBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformBuildResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
