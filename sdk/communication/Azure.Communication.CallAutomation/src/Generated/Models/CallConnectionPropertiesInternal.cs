@@ -27,6 +27,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
+        /// <param name="dataSubscriptionId"> SubscriptionId for transcription. </param>
         /// <param name="sourceCallerIdNumber">
         /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
@@ -35,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceIdentity"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
         /// <param name="answeredByIdentifier"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel sourceIdentity, string correlationId, CommunicationUserIdentifierModel answeredByIdentifier)
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel sourceIdentity, string correlationId, CommunicationUserIdentifierModel answeredByIdentifier)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -43,6 +44,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionState = callConnectionState;
             CallbackUri = callbackUri;
             MediaSubscriptionId = mediaSubscriptionId;
+            DataSubscriptionId = dataSubscriptionId;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
             SourceIdentity = sourceIdentity;
@@ -62,6 +64,8 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> SubscriptionId for media streaming. </summary>
         public string MediaSubscriptionId { get; }
+        /// <summary> SubscriptionId for transcription. </summary>
+        public string DataSubscriptionId { get; }
         /// <summary>
         /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
