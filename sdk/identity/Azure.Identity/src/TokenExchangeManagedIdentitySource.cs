@@ -135,7 +135,7 @@ namespace Azure.Identity
             }
         }
 
-        // If we use the path-taking constructors we will not have FileOptions.Asynchronous set and
+        // If we use the path-taking constructors, we won't have FileOptions.Asynchronous set and
         // we will have asynchronous file access faked by the thread pool. We want the real thing.
         private static StreamReader AsyncStreamReader(string path, Encoding encoding)
             => new StreamReader(
