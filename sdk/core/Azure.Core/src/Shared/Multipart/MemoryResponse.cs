@@ -36,16 +36,12 @@ namespace Azure.Core
         private readonly IDictionary<string, List<string>> _headers =
             new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        /// <inheritdoc />
         public override int Status => _status;
 
-        /// <inheritdoc />
         public override string ReasonPhrase => _reasonPhrase;
 
-        /// <inheritdoc />
         public override Stream ContentStream { get; set; }
 
-        /// <inheritdoc />
         public override string ClientRequestId
         {
             get => TryGetHeader(XmsClientRequestIdName, out string id) ? id : null;
@@ -113,21 +109,18 @@ namespace Azure.Core
             values.Add(value);
         }
 
-        /// <inheritdoc />
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
         protected override bool ContainsHeader(string name) =>
             _headers.ContainsKey(name);
 
-        /// <inheritdoc />
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
         protected override IEnumerable<HttpHeader> EnumerateHeaders() =>
             _headers.Select(header => new HttpHeader(header.Key, JoinHeaderValues(header.Value)));
 
-        /// <inheritdoc />
         protected internal override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out List<string> headers))
@@ -139,7 +132,6 @@ namespace Azure.Core
             return false;
         }
 
-        /// <inheritdoc />
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
