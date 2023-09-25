@@ -1054,6 +1054,14 @@ namespace Azure.Core.Pipeline
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
         public static void SetAllowAutoRedirect(Azure.Core.HttpMessage message, bool allowAutoRedirect) { }
     }
+    public sealed partial class RequestBodyContent : Azure.Core.RequestContent
+    {
+        public RequestBodyContent(System.ServiceModel.Rest.Core.RequestBody body) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
+    }
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }

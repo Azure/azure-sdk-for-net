@@ -24,30 +24,25 @@ namespace Azure.Core
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
-        public HttpMessage(Request request, ResponseClassifier responseClassifier)
+        public HttpMessage(Request request, ResponseClassifier responseClassifier) : base(request, responseClassifier)
         {
             Argument.AssertNotNull(request, nameof(Request));
+
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <exception cref="ArgumentException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpMessage(PipelineMessage message)
+        internal HttpMessage(PipelineMessage message, ResponseErrorClassifier classifier) : base(message.PipelineRequest, message.ResponseErrorClassifier)
         {
             if (message is not HttpMessage httpMessage)
             {
                 throw new ArgumentException("Unsupported type.");
             }
 
-            Request = httpMessage.Request;
-            ResponseClassifier = httpMessage.ResponseClassifier;
+            Request = (Request)message.PipelineRequest;
+            ResponseClassifier = (ResponseClassifier)classifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -55,7 +50,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        public Request Request { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
@@ -93,6 +88,7 @@ namespace Azure.Core
         public override PipelineRequest PipelineRequest
         {
             get => Request;
+            set => Request = (Request)value;
         }
 
         /// <summary>
@@ -106,6 +102,16 @@ namespace Azure.Core
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
         public ResponseClassifier ResponseClassifier { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResponseErrorClassifier ResponseErrorClassifier
+        {
+            get => ResponseClassifier;
+            set => ResponseClassifier = (ResponseClassifier)value;
+        }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.

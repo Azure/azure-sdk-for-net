@@ -726,7 +726,7 @@ namespace Azure.Core.Pipeline
             // Set ClientCertificates
             foreach (var cert in options.ClientCertificates)
             {
-               httpHandler.ClientCertificates.Add(cert);
+                httpHandler.ClientCertificates.Add(cert);
             }
             return httpHandler;
         }

@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Experimental.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -34,14 +36,56 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="uri"></param>
+        public override void SetUri(RequestUri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            _uri = new RequestUriBuilderAdapter(uri);
+        }
+
+        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
         public virtual RequestMethod Method { get; set; }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="method"></param>
+        public override void SetMethod(string method)
+        {
+            Method = VerbToMethod(method);
+        }
+
+        private static RequestMethod VerbToMethod(string verb)
+        {
+            return verb switch
+            {
+                "GET" => RequestMethod.Get,
+                "POST" => RequestMethod.Post,
+                "PUT" => RequestMethod.Put,
+                "HEAD" => RequestMethod.Head,
+                "DELETE" => RequestMethod.Delete,
+                "PATCH" => RequestMethod.Patch,
+                _ => throw new ArgumentOutOfRangeException(nameof(verb)),
+            };
+        }
+
+        /// <summary>
         /// Gets or sets the request content.
         /// </summary>
         public virtual RequestContent? Content { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="content"></param>
+        public override void SetContent(RequestBody content)
+        {
+            Content = new RequestBodyContent(content);
+        }
 
         /// <summary>
         /// Adds a header value to the header collection.
@@ -83,6 +127,14 @@ namespace Azure.Core
             RemoveHeader(name);
             AddHeader(name, value);
         }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public override void SetHeaderValue(string name, string value)
+            => SetHeader(name, value);
 
         /// <summary>
         /// Removes the header from the collection.
