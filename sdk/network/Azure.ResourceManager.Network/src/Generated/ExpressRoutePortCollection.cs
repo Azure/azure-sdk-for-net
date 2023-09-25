@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePorts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExpressRoutePortResource>> GetIfExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+
+            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _expressRoutePortRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRoutePortResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRoutePorts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
+        public virtual NullableResponse<ExpressRoutePortResource> GetIfExists(string expressRoutePortName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+
+            using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _expressRoutePortRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, expressRoutePortName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRoutePortResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRoutePortResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ExpressRoutePortResource> IEnumerable<ExpressRoutePortResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

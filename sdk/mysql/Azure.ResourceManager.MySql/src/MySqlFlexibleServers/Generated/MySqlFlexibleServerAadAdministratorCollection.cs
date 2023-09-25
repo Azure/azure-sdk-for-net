@@ -304,6 +304,72 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="administratorName"> The name of the Azure AD Administrator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<MySqlFlexibleServerAadAdministratorResource>> GetIfExistsAsync(MySqlFlexibleServerAdministratorName administratorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlFlexibleServerAadAdministratorResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerAadAdministratorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="administratorName"> The name of the Azure AD Administrator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<MySqlFlexibleServerAadAdministratorResource> GetIfExists(MySqlFlexibleServerAdministratorName administratorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlFlexibleServerAadAdministratorResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerAadAdministratorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MySqlFlexibleServerAadAdministratorResource> IEnumerable<MySqlFlexibleServerAadAdministratorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

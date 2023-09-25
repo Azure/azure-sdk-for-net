@@ -141,12 +141,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
         /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
+        /// <param name="appliedRules"> Gets list of collection rules. </param>
         /// <returns> A new <see cref="Marketplace.PrivateStoreCollectionInfoData"/> instance for mocking. </returns>
-        public static PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? collectionId = null, string collectionName = null, string claim = null, bool? areAllSubscriptionsSelected = null, bool? areAllItemsApproved = null, DateTimeOffset? approveAllItemsModifiedOn = null, IEnumerable<string> subscriptionsList = null, bool? isEnabled = null, long? numberOfOffers = null)
+        public static PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? collectionId = null, string collectionName = null, string claim = null, bool? areAllSubscriptionsSelected = null, bool? areAllItemsApproved = null, DateTimeOffset? approveAllItemsModifiedOn = null, IEnumerable<string> subscriptionsList = null, bool? isEnabled = null, long? numberOfOffers = null, IEnumerable<MarketplaceRule> appliedRules = null)
         {
             subscriptionsList ??= new List<string>();
+            appliedRules ??= new List<MarketplaceRule>();
 
-            return new PrivateStoreCollectionInfoData(id, name, resourceType, systemData, collectionId, collectionName, claim, areAllSubscriptionsSelected, areAllItemsApproved, approveAllItemsModifiedOn, subscriptionsList?.ToList(), isEnabled, numberOfOffers);
+            return new PrivateStoreCollectionInfoData(id, name, resourceType, systemData, collectionId, collectionName, claim, areAllSubscriptionsSelected, areAllItemsApproved, approveAllItemsModifiedOn, subscriptionsList?.ToList(), isEnabled, numberOfOffers, appliedRules?.ToList());
         }
 
         /// <summary> Initializes a new instance of TransferOffersResult. </summary>
@@ -228,6 +230,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             plans ??= new List<PrivateStorePlan>();
 
             return new PrivateStoreOfferData(id, name, resourceType, systemData, uniqueOfferId, offerDisplayName, publisherDisplayName, eTag, privateStoreId, createdOn, modifiedOn, specificPlanIdsLimitation?.ToList(), isUpdateSuppressedDueToIdempotence, iconFileUris, plans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of CollectionOffersByContext. </summary>
+        /// <param name="context"> Offer's context, e.g. subscription ID, tenant ID. </param>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.CollectionOffersByContext"/> instance for mocking. </returns>
+        public static CollectionOffersByContext CollectionOffersByContext(string context = null, IEnumerable<PrivateStoreOfferResult> value = null)
+        {
+            value ??= new List<PrivateStoreOfferResult>();
+
+            return new CollectionOffersByContext(context, value?.ToList());
         }
 
         /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>

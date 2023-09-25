@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("userToken"u8);
-            JsonSerializer.Serialize(writer, UserToken); if (Optional.IsDefined(EncryptedCredential))
+            JsonSerializer.Serialize(writer, UserToken);
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="password"> The password of the cluster role. </param>
         /// <param name="provisioningState"> Provisioning state of the role. </param>
-        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, CosmosDBForPostgreSqlProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Password = password;
             ProvisioningState = provisioningState;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The password of the cluster role. </summary>
         public string Password { get; set; }
         /// <summary> Provisioning state of the role. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
     }
 }

@@ -26,6 +26,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot AzureCliCredential authentication issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential authentication issues](#troubleshoot-azurepowershellcredential-authentication-issues)
 - [Troubleshoot multi-tenant authentication issues](#troubleshoot-multi-tenant-authentication-issues)
+- [Troubleshoot WAM with MSA login issues](#troubleshoot-wam-with-msa-login-issues)
 - [Get additional help](#get-additional-help)
 
 ## Handle Azure Identity exceptions
@@ -338,6 +339,24 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 | Error Message |Description| Mitigation |
 |---|---|---|
 |The current credential is not configured to acquire tokens for tenant <tenant ID>|<p>The application must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in your app:<ul><li>Add the requested tenant ID to `AdditionallyAllowedTenants` on the credential options.</li><li>Add `*` to `AdditionallyAllowedTenants` to allow token acquisition for any tenant.</li></ul></p><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
+
+## Troubleshoot WAM with MSA login issues
+
+When using `InteractiveBrowserCredential`, by default, only the Azure AD account is listed:
+
+![MSA Azure AD only](./images/MSA1.png)
+
+If you choose "Use another account" and type in an MSA outlook.com account, it fails:
+
+![Fail on use another account](./images/MSA2.png)
+
+Since version `1.0.0-beta.4` of [Azure.Identity.BrokeredAuthentication](https://www.nuget.org/packages/Azure.Identity.BrokeredAuthentication), you can set the `IsMsaPassthroughEnabled` property on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `true`. MSA outlook.com accounts that are logged in to Windows are automatically listed:
+
+![Enable MSA](./images/MSA3.png)
+
+You may also log in another MSA account by selecting "Microsoft account":
+
+![Microsoft account](./images/MSA4.png)
 
 ## Get additional help
 

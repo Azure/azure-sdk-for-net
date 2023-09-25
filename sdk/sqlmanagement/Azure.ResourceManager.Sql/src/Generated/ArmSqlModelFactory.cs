@@ -1571,12 +1571,28 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
+        /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <returns> A new <see cref="Sql.SqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, SqlPrivateLinkServiceConnectionStateProperty connectionState = null, SqlPrivateEndpointProvisioningState? provisioningState = null)
+        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, SqlPrivateLinkServiceConnectionStateProperty connectionState = null, SqlPrivateEndpointProvisioningState? provisioningState = null)
         {
-            return new SqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
+            groupIds ??= new List<string>();
+
+            return new SqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
+        /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
+        /// <param name="groupIds"> Group IDs. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="provisioningState"> State of the private endpoint connection. </param>
+        /// <returns> A new <see cref="Models.ServerPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static ServerPrivateEndpointConnectionProperties ServerPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, SqlPrivateLinkServiceConnectionStateProperty connectionState = null, SqlPrivateEndpointProvisioningState? provisioningState = null)
+        {
+            groupIds ??= new List<string>();
+
+            return new ServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of SqlPrivateLinkServiceConnectionStateProperty. </summary>
@@ -3174,6 +3190,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <param name="encryptionProtector"> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the database i.e. Default or VBS enclaves. </param>
+        /// <param name="useFreeLimit"> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </param>
+        /// <param name="freeLimitExhaustionBehavior">
+        /// Specifies the behavior when monthly free limits are exhausted for the free database.
+        ///
+        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
+        ///
+        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
+        /// </param>
         /// <param name="sourceResourceId">
         /// The resource identifier of the source associated with the create operation of this database.
         ///
@@ -3208,13 +3232,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
         /// </param>
         /// <param name="availabilityZone"> Specifies the availability zone the database is pinned to. </param>
+        /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseData"/> instance for mocking. </returns>
-        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, string managedBy = null, DatabaseIdentity identity = null, SqlDatabaseCreateMode? createMode = null, string collation = null, long? maxSizeBytes = null, SampleSchemaName? sampleName = null, ResourceIdentifier elasticPoolId = null, ResourceIdentifier sourceDatabaseId = null, SqlDatabaseStatus? status = null, Guid? databaseId = null, DateTimeOffset? createdOn = null, string currentServiceObjectiveName = null, string requestedServiceObjectiveName = null, AzureLocation? defaultSecondaryLocation = null, ResourceIdentifier failoverGroupId = null, DateTimeOffset? restorePointInTime = null, DateTimeOffset? sourceDatabaseDeletedOn = null, ResourceIdentifier recoveryServicesRecoveryPointId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, CatalogCollationType? catalogCollation = null, bool? isZoneRedundant = null, DatabaseLicenseType? licenseType = null, long? maxLogSizeBytes = null, DateTimeOffset? earliestRestoreOn = null, DatabaseReadScale? readScale = null, int? highAvailabilityReplicaCount = null, SecondaryType? secondaryType = null, SqlSku currentSku = null, int? autoPauseDelay = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, double? minCapacity = null, DateTimeOffset? pausedOn = null, DateTimeOffset? resumedOn = null, ResourceIdentifier maintenanceConfigurationId = null, bool? isLedgerOn = null, bool? isInfraEncryptionEnabled = null, Guid? federatedClientId = null, IDictionary<string, SqlDatabaseKey> keys = null, string encryptionProtector = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, ResourceIdentifier sourceResourceId = null, bool? manualCutover = null, bool? performCutover = null, SqlAvailabilityZoneType? availabilityZone = null)
+        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, string kind = null, string managedBy = null, DatabaseIdentity identity = null, SqlDatabaseCreateMode? createMode = null, string collation = null, long? maxSizeBytes = null, SampleSchemaName? sampleName = null, ResourceIdentifier elasticPoolId = null, ResourceIdentifier sourceDatabaseId = null, SqlDatabaseStatus? status = null, Guid? databaseId = null, DateTimeOffset? createdOn = null, string currentServiceObjectiveName = null, string requestedServiceObjectiveName = null, AzureLocation? defaultSecondaryLocation = null, ResourceIdentifier failoverGroupId = null, DateTimeOffset? restorePointInTime = null, DateTimeOffset? sourceDatabaseDeletedOn = null, ResourceIdentifier recoveryServicesRecoveryPointId = null, ResourceIdentifier longTermRetentionBackupResourceId = null, ResourceIdentifier recoverableDatabaseId = null, ResourceIdentifier restorableDroppedDatabaseId = null, CatalogCollationType? catalogCollation = null, bool? isZoneRedundant = null, DatabaseLicenseType? licenseType = null, long? maxLogSizeBytes = null, DateTimeOffset? earliestRestoreOn = null, DatabaseReadScale? readScale = null, int? highAvailabilityReplicaCount = null, SecondaryType? secondaryType = null, SqlSku currentSku = null, int? autoPauseDelay = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, double? minCapacity = null, DateTimeOffset? pausedOn = null, DateTimeOffset? resumedOn = null, ResourceIdentifier maintenanceConfigurationId = null, bool? isLedgerOn = null, bool? isInfraEncryptionEnabled = null, Guid? federatedClientId = null, IDictionary<string, SqlDatabaseKey> keys = null, string encryptionProtector = null, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = null, bool? useFreeLimit = null, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = null, ResourceIdentifier sourceResourceId = null, bool? manualCutover = null, bool? performCutover = null, SqlAvailabilityZoneType? availabilityZone = null, bool? encryptionProtectorAutoRotation = null)
         {
             tags ??= new Dictionary<string, string>();
             keys ??= new Dictionary<string, SqlDatabaseKey>();
 
-            return new SqlDatabaseData(id, name, resourceType, systemData, tags, location, sku, kind, managedBy, identity, createMode, collation, maxSizeBytes, sampleName, elasticPoolId, sourceDatabaseId, status, databaseId, createdOn, currentServiceObjectiveName, requestedServiceObjectiveName, defaultSecondaryLocation, failoverGroupId, restorePointInTime, sourceDatabaseDeletedOn, recoveryServicesRecoveryPointId, longTermRetentionBackupResourceId, recoverableDatabaseId, restorableDroppedDatabaseId, catalogCollation, isZoneRedundant, licenseType, maxLogSizeBytes, earliestRestoreOn, readScale, highAvailabilityReplicaCount, secondaryType, currentSku, autoPauseDelay, currentBackupStorageRedundancy, requestedBackupStorageRedundancy, minCapacity, pausedOn, resumedOn, maintenanceConfigurationId, isLedgerOn, isInfraEncryptionEnabled, federatedClientId, keys, encryptionProtector, preferredEnclaveType, sourceResourceId, manualCutover, performCutover, availabilityZone);
+            return new SqlDatabaseData(id, name, resourceType, systemData, tags, location, sku, kind, managedBy, identity, createMode, collation, maxSizeBytes, sampleName, elasticPoolId, sourceDatabaseId, status, databaseId, createdOn, currentServiceObjectiveName, requestedServiceObjectiveName, defaultSecondaryLocation, failoverGroupId, restorePointInTime, sourceDatabaseDeletedOn, recoveryServicesRecoveryPointId, longTermRetentionBackupResourceId, recoverableDatabaseId, restorableDroppedDatabaseId, catalogCollation, isZoneRedundant, licenseType, maxLogSizeBytes, earliestRestoreOn, readScale, highAvailabilityReplicaCount, secondaryType, currentSku, autoPauseDelay, currentBackupStorageRedundancy, requestedBackupStorageRedundancy, minCapacity, pausedOn, resumedOn, maintenanceConfigurationId, isLedgerOn, isInfraEncryptionEnabled, federatedClientId, keys, encryptionProtector, preferredEnclaveType, useFreeLimit, freeLimitExhaustionBehavior, sourceResourceId, manualCutover, performCutover, availabilityZone, encryptionProtectorAutoRotation);
         }
 
         /// <summary> Initializes a new instance of DatabaseIdentity. </summary>
@@ -3541,89 +3566,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceServerConfigurationOptionData(id, name, resourceType, systemData, serverConfigurationOptionValue, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SqlNameAvailabilityResponse. </summary>
-        /// <param name="name"> The name whose availability was checked. </param>
-        /// <param name="isAvailable"> True if the name is available, otherwise false. </param>
-        /// <param name="reason"> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </param>
-        /// <param name="message"> A message explaining why the name is unavailable. Will be undefined if the name is available. </param>
-        /// <returns> A new <see cref="Models.SqlNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static SqlNameAvailabilityResponse SqlNameAvailabilityResponse(string name = null, bool? isAvailable = null, SqlNameUnavailableReason? reason = null, string message = null)
-        {
-            return new SqlNameAvailabilityResponse(name, isAvailable, reason, message);
-        }
-
-        /// <summary> Initializes a new instance of SqlServerData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The Azure Active Directory identity of the server. </param>
-        /// <param name="kind"> Kind of sql server. This is metadata used for the Azure portal experience. </param>
-        /// <param name="administratorLogin"> Administrator username for the server. Once created it cannot be changed. </param>
-        /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
-        /// <param name="version"> The version of the server. </param>
-        /// <param name="state"> The state of the server. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
-        /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
-        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
-        /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
-        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
-        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, string minimalTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
-
-            return new SqlServerData(id, name, resourceType, systemData, tags, location, identity, kind, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minimalTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, externalGovernanceStatus);
-        }
-
-        /// <summary> Initializes a new instance of SqlServerPrivateEndpointConnection. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="properties"> Private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Models.SqlServerPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static SqlServerPrivateEndpointConnection SqlServerPrivateEndpointConnection(ResourceIdentifier id = null, ServerPrivateEndpointConnectionProperties properties = null)
-        {
-            return new SqlServerPrivateEndpointConnection(id, properties);
-        }
-
-        /// <summary> Initializes a new instance of ServerPrivateEndpointConnectionProperties. </summary>
-        /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
-        /// <param name="groupIds"> Group IDs. </param>
-        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
-        /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.ServerPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static ServerPrivateEndpointConnectionProperties ServerPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, SqlPrivateLinkServiceConnectionStateProperty connectionState = null, SqlPrivateEndpointProvisioningState? provisioningState = null)
-        {
-            groupIds ??= new List<string>();
-
-            return new ServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="requestId"> Request Id. </param>
-        /// <param name="requestType"> Request type. </param>
-        /// <param name="queuedTime"> Queued time. </param>
-        /// <param name="serverName"> Server name. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="errorMessage"> Error message. </param>
-        /// <returns> A new <see cref="Models.RefreshExternalGovernanceStatusOperationResult"/> instance for mocking. </returns>
-        public static RefreshExternalGovernanceStatusOperationResult RefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string serverName = null, string status = null, string errorMessage = null)
-        {
-            return new RefreshExternalGovernanceStatusOperationResult(id, name, resourceType, systemData, requestId, requestType, queuedTime, serverName, status, errorMessage);
-        }
-
         /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3652,39 +3594,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static LogicalDatabaseTransparentDataEncryptionData LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TransparentDataEncryptionState? state = null)
         {
             return new LogicalDatabaseTransparentDataEncryptionData(id, name, resourceType, systemData, state);
-        }
-
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
-        /// <param name="readOnlyEndpointFailoverPolicy"> Read-only endpoint of the failover group instance. </param>
-        /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
-        /// <param name="replicationState"> Replication state of the failover group instance. </param>
-        /// <param name="partnerServers"> List of partner server information for the failover group. </param>
-        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
-        /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
-        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            partnerServers ??= new List<PartnerServerInfo>();
-            failoverDatabases ??= new List<ResourceIdentifier>();
-
-            return new FailoverGroupData(id, name, resourceType, systemData, location, tags, readWriteEndpoint, readOnlyEndpointFailoverPolicy != null ? new FailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy) : null, replicationRole, replicationState, partnerServers?.ToList(), failoverDatabases?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of PartnerServerInfo. </summary>
-        /// <param name="id"> Resource identifier of the partner server. </param>
-        /// <param name="location"> Geo location of the partner server. </param>
-        /// <param name="replicationRole"> Replication role of the partner server. </param>
-        /// <returns> A new <see cref="Models.PartnerServerInfo"/> instance for mocking. </returns>
-        public static PartnerServerInfo PartnerServerInfo(ResourceIdentifier id = null, AzureLocation? location = null, FailoverGroupReplicationRole? replicationRole = null)
-        {
-            return new PartnerServerInfo(id, location, replicationRole);
         }
 
         /// <summary> Initializes a new instance of IPv6FirewallRuleData. </summary>
@@ -3905,6 +3814,110 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlVulnerabilityAssessmentData SqlVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlVulnerabilityAssessmentState? state = null)
         {
             return new SqlVulnerabilityAssessmentData(id, name, resourceType, systemData, state);
+        }
+
+        /// <summary> Initializes a new instance of SqlNameAvailabilityResponse. </summary>
+        /// <param name="name"> The name whose availability was checked. </param>
+        /// <param name="isAvailable"> True if the name is available, otherwise false. </param>
+        /// <param name="reason"> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </param>
+        /// <param name="message"> A message explaining why the name is unavailable. Will be undefined if the name is available. </param>
+        /// <returns> A new <see cref="Models.SqlNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static SqlNameAvailabilityResponse SqlNameAvailabilityResponse(string name = null, bool? isAvailable = null, SqlNameUnavailableReason? reason = null, string message = null)
+        {
+            return new SqlNameAvailabilityResponse(name, isAvailable, reason, message);
+        }
+
+        /// <summary> Initializes a new instance of SqlServerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The Azure Active Directory identity of the server. </param>
+        /// <param name="kind"> Kind of sql server. This is metadata used for the Azure portal experience. </param>
+        /// <param name="administratorLogin"> Administrator username for the server. Once created it cannot be changed. </param>
+        /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
+        /// <param name="version"> The version of the server. </param>
+        /// <param name="state"> The state of the server. </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
+        /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
+        /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
+        /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
+        /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
+        /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
+        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, string minimalTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
+
+            return new SqlServerData(id, name, resourceType, systemData, tags, location, identity, kind, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minimalTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus);
+        }
+
+        /// <summary> Initializes a new instance of SqlServerPrivateEndpointConnection. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="properties"> Private endpoint connection properties. </param>
+        /// <returns> A new <see cref="Models.SqlServerPrivateEndpointConnection"/> instance for mocking. </returns>
+        public static SqlServerPrivateEndpointConnection SqlServerPrivateEndpointConnection(ResourceIdentifier id = null, ServerPrivateEndpointConnectionProperties properties = null)
+        {
+            return new SqlServerPrivateEndpointConnection(id, properties);
+        }
+
+        /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="requestId"> Request Id. </param>
+        /// <param name="requestType"> Request type. </param>
+        /// <param name="queuedTime"> Queued time. </param>
+        /// <param name="serverName"> Server name. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="errorMessage"> Error message. </param>
+        /// <returns> A new <see cref="Models.RefreshExternalGovernanceStatusOperationResult"/> instance for mocking. </returns>
+        public static RefreshExternalGovernanceStatusOperationResult RefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string serverName = null, string status = null, string errorMessage = null)
+        {
+            return new RefreshExternalGovernanceStatusOperationResult(id, name, resourceType, systemData, requestId, requestType, queuedTime, serverName, status, errorMessage);
+        }
+
+        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
+        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
+        /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
+        /// <param name="replicationState"> Replication state of the failover group instance. </param>
+        /// <param name="partnerServers"> List of partner server information for the failover group. </param>
+        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
+        /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
+        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            partnerServers ??= new List<PartnerServerInfo>();
+            failoverDatabases ??= new List<ResourceIdentifier>();
+
+            return new FailoverGroupData(id, name, resourceType, systemData, location, tags, readWriteEndpoint, readOnlyEndpoint, replicationRole, replicationState, partnerServers?.ToList(), failoverDatabases?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PartnerServerInfo. </summary>
+        /// <param name="id"> Resource identifier of the partner server. </param>
+        /// <param name="location"> Geo location of the partner server. </param>
+        /// <param name="replicationRole"> Replication role of the partner server. </param>
+        /// <returns> A new <see cref="Models.PartnerServerInfo"/> instance for mocking. </returns>
+        public static PartnerServerInfo PartnerServerInfo(ResourceIdentifier id = null, AzureLocation? location = null, FailoverGroupReplicationRole? replicationRole = null)
+        {
+            return new PartnerServerInfo(id, location, replicationRole);
         }
     }
 }

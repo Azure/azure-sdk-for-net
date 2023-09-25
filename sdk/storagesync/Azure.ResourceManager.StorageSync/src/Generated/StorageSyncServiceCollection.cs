@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StorageSyncServiceResource>> GetIfExistsAsync(string storageSyncServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+
+            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageSyncServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageSyncServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
+        public virtual NullableResponse<StorageSyncServiceResource> GetIfExists(string storageSyncServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+
+            using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageSyncServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageSyncServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageSyncServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<StorageSyncServiceResource> IEnumerable<StorageSyncServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
