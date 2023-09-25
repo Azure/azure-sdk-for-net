@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `GetConfigurationSettings(SettingSelector)` not setting `ContentType` and `LastModified` properties [(#38524)](https://github.com/Azure/azure-sdk-for-net/issues/38524).
+
 ### Other Changes
 
 ## 1.2.1 (2023-09-13)
