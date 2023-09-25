@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.4 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features
 
 - Added metrics to header. Will be used to track the number of requests and responses for each action.
-
-### Other Changes
-
-- Change version semantics to Major.Minor.Patch
 
 ### Bugs Fixed
 
