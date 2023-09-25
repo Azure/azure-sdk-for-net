@@ -1277,7 +1277,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class StartHoldMusicOptions
     {
-        public StartHoldMusicOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
+        public StartHoldMusicOptions(Azure.Communication.CommunicationIdentifier targetParticipant, Azure.Communication.CallAutomation.PlaySource playSourceInfo) { }
         public bool Loop { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PlaySource PlaySourceInfo { get { throw null; } set { } }
