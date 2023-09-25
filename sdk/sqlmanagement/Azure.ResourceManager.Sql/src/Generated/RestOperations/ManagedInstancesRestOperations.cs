@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.Sql
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ManagedInstancesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ManagedInstancesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public ManagedInstancesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -128,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -211,7 +208,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -291,7 +288,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -375,7 +372,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -455,7 +452,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             _userAgent.Apply(message);
             return message;
@@ -526,7 +523,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -609,7 +606,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             _userAgent.Apply(message);
             return message;
@@ -681,7 +678,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -760,7 +757,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             _userAgent.Apply(message);
             return message;
@@ -828,7 +825,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             _userAgent.Apply(message);
             return message;
@@ -924,7 +921,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("observationMetric", observationMetric.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-08-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

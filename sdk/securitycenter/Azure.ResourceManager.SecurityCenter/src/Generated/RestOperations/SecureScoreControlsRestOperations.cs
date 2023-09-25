@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of SecureScoreControlsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SecureScoreControlsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public SecureScoreControlsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -49,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/providers/Microsoft.Security/secureScores/", false);
             uri.AppendPath(secureScoreName, true);
             uri.AppendPath("/secureScoreControls", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand.Value.ToString(), true);
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Security/secureScoreControls", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2020-01-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand.Value.ToString(), true);
