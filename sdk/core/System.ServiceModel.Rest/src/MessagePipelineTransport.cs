@@ -44,12 +44,18 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        _transport.Dispose();
+
+        // TODO: do we need this?
+        GC.SuppressFinalize(this);
     }
 
     public override void Process(PipelineMessage message)
     {
-        throw new NotImplementedException();
+        // Intentionally blocking here
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+        ProcessAsync(message).AsTask().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
     public override ValueTask ProcessAsync(PipelineMessage message)
