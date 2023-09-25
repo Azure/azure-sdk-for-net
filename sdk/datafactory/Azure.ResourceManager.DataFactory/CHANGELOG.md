@@ -12,11 +12,13 @@
 
 ### Other Changes
 
-## 1.0.0-beta.4 (2023-09-25)
+## 1.0.0-beta.4 (2023-09-24)
 
 ### Features Added
 
 - Upgraded API version.
+
+### Other Changes
 
 ## 1.0.0-beta.3 (2023-08-02)
 
