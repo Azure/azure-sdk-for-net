@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.ContainerService
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ManagedClustersRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ManagedClustersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public ManagedClustersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -49,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/osOptions/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             if (resourceType != null)
             {
                 uri.AppendQuery("resource-type", resourceType.Value, true);
@@ -128,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -197,7 +194,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -272,7 +269,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/upgradeProfiles/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -357,7 +354,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/accessProfiles/", false);
             uri.AppendPath(roleName, true);
             uri.AppendPath("/listCredential", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -440,7 +437,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listClusterAdminCredential", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             if (serverFqdn != null)
             {
                 uri.AppendQuery("server-fqdn", serverFqdn, true);
@@ -525,7 +522,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listClusterUserCredential", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             if (serverFqdn != null)
             {
                 uri.AppendQuery("server-fqdn", serverFqdn, true);
@@ -616,7 +613,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listClusterMonitoringUserCredential", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             if (serverFqdn != null)
             {
                 uri.AppendQuery("server-fqdn", serverFqdn, true);
@@ -700,7 +697,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -782,7 +779,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -860,7 +857,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -936,7 +933,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             if (ignorePodDisruptionBudget != null)
             {
                 uri.AppendQuery("ignore-pod-disruption-budget", ignorePodDisruptionBudget.Value, true);
@@ -1013,7 +1010,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/resetServicePrincipalProfile", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1092,7 +1089,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/resetAADProfile", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1171,7 +1168,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedclusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/abort", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1242,7 +1239,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/rotateClusterCertificates", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1313,7 +1310,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/rotateServiceAccountSigningKeys", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1384,7 +1381,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1455,7 +1452,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1526,7 +1523,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/runCommand", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1606,7 +1603,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/commandResults/", false);
             uri.AppendPath(commandId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1693,7 +1690,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

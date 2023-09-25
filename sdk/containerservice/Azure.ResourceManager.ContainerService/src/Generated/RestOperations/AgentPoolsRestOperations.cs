@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.ContainerService
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AgentPoolsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AgentPoolsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        public AgentPoolsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -53,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
             uri.AppendPath("/abort", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -128,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -208,7 +205,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -296,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -380,7 +377,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             if (ignorePodDisruptionBudget != null)
             {
                 uri.AppendQuery("ignore-pod-disruption-budget", ignorePodDisruptionBudget.Value, true);
@@ -463,7 +460,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
             uri.AppendPath("/upgradeProfiles/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -550,7 +547,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/availableAgentPoolVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -631,7 +628,7 @@ namespace Azure.ResourceManager.ContainerService
             uri.AppendPath("/agentPools/", false);
             uri.AppendPath(agentPoolName, true);
             uri.AppendPath("/upgradeNodeImageVersion", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2022-11-02-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
