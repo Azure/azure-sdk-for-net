@@ -158,12 +158,18 @@ namespace System.ServiceModel.Rest.Core
         public ResponseErrorClassifier() { }
         public virtual bool IsErrorResponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
+    public partial class StatusResponseClassifier : System.ServiceModel.Rest.Core.ResponseErrorClassifier
+    {
+        public StatusResponseClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public override bool IsErrorResponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
+    }
 }
 namespace System.ServiceModel.Rest.Experimental
 {
     public partial class ClientUtilities
     {
         public ClientUtilities() { }
+        public static void AssertInRange<T>(T value, T minimum, T maximum, string name) where T : notnull, System.IComparable<T> { }
         public static void AssertNotNullOrEmpty(string value, string name) { }
         public static void AssertNotNull<T>(T value, string name) { }
         public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
