@@ -7,9 +7,6 @@ namespace Azure.Storage.DataMovement
 {
     internal class DataMovementConstants
     {
-        public const int KB = 1024;
-        public const int MB = KB * 1024;
-
         /// <summary>
         /// Constants of the Data Movement library
         /// </summary>
@@ -269,11 +266,6 @@ namespace Azure.Storage.DataMovement
         {
             internal static readonly string[] CannotOverwrite = { "BlobAlreadyExists", "Cannot overwrite file." };
             internal static readonly string[] AccessDenied = { "AuthenticationFailed", "AuthorizationFailure", "access denied" };
-        }
-
-        internal static class Share
-        {
-            internal const int MaxRange = 4 * MB;
         }
     }
 }

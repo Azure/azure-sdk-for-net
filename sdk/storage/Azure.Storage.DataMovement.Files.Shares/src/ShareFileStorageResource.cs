@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,7 +11,7 @@ using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class ShareFileStorageResource : StorageResourceItem
+    internal class ShareFileStorageResource : StorageResourceItemInternal
     {
         internal long? _length;
         internal readonly ShareFileStorageResourceOptions _options;
@@ -26,7 +25,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        protected override long MaxChunkSize => DataMovementConstants.Share.MaxRange;
+        protected override long MaxChunkSize => DataMovementShareConstants.MaxRange;
 
         protected override long? Length => _length;
 

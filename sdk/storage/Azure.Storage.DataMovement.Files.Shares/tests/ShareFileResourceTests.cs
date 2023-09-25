@@ -2,17 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
-using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -34,7 +31,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Arrange
             Uri uri = new Uri("https://storageaccount.blob.core.windows.net/");
             ShareFileClient fileClient = new ShareFileClient(uri);
-            MockShareFileStorageResource storageResource = new(fileClient);
+            ShareFileStorageResource storageResource = new(fileClient);
 
             // Assert
             Assert.AreEqual(uri, storageResource.Uri.AbsoluteUri);
@@ -60,7 +57,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         contentRange: contentRange),
                     new MockResponse(201))));
 
-                MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+                ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
                 StorageResourceReadStreamResult result = await storageResource.MockReadStreamAsync();
@@ -92,7 +89,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         contentRange: contentRange),
                     new MockResponse(201))));
 
-                MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+                ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
                 StorageResourceReadStreamResult result = await storageResource.MockReadStreamAsync();
@@ -116,7 +113,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Setup(b => b.DownloadAsync(It.IsAny<ShareFileDownloadOptions>(), It.IsAny<CancellationToken>()))
                 .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
 
-            MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+            ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
             // Act without creating the blob
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -163,7 +160,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         contentRange: contentRange),
                     new MockResponse(201))));
 
-                MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+                ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
                 await storageResource.MockCopyFromStreamAsync(
@@ -218,7 +215,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         contentRange: contentRange),
                     new MockResponse(201))));
 
-                MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+                ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
                 await storageResource.MockCopyFromStreamAsync(
@@ -249,7 +246,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Setup(b => b.UploadAsync(It.IsAny<Stream>(), It.IsAny<ShareFileUploadOptions>(), It.IsAny<CancellationToken>()))
                 .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
 
-            MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+            ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
             // Act
             int length = 1024;
@@ -272,7 +269,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Mock<ShareFileClient> mockSource = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"),
                 new ShareClientOptions());
-            MockShareFileStorageResource sourceResource = new MockShareFileStorageResource(mockSource.Object);
+            ShareFileStorageResource sourceResource = new ShareFileStorageResource(mockSource.Object);
 
             Mock<ShareFileClient> mockDestination = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
@@ -286,7 +283,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         contentHash: default,
                         isServerEncrypted: false),
                     new MockResponse(200))));
-            MockShareFileStorageResource destinationResource = new MockShareFileStorageResource(mockDestination.Object);
+            ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             int length = 1024;
             await destinationResource.MockCopyFromUriAsync(sourceResource, false, length);
@@ -299,7 +296,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Mock<ShareFileClient> mockSource = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"),
                 new ShareClientOptions());
-            MockShareFileStorageResource sourceResource = new MockShareFileStorageResource(mockSource.Object);
+            ShareFileStorageResource sourceResource = new ShareFileStorageResource(mockSource.Object);
 
             Mock<ShareFileClient> mockDestination = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
@@ -307,7 +304,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
-            MockShareFileStorageResource destinationResource = new MockShareFileStorageResource(mockDestination.Object);
+            ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             // Act
             int length = 1024;
@@ -326,7 +323,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Mock<ShareFileClient> mockSource = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"),
                 new ShareClientOptions());
-            MockShareFileStorageResource sourceResource = new MockShareFileStorageResource(mockSource.Object);
+            ShareFileStorageResource sourceResource = new ShareFileStorageResource(mockSource.Object);
 
             Mock<ShareFileClient> mockDestination = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
@@ -340,7 +337,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         contentHash: default,
                         isServerEncrypted: false),
                     new MockResponse(200))));
-            MockShareFileStorageResource destinationResource = new MockShareFileStorageResource(mockDestination.Object);
+            ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             int length = 1024;
             await destinationResource.MockCopyFromUriAsync(sourceResource, false, length);
@@ -360,7 +357,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Mock<ShareFileClient> mockSource = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"),
                 new ShareClientOptions());
-            MockShareFileStorageResource sourceResource = new MockShareFileStorageResource(mockSource.Object);
+            ShareFileStorageResource sourceResource = new ShareFileStorageResource(mockSource.Object);
 
             Mock<ShareFileClient> mockDestination = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
@@ -368,7 +365,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
-            MockShareFileStorageResource destinationResource = new MockShareFileStorageResource(mockDestination.Object);
+            ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             // Act
             int length = 1024;
@@ -418,7 +415,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         fileParentId: default),
                     new MockResponse(200))));
 
-            MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+            ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
             // Act
             StorageResourceProperties result = await storageResource.MockGetPropertiesAsync();
@@ -438,7 +435,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
                 .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
 
-            MockShareFileStorageResource storageResource = new MockShareFileStorageResource(mock.Object);
+            ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
             // Act without creating the blob
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(

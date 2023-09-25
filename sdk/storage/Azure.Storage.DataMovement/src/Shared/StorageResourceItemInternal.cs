@@ -4,26 +4,11 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Files.Shares;
 
-namespace Azure.Storage.DataMovement.Files.Shares.Tests
+namespace Azure.Storage.DataMovement
 {
-    internal class MockShareFileStorageResource : ShareFileStorageResource
+    internal abstract class StorageResourceItemInternal : StorageResourceItem
     {
-        public MockShareFileStorageResource(
-            ShareFileClient fileClient,
-            ShareFileStorageResourceOptions options = null) : base(fileClient, options)
-        {
-        }
-
-        internal MockShareFileStorageResource(
-            ShareFileClient fileClient,
-            long? length,
-            ETag? etagLock,
-            ShareFileStorageResourceOptions options = null) : base(fileClient, length, etagLock, options)
-        {
-        }
-
         internal Task MockCompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
             => CompleteTransferAsync(overwrite, cancellationToken);
 
@@ -74,7 +59,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             => DeleteIfExistsAsync(cancellationToken);
 
         internal Task<HttpAuthorization> MockGetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
-            => MockGetCopyAuthorizationHeaderAsync(cancellationToken);
+            => GetCopyAuthorizationHeaderAsync(cancellationToken);
 
         internal Task<StorageResourceProperties> MockGetPropertiesAsync(CancellationToken token = default)
             => GetPropertiesAsync(token);
