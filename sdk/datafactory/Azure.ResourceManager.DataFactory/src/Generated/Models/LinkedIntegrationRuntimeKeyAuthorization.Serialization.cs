@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            JsonSerializer.Serialize(writer, Key); writer.WritePropertyName("authorizationType"u8);
+            JsonSerializer.Serialize(writer, Key);
+            writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
         }

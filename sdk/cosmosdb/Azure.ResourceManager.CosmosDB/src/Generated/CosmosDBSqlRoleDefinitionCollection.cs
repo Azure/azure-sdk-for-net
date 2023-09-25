@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlRoleDefinition</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<CosmosDBSqlRoleDefinitionResource>> GetIfExistsAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.GetSqlRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleDefinitions/{roleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlRoleDefinition</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public virtual NullableResponse<CosmosDBSqlRoleDefinitionResource> GetIfExists(string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var scope = _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.GetSqlRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<CosmosDBSqlRoleDefinitionResource> IEnumerable<CosmosDBSqlRoleDefinitionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

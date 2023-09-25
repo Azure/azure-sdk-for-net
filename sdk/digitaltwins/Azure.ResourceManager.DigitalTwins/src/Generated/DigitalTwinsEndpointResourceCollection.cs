@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.DigitalTwins
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name of Endpoint Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DigitalTwinsEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DigitalTwinsEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DigitalTwinsEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DigitalTwinsEndpoint_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointName"> Name of Endpoint Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        public virtual NullableResponse<DigitalTwinsEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using var scope = _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics.CreateScope("DigitalTwinsEndpointResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DigitalTwinsEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DigitalTwinsEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DigitalTwinsEndpointResource> IEnumerable<DigitalTwinsEndpointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

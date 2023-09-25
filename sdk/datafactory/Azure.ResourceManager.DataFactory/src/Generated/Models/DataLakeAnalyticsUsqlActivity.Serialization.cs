@@ -72,7 +72,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("scriptPath"u8);
             JsonSerializer.Serialize(writer, ScriptPath);
             writer.WritePropertyName("scriptLinkedService"u8);
-            JsonSerializer.Serialize(writer, ScriptLinkedService); if (Optional.IsDefined(DegreeOfParallelism))
+            JsonSerializer.Serialize(writer, ScriptLinkedService);
+            if (Optional.IsDefined(DegreeOfParallelism))
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
                 JsonSerializer.Serialize(writer, DegreeOfParallelism);

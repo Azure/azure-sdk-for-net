@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GitHubOwnerResource>> GetIfExistsAsync(string gitHubOwnerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+
+            using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _gitHubOwnerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubOwnerResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubOwnerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
+        public virtual NullableResponse<GitHubOwnerResource> GetIfExists(string gitHubOwnerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+
+            using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _gitHubOwnerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubOwnerResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubOwnerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<GitHubOwnerResource> IEnumerable<GitHubOwnerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

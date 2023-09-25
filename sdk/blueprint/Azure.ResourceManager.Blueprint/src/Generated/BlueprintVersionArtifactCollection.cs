@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Blueprint
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactName"> Name of the blueprint artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BlueprintVersionArtifactResource>> GetIfExistsAsync(string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _blueprintVersionArtifactPublishedArtifactsRestClient.GetAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, artifactName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintVersionArtifactResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}/artifacts/{artifactName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactName"> Name of the blueprint artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        public virtual NullableResponse<BlueprintVersionArtifactResource> GetIfExists(string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            using var scope = _blueprintVersionArtifactPublishedArtifactsClientDiagnostics.CreateScope("BlueprintVersionArtifactCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _blueprintVersionArtifactPublishedArtifactsRestClient.Get(Id.Parent.Parent, Id.Parent.Name, Id.Name, artifactName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintVersionArtifactResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintVersionArtifactResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<BlueprintVersionArtifactResource> IEnumerable<BlueprintVersionArtifactResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

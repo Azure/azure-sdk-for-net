@@ -41,9 +41,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </param>
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
-        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, objectType)
+        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType)
         {
             DeletionInfo = deletionInfo;
         }

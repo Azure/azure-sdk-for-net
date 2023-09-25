@@ -3,8 +3,8 @@
   <members>
     <member name="CheckKeysAsync(string,string,string,RequestContext)" />
     <member name="CheckKeys(string,string,string,RequestContext)" />
-    <member name="CheckKeyValuesAsync(string,string,string,string,IEnumerable{string},string,RequestContext)" />
-    <member name="CheckKeyValues(string,string,string,string,IEnumerable{string},string,RequestContext)" />
+    <member name="CheckKeyValuesAsync(string,string,string,string,IEnumerable{string},string,MatchConditions,RequestContext)" />
+    <member name="CheckKeyValues(string,string,string,string,IEnumerable{string},string,MatchConditions,RequestContext)" />
     <member name="GetConfigurationSettingAsync(string,string,string,IEnumerable{string},MatchConditions,RequestContext)" />
     <member name="GetConfigurationSetting(string,string,string,IEnumerable{string},MatchConditions,RequestContext)" />
     <member name="SetConfigurationSettingAsync(string,RequestContent,ContentType,string,MatchConditions,RequestContext)" />
@@ -17,8 +17,8 @@
     <member name="CheckSnapshots(string,RequestContext)" />
     <member name="GetSnapshotAsync(string,IEnumerable{string},MatchConditions,RequestContext)" />
     <member name="GetSnapshot(string,IEnumerable{string},MatchConditions,RequestContext)" />
-    <member name="UpdateSnapshotStatusAsync(string,RequestContent,MatchConditions,RequestContext)" />
-    <member name="UpdateSnapshotStatus(string,RequestContent,MatchConditions,RequestContext)" />
+    <member name="UpdateSnapshotStatusAsync(string,RequestContent,ContentType,MatchConditions,RequestContext)" />
+    <member name="UpdateSnapshotStatus(string,RequestContent,ContentType,MatchConditions,RequestContext)" />
     <member name="CheckSnapshotAsync(string,MatchConditions,RequestContext)" />
     <member name="CheckSnapshot(string,MatchConditions,RequestContext)" />
     <member name="CheckLabelsAsync(string,string,string,IEnumerable{string},RequestContext)" />
@@ -33,8 +33,8 @@
     <member name="GetOperationDetails(string,RequestContext)" />
     <member name="GetKeysAsync(string,string,string,RequestContext)" />
     <member name="GetKeys(string,string,string,RequestContext)" />
-    <member name="GetConfigurationSettingsAsync(string,string,string,string,IEnumerable{string},string,RequestContext)" />
-    <member name="GetConfigurationSettings(string,string,string,string,IEnumerable{string},string,RequestContext)" />
+    <member name="GetConfigurationSettingsAsync(string,string,string,string,IEnumerable{string},string,MatchConditions,RequestContext)" />
+    <member name="GetConfigurationSettings(string,string,string,string,IEnumerable{string},string,MatchConditions,RequestContext)" />
     <member name="GetSnapshotsAsync(string,string,IEnumerable{string},IEnumerable{string},RequestContext)" />
     <member name="GetSnapshots(string,string,IEnumerable{string},IEnumerable{string},RequestContext)" />
     <member name="GetLabelsAsync(string,string,string,IEnumerable{string},RequestContext)" />

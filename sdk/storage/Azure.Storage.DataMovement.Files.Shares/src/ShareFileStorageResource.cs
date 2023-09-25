@@ -161,5 +161,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToStorageResourceReadStreamResult();
         }
+
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

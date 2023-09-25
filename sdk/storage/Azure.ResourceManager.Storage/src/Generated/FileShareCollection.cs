@@ -339,6 +339,84 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileShares_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
+        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FileShareResource>> GetIfExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _fileShareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FileShareResource>(response.GetRawResponse());
+                return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileShares_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
+        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual NullableResponse<FileShareResource> GetIfExists(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _fileShareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FileShareResource>(response.GetRawResponse());
+                return Response.FromValue(new FileShareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FileShareResource> IEnumerable<FileShareResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

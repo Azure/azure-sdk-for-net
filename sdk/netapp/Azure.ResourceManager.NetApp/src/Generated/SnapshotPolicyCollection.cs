@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/snapshotPolicies/{snapshotPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SnapshotPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SnapshotPolicyResource>> GetIfExistsAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
+
+            using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _snapshotPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SnapshotPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new SnapshotPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/snapshotPolicies/{snapshotPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SnapshotPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        public virtual NullableResponse<SnapshotPolicyResource> GetIfExists(string snapshotPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
+
+            using var scope = _snapshotPolicyClientDiagnostics.CreateScope("SnapshotPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _snapshotPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SnapshotPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new SnapshotPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SnapshotPolicyResource> IEnumerable<SnapshotPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

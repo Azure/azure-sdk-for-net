@@ -239,6 +239,80 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCIReports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> The report name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageHciClusterConfigurationProfileAssignmentReportResource>> GetIfExistsAsync(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageHciClusterConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HCIReports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> The report name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetIfExists(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var scope = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsClientDiagnostics.CreateScope("AutomanageHciClusterConfigurationProfileAssignmentReportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageHciClusterConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomanageHciClusterConfigurationProfileAssignmentReportResource> IEnumerable<AutomanageHciClusterConfigurationProfileAssignmentReportResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

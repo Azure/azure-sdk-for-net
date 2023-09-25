@@ -328,6 +328,82 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteTables_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeTableName"> The name of the route table. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RouteTableResource>> GetIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+
+            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _routeTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RouteTableResource>(response.GetRawResponse());
+                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RouteTables_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeTableName"> The name of the route table. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        public virtual NullableResponse<RouteTableResource> GetIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+
+            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _routeTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RouteTableResource>(response.GetRawResponse());
+                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RouteTableResource> IEnumerable<RouteTableResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

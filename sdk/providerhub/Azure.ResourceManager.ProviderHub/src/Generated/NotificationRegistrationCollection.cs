@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationRegistrationName"> The notification registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NotificationRegistrationResource>> GetIfExistsAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
+
+            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _notificationRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, notificationRegistrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationRegistrationName"> The notification registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
+        public virtual NullableResponse<NotificationRegistrationResource> GetIfExists(string notificationRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
+
+            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _notificationRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, notificationRegistrationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NotificationRegistrationResource> IEnumerable<NotificationRegistrationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -10,24 +10,20 @@
       <Aliases>DMShare</Aliases>
     </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Files.Shares\src\Azure.Storage.DataMovement.Files.Shares.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- Required Shared Source for testing -->
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedTestSources)AsyncPageableExtensions.cs" LinkBase="Shared\Test" />
+    <Compile Include="$(AzureStorageSharedTestSources)RandomExtensions.cs" LinkBase="Shared\Test" />
+    <Compile Include="$(AzureStorageSharedTestSources)Tree.cs" LinkBase="Shared\Test" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />
