@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnSiteLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VpnSiteLinkResource>> GetIfExistsAsync(string vpnSiteLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
+
+            using var scope = _vpnSiteLinkClientDiagnostics.CreateScope("VpnSiteLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _vpnSiteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VpnSiteLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VpnSiteLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vpnSiteLinkName"> The name of the VpnSiteLink being retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vpnSiteLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteLinkName"/> is null. </exception>
+        public virtual NullableResponse<VpnSiteLinkResource> GetIfExists(string vpnSiteLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vpnSiteLinkName, nameof(vpnSiteLinkName));
+
+            using var scope = _vpnSiteLinkClientDiagnostics.CreateScope("VpnSiteLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _vpnSiteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnSiteLinkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VpnSiteLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<VpnSiteLinkResource> IEnumerable<VpnSiteLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

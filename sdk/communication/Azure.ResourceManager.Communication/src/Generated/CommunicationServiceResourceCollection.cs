@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CommunicationServiceResource>> GetIfExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CommunicationServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public virtual NullableResponse<CommunicationServiceResource> GetIfExists(string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communicationServiceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CommunicationServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<CommunicationServiceResource> IEnumerable<CommunicationServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

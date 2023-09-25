@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2Networks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="l2NetworkName"> The name of the L2 network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudL2NetworkResource>> GetIfExistsAsync(string l2NetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
+
+            using var scope = _networkCloudL2NetworkL2NetworksClientDiagnostics.CreateScope("NetworkCloudL2NetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudL2NetworkL2NetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudL2NetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudL2NetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2Networks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="l2NetworkName"> The name of the L2 network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudL2NetworkResource> GetIfExists(string l2NetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
+
+            using var scope = _networkCloudL2NetworkL2NetworksClientDiagnostics.CreateScope("NetworkCloudL2NetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudL2NetworkL2NetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l2NetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudL2NetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudL2NetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkCloudL2NetworkResource> IEnumerable<NetworkCloudL2NetworkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

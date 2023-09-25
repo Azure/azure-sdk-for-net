@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DiskPoolResource>> GetIfExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _diskPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DiskPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new DiskPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        public virtual NullableResponse<DiskPoolResource> GetIfExists(string diskPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+
+            using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _diskPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DiskPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new DiskPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DiskPoolResource> IEnumerable<DiskPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
