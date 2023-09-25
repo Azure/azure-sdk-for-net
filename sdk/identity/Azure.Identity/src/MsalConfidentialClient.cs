@@ -106,7 +106,7 @@ namespace Azure.Identity
             {
                 if (_asyncAssertionCallback != null)
                 {
-                    throw new InvalidOperationException("Cannot set both assertionCallback and asyncAssertionCallback");
+                    throw new InvalidOperationException($"Cannot set both {nameof(_assertionCallback)} and {nameof(_asyncAssertionCallback)}");
                 }
                 confClientBuilder.WithClientAssertion(_assertionCallback);
             }
@@ -115,7 +115,7 @@ namespace Azure.Identity
             {
                 if (_assertionCallback != null)
                 {
-                    throw new InvalidOperationException("Cannot set both assertionCallback and asyncAssertionCallback");
+                    throw new InvalidOperationException($"Cannot set both {nameof(_assertionCallback)} and {nameof(_asyncAssertionCallback)}");
                 }
                 confClientBuilder.WithClientAssertion(_asyncAssertionCallback);
             }
