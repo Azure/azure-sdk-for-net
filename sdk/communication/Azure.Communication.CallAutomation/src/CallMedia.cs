@@ -860,20 +860,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Starts transcription in the call.
         /// </summary>
-        /// <param name="startTranscriptionOptions">An optional object containing start transcription options and configurations.</param>
+        /// <param name="options">An optional object containing start transcription options and configurations.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual Response StartTranscription(StartTranscriptionOptions startTranscriptionOptions, CancellationToken cancellationToken = default)
+        public virtual Response StartTranscription(StartTranscriptionOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartTranscription)}");
             scope.Start();
             try
             {
-                StartTranscriptionRequestInternal request = new StartTranscriptionRequestInternal()
-                {
-                    Locale = startTranscriptionOptions.Locale,
-                    OperationContext = startTranscriptionOptions.OperationContext
-                };
+                var request = options == default
+                    ? new StartTranscriptionRequestInternal()
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+
                 return CallMediaRestClient.StartTranscription(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
@@ -886,20 +885,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Starts transcription in the call.
         /// </summary>
-        /// <param name="startTranscriptionOptions">An optional object containing start transcription options and configurations.</param>
+        /// <param name="options">An optional object containing start transcription options and configurations.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual async Task<Response> StartTranscriptionAsync(StartTranscriptionOptions startTranscriptionOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartTranscriptionAsync(StartTranscriptionOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartTranscriptionAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartTranscription)}");
             scope.Start();
             try
             {
-                StartTranscriptionRequestInternal request = new StartTranscriptionRequestInternal()
-                {
-                    Locale = startTranscriptionOptions.Locale,
-                    OperationContext = startTranscriptionOptions.OperationContext
-                };
+                var request = options == default
+                    ? new StartTranscriptionRequestInternal()
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+
                 return await CallMediaRestClient.StartTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -912,19 +910,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Stops transcription in the call.
         /// </summary>
-        /// <param name="stopTranscriptionOptions">An optional object containing stop transcription options and configurations.</param>
+        /// <param name="options">An optional object containing stop transcription options and configurations.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual Response StopTranscription(StopTranscriptionOptions stopTranscriptionOptions, CancellationToken cancellationToken = default)
+        public virtual Response StopTranscription(StopTranscriptionOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
             scope.Start();
             try
             {
-                StopTranscriptionRequestInternal request = new StopTranscriptionRequestInternal()
-                {
-                    OperationContext = stopTranscriptionOptions.OperationContext
-                };
+                var request = options == default
+                    ? new StopTranscriptionRequestInternal()
+                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext };
+
                 return CallMediaRestClient.StopTranscription(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
@@ -937,19 +935,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Stops transcription in the call.
         /// </summary>
-        /// <param name="stopTranscriptionOptions">An optional object containing stop transcription options and configurations.</param>
+        /// <param name="options">An optional object containing stop transcription options and configurations.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual async Task<Response> StopTranscriptionAsync(StopTranscriptionOptions stopTranscriptionOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopTranscriptionAsync(StopTranscriptionOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscriptionAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
             scope.Start();
             try
             {
-                StopTranscriptionRequestInternal request = new StopTranscriptionRequestInternal()
-                {
-                    OperationContext = stopTranscriptionOptions.OperationContext
-                };
+                var request = options == default
+                    ? new StopTranscriptionRequestInternal()
+                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext };
+
                 return await CallMediaRestClient.StopTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -989,7 +987,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
         public virtual async Task<Response> UpdateTranscriptionDataAsync(String locale, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscriptionDataAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscriptionData)}");
             scope.Start();
             try
             {
