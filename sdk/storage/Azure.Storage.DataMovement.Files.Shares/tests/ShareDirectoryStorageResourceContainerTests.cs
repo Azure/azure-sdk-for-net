@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Verify StorageResourceContainer correctly invokes path scanner and returns the given files
             List<ShareFileClient> results = new();
-            await foreach (StorageResource res in resource.GetStorageResourcesInternal())
+            await foreach (StorageResource res in resource.GetStorageResourcesInternalAsync())
             {
                 Assert.That(res, Is.TypeOf(typeof(ShareFileStorageResourceItem)));
                 results.Add((res as ShareFileStorageResourceItem).ShareFileClient);
