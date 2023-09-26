@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Rest.Core;
 using System.Threading;
@@ -117,5 +118,23 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
         message.Response = new PipelineResponse(responseMessage, contentStream);
 
         #endregion
+    }
+
+    private sealed class HttpContentAdapter : HttpContent
+    {
+        private readonly RequestBody _content;
+        private readonly CancellationToken _cancellationToken;
+
+        public HttpContentAdapter(RequestBody content, CancellationToken cancellationToken)
+        {
+            _content = content;
+            _cancellationToken = cancellationToken;
+        }
+
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
+            => await _content.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
+
+        protected override bool TryComputeLength(out long length)
+            => _content.TryComputeLength(out length);
     }
 }

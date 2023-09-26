@@ -58,6 +58,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
+        // TODO: would it make sense to template classifier to avoid this override?
         public virtual bool IsErrorResponse(HttpMessage message) => base.IsErrorResponse(message);
     }
 

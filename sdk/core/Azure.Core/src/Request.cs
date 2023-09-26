@@ -64,8 +64,9 @@ namespace Azure.Core
             };
         }
 
-        // Needed for compat with pre-net5.0 TFMs
+        // PATCH value needed for compat with pre-net5.0 TFMs
         private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
+
         private static HttpMethod AzureToSystemMethod(RequestMethod method)
         {
             return method.Method switch

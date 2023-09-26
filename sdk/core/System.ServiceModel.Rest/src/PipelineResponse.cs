@@ -21,8 +21,6 @@ public class PipelineResponse : IDisposable
 
         // TODO: Why do we handle these separately?
         _contentStream = contentStream;
-
-        //IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
     private void EnsureValid(string name)
@@ -56,8 +54,6 @@ public class PipelineResponse : IDisposable
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
 
-    // TODO: can we not duplicate this logic?  i.e. move it into the base class
-    // so both this and Azure.Core Response get the same logic?
     public virtual BinaryData Content
     {
         get
@@ -67,6 +63,7 @@ public class PipelineResponse : IDisposable
                 return s_EmptyBinaryData;
             }
 
+            // TODO: is this still a valid check for buffering?
             if (ContentStream is not MemoryStream memoryContent)
             {
                 throw new InvalidOperationException($"The response is not fully buffered.");
