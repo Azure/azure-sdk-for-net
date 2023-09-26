@@ -67,7 +67,10 @@ namespace Azure.Core.Pipeline
         public sealed override Request CreateRequest()
             => new PipelineRequest();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
         public override void Process(HttpMessage message)
         {
 #if NET5_0_OR_GREATER
@@ -80,7 +83,11 @@ namespace Azure.Core.Pipeline
 #endif
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// TBD
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public override ValueTask ProcessAsync(HttpMessage message) => ProcessAsync(message, true);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard

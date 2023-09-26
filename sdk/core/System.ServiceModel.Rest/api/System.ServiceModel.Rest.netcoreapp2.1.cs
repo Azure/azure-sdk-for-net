@@ -125,17 +125,18 @@ namespace System.ServiceModel.Rest.Core
         public virtual void Dispose() { }
         public virtual void SetHeaderValue(string name, string value) { }
     }
-    public abstract partial class PipelineResponse
+    public partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.BinaryData Content { get; }
-        public abstract System.IO.Stream? ContentStream { get; set; }
-        public virtual bool IsError { get { throw null; } set { } }
-        public abstract string ReasonPhrase { get; }
-        public abstract int Status { get; }
-        public abstract bool TryGetHeaderValue(string name, out string? value);
+        public virtual System.BinaryData Content { get { throw null; } }
+        public virtual System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public virtual bool IsError { get { throw null; } }
+        public virtual string ReasonPhrase { get { throw null; } }
+        public virtual int Status { get { throw null; } }
+        public virtual void Dispose() { }
+        public virtual bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }
-    public abstract partial class PipelineTransport<TMessage> : System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage>
+    public abstract partial class PipelineTransport<TMessage> : System.ServiceModel.Rest.Core.IPipelinePolicy<TMessage> where TMessage : System.ServiceModel.Rest.Core.PipelineMessage
     {
         protected PipelineTransport() { }
         public abstract TMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);

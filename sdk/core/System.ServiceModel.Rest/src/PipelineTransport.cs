@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace System.ServiceModel.Rest.Core;
 
 public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
+    where TMessage : PipelineMessage
 {
     public abstract void Process(TMessage message);
 
@@ -17,12 +18,18 @@ public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
     public void Process(TMessage message, PipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
+
         Process(message);
+
+        message.Response.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
     public async ValueTask ProcessAsync(TMessage message, PipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
+
         await ProcessAsync(message).ConfigureAwait(false);
+
+        message.Response.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 }
