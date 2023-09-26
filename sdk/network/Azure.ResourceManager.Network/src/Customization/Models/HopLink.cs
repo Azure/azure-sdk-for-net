@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         [Obsolete("This property has been replaced by ResourceIdString", false)]
         public ResourceIdentifier ResourceId
         {
-            get => ResourceIdString is null ? null : new ResourceIdentifier(ResourceIdString);
+            get => string.IsNullOrEmpty(ResourceIdString) ? null : new ResourceIdentifier(ResourceIdString);
             set
             {
-                ResourceId = ResourceIdString is null ? null : new ResourceIdentifier(ResourceIdString);
+                ResourceId = string.IsNullOrEmpty(ResourceIdString) ? null : new ResourceIdentifier(ResourceIdString);
             }
         }
     }
