@@ -20,9 +20,8 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// <summary>
         /// The format of text
         /// </summary>
-        //[JsonPropertyName("format")]
-        //[JsonConverter(typeof(StringEnumConverter))]
-        public TextFormat Format { get; set; }
+        [JsonPropertyName("format")]
+        public string Format { get; set; }
 
         /// <summary>
         /// Confidence of recognition of the whole phrase, from 0.0 (no confidence) to 1.0 (full confidence)
@@ -52,7 +51,7 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// <summary>
         /// Status of the result of transcription
         /// </summary>
-        //[JsonPropertyName("resultStatus")]
-        public ResultStatus ResultStatus { get; set; }
+        [JsonPropertyName("resultStatus")]
+        public string ResultStatus { get; set; }
     }
 }

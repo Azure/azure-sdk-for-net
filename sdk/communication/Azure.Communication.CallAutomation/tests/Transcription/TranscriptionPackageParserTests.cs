@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
                         "}" +
                     "]," +
                     "\"participantRawID\":\"abc12345\"," +
-                    "\"resultStatus\":\"final\"" +
+                    "\"resultStatus\":\"Final\"" +
                 "}" +
             "}";
 
@@ -70,7 +70,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             jsonData["kind"] = "TranscriptionData";
             jsonData["transcriptionData"] = new JObject();
             jsonData["transcriptionData"]["text"] = "Hello World!";
-            jsonData["transcriptionData"]["format"] = TextFormat.Display.ToString();
+            jsonData["transcriptionData"]["format"] = "Display";
             jsonData["transcriptionData"]["confidence"] = 0.98f;
             jsonData["transcriptionData"]["offset"] = 1;
 
@@ -88,7 +88,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             words.Add(word1);
 
             jsonData["transcriptionData"]["participantRawID"] = "abc12345";
-            jsonData["transcriptionData"]["resultStatus"] = ResultStatus.Final.ToString();
+            jsonData["transcriptionData"]["resultStatus"] = "Final";
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
@@ -103,7 +103,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             jsonData["kind"] = "TranscriptionData";
             jsonData["transcriptionData"] = new JObject();
             jsonData["transcriptionData"]["text"] = "Hello World!";
-            jsonData["transcriptionData"]["format"] = TextFormat.Display.ToString();
+            jsonData["transcriptionData"]["format"] = "Display";
             jsonData["transcriptionData"]["confidence"] = 0.98f;
             jsonData["transcriptionData"]["offset"] = 1;
 
@@ -121,7 +121,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             words.Add(word1);
 
             jsonData["transcriptionData"]["participantRawID"] = "abc12345";
-            jsonData["transcriptionData"]["resultStatus"] = ResultStatus.Final.ToString();
+            jsonData["transcriptionData"]["resultStatus"] = "Final";
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
             TranscriptionData parsedPackage = (TranscriptionData) TranscriptionPackageParser.Parse(receivedBytes);
@@ -158,7 +158,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
             Assert.AreEqual("abc12345", transcription.Participant.RawId);
             Console.WriteLine(transcription.ResultStatus.ToString());
-            Assert.AreEqual(ResultStatus.Intermediate, transcription.ResultStatus);
+            Assert.AreEqual(ResultStatus.Final, transcription.ResultStatus);
         }
     }
 }

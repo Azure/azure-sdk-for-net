@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -9,11 +10,12 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
     /// <summary>
     /// Streaming Transcription.
     /// </summary>
-    internal class TranscriptionData: TranscriptionPackageBase
+    internal class TranscriptionData : TranscriptionPackageBase
     {
-        internal   TranscriptionData(string text, TextFormat format, float confidence, int offset, IEnumerable<Word> words, string participantRawID, ResultStatus resultStatus) {
+        internal TranscriptionData(string text, string format, float confidence, int offset, IEnumerable<Word> words, string participantRawID, string resultStatus)
+        {
             Text = text;
-            Format = format;
+            Format = ConvertToTextFormatEnum(format);
             Confidence = confidence;
             Offset = offset;
             Words = words;
@@ -21,8 +23,9 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
             {
                 Participant = new CommunicationUserIdentifier(participantRawID);
             }
-            ResultStatus = resultStatus;
+            ResultStatus = ConvertToResultStatusEnum(resultStatus);
         }
+
         /// <summary>
         /// The display form of the recognized word
         /// </summary>
@@ -58,5 +61,29 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// Status of the result of transcription
         /// </summary>
         public ResultStatus ResultStatus { get; set; }
+
+        private static ResultStatus ConvertToResultStatusEnum(string resultStatus)
+        {
+            switch (resultStatus)
+            {
+                case "Intermediate":
+                    return ResultStatus.Intermediate;
+                case "Final":
+                    return ResultStatus.Final;
+                default:
+                    throw new NotSupportedException(resultStatus);
+            }
+        }
+
+        private static TextFormat ConvertToTextFormatEnum(string format)
+        {
+            switch (format)
+            {
+                case "Display":
+                    return TextFormat.Display;
+                default:
+                    throw new NotSupportedException(format);
+            }
+        }
     }
 }
