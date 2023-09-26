@@ -12,23 +12,21 @@ public abstract class PipelineRequest : IDisposable
 
     // TODO: rework Method setting; adding a constructor to an abstract class
     // is a problem. It would be better not to make Method nullable.
-    public HttpMethod? Method { get; set;  }
+    public HttpMethod? Method { get; set; }
 
-    public abstract string ClientRequestId { get; set; }
-
-    public abstract void SetMethod(string method);
+    //public abstract string ClientRequestId { get; set; }
 
     public abstract void SetUri(RequestUri uri);
 
     // TODO: Can we remove this in favor of a public Uri property?
-    public abstract bool TryGetUri(out Uri uri);
+    public abstract bool TryGetUri(out Uri? uri);
 
     public abstract void SetHeaderValue(string name, string value);
 
     public abstract void SetContent(RequestBody content);
 
     // TODO: Can we remove this in favor of a public Content property?
-    public abstract bool TryGetContent(out RequestBody content);
+    public abstract bool TryGetContent(out RequestBody? content);
 
     //public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value);
 

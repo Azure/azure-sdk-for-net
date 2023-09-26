@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Experimental.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
             AllowAutoRedirect = false
         };
 
-        _transport = new HttpClient()
+        _transport = new HttpClient(handler)
         {
             // TODO: Timeouts are handled by the pipeline
             Timeout = Timeout.InfiniteTimeSpan,
@@ -41,7 +42,9 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
 
     public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
-        throw new NotImplementedException();
+        PipelineRequest request = new MessagePipelineRequest();
+        PipelineMessage message = new MessagePipelineMessage(request, classifier);
+        return message;
     }
 
     public void Dispose()
@@ -73,12 +76,12 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
         HttpMethod method = message.PipelineRequest.Method;
 
         // TODO: clean up
-        if (!message.PipelineRequest.TryGetUri(out Uri uri))
+        if (!message.PipelineRequest.TryGetUri(out Uri? uri))
         {
             throw new NotSupportedException("TODO");
         }
 
-        if (message.PipelineRequest.TryGetContent(out RequestBody content))
+        if (message.PipelineRequest.TryGetContent(out RequestBody? content))
         {
             throw new NotSupportedException("TODO");
         }
@@ -86,7 +89,7 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
         using HttpRequestMessage netRequest = new HttpRequestMessage(method, uri);
 
         // TODO: CancellationToken
-        netRequest.Content = new HttpContentAdapter(content, CancellationToken.None);
+        netRequest.Content = new HttpContentAdapter(content!, CancellationToken.None);
 
         // TODO: Request Headers
 
@@ -121,9 +124,104 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
             throw new RequestErrorException(e.Message, e);
         }
 
-        message.PipelineResponse = new MessagePipelineTransportResponse(responseMessage, contentStream);
+        message.PipelineResponse = new MessagePipelineResponse(responseMessage, contentStream);
 
         #endregion
+    }
+
+    private sealed class MessagePipelineMessage : PipelineMessage
+    {
+        // TODO: should these be readonly?
+        private PipelineRequest _request;
+        private ResponseErrorClassifier _classifier;
+
+        private PipelineResponse? _response;
+
+        public MessagePipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier) : base(request, classifier)
+        {
+            _request = request;
+            _classifier = classifier;
+        }
+        public override PipelineRequest PipelineRequest
+        {
+            get => _request;
+            set => _request = value;
+        }
+
+        public override PipelineResponse? PipelineResponse
+        {
+            get => _response;
+            set => _response = value;
+        }
+
+        public override ResponseErrorClassifier ResponseErrorClassifier
+        {
+            get => _classifier;
+            set => _classifier = value;
+        }
+
+        public override void Dispose()
+        {
+            // TODO: implement Dispose pattern properly
+            _request.Dispose();
+
+            // TODO: should response be disposable?
+        }
+    }
+
+    private sealed class MessagePipelineRequest : PipelineRequest
+    {
+        private Uri? _uri;
+        private RequestBody? _content;
+
+        public MessagePipelineRequest()
+        {
+        }
+
+        public override void SetContent(RequestBody content)
+            => _content = content;
+
+        public override void SetHeaderValue(string name, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SetUri(RequestUri uri)
+            => _uri = uri.ToUri();
+
+        public override bool TryGetContent(out RequestBody? content)
+        {
+            if (_content == null)
+            {
+                content = default;
+                return false;
+            }
+
+            content = _content;
+            return true;
+        }
+
+        public override bool TryGetUri(out Uri? uri)
+        {
+            if (_uri == null)
+            {
+                uri = default;
+                return false;
+            }
+
+            uri = _uri;
+            return true;
+        }
+
+        public override void Dispose()
+        {
+            // TODO: get this pattern right
+            if (_content is not null)
+            {
+                RequestBody body = _content as RequestBody;
+                body.Dispose();
+            }
+        }
     }
 
     private sealed class HttpContentAdapter : HttpContent
@@ -144,7 +242,7 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
             => _content.TryComputeLength(out length);
     }
 
-    private sealed class MessagePipelineTransportResponse : PipelineResponse
+    private sealed class MessagePipelineResponse : PipelineResponse
     {
         private readonly HttpResponseMessage _netResponse;
 
@@ -152,7 +250,7 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
 
         private Stream? _contentStream;
 
-        public MessagePipelineTransportResponse(HttpResponseMessage netResponse, Stream? contentStream)
+        public MessagePipelineResponse(HttpResponseMessage netResponse, Stream? contentStream)
         {
             _netResponse = netResponse ?? throw new ArgumentNullException(nameof(netResponse));
             _netContent = _netResponse.Content;

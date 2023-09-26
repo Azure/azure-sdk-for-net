@@ -15,9 +15,9 @@ public abstract class PipelineMessage : IDisposable
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-    public abstract PipelineResponse? PipelineResponse { get; set; }
-
     public abstract PipelineRequest PipelineRequest { get; set; }
+
+    public abstract PipelineResponse? PipelineResponse { get; set; }
 
     public abstract ResponseErrorClassifier ResponseErrorClassifier { get; set; }
 

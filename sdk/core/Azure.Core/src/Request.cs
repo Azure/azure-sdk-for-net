@@ -46,18 +46,23 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        public abstract string ClientRequestId { get; set; }
+
+        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
         public new virtual RequestMethod Method { get; set; }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="method"></param>
-        public override void SetMethod(string method)
-        {
-            Method = VerbToMethod(method);
-        }
+        ///// <summary>
+        ///// TBD.
+        ///// </summary>
+        ///// <param name="method"></param>
+        //public override void SetMethod(string method)
+        //{
+        //    Method = VerbToMethod(method);
+        //}
 
         private static RequestMethod VerbToMethod(string verb)
         {
