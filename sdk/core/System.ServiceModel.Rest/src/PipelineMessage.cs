@@ -20,21 +20,26 @@ public class PipelineMessage : IDisposable
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-    public virtual PipelineRequest Request
-    {
-        get => _request;
-    }
+    public virtual PipelineRequest Request { get => _request; }
 
-    public virtual PipelineResponse? PipelineResponse
+    public virtual PipelineResponse Response
     {
-        get => _response;
+        get
+        {
+            if (_response is null)
+            {
+                throw new InvalidOperationException("Response was not set.");
+            }
+
+            return _response;
+        }
+
         set => _response = value;
     }
 
     public virtual ResponseErrorClassifier ResponseErrorClassifier
     {
         get => _classifier;
-        //set => _classifier = value;
     }
 
     public virtual void Dispose()

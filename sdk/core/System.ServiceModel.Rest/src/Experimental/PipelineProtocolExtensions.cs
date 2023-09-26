@@ -25,17 +25,17 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         {
             await pipeline.SendAsync(message).ConfigureAwait(false);
 
-            if (message.PipelineResponse is null)
+            if (message.Response is null)
             {
                 throw new InvalidOperationException("Failed to receive Result.");
             }
 
-            if (!message.PipelineResponse.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
+            if (!message.Response.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
             {
-                return message.PipelineResponse;
+                return message.Response;
             }
 
-            throw new RequestErrorException(message.PipelineResponse);
+            throw new RequestErrorException(message.Response);
         }
 
         /// <summary>
@@ -51,17 +51,17 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
         {
             pipeline.Send(message);
 
-            if (message.PipelineResponse is null)
+            if (message.Response is null)
             {
                 throw new InvalidOperationException("Failed to receive Result.");
             }
 
-            if (!message.PipelineResponse.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
+            if (!message.Response.IsError || requestContext?.ResultErrorOptions == ResultErrorOptions.NoThrow)
             {
-                return message.PipelineResponse;
+                return message.Response;
             }
 
-            throw new RequestErrorException(message.PipelineResponse);
+            throw new RequestErrorException(message.Response);
         }
 
         /// <summary>

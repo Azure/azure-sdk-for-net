@@ -59,7 +59,7 @@ namespace Azure.Core
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
         {
             get
             {
@@ -71,17 +71,14 @@ namespace Azure.Core
                 }
                 return _response;
             }
-            set => _response = value;
-        }
+            set
+            {
+                _response = value;
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PipelineResponse? PipelineResponse
-        {
-            get => Response;
-            set => _response = (Response?)value;
+                // TODO: this feels like it could go badly.  Is there another way?
+                // TODO: revisit once PipelineResponse lands.
+                base.Response = value;
+            }
         }
 
         /// <summary>
@@ -103,7 +100,6 @@ namespace Azure.Core
         public override ResponseErrorClassifier ResponseErrorClassifier
         {
             get => ResponseClassifier;
-            //set => ResponseClassifier = new ResponseClassifierAdapter(value);
         }
 
         /// <summary>
@@ -236,7 +232,7 @@ namespace Azure.Core
             Request.Dispose();
             _propertyBag.Dispose();
 
-            var response = _response;
+            Response? response = _response;
             if (response != null)
             {
                 _response = null;

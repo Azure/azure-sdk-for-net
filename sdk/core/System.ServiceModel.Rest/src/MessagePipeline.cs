@@ -146,7 +146,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         enumerator.ProcessNext();
 
         // Send is complete, we can annotate the response.
-        message.PipelineResponse!.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
     public override async ValueTask SendAsync(PipelineMessage message)
@@ -155,7 +155,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
 
         // Send is complete, we can annotate the response.
-        message.PipelineResponse!.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
     internal class MessagePipelineExecutor : PipelineEnumerator

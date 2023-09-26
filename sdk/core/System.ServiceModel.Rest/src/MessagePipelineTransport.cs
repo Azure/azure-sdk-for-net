@@ -122,7 +122,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
             throw new RequestErrorException(e.Message, e);
         }
 
-        message.PipelineResponse = new MessagePipelineResponse(responseMessage, contentStream);
+        message.Response = new MessagePipelineResponse(responseMessage, contentStream);
 
         #endregion
     }
