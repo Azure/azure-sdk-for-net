@@ -46,7 +46,18 @@ namespace Azure.Core
         /// </summary>
         public new virtual RequestMethod Method
         {
-            get { return SystemToAzureMethod(base.Method); }
+            get
+            {
+                try
+                {
+                    return SystemToAzureMethod(base.Method);
+                }
+                catch (NotSupportedException)
+                {
+                    // Preserve existing functionality
+                    return new RequestMethod();
+                }
+            }
             set { base.Method = AzureToSystemMethod(value); }
         }
 
@@ -78,7 +89,8 @@ namespace Azure.Core
                 "DELETE" => HttpMethod.Delete,
                 "PATCH" => _patchMethod,
                 _ => new HttpMethod(method.Method),
-            }; ;
+            };
+            ;
         }
 
         /// <summary>

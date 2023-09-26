@@ -27,7 +27,7 @@ public class PipelineRequest : IDisposable
         {
             if (_method is null)
             {
-                throw new NotSupportedException("TODO");
+                throw new NotSupportedException("'Method' must be initialized before use.");
             }
 
             return _method;
@@ -42,7 +42,7 @@ public class PipelineRequest : IDisposable
         {
             if (_uri is null)
             {
-                throw new NotSupportedException("TODO");
+                throw new NotSupportedException("'Uri' must be initialized before use.");
             }
 
             return _uri;

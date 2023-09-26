@@ -172,8 +172,8 @@ namespace Azure.Core.Tests
         [Test]
         public async Task CanAddPolicies_ThreeWays()
         {
-            var mockTransport = new MockTransport(new MockResponse(200));
-            var options = new TestOptions()
+            MockTransport mockTransport = new MockTransport(new MockResponse(200));
+            TestOptions options = new TestOptions()
             {
                 Transport = mockTransport,
             };
@@ -185,14 +185,14 @@ namespace Azure.Core.Tests
             options.AddPolicy(new AddHeaderPolicy("PerRetry", "ClientOptions"), HttpPipelinePosition.PerRetry);
             options.AddPolicy(new AddHeaderPolicy("PerCall", "ClientOptions"), HttpPipelinePosition.PerCall);
 
-            var pipeline = HttpPipelineBuilder.Build(options, perCallPolicies, perRetryPolicies, null);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies, perRetryPolicies, null);
 
-            var context = new RequestContext();
+            RequestContext context = new RequestContext();
             context.AddPolicy(new AddHeaderPolicy("PerRetry", "RequestContext"), HttpPipelinePosition.PerRetry);
             context.AddPolicy(new AddHeaderPolicy("PerCall", "RequestContext"), HttpPipelinePosition.PerCall);
             context.AddPolicy(new AddHeaderPolicy("BeforeTransport", "RequestContext"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(context);
+            HttpMessage message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
