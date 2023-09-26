@@ -9,10 +9,10 @@ namespace Azure.Storage.DataMovement
 {
     internal abstract class StorageResourceItemInternal : StorageResourceItem
     {
-        internal Task MockCompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        internal Task CompleteTransferInternalAsync(bool overwrite, CancellationToken cancellationToken = default)
             => CompleteTransferAsync(overwrite, cancellationToken);
 
-        internal Task MockCopyBlockFromUriAsync(
+        internal Task CopyBlockFromUriInternalAsync(
             StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
                 options,
                 cancellationToken);
 
-        internal Task MockCopyFromStreamAsync(
+        internal Task CopyFromStreamInternalAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement
                options,
                cancellationToken);
 
-        internal Task MockCopyFromUriAsync(
+        internal Task CopyFromUriInternalAsync(
             StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
@@ -55,16 +55,16 @@ namespace Azure.Storage.DataMovement
                 options,
                 cancellationToken);
 
-        internal Task<bool> MockDeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        internal Task<bool> DeleteIfExistsInternalAsync(CancellationToken cancellationToken = default)
             => DeleteIfExistsAsync(cancellationToken);
 
-        internal Task<HttpAuthorization> MockGetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        internal Task<HttpAuthorization> GetCopyAuthorizationHeaderInternalAsync(CancellationToken cancellationToken = default)
             => GetCopyAuthorizationHeaderAsync(cancellationToken);
 
-        internal Task<StorageResourceProperties> MockGetPropertiesAsync(CancellationToken token = default)
+        internal Task<StorageResourceProperties> GetPropertiesInternalAsync(CancellationToken token = default)
             => GetPropertiesAsync(token);
 
-        internal Task<StorageResourceReadStreamResult> MockReadStreamAsync(
+        internal Task<StorageResourceReadStreamResult> ReadStreamInternalAsync(
             long position = 0,
             long? length = null,
             CancellationToken cancellationToken = default)

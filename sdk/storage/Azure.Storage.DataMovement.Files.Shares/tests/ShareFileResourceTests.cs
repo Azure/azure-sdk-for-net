@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
-                StorageResourceReadStreamResult result = await storageResource.MockReadStreamAsync();
+                StorageResourceReadStreamResult result = await storageResource.ReadStreamInternalAsync();
 
                 // Assert
                 Assert.NotNull(result);
@@ -92,7 +92,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
-                StorageResourceReadStreamResult result = await storageResource.MockReadStreamAsync();
+                StorageResourceReadStreamResult result = await storageResource.ReadStreamInternalAsync();
 
                 // Assert
                 Assert.NotNull(result);
@@ -117,7 +117,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Act without creating the blob
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.MockReadStreamAsync(),
+                storageResource.ReadStreamInternalAsync(),
                 e =>
                 {
                     Assert.AreEqual("ResourceNotFound", e.ErrorCode);
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
-                await storageResource.MockCopyFromStreamAsync(
+                await storageResource.CopyFromStreamInternalAsync(
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
@@ -218,7 +218,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
                 // Act
-                await storageResource.MockCopyFromStreamAsync(
+                await storageResource.CopyFromStreamInternalAsync(
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using (var stream = new MemoryStream(data))
             {
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.MockCopyFromStreamAsync(stream, length, false, length),
+                storageResource.CopyFromStreamInternalAsync(stream, length, false, length),
                 e =>
                 {
                     Assert.AreEqual("ResourceNotFound", e.ErrorCode);
@@ -286,7 +286,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             int length = 1024;
-            await destinationResource.MockCopyFromUriAsync(sourceResource, false, length);
+            await destinationResource.CopyFromUriInternalAsync(sourceResource, false, length);
         }
 
         [Test]
@@ -309,7 +309,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Act
             int length = 1024;
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.MockCopyFromUriAsync(sourceResource, false, length),
+                destinationResource.CopyFromUriInternalAsync(sourceResource, false, length),
                 e =>
                 {
                     Assert.AreEqual("ResourceNotFound", e.ErrorCode);
@@ -340,10 +340,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             int length = 1024;
-            await destinationResource.MockCopyFromUriAsync(sourceResource, false, length);
+            await destinationResource.CopyFromUriInternalAsync(sourceResource, false, length);
 
             // Act
-            await destinationResource.MockCopyBlockFromUriAsync(
+            await destinationResource.CopyBlockFromUriInternalAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, length),
@@ -370,7 +370,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Act
             int length = 1024;
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.MockCopyBlockFromUriAsync(sourceResource, new HttpRange(0, length), false, length),
+                destinationResource.CopyBlockFromUriInternalAsync(sourceResource, new HttpRange(0, length), false, length),
                 e =>
                 {
                     Assert.AreEqual("ResourceNotFound", e.ErrorCode);
@@ -418,7 +418,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource storageResource = new ShareFileStorageResource(mock.Object);
 
             // Act
-            StorageResourceProperties result = await storageResource.MockGetPropertiesAsync();
+            StorageResourceProperties result = await storageResource.GetPropertiesInternalAsync();
 
             // Assert
             Assert.NotNull(result);
@@ -439,7 +439,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Act without creating the blob
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.MockGetPropertiesAsync(),
+                storageResource.GetPropertiesInternalAsync(),
                 e =>
                 {
                     Assert.AreEqual("ResourceNotFound", e.ErrorCode);
