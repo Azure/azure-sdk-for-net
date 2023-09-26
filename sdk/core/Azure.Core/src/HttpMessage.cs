@@ -53,7 +53,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; private set; }
+        public new Request Request { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
@@ -82,16 +82,6 @@ namespace Azure.Core
         {
             get => Response;
             set => _response = (Response?)value;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PipelineRequest PipelineRequest
-        {
-            get => Request;
-            //set => Request = (Request)value;
         }
 
         /// <summary>

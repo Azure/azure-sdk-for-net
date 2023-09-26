@@ -20,10 +20,9 @@ public class PipelineMessage : IDisposable
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-    public virtual PipelineRequest PipelineRequest
+    public virtual PipelineRequest Request
     {
         get => _request;
-        //set => _request = value;
     }
 
     public virtual PipelineResponse? PipelineResponse

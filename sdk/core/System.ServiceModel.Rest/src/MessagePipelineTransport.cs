@@ -65,21 +65,21 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
     {
         #region Create the request
 
-        if (message.PipelineRequest.Method is null)
+        if (message.Request.Method is null)
         {
             throw new NotSupportedException("TODO");
         }
 
         // TODO: optimize?
-        HttpMethod method = message.PipelineRequest.Method;
+        HttpMethod method = message.Request.Method;
 
         // TODO: clean up
-        if (!message.PipelineRequest.TryGetUri(out Uri? uri))
+        if (!message.Request.TryGetUri(out Uri? uri))
         {
             throw new NotSupportedException("TODO");
         }
 
-        if (!message.PipelineRequest.TryGetContent(out RequestBody? content))
+        if (!message.Request.TryGetContent(out RequestBody? content))
         {
             throw new NotSupportedException("TODO");
         }
@@ -89,7 +89,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
         // TODO: CancellationToken
         netRequest.Content = new HttpContentAdapter(content!, CancellationToken.None);
 
-        message.PipelineRequest.SetRequestHeaders(netRequest);
+        message.Request.SetRequestHeaders(netRequest);
 
         #endregion
 
