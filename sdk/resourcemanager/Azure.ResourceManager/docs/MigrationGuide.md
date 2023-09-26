@@ -1,27 +1,25 @@
 # Migrating from old to new management SDK
 
-There are several differences between the old sdk and this new sdk. Here's an example of how to create a Virtual Machine with both SDKs:
+If you are using the old Azure management SDK for .Net, you may need to make some changes to your code to take advantage of the new features and improvements in the new Track 2 Azure management SDK. Here are some examples that show you how to migrate your code to the new Azure management SDK for .Net.
 
-## Create a Virtual Machine example
+## Migrating from Track 1 SDK to Track 2 SDK
+
+The old Track 1 SDK uses package names that start with `Microsoft.Azure.Management` and without `Fluent` suffix.
+To assist you with the migration process, we have prepared some examples for you.
 
 ### Import the namespaces
-#### Old (Microsoft.Azure.Management._)
+
+**Old (Microsoft.Azure.Management._)**
 ```C#
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Rest;
-using System;
-using System.Threading.Tasks;
+...
 ```
-#### New (Azure.ResourceManager._)
+**New (Azure.ResourceManager._)**
 ```C# Snippet:Using_Statements
-using System;
-using System.Linq;
-using Azure.Identity;
-using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
@@ -32,21 +30,23 @@ using Azure.ResourceManager.Resources.Models;
 ```
 
 ### Setting up the clients
-#### Old
+
+**Old**
 ```C#
 ServiceClientCredentials credentials = getMyCredentials();
 ComputeManagementClient computeClient = new ComputeManagementClient(credentials);
 NetworkManagementClient networkClient = new NetworkManagementClient(credentials);
 ManagedServiceIdentityClient managedServiceIdentityClient = new ManagedServiceIdentityClient(credentials);
 ```
-#### New
+**New**
 ```C# Snippet:Construct_Client
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
 As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the default subscription and start managing your resources.
 
 ### Create a Resource Group
-#### Old
+
+**Old**
 ```C#
 ServiceClientCredentials credentials = getMyCredentials(); 
 ResourceManagementClient resourcesClient = new ResourceManagementClient(credentials);
@@ -61,7 +61,7 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
         Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
     });
 ```
-#### New
+**New**
 ```C# Snippet:Create_ResourceGroup
 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
@@ -78,7 +78,8 @@ The main difference is that the previous libraries represent all operations as f
 The new SDK also provides some common classes to represent commonly-used constructs, like `Location`, and allows you to use them directly throughout the APIs, making it easier to discover how to properly configure resources.
 
 ### Create an Availability Set
-#### Old
+
+**Old**
 ```C#
 AvailabilitySet inputAvailabilitySet = new AvailabilitySet
 {
@@ -100,7 +101,7 @@ string aSetName = "quickstartvm_aSet";
 AvailabilitySet asCreateOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(rgName,aSetName,inputAvailabilitySet);
 string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/{aSetName}";
 ```
-#### New
+**New**
 ```C# Snippet:Create_AvailabilitySet
 string virtualMachineName = "quickstartvm";
 AvailabilitySetData availabilitySetData = new AvailabilitySetData(location);
@@ -112,7 +113,8 @@ AvailabilitySetResource availabilitySet = availabilitySetOperation.Value;
 Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsCollection returned from the `GetAvailabilitySets()` extension method instead of using another client. 
 
 ### Create a Virtual Network and Subnet
-#### Old
+
+**Old**
 ```C#
 string vnetName = vmName + "_vnet";
 string subnetName = "mySubnet";
@@ -139,7 +141,7 @@ VirtualNetwork vnet = new VirtualNetwork()
 VirtualNetwork putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(rgName, vnetName, vnet);
 VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subnetName);
 ```
-#### New
+**New**
 ```C# Snippet:Create_Vnet_and_Subnet
 string virtualNetworkName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
@@ -164,7 +166,8 @@ VirtualNetworkResource virtualNetwork = virtualNetworkOperation.Value;
 In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets collection using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
 
 ### Create a Security Group
-#### Old
+
+**Old**
 ```C#
 string nsgName = vmName + "_nsg";
 NetworkSecurityGroup nsgParameters = new NetworkSecurityGroup()
@@ -175,7 +178,7 @@ NetworkSecurityGroup nsgParameters = new NetworkSecurityGroup()
 NetworkSecurityGroup putNSgResponse = networkClient.NetworkSecurityGroups.CreateOrUpdate(rgName, nsgName, nsgParameters);
 NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
 ```
-#### New
+**New**
 ```C# Snippet:Create_NetworkSecurityGroup
 string networkSecurityGroupName = virtualMachineName + "_nsg";
 NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData() { Location = location };
@@ -185,7 +188,8 @@ NetworkSecurityGroupResource networkSecurityGroup = networkSecurityGroupOperatio
 ```
 
 ### Create a Network Interface
-#### Old
+
+**Old**
 ```C#
 string nicname = vmName + "_nic";
 string ipConfigName = vmName + "_IP";
@@ -212,7 +216,7 @@ NetworkInterface nicParameters = new NetworkInterface()
 NetworkInterface putNicResponse = networkClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
 NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
 ```
-#### New
+**New**
 ```C# Snippet:Create_NetworkInterface
 string networkInterfaceName = virtualMachineName + "_nic";
 NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new NetworkInterfaceIPConfigurationData()
@@ -234,7 +238,8 @@ NetworkInterfaceResource networkInterface = networkInterfaceOperation.Value;
 This step is similar to the old SDK, however, notice that the `CreateOrUpdateAsync()` method returns the network interface that has been created. 
 
 ### Create a Virtual Machine
-#### Old
+
+**Old**
 ```C#
 string vmSize = VirtualMachineSizeTypes.StandardA1V2
 VirtualMachine inputVM = new VirtualMachine
@@ -285,7 +290,7 @@ inputVM.NetworkProfile = vmNetworkProfile;
 
 VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
 ```
-#### New
+**New**
 ```C# Snippet:Create_VirtualMachine
 VirtualMachineData virutalMachineData = new VirtualMachineData(location)
 {

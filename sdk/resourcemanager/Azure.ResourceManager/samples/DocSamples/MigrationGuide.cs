@@ -1,8 +1,11 @@
-﻿#region Snippet:Using_Statements
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Linq;
 using Azure.Identity;
 using Azure.Core;
+#region Snippet:Using_Statements
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
