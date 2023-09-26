@@ -13,6 +13,16 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+    # Not support generate samples from customized operations
+    - VirtualMachineScaleSets_ListPublicIPAddresses
+    - VirtualMachineScaleSets_ListNetworkInterfaces
+    - VirtualMachineScaleSets_ListIpConfigurations
+    - VirtualMachineScaleSets_GetIpConfiguration
+    - VirtualMachineScaleSets_GetPublicIPAddress
+    - VirtualMachineScaleSetVMs_ListPublicIPAddresses
+    - VirtualMachineScaleSetVMs_ListNetworkInterfaces
+    - VirtualMachineScaleSets_GetNetworkInterface
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
