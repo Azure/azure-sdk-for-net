@@ -97,5 +97,14 @@
                 return PayloadHelper.GetPayload("TokenIssuanceStart.RequestMissingODataType.json");
             }
         }
+
+        /// <summary> Gets the request payload with invalid json structure </summary>
+        public static string RequestWithInvalidCharacter
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.InvalidJsonRequest.json");
+            }
+        }
     }
 }

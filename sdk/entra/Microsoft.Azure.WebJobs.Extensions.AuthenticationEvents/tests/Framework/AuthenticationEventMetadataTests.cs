@@ -14,8 +14,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     public class AuthenticationEventMetadataTests
     {
         [Test]
-        [TestCaseSource(nameof(TestScenarios))]
-        public void TestRequestCreateInstance(object testObject, string message, bool success, string exceptionMessage)
+        [TestCaseSource(nameof(TestJsonPayloadScenarios))]
+        public void TestRequestPayloadStructureInstance(object testObject, string message, bool success, string exceptionMessage)
+        {
+            string payload = testObject.ToString();
+            if (success == false)
+            {
+                var ex = Assert.Throws<RequestValidationException>(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
+                Assert.AreEqual(exceptionMessage, ex.Message);
+            }
+            else
+            {
+                Assert.DoesNotThrow(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TestAttributeScenarios))]
+        public void TestRequestAttributesCreateInstance(object testObject, string message, bool success, string exceptionMessage)
         {
             string payload = testObject.ToString();
             AuthenticationEventMetadata eventMetadata = AuthenticationEventMetadataLoader.GetEventMetadata(payload);
@@ -32,7 +48,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             }
         }
 
-        private static IEnumerable<object[]> TestScenarios()
+        private static IEnumerable<object[]> TestJsonPayloadScenarios()
+        {
+#region Invalid
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.RequestWithInvalidCharacter,
+                Message = "Testing request payload with invalid character passed and verifies it throws an error",
+                ExceptionMessage = "The JSON object contains a trailing comma at the end which is not supported in this mode. Change the reader options. LineNumber: 38 | BytePositionInLine: 6."
+            }.ToArray;
+#endregion
+
+#region Valid
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.ValidRequestPayload,
+                Message = "Testing valid full request payload",
+                Success = true,
+            }.ToArray;
+#endregion
+        }
+
+        private static IEnumerable<object[]> TestAttributeScenarios()
         {
 #region Invalid
             yield return new TestCaseStructure()

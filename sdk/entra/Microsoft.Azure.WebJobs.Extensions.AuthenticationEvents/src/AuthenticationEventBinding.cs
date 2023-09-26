@@ -233,7 +233,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             if (!Helpers.IsJson(body))
             {
-                throw new InvalidDataException();
+                throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_Payload);
             }
 
             return AuthenticationEventMetadataLoader.GetEventMetadata(body);

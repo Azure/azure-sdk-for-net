@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(AuthenticationEventResource.Ex_Event_Missing, ex);
+                throw new RequestValidationException(ex.Message, ex.InnerException);
             }
         }
 
