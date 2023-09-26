@@ -32,6 +32,9 @@
     <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceContainerInternal.cs" LinkBase="Shared\DataMovement" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
   <ItemGroup>
