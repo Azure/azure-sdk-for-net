@@ -40,7 +40,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
 
     public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
-        PipelineRequest request = new MessagePipelineRequest();
+        PipelineRequest request = new PipelineRequest();
         PipelineMessage message = new PipelineMessage(request, classifier);
         return message;
     }
@@ -73,21 +73,13 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
         // TODO: optimize?
         HttpMethod method = message.Request.Method;
 
-        // TODO: clean up
-        if (!message.Request.TryGetUri(out Uri? uri))
+        using HttpRequestMessage netRequest = new HttpRequestMessage(method, message.Request.Uri);
+
+        if (message.Request.Content != null)
         {
-            throw new NotSupportedException("TODO");
+            // TODO: CancellationToken
+            netRequest.Content = new HttpContentAdapter(message.Request.Content, CancellationToken.None);
         }
-
-        if (!message.Request.TryGetContent(out RequestBody? content))
-        {
-            throw new NotSupportedException("TODO");
-        }
-
-        using HttpRequestMessage netRequest = new HttpRequestMessage(method, uri);
-
-        // TODO: CancellationToken
-        netRequest.Content = new HttpContentAdapter(content!, CancellationToken.None);
 
         message.Request.SetRequestHeaders(netRequest);
 

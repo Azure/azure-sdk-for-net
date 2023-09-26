@@ -37,10 +37,7 @@ public class PipelineMessage : IDisposable
         set => _response = value;
     }
 
-    public virtual ResponseErrorClassifier ResponseErrorClassifier
-    {
-        get => _classifier;
-    }
+    public virtual ResponseErrorClassifier ResponseErrorClassifier { get => _classifier; }
 
     public virtual void Dispose()
     {

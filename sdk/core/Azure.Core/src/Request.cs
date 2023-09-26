@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Experimental.Core;
 using Azure.Core.Pipeline;
@@ -22,7 +23,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
         /// </summary>
-        public virtual RequestUriBuilder Uri
+        public new RequestUriBuilder Uri
         {
             get
             {
@@ -38,35 +39,20 @@ namespace Azure.Core
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <param name="uri"></param>
-        public override void SetUri(RequestUri uri)
-        {
-            Argument.AssertNotNull(uri, nameof(uri));
-            _uri = new RequestUriBuilderAdapter(uri);
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
         public abstract string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
-        public new virtual RequestMethod Method { get; set; }
-
-        ///// <summary>
-        ///// TBD.
-        ///// </summary>
-        ///// <param name="method"></param>
-        //public override void SetMethod(string method)
-        //{
-        //    Method = VerbToMethod(method);
-        //}
-
-        private static RequestMethod VerbToMethod(string verb)
+        public new virtual RequestMethod Method
         {
-            return verb switch
+            get { return SystemToAzureMethod(base.Method); }
+            set { base.Method = AzureToSystemMethod(value); }
+        }
+
+        private static RequestMethod SystemToAzureMethod(HttpMethod verb)
+        {
+            return verb.Method switch
             {
                 "GET" => RequestMethod.Get,
                 "POST" => RequestMethod.Post,
@@ -78,40 +64,32 @@ namespace Azure.Core
             };
         }
 
+        private static HttpMethod AzureToSystemMethod(RequestMethod method)
+        {
+            return method.Method switch
+            {
+                "GET" => HttpMethod.Get,
+                "POST" => HttpMethod.Post,
+                "PUT" => HttpMethod.Put,
+                "HEAD" => HttpMethod.Head,
+                "DELETE" => HttpMethod.Delete,
+                "PATCH" => new HttpMethod("PATCH"),
+                _ => throw new ArgumentOutOfRangeException(nameof(method)),
+            };
+        }
+
+        private RequestBodyContent? _content;
         /// <summary>
         /// Gets or sets the request content.
         /// </summary>
-        public virtual RequestContent? Content { get; set; }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="content"></param>
-        public override void SetContent(RequestBody content)
+        public new virtual RequestContent? Content
         {
-            Content = new RequestBodyContent(content);
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="uri"></param>
-        /// <returns></returns>
-        public override bool TryGetUri(out Uri uri)
-        {
-            uri = Uri.ToUri();
-            return true;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        public override bool TryGetContent(out RequestBody content)
-        {
-            content = Content!;
-            return true;
+            get => _content;
+            set
+            {
+                base.Content = value;
+                _content = base.Content is null ? null : new RequestBodyContent(base.Content);
+            }
         }
 
         /// <summary>
