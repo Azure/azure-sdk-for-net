@@ -263,16 +263,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
                 new ShareClientOptions());
 
-            Uri passedSourceUri = default;
-            HttpRange passedRange = default;
-            HttpRange passedSourceRange = default;
             mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<Uri, HttpRange, HttpRange, ShareFileUploadRangeFromUriOptions, CancellationToken>((sourceUri, range, sourceRange, options, token) =>
-                {
-                    passedSourceUri = sourceUri;
-                    passedRange = range;
-                    passedSourceRange = sourceRange;
-                })
                 .Returns(Task.FromResult(Response.FromValue(
                     ShareModelFactory.ShareFileUploadInfo(
                         eTag: new ETag("eTag"),
@@ -287,11 +278,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             sourceResource.Verify(b => b.Uri, Times.Once());
             sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()),
+            mockDestination.Verify(b => b.UploadRangeFromUriAsync(
+                sourceResource.Object.Uri,
+                new HttpRange(0, length),
+                new HttpRange(0, length),
+                It.IsAny<ShareFileUploadRangeFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
                 Times.Once());
-            Assert.AreEqual(sourceResource.Object.Uri, passedSourceUri);
-            Assert.AreEqual(new HttpRange(0, length), passedRange);
-            Assert.AreEqual(new HttpRange(0, length), passedSourceRange);
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -307,16 +300,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
                 new ShareClientOptions());
 
-            Uri passedSourceUri = default;
-            HttpRange passedRange = default;
-            HttpRange passedSourceRange = default;
             mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<Uri, HttpRange, HttpRange, ShareFileUploadRangeFromUriOptions, CancellationToken>((sourceUri, range, sourceRange, options, token) =>
-                {
-                    passedSourceUri = sourceUri;
-                    passedRange = range;
-                    passedSourceRange = sourceRange;
-                })
                 .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
@@ -331,12 +315,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             sourceResource.Verify(b => b.Uri, Times.Once());
             sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()),
+            mockDestination.Verify(b => b.UploadRangeFromUriAsync(
+                sourceResource.Object.Uri,
+                new HttpRange(0, length),
+                new HttpRange(0, length),
+                It.IsAny<ShareFileUploadRangeFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
-            Assert.AreEqual(sourceResource.Object.Uri, passedSourceUri);
-            Assert.AreEqual(new HttpRange(0, length), passedRange);
-            Assert.AreEqual(new HttpRange(0, length), passedSourceRange);
         }
 
         [Test]
@@ -352,16 +338,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
                 new ShareClientOptions());
 
-            Uri passedSourceUri = default;
-            HttpRange passedRange = default;
-            HttpRange passedSourceRange = default;
             mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<Uri, HttpRange, HttpRange, ShareFileUploadRangeFromUriOptions, CancellationToken>((sourceUri, range, sourceRange, options, token) =>
-                {
-                    passedSourceUri = sourceUri;
-                    passedRange = range;
-                    passedSourceRange = sourceRange;
-                })
                 .Returns(Task.FromResult(Response.FromValue(
                     ShareModelFactory.ShareFileUploadInfo(
                         eTag: new ETag("eTag"),
@@ -380,12 +357,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             sourceResource.Verify(b => b.Uri, Times.Once());
             sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()),
+            mockDestination.Verify(b => b.UploadRangeFromUriAsync(
+                sourceResource.Object.Uri,
+                new HttpRange(0, length),
+                new HttpRange(0, length),
+                It.IsAny<ShareFileUploadRangeFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
-            Assert.AreEqual(sourceResource.Object.Uri, passedSourceUri);
-            Assert.AreEqual(new HttpRange(0, length), passedRange);
-            Assert.AreEqual(new HttpRange(0, length), passedSourceRange);
         }
 
         [Test]
@@ -400,16 +379,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
                 new ShareClientOptions());
 
-            Uri passedSourceUri = default;
-            HttpRange passedRange = default;
-            HttpRange passedSourceRange = default;
             mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<Uri, HttpRange, HttpRange, ShareFileUploadRangeFromUriOptions, CancellationToken>((sourceUri, range, sourceRange, options, token) =>
-                {
-                    passedSourceUri = sourceUri;
-                    passedRange = range;
-                    passedSourceRange = sourceRange;
-                })
                 .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
@@ -424,12 +394,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             sourceResource.Verify(b => b.Uri, Times.Once());
             sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()),
+            mockDestination.Verify(b => b.UploadRangeFromUriAsync(
+                sourceResource.Object.Uri,
+                new HttpRange(0, length),
+                new HttpRange(0, length),
+                It.IsAny<ShareFileUploadRangeFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
-            Assert.AreEqual(sourceResource.Object.Uri, passedSourceUri);
-            Assert.AreEqual(new HttpRange(0, length), passedRange);
-            Assert.AreEqual(new HttpRange(0, length), passedSourceRange);
         }
 
         [Test]
