@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="linkType"> Link type. </param>
         /// <param name="issues"> List of issues. </param>
         /// <param name="context"> Provides additional context on links. </param>
-        /// <param name="resourceIdString"> Resource ID. </param>
+        /// <param name="resourceId"> Resource ID. </param>
         /// <param name="roundTripTimeMin"> Minimum roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeAvg"> Average roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeMax"> Maximum roundtrip time in milliseconds. </param>
-        internal HopLink(string nextHopId, string linkType, IReadOnlyList<ConnectivityIssueInfo> issues, IReadOnlyDictionary<string, string> context, string resourceIdString, long? roundTripTimeMin, long? roundTripTimeAvg, long? roundTripTimeMax)
+        internal HopLink(string nextHopId, string linkType, IReadOnlyList<ConnectivityIssueInfo> issues, IReadOnlyDictionary<string, string> context, ResourceIdentifier resourceId, long? roundTripTimeMin, long? roundTripTimeAvg, long? roundTripTimeMax)
         {
             NextHopId = nextHopId;
             LinkType = linkType;
             Issues = issues;
             Context = context;
-            ResourceIdString = resourceIdString;
+            ResourceId = resourceId;
             RoundTripTimeMin = roundTripTimeMin;
             RoundTripTimeAvg = roundTripTimeAvg;
             RoundTripTimeMax = roundTripTimeMax;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Provides additional context on links. </summary>
         public IReadOnlyDictionary<string, string> Context { get; }
         /// <summary> Resource ID. </summary>
-        public string ResourceIdString { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Minimum roundtrip time in milliseconds. </summary>
         public long? RoundTripTimeMin { get; }
         /// <summary> Average roundtrip time in milliseconds. </summary>

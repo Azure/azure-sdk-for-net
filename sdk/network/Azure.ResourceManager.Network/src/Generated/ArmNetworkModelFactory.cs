@@ -3365,17 +3365,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="linkType"> Link type. </param>
         /// <param name="issues"> List of issues. </param>
         /// <param name="context"> Provides additional context on links. </param>
-        /// <param name="resourceIdString"> Resource ID. </param>
+        /// <param name="resourceId"> Resource ID. </param>
         /// <param name="roundTripTimeMin"> Minimum roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeAvg"> Average roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeMax"> Maximum roundtrip time in milliseconds. </param>
         /// <returns> A new <see cref="Models.HopLink"/> instance for mocking. </returns>
-        public static HopLink HopLink(string nextHopId = null, string linkType = null, IEnumerable<ConnectivityIssueInfo> issues = null, IReadOnlyDictionary<string, string> context = null, string resourceIdString = null, long? roundTripTimeMin = null, long? roundTripTimeAvg = null, long? roundTripTimeMax = null)
+        public static HopLink HopLink(string nextHopId = null, string linkType = null, IEnumerable<ConnectivityIssueInfo> issues = null, IReadOnlyDictionary<string, string> context = null, ResourceIdentifier resourceId = null, long? roundTripTimeMin = null, long? roundTripTimeAvg = null, long? roundTripTimeMax = null)
         {
             issues ??= new List<ConnectivityIssueInfo>();
             context ??= new Dictionary<string, string>();
 
-            return new HopLink(nextHopId, linkType, issues?.ToList(), context, resourceIdString, roundTripTimeMin, roundTripTimeAvg, roundTripTimeMax);
+            return new HopLink(nextHopId, linkType, issues?.ToList(), context, resourceId, roundTripTimeMin, roundTripTimeAvg, roundTripTimeMax);
         }
 
         /// <summary> Initializes a new instance of ConnectivityIssueInfo. </summary>

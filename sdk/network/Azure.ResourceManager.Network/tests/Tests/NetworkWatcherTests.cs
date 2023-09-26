@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Tests
                 new ConnectivityDestination() { Port = 22, ResourceId = vm2.Id });
             var connectivityResult = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content);
             Assert.IsNotNull(connectivityResult.Value.NetworkConnectionStatus);
-            Assert.IsEmpty(connectivityResult.Value.Hops.First().Links.First().ResourceIdString);
+            Assert.IsNull(connectivityResult.Value.Hops.First().Links.First().ResourceId);
         }
     }
 }
