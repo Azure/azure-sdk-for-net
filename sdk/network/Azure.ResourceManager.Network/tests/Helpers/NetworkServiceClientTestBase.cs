@@ -395,19 +395,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         //    await deploymentWait.WaitForCompletionAsync();
         //}
 
-        // TODO: we should decide after preview whehter we need to support compute resources like vmss in Network SDK
-        //public async Task CreateVmss(ResourcesManagementClient resourcesClient, string resourceGroupName, string deploymentName)
-        //{
-        //    string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
+        public async Task CreateVmss(ResourceGroupResource resourceGroup, string deploymentName)
+        {
+            string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
 
-        //    DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
-        //    {
-        //        Template = templateString
-        //    };
-        //    Deployment deploymentModel = new Deployment(deploymentProperties);
-        //    Operation<DeploymentExtended> deploymentWait = await resourcesClient.Deployments.CreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
-        //    await deploymentWait.WaitForCompletionAsync();
-        //}
+            var deploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+            {
+                Template = BinaryData.FromString(templateString)
+            };
+            var deploymentModel = new ArmDeploymentContent(deploymentProperties);
+            var deploymentWait = await resourceGroup.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deploymentModel);
+            await deploymentWait.WaitForCompletionAsync();
+        }
 
         public async Task<ExpressRouteCircuitResource> CreateDefaultExpressRouteCircuit(Resources.ResourceGroupResource resourceGroup, string circuitName, string location)
         {
