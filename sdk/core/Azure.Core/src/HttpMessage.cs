@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
 
@@ -24,16 +25,26 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : this((PipelineRequest)request, responseClassifier)
+            : this((PipelineRequest)request, responseClassifier, default)
         {
         }
 
-        internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
-            : base(request, classifier)
+        internal HttpMessage(Request request,
+            ResponseClassifier classifier,
+            RequestContext? context)
+             : this((PipelineRequest)request,
+                    UpdateClassifierFromContext(classifier, context),
+                    context)
+        {
+        }
+
+        internal HttpMessage(PipelineRequest request,
+            ResponseErrorClassifier classifier,
+            RequestOptions? options)
+            : base(request, classifier, options)
         {
             Argument.AssertNotNull(request, nameof(request));
 
-            Request = (Request)request;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -41,7 +52,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public new Request Request { get; private set; }
+        public new Request Request { get => (Request)base.Request; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
@@ -61,11 +72,7 @@ namespace Azure.Core
             }
             set
             {
-                _response = value;
-
-                // TODO: this feels like it could go badly.  Is there another way?
-                // TODO: revisit once PipelineResponse lands.
-                base.Response = value;
+                base.Response = _response = value;
             }
         }
 
@@ -108,6 +115,17 @@ namespace Azure.Core
         /// </summary>
         public MessageProcessingContext ProcessingContext => new(this);
 
+        private static ResponseClassifier UpdateClassifierFromContext(ResponseClassifier classifier, RequestContext? context)
+        {
+            if (context is not null)
+            {
+                context.Freeze();
+                return context.Apply(classifier);
+            }
+
+            return classifier;
+        }
+
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
             if (context == null)
@@ -121,11 +139,6 @@ namespace Azure.Core
             {
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
-            }
-
-            if (classifier != null)
-            {
-                ResponseClassifier = context.Apply(classifier);
             }
         }
 

@@ -12,10 +12,14 @@ public class PipelineMessage : IDisposable
 
     private PipelineResponse? _response;
 
-    protected internal PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+    protected internal PipelineMessage(PipelineRequest request,
+        ResponseErrorClassifier classifier,
+        RequestOptions? options)
     {
         _request = request;
         _classifier = classifier;
+
+        // TODO: wire options through
     }
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;

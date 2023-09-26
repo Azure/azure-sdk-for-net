@@ -120,13 +120,12 @@ namespace Azure.Core.Pipeline
         {
             classifier ??= ResponseClassifier.Shared;
 
-            HttpMessage message = new HttpMessage(CreateRequest(), classifier);
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier, options);
 
-            // TODO: add this back
-            //if (options is RequestContext context)
-            //{
-            //    message.ApplyRequestContext(context, classifier);
-            //}
+            if (options is RequestContext context)
+            {
+                message.ApplyRequestContext(context, (ResponseClassifier?)classifier);
+            }
 
             return message;
         }
@@ -163,6 +162,8 @@ namespace Azure.Core.Pipeline
             try
             {
                 var pipeline = CreateRequestPipeline(policies, message.Policies);
+
+                // TODO: use PipelineEnumerator?
                 await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
             }
             finally
