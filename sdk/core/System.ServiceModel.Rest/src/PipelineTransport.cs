@@ -21,7 +21,7 @@ public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
 
         Process(message);
 
-        message.Response.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
     public async ValueTask ProcessAsync(TMessage message, PipelineEnumerator pipeline)
@@ -30,6 +30,6 @@ public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
 
         await ProcessAsync(message).ConfigureAwait(false);
 
-        message.Response.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 }

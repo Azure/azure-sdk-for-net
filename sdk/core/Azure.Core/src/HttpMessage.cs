@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
@@ -25,14 +24,8 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : base(request, responseClassifier)
+            : this((PipelineRequest)request, responseClassifier)
         {
-            Argument.AssertNotNull(request, nameof(Request));
-
-            Request = request;
-            ResponseClassifier = responseClassifier;
-            BufferResponse = true;
-            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
         internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
@@ -41,11 +34,6 @@ namespace Azure.Core
             Argument.AssertNotNull(request, nameof(request));
 
             Request = (Request)request;
-
-            // TODO: when we get here, the base class has already initialized
-            // the ResponseClassifier property, so this makes a second allocation
-            // that isn't needed.  Address this.
-            ResponseClassifier = new ResponseClassifierAdapter(classifier);
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -88,18 +76,16 @@ namespace Azure.Core
 
         internal void ClearResponse() => _response = null;
 
+        // Note: ideally this is never used because methods treating HttpMethod as PipelineMessage
+        // won't see the override.  Revisit?
+        private ResponseClassifier? _classifier = null;
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResponseErrorClassifier ResponseErrorClassifier
+        public new ResponseClassifier ResponseClassifier
         {
-            get => ResponseClassifier;
+            get { return _classifier ?? (ResponseClassifier)base.ResponseClassifier; }
+            set { /* TODO: restore: _classifier = value;*/ throw new NotImplementedException(); }
         }
 
         /// <summary>

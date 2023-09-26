@@ -108,21 +108,7 @@ namespace Azure.Core.Pipeline
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
-            => CreateMessage((RequestOptions?)context, classifier);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="classifier"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
-        {
-            // TODO: I made a mess here, clean it up.
-            return CreateMessage((RequestOptions?)options, (ResponseClassifier?)classifier);
-        }
+            => (HttpMessage)CreateMessage((RequestOptions?)context, classifier);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -130,19 +116,17 @@ namespace Azure.Core.Pipeline
         /// <param name="options">Request options to be used by the pipeline when sending the message request.</param>
         /// <param name="classifier">Classifier to apply to the response.</param>
         /// <returns>The HTTP message.</returns>
-        public HttpMessage CreateMessage(RequestOptions? options, ResponseClassifier? classifier = default)
+        public override PipelineMessage CreateMessage(RequestOptions? options, ResponseErrorClassifier? classifier = default)
         {
-            HttpMessage message = CreateMessage();
+            classifier ??= ResponseClassifier.Shared;
 
-            if (classifier != null)
-            {
-                message.ResponseClassifier = classifier;
-            }
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier);
 
-            if (options is RequestContext context)
-            {
-                message.ApplyRequestContext(context, classifier);
-            }
+            // TODO: add this back
+            //if (options is RequestContext context)
+            //{
+            //    message.ApplyRequestContext(context, classifier);
+            //}
 
             return message;
         }

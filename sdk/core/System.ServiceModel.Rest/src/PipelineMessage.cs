@@ -12,7 +12,7 @@ public class PipelineMessage : IDisposable
 
     private PipelineResponse? _response;
 
-    public PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+    protected internal PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
     {
         _request = request;
         _classifier = classifier;
@@ -37,7 +37,7 @@ public class PipelineMessage : IDisposable
         set => _response = value;
     }
 
-    public virtual ResponseErrorClassifier ResponseErrorClassifier { get => _classifier; }
+    public virtual ResponseErrorClassifier ResponseClassifier { get => _classifier; }
 
     public virtual void Dispose()
     {
