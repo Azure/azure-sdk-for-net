@@ -203,6 +203,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.HopLink"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HopLink HopLink(string nextHopId = null, string linkType = null, IEnumerable<ConnectivityIssueInfo> issues = null, IReadOnlyDictionary<string, string> context = null, ResourceIdentifier resourceId = null, long? roundTripTimeMin = null, long? roundTripTimeAvg = null, long? roundTripTimeMax = null)
-            => HopLink(nextHopId, linkType, issues, context, null, roundTripTimeMin, roundTripTimeAvg, roundTripTimeMax);
+            => HopLink(nextHopId, linkType, issues, context, resourceId != null ? resourceId.ToString() : null, roundTripTimeMin, roundTripTimeAvg, roundTripTimeMax);
     }
 }
