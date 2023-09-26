@@ -61,22 +61,4 @@ namespace Azure.Core
         // TODO: would it make sense to template classifier to avoid this override?
         public virtual bool IsErrorResponse(HttpMessage message) => base.IsErrorResponse(message);
     }
-
-#pragma warning disable SA1402 // File may only contain a single type
-    internal class ResponseClassifierAdapter : ResponseClassifier
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        private readonly ResponseErrorClassifier _classifier;
-
-        public ResponseClassifierAdapter(ResponseErrorClassifier classifier)
-        {
-            _classifier = classifier;
-        }
-
-        public override bool IsErrorResponse(HttpMessage message)
-            => _classifier.IsErrorResponse(message);
-
-        public override bool IsErrorResponse(PipelineMessage message)
-            => _classifier.IsErrorResponse(message);
-    }
 }
