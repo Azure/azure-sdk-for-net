@@ -53,7 +53,7 @@ public class PipelineRequest : IDisposable
 
     public virtual RequestBody? Content { get; set; }
 
-    public virtual void SetHeader(string name, string value)
+    public virtual void SetHeaderValue(string name, string value)
     {
         _headers ??= new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
         _headers[name] = value;

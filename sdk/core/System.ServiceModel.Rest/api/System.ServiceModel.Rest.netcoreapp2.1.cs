@@ -94,7 +94,7 @@ namespace System.ServiceModel.Rest.Core
         public virtual System.Net.Http.HttpMethod Method { get { throw null; } set { } }
         public virtual System.Uri Uri { get { throw null; } set { } }
         public virtual void Dispose() { }
-        public virtual void SetHeader(string name, string value) { }
+        public virtual void SetHeaderValue(string name, string value) { }
     }
     public partial class PipelineResponse : System.IDisposable
     {

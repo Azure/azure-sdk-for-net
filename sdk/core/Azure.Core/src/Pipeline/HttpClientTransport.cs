@@ -386,7 +386,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override void SetHeader(string name, string value)
+            protected internal override void SetHeader(string name, string value)
             {
                 _headers.Set(new IgnoreCaseString(name), value);
             }
