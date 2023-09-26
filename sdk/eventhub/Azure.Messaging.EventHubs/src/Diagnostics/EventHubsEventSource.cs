@@ -2150,6 +2150,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="startingPosition">The position in the event stream that reading will start from.</param>
         /// <param name="checkpointUsed"><c>true</c> if a checkpoint was used for the position; otherwise, <c>false</c>.</param>
         /// <param name="lastModified">The date and time that the checkpoint was last modified.</param>
+        /// <param name="authorIdentifier">The author of the checkpoint used to determine this position.</param>
         ///
         [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]. Position chosen by {5}.")]
         public virtual void EventProcessorPartitionProcessingEventPositionDetermined(string partitionId,
@@ -2158,11 +2159,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                                                      string consumerGroup,
                                                                                      string startingPosition,
                                                                                      bool checkpointUsed,
-                                                                                     string lastModified)
+                                                                                     string lastModified,
+                                                                                     string authorIdentifier)
         {
             if (IsEnabled())
             {
-                var selectionBasedOn = checkpointUsed ? $"checkpoint made at {lastModified}" : "default";
+                var selectionBasedOn = checkpointUsed ? $"checkpoint made at {lastModified} by client author with unique identifier: {authorIdentifier}" : "default";
                 WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty, selectionBasedOn);
             }
         }

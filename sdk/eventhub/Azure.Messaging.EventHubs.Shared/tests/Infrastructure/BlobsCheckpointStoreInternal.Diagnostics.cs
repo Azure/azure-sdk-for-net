@@ -86,6 +86,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
         partial void UpdateCheckpointError(string partitionId,
@@ -93,8 +96,11 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
+                                           string sequenceNumber,
+                                           string replicationSegment,
+                                           string offset,
                                            Exception exception) =>
-            Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, exception.Message);
+            Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset, exception.Message);
 
         /// <summary>
         ///   Indicates that an attempt to update a checkpoint has completed.
@@ -105,13 +111,19 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         partial void UpdateCheckpointComplete(string partitionId,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               string consumerGroup,
-                                              string clientIdentifier) =>
-            Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier);
+                                              string clientIdentifier,
+                                              string sequenceNumber,
+                                              string replicationSegment,
+                                              string offset) =>
+            Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -122,13 +134,19 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         partial void UpdateCheckpointStart(string partitionId,
                                            string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
-                                           string clientIdentifier) =>
-            Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier);
+                                           string clientIdentifier,
+                                           string sequenceNumber,
+                                           string replicationSegment,
+                                           string offset) =>
+            Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.
@@ -255,12 +273,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="clientIdentifier">The unique identifier of the Event Hub client that wrote this checkpoint.</param>
         ///
         partial void GetCheckpointComplete(string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
-                                           string partitionId) =>
-            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+                                           string partitionId,
+                                           string clientIdentifier) =>
+            Logger.GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.

@@ -763,8 +763,9 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 var checkpointUsed = (checkpoint != null);
                 var checkpointLastModified = checkpointUsed ? checkpoint.LastModified.ToString() : null;
+                var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified);
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified, checkpointAuthor);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing

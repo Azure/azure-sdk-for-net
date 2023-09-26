@@ -14,11 +14,11 @@ namespace Azure.Messaging.EventHubs.Consumer
     public struct CheckpointPosition
     {
         /// <summary>
-        ///   The offset to associate with the checkpoint. If there is a <see cref="SequenceNumber"/> associated with this checkpoint, then this value will be used for
-        ///   informational metadata. If no <see cref="SequenceNumber"/> is associated, then this will be used for positioning when events are read.
+        ///   The offset to associate with the checkpoint. This value will be used for informational metadata in almost all cases. If there is no sequence number associated
+        ///   with the checkpoint, this value will be used for positioning when events are read.
         /// </summary>
         ///
-        public long? Offset { get; internal set; }
+        public long? Offset { get; internal set; } = null;
 
         /// <summary>
         ///   The replication segment to associate with the checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.
@@ -27,10 +27,10 @@ namespace Azure.Messaging.EventHubs.Consumer
         public string ReplicationSegment { get; internal set; }
 
         /// <summary>
-        ///   The sequence number to associate with the checkpoint. If populated, it indicates that a processor should begin reading from the next event in the stream.
+        ///   The sequence number to associate with the checkpoint. It indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
         ///
-        public long SequenceNumber { get; internal set; }
+        public long SequenceNumber { get; internal set; } = long.MinValue;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
-        /// <param name="replicationSegment">The replication segment to associate with this checkpoint</param>
+        /// <param name="replicationSegment">The replication segment to associate with this checkpoint.</param>
         /// <param name="offset">An optional offset to associate with the checkpoint, intended as informational metadata.</param>
         ///
         public CheckpointPosition(long sequenceNumber, string replicationSegment, long? offset = null)

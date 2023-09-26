@@ -897,9 +897,14 @@ namespace Azure.Messaging.EventHubs
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Argument.AssertNotNull(partitionId, nameof(partitionId));
+
             if (checkpointStartingPosition.Offset.HasValue)
             {
                 Argument.AssertInRange(checkpointStartingPosition.Offset.Value, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
+            }
+            else
+            {
+                Argument.AssertInRange(checkpointStartingPosition.SequenceNumber, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.SequenceNumber));
             }
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
