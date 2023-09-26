@@ -214,8 +214,10 @@ rename-mapping:
   SecretBase: DataFactorySecret
   SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
   SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled
-  SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  SelfHostedIntegrationRuntime.typeProperties.selfContainedInteractiveAuthoringEnabled: IsSelfContainedInteractiveAuthoringEnabled
   SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
+  SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  SelfHostedIntegrationRuntimeStatus.typeProperties.selfContainedInteractiveAuthoringEnabled: IsSelfContainedInteractiveAuthoringEnabled
   SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId: -|uuid
   SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: ServiceUriStringList
   SubResourceDebugResource: DataFactoryDebugInfo

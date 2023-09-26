@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("linkedInfo"u8);
                 writer.WriteObjectValue(LinkedInfo);
             }
-            if (Optional.IsDefined(SelfContainedInteractiveAuthoringEnabled))
+            if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
             {
                 writer.WritePropertyName("selfContainedInteractiveAuthoringEnabled"u8);
-                writer.WriteBooleanValue(SelfContainedInteractiveAuthoringEnabled.Value);
+                writer.WriteBooleanValue(IsSelfContainedInteractiveAuthoringEnabled.Value);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

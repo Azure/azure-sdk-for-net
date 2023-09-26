@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
         /// </param>
-        /// <param name="selfContainedInteractiveAuthoringEnabled"> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </param>
-        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo, bool? selfContainedInteractiveAuthoringEnabled) : base(integrationRuntimeType, description, additionalProperties)
+        /// <param name="isSelfContainedInteractiveAuthoringEnabled"> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </param>
+        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo, bool? isSelfContainedInteractiveAuthoringEnabled) : base(integrationRuntimeType, description, additionalProperties)
         {
             LinkedInfo = linkedInfo;
-            SelfContainedInteractiveAuthoringEnabled = selfContainedInteractiveAuthoringEnabled;
+            IsSelfContainedInteractiveAuthoringEnabled = isSelfContainedInteractiveAuthoringEnabled;
             IntegrationRuntimeType = integrationRuntimeType;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public LinkedIntegrationRuntimeType LinkedInfo { get; set; }
         /// <summary> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </summary>
-        public bool? SelfContainedInteractiveAuthoringEnabled { get; set; }
+        public bool? IsSelfContainedInteractiveAuthoringEnabled { get; set; }
     }
 }
