@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ServiceModel.Rest.Core;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest;
+namespace System.ServiceModel.Rest.Core.Pipeline;
 
 /// <summary>
 /// TBD.

@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest.Core;
+namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
     where TMessage : PipelineMessage

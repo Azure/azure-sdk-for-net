@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 

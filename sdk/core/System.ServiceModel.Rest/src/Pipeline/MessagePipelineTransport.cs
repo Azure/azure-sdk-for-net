@@ -4,11 +4,10 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.ServiceModel.Rest.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest;
+namespace System.ServiceModel.Rest.Core.Pipeline;
 
 /// <summary>
 /// TBD.
