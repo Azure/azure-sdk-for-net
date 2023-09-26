@@ -2,6 +2,18 @@
 
 If you are using the old Azure management SDK for .Net, you may need to make some changes to your code to take advantage of the new features and improvements in the new Track 2 Azure management SDK. Here are some examples that show you how to migrate your code to the new Azure management SDK for .Net.
 
+**Table of contents**
+
+* [Migrating from Track 1 SDK to Track 2 SDK](#migrating-from-track-1-sdk-to-track-2-sdk)
+    * [Import the namespaces](#import-the-namespaces)
+    * [Setting up the clients](#setting-up-the-clients)
+    * [Create a Resource Group](#create-a-resource-group)
+    * [Create an Availability Set](#create-an-availability-set)
+    * [Create a Virtual Network and Subnet](#create-a-virtual-network-and-subnet)
+    * [Create a Network Interface](#create-a-network-interface)
+    * [Create a Virtual Machine](#create-a-virtual-machine)
+* [Migrating from Track 1 Fluent SDK to Track 2 SDK](#migrating-from-track-1-fluent-sdk-to-track-2-sdk)
+
 ## Migrating from Track 1 SDK to Track 2 SDK
 
 The old Track 1 SDK uses package names that start with `Microsoft.Azure.Management` and without `Fluent` suffix.
@@ -321,5 +333,11 @@ Console.WriteLine("VirtualMachine ID: " + virtualMachine.Id);
 
 Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.
 
+## Migrating from Track 1 Fluent SDK to Track 2 SDK
+
+The old Track 1 Fluent  SDK uses package names that start with `Microsoft.Azure.Management` and end with `Fluent` suffix.
+To assist you with the migration process, we have prepared some examples for you.
+
 ## Next steps
+
 Check out [more examples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
