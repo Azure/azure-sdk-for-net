@@ -8,12 +8,13 @@
 
 ### Bugs Fixed
 
+- Fix an issue that the `DeserializeHopLink` can't handle empty `resourceId`.
+
 ### Other Changes
 
 ## 1.6.0-beta.1 (2023-09-25)
 
 ### Features Added
-
 - Add support to VMSS features.
 
 ## 1.5.0 (2023-09-16)

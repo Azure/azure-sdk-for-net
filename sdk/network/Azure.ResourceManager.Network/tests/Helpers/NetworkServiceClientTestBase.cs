@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
-        protected async Task<ResourceGroupResource> CreateResourceGroup(string name,string location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string name, string location)
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(location))).Value;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            var genericResouces = subscription.GetGenericResources();
+            var genericResouces = subscription.GetGenericResourcesAsync();
             GenericResourceData data = new GenericResourceData(location)
             {
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     { "osProfile", new Dictionary<string, object>
                         {
                             { "adminUsername", Recording.GenerateAssetName("admin") },
-                            { "adminPassword", Recording.GenerateAlphaNumericId("adminPass") },
+                            { "adminPassword", Recording.GenerateAlphaNumericId("adminPass!") },
                             { "computerName", vmName }
                         }
                     },
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getNicResponse;
         }
 
-        public async Task<NetworkInterfaceResource> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
+        public async Task<NetworkInterfaceResource> CreateNetworkInterface(string name, string publicIpAddressId, string subnetId,
             string location, string ipConfigName, NetworkInterfaceCollection networkInterfaceCollection)
         {
             var nicParameters = new NetworkInterfaceData()

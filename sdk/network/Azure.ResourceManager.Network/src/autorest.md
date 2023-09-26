@@ -31,8 +31,6 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-# csharpgen:
-#   attach: true
 #mgmt-debug:
 #  show-serialized-names: true
 
@@ -196,6 +194,9 @@ rename-mapping:
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
+
+models-to-treat-empty-string-as-null:
+  - HopLink
 
 format-by-name-rules:
   'tenantId': 'uuid'
