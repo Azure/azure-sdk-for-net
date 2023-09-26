@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
-        /// <param name="dialogInputType"></param>
-        /// <param name="botAppId"></param>
-        /// <param name="dialogContext"></param>
+        /// <param name="dialogInputType">Determines the type of the dialog</param>
+        /// <param name="botAppId">Bot Identifier</param>
+        /// <param name="dialogContext">Dialog Context</param>
         public StartDialogOptions(DialogInputType dialogInputType, string botAppId, IDictionary<string, object> dialogContext)
         {
             DialogInputType = dialogInputType;
@@ -28,8 +28,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
-        /// <param name="dialogInputType"></param>
-        /// <param name="dialogContext"></param>
+        /// <param name="dialogInputType">Determines the type of the dialog</param>
+        /// <param name="dialogContext">Dialog Context</param>
         public StartDialogOptions(DialogInputType dialogInputType, IDictionary<string, object> dialogContext)
         {
             DialogInputType = dialogInputType;
@@ -40,10 +40,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
-        /// <param name="dialogInputType"></param>
-        /// <param name="botAppId"></param>
-        /// <param name="dialogContext"></param>
-        /// /// <param name="dialogId"></param>
+        /// <param name="dialogId">Dialog ID</param>
+        /// <param name="dialogInputType">Determines the type of the dialog</param>
+        /// <param name="botAppId">Bot Identifier</param>
+        /// <param name="dialogContext">Dialog Context</param>
         public StartDialogOptions(string dialogId, DialogInputType dialogInputType, string botAppId, IDictionary<string, object> dialogContext)
         {
             DialogInputType = dialogInputType;
@@ -55,9 +55,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
-        /// <param name="dialogInputType"></param>
-        /// <param name="dialogContext"></param>
-        /// /// <param name="dialogId"></param>
+        /// <param name="dialogId">Dialog ID</param>
+        /// <param name="dialogInputType">Determines the type of the dialog</param>
+        /// <param name="dialogContext">Dialog Context</param>
         public StartDialogOptions(string dialogId, DialogInputType dialogInputType, IDictionary<string, object> dialogContext)
         {
             DialogInputType = dialogInputType;
