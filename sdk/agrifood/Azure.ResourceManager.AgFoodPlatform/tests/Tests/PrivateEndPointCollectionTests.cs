@@ -8,7 +8,7 @@ using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.AgFoodPlatform.Tests.Helpers;
 using Azure.ResourceManager.Models;
 using NUnit.Framework;
-namespace Azure.ResourceManager.AgFoodPlatform.Tests.Tests
+namespace Azure.ResourceManager.AgFoodPlatform.Tests
 {
     public class PrivateEndPointCollectionTests : AgFoodPlatformManagementTestBase
     {
