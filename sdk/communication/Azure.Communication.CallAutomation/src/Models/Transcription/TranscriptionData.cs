@@ -66,9 +66,9 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         {
             switch (resultStatus)
             {
-                case "Intermediate":
+                case "intermediate":
                     return ResultStatus.Intermediate;
-                case "Final":
+                case "final":
                     return ResultStatus.Final;
                 default:
                     throw new NotSupportedException(resultStatus);
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         {
             switch (format)
             {
-                case "Display":
+                case "display":
                     return TextFormat.Display;
                 default:
                     throw new NotSupportedException(format);

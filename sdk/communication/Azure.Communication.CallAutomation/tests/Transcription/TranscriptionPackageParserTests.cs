@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
                 "\"transcriptionData\":" +
                 "{" +
                     "\"text\":\"Hello World!\"," +
-                    "\"format\":\"Display\"," +
+                    "\"format\":\"display\"," +
                     "\"confidence\":0.98," +
                     "\"offset\":1," +
                     "\"words\":" +
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
                         "}" +
                     "]," +
                     "\"participantRawID\":\"abc12345\"," +
-                    "\"resultStatus\":\"Final\"" +
+                    "\"resultStatus\":\"final\"" +
                 "}" +
             "}";
 
@@ -66,29 +66,35 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
         [Test]
         public void ParseBinaryData()
         {
-            JObject jsonData = new();
-            jsonData["kind"] = "TranscriptionData";
-            jsonData["transcriptionData"] = new JObject();
+            JObject jsonData = new()
+            {
+                ["kind"] = "TranscriptionData",
+                ["transcriptionData"] = new JObject()
+            };
             jsonData["transcriptionData"]["text"] = "Hello World!";
-            jsonData["transcriptionData"]["format"] = "Display";
+            jsonData["transcriptionData"]["format"] = "display";
             jsonData["transcriptionData"]["confidence"] = 0.98f;
             jsonData["transcriptionData"]["offset"] = 1;
 
             JArray words = new();
             jsonData["transcriptionData"]["words"] = words;
 
-            JObject word0 = new();
-            word0["text"] = "Hello";
-            word0["offset"] = 1;
+            JObject word0 = new()
+            {
+                ["text"] = "Hello",
+                ["offset"] = 1
+            };
             words.Add(word0);
 
-            JObject word1 = new();
-            word1["text"] = "World";
-            word1["offset"] = 6;
+            JObject word1 = new()
+            {
+                ["text"] = "World",
+                ["offset"] = 6
+            };
             words.Add(word1);
 
             jsonData["transcriptionData"]["participantRawID"] = "abc12345";
-            jsonData["transcriptionData"]["resultStatus"] = "Final";
+            jsonData["transcriptionData"]["resultStatus"] = "final";
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
@@ -99,29 +105,35 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
         [Test]
         public void ParseAudioEventsWithBynaryArray()
         {
-            JObject jsonData = new JObject();
-            jsonData["kind"] = "TranscriptionData";
-            jsonData["transcriptionData"] = new JObject();
+            JObject jsonData = new()
+            {
+                ["kind"] = "TranscriptionData",
+                ["transcriptionData"] = new JObject()
+            };
             jsonData["transcriptionData"]["text"] = "Hello World!";
-            jsonData["transcriptionData"]["format"] = "Display";
+            jsonData["transcriptionData"]["format"] = "display";
             jsonData["transcriptionData"]["confidence"] = 0.98f;
             jsonData["transcriptionData"]["offset"] = 1;
 
             JArray words = new();
             jsonData["transcriptionData"]["words"] = words;
 
-            JObject word0 = new();
-            word0["text"] = "Hello";
-            word0["offset"] = 1;
+            JObject word0 = new()
+            {
+                ["text"] = "Hello",
+                ["offset"] = 1
+            };
             words.Add(word0);
 
-            JObject word1 = new();
-            word1["text"] = "World";
-            word1["offset"] = 6;
+            JObject word1 = new()
+            {
+                ["text"] = "World",
+                ["offset"] = 6
+            };
             words.Add(word1);
 
             jsonData["transcriptionData"]["participantRawID"] = "abc12345";
-            jsonData["transcriptionData"]["resultStatus"] = "Final";
+            jsonData["transcriptionData"]["resultStatus"] = "final";
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
             TranscriptionData parsedPackage = (TranscriptionData) TranscriptionPackageParser.Parse(receivedBytes);
