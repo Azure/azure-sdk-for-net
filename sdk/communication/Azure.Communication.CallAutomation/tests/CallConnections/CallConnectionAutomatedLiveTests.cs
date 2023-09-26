@@ -112,6 +112,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         /// 5. Cancel the add participant
         /// </summary>
         /// <returns></returns>
+        [Ignore("ignore until record asset infrastructure is in place")]
         [RecordedTest]
         public async Task CancelAddParticipantTest()
         {
