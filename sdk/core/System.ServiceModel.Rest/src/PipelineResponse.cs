@@ -13,6 +13,7 @@ public abstract class PipelineResponse
 
     public abstract BinaryData Content { get; }
 
+    // TODO: do we want the content stream to be externally settable?
     public abstract Stream? ContentStream { get; set; }
 
     public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value);
