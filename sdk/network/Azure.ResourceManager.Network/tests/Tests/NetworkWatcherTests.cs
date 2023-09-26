@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class NetworkWatcherTests : NetworkServiceClientTestBase
     {
-        public NetworkWatcherTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public NetworkWatcherTests(bool isAsync) : base(isAsync)
         {
         }
 

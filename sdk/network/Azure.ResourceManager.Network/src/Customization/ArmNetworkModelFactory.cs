@@ -201,12 +201,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="roundTripTimeAvg"> Average roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeMax"> Maximum roundtrip time in milliseconds. </param>
         /// <returns> A new <see cref="Models.HopLink"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static HopLink HopLink(string nextHopId = null, string linkType = null, IEnumerable<ConnectivityIssueInfo> issues = null, IReadOnlyDictionary<string, string> context = null, ResourceIdentifier resourceId = null, long? roundTripTimeMin = null, long? roundTripTimeAvg = null, long? roundTripTimeMax = null)
-        {
-            issues ??= new List<ConnectivityIssueInfo>();
-            context ??= new Dictionary<string, string>();
-
-            return new HopLink(nextHopId, linkType, issues?.ToList(), context, resourceId, roundTripTimeMin, roundTripTimeAvg, roundTripTimeMax);
-        }
+            => HopLink(nextHopId, linkType, issues, context, null, roundTripTimeMin, roundTripTimeAvg, roundTripTimeMax);
     }
 }

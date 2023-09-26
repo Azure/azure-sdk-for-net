@@ -14,6 +14,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property has been replaced by ResourceIdString", false)]
-        public ResourceIdentifier ResourceId { get; }
+        public ResourceIdentifier ResourceId {
+            get => ResourceId;
+            set
+            {
+                ResourceId = value;
+            }
+        }
     }
 }
