@@ -398,7 +398,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(long.MinValue), "The sequence number should match.");
             Assert.That(message.GetOffset(), Is.EqualTo(long.MinValue), "The offset should match.");
-            Assert.That(message.GetReplicationSegment(), Is.EqualTo(null), "The replication segment should match.");
+            Assert.That(message.GetReplicationSegment(), Is.EqualTo("-1"), "The replication segment should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(default(DateTimeOffset)), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(null), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(null), "The last sequence number should match.");
