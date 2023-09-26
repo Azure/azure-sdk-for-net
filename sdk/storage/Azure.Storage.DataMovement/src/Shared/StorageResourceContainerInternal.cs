@@ -6,6 +6,12 @@ using System.Threading;
 
 namespace Azure.Storage.DataMovement
 {
+    /// <summary>
+    /// Middle class between the public type and implementation class.
+    /// Gives internal hook methods to protected methods of
+    /// <see cref="StorageResourceContainer"/>, allowing for internal
+    /// package use as well as testing access.
+    /// </summary>
     internal abstract class StorageResourceContainerInternal : StorageResourceContainer
     {
         internal IAsyncEnumerable<StorageResource> GetStorageResourcesInternalAsync(
