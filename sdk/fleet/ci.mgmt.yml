@@ -1,8 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-
-
 pr:
   branches:
     include:
@@ -13,31 +11,7 @@ pr:
   paths:
     include:
     - sdk/fleet/ci.mgmt.yml
-    - sdk/fleet/Azure.ResourceManager.Fleet/
-
-
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/fleet/ci.mgmt.yml
-    - sdk/fleet/Azure.ResourceManager.Fleet/
-
-
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/fleet/ci.mgmt.yml
-    - sdk/fleet/Azure.ResourceManager.Fleet/
+    - sdk/fleet/Azure.ResourceManager.DatabaseFleetManager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -45,5 +19,5 @@ extends:
     ServiceDirectory: fleet
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.Fleet
-      safeName: AzureResourceManagerFleet
+    - name: Azure.ResourceManager.DatabaseFleetManager
+      safeName: AzureResourceManagerDatabaseFleetManager
