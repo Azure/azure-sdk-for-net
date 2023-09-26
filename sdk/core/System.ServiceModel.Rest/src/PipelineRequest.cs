@@ -32,5 +32,8 @@ public abstract class PipelineRequest : IDisposable
 
     //public abstract bool RemoveHeaderValue(string name);
 
+    // TODO: better design?
+    internal virtual void  SetRequestHeaders(HttpRequestMessage request) { }
+
     public abstract void Dispose();
 }

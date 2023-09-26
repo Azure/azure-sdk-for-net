@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Net.Http;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Experimental.Core;
 
@@ -16,6 +18,11 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
         private Uri? _uri;
         private RequestBody? _content;
 
+        // TODO: optimize
+        // Azure.Core has ArrayBackedPropertyBag and IgnoreCaseString
+        // TODO: Azure.Core header dictionary stores a collection of values for a header.
+        private Dictionary<string, string>? _headers;
+
         public MessagePipelineRequest()
         {
         }
@@ -25,7 +32,8 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
 
         public override void SetHeaderValue(string name, string value)
         {
-            throw new NotImplementedException();
+            _headers ??= new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            _headers[name] = value;
         }
 
         public override void SetUri(RequestUri uri)
@@ -53,6 +61,24 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
 
             uri = _uri;
             return true;
+        }
+
+        internal override void SetRequestHeaders(HttpRequestMessage request)
+        {
+            if (_headers is null) return;
+
+            foreach (var header in _headers)
+            {
+                // TODO: optimize
+                if (!request.Headers.TryAddWithoutValidation(header.Key, header.Value))
+                {
+                    if (request.Content != null &&
+                        !request.Content.Headers.TryAddWithoutValidation(header.Key, header.Value))
+                    {
+                        throw new InvalidOperationException($"Unable to add header {header.Key} to header collection.");
+                    }
+                }
+            }
         }
 
         public override void Dispose()

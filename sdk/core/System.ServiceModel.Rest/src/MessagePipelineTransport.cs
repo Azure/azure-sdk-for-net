@@ -79,7 +79,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
             throw new NotSupportedException("TODO");
         }
 
-        if (message.PipelineRequest.TryGetContent(out RequestBody? content))
+        if (!message.PipelineRequest.TryGetContent(out RequestBody? content))
         {
             throw new NotSupportedException("TODO");
         }
@@ -89,7 +89,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
         // TODO: CancellationToken
         netRequest.Content = new HttpContentAdapter(content!, CancellationToken.None);
 
-        // TODO: Request Headers
+        message.PipelineRequest.SetRequestHeaders(netRequest);
 
         #endregion
 
