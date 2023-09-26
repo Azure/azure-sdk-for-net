@@ -2,8 +2,6 @@
 
 If you are using the old Azure management SDK for .Net, you may need to make some changes to your code to take advantage of the new features and improvements in the new Track 2 Azure management SDK. Here are some examples that show you how to migrate your code to the new Azure management SDK for .Net.
 
-**Table of contents**
-
 * [Migrating from Track 1 SDK to Track 2 SDK](#migrating-from-track-1-sdk-to-track-2-sdk)
     * [Import the namespaces](#import-the-namespaces)
     * [Setting up the clients](#setting-up-the-clients)
