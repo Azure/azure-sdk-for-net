@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0-beta.1 (2023-09-25)
+
+### Features Added
+
+- Add support to VMSS features.
 
 ## 1.5.0 (2023-09-16)
 

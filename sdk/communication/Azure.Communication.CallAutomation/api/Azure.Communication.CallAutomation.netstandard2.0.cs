@@ -274,10 +274,14 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.SendDtmfResult>> SendDtmfAsync(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones, Azure.Communication.CommunicationIdentifier targetParticipant, string operationContext = null, System.Uri callbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StartContinuousDtmfRecognition(Azure.Communication.CommunicationIdentifier targetParticipant, string operationContext = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StartContinuousDtmfRecognitionAsync(Azure.Communication.CommunicationIdentifier targetParticipant, string operationContext = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response StartHoldMusic(Azure.Communication.CallAutomation.StartHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StartHoldMusicAsync(Azure.Communication.CallAutomation.StartHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.StartRecognizingCallMediaResult> StartRecognizing(Azure.Communication.CallAutomation.CallMediaRecognizeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.StartRecognizingCallMediaResult>> StartRecognizingAsync(Azure.Communication.CallAutomation.CallMediaRecognizeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopContinuousDtmfRecognition(Azure.Communication.CommunicationIdentifier targetParticipant, string operationContext = null, System.Uri callbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopContinuousDtmfRecognitionAsync(Azure.Communication.CommunicationIdentifier targetParticipant, string operationContext = null, System.Uri callbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response StopHoldMusic(Azure.Communication.CallAutomation.StopHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StopHoldMusicAsync(Azure.Communication.CallAutomation.StopHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CallMediaRecognitionType : System.IEquatable<Azure.Communication.CallAutomation.CallMediaRecognitionType>
@@ -633,6 +637,7 @@ namespace Azure.Communication.CallAutomation
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DialogInputType(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.DialogInputType AzureOpenAI { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogInputType PowerVirtualAgents { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.DialogInputType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1270,6 +1275,14 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.DialogInputType DialogInputType { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
     }
+    public partial class StartHoldMusicOptions
+    {
+        public StartHoldMusicOptions(Azure.Communication.CommunicationIdentifier targetParticipant, Azure.Communication.CallAutomation.PlaySource playSourceInfo) { }
+        public bool Loop { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.PlaySource PlaySourceInfo { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
+    }
     public partial class StartRecognizingCallMediaResult
     {
         internal StartRecognizingCallMediaResult() { }
@@ -1293,6 +1306,23 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecordingContent RecordingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackUri { get { throw null; } set { } }
+    }
+    public partial class StartTranscriptionRequest
+    {
+        public StartTranscriptionRequest() { }
+        public string Locale { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
+    }
+    public partial class StopHoldMusicOptions
+    {
+        public StopHoldMusicOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
+    }
+    public partial class StopTranscriptionRequest
+    {
+        public StopTranscriptionRequest() { }
+        public string OperationContext { get { throw null; } set { } }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
@@ -1371,6 +1401,11 @@ namespace Azure.Communication.CallAutomation
     {
         internal UnmuteParticipantsResult() { }
         public string OperationContext { get { throw null; } }
+    }
+    public partial class UpdateTranscriptionDataRequest
+    {
+        public UpdateTranscriptionDataRequest(string locale) { }
+        public string Locale { get { throw null; } }
     }
     public partial class UserConsent
     {

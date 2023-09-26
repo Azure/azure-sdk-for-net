@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -653,7 +652,7 @@ namespace Azure.Data.AppConfiguration
             var label = selector.LabelFilter;
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<string> fieldsString = selector.Fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, null, context);
@@ -673,7 +672,7 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<string> fieldsString = selector.Fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, null, context);
@@ -725,7 +724,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = fields == SettingFields.All ? null : fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<string> fieldsString = fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, context);
@@ -743,7 +742,7 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = fields == SettingFields.All ? null : fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<string> fieldsString = fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, context);
@@ -1244,7 +1243,7 @@ namespace Azure.Data.AppConfiguration
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<string> fieldsString = selector.Fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, context);
@@ -1263,7 +1262,7 @@ namespace Azure.Data.AppConfiguration
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields == SettingFields.All ? null : selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked").Split(',');
+            IEnumerable<string> fieldsString = selector.Fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, context);
