@@ -7,11 +7,14 @@ using Azure.Core;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.AppContainers.Models;
+using Azure.ResourceManager.ExtendedLocations;
 using Azure.ResourceManager.AppContainers.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azure.ResourceManager.ExtendedLocations.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Tests.TestCase
 {
@@ -26,11 +29,25 @@ namespace Azure.ResourceManager.AppContainers.Tests.TestCase
         [RecordedTest]
         public async Task AppContainerTest()
         {
+            string extendName = Recording.GenerateAssetName("sustom");
             string envName = Recording.GenerateAssetName("env");
             string envName2 = Recording.GenerateAssetName("env");
             string envName3 = Recording.GenerateAssetName("env");
+            string CassandraTest = "/subscriptions/" + DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster/providers/Microsoft.KubernetesConfiguration/extensions/cli-test-operator";
             ResourceGroupResource rg = await CreateResourceGroupAsync();
-            var data = ResourceDataHelpers.GetEnvironmentData();
+            var customlocationCollection = rg.GetCustomLocations();
+            var customlocationdata = new CustomLocationData(DefaultLocation)
+            {
+                HostResourceId = new ResourceIdentifier("/subscriptions/" + DefaultSubscription.Data.SubscriptionId + "/resourceGroups/sdktestrg/providers/Microsoft.Kubernetes/connectedClusters/cle2edfkapconnectedcluster"),
+                ClusterExtensionIds = { new ResourceIdentifier(CassandraTest) },
+                HostType = CustomLocationHostType.Kubernetes,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                Namespace = Recording.GenerateAssetName("clnamespace-"),
+                DisplayName = Recording.GenerateAssetName("cltest-"),
+                Authentication = null
+            };
+            var customLocation = (await customlocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, extendName, customlocationdata)).Value;
+            var data = ResourceDataHelpers.GetEnvironmentData(customLocation.Id);
 
             //1.Create
             var containerAppConnectedEnvironmentCollection = rg.GetContainerAppConnectedEnvironments();

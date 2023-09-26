@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
         #endregion
 
         #region enviroment
-        public static ContainerAppConnectedEnvironmentData GetEnvironmentData()
+        public static ContainerAppConnectedEnvironmentData GetEnvironmentData(ResourceIdentifier customlocationId)
         {
-            ContainerAppConnectedEnvironmentData data = new ContainerAppConnectedEnvironmentData(AzureLocation.EastUS)
+            ContainerAppConnectedEnvironmentData data = new ContainerAppConnectedEnvironmentData(AzureLocation.NorthCentralUS)
             {
                 StaticIP = IPAddress.Parse("1.2.3.4"),
                 DaprAIConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://northcentralus-0.in.applicationinsights.azure.com/",
@@ -176,6 +176,11 @@ namespace Azure.ResourceManager.AppContainers.Tests.Helpers
                     CertificateValue = Convert.FromBase64String("Y2VydA=="),
                     CertificatePassword = "private key password",
                 },
+                ExtendedLocation = new ContainerAppExtendedLocation()
+                {
+                    Name = customlocationId,
+                    ExtendedLocationType = ContainerAppExtendedLocationType.CustomLocation
+                }
             };
             return data;
         }
