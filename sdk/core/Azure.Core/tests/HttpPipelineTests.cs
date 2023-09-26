@@ -99,21 +99,21 @@ namespace Azure.Core.Tests
         [Test]
         public async Task CanAddPolicy_BeforeTransport()
         {
-            var retryResponse = new MockResponse(408); // Request Timeout
+            MockResponse retryResponse = new MockResponse(408); // Request Timeout
 
             // retry twice
-            var mockTransport = new MockTransport(retryResponse, retryResponse, new MockResponse(200));
-            var options = new TestOptions()
+            MockTransport mockTransport = new MockTransport(retryResponse, retryResponse, new MockResponse(200));
+            TestOptions options = new TestOptions()
             {
                 Transport = mockTransport,
             };
 
-            var pipeline = HttpPipelineBuilder.Build(options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
-            var context = new RequestContext();
+            RequestContext context = new RequestContext();
             context.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "Value"), HttpPipelinePosition.BeforeTransport);
 
-            var message = pipeline.CreateMessage(context);
+            HttpMessage message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
 
             Request request = mockTransport.Requests[0];
