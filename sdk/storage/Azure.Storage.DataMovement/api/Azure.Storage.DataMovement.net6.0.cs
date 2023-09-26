@@ -178,8 +178,8 @@ namespace Azure.Storage.DataMovement
     public partial class StorageResourceWriteToOffsetOptions
     {
         public StorageResourceWriteToOffsetOptions() { }
-        public string BlockId { get { throw null; } }
-        public long? Position { get { throw null; } }
+        public string BlockId { get { throw null; } set { } }
+        public long? Position { get { throw null; } set { } }
     }
     public partial class TransferCheckpointStoreOptions
     {
