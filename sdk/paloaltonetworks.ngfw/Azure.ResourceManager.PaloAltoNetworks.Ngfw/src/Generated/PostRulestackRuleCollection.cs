@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PostRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual async Task<NullableResponse<PostRulestackRuleResource>> GetIfExistsAsync(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postRulestackRulePostRulesRestClient.GetAsync(Id.Name, priority, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new PostRulestackRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PostRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual NullableResponse<PostRulestackRuleResource> GetIfExists(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _postRulestackRulePostRulesClientDiagnostics.CreateScope("PostRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postRulestackRulePostRulesRestClient.Get(Id.Name, priority, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new PostRulestackRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PostRulestackRuleResource> IEnumerable<PostRulestackRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

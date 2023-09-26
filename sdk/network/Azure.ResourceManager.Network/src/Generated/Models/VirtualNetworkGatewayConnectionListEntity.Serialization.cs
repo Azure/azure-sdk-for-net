@@ -48,7 +48,8 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
-            JsonSerializer.Serialize(writer, VirtualNetworkGateway1); if (Optional.IsDefined(VirtualNetworkGateway2))
+            JsonSerializer.Serialize(writer, VirtualNetworkGateway1);
+            if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
                 JsonSerializer.Serialize(writer, VirtualNetworkGateway2);

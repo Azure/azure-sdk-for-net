@@ -20,9 +20,4 @@
     <PackageReference Include="Microsoft.Identity.Client" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="SessionRecords\EnvironmentCreateTests\" />
-    <Folder Include="SessionRecords\DevBoxCreateTests\" />
-  </ItemGroup>
-  
 </Project>

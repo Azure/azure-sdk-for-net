@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/relationships/{relationshipName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Relationships_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relationshipName"> The name of the relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RelationshipResourceFormatResource>> GetIfExistsAsync(string relationshipName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+
+            using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _relationshipResourceFormatRelationshipsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RelationshipResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new RelationshipResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/relationships/{relationshipName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Relationships_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relationshipName"> The name of the relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        public virtual NullableResponse<RelationshipResourceFormatResource> GetIfExists(string relationshipName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
+
+            using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _relationshipResourceFormatRelationshipsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RelationshipResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new RelationshipResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RelationshipResourceFormatResource> IEnumerable<RelationshipResourceFormatResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
