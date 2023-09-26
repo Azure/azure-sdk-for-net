@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shareas client library tests</AssemblyTitle>
@@ -10,10 +10,14 @@
       <Aliases>DMBlobs</Aliases>
     </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Files.Shares\src\Azure.Storage.DataMovement.Files.Shares.csproj" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageSharedTestSources)AsyncPageableExtensions.cs" LinkBase="Shared\Test" />
+    <Compile Include="$(AzureStorageSharedTestSources)RandomExtensions.cs" LinkBase="Shared\Test" />
+    <Compile Include="$(AzureStorageSharedTestSources)Tree.cs" LinkBase="Shared\Test" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(AzureStorageSharedTestSources)\*.xml">

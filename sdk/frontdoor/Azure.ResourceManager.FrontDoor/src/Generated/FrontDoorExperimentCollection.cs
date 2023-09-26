@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FrontDoorExperimentResource>> GetIfExistsAsync(string experimentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorExperimentResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
+        public virtual NullableResponse<FrontDoorExperimentResource> GetIfExists(string experimentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorExperimentResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FrontDoorExperimentResource> IEnumerable<FrontDoorExperimentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

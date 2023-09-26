@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet); if (Optional.IsDefined(PrivateIPAddress))
+            JsonSerializer.Serialize(writer, Subnet);
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());

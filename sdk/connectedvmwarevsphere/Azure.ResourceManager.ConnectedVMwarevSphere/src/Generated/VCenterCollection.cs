@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VCenters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vcenterName"> Name of the vCenter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VCenterResource>> GetIfExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _vCenterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VCenterResource>(response.GetRawResponse());
+                return Response.FromValue(new VCenterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VCenters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vcenterName"> Name of the vCenter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        public virtual NullableResponse<VCenterResource> GetIfExists(string vcenterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+
+            using var scope = _vCenterClientDiagnostics.CreateScope("VCenterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _vCenterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vcenterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VCenterResource>(response.GetRawResponse());
+                return Response.FromValue(new VCenterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<VCenterResource> IEnumerable<VCenterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontendsInterface_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FrontendResource>> GetIfExistsAsync(string frontendName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+
+            using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _frontendFrontendsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontendResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontendResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/frontends/{frontendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontendsInterface_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
+        public virtual NullableResponse<FrontendResource> GetIfExists(string frontendName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+
+            using var scope = _frontendFrontendsInterfaceClientDiagnostics.CreateScope("FrontendCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _frontendFrontendsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontendResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontendResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FrontendResource> IEnumerable<FrontendResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricAccessControlListResource>> GetIfExistsAsync(string accessControlListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricAccessControlListAccessControlListsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accessControlListName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricAccessControlListResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricAccessControlListResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/accessControlLists/{accessControlListName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessControlLists_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessControlListName"> Name of the Access Control List. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricAccessControlListResource> GetIfExists(string accessControlListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accessControlListName, nameof(accessControlListName));
+
+            using var scope = _networkFabricAccessControlListAccessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricAccessControlListAccessControlListsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accessControlListName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricAccessControlListResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricAccessControlListResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFabricAccessControlListResource> IEnumerable<NetworkFabricAccessControlListResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

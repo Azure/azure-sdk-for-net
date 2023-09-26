@@ -54,7 +54,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
         }
 
         [Test]
-        [Ignore("Consistently failing in CI; caused by #38673")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task ScaleHostEndToEndTest(bool tbsEnabled)

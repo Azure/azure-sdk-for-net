@@ -119,6 +119,48 @@ namespace Azure.ResourceManager.Logic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get integration service environment by name
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetIntegrationServiceEnvironmentByName()
+        {
+            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_Get.json
+            // this example is just showing the usage of "IntegrationServiceEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string resourceGroup = "testResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroup);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this IntegrationServiceEnvironmentResource
+            IntegrationServiceEnvironmentCollection collection = resourceGroupResource.GetIntegrationServiceEnvironments();
+
+            // invoke the operation
+            string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
+            NullableResponse<IntegrationServiceEnvironmentResource> response = await collection.GetIfExistsAsync(integrationServiceEnvironmentName);
+            IntegrationServiceEnvironmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                IntegrationServiceEnvironmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Create or update an integration service environment
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

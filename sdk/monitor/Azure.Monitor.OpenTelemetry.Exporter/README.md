@@ -17,7 +17,7 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 Install the Azure Monitor Exporter for OpenTelemetry .NET with [NuGet](https://www.nuget.org/):
 ```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.Exporter --prerelease
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
 #### Nightly builds
@@ -149,9 +149,3 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on contribution process.
-
-## Release Schedule
-
-This exporter is under active development.
-
-The library is not yet _generally available_, and is not officially supported. Future releases will not attempt to maintain backwards compatibility with previous releases. Each beta release includes significant changes to the exporter package, making them incompatible with each other.

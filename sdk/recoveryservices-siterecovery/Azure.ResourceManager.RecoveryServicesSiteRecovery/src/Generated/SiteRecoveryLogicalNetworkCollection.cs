@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationLogicalNetworks/{logicalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLogicalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="logicalNetworkName"> Logical network name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryLogicalNetworkResource>> GetIfExistsAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+
+            using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, logicalNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryLogicalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryLogicalNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationLogicalNetworks/{logicalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLogicalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="logicalNetworkName"> Logical network name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
+        public virtual NullableResponse<SiteRecoveryLogicalNetworkResource> GetIfExists(string logicalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+
+            using var scope = _siteRecoveryLogicalNetworkReplicationLogicalNetworksClientDiagnostics.CreateScope("SiteRecoveryLogicalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, logicalNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryLogicalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryLogicalNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SiteRecoveryLogicalNetworkResource> IEnumerable<SiteRecoveryLogicalNetworkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
