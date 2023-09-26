@@ -6,9 +6,9 @@
 
 ### Breaking Changes
 
-- For the `HopLink` class, Use the new property `ResourceIdString` to replace `ResourceId` and fix the formatting issue when `resourceId` returns an empty string.
-
 ### Bugs Fixed
+
+- Add the new property `ResourceIdString` to replace `ResourceId` which fixed the formatting issue when `resourceId` returns an empty string.
 
 ### Other Changes
 
