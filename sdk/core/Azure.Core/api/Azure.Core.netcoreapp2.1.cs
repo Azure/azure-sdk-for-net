@@ -485,9 +485,7 @@ namespace Azure.Core
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }
-        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseErrorClassifier { get { throw null; } }
+        public new Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
         public override void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -980,9 +978,7 @@ namespace Azure.Core.Pipeline
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context) { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier) { throw null; }
-        public Azure.Core.HttpMessage CreateMessage(System.ServiceModel.Rest.RequestOptions? options, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
+        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions? options, System.ServiceModel.Rest.Core.ResponseErrorClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

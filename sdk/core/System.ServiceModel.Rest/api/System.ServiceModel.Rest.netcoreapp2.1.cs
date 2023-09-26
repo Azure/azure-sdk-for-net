@@ -103,11 +103,11 @@ namespace System.ServiceModel.Rest.Core
     }
     public partial class PipelineMessage : System.IDisposable
     {
-        public PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { }
+        protected internal PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } }
         public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } set { } }
-        public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseErrorClassifier { get { throw null; } }
+        public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } }
         public virtual void Dispose() { }
     }
     public enum PipelinePosition
