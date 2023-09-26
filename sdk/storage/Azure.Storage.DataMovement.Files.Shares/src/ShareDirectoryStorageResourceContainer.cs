@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 dir = dir.GetSubdirectoryClient(pathSegment);
             }
             ShareFileClient file = dir.GetFileClient(pathSegments.Last());
-            return new ShareFileStorageResourceItem(file, ResourceOptions);
+            return new ShareFileStorageResource(file, ResourceOptions);
         }
 
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             await foreach (ShareFileClient client in PathScanner.ScanFilesAsync(
                 ShareDirectoryClient, cancellationToken).ConfigureAwait(false))
             {
-                yield return new ShareFileStorageResourceItem(client, ResourceOptions);
+                yield return new ShareFileStorageResource(client, ResourceOptions);
             }
         }
     }
