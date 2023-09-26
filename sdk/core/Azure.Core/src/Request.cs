@@ -23,7 +23,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
         /// </summary>
-        public new RequestUriBuilder Uri
+        public new virtual RequestUriBuilder Uri
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Azure.Core
                 }
                 catch (NotSupportedException)
                 {
-                    // Preserve existing functionality
+                    // Preserve existing Azure.Core functionality
                     return new RequestMethod();
                 }
             }

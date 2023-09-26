@@ -94,7 +94,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
         HttpResponseMessage responseMessage;
         Stream? contentStream = null;
 
-        // TODO: Why message.ClearReponse() ?
+        // TODO: we'll need to call message.ClearResponse() when we add retries.
 
         try
         {
