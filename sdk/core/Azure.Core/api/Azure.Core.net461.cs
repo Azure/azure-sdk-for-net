@@ -483,16 +483,12 @@ namespace Azure.Core
         public bool BufferResponse { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ServiceModel.Rest.Core.PipelineRequest PipelineRequest { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ServiceModel.Rest.Core.PipelineResponse? PipelineResponse { get { throw null; } set { } }
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
-        public Azure.Core.Request Request { get { throw null; } }
-        public Azure.Response Response { get { throw null; } set { } }
+        public new Azure.Core.Request Request { get { throw null; } }
+        public new Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseErrorClassifier { get { throw null; } set { } }
+        public override System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseErrorClassifier { get { throw null; } }
         public override void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -534,19 +530,17 @@ namespace Azure.Core
     public abstract partial class Request : System.ServiceModel.Rest.Core.PipelineRequest
     {
         protected Request() { }
-        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public abstract string ClientRequestId { get; set; }
+        public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
         public Azure.Core.RequestHeaders Headers { get { throw null; } }
-        public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
-        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        public new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         protected internal abstract bool RemoveHeader(string name);
-        public override void SetContent(System.ServiceModel.Rest.Core.RequestBody content) { }
         protected internal virtual void SetHeader(string name, string value) { }
         public override void SetHeaderValue(string name, string value) { }
-        public override void SetMethod(string method) { }
-        public override void SetUri(System.ServiceModel.Rest.Experimental.Core.RequestUri uri) { }
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
@@ -1178,16 +1172,5 @@ namespace Azure.Messaging
         protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
         public virtual System.BinaryData? Data { get { throw null; } set { } }
         public virtual bool IsReadOnly { get { throw null; } }
-    }
-}
-namespace System.ServiceModel.Rest
-{
-    public partial class MessagePipelineTransport : System.ServiceModel.Rest.Core.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
-    {
-        public MessagePipelineTransport() { }
-        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
-        public void Dispose() { }
-        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
 }

@@ -15,6 +15,14 @@ namespace System.ServiceModel.Rest
         public override void Send(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
+    public partial class MessagePipelineTransport : System.ServiceModel.Rest.Core.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
+    {
+        public MessagePipelineTransport() { }
+        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
+        public void Dispose() { }
+        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
+    }
     public partial class NullableResult<T> : System.ServiceModel.Rest.Result
     {
         public NullableResult(T? value, System.ServiceModel.Rest.Core.PipelineResponse response) { }
@@ -93,14 +101,14 @@ namespace System.ServiceModel.Rest.Core
         public abstract bool ProcessNext();
         public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
     }
-    public abstract partial class PipelineMessage : System.IDisposable
+    public partial class PipelineMessage : System.IDisposable
     {
-        protected PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { }
+        public PipelineMessage(System.ServiceModel.Rest.Core.PipelineRequest request, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public abstract System.ServiceModel.Rest.Core.PipelineRequest PipelineRequest { get; set; }
-        public abstract System.ServiceModel.Rest.Core.PipelineResponse? PipelineResponse { get; set; }
-        public abstract System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseErrorClassifier { get; set; }
-        public abstract void Dispose();
+        public virtual System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } }
+        public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } set { } }
+        public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseErrorClassifier { get { throw null; } }
+        public virtual void Dispose() { }
     }
     public enum PipelinePosition
     {
@@ -108,15 +116,14 @@ namespace System.ServiceModel.Rest.Core
         PerRetry = 1,
         BeforeTransport = 2,
     }
-    public abstract partial class PipelineRequest : System.IDisposable
+    public partial class PipelineRequest : System.IDisposable
     {
-        protected PipelineRequest() { }
-        public abstract string ClientRequestId { get; set; }
-        public abstract void Dispose();
-        public abstract void SetContent(System.ServiceModel.Rest.Core.RequestBody content);
-        public abstract void SetHeaderValue(string name, string value);
-        public abstract void SetMethod(string method);
-        public abstract void SetUri(System.ServiceModel.Rest.Experimental.Core.RequestUri uri);
+        public PipelineRequest() { }
+        public virtual System.ServiceModel.Rest.Core.RequestBody? Content { get { throw null; } set { } }
+        public virtual System.Net.Http.HttpMethod Method { get { throw null; } set { } }
+        public virtual System.Uri Uri { get { throw null; } set { } }
+        public virtual void Dispose() { }
+        public virtual void SetHeaderValue(string name, string value) { }
     }
     public abstract partial class PipelineResponse
     {

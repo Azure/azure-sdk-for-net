@@ -60,10 +60,12 @@ namespace Azure.Core
                 "HEAD" => RequestMethod.Head,
                 "DELETE" => RequestMethod.Delete,
                 "PATCH" => RequestMethod.Patch,
-                _ => throw new ArgumentOutOfRangeException(nameof(verb)),
+                _ => new RequestMethod(verb.Method),
             };
         }
 
+        // Needed for compat with pre-net5.0 TFMs
+        private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
         private static HttpMethod AzureToSystemMethod(RequestMethod method)
         {
             return method.Method switch
@@ -73,23 +75,19 @@ namespace Azure.Core
                 "PUT" => HttpMethod.Put,
                 "HEAD" => HttpMethod.Head,
                 "DELETE" => HttpMethod.Delete,
-                "PATCH" => new HttpMethod("PATCH"),
-                _ => throw new ArgumentOutOfRangeException(nameof(method)),
-            };
+                "PATCH" => _patchMethod,
+                _ => new HttpMethod(method.Method),
+            }; ;
         }
 
-        private RequestBodyContent? _content;
         /// <summary>
         /// Gets or sets the request content.
         /// </summary>
+
         public new virtual RequestContent? Content
         {
-            get => _content;
-            set
-            {
-                base.Content = value;
-                _content = base.Content is null ? null : new RequestBodyContent(base.Content);
-            }
+            get => (RequestContent?)base.Content;
+            set => base.Content = value;
         }
 
         /// <summary>
