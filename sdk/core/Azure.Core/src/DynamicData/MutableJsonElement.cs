@@ -1413,7 +1413,9 @@ namespace Azure.Core.Json
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
 
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
         [RequiresUnreferencedCode("Using MutableJsonElement or MutableJsonElementConverter is not compatible with trimming due to reflection-based serialization.")]
+#endif
         private class MutableJsonElementConverter : JsonConverter<MutableJsonElement>
         {
             public override MutableJsonElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

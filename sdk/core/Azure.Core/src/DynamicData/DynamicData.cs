@@ -479,7 +479,9 @@ namespace Azure.Core.Serialization
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
         [RequiresUnreferencedCode(ClassIsIncompatibleWithTrimming)]
+#endif
         [RequiresDynamicCode(ClassIsIncompatibleWithTrimming)]
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {

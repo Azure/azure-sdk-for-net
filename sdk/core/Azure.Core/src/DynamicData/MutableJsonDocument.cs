@@ -220,7 +220,9 @@ namespace Azure.Core.Json
             _serializerOptions = serializerOptions ?? DefaultSerializerOptions;
         }
 
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
         [RequiresUnreferencedCode(classIsIncompatibleWithTrimming)]
+#endif
         [RequiresDynamicCode(classIsIncompatibleWithTrimming)]
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
         {
