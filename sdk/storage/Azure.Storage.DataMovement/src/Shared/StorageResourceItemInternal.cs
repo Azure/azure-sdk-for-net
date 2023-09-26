@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement
 {
+    /// <summary>
+    /// This is used internally for testing purposes. It is shared within the test packages.
+    /// </summary>
     internal abstract class StorageResourceItemInternal : StorageResourceItem
     {
         internal Task CompleteTransferInternalAsync(bool overwrite, CancellationToken cancellationToken = default)
