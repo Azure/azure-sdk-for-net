@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
     /// <summary> The status of a member update operation. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="clusterResourceId"> The Azure resource id of the target Kubernetes cluster. </param>
         /// <param name="operationId"> The operation resource id of the latest attempt to perform the operation. </param>
         /// <param name="message"> The status message after processing the member update operation. </param>
-        internal MemberUpdateStatus(UpdateStatus status, string name, string clusterResourceId, string operationId, string message)
+        internal MemberUpdateStatus(FleetUpdateOperationStatus status, string name, ResourceIdentifier clusterResourceId, string operationId, string message)
         {
             Status = status;
             Name = name;
@@ -31,11 +33,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <summary> The status of the MemberUpdate operation. </summary>
-        public UpdateStatus Status { get; }
+        public FleetUpdateOperationStatus Status { get; }
         /// <summary> The name of the FleetMember. </summary>
         public string Name { get; }
         /// <summary> The Azure resource id of the target Kubernetes cluster. </summary>
-        public string ClusterResourceId { get; }
+        public ResourceIdentifier ClusterResourceId { get; }
         /// <summary> The operation resource id of the latest attempt to perform the operation. </summary>
         public string OperationId { get; }
         /// <summary> The status message after processing the member update operation. </summary>

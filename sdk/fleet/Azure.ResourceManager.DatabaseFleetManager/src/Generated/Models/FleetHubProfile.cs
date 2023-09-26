@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="agentProfile"> The agent profile for the Fleet hub. </param>
         /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>
-        internal FleetHubProfile(string dnsPrefix, APIServerAccessProfile apiServerAccessProfile, AgentProfile agentProfile, string fqdn, string kubernetesVersion)
+        internal FleetHubProfile(string dnsPrefix, FleetApiServerAccessProfile apiServerAccessProfile, FleetAgentProfile agentProfile, string fqdn, string kubernetesVersion)
         {
             DnsPrefix = dnsPrefix;
             ApiServerAccessProfile = apiServerAccessProfile;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <summary> DNS prefix used to create the FQDN for the Fleet hub. </summary>
         public string DnsPrefix { get; set; }
         /// <summary> The access profile for the Fleet hub API server. </summary>
-        public APIServerAccessProfile ApiServerAccessProfile { get; set; }
+        public FleetApiServerAccessProfile ApiServerAccessProfile { get; set; }
         /// <summary> The agent profile for the Fleet hub. </summary>
-        internal AgentProfile AgentProfile { get; set; }
+        internal FleetAgentProfile AgentProfile { get; set; }
         /// <summary> The ID of the subnet which the Fleet hub node will join on startup. If this is not specified, a vnet and subnet will be generated and used. </summary>
         public ResourceIdentifier AgentSubnetId
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             set
             {
                 if (AgentProfile is null)
-                    AgentProfile = new AgentProfile();
+                    AgentProfile = new FleetAgentProfile();
                 AgentProfile.SubnetId = value;
             }
         }

@@ -5,14 +5,15 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
-    public partial class MemberUpdateStatus
+    public partial class FleetUpdateGroupStatus
     {
-        internal static MemberUpdateStatus DeserializeMemberUpdateStatus(JsonElement element)
+        internal static FleetUpdateGroupStatus DeserializeFleetUpdateGroupStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -20,9 +21,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             }
             Optional<FleetUpdateOperationStatus> status = default;
             Optional<string> name = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<string> operationId = default;
-            Optional<string> message = default;
+            Optional<IReadOnlyList<MemberUpdateStatus>> members = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -39,27 +38,22 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterResourceId"u8))
+                if (property.NameEquals("members"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clusterResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("operationId"u8))
-                {
-                    operationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("message"u8))
-                {
-                    message = property.Value.GetString();
+                    List<MemberUpdateStatus> array = new List<MemberUpdateStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MemberUpdateStatus.DeserializeMemberUpdateStatus(item));
+                    }
+                    members = array;
                     continue;
                 }
             }
-            return new MemberUpdateStatus(status.Value, name.Value, clusterResourceId.Value, operationId.Value, message.Value);
+            return new FleetUpdateGroupStatus(status.Value, name.Value, Optional.ToList(members));
         }
     }
 }

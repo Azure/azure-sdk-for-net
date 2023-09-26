@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FleetMemberListResult>> ListByFleetAsync(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseFleetMemberListResult>> ListByFleetAsync(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        FleetMemberListResult value = default;
+                        DatabaseFleetMemberListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FleetMemberListResult.DeserializeFleetMemberListResult(document.RootElement);
+                        value = DatabaseFleetMemberListResult.DeserializeDatabaseFleetMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FleetMemberListResult> ListByFleet(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public Response<DatabaseFleetMemberListResult> ListByFleet(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        FleetMemberListResult value = default;
+                        DatabaseFleetMemberListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FleetMemberListResult.DeserializeFleetMemberListResult(document.RootElement);
+                        value = DatabaseFleetMemberListResult.DeserializeDatabaseFleetMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FleetMemberData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseFleetMemberData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        FleetMemberData value = default;
+                        DatabaseFleetMemberData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FleetMemberData.DeserializeFleetMemberData(document.RootElement);
+                        value = DatabaseFleetMemberData.DeserializeDatabaseFleetMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FleetMemberData)null, message.Response);
+                    return Response.FromValue((DatabaseFleetMemberData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FleetMemberData> Get(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, CancellationToken cancellationToken = default)
+        public Response<DatabaseFleetMemberData> Get(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        FleetMemberData value = default;
+                        DatabaseFleetMemberData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FleetMemberData.DeserializeFleetMemberData(document.RootElement);
+                        value = DatabaseFleetMemberData.DeserializeDatabaseFleetMemberData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FleetMemberData)null, message.Response);
+                    return Response.FromValue((DatabaseFleetMemberData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, FleetMemberData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, DatabaseFleetMemberData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, FleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, DatabaseFleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, FleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, DatabaseFleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, FleetMemberPatch patch, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, DatabaseFleetMemberPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, FleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, DatabaseFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, FleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, DatabaseFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FleetMemberListResult>> ListByFleetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseFleetMemberListResult>> ListByFleetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -509,9 +509,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        FleetMemberListResult value = default;
+                        DatabaseFleetMemberListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FleetMemberListResult.DeserializeFleetMemberListResult(document.RootElement);
+                        value = DatabaseFleetMemberListResult.DeserializeDatabaseFleetMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FleetMemberListResult> ListByFleetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public Response<DatabaseFleetMemberListResult> ListByFleetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -540,9 +540,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        FleetMemberListResult value = default;
+                        DatabaseFleetMemberListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FleetMemberListResult.DeserializeFleetMemberListResult(document.RootElement);
+                        value = DatabaseFleetMemberListResult.DeserializeDatabaseFleetMemberListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

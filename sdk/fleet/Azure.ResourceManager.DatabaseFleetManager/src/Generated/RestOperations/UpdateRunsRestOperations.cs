@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateRunListResult>> ListByFleetAsync(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseFleetUpdateRunListResult>> ListByFleetAsync(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        UpdateRunListResult value = default;
+                        DatabaseFleetUpdateRunListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRunListResult.DeserializeUpdateRunListResult(document.RootElement);
+                        value = DatabaseFleetUpdateRunListResult.DeserializeDatabaseFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateRunListResult> ListByFleet(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public Response<DatabaseFleetUpdateRunListResult> ListByFleet(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        UpdateRunListResult value = default;
+                        DatabaseFleetUpdateRunListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRunListResult.DeserializeUpdateRunListResult(document.RootElement);
+                        value = DatabaseFleetUpdateRunListResult.DeserializeDatabaseFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateRunData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseFleetUpdateRunData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
+                        DatabaseFleetUpdateRunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        value = DatabaseFleetUpdateRunData.DeserializeDatabaseFleetUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateRunData)null, message.Response);
+                    return Response.FromValue((DatabaseFleetUpdateRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateRunData> Get(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, CancellationToken cancellationToken = default)
+        public Response<DatabaseFleetUpdateRunData> Get(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        UpdateRunData value = default;
+                        DatabaseFleetUpdateRunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRunData.DeserializeUpdateRunData(document.RootElement);
+                        value = DatabaseFleetUpdateRunData.DeserializeDatabaseFleetUpdateRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateRunData)null, message.Response);
+                    return Response.FromValue((DatabaseFleetUpdateRunData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, UpdateRunData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, DatabaseFleetUpdateRunData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, UpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, DatabaseFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, UpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName, DatabaseFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateRunListResult>> ListByFleetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatabaseFleetUpdateRunListResult>> ListByFleetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -585,9 +585,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        UpdateRunListResult value = default;
+                        DatabaseFleetUpdateRunListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateRunListResult.DeserializeUpdateRunListResult(document.RootElement);
+                        value = DatabaseFleetUpdateRunListResult.DeserializeDatabaseFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateRunListResult> ListByFleetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public Response<DatabaseFleetUpdateRunListResult> ListByFleetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -616,9 +616,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             {
                 case 200:
                     {
-                        UpdateRunListResult value = default;
+                        DatabaseFleetUpdateRunListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateRunListResult.DeserializeUpdateRunListResult(document.RootElement);
+                        value = DatabaseFleetUpdateRunListResult.DeserializeDatabaseFleetUpdateRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

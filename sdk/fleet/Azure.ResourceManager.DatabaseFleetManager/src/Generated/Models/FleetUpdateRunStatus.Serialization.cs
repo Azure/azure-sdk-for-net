@@ -5,24 +5,23 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
-    public partial class MemberUpdateStatus
+    public partial class FleetUpdateRunStatus
     {
-        internal static MemberUpdateStatus DeserializeMemberUpdateStatus(JsonElement element)
+        internal static FleetUpdateRunStatus DeserializeFleetUpdateRunStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<FleetUpdateOperationStatus> status = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<string> operationId = default;
-            Optional<string> message = default;
+            Optional<IReadOnlyList<FleetUpdateStageStatus>> stages = default;
+            Optional<NodeImageSelectionStatus> nodeImageSelection = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -34,32 +33,31 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     status = FleetUpdateOperationStatus.DeserializeFleetUpdateOperationStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("clusterResourceId"u8))
+                if (property.NameEquals("stages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clusterResourceId = new ResourceIdentifier(property.Value.GetString());
+                    List<FleetUpdateStageStatus> array = new List<FleetUpdateStageStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FleetUpdateStageStatus.DeserializeFleetUpdateStageStatus(item));
+                    }
+                    stages = array;
                     continue;
                 }
-                if (property.NameEquals("operationId"u8))
+                if (property.NameEquals("nodeImageSelection"u8))
                 {
-                    operationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("message"u8))
-                {
-                    message = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeImageSelection = NodeImageSelectionStatus.DeserializeNodeImageSelectionStatus(property.Value);
                     continue;
                 }
             }
-            return new MemberUpdateStatus(status.Value, name.Value, clusterResourceId.Value, operationId.Value, message.Value);
+            return new FleetUpdateRunStatus(status.Value, Optional.ToList(stages), nodeImageSelection.Value);
         }
     }
 }

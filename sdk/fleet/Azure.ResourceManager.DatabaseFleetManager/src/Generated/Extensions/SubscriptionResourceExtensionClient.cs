@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _fleetClientDiagnostics;
-        private FleetsRestOperations _fleetRestClient;
+        private ClientDiagnostics _databaseFleetFleetsClientDiagnostics;
+        private FleetsRestOperations _databaseFleetFleetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         {
         }
 
-        private ClientDiagnostics FleetClientDiagnostics => _fleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager", FleetResource.ResourceType.Namespace, Diagnostics);
-        private FleetsRestOperations FleetRestClient => _fleetRestClient ??= new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FleetResource.ResourceType));
+        private ClientDiagnostics DatabaseFleetFleetsClientDiagnostics => _databaseFleetFleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseFleetManager", DatabaseFleetResource.ResourceType.Namespace, Diagnostics);
+        private FleetsRestOperations DatabaseFleetFleetsRestClient => _databaseFleetFleetsRestClient ??= new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatabaseFleetResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FleetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FleetResource> GetFleetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseFleetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseFleetResource> GetDatabaseFleetsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FleetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FleetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FleetResource(Client, FleetData.DeserializeFleetData(e)), FleetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFleets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatabaseFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatabaseFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatabaseFleetResource(Client, DatabaseFleetData.DeserializeDatabaseFleetData(e)), DatabaseFleetFleetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatabaseFleets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FleetResource> GetFleets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseFleetResource> GetDatabaseFleets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FleetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FleetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FleetResource(Client, FleetData.DeserializeFleetData(e)), FleetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFleets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DatabaseFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatabaseFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatabaseFleetResource(Client, DatabaseFleetData.DeserializeDatabaseFleetData(e)), DatabaseFleetFleetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDatabaseFleets", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 return null;
             }
             Optional<string> dnsPrefix = default;
-            Optional<APIServerAccessProfile> apiServerAccessProfile = default;
-            Optional<AgentProfile> agentProfile = default;
+            Optional<FleetApiServerAccessProfile> apiServerAccessProfile = default;
+            Optional<FleetAgentProfile> agentProfile = default;
             Optional<string> fqdn = default;
             Optional<string> kubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    apiServerAccessProfile = APIServerAccessProfile.DeserializeAPIServerAccessProfile(property.Value);
+                    apiServerAccessProfile = FleetApiServerAccessProfile.DeserializeFleetApiServerAccessProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentProfile"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     {
                         continue;
                     }
-                    agentProfile = AgentProfile.DeserializeAgentProfile(property.Value);
+                    agentProfile = FleetAgentProfile.DeserializeFleetAgentProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("fqdn"u8))

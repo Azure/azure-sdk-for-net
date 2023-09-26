@@ -49,69 +49,69 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region FleetResource
+        #region DatabaseFleetResource
         /// <summary>
-        /// Gets an object representing a <see cref="FleetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FleetResource.CreateResourceIdentifier" /> to create a <see cref="FleetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseFleetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseFleetResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseFleetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetResource" /> object. </returns>
-        public static FleetResource GetFleetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseFleetResource" /> object. </returns>
+        public static DatabaseFleetResource GetDatabaseFleetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FleetResource.ValidateResourceId(id);
-                return new FleetResource(client, id);
+                DatabaseFleetResource.ValidateResourceId(id);
+                return new DatabaseFleetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FleetMemberResource
+        #region DatabaseFleetMemberResource
         /// <summary>
-        /// Gets an object representing a <see cref="FleetMemberResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="FleetMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseFleetMemberResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseFleetMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetMemberResource" /> object. </returns>
-        public static FleetMemberResource GetFleetMemberResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseFleetMemberResource" /> object. </returns>
+        public static DatabaseFleetMemberResource GetDatabaseFleetMemberResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FleetMemberResource.ValidateResourceId(id);
-                return new FleetMemberResource(client, id);
+                DatabaseFleetMemberResource.ValidateResourceId(id);
+                return new DatabaseFleetMemberResource(client, id);
             }
             );
         }
         #endregion
 
-        #region UpdateRunResource
+        #region DatabaseFleetUpdateRunResource
         /// <summary>
-        /// Gets an object representing an <see cref="UpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UpdateRunResource.CreateResourceIdentifier" /> to create an <see cref="UpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseFleetUpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseFleetUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseFleetUpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpdateRunResource" /> object. </returns>
-        public static UpdateRunResource GetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseFleetUpdateRunResource" /> object. </returns>
+        public static DatabaseFleetUpdateRunResource GetDatabaseFleetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UpdateRunResource.ValidateResourceId(id);
-                return new UpdateRunResource(client, id);
+                DatabaseFleetUpdateRunResource.ValidateResourceId(id);
+                return new DatabaseFleetUpdateRunResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of FleetResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DatabaseFleetResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of FleetResources and their operations over a FleetResource. </returns>
-        public static FleetCollection GetFleets(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DatabaseFleetResources and their operations over a DatabaseFleetResource. </returns>
+        public static DatabaseFleetCollection GetDatabaseFleets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFleets();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseFleets();
         }
 
         /// <summary>
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FleetResource>> GetFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseFleetResource>> GetDatabaseFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDatabaseFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FleetResource> GetFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
+        public static Response<DatabaseFleetResource> GetDatabaseFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFleets().Get(fleetName, cancellationToken);
+            return resourceGroupResource.GetDatabaseFleets().Get(fleetName, cancellationToken);
         }
 
         /// <summary>
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FleetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FleetResource> GetFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseFleetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DatabaseFleetResource> GetDatabaseFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFleetsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDatabaseFleetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.DatabaseFleetManager
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FleetResource> GetFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseFleetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DatabaseFleetResource> GetDatabaseFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFleets(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDatabaseFleets(cancellationToken);
         }
     }
 }

@@ -5,14 +5,15 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DatabaseFleetManager.Models
 {
-    public partial class MemberUpdateStatus
+    public partial class FleetUpdateStageStatus
     {
-        internal static MemberUpdateStatus DeserializeMemberUpdateStatus(JsonElement element)
+        internal static FleetUpdateStageStatus DeserializeFleetUpdateStageStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -20,9 +21,8 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             }
             Optional<FleetUpdateOperationStatus> status = default;
             Optional<string> name = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<string> operationId = default;
-            Optional<string> message = default;
+            Optional<IReadOnlyList<FleetUpdateGroupStatus>> groups = default;
+            Optional<FleetWaitStatus> afterStageWaitStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -39,27 +39,31 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterResourceId"u8))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clusterResourceId = new ResourceIdentifier(property.Value.GetString());
+                    List<FleetUpdateGroupStatus> array = new List<FleetUpdateGroupStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FleetUpdateGroupStatus.DeserializeFleetUpdateGroupStatus(item));
+                    }
+                    groups = array;
                     continue;
                 }
-                if (property.NameEquals("operationId"u8))
+                if (property.NameEquals("afterStageWaitStatus"u8))
                 {
-                    operationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("message"u8))
-                {
-                    message = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    afterStageWaitStatus = FleetWaitStatus.DeserializeFleetWaitStatus(property.Value);
                     continue;
                 }
             }
-            return new MemberUpdateStatus(status.Value, name.Value, clusterResourceId.Value, operationId.Value, message.Value);
+            return new FleetUpdateStageStatus(status.Value, name.Value, Optional.ToList(groups), afterStageWaitStatus.Value);
         }
     }
 }

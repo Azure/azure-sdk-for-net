@@ -8,6 +8,7 @@ csharp: true
 library-name: DatabaseFleetManager
 namespace: Azure.ResourceManager.DatabaseFleetManager
 require: https://github.com/Azure/azure-rest-api-specs/blob/de06c42bd985fb66b6a49c907aaf5baee693bc7b/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
+#tag: package-2023-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +21,29 @@ modelerfour:
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+rename-mapping:
+  AgentProfile: FleetAgentProfile
+  APIServerAccessProfile: FleetApiServerAccessProfile
+  Fleet: DatabaseFleet
+  FleetListResult: DatabaseFleetListResult
+  FleetMember: DatabaseFleetMember
+  FleetMemberListResult: DatabaseFleetMemberListResult
+  ManagedClusterUpdate: FleetManagedClusterUpdate
+  ManagedClusterUpgradeSpec: FleetManagedClusterUpgradeSpec
+  ManagedClusterUpgradeType: FleetManagedClusterUpgradeType
+  MemberUpdateStatus.clusterResourceId: -|arm-id
+  UpdateGroup: FleetUpdateGroup
+  UpdateGroupStatus: FleetUpdateGroupStatus
+  UpdateRun: DatabaseFleetUpdateRun
+  UpdateRunListResult: DatabaseFleetUpdateRunListResult
+  UpdateRunProvisioningState: FleetUpdateRunProvisioningState
+  UpdateRunStatus: FleetUpdateRunStatus
+  UpdateRunStrategy: FleetUpdateRunStrategy
+  UpdateStage: FleetUpdateStage
+  UpdateStageStatus: FleetUpdateStageStatus
+  UpdateState: FleetUpdateState
+  UpdateStatus: FleetUpdateOperationStatus
+  WaitStatus: FleetWaitStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'

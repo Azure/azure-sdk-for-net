@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DatabaseFleetManager
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of FleetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FleetResources and their operations over a FleetResource. </returns>
-        public virtual FleetCollection GetFleets()
+        /// <summary> Gets a collection of DatabaseFleetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DatabaseFleetResources and their operations over a DatabaseFleetResource. </returns>
+        public virtual DatabaseFleetCollection GetDatabaseFleets()
         {
-            return GetCachedClient(Client => new FleetCollection(Client, Id));
+            return GetCachedClient(Client => new DatabaseFleetCollection(Client, Id));
         }
     }
 }

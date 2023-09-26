@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDatabaseFleetManagerModelFactory
     {
-        /// <summary> Initializes a new instance of FleetData. </summary>
+        /// <summary> Initializes a new instance of DatabaseFleetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="identity"> Managed identity. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.FleetData"/> instance for mocking. </returns>
-        public static FleetData FleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null, FleetHubProfile hubProfile = null)
+        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetData"/> instance for mocking. </returns>
+        public static DatabaseFleetData DatabaseFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null, FleetHubProfile hubProfile = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FleetData(id, name, resourceType, systemData, tags, location, eTag, identity, provisioningState, hubProfile);
+            return new DatabaseFleetData(id, name, resourceType, systemData, tags, location, eTag, identity, provisioningState, hubProfile);
         }
 
         /// <summary> Initializes a new instance of FleetHubProfile. </summary>
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>
         /// <returns> A new <see cref="Models.FleetHubProfile"/> instance for mocking. </returns>
-        public static FleetHubProfile FleetHubProfile(string dnsPrefix = null, APIServerAccessProfile apiServerAccessProfile = null, ResourceIdentifier agentSubnetId = null, string fqdn = null, string kubernetesVersion = null)
+        public static FleetHubProfile FleetHubProfile(string dnsPrefix = null, FleetApiServerAccessProfile apiServerAccessProfile = null, ResourceIdentifier agentSubnetId = null, string fqdn = null, string kubernetesVersion = null)
         {
-            return new FleetHubProfile(dnsPrefix, apiServerAccessProfile, agentSubnetId != null ? new AgentProfile(agentSubnetId) : null, fqdn, kubernetesVersion);
+            return new FleetHubProfile(dnsPrefix, apiServerAccessProfile, agentSubnetId != null ? new FleetAgentProfile(agentSubnetId) : null, fqdn, kubernetesVersion);
         }
 
         /// <summary> Initializes a new instance of FleetCredentialResults. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new FleetCredentialResult(name, value);
         }
 
-        /// <summary> Initializes a new instance of FleetMemberData. </summary>
+        /// <summary> Initializes a new instance of DatabaseFleetMemberData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
         /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.FleetMemberData"/> instance for mocking. </returns>
-        public static FleetMemberData FleetMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, ResourceIdentifier clusterResourceId = null, string group = null, FleetMemberProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetMemberData"/> instance for mocking. </returns>
+        public static DatabaseFleetMemberData DatabaseFleetMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, ResourceIdentifier clusterResourceId = null, string group = null, FleetMemberProvisioningState? provisioningState = null)
         {
-            return new FleetMemberData(id, name, resourceType, systemData, eTag, clusterResourceId, group, provisioningState);
+            return new DatabaseFleetMemberData(id, name, resourceType, systemData, eTag, clusterResourceId, group, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of UpdateRunData. </summary>
+        /// <summary> Initializes a new instance of DatabaseFleetUpdateRunData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -97,61 +97,61 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.UpdateRunData"/> instance for mocking. </returns>
-        public static UpdateRunData UpdateRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, UpdateRunProvisioningState? provisioningState = null, IEnumerable<UpdateStage> strategyStages = null, ManagedClusterUpdate managedClusterUpdate = null, UpdateRunStatus status = null)
+        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetUpdateRunData"/> instance for mocking. </returns>
+        public static DatabaseFleetUpdateRunData DatabaseFleetUpdateRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, FleetUpdateRunProvisioningState? provisioningState = null, IEnumerable<FleetUpdateStage> strategyStages = null, FleetManagedClusterUpdate managedClusterUpdate = null, FleetUpdateRunStatus status = null)
         {
-            strategyStages ??= new List<UpdateStage>();
+            strategyStages ??= new List<FleetUpdateStage>();
 
-            return new UpdateRunData(id, name, resourceType, systemData, eTag, provisioningState, strategyStages != null ? new UpdateRunStrategy(strategyStages?.ToList()) : null, managedClusterUpdate, status);
+            return new DatabaseFleetUpdateRunData(id, name, resourceType, systemData, eTag, provisioningState, strategyStages != null ? new FleetUpdateRunStrategy(strategyStages?.ToList()) : null, managedClusterUpdate, status);
         }
 
-        /// <summary> Initializes a new instance of UpdateRunStatus. </summary>
+        /// <summary> Initializes a new instance of FleetUpdateRunStatus. </summary>
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="stages"> The stages composing an update run. Stages are run sequentially withing an UpdateRun. </param>
         /// <param name="selectedNodeImageVersions"> The node image upgrade specs for the update run. It is only set in update run when `NodeImageSelection.type` is `Consistent`. </param>
-        /// <returns> A new <see cref="Models.UpdateRunStatus"/> instance for mocking. </returns>
-        public static UpdateRunStatus UpdateRunStatus(UpdateStatus status = null, IEnumerable<UpdateStageStatus> stages = null, IEnumerable<NodeImageVersion> selectedNodeImageVersions = null)
+        /// <returns> A new <see cref="Models.FleetUpdateRunStatus"/> instance for mocking. </returns>
+        public static FleetUpdateRunStatus FleetUpdateRunStatus(FleetUpdateOperationStatus status = null, IEnumerable<FleetUpdateStageStatus> stages = null, IEnumerable<NodeImageVersion> selectedNodeImageVersions = null)
         {
-            stages ??= new List<UpdateStageStatus>();
+            stages ??= new List<FleetUpdateStageStatus>();
             selectedNodeImageVersions ??= new List<NodeImageVersion>();
 
-            return new UpdateRunStatus(status, stages?.ToList(), selectedNodeImageVersions != null ? new NodeImageSelectionStatus(selectedNodeImageVersions?.ToList()) : null);
+            return new FleetUpdateRunStatus(status, stages?.ToList(), selectedNodeImageVersions != null ? new NodeImageSelectionStatus(selectedNodeImageVersions?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of UpdateStatus. </summary>
+        /// <summary> Initializes a new instance of FleetUpdateOperationStatus. </summary>
         /// <param name="startOn"> The time the operation or group was started. </param>
         /// <param name="completedOn"> The time the operation or group was completed. </param>
         /// <param name="state"> The State of the operation or group. </param>
         /// <param name="error"> The error details when a failure is encountered. </param>
-        /// <returns> A new <see cref="Models.UpdateStatus"/> instance for mocking. </returns>
-        public static UpdateStatus UpdateStatus(DateTimeOffset? startOn = null, DateTimeOffset? completedOn = null, UpdateState? state = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.FleetUpdateOperationStatus"/> instance for mocking. </returns>
+        public static FleetUpdateOperationStatus FleetUpdateOperationStatus(DateTimeOffset? startOn = null, DateTimeOffset? completedOn = null, FleetUpdateState? state = null, ResponseError error = null)
         {
-            return new UpdateStatus(startOn, completedOn, state, error);
+            return new FleetUpdateOperationStatus(startOn, completedOn, state, error);
         }
 
-        /// <summary> Initializes a new instance of UpdateStageStatus. </summary>
+        /// <summary> Initializes a new instance of FleetUpdateStageStatus. </summary>
         /// <param name="status"> The status of the UpdateStage. </param>
         /// <param name="name"> The name of the UpdateStage. </param>
         /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
-        /// <returns> A new <see cref="Models.UpdateStageStatus"/> instance for mocking. </returns>
-        public static UpdateStageStatus UpdateStageStatus(UpdateStatus status = null, string name = null, IEnumerable<UpdateGroupStatus> groups = null, WaitStatus afterStageWaitStatus = null)
+        /// <returns> A new <see cref="Models.FleetUpdateStageStatus"/> instance for mocking. </returns>
+        public static FleetUpdateStageStatus FleetUpdateStageStatus(FleetUpdateOperationStatus status = null, string name = null, IEnumerable<FleetUpdateGroupStatus> groups = null, FleetWaitStatus afterStageWaitStatus = null)
         {
-            groups ??= new List<UpdateGroupStatus>();
+            groups ??= new List<FleetUpdateGroupStatus>();
 
-            return new UpdateStageStatus(status, name, groups?.ToList(), afterStageWaitStatus);
+            return new FleetUpdateStageStatus(status, name, groups?.ToList(), afterStageWaitStatus);
         }
 
-        /// <summary> Initializes a new instance of UpdateGroupStatus. </summary>
+        /// <summary> Initializes a new instance of FleetUpdateGroupStatus. </summary>
         /// <param name="status"> The status of the UpdateGroup. </param>
         /// <param name="name"> The name of the UpdateGroup. </param>
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
-        /// <returns> A new <see cref="Models.UpdateGroupStatus"/> instance for mocking. </returns>
-        public static UpdateGroupStatus UpdateGroupStatus(UpdateStatus status = null, string name = null, IEnumerable<MemberUpdateStatus> members = null)
+        /// <returns> A new <see cref="Models.FleetUpdateGroupStatus"/> instance for mocking. </returns>
+        public static FleetUpdateGroupStatus FleetUpdateGroupStatus(FleetUpdateOperationStatus status = null, string name = null, IEnumerable<MemberUpdateStatus> members = null)
         {
             members ??= new List<MemberUpdateStatus>();
 
-            return new UpdateGroupStatus(status, name, members?.ToList());
+            return new FleetUpdateGroupStatus(status, name, members?.ToList());
         }
 
         /// <summary> Initializes a new instance of MemberUpdateStatus. </summary>
@@ -161,18 +161,18 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         /// <param name="operationId"> The operation resource id of the latest attempt to perform the operation. </param>
         /// <param name="message"> The status message after processing the member update operation. </param>
         /// <returns> A new <see cref="Models.MemberUpdateStatus"/> instance for mocking. </returns>
-        public static MemberUpdateStatus MemberUpdateStatus(UpdateStatus status = null, string name = null, string clusterResourceId = null, string operationId = null, string message = null)
+        public static MemberUpdateStatus MemberUpdateStatus(FleetUpdateOperationStatus status = null, string name = null, ResourceIdentifier clusterResourceId = null, string operationId = null, string message = null)
         {
             return new MemberUpdateStatus(status, name, clusterResourceId, operationId, message);
         }
 
-        /// <summary> Initializes a new instance of WaitStatus. </summary>
+        /// <summary> Initializes a new instance of FleetWaitStatus. </summary>
         /// <param name="status"> The status of the wait duration. </param>
         /// <param name="waitDurationInSeconds"> The wait duration configured in seconds. </param>
-        /// <returns> A new <see cref="Models.WaitStatus"/> instance for mocking. </returns>
-        public static WaitStatus WaitStatus(UpdateStatus status = null, int? waitDurationInSeconds = null)
+        /// <returns> A new <see cref="Models.FleetWaitStatus"/> instance for mocking. </returns>
+        public static FleetWaitStatus FleetWaitStatus(FleetUpdateOperationStatus status = null, int? waitDurationInSeconds = null)
         {
-            return new WaitStatus(status, waitDurationInSeconds);
+            return new FleetWaitStatus(status, waitDurationInSeconds);
         }
 
         /// <summary> Initializes a new instance of NodeImageVersion. </summary>
