@@ -1,16 +1,14 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2023-09-26)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded API version.
 
 ### Bugs Fixed
 
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `SelfHostedIntegrationRuntimeStatus`.
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2023-08-02)
 
