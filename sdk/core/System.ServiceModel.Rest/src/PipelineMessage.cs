@@ -5,21 +5,44 @@ using System.Threading;
 
 namespace System.ServiceModel.Rest.Core;
 
-public abstract class PipelineMessage : IDisposable
+public class PipelineMessage : IDisposable
 {
-    protected PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+    private readonly PipelineRequest _request;
+    private readonly ResponseErrorClassifier _classifier;
+
+    private PipelineResponse? _response;
+
+    public PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
     {
-        PipelineRequest = request;
-        ResponseErrorClassifier = classifier;
+        _request = request;
+        _classifier = classifier;
     }
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-    public abstract PipelineRequest PipelineRequest { get; set; }
+    public virtual PipelineRequest PipelineRequest
+    {
+        get => _request;
+        //set => _request = value;
+    }
 
-    public abstract PipelineResponse? PipelineResponse { get; set; }
+    public virtual PipelineResponse? PipelineResponse
+    {
+        get => _response;
+        set => _response = value;
+    }
 
-    public abstract ResponseErrorClassifier ResponseErrorClassifier { get; set; }
+    public virtual ResponseErrorClassifier ResponseErrorClassifier
+    {
+        get => _classifier;
+        //set => _classifier = value;
+    }
 
-    public abstract void Dispose();
+    public virtual void Dispose()
+    {
+        // TODO: implement Dispose pattern properly
+        _request.Dispose();
+
+        // TODO: should response be disposable?
+    }
 }

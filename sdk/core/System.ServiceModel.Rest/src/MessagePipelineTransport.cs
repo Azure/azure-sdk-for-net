@@ -41,7 +41,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
     public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
         PipelineRequest request = new MessagePipelineRequest();
-        PipelineMessage message = new MessagePipelineMessage(request, classifier);
+        PipelineMessage message = new PipelineMessage(request, classifier);
         return message;
     }
 

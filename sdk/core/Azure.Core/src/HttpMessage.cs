@@ -91,7 +91,7 @@ namespace Azure.Core
         public override PipelineRequest PipelineRequest
         {
             get => Request;
-            set => Request = (Request)value;
+            //set => Request = (Request)value;
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.Core
         public override ResponseErrorClassifier ResponseErrorClassifier
         {
             get => ResponseClassifier;
-            set => ResponseClassifier = new ResponseClassifierAdapter(value);
+            //set => ResponseClassifier = new ResponseClassifierAdapter(value);
         }
 
         /// <summary>
