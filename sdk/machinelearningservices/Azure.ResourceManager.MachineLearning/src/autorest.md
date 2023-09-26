@@ -393,6 +393,7 @@ rename-mapping:
   WorkspaceConnectionUsernamePassword: MachineLearningWorkspaceConnectionUsernamePassword
   Workspace.properties.hbiWorkspace: IsHbiWorkspace
   AllocationState: MachineLearningAllocationState
+  FeatureResource: MachineLearningFeatureResource
   ResourceId.id: -|arm-id
   JobBase.componentId: -|arm-id
   JobBase.computeId: -|arm-id
