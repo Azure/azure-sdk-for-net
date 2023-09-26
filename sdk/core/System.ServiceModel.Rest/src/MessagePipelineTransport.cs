@@ -60,6 +60,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
     public override void Process(PipelineMessage message)
     {
         // Intentionally blocking here
+        // TODO: Sync over async?
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         ProcessAsync(message).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
@@ -67,17 +68,9 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
 
     public override async ValueTask ProcessAsync(PipelineMessage message)
     {
-        #region Create the request
-
-        if (message.Request.Method is null)
-        {
-            throw new NotSupportedException("TODO");
-        }
-
         // TODO: optimize?
-        HttpMethod method = message.Request.Method;
 
-        using HttpRequestMessage netRequest = new HttpRequestMessage(method, message.Request.Uri);
+        using HttpRequestMessage netRequest = new(message.Request.Method, message.Request.Uri);
 
         if (message.Request.Content != null)
         {
@@ -85,30 +78,24 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
             netRequest.Content = new HttpContentAdapter(message.Request.Content, CancellationToken.None);
         }
 
-        message.Request.SetRequestHeaders(netRequest);
-
-        #endregion
-
-        #region Send the response
-
-        HttpResponseMessage responseMessage;
-        Stream? contentStream = null;
-
-        // TODO: we'll need to call message.ClearResponse() when we add retries.
+        message.Request.SetHeaders(netRequest);
 
         try
         {
+            HttpResponseMessage responseMessage;
+            Stream? contentStream = null;
+
+            // TODO: we'll need to call message.ClearResponse() when we add retries.
+
             // TODO: Why does Azure.Core use HttpCompletionOption.ResponseHeadersRead?
             responseMessage = await _transport.SendAsync(netRequest).ConfigureAwait(false);
-
-            #endregion
-
-            #region Make the message response
 
             if (responseMessage.Content != null)
             {
                 contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
+
+            message.Response = new PipelineResponse(responseMessage, contentStream);
         }
 
         // TODO: CancellationToken: catch(OperationCanceledException e) { ... }
@@ -117,10 +104,6 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
         {
             throw new RequestErrorException(e.Message, e);
         }
-
-        message.Response = new PipelineResponse(responseMessage, contentStream);
-
-        #endregion
     }
 
     private sealed class HttpContentAdapter : HttpContent

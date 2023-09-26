@@ -27,7 +27,7 @@ public class PipelineMessage : IDisposable
         {
             if (_response is null)
             {
-                throw new InvalidOperationException("Response was not set.");
+                throw new InvalidOperationException("Response has not been set on Message.");
             }
 
             return _response;

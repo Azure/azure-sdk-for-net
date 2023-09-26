@@ -27,7 +27,7 @@ public class PipelineRequest : IDisposable
         {
             if (_method is null)
             {
-                throw new NotSupportedException("'Method' must be initialized before use.");
+                throw new InvalidOperationException("'Method' must be initialized before use.");
             }
 
             return _method;
@@ -42,7 +42,7 @@ public class PipelineRequest : IDisposable
         {
             if (_uri is null)
             {
-                throw new NotSupportedException("'Uri' must be initialized before use.");
+                throw new InvalidOperationException("'Uri' must be initialized before use.");
             }
 
             return _uri;
@@ -59,7 +59,7 @@ public class PipelineRequest : IDisposable
         _headers[name] = value;
     }
 
-    internal virtual void SetRequestHeaders(HttpRequestMessage request)
+    internal virtual void SetHeaders(HttpRequestMessage request)
     {
         if (_headers is null) return;
 

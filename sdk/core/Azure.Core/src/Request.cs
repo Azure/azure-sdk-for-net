@@ -52,7 +52,7 @@ namespace Azure.Core
                 {
                     return SystemToAzureMethod(base.Method);
                 }
-                catch (NotSupportedException)
+                catch (InvalidOperationException)
                 {
                     // Preserve existing Azure.Core functionality
                     return new RequestMethod();

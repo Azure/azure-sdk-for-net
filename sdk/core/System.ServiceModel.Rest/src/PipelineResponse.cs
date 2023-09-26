@@ -17,18 +17,11 @@ public class PipelineResponse : IDisposable
     internal PipelineResponse(HttpResponseMessage netResponse, Stream? contentStream)
     {
         _netResponse = netResponse ?? throw new ArgumentNullException(nameof(netResponse));
+
         //_netContent = _netResponse.Content;
 
-        // TODO: Why do we handle these separately?
+        // TODO: Why does Azure.Core handle the System.Net response content separately?
         _contentStream = contentStream;
-    }
-
-    private void EnsureValid(string name)
-    {
-        if (_netResponse is null)
-        {
-            throw new InvalidOperationException($"Must initialize response to retrieve '{name}'.");
-        }
     }
 
     public virtual int Status
@@ -36,7 +29,6 @@ public class PipelineResponse : IDisposable
         get
         {
             EnsureValid(nameof(Status));
-
             return (int)_netResponse!.StatusCode;
         }
     }
@@ -46,7 +38,6 @@ public class PipelineResponse : IDisposable
         get
         {
             EnsureValid(nameof(ReasonPhrase));
-
             return _netResponse!.ReasonPhrase;
         }
     }
@@ -106,5 +97,13 @@ public class PipelineResponse : IDisposable
         // TODO: implement pattern correctly
         _netResponse?.Dispose();
         _contentStream?.Dispose();
+    }
+
+    private void EnsureValid(string name)
+    {
+        if (_netResponse is null)
+        {
+            throw new InvalidOperationException($"Must initialize response to retrieve '{name}'.");
+        }
     }
 }
