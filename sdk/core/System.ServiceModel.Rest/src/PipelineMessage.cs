@@ -7,24 +7,19 @@ namespace System.ServiceModel.Rest.Core;
 
 public class PipelineMessage : IDisposable
 {
-    private readonly PipelineRequest _request;
-    private readonly ResponseErrorClassifier _classifier;
-
     private PipelineResponse? _response;
 
-    protected internal PipelineMessage(PipelineRequest request,
-        ResponseErrorClassifier classifier,
-        RequestOptions? options)
+    protected internal PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
     {
-        _request = request;
-        _classifier = classifier;
+        Request = request;
+        ResponseClassifier = classifier;
 
-        // TODO: wire options through
+        // TODO: take options and wire them through?
     }
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-    public virtual PipelineRequest Request { get => _request; }
+    public virtual PipelineRequest Request { get; }
 
     public virtual PipelineResponse Response
     {
@@ -41,13 +36,12 @@ public class PipelineMessage : IDisposable
         set => _response = value;
     }
 
-    public virtual ResponseErrorClassifier ResponseClassifier { get => _classifier; }
+    public virtual ResponseErrorClassifier ResponseClassifier { get; set; }
 
     public virtual void Dispose()
     {
         // TODO: implement Dispose pattern properly
-        _request.Dispose();
-
-        // TODO: should response be disposable?
+        Request.Dispose();
+        Response.Dispose();
     }
 }

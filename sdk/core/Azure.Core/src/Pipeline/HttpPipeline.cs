@@ -120,7 +120,7 @@ namespace Azure.Core.Pipeline
         {
             classifier ??= ResponseClassifier.Shared;
 
-            HttpMessage message = new HttpMessage(CreateRequest(), classifier, options);
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier);
 
             if (options is RequestContext context)
             {
@@ -163,7 +163,6 @@ namespace Azure.Core.Pipeline
             {
                 var pipeline = CreateRequestPipeline(policies, message.Policies);
 
-                // TODO: use PipelineEnumerator?
                 await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
             }
             finally

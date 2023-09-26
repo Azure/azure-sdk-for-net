@@ -107,7 +107,7 @@ namespace System.ServiceModel.Rest.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.ServiceModel.Rest.Core.PipelineRequest Request { get { throw null; } }
         public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } set { } }
-        public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } }
+        public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Dispose() { }
     }
     public enum PipelinePosition
@@ -130,7 +130,7 @@ namespace System.ServiceModel.Rest.Core
         protected PipelineResponse() { }
         public virtual System.BinaryData Content { get { throw null; } }
         public virtual System.IO.Stream? ContentStream { get { throw null; } set { } }
-        public virtual bool IsError { get { throw null; } }
+        public virtual bool IsError { get { throw null; } set { } }
         public virtual string ReasonPhrase { get { throw null; } }
         public virtual int Status { get { throw null; } }
         public virtual void Dispose() { }

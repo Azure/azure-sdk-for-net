@@ -14,7 +14,7 @@ public class PipelineResponse : IDisposable
 
     protected PipelineResponse() { }
 
-    internal PipelineResponse(HttpResponseMessage netResponse, Stream? contentStream)//, PipelineMessage message)
+    internal PipelineResponse(HttpResponseMessage netResponse, Stream? contentStream)
     {
         _netResponse = netResponse ?? throw new ArgumentNullException(nameof(netResponse));
         //_netContent = _netResponse.Content;
@@ -99,7 +99,7 @@ public class PipelineResponse : IDisposable
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    public virtual bool IsError { get; internal set; }
+    public virtual bool IsError { get; set; }
 
     public virtual void Dispose()
     {

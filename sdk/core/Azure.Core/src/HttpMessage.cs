@@ -25,23 +25,12 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : this((PipelineRequest)request, responseClassifier, default)
+            : this((PipelineRequest)request, responseClassifier)
         {
         }
 
-        internal HttpMessage(Request request,
-            ResponseClassifier classifier,
-            RequestContext? context)
-             : this((PipelineRequest)request,
-                    UpdateClassifierFromContext(classifier, context),
-                    context)
-        {
-        }
-
-        internal HttpMessage(PipelineRequest request,
-            ResponseErrorClassifier classifier,
-            RequestOptions? options)
-            : base(request, classifier, options)
+        internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+            : base(request, classifier)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -83,16 +72,13 @@ namespace Azure.Core
 
         internal void ClearResponse() => _response = null;
 
-        // Note: ideally this is never used because methods treating HttpMethod as PipelineMessage
-        // won't see the override.  Revisit?
-        private ResponseClassifier? _classifier = null;
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
         public new ResponseClassifier ResponseClassifier
         {
-            get { return _classifier ?? (ResponseClassifier)base.ResponseClassifier; }
-            set { /* TODO: restore: _classifier = value;*/ throw new NotImplementedException(); }
+            get => (ResponseClassifier)base.ResponseClassifier;
+            set => base.ResponseClassifier = value;
         }
 
         /// <summary>
@@ -115,17 +101,6 @@ namespace Azure.Core
         /// </summary>
         public MessageProcessingContext ProcessingContext => new(this);
 
-        private static ResponseClassifier UpdateClassifierFromContext(ResponseClassifier classifier, RequestContext? context)
-        {
-            if (context is not null)
-            {
-                context.Freeze();
-                return context.Apply(classifier);
-            }
-
-            return classifier;
-        }
-
         internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
             if (context == null)
@@ -139,6 +114,11 @@ namespace Azure.Core
             {
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
+            }
+
+            if (classifier != null)
+            {
+                ResponseClassifier = context.Apply(classifier);
             }
         }
 

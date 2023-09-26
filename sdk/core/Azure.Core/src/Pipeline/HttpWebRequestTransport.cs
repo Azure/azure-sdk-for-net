@@ -47,13 +47,11 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
             ProcessInternal(message, false).EnsureCompleted();
         }
 
-        /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
         {
             await ProcessInternal(message, true).ConfigureAwait(false);
@@ -259,7 +257,6 @@ namespace Azure.Core.Pipeline
             return request;
         }
 
-        /// <inheritdoc />
         public override Request CreateRequest()
         {
             return new HttpWebRequestImplementation();

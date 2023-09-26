@@ -8,19 +8,17 @@ namespace System.ServiceModel.Rest.Core;
 
 public class PipelineRequest : IDisposable
 {
+    private HttpMethod? _method;
+    private Uri? _uri;
+
     // TODO: optimize
     // Azure.Core has ArrayBackedPropertyBag and IgnoreCaseString
     // TODO: Azure.Core header dictionary stores a collection of values for a header.
     private Dictionary<string, string>? _headers;
 
-    public PipelineRequest( /*HttpMethod method, Uri uri */)
+    public PipelineRequest()
     {
-        //Method = method;
-        //Uri = uri;
     }
-
-    private HttpMethod? _method;
-    private Uri? _uri;
 
     // TODO: generator constraint requires us to make this settable, revisit later?
     public virtual HttpMethod Method
@@ -53,7 +51,6 @@ public class PipelineRequest : IDisposable
         set => _uri = value;
     }
 
-    // TODO: should this be publicly settable?  nullable?
     public virtual RequestBody? Content { get; set; }
 
     public virtual void SetHeaderValue(string name, string value)
@@ -62,7 +59,6 @@ public class PipelineRequest : IDisposable
         _headers[name] = value;
     }
 
-    // TODO: better design?
     internal virtual void SetRequestHeaders(HttpRequestMessage request)
     {
         if (_headers is null) return;
