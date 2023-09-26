@@ -390,7 +390,7 @@ namespace Azure.Storage.Files.DataLake
             : this(
                 fileSystemUri,
                 credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    DataLakeExtensions.CreateServiceAudience(options?.Audience),
                     options),
                 options,
                 storageSharedKeyCredential: null,

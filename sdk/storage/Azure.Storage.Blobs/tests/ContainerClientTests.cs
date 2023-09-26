@@ -330,61 +330,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task Ctor_DefaultAudience()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.PublicAudience);
-
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
-            {
-                BlobContainerName = test.Container.Name,
-            };
-
-            BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
-                uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadContainer.ExistsAsync();
-            Assert.IsTrue(exists);
-        }
-
-        [RecordedTest]
-        public async Task Ctor_CustomAudience()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience($"https://{test.Container.AccountName}.blob.core.windows.net/"));
-
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
-            {
-                BlobContainerName = test.Container.Name,
-            };
-
-            BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
-                uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadContainer.ExistsAsync();
-            Assert.IsTrue(exists);
-        }
-
-        [RecordedTest]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.GetBlobServiceAccountAudience(test.Container.AccountName));
+            BlobClientOptions options = GetOptions();
+            options.Audience = test.Container.AccountName;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
             {
@@ -408,7 +361,8 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience("https://badaudience.blob.core.windows.net"));
+            BlobClientOptions options = GetOptions();
+            options.Audience = test.Container.AccountName;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
             {

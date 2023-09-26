@@ -272,9 +272,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// Optional. Gets or sets the Audience to use for authentication with Azure Active Directory (AAD) to the specified storage account name.
+        /// The audience will only be used when a <see cref="TokenCredential"/> is used for authentication.
         /// </summary>
-        /// <value>If <c>null</c>, <see cref="ShareAudience.PublicAudience" /> will be assumed.</value>
-        public ShareAudience? Audience { get; set; }
+        /// <value>If <c>null</c> or empty, the audience will be scoped to to any Azure Storage account.</value>
+        public string Audience { get; set; }
     }
 }

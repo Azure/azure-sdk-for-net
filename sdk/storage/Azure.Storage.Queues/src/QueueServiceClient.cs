@@ -241,7 +241,7 @@ namespace Azure.Storage.Queues
             : this(
                   serviceUri,
                   credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? QueueAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    QueueExtensions.CreateServiceAudience(options?.Audience),
                     options),
                   options,
                   sharedKeyCredential: null,

@@ -325,7 +325,7 @@ namespace Azure.Storage.Queues
             : this(
                   queueUri,
                   credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? QueueAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    QueueExtensions.CreateServiceAudience(options?.Audience),
                     options),
                   options,
                   sharedKeyCredential: null,
@@ -3257,6 +3257,20 @@ namespace Azure.Storage.Queues
             return _parentQueueServiceClient;
         }
         #endregion
+    }
+}
+
+namespace Azure.Storage.Queues
+{
+    internal static partial class QueueExtensions
+    {
+        /// <summary>
+        /// Creates the Audience based on the account name.
+        /// </summary>
+        /// <param name="accountName"></param>
+        /// <returns></returns>
+        internal static string CreateServiceAudience(string accountName)
+            => $"https://{accountName}.queue.core.windows.net{Constants.DefaultScope}";
     }
 }
 

@@ -971,5 +971,8 @@ namespace Azure.Storage.Files.Shares
 
             return lastModified;
         }
+
+        internal static string CreateServiceAudience(string accountName)
+            => $"https://{accountName}.file.core.windows.net{Constants.DefaultScope}";
     }
 }

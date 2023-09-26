@@ -166,61 +166,14 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        public async Task Ctor_DefaultAudience()
-        {
-            // Arrange
-            await using DisposingQueue test = await GetTestQueueAsync();
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.PublicAudience);
-
-            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
-            {
-                QueueName = test.Queue.Name,
-            };
-
-            QueueClient aadQueue = InstrumentClient(new QueueClient(
-                uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadQueue.ExistsAsync();
-            Assert.IsTrue(exists);
-        }
-
-        [RecordedTest]
-        public async Task Ctor_CustomAudience()
-        {
-            // Arrange
-            await using DisposingQueue test = await GetTestQueueAsync();
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience($"https://{test.Queue.AccountName}.queue.core.windows.net/"));
-
-            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
-            {
-                QueueName = test.Queue.Name,
-            };
-
-            QueueClient aadQueue = InstrumentClient(new QueueClient(
-                uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadQueue.ExistsAsync();
-            Assert.IsTrue(exists);
-        }
-
-        [RecordedTest]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
             await using DisposingQueue test = await GetTestQueueAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.GetQueueServiceAccountAudience(test.Queue.AccountName));
+            QueueClientOptions options = GetOptions();
+            options.Audience = test.Queue.AccountName;
 
             QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
             {
@@ -244,7 +197,8 @@ namespace Azure.Storage.Queues.Test
             await using DisposingQueue test = await GetTestQueueAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience("https://badaudience.queue.core.windows.net"));
+            QueueClientOptions options = GetOptions();
+            options.Audience = test.Queue.AccountName;
 
             QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
             {

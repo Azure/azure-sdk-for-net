@@ -89,13 +89,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             return options;
         }
 
-        public DataLakeClientOptions GetOptionsWithAudience(DataLakeAudience audience)
-        {
-            DataLakeClientOptions options = DataLakeClientBuilder.GetOptions(false);
-            options.Audience = audience;
-            return options;
-        }
-
         public DataLakeServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config)
             => InstrumentClient(
                 new DataLakeServiceClient(

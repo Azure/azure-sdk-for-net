@@ -110,64 +110,6 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-                [RecordedTest]
-        public async Task Ctor_DefaultAudience()
-        {
-            // Arrange
-            await using DisposingShare test = await GetTestShareAsync();
-            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
-            await directoryClient.CreateIfNotExistsAsync();
-            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
-            await fileClient.CreateAsync(Constants.KB);
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.PublicAudience);
-
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
-            {
-                ShareName = test.Share.Name,
-                DirectoryOrFilePath = fileClient.Path
-            };
-
-            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
-                uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadFileClient.ExistsAsync();
-            Assert.IsNotNull(exists);
-        }
-
-        [RecordedTest]
-        public async Task Ctor_CustomAudience()
-        {
-            // Arrange
-            await using DisposingShare test = await GetTestShareAsync();
-            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
-            await directoryClient.CreateIfNotExistsAsync();
-            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
-            await fileClient.CreateAsync(Constants.KB);
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience($"https://{test.Share.AccountName}.file.core.windows.net/"));
-
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
-            {
-                ShareName = test.Share.Name,
-                DirectoryOrFilePath = fileClient.Path
-            };
-
-            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
-                uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadFileClient.ExistsAsync();
-            Assert.IsNotNull(exists);
-        }
-
         [RecordedTest]
         public async Task Ctor_StorageAccountAudience()
         {
@@ -179,7 +121,9 @@ namespace Azure.Storage.Files.Shares.Tests
             await fileClient.CreateAsync(Constants.KB);
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.GetShareServiceAccountAudience(test.Share.AccountName));
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            options.Audience = test.Container.AccountName;
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {
@@ -208,7 +152,9 @@ namespace Azure.Storage.Files.Shares.Tests
             await fileClient.CreateAsync(Constants.KB);
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience("https://badaudience.blob.core.windows.net"));
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            options.Audience = test.Container.AccountName;
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {

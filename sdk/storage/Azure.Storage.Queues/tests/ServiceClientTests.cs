@@ -15,6 +15,7 @@ using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -108,48 +109,14 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        public async Task Ctor_DefaultAudience()
-        {
-            // Act - Create new Queue client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.PublicAudience);
-
-            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
-                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
-        }
-
-        [RecordedTest]
-        public async Task Ctor_CustomAudience()
-        {
-            // Arrange
-            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
-
-            // Act - Create new Queue client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience($"https://{uriBuilder.AccountName}.queue.core.windows.net/"));
-
-            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
-                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
-                Tenants.GetOAuthCredential(),
-                options));
-
-            // Assert
-            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
-            Assert.IsNotNull(properties);
-        }
-
-        [RecordedTest]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
             QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
 
             // Act - Create new Queue client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.GetQueueServiceAccountAudience(uriBuilder.AccountName));
+            QueueClientOptions options = GetOptions();
+            options.Audience = uriBuilder.AccountName;
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
@@ -165,7 +132,9 @@ namespace Azure.Storage.Queues.Test
         public async Task Ctor_AudienceError()
         {
             // Act - Create new Queue client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience("https://badaudience.queue.core.windows.net"));
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
+            QueueClientOptions options = GetOptions();
+            options.Audience = uriBuilder.AccountName;
 
             QueueServiceClient aadContainer = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),

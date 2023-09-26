@@ -1760,5 +1760,8 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion
+
+        internal static string CreateServiceAudience(string accountName)
+            => $"https://{accountName}.blob.core.windows.net{Constants.DefaultScope}";
     }
 }

@@ -326,7 +326,7 @@ namespace Azure.Storage.Files.Shares
             : this(
                   directoryUri: directoryUri,
                   authentication: credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? ShareAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    ShareExtensions.CreateServiceAudience(options?.Audience),
                     options),
                   options: options ?? new ShareClientOptions(),
                   storageSharedKeyCredential: null,

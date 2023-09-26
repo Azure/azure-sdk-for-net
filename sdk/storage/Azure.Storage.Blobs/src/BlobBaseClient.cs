@@ -332,7 +332,7 @@ namespace Azure.Storage.Blobs.Specialized
             : this(
                 blobUri,
                 credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    BlobExtensions.CreateServiceAudience(options?.Audience),
                     options),
                 options,
                 storageSharedKeyCredential: null,

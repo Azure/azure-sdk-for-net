@@ -1081,5 +1081,8 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion
+
+        internal static string CreateServiceAudience(string accountName)
+            => $"https://{accountName}.blob.core.windows.net{Constants.DefaultScope}";
     }
 }

@@ -223,62 +223,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task Ctor_DefaultAudience()
-        {
-            // Arrange
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            DataLakeDirectoryClient pathClient = test.FileSystem.GetDirectoryClient(GetNewFileName());
-            await pathClient.CreateIfNotExistsAsync();
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.PublicAudience);
-
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
-            {
-                FileSystemName = pathClient.FileSystemName,
-                DirectoryOrFilePath = pathClient.Name
-            };
-
-            DataLakeDirectoryClient aadPathClient = InstrumentClient(new DataLakeDirectoryClient(
-                uriBuilder.ToUri(),
-                GetOAuthHnsCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadPathClient.ExistsAsync();
-            Assert.IsTrue(exists);
-        }
-
-        [RecordedTest]
-        public async Task Ctor_CustomAudience()
-        {
-            // Arrange
-            await using DisposingFileSystem test = await GetNewFileSystem();
-
-            DataLakeDirectoryClient fileClient = test.FileSystem.GetDirectoryClient(GetNewFileName());
-            await fileClient.CreateIfNotExistsAsync();
-
-            // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience($"https://{test.FileSystem.AccountName}.blob.core.windows.net/"));
-
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
-            {
-                FileSystemName = fileClient.FileSystemName,
-                DirectoryOrFilePath = fileClient.Name
-            };
-
-            DataLakeDirectoryClient aadDirClient = InstrumentClient(new DataLakeDirectoryClient(
-                uriBuilder.ToUri(),
-                GetOAuthHnsCredential(),
-                options));
-
-            // Assert
-            bool exists = await aadDirClient.ExistsAsync();
-            Assert.IsTrue(exists);
-        }
-
-        [RecordedTest]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -288,7 +232,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await pathClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DataLakeServiceAccountAudience(test.FileSystem.AccountName));
+            DataLakeClientOptions options = GetOptions();
+            options.Audience = test.Container.AccountName;
 
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
             {
@@ -316,7 +261,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await pathClient.CreateIfNotExistsAsync();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience("https://badaudience.blob.core.windows.net"));
+            DataLakeClientOptions options = GetOptions();
+            options.Audience = test.Container.AccountName;
 
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
             {

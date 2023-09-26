@@ -261,7 +261,7 @@ namespace Azure.Storage.Files.DataLake
             : this(
                 fileUri,
                 credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    DataLakeExtensions.CreateServiceAudience(options?.Audience),
                     options),
                 options,
                 credential)
