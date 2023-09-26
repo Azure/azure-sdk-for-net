@@ -1,0 +1,62 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+
+namespace Azure.Communication.CallAutomation.Models.Transcription
+{
+    /// <summary>
+    /// Streaming Transcription.
+    /// </summary>
+    internal class TranscriptionData: TranscriptionPackageBase
+    {
+        internal   TranscriptionData(string text, TextFormat format, float confidence, int offset, IEnumerable<Word> words, string participantRawID, ResultStatus resultStatus) {
+            Text = text;
+            Format = format;
+            Confidence = confidence;
+            Offset = offset;
+            Words = words;
+            if (participantRawID != null)
+            {
+                Participant = new CommunicationUserIdentifier(participantRawID);
+            }
+            ResultStatus = resultStatus;
+        }
+        /// <summary>
+        /// The display form of the recognized word
+        /// </summary>
+        public string Text { get; set; }
+
+        /// <summary>
+        /// The format of text
+        /// </summary>
+        public TextFormat Format { get; set; }
+
+        /// <summary>
+        /// Confidence of recognition of the whole phrase, from 0.0 (no confidence) to 1.0 (full confidence)
+        /// </summary>
+        public float Confidence { get; set; }
+
+        /// <summary>
+        /// The position of this payload
+        /// </summary>
+
+        public int Offset { get; set; }
+
+        /// <summary>
+        /// The result for each word of the phrase
+        /// </summary>
+        public IEnumerable<Word> Words { get; set; }
+
+        /// <summary>
+        /// The identified speaker based on participant raw ID
+        /// </summary>
+        public CommunicationUserIdentifier Participant { get; set; }
+
+        /// <summary>
+        /// Status of the result of transcription
+        /// </summary>
+        public ResultStatus ResultStatus { get; set; }
+    }
+}
