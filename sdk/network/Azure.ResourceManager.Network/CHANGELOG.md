@@ -2,10 +2,6 @@
 
 ## 1.6.0-beta.1 (2023-09-25)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Add the new property `ResourceIdString` to replace `ResourceId` which fixed the formatting issue when `resourceId` returns an empty string.
