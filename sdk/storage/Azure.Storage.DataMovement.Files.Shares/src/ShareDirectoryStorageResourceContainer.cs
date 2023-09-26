@@ -11,7 +11,7 @@ using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class ShareDirectoryStorageResourceContainer : StorageResourceContainer
+    internal class ShareDirectoryStorageResourceContainer : StorageResourceContainerInternal
     {
         internal ShareFileStorageResourceOptions ResourceOptions { get; set; }
         internal PathScanner PathScanner { get; set; }
@@ -47,20 +47,5 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 yield return new ShareFileStorageResourceItem(client, ResourceOptions);
             }
         }
-
-        #region Protected Hooks
-        // Internal func to access protected member for testing.
-        internal async IAsyncEnumerable<StorageResource> GetStorageResourcesInternal(
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (StorageResource resource in GetStorageResourcesAsync(cancellationToken).ConfigureAwait(false))
-            {
-                yield return resource;
-            }
-        }
-
-        internal StorageResourceItem GetStorageResourceReferenceInternal(string path)
-            => GetStorageResourceReference(path);
-        #endregion
     }
 }
