@@ -78,7 +78,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
             netRequest.Content = new HttpContentAdapter(message.Request.Content, CancellationToken.None);
         }
 
-        message.Request.SetHeaders(netRequest);
+        message.Request.SetTransportHeaders(netRequest);
 
         try
         {

@@ -6,7 +6,6 @@ using System.Net.Http;
 
 namespace System.ServiceModel.Rest.Core;
 
-// TODO: this does not include some members from Response (e.g. ClientRequestId). Is that OK?
 public class PipelineResponse : IDisposable
 {
     private readonly HttpResponseMessage? _netResponse;

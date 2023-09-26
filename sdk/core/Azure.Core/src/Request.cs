@@ -138,19 +138,11 @@ namespace Azure.Core
         /// </summary>
         /// <param name="name">The header name.</param>
         /// <param name="value">The header value.</param>
-        protected internal virtual void SetHeader(string name, string value)
+        public override void SetHeader(string name, string value)
         {
             RemoveHeader(name);
             AddHeader(name, value);
         }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        public override void SetHeaderValue(string name, string value)
-            => SetHeader(name, value);
 
         /// <summary>
         /// Removes the header from the collection.

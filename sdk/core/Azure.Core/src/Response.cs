@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -14,7 +13,7 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : PipelineResponse, IDisposable
+    public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>

@@ -236,7 +236,7 @@ namespace Azure
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
+    public abstract partial class Response : System.ServiceModel.Rest.Core.PipelineResponse
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
@@ -475,7 +475,7 @@ namespace Azure.Core
             public static string XMsRequestId { get { throw null; } }
         }
     }
-    public partial class HttpMessage : System.ServiceModel.Rest.Core.PipelineMessage, System.IDisposable
+    public sealed partial class HttpMessage : System.ServiceModel.Rest.Core.PipelineMessage
     {
         public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ServiceModel.Rest.Core.PipelineRequest), default(System.ServiceModel.Rest.Core.ResponseErrorClassifier)) { }
         public bool BufferResponse { get { throw null; } set { } }
@@ -535,8 +535,7 @@ namespace Azure.Core
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         protected internal abstract bool RemoveHeader(string name);
-        protected internal virtual void SetHeader(string name, string value) { }
-        public override void SetHeaderValue(string name, string value) { }
+        public override void SetHeader(string name, string value) { }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
@@ -968,7 +967,7 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public partial class HttpPipeline : System.ServiceModel.Rest.Core.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage>
+    public partial class HttpPipeline : System.ServiceModel.Rest.Core.Pipeline<Azure.Core.HttpMessage>
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
@@ -977,14 +976,12 @@ namespace Azure.Core.Pipeline
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context) { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier) { throw null; }
-        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions? options, System.ServiceModel.Rest.Core.ResponseErrorClassifier? classifier = null) { throw null; }
+        public override Azure.Core.HttpMessage CreateMessage(System.ServiceModel.Rest.RequestOptions? options, System.ServiceModel.Rest.Core.ResponseErrorClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
+        public override void Send(Azure.Core.HttpMessage message) { }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override void Send(System.ServiceModel.Rest.Core.PipelineMessage message) { }
+        public override System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message) { throw null; }
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
         public Azure.Response SendRequest(Azure.Core.Request request, System.Threading.CancellationToken cancellationToken) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Response> SendRequestAsync(Azure.Core.Request request, System.Threading.CancellationToken cancellationToken) { throw null; }
     }

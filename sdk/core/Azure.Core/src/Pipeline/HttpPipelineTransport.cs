@@ -4,8 +4,6 @@
 using System.ComponentModel;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
