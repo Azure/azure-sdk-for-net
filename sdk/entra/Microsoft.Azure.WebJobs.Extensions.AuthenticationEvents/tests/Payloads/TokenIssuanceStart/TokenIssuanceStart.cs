@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart
 {
     /// <summary>Test data for the Token Issuance Start</summary>
     public static class TokenIssuanceStart
@@ -104,6 +107,15 @@
             get
             {
                 return PayloadHelper.GetPayload("TokenIssuanceStart.InvalidJsonRequest.json");
+            }
+        }
+
+        /// <summary> Gets the request payload with XML structure </summary>
+        public static string RequestWithXmlBody
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.InvalidXmlRequest.xml");
             }
         }
     }

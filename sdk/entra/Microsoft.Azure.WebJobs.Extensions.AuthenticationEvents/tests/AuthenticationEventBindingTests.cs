@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Reflection;
-using Castle.Core.Logging;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Extensions.Logging;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
 using NUnit.Framework;
+using Payload = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
@@ -14,23 +12,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
     {
         [Test]
         [TestCaseSource(nameof(TestPayloadScenarios))]
-        public void TestRequestJsonPayload(object testObject, string message, bool success, string exceptionMessage)
+        public void TestRequestJsonPayload(object eventPayload, string message, bool success, string exceptionMessage)
         {
-            Microsoft.Extensions.Logging.ILoggerFactory loggerFactory = new LoggerFactory();
-            //Microsoft.Extensions.Logging.ILogger logger = loggerFactory.CreateLogger<AuthenticationEventConfigProvider>();
-            AuthenticationEventConfigProvider config = new AuthenticationEventConfigProvider(loggerFactory);
-            string payload = testObject.ToString();
+            string payload = eventPayload.ToString();
             if (success == false)
             {
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:7278/");
-                request.Content = new StringContent(string.Empty);
-                var authEventBinding = new AuthenticationEventBinding(new AuthenticationEventsTriggerAttribute(), config, null);
-                var ex = Assert.Throws<RequestValidationException>(async () => await authEventBinding.BindAsync(request, null));
+                var ex = Assert.Throws<RequestValidationException>(() => AuthenticationEventBinding.GetEventAndValidateSchema(payload));
                 Assert.AreEqual(exceptionMessage, ex.Message);
             }
             else
             {
-                Assert.DoesNotThrow(() => AuthenticationEventMetadataLoader.GetEventMetadata(payload));
+                Assert.DoesNotThrow(() => AuthenticationEventBinding.GetEventAndValidateSchema(payload));
             }
         }
 
@@ -41,7 +33,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             {
                 Test = string.Empty,
                 Message = "Testing request without payload throws an error",
-                ExceptionMessage = "Invalid Type of payload"
+                ExceptionMessage = "Invalid Payload detected."
+            }.ToArray;
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.RequestWithXmlBody,
+                Message = "Testing request with XML payload throws an error",
+                ExceptionMessage = "Invalid Payload detected."
+            }.ToArray;
+#endregion
+
+#region Valid
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.ValidRequestPayload,
+                Message = "Testing valid full request payload",
+                Success = true,
             }.ToArray;
 #endregion
         }

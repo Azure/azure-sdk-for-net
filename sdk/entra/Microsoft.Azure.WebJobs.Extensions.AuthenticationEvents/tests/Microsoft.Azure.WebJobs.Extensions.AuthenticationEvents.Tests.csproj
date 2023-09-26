@@ -9,6 +9,7 @@
 		<None Remove="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<None Remove="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\InvalidJsonRequest.json" />
+		<None Remove="Payloads\TokenIssuanceStart\InvalidXmlRequest.xml" />
 		<None Remove="Payloads\TokenIssuanceStart\NoActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\QueryParameters.json" />
 		<None Remove="Payloads\TokenIssuanceStart\RequestMissingODataType.json" />
@@ -26,6 +27,7 @@
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\RequestMissingODataType.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\RequestMissingSource.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidJsonRequest.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidXmlRequest.xml" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ValidRequest.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NullResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ExpectedPayload.json" />

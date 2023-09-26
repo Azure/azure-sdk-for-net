@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using NUnit.Framework;
