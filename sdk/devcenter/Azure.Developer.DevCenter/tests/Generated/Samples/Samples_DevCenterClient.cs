@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Samples
 {
-    public class Samples_DevCenterClient
+    public partial class Samples_DevCenterClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -89,7 +89,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetProjects())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetProjectsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -119,9 +119,9 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetProjects(filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("maxDevBoxesPerUser").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
             }
         }
 
@@ -136,9 +136,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetProjectsAsync(filter: "<filter>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("maxDevBoxesPerUser").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
             }
         }
     }
