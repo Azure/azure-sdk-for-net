@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Account.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetResourceSetRule()
+        public void Example_GetResourceSetRule_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetResourceSetRule_Async()
+        public async Task Example_GetResourceSetRule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateResourceSetRule()
+        public void Example_CreateOrUpdateResourceSetRule_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -260,7 +260,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateResourceSetRule_Async()
+        public async Task Example_CreateOrUpdateResourceSetRule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -693,7 +693,7 @@ storeType = "<storeType>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteResourceSetRule()
+        public void Example_DeleteResourceSetRule_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -705,7 +705,7 @@ storeType = "<storeType>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteResourceSetRule_Async()
+        public async Task Example_DeleteResourceSetRule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

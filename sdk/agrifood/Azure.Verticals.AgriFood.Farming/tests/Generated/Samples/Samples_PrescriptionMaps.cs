@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPrescriptionMap()
+        public void Example_GetPrescriptionMap_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPrescriptionMap_Async()
+        public async Task Example_GetPrescriptionMap_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -103,7 +103,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -117,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -217,7 +217,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -228,7 +228,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -261,7 +261,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails()
+        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -276,7 +276,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -339,7 +339,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPrescriptionMapsByPartyId()
+        public void Example_GetPrescriptionMapsByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -353,7 +353,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPrescriptionMapsByPartyId_Async()
+        public async Task Example_GetPrescriptionMapsByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -479,7 +479,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPrescriptionMaps()
+        public void Example_GetPrescriptionMaps_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -493,7 +493,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPrescriptionMaps_Async()
+        public async Task Example_GetPrescriptionMaps_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -619,7 +619,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob()
+        public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
@@ -635,7 +635,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
+        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PrescriptionMaps client = new FarmBeatsClient(credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");

@@ -21,7 +21,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_InferCancerProfile()
+        public void Example_InferCancerProfile_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -50,7 +50,7 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_InferCancerProfile_Async()
+        public async Task Example_InferCancerProfile_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -79,7 +79,7 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_InferCancerProfile_Convenience()
+        public void Example_InferCancerProfile_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -95,7 +95,7 @@ new PatientRecord("<id>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_InferCancerProfile_Convenience_Async()
+        public async Task Example_InferCancerProfile_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");

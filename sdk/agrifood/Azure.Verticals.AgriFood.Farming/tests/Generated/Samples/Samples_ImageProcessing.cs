@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRasterizeJob()
+        public void Example_GetRasterizeJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
@@ -36,7 +36,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRasterizeJob_Async()
+        public async Task Example_GetRasterizeJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
@@ -109,7 +109,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateRasterizeJob()
+        public void Example_CreateRasterizeJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
@@ -134,7 +134,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateRasterizeJob_Async()
+        public async Task Example_CreateRasterizeJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");

@@ -21,7 +21,7 @@ namespace Azure.AI.ContentSafety.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeText()
+        public void Example_AnalyzeText_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentSafety.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeText_Async()
+        public async Task Example_AnalyzeText_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -57,7 +57,7 @@ namespace Azure.AI.ContentSafety.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeText_Convenience()
+        public void Example_AnalyzeText_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -69,7 +69,7 @@ namespace Azure.AI.ContentSafety.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeText_Convenience_Async()
+        public async Task Example_AnalyzeText_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -205,7 +205,7 @@ TextCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeImage()
+        public void Example_AnalyzeImage_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -223,7 +223,7 @@ TextCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeImage_Async()
+        public async Task Example_AnalyzeImage_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -241,7 +241,7 @@ TextCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeImage_Convenience()
+        public void Example_AnalyzeImage_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -253,7 +253,7 @@ TextCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeImage_Convenience_Async()
+        public async Task Example_AnalyzeImage_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -375,7 +375,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklist()
+        public void Example_GetTextBlocklist_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -389,7 +389,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklist_Async()
+        public async Task Example_GetTextBlocklist_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -403,7 +403,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklist_Convenience()
+        public void Example_GetTextBlocklist_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -414,7 +414,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklist_Convenience_Async()
+        public async Task Example_GetTextBlocklist_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -477,7 +477,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateTextBlocklist()
+        public void Example_CreateOrUpdateTextBlocklist_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -495,7 +495,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateTextBlocklist_Async()
+        public async Task Example_CreateOrUpdateTextBlocklist_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -553,7 +553,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTextBlocklist()
+        public void Example_DeleteTextBlocklist_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -565,7 +565,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTextBlocklist_Async()
+        public async Task Example_DeleteTextBlocklist_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -601,7 +601,7 @@ ImageCategory.Hate
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddBlockItems()
+        public void Example_AddBlockItems_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -625,7 +625,7 @@ text = "<text>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddBlockItems_Async()
+        public async Task Example_AddBlockItems_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -649,7 +649,7 @@ text = "<text>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddBlockItems_Convenience()
+        public void Example_AddBlockItems_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -664,7 +664,7 @@ new TextBlockItemInfo("<text>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddBlockItems_Convenience_Async()
+        public async Task Example_AddBlockItems_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -769,7 +769,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveBlockItems()
+        public void Example_RemoveBlockItems_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -788,7 +788,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveBlockItems_Async()
+        public async Task Example_RemoveBlockItems_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -807,7 +807,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveBlockItems_Convenience()
+        public void Example_RemoveBlockItems_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -823,7 +823,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveBlockItems_Convenience_Async()
+        public async Task Example_RemoveBlockItems_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -909,7 +909,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklistItem()
+        public void Example_GetTextBlocklistItem_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -924,7 +924,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklistItem_Async()
+        public async Task Example_GetTextBlocklistItem_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -939,7 +939,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklistItem_Convenience()
+        public void Example_GetTextBlocklistItem_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -950,7 +950,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklistItem_Convenience_Async()
+        public async Task Example_GetTextBlocklistItem_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1015,7 +1015,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklists()
+        public void Example_GetTextBlocklists_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1030,7 +1030,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklists_Async()
+        public async Task Example_GetTextBlocklists_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1045,7 +1045,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklists_Convenience()
+        public void Example_GetTextBlocklists_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1058,7 +1058,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklists_Convenience_Async()
+        public async Task Example_GetTextBlocklists_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1129,7 +1129,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklistItems()
+        public void Example_GetTextBlocklistItems_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1145,7 +1145,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklistItems_Async()
+        public async Task Example_GetTextBlocklistItems_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1161,7 +1161,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTextBlocklistItems_Convenience()
+        public void Example_GetTextBlocklistItems_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1174,7 +1174,7 @@ Description = "<description>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTextBlocklistItems_Convenience_Async()
+        public async Task Example_GetTextBlocklistItems_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
