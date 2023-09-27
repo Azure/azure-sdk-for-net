@@ -286,12 +286,6 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response> StopContinuousDtmfRecognitionAsync(Azure.Communication.CommunicationIdentifier targetParticipant, string operationContext = null, System.Uri callbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopHoldMusic(Azure.Communication.CallAutomation.StopHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopHoldMusicAsync(Azure.Communication.CallAutomation.StopHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response StopTranscription(Azure.Communication.CallAutomation.StopTranscriptionOptions stopTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> StopTranscriptionAsync(Azure.Communication.CallAutomation.StopTranscriptionOptions stopTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response StopTranscription(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> StopTranscriptionAsync(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateTranscriptionData(string locale, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTranscriptionDataAsync(string locale, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopTranscription(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTranscriptionAsync(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateTranscriptionData(string locale, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1328,9 +1322,9 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackUri { get { throw null; } set { } }
     }
-    public partial class StartTranscriptionRequest
+    public partial class StartTranscriptionOptions
     {
-        public StartTranscriptionRequest() { }
+        public StartTranscriptionOptions() { }
         public string Locale { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
     }
@@ -1339,17 +1333,6 @@ namespace Azure.Communication.CallAutomation
         public StopHoldMusicOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
-    }
-    public partial class StopTranscriptionRequest
-    {
-        public StopTranscriptionRequest() { }
-        public string OperationContext { get { throw null; } set { } }
-    }
-    public partial class StartTranscriptionOptions
-    {
-        public StartTranscriptionOptions() { }
-        public string Locale { get { throw null; } set { } }
-        public string OperationContext { get { throw null; } set { } }
     }
     public partial class StopTranscriptionOptions
     {
@@ -1530,11 +1513,6 @@ namespace Azure.Communication.CallAutomation
     {
         internal UnmuteParticipantsResult() { }
         public string OperationContext { get { throw null; } }
-    }
-    public partial class UpdateTranscriptionDataRequest
-    {
-        public UpdateTranscriptionDataRequest(string locale) { }
-        public string Locale { get { throw null; } }
     }
     public partial class UserConsent
     {
