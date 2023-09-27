@@ -11,8 +11,6 @@ using Azure.Core;
 namespace Azure
 {
 #if NET6_0_OR_GREATER
-    [JsonSourceGenerationOptions(GenerationMode = JsonSourceGenerationMode.Metadata)]
-    [JsonSerializable(typeof(Array))]
     [JsonSerializable(typeof(ResponseError))]
     [JsonSerializable(typeof(RequestFailedException.ErrorResponse))]
     [JsonSerializable(typeof(ResponseInnerError))]

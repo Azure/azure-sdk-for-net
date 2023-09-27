@@ -272,7 +272,7 @@ namespace Azure
                     var deserializedResponseError = System.Text.Json.JsonSerializer.Deserialize(content, typeof(ResponseError), ResponseErrorSourceGenerationContext.Default);
                     if (deserializedResponseError != null)
                     {
-                        error= (ResponseError)deserializedResponseError;
+                        error = (ResponseError)deserializedResponseError;
                     }
                 }
 #else
