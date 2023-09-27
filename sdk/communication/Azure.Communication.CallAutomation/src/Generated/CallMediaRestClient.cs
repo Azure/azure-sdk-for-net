@@ -194,7 +194,7 @@ namespace Azure.Communication.CallAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath(":StopTranscripition", false);
+            uri.AppendPath(":StopTranscription", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
