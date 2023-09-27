@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -35,7 +35,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -121,7 +121,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSensorPartnerIntegration()
+        public void Example_GetSensorPartnerIntegration_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -134,7 +134,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSensorPartnerIntegration_Async()
+        public async Task Example_GetSensorPartnerIntegration_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -197,7 +197,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -208,7 +208,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -241,7 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CheckConsent()
+        public void Example_CheckConsent_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -254,7 +254,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CheckConsent_Async()
+        public async Task Example_CheckConsent_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -297,7 +297,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GenerateConsentLink()
+        public void Example_GenerateConsentLink_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -310,7 +310,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GenerateConsentLink_Async()
+        public async Task Example_GenerateConsentLink_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -351,7 +351,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSensorPartnerIntegrations()
+        public void Example_GetSensorPartnerIntegrations_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
@@ -365,7 +365,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSensorPartnerIntegrations_Async()
+        public async Task Example_GetSensorPartnerIntegrations_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");

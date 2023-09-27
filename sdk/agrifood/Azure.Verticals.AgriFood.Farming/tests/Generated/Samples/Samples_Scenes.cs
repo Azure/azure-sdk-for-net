@@ -22,7 +22,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Download()
+        public void Example_Download_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -39,7 +39,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Download_Async()
+        public async Task Example_Download_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -90,7 +90,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSatelliteDataIngestionJobDetails()
+        public void Example_GetSatelliteDataIngestionJobDetails_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -107,7 +107,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSatelliteDataIngestionJobDetails_Async()
+        public async Task Example_GetSatelliteDataIngestionJobDetails_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -194,7 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SearchFeatures()
+        public void Example_SearchFeatures_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -218,7 +218,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SearchFeatures_Async()
+        public async Task Example_SearchFeatures_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -362,7 +362,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetStacFeature()
+        public void Example_GetStacFeature_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -381,7 +381,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStacFeature_Async()
+        public async Task Example_GetStacFeature_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -458,7 +458,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScenes()
+        public void Example_GetScenes_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -472,7 +472,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScenes_Async()
+        public async Task Example_GetScenes_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -560,7 +560,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSatelliteDataIngestionJob()
+        public void Example_CreateSatelliteDataIngestionJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
@@ -586,7 +586,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSatelliteDataIngestionJob_Async()
+        public async Task Example_CreateSatelliteDataIngestionJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
