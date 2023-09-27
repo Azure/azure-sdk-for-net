@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Sharing.Samples
 {
-    public class Samples_ShareResourcesClient
+    public partial class Samples_ShareResourcesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public class Samples_PurviewScanClient
+    public partial class Samples_PurviewScanClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -123,14 +122,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new List<object>()
-{
+                    excludeUriPrefixes = new object[]
+            {
 "<excludeUriPrefixes>"
-},
-                    includeUriPrefixes = new List<object>()
-{
+            },
+                    includeUriPrefixes = new object[]
+            {
 "<includeUriPrefixes>"
-},
+            },
                 },
             });
             Response response = client.CreateOrUpdateFilter(content);
@@ -154,14 +153,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new List<object>()
-{
+                    excludeUriPrefixes = new object[]
+            {
 "<excludeUriPrefixes>"
-},
-                    includeUriPrefixes = new List<object>()
-{
+            },
+                    includeUriPrefixes = new object[]
+            {
 "<includeUriPrefixes>"
-},
+            },
                 },
             });
             Response response = await client.CreateOrUpdateFilterAsync(content);
@@ -189,7 +188,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -208,7 +206,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -231,18 +228,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new List<object>()
-{
+                                excludePrefixes = new object[]
+            {
 "<excludePrefixes>"
-},
-                                includePrefixes = new List<object>()
-{
+            },
+                                includePrefixes = new object[]
+            {
 "<includePrefixes>"
-},
-                                resources = new List<object>()
-{
+            },
+                                resources = new object[]
+            {
 "<resources>"
-},
+            },
                             },
                             credential = new
                             {
@@ -323,18 +320,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new List<object>()
-{
+                                excludePrefixes = new object[]
+            {
 "<excludePrefixes>"
-},
-                                includePrefixes = new List<object>()
-{
+            },
+                                includePrefixes = new object[]
+            {
 "<includePrefixes>"
-},
-                                resources = new List<object>()
-{
+            },
+                                resources = new object[]
+            {
 "<resources>"
-},
+            },
                             },
                             credential = new
                             {
@@ -407,7 +404,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -422,7 +418,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -519,7 +514,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -534,7 +528,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -917,24 +910,24 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             {
                                 key = new object(),
                             },
-                            minutes = new List<object>()
-{
+                            minutes = new object[]
+            {
 1234
-},
-                            hours = new List<object>()
-{
+            },
+                            hours = new object[]
+            {
 1234
-},
-                            weekDays = new List<object>()
-{
+            },
+                            weekDays = new object[]
+            {
 "Sunday"
-},
-                            monthDays = new List<object>()
-{
+            },
+                            monthDays = new object[]
+            {
 1234
-},
-                            monthlyOccurrences = new List<object>()
-{
+            },
+                            monthlyOccurrences = new object[]
+            {
 new
 {
 additionalProperties = new
@@ -944,7 +937,7 @@ key = new object(),
 day = "Sunday",
 occurrence = 1234,
 }
-},
+            },
                         },
                         timeZone = "<timeZone>",
                     },
@@ -1003,24 +996,24 @@ occurrence = 1234,
                             {
                                 key = new object(),
                             },
-                            minutes = new List<object>()
-{
+                            minutes = new object[]
+            {
 1234
-},
-                            hours = new List<object>()
-{
+            },
+                            hours = new object[]
+            {
 1234
-},
-                            weekDays = new List<object>()
-{
+            },
+                            weekDays = new object[]
+            {
 "Sunday"
-},
-                            monthDays = new List<object>()
-{
+            },
+                            monthDays = new object[]
+            {
 1234
-},
-                            monthlyOccurrences = new List<object>()
-{
+            },
+                            monthlyOccurrences = new object[]
+            {
 new
 {
 additionalProperties = new
@@ -1030,7 +1023,7 @@ key = new object(),
 day = "Sunday",
 occurrence = 1234,
 }
-},
+            },
                         },
                         timeZone = "<timeZone>",
                     },
