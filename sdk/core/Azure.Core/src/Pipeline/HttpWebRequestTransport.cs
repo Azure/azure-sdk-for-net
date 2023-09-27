@@ -375,8 +375,6 @@ namespace Azure.Core.Pipeline
                     Content = null;
                     content.Dispose();
                 }
-
-                base.Dispose();
             }
         }
 

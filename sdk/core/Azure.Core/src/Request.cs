@@ -15,7 +15,7 @@ namespace Azure.Core
     /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Request : PipelineRequest
+    public abstract class Request : PipelineRequest, IDisposable
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private RequestUriBuilder? _uri;
@@ -168,5 +168,10 @@ namespace Azure.Core
         /// Gets the response HTTP headers.
         /// </summary>
         public RequestHeaders Headers => new(this);
+
+        /// <summary>
+        /// Frees resources held by this <see cref="Request"/> instance.
+        /// </summary>
+        public abstract void Dispose();
     }
 }

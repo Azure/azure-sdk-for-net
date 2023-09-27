@@ -46,8 +46,6 @@ namespace Azure.Core.TestFramework
         public override void Dispose()
         {
             IsDisposed = true;
-
-            base.Dispose();
         }
     }
 }

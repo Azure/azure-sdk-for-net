@@ -73,7 +73,6 @@ namespace Azure.Core
 
         public override void Dispose()
         {
-            base.Dispose();
         }
     }
 }

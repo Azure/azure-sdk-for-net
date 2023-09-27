@@ -6,12 +6,10 @@ using System.Net.Http;
 
 namespace System.ServiceModel.Rest.Core;
 
-public class PipelineRequest : IDisposable
+public class PipelineRequest
 {
     private HttpMethod? _method;
     private Uri? _uri;
-
-    private bool _disposed;
 
     // TODO: optimize
     // Azure.Core has ArrayBackedPropertyBag and IgnoreCaseString
@@ -53,6 +51,9 @@ public class PipelineRequest : IDisposable
         set => _uri = value;
     }
 
+    // Note: we don't dipose the request's Content, because for protocol methods
+    // the caller creates these.
+    // TODO: do we do the right thing for convenience methods?
     public virtual RequestBody? Content { get; set; }
 
     public virtual void SetHeaderValue(string name, string value)
@@ -78,26 +79,4 @@ public class PipelineRequest : IDisposable
             }
         }
     }
-
-    #region IDisposable
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing && !_disposed)
-        {
-            var content = Content;
-            content?.Dispose();
-            Content = null;
-
-            _disposed = true;
-        }
-    }
-
-    public virtual void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    #endregion
 }

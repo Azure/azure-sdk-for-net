@@ -518,8 +518,6 @@ namespace Azure.Core.Pipeline
                     Content = null;
                     content.Dispose();
                 }
-
-                base.Dispose();
             }
 
             public override string ToString() => BuildRequestMessage(default).ToString();
