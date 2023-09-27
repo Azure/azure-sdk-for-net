@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Samples
 {
-    public class Samples_DeploymentEnvironmentsClient
+    public partial class Samples_DeploymentEnvironmentsClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -32,7 +32,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -49,7 +48,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -256,7 +254,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("environmentType").ToString());
                 Console.WriteLine(result[0].GetProperty("catalogName").ToString());
                 Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -274,7 +271,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("environmentType").ToString());
                 Console.WriteLine(result[0].GetProperty("catalogName").ToString());
                 Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -342,7 +338,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("environmentType").ToString());
                 Console.WriteLine(result[0].GetProperty("catalogName").ToString());
                 Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -360,7 +355,6 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result[0].GetProperty("environmentType").ToString());
                 Console.WriteLine(result[0].GetProperty("catalogName").ToString());
                 Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -743,7 +737,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -767,7 +760,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
