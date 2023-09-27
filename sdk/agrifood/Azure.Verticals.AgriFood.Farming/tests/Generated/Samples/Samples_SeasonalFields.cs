@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_SeasonalFields
+    public partial class Samples_SeasonalFields
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -143,10 +142,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 farmId = "<farmId>",
                 fieldId = "<fieldId>",
                 seasonId = "<seasonId>",
-                cropProductIds = new List<object>()
-{
+                cropProductIds = new object[]
+            {
 "<cropProductIds>"
-},
+            },
                 cropId = "<cropId>",
                 status = "<status>",
                 source = "<source>",
@@ -191,10 +190,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 farmId = "<farmId>",
                 fieldId = "<fieldId>",
                 seasonId = "<seasonId>",
-                cropProductIds = new List<object>()
-{
+                cropProductIds = new object[]
+            {
 "<cropProductIds>"
-},
+            },
                 cropId = "<cropId>",
                 status = "<status>",
                 source = "<source>",
@@ -235,6 +234,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -246,6 +246,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -257,6 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -268,6 +270,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -359,7 +362,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             foreach (BinaryData item in client.GetSeasonalFieldsByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -373,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             await foreach (BinaryData item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -384,53 +387,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetSeasonalFieldsByPartyId("<partyId>", new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetSeasonalFieldsByPartyId("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("farmId").ToString());
-                Console.WriteLine(result[0].GetProperty("fieldId").ToString());
-                Console.WriteLine(result[0].GetProperty("seasonId").ToString());
-                Console.WriteLine(result[0].GetProperty("cropProductIds")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("cropId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("farmId").ToString());
+                Console.WriteLine(result.GetProperty("fieldId").ToString());
+                Console.WriteLine(result.GetProperty("seasonId").ToString());
+                Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
+                Console.WriteLine(result.GetProperty("cropId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -441,53 +417,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("farmId").ToString());
-                Console.WriteLine(result[0].GetProperty("fieldId").ToString());
-                Console.WriteLine(result[0].GetProperty("seasonId").ToString());
-                Console.WriteLine(result[0].GetProperty("cropProductIds")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("cropId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("farmId").ToString());
+                Console.WriteLine(result.GetProperty("fieldId").ToString());
+                Console.WriteLine(result.GetProperty("seasonId").ToString());
+                Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
+                Console.WriteLine(result.GetProperty("cropId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -501,7 +450,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             foreach (BinaryData item in client.GetSeasonalFields(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -515,7 +464,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             await foreach (BinaryData item in client.GetSeasonalFieldsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -526,53 +475,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetSeasonalFields(new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<seasonalFieldIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetSeasonalFields(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("farmId").ToString());
-                Console.WriteLine(result[0].GetProperty("fieldId").ToString());
-                Console.WriteLine(result[0].GetProperty("seasonId").ToString());
-                Console.WriteLine(result[0].GetProperty("cropProductIds")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("cropId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("farmId").ToString());
+                Console.WriteLine(result.GetProperty("fieldId").ToString());
+                Console.WriteLine(result.GetProperty("seasonId").ToString());
+                Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
+                Console.WriteLine(result.GetProperty("cropId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -583,53 +505,26 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetSeasonalFieldsAsync(new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<seasonalFieldIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetSeasonalFieldsAsync(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("farmId").ToString());
-                Console.WriteLine(result[0].GetProperty("fieldId").ToString());
-                Console.WriteLine(result[0].GetProperty("seasonId").ToString());
-                Console.WriteLine(result[0].GetProperty("cropProductIds")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("cropId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("farmId").ToString());
+                Console.WriteLine(result.GetProperty("fieldId").ToString());
+                Console.WriteLine(result.GetProperty("seasonId").ToString());
+                Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
+                Console.WriteLine(result.GetProperty("cropId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
