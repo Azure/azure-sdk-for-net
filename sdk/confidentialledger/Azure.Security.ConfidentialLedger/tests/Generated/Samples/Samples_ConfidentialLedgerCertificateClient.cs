@@ -13,9 +13,9 @@ using Azure.Identity;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
-namespace Azure.Security.ConfidentialLedger.Certificate.Samples
+namespace Azure.Security.ConfidentialLedger.Samples
 {
-    public class Samples_ConfidentialLedgerCertificateClient
+    public partial class Samples_ConfidentialLedgerCertificateClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
