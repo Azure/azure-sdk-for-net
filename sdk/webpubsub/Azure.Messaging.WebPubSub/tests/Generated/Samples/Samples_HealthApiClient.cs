@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Samples
 {
-    public class Samples_HealthApiClient
+    public partial class Samples_HealthApiClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -23,6 +23,7 @@ namespace Azure.Messaging.WebPubSub.Samples
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
             Response response = client.GetServiceStatus();
+
             Console.WriteLine(response.Status);
         }
 
@@ -33,6 +34,7 @@ namespace Azure.Messaging.WebPubSub.Samples
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
             Response response = await client.GetServiceStatusAsync();
+
             Console.WriteLine(response.Status);
         }
 
@@ -43,6 +45,7 @@ namespace Azure.Messaging.WebPubSub.Samples
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
             Response response = client.GetServiceStatus();
+
             Console.WriteLine(response.Status);
         }
 
@@ -53,6 +56,7 @@ namespace Azure.Messaging.WebPubSub.Samples
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
             Response response = await client.GetServiceStatusAsync();
+
             Console.WriteLine(response.Status);
         }
     }
