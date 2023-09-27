@@ -13,7 +13,6 @@ Response response = await client.GetReceivedShareAsync("<receivedShareId>", null
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetReceivedShareAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -41,7 +40,6 @@ Response response = client.GetReceivedShare("<receivedShareId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetReceivedShare with all parameters and parse the result.
 <code><![CDATA[
@@ -213,7 +211,6 @@ await foreach (BinaryData item in client.GetAllAttachedReceivedSharesAsync("<ref
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllAttachedReceivedSharesAsync with all parameters and parse the result.
@@ -243,7 +240,6 @@ foreach (BinaryData item in client.GetAllAttachedReceivedShares("<referenceName>
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllAttachedReceivedShares with all parameters and parse the result.
@@ -273,7 +269,6 @@ await foreach (BinaryData item in client.GetAllDetachedReceivedSharesAsync(null,
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllDetachedReceivedSharesAsync with all parameters and parse the result.
@@ -303,7 +298,6 @@ foreach (BinaryData item in client.GetAllDetachedReceivedShares(null, null, null
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllDetachedReceivedShares with all parameters and parse the result.
@@ -339,7 +333,6 @@ BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrReplaceReceivedShareAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -399,7 +392,6 @@ BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrReplaceReceivedShare with all parameters and request content and parse the result.
 <code><![CDATA[

@@ -199,7 +199,6 @@ Response response = await client.GetScanRulesetAsync("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetScanRulesetAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -230,7 +229,6 @@ Response response = client.GetScanRuleset("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetScanRuleset with all parameters and parse the result.
 <code><![CDATA[
@@ -262,7 +260,6 @@ Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetNam
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateScanRulesetAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -275,11 +272,11 @@ RequestContent content = RequestContent.Create(new
     properties = new
     {
         description = "<description>",
-        excludedSystemClassifications = new List<object>()
+        excludedSystemClassifications = new object[]
         {
             "<excludedSystemClassifications>"
         },
-        includedCustomClassificationRuleNames = new List<object>()
+        includedCustomClassificationRuleNames = new object[]
         {
             "<includedCustomClassificationRuleNames>"
         },
@@ -311,7 +308,6 @@ Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", conten
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateScanRuleset with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -324,11 +320,11 @@ RequestContent content = RequestContent.Create(new
     properties = new
     {
         description = "<description>",
-        excludedSystemClassifications = new List<object>()
+        excludedSystemClassifications = new object[]
         {
             "<excludedSystemClassifications>"
         },
-        includedCustomClassificationRuleNames = new List<object>()
+        includedCustomClassificationRuleNames = new object[]
         {
             "<includedCustomClassificationRuleNames>"
         },
@@ -359,7 +355,6 @@ Response response = await client.DeleteScanRulesetAsync("<scanRulesetName>", nul
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteScanRulesetAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -390,7 +385,6 @@ Response response = client.DeleteScanRuleset("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteScanRuleset with all parameters and parse the result.
 <code><![CDATA[
@@ -421,7 +415,6 @@ Response response = await client.GetSystemRulesetsForDataSourceAsync("None", nul
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForDataSourceAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -452,7 +445,6 @@ Response response = client.GetSystemRulesetsForDataSource("None", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForDataSource with all parameters and parse the result.
 <code><![CDATA[
@@ -483,7 +475,6 @@ Response response = await client.GetSystemRulesetsForVersionAsync(1234, null, nu
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForVersionAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -514,7 +505,6 @@ Response response = client.GetSystemRulesetsForVersion(1234, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForVersion with all parameters and parse the result.
 <code><![CDATA[
@@ -545,7 +535,6 @@ Response response = await client.GetLatestSystemRulesetsAsync(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLatestSystemRulesetsAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -576,7 +565,6 @@ Response response = client.GetLatestSystemRulesets(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLatestSystemRulesets with all parameters and parse the result.
 <code><![CDATA[
@@ -667,7 +655,6 @@ await foreach (BinaryData item in client.GetClassificationRulesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetClassificationRulesAsync with all parameters and parse the result.
@@ -697,7 +684,6 @@ foreach (BinaryData item in client.GetClassificationRules(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetClassificationRules with all parameters and parse the result.
@@ -727,7 +713,6 @@ await foreach (BinaryData item in client.GetDataSourcesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetDataSourcesAsync with all parameters and parse the result.
@@ -785,7 +770,6 @@ foreach (BinaryData item in client.GetDataSources(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetDataSources with all parameters and parse the result.
@@ -843,7 +827,6 @@ await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetScanRulesetsAsync with all parameters and parse the result.
@@ -876,7 +859,6 @@ foreach (BinaryData item in client.GetScanRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetScanRulesets with all parameters and parse the result.
@@ -909,7 +891,6 @@ await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesetsAsync with all parameters and parse the result.
@@ -942,7 +923,6 @@ foreach (BinaryData item in client.GetSystemRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesets with all parameters and parse the result.
@@ -975,7 +955,6 @@ await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync(null, nu
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesetsVersionsAsync with all parameters and parse the result.
@@ -1008,7 +987,6 @@ foreach (BinaryData item in client.GetSystemRulesetsVersions(null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("kind").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetSystemRulesetsVersions with all parameters and parse the result.

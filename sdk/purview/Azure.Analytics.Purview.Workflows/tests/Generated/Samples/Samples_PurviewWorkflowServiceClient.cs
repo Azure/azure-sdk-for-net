@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -119,13 +118,13 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -151,13 +150,13 @@ type = "when_term_creation_is_requested",
 
             RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -183,8 +182,8 @@ type = "when_term_creation_is_requested",
 
             RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
@@ -192,7 +191,7 @@ underGlossaryHierarchy = "<underGlossaryHierarchy>",
 underCollection = "<underCollection>",
 underGlossary = "<underGlossary>",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -226,8 +225,8 @@ underGlossary = "<underGlossary>",
 
             RequestContent content = RequestContent.Create(new
             {
-                triggers = new List<object>()
-{
+                triggers = new object[]
+            {
 new
 {
 type = "when_term_creation_is_requested",
@@ -235,7 +234,7 @@ underGlossaryHierarchy = "<underGlossaryHierarchy>",
 underCollection = "<underCollection>",
 underGlossary = "<underGlossary>",
 }
-},
+            },
                 name = "<name>",
                 isEnabled = true,
                 description = "<description>",
@@ -268,6 +267,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -280,6 +280,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = await client.DeleteWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -292,6 +293,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = client.DeleteWorkflow(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -304,6 +306,7 @@ underGlossary = "<underGlossary>",
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
             Response response = await client.DeleteWorkflowAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+
             Console.WriteLine(response.Status);
         }
 
@@ -317,14 +320,14 @@ underGlossary = "<underGlossary>",
 
             RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
             });
             Response response = client.SubmitUserRequests(content);
 
@@ -346,14 +349,14 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
             });
             Response response = await client.SubmitUserRequestsAsync(content);
 
@@ -375,14 +378,14 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
                 comment = "<comment>",
             });
             Response response = client.SubmitUserRequests(content);
@@ -407,14 +410,14 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new
             {
-                operations = new List<object>()
-{
+                operations = new object[]
+            {
 new
 {
 type = "CreateTerm",
 payload = new object(),
 }
-},
+            },
                 comment = "<comment>",
             });
             Response response = await client.SubmitUserRequestsAsync(content);
@@ -527,6 +530,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -540,6 +544,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -556,6 +561,7 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = client.CancelWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -572,6 +578,7 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = await client.CancelWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -693,6 +700,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -706,6 +714,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -722,6 +731,7 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = client.ApproveApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -738,6 +748,7 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = await client.ApproveApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -751,6 +762,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -764,6 +776,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -780,6 +793,7 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = client.RejectApprovalTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -796,6 +810,7 @@ payload = new object(),
                 comment = "<comment>",
             });
             Response response = await client.RejectApprovalTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -809,6 +824,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -822,6 +838,7 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -835,16 +852,17 @@ payload = new object(),
 
             RequestContent content = RequestContent.Create(new
             {
-                reassignments = new List<object>()
-{
+                reassignments = new object[]
+            {
 new
 {
 reassignFrom = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 }
-},
+            },
             });
             Response response = client.ReassignWorkflowTask(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -858,16 +876,17 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
             RequestContent content = RequestContent.Create(new
             {
-                reassignments = new List<object>()
-{
+                reassignments = new object[]
+            {
 new
 {
 reassignFrom = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 }
-},
+            },
             });
             Response response = await client.ReassignWorkflowTaskAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -884,6 +903,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 newStatus = "NotStarted",
             });
             Response response = client.UpdateTaskStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -900,6 +920,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 newStatus = "NotStarted",
             });
             Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -917,6 +938,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 comment = "<comment>",
             });
             Response response = client.UpdateTaskStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -934,6 +956,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 comment = "<comment>",
             });
             Response response = await client.UpdateTaskStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -1077,13 +1100,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new List<string>()
-{
-"InProgress"
-}, new List<string>()
-{
-"<workflowIds>"
-}, 1234, null))
+            foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -1108,13 +1125,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new List<string>()
-{
-"InProgress"
-}, new List<string>()
-{
-"<workflowIds>"
-}, 1234, null))
+            await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -1185,16 +1196,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new List<string>()
-{
-"<workflowIds>"
-}, "1d", 1234, "status desc", new List<string>()
-{
-"Approval"
-}, new List<string>()
-{
-"InProgress"
-}, "<workflowNameKeyword>", null))
+            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("type").ToString());
@@ -1227,16 +1229,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new List<string>()
-{
-"<workflowIds>"
-}, "1d", 1234, "status desc", new List<string>()
-{
-"Approval"
-}, new List<string>()
-{
-"InProgress"
-}, "<workflowNameKeyword>", null))
+            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("type").ToString());

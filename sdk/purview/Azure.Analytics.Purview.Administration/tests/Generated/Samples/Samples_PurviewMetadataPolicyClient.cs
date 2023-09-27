@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -65,25 +64,25 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 properties = new
                 {
                     description = "<description>",
-                    decisionRules = new List<object>()
-{
+                    decisionRules = new object[]
+            {
 new
 {
 effect = "Deny",
-dnfCondition = new List<object>()
+dnfCondition = new object[]
 {
-new List<object>()
+new object[]
 {
 new
 {
 attributeName = "<attributeName>",
 attributeValueIncludes = "<attributeValueIncludes>",
-attributeValueIncludedIn = new List<object>()
+attributeValueIncludedIn = new object[]
 {
 "<attributeValueIncludedIn>"
 },
 attributeValueExcludes = "<attributeValueExcludes>",
-attributeValueExcludedIn = new List<object>()
+attributeValueExcludedIn = new object[]
 {
 "<attributeValueExcludedIn>"
 },
@@ -91,22 +90,22 @@ attributeValueExcludedIn = new List<object>()
 }
 },
 }
-},
-                    attributeRules = new List<object>()
-{
+            },
+                    attributeRules = new object[]
+            {
 new
 {
 id = "<id>",
 name = "<name>",
-dnfCondition = new List<object>()
+dnfCondition = new object[]
 {
-new List<object>()
+new object[]
 {
 null
 }
 },
 }
-},
+            },
                     collection = new
                     {
                         referenceName = "<referenceName>",
@@ -157,25 +156,25 @@ null
                 properties = new
                 {
                     description = "<description>",
-                    decisionRules = new List<object>()
-{
+                    decisionRules = new object[]
+            {
 new
 {
 effect = "Deny",
-dnfCondition = new List<object>()
+dnfCondition = new object[]
 {
-new List<object>()
+new object[]
 {
 new
 {
 attributeName = "<attributeName>",
 attributeValueIncludes = "<attributeValueIncludes>",
-attributeValueIncludedIn = new List<object>()
+attributeValueIncludedIn = new object[]
 {
 "<attributeValueIncludedIn>"
 },
 attributeValueExcludes = "<attributeValueExcludes>",
-attributeValueExcludedIn = new List<object>()
+attributeValueExcludedIn = new object[]
 {
 "<attributeValueExcludedIn>"
 },
@@ -183,22 +182,22 @@ attributeValueExcludedIn = new List<object>()
 }
 },
 }
-},
-                    attributeRules = new List<object>()
-{
+            },
+                    attributeRules = new object[]
+            {
 new
 {
 id = "<id>",
 name = "<name>",
-dnfCondition = new List<object>()
+dnfCondition = new object[]
 {
-new List<object>()
+new object[]
 {
 null
 }
 },
 }
-},
+            },
                     collection = new
                     {
                         referenceName = "<referenceName>",
@@ -341,8 +340,7 @@ null
 
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(item.Status);
             }
         }
 
@@ -356,8 +354,7 @@ null
 
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(item.Status);
             }
         }
 
@@ -371,8 +368,7 @@ null
 
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(item.Status);
             }
         }
 
@@ -386,8 +382,7 @@ null
 
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(item.Status);
             }
         }
     }

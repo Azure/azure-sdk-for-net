@@ -81,11 +81,11 @@ RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
-        excludeUriPrefixes = new List<object>()
+        excludeUriPrefixes = new object[]
         {
             "<excludeUriPrefixes>"
         },
-        includeUriPrefixes = new List<object>()
+        includeUriPrefixes = new object[]
         {
             "<includeUriPrefixes>"
         },
@@ -124,11 +124,11 @@ RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
-        excludeUriPrefixes = new List<object>()
+        excludeUriPrefixes = new object[]
         {
             "<excludeUriPrefixes>"
         },
-        includeUriPrefixes = new List<object>()
+        includeUriPrefixes = new object[]
         {
             "<includeUriPrefixes>"
         },
@@ -159,7 +159,6 @@ Response response = await client.CreateOrUpdateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all request content and parse the result.
 <code><![CDATA[
@@ -179,15 +178,15 @@ RequestContent content = RequestContent.Create(new
                 scanRulesetType = "Custom",
                 resourceNameFilter = new
                 {
-                    excludePrefixes = new List<object>()
+                    excludePrefixes = new object[]
                     {
                         "<excludePrefixes>"
                     },
-                    includePrefixes = new List<object>()
+                    includePrefixes = new object[]
                     {
                         "<includePrefixes>"
                     },
-                    resources = new List<object>()
+                    resources = new object[]
                     {
                         "<resources>"
                     },
@@ -267,7 +266,6 @@ Response response = client.CreateOrUpdate(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all request content and parse the result.
 <code><![CDATA[
@@ -287,15 +285,15 @@ RequestContent content = RequestContent.Create(new
                 scanRulesetType = "Custom",
                 resourceNameFilter = new
                 {
-                    excludePrefixes = new List<object>()
+                    excludePrefixes = new object[]
                     {
                         "<excludePrefixes>"
                     },
-                    includePrefixes = new List<object>()
+                    includePrefixes = new object[]
                     {
                         "<includePrefixes>"
                     },
-                    resources = new List<object>()
+                    resources = new object[]
                     {
                         "<resources>"
                     },
@@ -371,7 +369,6 @@ Response response = await client.GetPropertiesAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPropertiesAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -424,7 +421,6 @@ Response response = client.GetProperties(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetProperties with all parameters and parse the result.
 <code><![CDATA[
@@ -477,7 +473,6 @@ Response response = await client.DeleteAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -530,7 +525,6 @@ Response response = client.Delete(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call Delete with all parameters and parse the result.
 <code><![CDATA[
@@ -833,23 +827,23 @@ RequestContent content = RequestContent.Create(new
                 {
                     key = new object(),
                 },
-                minutes = new List<object>()
+                minutes = new object[]
                 {
                     1234
                 },
-                hours = new List<object>()
+                hours = new object[]
                 {
                     1234
                 },
-                weekDays = new List<object>()
+                weekDays = new object[]
                 {
                     "Sunday"
                 },
-                monthDays = new List<object>()
+                monthDays = new object[]
                 {
                     1234
                 },
-                monthlyOccurrences = new List<object>()
+                monthlyOccurrences = new object[]
                 {
                     new
                     {
@@ -931,23 +925,23 @@ RequestContent content = RequestContent.Create(new
                 {
                     key = new object(),
                 },
-                minutes = new List<object>()
+                minutes = new object[]
                 {
                     1234
                 },
-                hours = new List<object>()
+                hours = new object[]
                 {
                     1234
                 },
-                weekDays = new List<object>()
+                weekDays = new object[]
                 {
                     "Sunday"
                 },
-                monthDays = new List<object>()
+                monthDays = new object[]
                 {
                     1234
                 },
-                monthlyOccurrences = new List<object>()
+                monthlyOccurrences = new object[]
                 {
                     new
                     {
