@@ -707,8 +707,9 @@ namespace Azure.Storage.Files.Shares
                 LeaseDuration = response.Headers.LeaseDuration,
                 Protocols =  ToShareEnabledProtocols(response.Headers.EnabledProtocols),
                 RootSquash = response.Headers.RootSquash,
+                Metadata = response.Headers.Metadata,
+                EnableSnapshotVirtualDirectoryAccess = response.Headers.EnabledSnapshotVirtualDirectoryAccess,
                 QuotaInGB = response.Headers.Quota,
-                Metadata = response.Headers.Metadata
             };
         }
 
@@ -820,8 +821,9 @@ namespace Azure.Storage.Files.Shares
                 LeaseDuration = sharePropertiesInternal.LeaseDuration,
                 Protocols = ToShareEnabledProtocols(sharePropertiesInternal.EnabledProtocols),
                 RootSquash = sharePropertiesInternal.RootSquash,
+                Metadata = metadata,
+                EnableSnapshotVirtualDirectoryAccess = sharePropertiesInternal.EnableSnapshotVirtualDirectoryAccess,
                 QuotaInGB = sharePropertiesInternal.Quota,
-                Metadata = metadata
             };
         }
 

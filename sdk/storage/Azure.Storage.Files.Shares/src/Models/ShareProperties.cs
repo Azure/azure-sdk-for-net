@@ -113,6 +113,13 @@ namespace Azure.Storage.Files.Shares.Models
         public IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
+        /// Optional. Supported in version 2023-08-03 and above.
+        /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
+        /// If not specified, the default is true.
+        /// </summary>
+        public bool? EnableSnapshotVirtualDirectoryAccess { get; internal set; }
+
+        /// <summary>
         /// Internal constructor.
         /// </summary>
         internal ShareProperties() { }
