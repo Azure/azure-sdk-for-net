@@ -21,7 +21,7 @@ namespace Azure.Messaging.WebPubSub.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CloseAllConnections()
+        public void Example_CloseAllConnections_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -31,7 +31,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CloseAllConnections_Async()
+        public async Task Example_CloseAllConnections_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -67,7 +67,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SendToAll()
+        public void Example_SendToAll_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -78,7 +78,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SendToAll_Async()
+        public async Task Example_SendToAll_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -117,7 +117,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CloseConnection()
+        public void Example_CloseConnection_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -127,7 +127,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CloseConnection_Async()
+        public async Task Example_CloseConnection_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -157,7 +157,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SendToConnection()
+        public void Example_SendToConnection_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -168,7 +168,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SendToConnection_Async()
+        public async Task Example_SendToConnection_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -201,7 +201,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveConnectionFromAllGroups()
+        public void Example_RemoveConnectionFromAllGroups_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -211,7 +211,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveConnectionFromAllGroups_Async()
+        public async Task Example_RemoveConnectionFromAllGroups_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -241,7 +241,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CloseGroupConnections()
+        public void Example_CloseGroupConnections_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -251,7 +251,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CloseGroupConnections_Async()
+        public async Task Example_CloseGroupConnections_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -287,7 +287,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SendToGroup()
+        public void Example_SendToGroup_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -298,7 +298,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SendToGroup_Async()
+        public async Task Example_SendToGroup_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -337,7 +337,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveConnectionFromGroup()
+        public void Example_RemoveConnectionFromGroup_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -347,7 +347,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveConnectionFromGroup_Async()
+        public async Task Example_RemoveConnectionFromGroup_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -377,7 +377,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddConnectionToGroup()
+        public void Example_AddConnectionToGroup_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -387,7 +387,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddConnectionToGroup_Async()
+        public async Task Example_AddConnectionToGroup_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -417,7 +417,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CloseUserConnections()
+        public void Example_CloseUserConnections_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -427,7 +427,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CloseUserConnections_Async()
+        public async Task Example_CloseUserConnections_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -463,7 +463,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SendToUser()
+        public void Example_SendToUser_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -474,7 +474,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SendToUser_Async()
+        public async Task Example_SendToUser_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -507,7 +507,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveUserFromAllGroups()
+        public void Example_RemoveUserFromAllGroups_ShortVersion()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
@@ -517,7 +517,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveUserFromAllGroups_Async()
+        public async Task Example_RemoveUserFromAllGroups_ShortVersion_Async()
         {
             WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
