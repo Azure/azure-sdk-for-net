@@ -201,6 +201,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<cropId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
@@ -209,6 +210,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<cropId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -220,6 +222,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<cropId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
@@ -228,6 +231,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<cropId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -249,25 +253,7 @@ This sample shows how to call GetCropsAsync with all parameters and parse the re
 TokenCredential credential = new DefaultAzureCredential();
 Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetCropsAsync(new List<string>()
-{
-    "<phenotypes>"
-}, new List<string>()
-{
-    "<breedingMethods>"
-}, new List<string>()
-{
-    "<cropIds>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetCropsAsync(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("phenotype").ToString());
@@ -306,25 +292,7 @@ This sample shows how to call GetCrops with all parameters and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetCrops(new List<string>()
-{
-    "<phenotypes>"
-}, new List<string>()
-{
-    "<breedingMethods>"
-}, new List<string>()
-{
-    "<cropIds>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetCrops(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("phenotype").ToString());

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -15,9 +14,9 @@ using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.Conversations.Authoring.Samples
+namespace Azure.AI.Language.Conversations.Samples
 {
-    public class Samples_ConversationAuthoringClient
+    public partial class Samples_ConversationAuthoringClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -510,7 +509,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
@@ -524,7 +526,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
@@ -788,6 +793,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -800,6 +806,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -812,6 +819,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -824,6 +832,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
             Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -2141,7 +2150,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
@@ -2156,7 +2168,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
@@ -2315,32 +2330,32 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                 },
                 assets = new
                 {
-                    intents = new List<object>()
-{
+                    intents = new object[]
+            {
 new
 {
 category = "<category>",
 }
-},
-                    entities = new List<object>()
-{
+            },
+                    entities = new object[]
+            {
 new
 {
 category = "<category>",
 compositionSetting = "returnLongestOverlap",
 list = new
 {
-sublists = new List<object>()
+sublists = new object[]
 {
 new
 {
 listKey = "<listKey>",
-synonyms = new List<object>()
+synonyms = new object[]
 {
 new
 {
 language = "<language>",
-values = new List<object>()
+values = new object[]
 {
 "<values>"
 },
@@ -2349,7 +2364,7 @@ values = new List<object>()
 }
 },
 },
-prebuilts = new List<object>()
+prebuilts = new object[]
 {
 new
 {
@@ -2358,7 +2373,7 @@ category = "<category>",
 },
 regex = new
 {
-expressions = new List<object>()
+expressions = new object[]
 {
 new
 {
@@ -2368,17 +2383,17 @@ regexPattern = "<regexPattern>",
 }
 },
 },
-requiredComponents = new List<object>()
+requiredComponents = new object[]
 {
 "<requiredComponents>"
 },
 }
-},
-                    utterances = new List<object>()
-{
+            },
+                    utterances = new object[]
+            {
 new
 {
-entities = new List<object>()
+entities = new object[]
 {
 new
 {
@@ -2392,7 +2407,7 @@ language = "<language>",
 intent = "<intent>",
 dataset = "<dataset>",
 }
-},
+            },
                     projectKind = "Conversation",
                 },
             });
@@ -2449,32 +2464,32 @@ dataset = "<dataset>",
                 },
                 assets = new
                 {
-                    intents = new List<object>()
-{
+                    intents = new object[]
+            {
 new
 {
 category = "<category>",
 }
-},
-                    entities = new List<object>()
-{
+            },
+                    entities = new object[]
+            {
 new
 {
 category = "<category>",
 compositionSetting = "returnLongestOverlap",
 list = new
 {
-sublists = new List<object>()
+sublists = new object[]
 {
 new
 {
 listKey = "<listKey>",
-synonyms = new List<object>()
+synonyms = new object[]
 {
 new
 {
 language = "<language>",
-values = new List<object>()
+values = new object[]
 {
 "<values>"
 },
@@ -2483,7 +2498,7 @@ values = new List<object>()
 }
 },
 },
-prebuilts = new List<object>()
+prebuilts = new object[]
 {
 new
 {
@@ -2492,7 +2507,7 @@ category = "<category>",
 },
 regex = new
 {
-expressions = new List<object>()
+expressions = new object[]
 {
 new
 {
@@ -2502,17 +2517,17 @@ regexPattern = "<regexPattern>",
 }
 },
 },
-requiredComponents = new List<object>()
+requiredComponents = new object[]
 {
 "<requiredComponents>"
 },
 }
-},
-                    utterances = new List<object>()
-{
+            },
+                    utterances = new object[]
+            {
 new
 {
-entities = new List<object>()
+entities = new object[]
 {
 new
 {
@@ -2526,7 +2541,7 @@ language = "<language>",
 intent = "<intent>",
 dataset = "<dataset>",
 }
-},
+            },
                     projectKind = "Conversation",
                 },
             });

@@ -462,7 +462,10 @@ ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, c
 Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportProjectJobStatusAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -508,7 +511,10 @@ ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, c
 Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportProjectJobStatus with all parameters and parse the result.
 <code><![CDATA[
@@ -722,6 +728,7 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
 Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTrainedModelAsync with all parameters.
@@ -731,6 +738,7 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
 Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -743,6 +751,7 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
 Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTrainedModel with all parameters.
@@ -752,6 +761,7 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
 Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1991,7 +2001,10 @@ Operation<BinaryData> operation = await client.ExportProjectAsync(WaitUntil.Comp
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call ExportProjectAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -2039,7 +2052,10 @@ Operation<BinaryData> operation = client.ExportProject(WaitUntil.Completed, "<pr
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call ExportProject with all parameters and parse the result.
 <code><![CDATA[
@@ -2127,14 +2143,14 @@ RequestContent content = RequestContent.Create(new
     },
     assets = new
     {
-        intents = new List<object>()
+        intents = new object[]
         {
             new
             {
                 category = "<category>",
             }
         },
-        entities = new List<object>()
+        entities = new object[]
         {
             new
             {
@@ -2142,17 +2158,17 @@ RequestContent content = RequestContent.Create(new
                 compositionSetting = "returnLongestOverlap",
                 list = new
                 {
-                    sublists = new List<object>()
+                    sublists = new object[]
                     {
                         new
                         {
                             listKey = "<listKey>",
-                            synonyms = new List<object>()
+                            synonyms = new object[]
                             {
                                 new
                                 {
                                     language = "<language>",
-                                    values = new List<object>()
+                                    values = new object[]
                                     {
                                         "<values>"
                                     },
@@ -2161,7 +2177,7 @@ RequestContent content = RequestContent.Create(new
                         }
                     },
                 },
-                prebuilts = new List<object>()
+                prebuilts = new object[]
                 {
                     new
                     {
@@ -2170,7 +2186,7 @@ RequestContent content = RequestContent.Create(new
                 },
                 regex = new
                 {
-                    expressions = new List<object>()
+                    expressions = new object[]
                     {
                         new
                         {
@@ -2180,17 +2196,17 @@ RequestContent content = RequestContent.Create(new
                         }
                     },
                 },
-                requiredComponents = new List<object>()
+                requiredComponents = new object[]
                 {
                     "<requiredComponents>"
                 },
             }
         },
-        utterances = new List<object>()
+        utterances = new object[]
         {
             new
             {
-                entities = new List<object>()
+                entities = new object[]
                 {
                     new
                     {
@@ -2287,14 +2303,14 @@ RequestContent content = RequestContent.Create(new
     },
     assets = new
     {
-        intents = new List<object>()
+        intents = new object[]
         {
             new
             {
                 category = "<category>",
             }
         },
-        entities = new List<object>()
+        entities = new object[]
         {
             new
             {
@@ -2302,17 +2318,17 @@ RequestContent content = RequestContent.Create(new
                 compositionSetting = "returnLongestOverlap",
                 list = new
                 {
-                    sublists = new List<object>()
+                    sublists = new object[]
                     {
                         new
                         {
                             listKey = "<listKey>",
-                            synonyms = new List<object>()
+                            synonyms = new object[]
                             {
                                 new
                                 {
                                     language = "<language>",
-                                    values = new List<object>()
+                                    values = new object[]
                                     {
                                         "<values>"
                                     },
@@ -2321,7 +2337,7 @@ RequestContent content = RequestContent.Create(new
                         }
                     },
                 },
-                prebuilts = new List<object>()
+                prebuilts = new object[]
                 {
                     new
                     {
@@ -2330,7 +2346,7 @@ RequestContent content = RequestContent.Create(new
                 },
                 regex = new
                 {
-                    expressions = new List<object>()
+                    expressions = new object[]
                     {
                         new
                         {
@@ -2340,17 +2356,17 @@ RequestContent content = RequestContent.Create(new
                         }
                     },
                 },
-                requiredComponents = new List<object>()
+                requiredComponents = new object[]
                 {
                     "<requiredComponents>"
                 },
             }
         },
-        utterances = new List<object>()
+        utterances = new object[]
         {
             new
             {
-                entities = new List<object>()
+                entities = new object[]
                 {
                     new
                     {

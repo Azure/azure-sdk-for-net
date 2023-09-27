@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_OAuthProviders
+    public partial class Samples_OAuthProviders
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -207,6 +206,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<oauthProviderId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -218,6 +218,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<oauthProviderId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -229,6 +230,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<oauthProviderId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -240,6 +242,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<oauthProviderId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -358,19 +361,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetOAuthProviders(new List<string>()
-{
-"<providerIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetOAuthProviders(new string[] { "<providerIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("appId").ToString());
@@ -396,19 +387,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetOAuthProvidersAsync(new List<string>()
-{
-"<providerIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetOAuthProvidersAsync(new string[] { "<providerIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("appId").ToString());

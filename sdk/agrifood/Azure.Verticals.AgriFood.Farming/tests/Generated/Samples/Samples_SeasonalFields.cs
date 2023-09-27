@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_SeasonalFields
+    public partial class Samples_SeasonalFields
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -143,10 +142,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 farmId = "<farmId>",
                 fieldId = "<fieldId>",
                 seasonId = "<seasonId>",
-                cropProductIds = new List<object>()
-{
+                cropProductIds = new object[]
+            {
 "<cropProductIds>"
-},
+            },
                 cropId = "<cropId>",
                 status = "<status>",
                 source = "<source>",
@@ -191,10 +190,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 farmId = "<farmId>",
                 fieldId = "<fieldId>",
                 seasonId = "<seasonId>",
-                cropProductIds = new List<object>()
-{
+                cropProductIds = new object[]
+            {
 "<cropProductIds>"
-},
+            },
                 cropId = "<cropId>",
                 status = "<status>",
                 source = "<source>",
@@ -235,6 +234,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -246,6 +246,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -257,6 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -268,6 +270,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -384,34 +387,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetSeasonalFieldsByPartyId("<partyId>", new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetSeasonalFieldsByPartyId("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -441,34 +417,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -526,34 +475,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetSeasonalFields(new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<seasonalFieldIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetSeasonalFields(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -583,34 +505,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetSeasonalFieldsAsync(new List<string>()
-{
-"<farmIds>"
-}, new List<string>()
-{
-"<fieldIds>"
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<cropProductIds>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<seasonalFieldIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetSeasonalFieldsAsync(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
