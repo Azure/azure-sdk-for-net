@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Catalog.Samples
 {
-    internal class Samples_PurviewRelationships
+    public partial class Samples_PurviewRelationships
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -481,6 +481,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = client.Delete("<guid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -493,6 +494,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = await client.DeleteAsync("<guid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -505,6 +507,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = client.Delete("<guid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -517,6 +520,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
             Response response = await client.DeleteAsync("<guid>");
+
             Console.WriteLine(response.Status);
         }
     }
