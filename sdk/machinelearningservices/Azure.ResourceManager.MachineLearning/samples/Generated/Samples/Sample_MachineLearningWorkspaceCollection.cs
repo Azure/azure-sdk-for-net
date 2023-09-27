@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 ApplicationInsights = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/microsoft.insights/components/testinsights",
                 ContainerRegistry = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.ContainerRegistry/registries/testRegistry",
                 Description = "test description",
-                Encryption = new MachineLearningEncryptionSetting(new Models.KeyVaultProperties("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb", "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv")
+                Encryption = new MachineLearningEncryptionSetting(new MachineLearningEncryptionKeyVaultProperties("https://testkv.vault.azure.net/keys/testkey/aabbccddee112233445566778899aabb", new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.KeyVault/vaults/testkv"))
                 {
                     IdentityClientId = "",
                 }, MachineLearningEncryptionStatus.Enabled)
@@ -217,7 +217,7 @@ Name = "testdbresource",
 GroupId = "Sql",
 PrivateLinkResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspace-1234/providers/Microsoft.DocumentDB/databaseAccounts/testdbresource/privateLinkResources/Sql"),
 RequestMessage = "Please approve",
-Status = EndpointServiceConnectionStatus.Approved,
+Status = MachineLearningPrivateEndpointServiceConnectionStatus.Approved,
 }
 },
                 StorageAccount = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/accountcrud-1234/providers/Microsoft.Storage/storageAccounts/testStorageAccount",

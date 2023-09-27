@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="privateEndpoint"> The Private Endpoint resource. </param>
         /// <param name="connectionState"> The connection state. </param>
         /// <param name="provisioningState"> The current provisioning state. </param>
-        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, WorkspacePrivateEndpointResource privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, MachineLearningPrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </summary>
         public MachineLearningSku Sku { get; set; }
         /// <summary> The Private Endpoint resource. </summary>
-        public WorkspacePrivateEndpointResource PrivateEndpoint { get; set; }
+        public MachineLearningPrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> The connection state. </summary>
         public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The current provisioning state. </summary>

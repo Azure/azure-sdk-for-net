@@ -43,21 +43,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
-            {
-                writer.WritePropertyName("groupId"u8);
-                writer.WriteStringValue(GroupId);
-            }
-            if (Optional.IsCollectionDefined(RequiredMembers))
-            {
-                writer.WritePropertyName("requiredMembers"u8);
-                writer.WriteStartArray();
-                foreach (var item in RequiredMembers)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
@@ -87,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
-        public MachineLearningEncryptionSetting(KeyVaultProperties keyVaultProperties, MachineLearningEncryptionStatus status)
+        public MachineLearningEncryptionSetting(MachineLearningEncryptionKeyVaultProperties keyVaultProperties, MachineLearningEncryptionStatus status)
         {
             Argument.AssertNotNull(keyVaultProperties, nameof(keyVaultProperties));
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The byok storage account that customer brings to store customer's data
         /// with encryption
         /// </param>
-        internal MachineLearningEncryptionSetting(string cosmosDbResourceId, MachineLearningCmkIdentity identity, KeyVaultProperties keyVaultProperties, string searchAccountResourceId, MachineLearningEncryptionStatus status, string storageAccountResourceId)
+        internal MachineLearningEncryptionSetting(string cosmosDbResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, string searchAccountResourceId, MachineLearningEncryptionStatus status, string storageAccountResourceId)
         {
             CosmosDbResourceId = cosmosDbResourceId;
             Identity = identity;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> KeyVault details to do the encryption. </summary>
-        public KeyVaultProperties KeyVaultProperties { get; set; }
+        public MachineLearningEncryptionKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary>
         /// The byok search account that customer brings to store customer's data
         /// with encryption

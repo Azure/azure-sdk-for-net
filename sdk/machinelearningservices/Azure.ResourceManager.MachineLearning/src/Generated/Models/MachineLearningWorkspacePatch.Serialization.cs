@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("primaryUserAssignedIdentity"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccessType))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
             }
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {

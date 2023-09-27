@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             {
                 Description = "new description",
                 FriendlyName = "New friendly name",
-                PublicNetworkAccess = MachineLearningPublicNetworkAccessType.Disabled,
+                PublicNetworkAccessType = MachineLearningPublicNetworkAccessType.Disabled,
             };
             ArmOperation<MachineLearningWorkspaceResource> lro = await machineLearningWorkspace.UpdateAsync(WaitUntil.Completed, patch);
             MachineLearningWorkspaceResource result = lro.Value;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FqdnEndpointsPropertyBag item in machineLearningWorkspace.GetOutboundNetworkDependenciesEndpointsAsync())
+            await foreach (MachineLearningFqdnEndpoints item in machineLearningWorkspace.GetOutboundNetworkDependenciesEndpointsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

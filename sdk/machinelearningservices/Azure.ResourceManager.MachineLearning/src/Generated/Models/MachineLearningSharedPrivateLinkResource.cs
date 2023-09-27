@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="privateLinkResourceId"> the resource id that private link links to. </param>
         /// <param name="requestMessage"> Request message. </param>
         /// <param name="status"> Connection status of the service consumer with the service provider. </param>
-        internal MachineLearningSharedPrivateLinkResource(string name, string groupId, ResourceIdentifier privateLinkResourceId, string requestMessage, EndpointServiceConnectionStatus? status)
+        internal MachineLearningSharedPrivateLinkResource(string name, string groupId, ResourceIdentifier privateLinkResourceId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status)
         {
             Name = name;
             GroupId = groupId;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Request message. </summary>
         public string RequestMessage { get; set; }
         /// <summary> Connection status of the service consumer with the service provider. </summary>
-        public EndpointServiceConnectionStatus? Status { get; set; }
+        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

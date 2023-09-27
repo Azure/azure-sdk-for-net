@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal MachineLearningPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData, tags, location)
+        internal MachineLearningPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </summary>
         public MachineLearningSku Sku { get; set; }
         /// <summary> The private link resource group id. </summary>
-        public string GroupId { get; set; }
+        public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
-        public IList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
         public IList<string> RequiredZoneNames { get; }
     }

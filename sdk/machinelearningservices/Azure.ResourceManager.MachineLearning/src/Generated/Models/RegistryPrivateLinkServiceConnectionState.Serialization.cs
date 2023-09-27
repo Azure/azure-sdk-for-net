@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<string> actionsRequired = default;
             Optional<string> description = default;
-            Optional<EndpointServiceConnectionStatus> status = default;
+            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionsRequired"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    status = new EndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new MachineLearningPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
             }

@@ -1273,17 +1273,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointResource"/> instance for mocking. </returns>
-        public static PrivateEndpointResource PrivateEndpointResource(ResourceIdentifier id = null, string subnetArmId = null)
+        public static PrivateEndpointResource PrivateEndpointResource(string id = null, string subnetArmId = null)
         {
             return new PrivateEndpointResource(id, subnetArmId);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
-        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = null)
+        /// <returns> A new <see cref="Models.PrivateEndpoint"/> instance for mocking. </returns>
+        public static PrivateEndpoint PrivateEndpoint(string id = null)
         {
-            return new MachineLearningPrivateEndpoint(id);
+            return new PrivateEndpoint(id);
         }
 
         /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
@@ -1330,7 +1330,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
         /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
         /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
         /// <param name="cosmosDbCollectionsThroughput"> The service managed resource settings. </param>
         /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, bool? allowPublicAccessWhenBehindVnet = null, string applicationInsights = null, IEnumerable<string> associatedWorkspaces = null, IEnumerable<string> containerRegistries = null, string containerRegistry = null, string description = null, Uri discoveryUri = null, bool? enableDataIsolation = null, MachineLearningEncryptionSetting encryption = null, IEnumerable<string> existingWorkspaces = null, FeatureStoreSettings featureStoreSettings = null, string friendlyName = null, bool? isHbiWorkspace = null, string hubResourceId = null, string imageBuildCompute = null, string keyVault = null, IEnumerable<string> keyVaults = null, ManagedNetworkSettings managedNetwork = null, Uri mlFlowTrackingUri = null, MachineLearningNotebookResourceInfo notebookInfo = null, string primaryUserAssignedIdentity = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, int? privateLinkCount = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccess = null, int? cosmosDbCollectionsThroughput = null, string serviceProvisionedResourceGroup = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, int? softDeleteRetentionInDays = null, string storageAccount = null, IEnumerable<string> storageAccounts = null, bool? isStorageHnsEnabled = null, string systemDatastoresAuthMode = null, Guid? tenantId = null, bool? isV1LegacyMode = null, WorkspaceHubConfig workspaceHubConfig = null, string workspaceId = null)
+        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, bool? allowPublicAccessWhenBehindVnet = null, string applicationInsights = null, IEnumerable<string> associatedWorkspaces = null, IEnumerable<string> containerRegistries = null, string containerRegistry = null, string description = null, Uri discoveryUri = null, bool? enableDataIsolation = null, MachineLearningEncryptionSetting encryption = null, IEnumerable<string> existingWorkspaces = null, FeatureStoreSettings featureStoreSettings = null, string friendlyName = null, bool? isHbiWorkspace = null, string hubResourceId = null, string imageBuildCompute = null, string keyVault = null, IEnumerable<string> keyVaults = null, ManagedNetworkSettings managedNetwork = null, Uri mlFlowTrackingUri = null, MachineLearningNotebookResourceInfo notebookInfo = null, string primaryUserAssignedIdentity = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, int? privateLinkCount = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccessType = null, int? cosmosDbCollectionsThroughput = null, string serviceProvisionedResourceGroup = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, int? softDeleteRetentionInDays = null, string storageAccount = null, IEnumerable<string> storageAccounts = null, bool? isStorageHnsEnabled = null, string systemDatastoresAuthMode = null, Guid? tenantId = null, bool? isV1LegacyMode = null, WorkspaceHubConfig workspaceHubConfig = null, string workspaceId = null)
         {
             tags ??= new Dictionary<string, string>();
             associatedWorkspaces ??= new List<string>();
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             sharedPrivateLinkResources ??= new List<MachineLearningSharedPrivateLinkResource>();
             storageAccounts ??= new List<string>();
 
-            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, kind, sku, allowPublicAccessWhenBehindVnet, applicationInsights, associatedWorkspaces?.ToList(), containerRegistries?.ToList(), containerRegistry, description, discoveryUri, enableDataIsolation, encryption, existingWorkspaces?.ToList(), featureStoreSettings, friendlyName, isHbiWorkspace, hubResourceId, imageBuildCompute, keyVault, keyVaults?.ToList(), managedNetwork, mlFlowTrackingUri, notebookInfo, primaryUserAssignedIdentity, privateEndpointConnections?.ToList(), privateLinkCount, provisioningState, publicNetworkAccess, cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput)) : null, serviceProvisionedResourceGroup, sharedPrivateLinkResources?.ToList(), softDeleteRetentionInDays, storageAccount, storageAccounts?.ToList(), isStorageHnsEnabled, systemDatastoresAuthMode, tenantId, isV1LegacyMode, workspaceHubConfig, workspaceId);
+            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, kind, sku, allowPublicAccessWhenBehindVnet, applicationInsights, associatedWorkspaces?.ToList(), containerRegistries?.ToList(), containerRegistry, description, discoveryUri, enableDataIsolation, encryption, existingWorkspaces?.ToList(), featureStoreSettings, friendlyName, isHbiWorkspace, hubResourceId, imageBuildCompute, keyVault, keyVaults?.ToList(), managedNetwork, mlFlowTrackingUri, notebookInfo, primaryUserAssignedIdentity, privateEndpointConnections?.ToList(), privateLinkCount, provisioningState, publicNetworkAccessType, cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput)) : null, serviceProvisionedResourceGroup, sharedPrivateLinkResources?.ToList(), softDeleteRetentionInDays, storageAccount, storageAccounts?.ToList(), isStorageHnsEnabled, systemDatastoresAuthMode, tenantId, isV1LegacyMode, workspaceHubConfig, workspaceId);
         }
 
         /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
@@ -1408,20 +1408,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="connectionState"> The connection state. </param>
         /// <param name="provisioningState"> The current provisioning state. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, WorkspacePrivateEndpointResource privateEndpoint = null, MachineLearningPrivateLinkServiceConnectionState connectionState = null, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningPrivateEndpoint privateEndpoint = null, MachineLearningPrivateLinkServiceConnectionState connectionState = null, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
             return new MachineLearningPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, identity, sku, privateEndpoint, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of WorkspacePrivateEndpointResource. </summary>
+        /// <summary> Initializes a new instance of MachineLearningPrivateEndpoint. </summary>
         /// <param name="id"> e.g. /subscriptions/{networkSubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        /// <returns> A new <see cref="Models.WorkspacePrivateEndpointResource"/> instance for mocking. </returns>
-        public static WorkspacePrivateEndpointResource WorkspacePrivateEndpointResource(string id = null, string subnetArmId = null)
+        /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
+        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = null, ResourceIdentifier subnetArmId = null)
         {
-            return new WorkspacePrivateEndpointResource(id, subnetArmId);
+            return new MachineLearningPrivateEndpoint(id, subnetArmId);
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionData. </summary>
@@ -1487,12 +1487,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="appInsightsInstrumentationKey"> The access key of the workspace app insights. </param>
         /// <param name="containerRegistryCredentials"></param>
         /// <param name="notebookAccessKeys"></param>
-        /// <param name="userStorageArmId"> The arm Id key of the workspace storage. </param>
+        /// <param name="userStorageResourceId"> The arm Id key of the workspace storage. </param>
         /// <param name="userStorageKey"> The access key of the workspace storage. </param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey = null, MachineLearningContainerRegistryCredentials containerRegistryCredentials = null, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = null, string userStorageArmId = null, string userStorageKey = null)
+        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey = null, MachineLearningContainerRegistryCredentials containerRegistryCredentials = null, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = null, string userStorageResourceId = null, string userStorageKey = null)
         {
-            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey, containerRegistryCredentials, notebookAccessKeys, userStorageArmId, userStorageKey);
+            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey, containerRegistryCredentials, notebookAccessKeys, userStorageResourceId, userStorageKey);
         }
 
         /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
@@ -1548,23 +1548,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey);
         }
 
-        /// <summary> Initializes a new instance of FqdnEndpointsPropertyBag. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.FqdnEndpointsPropertyBag"/> instance for mocking. </returns>
-        public static FqdnEndpointsPropertyBag FqdnEndpointsPropertyBag(MachineLearningFqdnEndpoints properties = null)
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties = null)
         {
-            return new FqdnEndpointsPropertyBag(properties);
+            return new MachineLearningFqdnEndpoints(properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpoints. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
         /// <param name="category"></param>
         /// <param name="endpoints"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(string category = null, IEnumerable<MachineLearningFqdnEndpoint> endpoints = null)
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointsProperties"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpointsProperties MachineLearningFqdnEndpointsProperties(string category = null, IEnumerable<MachineLearningFqdnEndpoint> endpoints = null)
         {
             endpoints ??= new List<MachineLearningFqdnEndpoint>();
 
-            return new MachineLearningFqdnEndpoints(category, endpoints?.ToList());
+            return new MachineLearningFqdnEndpointsProperties(category, endpoints?.ToList());
         }
 
         /// <summary> Initializes a new instance of MachineLearningFqdnEndpoint. </summary>
@@ -1748,44 +1748,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new AmlCompute(ComputeType.AmlCompute, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, properties);
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceProperties. </summary>
-        /// <param name="vmSize"> Virtual Machine Size. </param>
-        /// <param name="subnetId"> Virtual network subnet resource ID the compute nodes belong to. </param>
-        /// <param name="applicationSharingPolicy"> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </param>
-        /// <param name="mlflowAutologger"> Specifies settings for autologger. </param>
-        /// <param name="sshSettings"> Specifies policy and settings for SSH access. </param>
-        /// <param name="customServices"> List of Custom Services added to the compute. </param>
-        /// <param name="osImageMetadata"> Returns metadata about the operating system image for this compute instance. </param>
-        /// <param name="connectivityEndpoints"> Describes all connectivity endpoints available for this ComputeInstance. </param>
-        /// <param name="applications"> Describes available applications and their endpoints on this ComputeInstance. </param>
-        /// <param name="createdBy"> Describes information on user who created this ComputeInstance. </param>
-        /// <param name="errors"> Collection of errors encountered on this ComputeInstance. </param>
-        /// <param name="state"> The current state of this ComputeInstance. </param>
-        /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
-        /// <param name="personalComputeInstanceAssignedUser"> Settings for a personal compute instance. </param>
-        /// <param name="scripts"> Details of customized scripts to execute for setting up the cluster. </param>
-        /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
-        /// <param name="schedulesComputeStartStop"> The list of schedules to be applied on the computes. </param>
-        /// <param name="idleTimeBeforeShutdown"> Stops compute instance after user defined period of inactivity. Time is defined in ISO8601 format. Minimum is 15 min, maximum is 3 days. </param>
-        /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
-        /// <param name="containers"> Describes informations of containers on this ComputeInstance. </param>
-        /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
-        /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
-        /// <param name="versionsRuntime"> ComputeInstance version. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceProperties"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceProperties MachineLearningComputeInstanceProperties(string vmSize = null, ResourceIdentifier subnetId = null, MachineLearningApplicationSharingPolicy? applicationSharingPolicy = null, MlflowAutologger? mlflowAutologger = null, MachineLearningComputeInstanceSshSettings sshSettings = null, IEnumerable<CustomService> customServices = null, ImageMetadata osImageMetadata = null, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints = null, IEnumerable<MachineLearningComputeInstanceApplication> applications = null, MachineLearningComputeInstanceCreatedBy createdBy = null, IEnumerable<MachineLearningError> errors = null, MachineLearningComputeInstanceState? state = null, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = null, MachineLearningComputeInstanceAssignedUser personalComputeInstanceAssignedUser = null, MachineLearningScriptsToExecute scripts = null, MachineLearningComputeInstanceLastOperation lastOperation = null, IEnumerable<MachineLearningComputeStartStopSchedule> schedulesComputeStartStop = null, string idleTimeBeforeShutdown = null, bool? enableNodePublicIP = null, IEnumerable<MachineLearningComputeInstanceContainer> containers = null, IEnumerable<MachineLearningComputeInstanceDataDisk> dataDisks = null, IEnumerable<MachineLearningComputeInstanceDataMount> dataMounts = null, string versionsRuntime = null)
-        {
-            customServices ??= new List<CustomService>();
-            applications ??= new List<MachineLearningComputeInstanceApplication>();
-            errors ??= new List<MachineLearningError>();
-            schedulesComputeStartStop ??= new List<MachineLearningComputeStartStopSchedule>();
-            containers ??= new List<MachineLearningComputeInstanceContainer>();
-            dataDisks ??= new List<MachineLearningComputeInstanceDataDisk>();
-            dataMounts ??= new List<MachineLearningComputeInstanceDataMount>();
-
-            return new MachineLearningComputeInstanceProperties(vmSize, subnetId != null ? new ResourceId(subnetId) : null, applicationSharingPolicy, mlflowAutologger != null ? new ComputeInstanceAutologgerSettings(mlflowAutologger) : null, sshSettings, customServices?.ToList(), osImageMetadata, connectivityEndpoints, applications?.ToList(), createdBy, errors?.ToList(), state, computeInstanceAuthorizationType, personalComputeInstanceAssignedUser != null ? new PersonalComputeInstanceSettings(personalComputeInstanceAssignedUser) : null, scripts != null ? new SetupScripts(scripts) : null, lastOperation, schedulesComputeStartStop != null ? new ComputeSchedules(schedulesComputeStartStop?.ToList()) : null, idleTimeBeforeShutdown, enableNodePublicIP, containers?.ToList(), dataDisks?.ToList(), dataMounts?.ToList(), versionsRuntime != null ? new ComputeInstanceVersion(versionsRuntime) : null);
-        }
-
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
         /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
         /// <param name="adminUserName"> Describes the admin user name. </param>
@@ -1852,13 +1814,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Is the schedule enabled or disabled?. </param>
         /// <param name="action"> [Required] The compute power action. </param>
         /// <param name="triggerType"> [Required] The schedule trigger type. </param>
-        /// <param name="recurrence"> Required if triggerType is Recurrence. </param>
-        /// <param name="cron"> Required if triggerType is Cron. </param>
+        /// <param name="recurrenceSchedule"> Required if triggerType is Recurrence. </param>
+        /// <param name="cronSchedule"> Required if triggerType is Cron. </param>
         /// <param name="schedule"> [Deprecated] Not used any more. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeStartStopSchedule"/> instance for mocking. </returns>
-        public static MachineLearningComputeStartStopSchedule MachineLearningComputeStartStopSchedule(string id = null, MachineLearningComputeProvisioningStatus? provisioningStatus = null, MachineLearningScheduleStatus? status = null, MachineLearningComputePowerAction? action = null, MachineLearningTriggerType? triggerType = null, Recurrence recurrence = null, Cron cron = null, MachineLearningScheduleBase schedule = null)
+        public static MachineLearningComputeStartStopSchedule MachineLearningComputeStartStopSchedule(string id = null, MachineLearningComputeProvisioningStatus? provisioningStatus = null, MachineLearningScheduleStatus? status = null, MachineLearningComputePowerAction? action = null, MachineLearningTriggerType? triggerType = null, ComputeStartStopRecurrenceSchedule recurrenceSchedule = null, ComputeStartStopCronSchedule cronSchedule = null, MachineLearningScheduleBase schedule = null)
         {
-            return new MachineLearningComputeStartStopSchedule(id, provisioningStatus, status, action, triggerType, recurrence, cron, schedule);
+            return new MachineLearningComputeStartStopSchedule(id, provisioningStatus, status, action, triggerType, recurrenceSchedule, cronSchedule, schedule);
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>

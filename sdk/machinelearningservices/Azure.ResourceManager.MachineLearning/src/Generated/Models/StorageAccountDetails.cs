@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of StorageAccountDetails. </summary>
         /// <param name="systemCreatedStorageAccount"> Details of system created storage account to be used for the registry. </param>
-        /// <param name="userCreatedStorageAccount"> Details of user created storage account to be used for the registry. </param>
+        /// <param name="userCreatedStorageAccount"> Details of user created storage account to be used for the registry.  Not supported in most cases and will throw 400 error if provided. </param>
         internal StorageAccountDetails(SystemCreatedStorageAccount systemCreatedStorageAccount, UserCreatedStorageAccount userCreatedStorageAccount)
         {
             SystemCreatedStorageAccount = systemCreatedStorageAccount;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Details of system created storage account to be used for the registry. </summary>
         public SystemCreatedStorageAccount SystemCreatedStorageAccount { get; set; }
-        /// <summary> Details of user created storage account to be used for the registry. </summary>
+        /// <summary> Details of user created storage account to be used for the registry.  Not supported in most cases and will throw 400 error if provided. </summary>
         internal UserCreatedStorageAccount UserCreatedStorageAccount { get; set; }
         /// <summary>
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"

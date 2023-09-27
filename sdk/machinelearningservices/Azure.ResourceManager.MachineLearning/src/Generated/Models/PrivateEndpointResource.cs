@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The PE network resource that is linked to this PE connection. </summary>
-    public partial class PrivateEndpointResource : MachineLearningPrivateEndpoint
+    public partial class PrivateEndpointResource : PrivateEndpoint
     {
         /// <summary> Initializes a new instance of PrivateEndpointResource. </summary>
         public PrivateEndpointResource()
@@ -20,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of PrivateEndpointResource. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        internal PrivateEndpointResource(ResourceIdentifier id, string subnetArmId) : base(id)
+        internal PrivateEndpointResource(string id, string subnetArmId) : base(id)
         {
             SubnetArmId = subnetArmId;
         }

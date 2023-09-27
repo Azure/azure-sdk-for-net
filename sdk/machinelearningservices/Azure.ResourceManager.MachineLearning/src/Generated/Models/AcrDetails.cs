@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of AcrDetails. </summary>
         /// <param name="systemCreatedAcrAccount"> Details of system created ACR account to be used for the Registry. </param>
-        /// <param name="userCreatedAcrAccount"> Details of user created ACR account to be used for the Registry. </param>
+        /// <param name="userCreatedAcrAccount"> Details of user created ACR account to be used for the Registry. Not supported in most cases and will throw 400 error if provided. </param>
         internal AcrDetails(SystemCreatedAcrAccount systemCreatedAcrAccount, UserCreatedAcrAccount userCreatedAcrAccount)
         {
             SystemCreatedAcrAccount = systemCreatedAcrAccount;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Details of system created ACR account to be used for the Registry. </summary>
         public SystemCreatedAcrAccount SystemCreatedAcrAccount { get; set; }
-        /// <summary> Details of user created ACR account to be used for the Registry. </summary>
+        /// <summary> Details of user created ACR account to be used for the Registry. Not supported in most cases and will throw 400 error if provided. </summary>
         internal UserCreatedAcrAccount UserCreatedAcrAccount { get; set; }
         /// <summary>
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"

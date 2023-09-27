@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Optional.IsDefined(RecurrenceSchedule))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue(RecurrenceSchedule);
             }
-            if (Optional.IsDefined(Cron))
+            if (Optional.IsDefined(CronSchedule))
             {
                 writer.WritePropertyName("cron"u8);
-                writer.WriteObjectValue(Cron);
+                writer.WriteObjectValue(CronSchedule);
             }
             if (Optional.IsDefined(Schedule))
             {
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningScheduleStatus> status = default;
             Optional<MachineLearningComputePowerAction> action = default;
             Optional<MachineLearningTriggerType> triggerType = default;
-            Optional<Recurrence> recurrence = default;
-            Optional<Cron> cron = default;
+            Optional<ComputeStartStopRecurrenceSchedule> recurrence = default;
+            Optional<ComputeStartStopCronSchedule> cron = default;
             Optional<MachineLearningScheduleBase> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    recurrence = Recurrence.DeserializeRecurrence(property.Value);
+                    recurrence = ComputeStartStopRecurrenceSchedule.DeserializeComputeStartStopRecurrenceSchedule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cron"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cron = Cron.DeserializeCron(property.Value);
+                    cron = ComputeStartStopCronSchedule.DeserializeComputeStartStopCronSchedule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("schedule"u8))

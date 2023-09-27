@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> subnetArmId = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetArmId"u8))
@@ -52,11 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
             }

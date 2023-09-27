@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
         /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
         /// <param name="status"> Connection status of the service consumer with the service provider. </param>
-        internal RegistryPrivateLinkServiceConnectionState(string actionsRequired, string description, EndpointServiceConnectionStatus? status)
+        internal RegistryPrivateLinkServiceConnectionState(string actionsRequired, string description, MachineLearningPrivateEndpointServiceConnectionStatus? status)
         {
             ActionsRequired = actionsRequired;
             Description = description;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> User-defined message that, per NRP doc, may be used for approval-related message. </summary>
         public string Description { get; set; }
         /// <summary> Connection status of the service consumer with the service provider. </summary>
-        public EndpointServiceConnectionStatus? Status { get; set; }
+        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

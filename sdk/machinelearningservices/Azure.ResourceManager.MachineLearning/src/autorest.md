@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: MachineLearning
 namespace: Azure.ResourceManager.MachineLearning
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/79d4b87b6632452bf83711814faa5b71e4761544/specification/machinelearningservices/resource-manager/readme.md
-tag: package-preview-2023-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/3eb9ec8e9c8f717c6b461c4c0f49a4662fb948fd/specification/machinelearningservices/resource-manager/readme.md
+#tag: package-preview-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +20,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -70,6 +73,18 @@ no-property-type-replacement:
 - ResourceId
 - VirtualMachineImage
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}: MachineLearningCodeContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}/versions/{version}: MachineLearningCodeVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/components/{name}: MachineLearningComponentContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/components/{name}/versions/{version}: MachineLearningComponentVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}: MachineLearningDataContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}: MachineLearningDataVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}: MachineLearningEnvironmentContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions/{version}: MachineLearningEnvironmentVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}: MachineLearningModelContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions/{version}: MachineLearningModelVersion
+
 rename-mapping:
   ComputeInstanceProperties.setupScripts: SetupScriptsSettings
   Workspace: MachineLearningWorkspace
@@ -95,6 +110,7 @@ rename-mapping:
   SynapseSparkProperties: MachineLearningSynapseSparkProperties
   ProvisioningState: MachineLearningProvisioningState
   ListWorkspaceKeysResult: MachineLearningWorkspaceGetKeysResult
+  ListWorkspaceKeysResult.userStorageArmId: UserStorageResourceId
   RegistryListCredentialsResult: MachineLearningContainerRegistryCredentials
   Password: MachineLearningPasswordDetail
   BatchDeploymentTrackedResource: MachineLearningBatchDeployment
@@ -144,12 +160,11 @@ rename-mapping:
   QuotaUpdateParameters: MachineLearningQuotaUpdateContent
   EncryptionProperty: MachineLearningEncryptionSetting
   EncryptionStatus: MachineLearningEncryptionStatus
-  EncryptionKeyVaultProperties: MachineLearningEncryptionKeyVaultProperties
-  EncryptionKeyVaultProperties.keyVaultArmId: -|arm-id
+  KeyVaultProperties: MachineLearningEncryptionKeyVaultProperties
+  KeyVaultProperties.keyVaultArmId: -|arm-id
   IdentityForCmk: MachineLearningCmkIdentity
   IdentityForCmk.userAssignedIdentity: -|arm-id
   NotebookResourceInfo: MachineLearningNotebookResourceInfo
-  PublicNetworkAccess: MachineLearningPublicNetworkAccess
   SharedPrivateLinkResource: MachineLearningSharedPrivateLinkResource
   SharedPrivateLinkResource.properties.privateLinkResourceId: -|arm-id
   Workspace.properties.storageHnsEnabled: IsStorageHnsEnabled
@@ -159,8 +174,8 @@ rename-mapping:
   DiagnoseRequestProperties: MachineLearningWorkspaceDiagnoseProperties
   NotebookAccessTokenResult: MachineLearningWorkspaceNotebookAccessTokenResult
   ListNotebookKeysResult: MachineLearningWorkspaceGetNotebookKeysResult
-  FqdnEndpoints: MachineLearningFqdnEndpoints
-  FqdnEndpointsProperties: MachineLearningFqdnEndpointsProperties
+  FqdnEndpointsPropertyBag: MachineLearningFqdnEndpoints
+  FqdnEndpoints: MachineLearningFqdnEndpointsProperties
   ListStorageAccountKeysResult: MachineLearningWorkspaceGetStorageAccountKeysResult
   AmlUserFeature: MachineLearningUserFeature
   DatastoreCredentials: MachineLearningDatastoreCredentials
@@ -222,6 +237,8 @@ rename-mapping:
   ComputeInstanceState: MachineLearningComputeInstanceState
   ComputePowerAction: MachineLearningComputePowerAction
   ComputeStartStopSchedule: MachineLearningComputeStartStopSchedule
+  ComputeStartStopSchedule.recurrence: RecurrenceSchedule
+  ComputeStartStopSchedule.cron: CronSchedule
   ProvisioningStatus: MachineLearningComputeProvisioningStatus
   ScheduleBase: MachineLearningScheduleBase
   ScheduleStatus: MachineLearningScheduleStatus
@@ -339,9 +356,9 @@ rename-mapping:
   OrderString: MachineLearningOrderString
   OsType: MachineLearningOSType
   PipelineJob: MachineLearningPipelineJob
-  PrivateEndpoint: MachineLearningPrivateEndpoint
-  PrivateEndpoint.id: -|arm-id
-  PrivateEndpoint.subnetArmId: -|arm-id
+  WorkspacePrivateEndpointResource: MachineLearningPrivateEndpoint
+  WorkspacePrivateEndpointResource.id: -|arm-id
+  WorkspacePrivateEndpointResource.subnetArmId: -|arm-id
   ProbeSettings: MachineLearningProbeSettings
   PublicNetworkAccessType: MachineLearningPublicNetworkAccessType
   QuotaBaseProperties: MachineLearningQuotaProperties
@@ -392,6 +409,8 @@ rename-mapping:
   VmPriority: MachineLearningVmPriority
   WorkspaceConnectionUsernamePassword: MachineLearningWorkspaceConnectionUsernamePassword
   Workspace.properties.hbiWorkspace: IsHbiWorkspace
+  Workspace.properties.publicNetworkAccess: PublicNetworkAccessType
+  WorkspaceUpdateParameters.properties.publicNetworkAccess: PublicNetworkAccessType
   AllocationState: MachineLearningAllocationState
   FeatureResource: MachineLearningFeatureResource
   ResourceId.id: -|arm-id
@@ -418,6 +437,9 @@ rename-mapping:
   SystemCreatedStorageAccount.armResourceId: ArmResourceIdentifier|arm-id
   UserCreatedAcrAccount.armResourceId: ArmResourceIdentifier|arm-id
   UserCreatedStorageAccount.armResourceId: ArmResourceIdentifier|arm-id
+  Cron: ComputeStartStopCronSchedule
+  Recurrence: ComputeStartStopRecurrenceSchedule
+  EndpointServiceConnectionStatus: MachineLearningPrivateEndpointServiceConnectionStatus
 
 directive:
   - from: swagger-document
@@ -478,6 +500,11 @@ directive:
   - from: swagger-document
     where: $.definitions.TableVerticalValidationDataSettings.properties.cvSplitColumnNames
     transform: $["x-nullable"] = true;
+  - from: workspaceRP.json
+    where: $.definitions
+    transform: >
+      $.PrivateLinkResourceProperties.properties.groupId.readOnly = true;
+      $.PrivateLinkResourceProperties.properties.requiredMembers.readOnly = true;
   # quite a few x-ms-client-name extensions are defined in the swagger, we here erase them all to prevent some funny interactions between our own renaming configuration
   - from: mfe.json
     where: $.definitions

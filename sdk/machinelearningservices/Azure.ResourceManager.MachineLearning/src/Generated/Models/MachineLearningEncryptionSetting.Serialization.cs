@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<string> cosmosDbResourceId = default;
             Optional<MachineLearningCmkIdentity> identity = default;
-            KeyVaultProperties keyVaultProperties = default;
+            MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
             Optional<string> searchAccountResourceId = default;
             MachineLearningEncryptionStatus status = default;
             Optional<string> storageAccountResourceId = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("searchAccountResourceId"u8))

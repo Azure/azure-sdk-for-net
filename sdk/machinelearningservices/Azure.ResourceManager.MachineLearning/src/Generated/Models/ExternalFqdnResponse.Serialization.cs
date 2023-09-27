@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FqdnEndpointsPropertyBag>> value = default;
+            Optional<IReadOnlyList<MachineLearningFqdnEndpoints>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<FqdnEndpointsPropertyBag> array = new List<FqdnEndpointsPropertyBag>();
+                    List<MachineLearningFqdnEndpoints> array = new List<MachineLearningFqdnEndpoints>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FqdnEndpointsPropertyBag.DeserializeFqdnEndpointsPropertyBag(item));
+                        array.Add(MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints(item));
                     }
                     value = array;
                     continue;

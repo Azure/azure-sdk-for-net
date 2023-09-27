@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
         /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
         /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
         /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
         /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
         /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
-        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, bool? allowPublicAccessWhenBehindVnet, string applicationInsights, IList<string> associatedWorkspaces, IList<string> containerRegistries, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, MachineLearningEncryptionSetting encryption, IList<string> existingWorkspaces, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, string hubResourceId, string imageBuildCompute, string keyVault, IList<string> keyVaults, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, MachineLearningProvisioningState? provisioningState, MachineLearningPublicNetworkAccessType? publicNetworkAccess, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, int? softDeleteRetentionInDays, string storageAccount, IList<string> storageAccounts, bool? isStorageHnsEnabled, string systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId) : base(id, name, resourceType, systemData, tags, location)
+        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, bool? allowPublicAccessWhenBehindVnet, string applicationInsights, IList<string> associatedWorkspaces, IList<string> containerRegistries, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, MachineLearningEncryptionSetting encryption, IList<string> existingWorkspaces, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, string hubResourceId, string imageBuildCompute, string keyVault, IList<string> keyVaults, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, MachineLearningProvisioningState? provisioningState, MachineLearningPublicNetworkAccessType? publicNetworkAccessType, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, int? softDeleteRetentionInDays, string storageAccount, IList<string> storageAccounts, bool? isStorageHnsEnabled, string systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning
             PrivateEndpointConnections = privateEndpointConnections;
             PrivateLinkCount = privateLinkCount;
             ProvisioningState = provisioningState;
-            PublicNetworkAccess = publicNetworkAccess;
+            PublicNetworkAccessType = publicNetworkAccessType;
             ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
             ServiceProvisionedResourceGroup = serviceProvisionedResourceGroup;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
         public MachineLearningProvisioningState? ProvisioningState { get; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public MachineLearningPublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public MachineLearningPublicNetworkAccessType? PublicNetworkAccessType { get; set; }
         /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
         /// <summary> Gets or sets the cosmos db collections throughput. </summary>

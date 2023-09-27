@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,31 +18,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<MachineLearningFqdnEndpoint>> endpoints = default;
+            Optional<MachineLearningFqdnEndpointsProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"u8))
-                {
-                    category = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("endpoints"u8))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<MachineLearningFqdnEndpoint> array = new List<MachineLearningFqdnEndpoint>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(MachineLearningFqdnEndpoint.DeserializeMachineLearningFqdnEndpoint(item));
-                    }
-                    endpoints = array;
+                    properties = MachineLearningFqdnEndpointsProperties.DeserializeMachineLearningFqdnEndpointsProperties(property.Value);
                     continue;
                 }
             }
-            return new MachineLearningFqdnEndpoints(category.Value, Optional.ToList(endpoints));
+            return new MachineLearningFqdnEndpoints(properties.Value);
         }
     }
 }

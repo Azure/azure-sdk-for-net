@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 ConnectionState = new MachineLearningPrivateLinkServiceConnectionState()
                 {
                     Description = "Auto-Approved",
-                    Status = EndpointServiceConnectionStatus.Approved,
+                    Status = MachineLearningPrivateEndpointServiceConnectionStatus.Approved,
                 },
             };
             ArmOperation<MachineLearningPrivateEndpointConnectionResource> lro = await machineLearningPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         public string PrimaryUserAssignedIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public MachineLearningPublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public MachineLearningPublicNetworkAccessType? PublicNetworkAccessType { get; set; }
         /// <summary> The service managed resource settings. </summary>
         internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
         /// <summary> Gets or sets the cosmos db collections throughput. </summary>

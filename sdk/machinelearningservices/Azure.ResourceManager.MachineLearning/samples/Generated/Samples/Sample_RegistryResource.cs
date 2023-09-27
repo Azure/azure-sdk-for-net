@@ -84,38 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetRegistryWithSystemCreatedAccounts()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registries/get-SystemCreated.json
-            // this example is just showing the usage of "Registries_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RegistryResource created on azure
-            // for more information of creating RegistryResource, please refer to the document of RegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string registryName = "string";
-            ResourceIdentifier registryResourceId = RegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
-            RegistryResource registry = client.GetRegistryResource(registryResourceId);
-
-            // invoke the operation
-            RegistryResource result = await registry.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RegistryData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get Registry with user created accounts.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetRegistryWithUserCreatedAccounts()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registries/get-UserCreated.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registries/get.json
             // this example is just showing the usage of "Registries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateRegistryWithSystemCreatedAccounts()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registries/update-SystemCreated.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registries/update.json
             // this example is just showing the usage of "Registries_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,58 +135,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             RegistryPatch patch = new RegistryPatch()
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("string")] = new UserAssignedIdentity(),
-},
-                },
-                Sku = new MachineLearningSkuPatch()
-                {
-                    Capacity = 1,
-                    Family = "string",
-                    Name = "string",
-                    Size = "string",
-                    Tier = MachineLearningSkuTier.Basic,
-                },
-                Tags =
-{
-},
-            };
-            RegistryResource result = await registry.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RegistryData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update Registry with user created accounts.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateRegistryWithUserCreatedAccounts()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registries/update-UserCreated.json
-            // this example is just showing the usage of "Registries_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RegistryResource created on azure
-            // for more information of creating RegistryResource, please refer to the document of RegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string registryName = "string";
-            ResourceIdentifier registryResourceId = RegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
-            RegistryResource registry = client.GetRegistryResource(registryResourceId);
-
-            // invoke the operation
-            RegistryPatch patch = new RegistryPatch()
-            {
-                Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
@@ -306,7 +223,7 @@ PrivateLinkServiceConnectionState = new RegistryPrivateLinkServiceConnectionStat
 {
 ActionsRequired = "string",
 Description = "string",
-Status = EndpointServiceConnectionStatus.Approved,
+Status = MachineLearningPrivateEndpointServiceConnectionStatus.Approved,
 },
 ProvisioningState = "string",
 }
@@ -326,7 +243,6 @@ AcrAccountName = "string",
 AcrAccountSku = "string",
 ArmResourceId = "string",
 },
-ArmResourceId = "string",
 }
 },
 Location = new AzureLocation("string"),
@@ -342,7 +258,6 @@ StorageAccountHnsEnabled = false,
 StorageAccountName = "string",
 StorageAccountType = "string",
 },
-ArmResourceId = "string",
 }
 },
 }

@@ -88,20 +88,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceCodeResource
+        #region MachineLearningCodeContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceCodeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceCodeResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceCodeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningCodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningCodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceCodeResource" /> object. </returns>
-        public static WorkspaceCodeResource GetWorkspaceCodeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningCodeContainerResource" /> object. </returns>
+        public static MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceCodeResource.ValidateResourceId(id);
-                return new WorkspaceCodeResource(client, id);
+                MachineLearningCodeContainerResource.ValidateResourceId(id);
+                return new MachineLearningCodeContainerResource(client, id);
             }
             );
         }
@@ -126,20 +126,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceCodeVersionResource
+        #region MachineLearningCodeVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceCodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceCodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceCodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningCodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningCodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceCodeVersionResource" /> object. </returns>
-        public static WorkspaceCodeVersionResource GetWorkspaceCodeVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningCodeVersionResource" /> object. </returns>
+        public static MachineLearningCodeVersionResource GetMachineLearningCodeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceCodeVersionResource.ValidateResourceId(id);
-                return new WorkspaceCodeVersionResource(client, id);
+                MachineLearningCodeVersionResource.ValidateResourceId(id);
+                return new MachineLearningCodeVersionResource(client, id);
             }
             );
         }
@@ -164,20 +164,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceComponentResource
+        #region MachineLearningComponentContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceComponentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceComponentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningComponentContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningComponentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceComponentResource" /> object. </returns>
-        public static WorkspaceComponentResource GetWorkspaceComponentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningComponentContainerResource" /> object. </returns>
+        public static MachineLearningComponentContainerResource GetMachineLearningComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceComponentResource.ValidateResourceId(id);
-                return new WorkspaceComponentResource(client, id);
+                MachineLearningComponentContainerResource.ValidateResourceId(id);
+                return new MachineLearningComponentContainerResource(client, id);
             }
             );
         }
@@ -202,20 +202,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceComponentVersionResource
+        #region MachineLearningComponentVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceComponentVersionResource" /> object. </returns>
-        public static WorkspaceComponentVersionResource GetWorkspaceComponentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningComponentVersionResource" /> object. </returns>
+        public static MachineLearningComponentVersionResource GetMachineLearningComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceComponentVersionResource.ValidateResourceId(id);
-                return new WorkspaceComponentVersionResource(client, id);
+                MachineLearningComponentVersionResource.ValidateResourceId(id);
+                return new MachineLearningComponentVersionResource(client, id);
             }
             );
         }
@@ -240,20 +240,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceDataResource
+        #region MachineLearningDataContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceDataResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningDataContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningDataContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceDataResource" /> object. </returns>
-        public static WorkspaceDataResource GetWorkspaceDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningDataContainerResource" /> object. </returns>
+        public static MachineLearningDataContainerResource GetMachineLearningDataContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceDataResource.ValidateResourceId(id);
-                return new WorkspaceDataResource(client, id);
+                MachineLearningDataContainerResource.ValidateResourceId(id);
+                return new MachineLearningDataContainerResource(client, id);
             }
             );
         }
@@ -278,20 +278,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceDataVersionResource
+        #region MachineLearningDataVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceDataVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceDataVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceDataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningDataVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningDataVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceDataVersionResource" /> object. </returns>
-        public static WorkspaceDataVersionResource GetWorkspaceDataVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningDataVersionResource" /> object. </returns>
+        public static MachineLearningDataVersionResource GetMachineLearningDataVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceDataVersionResource.ValidateResourceId(id);
-                return new WorkspaceDataVersionResource(client, id);
+                MachineLearningDataVersionResource.ValidateResourceId(id);
+                return new MachineLearningDataVersionResource(client, id);
             }
             );
         }
@@ -316,20 +316,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceEnvironmentResource
+        #region MachineLearningEnvironmentContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningEnvironmentContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningEnvironmentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceEnvironmentResource" /> object. </returns>
-        public static WorkspaceEnvironmentResource GetWorkspaceEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource" /> object. </returns>
+        public static MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceEnvironmentResource.ValidateResourceId(id);
-                return new WorkspaceEnvironmentResource(client, id);
+                MachineLearningEnvironmentContainerResource.ValidateResourceId(id);
+                return new MachineLearningEnvironmentContainerResource(client, id);
             }
             );
         }
@@ -354,20 +354,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceEnvironmentVersionResource
+        #region MachineLearningEnvironmentVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceEnvironmentVersionResource" /> object. </returns>
-        public static WorkspaceEnvironmentVersionResource GetWorkspaceEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource" /> object. </returns>
+        public static MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceEnvironmentVersionResource.ValidateResourceId(id);
-                return new WorkspaceEnvironmentVersionResource(client, id);
+                MachineLearningEnvironmentVersionResource.ValidateResourceId(id);
+                return new MachineLearningEnvironmentVersionResource(client, id);
             }
             );
         }
@@ -392,20 +392,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceModelResource
+        #region MachineLearningModelContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceModelResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceModelResource" /> object. </returns>
-        public static WorkspaceModelResource GetWorkspaceModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningModelContainerResource" /> object. </returns>
+        public static MachineLearningModelContainerResource GetMachineLearningModelContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceModelResource.ValidateResourceId(id);
-                return new WorkspaceModelResource(client, id);
+                MachineLearningModelContainerResource.ValidateResourceId(id);
+                return new MachineLearningModelContainerResource(client, id);
             }
             );
         }
@@ -430,20 +430,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region WorkspaceModelVersionResource
+        #region MachineLearningModelVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceModelVersionResource" /> object. </returns>
-        public static WorkspaceModelVersionResource GetWorkspaceModelVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningModelVersionResource" /> object. </returns>
+        public static MachineLearningModelVersionResource GetMachineLearningModelVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceModelVersionResource.ValidateResourceId(id);
-                return new WorkspaceModelVersionResource(client, id);
+                MachineLearningModelVersionResource.ValidateResourceId(id);
+                return new MachineLearningModelVersionResource(client, id);
             }
             );
         }

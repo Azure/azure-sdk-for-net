@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="appInsightsInstrumentationKey"> The access key of the workspace app insights. </param>
         /// <param name="containerRegistryCredentials"></param>
         /// <param name="notebookAccessKeys"></param>
-        /// <param name="userStorageArmId"> The arm Id key of the workspace storage. </param>
+        /// <param name="userStorageResourceId"> The arm Id key of the workspace storage. </param>
         /// <param name="userStorageKey"> The access key of the workspace storage. </param>
-        internal MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys, string userStorageArmId, string userStorageKey)
+        internal MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys, string userStorageResourceId, string userStorageKey)
         {
             AppInsightsInstrumentationKey = appInsightsInstrumentationKey;
             ContainerRegistryCredentials = containerRegistryCredentials;
             NotebookAccessKeys = notebookAccessKeys;
-            UserStorageArmId = userStorageArmId;
+            UserStorageResourceId = userStorageResourceId;
             UserStorageKey = userStorageKey;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the notebook access keys. </summary>
         public MachineLearningWorkspaceGetNotebookKeysResult NotebookAccessKeys { get; }
         /// <summary> The arm Id key of the workspace storage. </summary>
-        public string UserStorageArmId { get; }
+        public string UserStorageResourceId { get; }
         /// <summary> The access key of the workspace storage. </summary>
         public string UserStorageKey { get; }
     }
