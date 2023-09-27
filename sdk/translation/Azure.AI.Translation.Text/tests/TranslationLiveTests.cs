@@ -139,7 +139,7 @@ namespace Azure.AI.Translation.Text.Tests
         [RecordedTest]
         public async Task TranslateWithDictionaryTagOptions()
         {
-            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(targetLanguage: "en", content: "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.")
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(targetLanguage: "es", content: "The word < mstrans:dictionary translation =\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.")
             {
                 SourceLanguage = "en"
             };
