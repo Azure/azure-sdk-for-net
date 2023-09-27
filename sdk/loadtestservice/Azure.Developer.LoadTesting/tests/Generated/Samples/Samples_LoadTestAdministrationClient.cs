@@ -313,6 +313,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTest("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -325,6 +326,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestAsync("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -337,6 +339,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTest("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -349,6 +352,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestAsync("<testId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -603,6 +607,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTestFile("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -615,6 +620,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -627,6 +633,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteTestFile("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -639,6 +646,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+
             Console.WriteLine(response.Status);
         }
 

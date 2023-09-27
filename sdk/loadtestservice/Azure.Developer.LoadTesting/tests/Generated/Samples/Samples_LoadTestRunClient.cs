@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -272,6 +271,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = client.DeleteTestRun("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -284,6 +284,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = await client.DeleteTestRunAsync("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -296,6 +297,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = client.DeleteTestRun("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -308,6 +310,7 @@ namespace Azure.Developer.LoadTesting.Samples
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
             Response response = await client.DeleteTestRunAsync("<testRunId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1183,17 +1186,17 @@ namespace Azure.Developer.LoadTesting.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                filters = new List<object>()
-{
+                filters = new object[]
+            {
 new
 {
 name = "<name>",
-values = new List<object>()
+values = new object[]
 {
 "<values>"
 },
 }
-},
+            },
             });
             foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
             {
@@ -1215,17 +1218,17 @@ values = new List<object>()
 
             RequestContent content = RequestContent.Create(new
             {
-                filters = new List<object>()
-{
+                filters = new object[]
+            {
 new
 {
 name = "<name>",
-values = new List<object>()
+values = new object[]
 {
 "<values>"
 },
 }
-},
+            },
             });
             await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
             {
