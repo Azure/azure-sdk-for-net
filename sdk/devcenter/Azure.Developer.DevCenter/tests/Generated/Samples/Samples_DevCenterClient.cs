@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Samples
 {
-    public class Samples_DevCenterClient
+    public partial class Samples_DevCenterClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]

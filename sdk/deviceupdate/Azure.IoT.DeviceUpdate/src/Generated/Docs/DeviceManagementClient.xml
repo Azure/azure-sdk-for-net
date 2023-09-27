@@ -166,6 +166,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClassAsync with all parameters.
@@ -175,6 +176,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -187,6 +189,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeviceClass("<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClass with all parameters.
@@ -196,6 +199,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeviceClass("<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -558,6 +562,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteGroupAsync("<groupId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGroupAsync with all parameters.
@@ -567,6 +572,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteGroupAsync("<groupId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -579,6 +585,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteGroup("<groupId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGroup with all parameters.
@@ -588,6 +595,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteGroup("<groupId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -802,7 +810,7 @@ RequestContent content = RequestContent.Create(new
         },
     },
     groupId = "<groupId>",
-    deviceClassSubgroups = new List<object>()
+    deviceClassSubgroups = new object[]
     {
         "<deviceClassSubgroups>"
     },
@@ -895,7 +903,7 @@ RequestContent content = RequestContent.Create(new
         },
     },
     groupId = "<groupId>",
-    deviceClassSubgroups = new List<object>()
+    deviceClassSubgroups = new object[]
     {
         "<deviceClassSubgroups>"
     },
@@ -944,6 +952,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentAsync with all parameters.
@@ -953,6 +962,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -965,6 +975,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeployment with all parameters.
@@ -974,6 +985,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1152,6 +1164,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClassSubgroupAsync with all parameters.
@@ -1161,6 +1174,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1173,6 +1187,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClassSubgroup with all parameters.
@@ -1182,6 +1197,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1426,6 +1442,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroupAsync with all parameters.
@@ -1435,6 +1452,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1447,6 +1465,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroup with all parameters.
@@ -1456,6 +1475,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
 Response response = client.DeleteDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1823,7 +1843,7 @@ DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceI
 
 RequestContent content = RequestContent.Create(new
 {
-    deviceList = new List<object>()
+    deviceList = new object[]
     {
         new
         {
@@ -1845,7 +1865,7 @@ DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceI
 RequestContent content = RequestContent.Create(new
 {
     operationId = "<operationId>",
-    deviceList = new List<object>()
+    deviceList = new object[]
     {
         new
         {
@@ -1877,7 +1897,7 @@ DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceI
 
 RequestContent content = RequestContent.Create(new
 {
-    deviceList = new List<object>()
+    deviceList = new object[]
     {
         new
         {
@@ -1899,7 +1919,7 @@ DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceI
 RequestContent content = RequestContent.Create(new
 {
     operationId = "<operationId>",
-    deviceList = new List<object>()
+    deviceList = new object[]
     {
         new
         {
