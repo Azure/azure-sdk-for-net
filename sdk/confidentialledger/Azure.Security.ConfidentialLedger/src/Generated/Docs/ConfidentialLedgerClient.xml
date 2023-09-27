@@ -405,6 +405,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = await client.DeleteUserAsync("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteUserAsync with all parameters.
@@ -413,6 +414,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = await client.DeleteUserAsync("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -424,6 +426,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = client.DeleteUser("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteUser with all parameters.
@@ -432,6 +435,7 @@ TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
 Response response = client.DeleteUser("<userId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
