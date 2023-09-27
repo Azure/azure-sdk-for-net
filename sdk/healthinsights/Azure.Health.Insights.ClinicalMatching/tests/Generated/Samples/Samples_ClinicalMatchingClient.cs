@@ -21,7 +21,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MatchTrials_ShortVersion()
+        public void Example_MatchTrials()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -50,7 +50,7 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MatchTrials_ShortVersion_Async()
+        public async Task Example_MatchTrials_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -79,7 +79,7 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MatchTrials_ShortVersion_Convenience()
+        public void Example_MatchTrials_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -95,7 +95,7 @@ new PatientRecord("<id>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MatchTrials_ShortVersion_Convenience_Async()
+        public async Task Example_MatchTrials_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
