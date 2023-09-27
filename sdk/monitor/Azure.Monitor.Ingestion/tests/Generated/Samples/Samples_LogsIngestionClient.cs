@@ -20,7 +20,7 @@ namespace Azure.Monitor.Ingestion.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Upload()
+        public void Example_Upload_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Upload_Async()
+        public async Task Example_Upload_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

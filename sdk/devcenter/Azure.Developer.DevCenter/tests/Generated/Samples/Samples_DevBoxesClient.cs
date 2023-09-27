@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPool()
+        public void Example_GetPool_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPool_Async()
+        public async Task Example_GetPool_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -112,7 +112,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSchedule()
+        public void Example_GetSchedule_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -130,7 +130,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSchedule_Async()
+        public async Task Example_GetSchedule_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -184,7 +184,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDevBox()
+        public void Example_GetDevBox_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -198,7 +198,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDevBox_Async()
+        public async Task Example_GetDevBox_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -288,7 +288,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRemoteConnection()
+        public void Example_GetRemoteConnection_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -302,7 +302,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRemoteConnection_Async()
+        public async Task Example_GetRemoteConnection_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -346,7 +346,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAction()
+        public void Example_GetAction_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -362,7 +362,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAction_Async()
+        public async Task Example_GetAction_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -414,7 +414,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SkipAction()
+        public void Example_SkipAction_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -426,7 +426,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SkipAction_Async()
+        public async Task Example_SkipAction_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -462,7 +462,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DelayAction()
+        public void Example_DelayAction_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -478,7 +478,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DelayAction_Async()
+        public async Task Example_DelayAction_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -530,7 +530,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools()
+        public void Example_GetPools_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -547,7 +547,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_Async()
+        public async Task Example_GetPools_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -626,7 +626,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSchedules()
+        public void Example_GetSchedules_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -645,7 +645,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSchedules_Async()
+        public async Task Example_GetSchedules_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -702,7 +702,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDevBoxes()
+        public void Example_GetAllDevBoxes_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -717,7 +717,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxes_Async()
+        public async Task Example_GetAllDevBoxes_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -810,7 +810,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDevBoxesByUser()
+        public void Example_GetAllDevBoxesByUser_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -825,7 +825,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDevBoxesByUser_Async()
+        public async Task Example_GetAllDevBoxesByUser_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -918,7 +918,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDevBoxes()
+        public void Example_GetDevBoxes_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -933,7 +933,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDevBoxes_Async()
+        public async Task Example_GetDevBoxes_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1026,7 +1026,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetActions()
+        public void Example_GetActions_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1043,7 +1043,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetActions_Async()
+        public async Task Example_GetActions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1098,7 +1098,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DelayAllActions()
+        public void Example_DelayAllActions_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1114,7 +1114,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DelayAllActions_Async()
+        public async Task Example_DelayAllActions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1178,7 +1178,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateDevBox()
+        public void Example_CreateDevBox_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1197,7 +1197,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateDevBox_Async()
+        public async Task Example_CreateDevBox_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1304,7 +1304,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDevBox()
+        public void Example_DeleteDevBox_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1319,7 +1319,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDevBox_Async()
+        public async Task Example_DeleteDevBox_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1382,7 +1382,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_StartDevBox()
+        public void Example_StartDevBox_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1397,7 +1397,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_StartDevBox_Async()
+        public async Task Example_StartDevBox_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1460,7 +1460,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_StopDevBox()
+        public void Example_StopDevBox_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1475,7 +1475,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_StopDevBox_Async()
+        public async Task Example_StopDevBox_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1538,7 +1538,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RestartDevBox()
+        public void Example_RestartDevBox_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1553,7 +1553,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RestartDevBox_Async()
+        public async Task Example_RestartDevBox_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
