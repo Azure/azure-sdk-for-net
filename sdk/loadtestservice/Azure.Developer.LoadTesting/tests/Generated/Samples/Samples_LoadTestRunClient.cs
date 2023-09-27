@@ -21,7 +21,7 @@ namespace Azure.Developer.LoadTesting.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTestRun_ShortVersion()
+        public void Example_GetTestRun()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +35,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestRun_ShortVersion_Async()
+        public async Task Example_GetTestRun_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -265,7 +265,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTestRun_ShortVersion()
+        public void Example_DeleteTestRun()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -277,7 +277,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTestRun_ShortVersion_Async()
+        public async Task Example_DeleteTestRun_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -313,7 +313,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTestRunFile_ShortVersion()
+        public void Example_GetTestRunFile()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -327,7 +327,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestRunFile_ShortVersion_Async()
+        public async Task Example_GetTestRunFile_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -379,7 +379,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_StopTestRun_ShortVersion()
+        public void Example_StopTestRun()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -393,7 +393,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_StopTestRun_ShortVersion_Async()
+        public async Task Example_StopTestRun_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -623,7 +623,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricNamespaces_ShortVersion()
+        public void Example_GetMetricNamespaces()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -637,7 +637,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricNamespaces_ShortVersion_Async()
+        public async Task Example_GetMetricNamespaces_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -681,7 +681,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricDefinitions_ShortVersion()
+        public void Example_GetMetricDefinitions()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -695,7 +695,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricDefinitions_ShortVersion_Async()
+        public async Task Example_GetMetricDefinitions_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -753,7 +753,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateAppComponents_ShortVersion()
+        public void Example_CreateOrUpdateAppComponents()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -774,7 +774,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateAppComponents_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateAppComponents_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -871,7 +871,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAppComponents_ShortVersion()
+        public void Example_GetAppComponents()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -885,7 +885,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAppComponents_ShortVersion_Async()
+        public async Task Example_GetAppComponents_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -949,7 +949,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateServerMetricsConfig_ShortVersion()
+        public void Example_CreateOrUpdateServerMetricsConfig()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -964,7 +964,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateServerMetricsConfig_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateServerMetricsConfig_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1063,7 +1063,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetServerMetricsConfig_ShortVersion()
+        public void Example_GetServerMetricsConfig()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1077,7 +1077,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetServerMetricsConfig_ShortVersion_Async()
+        public async Task Example_GetServerMetricsConfig_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1143,7 +1143,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetrics_ShortVersion()
+        public void Example_GetMetrics()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1159,7 +1159,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetrics_ShortVersion_Async()
+        public async Task Example_GetMetrics_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1239,7 +1239,7 @@ values = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricDimensionValues_ShortVersion()
+        public void Example_GetMetricDimensionValues()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1254,7 +1254,7 @@ values = new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricDimensionValues_ShortVersion_Async()
+        public async Task Example_GetMetricDimensionValues_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
