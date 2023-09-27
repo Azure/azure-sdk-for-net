@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateTestRunAsync(string,RequestContent,string,RequestContext)" />
-    <member name="CreateOrUpdateTestRun(string,RequestContent,string,RequestContext)" />
     <member name="GetTestRunAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetTestRunAsync and parse the result.
@@ -250,6 +248,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = await client.DeleteTestRunAsync("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestRunAsync with all parameters.
@@ -259,6 +258,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = await client.DeleteTestRunAsync("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -271,6 +271,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = client.DeleteTestRun("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestRun with all parameters.
@@ -280,6 +281,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = client.DeleteTestRun("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -1065,8 +1067,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code></example>
     </member>
-    <member name="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)" />
-    <member name="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)" />
     <member name="GetMetricsAsync(string,string,string,string,RequestContent,string,string,RequestContext)">
       <example>
 This sample shows how to call GetMetricsAsync and parse the result.
@@ -1090,12 +1090,12 @@ LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 RequestContent content = RequestContent.Create(new
 {
-    filters = new List<object>()
+    filters = new object[]
     {
         new
         {
             name = "<name>",
-            values = new List<object>()
+            values = new object[]
             {
                 "<values>"
             },
@@ -1135,12 +1135,12 @@ LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 RequestContent content = RequestContent.Create(new
 {
-    filters = new List<object>()
+    filters = new object[]
     {
         new
         {
             name = "<name>",
-            values = new List<object>()
+            values = new object[]
             {
                 "<values>"
             },
