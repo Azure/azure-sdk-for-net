@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetOAuthProvider_ShortVersion()
+        public void Example_GetOAuthProvider()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOAuthProvider_ShortVersion_Async()
+        public async Task Example_GetOAuthProvider_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -97,7 +97,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_CreateOrUpdate()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -111,7 +111,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_CreateOrUpdate_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -201,7 +201,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_Delete()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -212,7 +212,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_Delete_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -245,7 +245,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
+        public void Example_GetCascadeDeleteJobDetails()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -258,7 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -325,7 +325,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetOAuthProviders_ShortVersion()
+        public void Example_GetOAuthProviders()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -339,7 +339,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOAuthProviders_ShortVersion_Async()
+        public async Task Example_GetOAuthProviders_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -429,7 +429,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_ShortVersion()
+        public void Example_CreateCascadeDeleteJob()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");
@@ -443,7 +443,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
+        public async Task Example_CreateCascadeDeleteJob_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             OAuthProviders client = new FarmBeatsClient(credential).GetOAuthProvidersClient(apiVersion: "2022-11-01-preview");

@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetZone_ShortVersion()
+        public void Example_GetZone()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetZone_ShortVersion_Async()
+        public async Task Example_GetZone_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -99,7 +99,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_CreateOrUpdate()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -113,7 +113,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_CreateOrUpdate_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -205,7 +205,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_Delete()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -216,7 +216,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_Delete_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -249,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
+        public void Example_GetCascadeDeleteJobDetails()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -264,7 +264,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -327,7 +327,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetZonesByPartyId_ShortVersion()
+        public void Example_GetZonesByPartyId()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -341,7 +341,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetZonesByPartyId_ShortVersion_Async()
+        public async Task Example_GetZonesByPartyId_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -451,7 +451,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetZones_ShortVersion()
+        public void Example_GetZones()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -465,7 +465,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetZones_ShortVersion_Async()
+        public async Task Example_GetZones_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -575,7 +575,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_ShortVersion()
+        public void Example_CreateCascadeDeleteJob()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");
@@ -591,7 +591,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
+        public async Task Example_CreateCascadeDeleteJob_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Zones client = new FarmBeatsClient(credential).GetZonesClient(apiVersion: "2022-11-01-preview");

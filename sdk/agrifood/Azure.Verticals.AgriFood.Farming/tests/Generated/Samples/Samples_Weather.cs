@@ -20,7 +20,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDataDeleteJobDetails_ShortVersion()
+        public void Example_GetDataDeleteJobDetails()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -35,7 +35,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDataDeleteJobDetails_ShortVersion_Async()
+        public async Task Example_GetDataDeleteJobDetails_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -116,7 +116,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDataIngestionJobDetails_ShortVersion()
+        public void Example_GetDataIngestionJobDetails()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -133,7 +133,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDataIngestionJobDetails_ShortVersion_Async()
+        public async Task Example_GetDataIngestionJobDetails_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -216,7 +216,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWeathers_ShortVersion()
+        public void Example_GetWeathers()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -238,7 +238,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeathers_ShortVersion_Async()
+        public async Task Example_GetWeathers_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -376,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateDataDeleteJob_ShortVersion()
+        public void Example_CreateDataDeleteJob()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -398,7 +398,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateDataDeleteJob_ShortVersion_Async()
+        public async Task Example_CreateDataDeleteJob_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -520,7 +520,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateDataIngestionJob_ShortVersion()
+        public void Example_CreateDataIngestionJob()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
@@ -549,7 +549,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateDataIngestionJob_ShortVersion_Async()
+        public async Task Example_CreateDataIngestionJob_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");

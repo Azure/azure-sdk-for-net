@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWeatherData_ShortVersion()
+        public void Example_GetWeatherData()
         {
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
@@ -45,7 +45,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeatherData_ShortVersion_Async()
+        public async Task Example_GetWeatherData_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");

@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSeasonalField_ShortVersion()
+        public void Example_GetSeasonalField()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSeasonalField_ShortVersion_Async()
+        public async Task Example_GetSeasonalField_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -105,7 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_CreateOrUpdate()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -119,7 +119,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_CreateOrUpdate_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -229,7 +229,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_Delete()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -240,7 +240,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_Delete_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -273,7 +273,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
+        public void Example_GetCascadeDeleteJobDetails()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -288,7 +288,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -351,7 +351,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSeasonalFieldsByPartyId_ShortVersion()
+        public void Example_GetSeasonalFieldsByPartyId()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -365,7 +365,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSeasonalFieldsByPartyId_ShortVersion_Async()
+        public async Task Example_GetSeasonalFieldsByPartyId_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -493,7 +493,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSeasonalFields_ShortVersion()
+        public void Example_GetSeasonalFields()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -507,7 +507,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSeasonalFields_ShortVersion_Async()
+        public async Task Example_GetSeasonalFields_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -635,7 +635,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_ShortVersion()
+        public void Example_CreateCascadeDeleteJob()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
@@ -651,7 +651,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
+        public async Task Example_CreateCascadeDeleteJob_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             SeasonalFields client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
