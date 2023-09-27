@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEntity_ShortVersion()
+        public void Example_CreateOrUpdateEntity()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntity_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateEntity_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -409,7 +409,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEntityInBulk_ShortVersion()
+        public void Example_CreateOrUpdateEntityInBulk()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -424,7 +424,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntityInBulk_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateEntityInBulk_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -803,7 +803,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MoveEntitiesToCollection_ShortVersion()
+        public void Example_MoveEntitiesToCollection()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -818,7 +818,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MoveEntitiesToCollection_ShortVersion_Async()
+        public async Task Example_MoveEntitiesToCollection_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

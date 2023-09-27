@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_CreateOrUpdate()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_CreateOrUpdate_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -410,7 +410,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetByGuids_ShortVersion()
+        public void Example_GetByGuids()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -427,7 +427,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuids_ShortVersion_Async()
+        public async Task Example_GetByGuids_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -654,7 +654,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEntities_ShortVersion()
+        public void Example_CreateOrUpdateEntities()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -669,7 +669,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntities_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateEntities_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1048,7 +1048,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteByGuids_ShortVersion()
+        public void Example_DeleteByGuids()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1065,7 +1065,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuids_ShortVersion_Async()
+        public async Task Example_DeleteByGuids_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1240,7 +1240,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddClassification_ShortVersion()
+        public void Example_AddClassification()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1253,7 +1253,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassification_ShortVersion_Async()
+        public async Task Example_AddClassification_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1356,7 +1356,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetByGuid_ShortVersion()
+        public void Example_GetByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1370,7 +1370,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByGuid_ShortVersion_Async()
+        public async Task Example_GetByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1582,7 +1582,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PartialUpdateEntityAttributeByGuid_ShortVersion()
+        public void Example_PartialUpdateEntityAttributeByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1597,7 +1597,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateEntityAttributeByGuid_ShortVersion_Async()
+        public async Task Example_PartialUpdateEntityAttributeByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1766,7 +1766,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteByGuid_ShortVersion()
+        public void Example_DeleteByGuid()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1780,7 +1780,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByGuid_ShortVersion_Async()
+        public async Task Example_DeleteByGuid_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1946,7 +1946,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassification_ShortVersion()
+        public void Example_GetClassification()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1960,7 +1960,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassification_ShortVersion_Async()
+        public async Task Example_GetClassification_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2022,7 +2022,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteClassification_ShortVersion()
+        public void Example_DeleteClassification()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2034,7 +2034,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteClassification_ShortVersion_Async()
+        public async Task Example_DeleteClassification_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2070,7 +2070,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassifications_ShortVersion()
+        public void Example_GetClassifications()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2084,7 +2084,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassifications_ShortVersion_Async()
+        public async Task Example_GetClassifications_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2136,7 +2136,7 @@ timeZone = "<timeZone>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddClassifications_ShortVersion()
+        public void Example_AddClassifications()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2152,7 +2152,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassifications_ShortVersion_Async()
+        public async Task Example_AddClassifications_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2250,7 +2250,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateClassifications_ShortVersion()
+        public void Example_UpdateClassifications()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2266,7 +2266,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateClassifications_ShortVersion_Async()
+        public async Task Example_UpdateClassifications_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2364,7 +2364,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetByUniqueAttributes_ShortVersion()
+        public void Example_GetByUniqueAttributes()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2378,7 +2378,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetByUniqueAttributes_ShortVersion_Async()
+        public async Task Example_GetByUniqueAttributes_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2590,7 +2590,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PartialUpdateEntityByUniqueAttributes_ShortVersion()
+        public void Example_PartialUpdateEntityByUniqueAttributes()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2605,7 +2605,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateEntityByUniqueAttributes_ShortVersion_Async()
+        public async Task Example_PartialUpdateEntityByUniqueAttributes_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2978,7 +2978,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteByUniqueAttribute_ShortVersion()
+        public void Example_DeleteByUniqueAttribute()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2992,7 +2992,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_DeleteByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3158,7 +3158,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteClassificationByUniqueAttribute_ShortVersion()
+        public void Example_DeleteClassificationByUniqueAttribute()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3170,7 +3170,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteClassificationByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_DeleteClassificationByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3206,7 +3206,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddClassificationsByUniqueAttribute_ShortVersion()
+        public void Example_AddClassificationsByUniqueAttribute()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3222,7 +3222,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddClassificationsByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_AddClassificationsByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3320,7 +3320,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateClassificationsByUniqueAttribute_ShortVersion()
+        public void Example_UpdateClassificationsByUniqueAttribute()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3336,7 +3336,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateClassificationsByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_UpdateClassificationsByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3434,7 +3434,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SetClassifications_ShortVersion()
+        public void Example_SetClassifications()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3449,7 +3449,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetClassifications_ShortVersion_Async()
+        public async Task Example_SetClassifications_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3644,7 +3644,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEntitiesByUniqueAttributes_ShortVersion()
+        public void Example_GetEntitiesByUniqueAttributes()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3658,7 +3658,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntitiesByUniqueAttributes_ShortVersion_Async()
+        public async Task Example_GetEntitiesByUniqueAttributes_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3870,7 +3870,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetHeader_ShortVersion()
+        public void Example_GetHeader()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3884,7 +3884,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetHeader_ShortVersion_Async()
+        public async Task Example_GetHeader_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3986,7 +3986,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteBusinessMetadata_ShortVersion()
+        public void Example_DeleteBusinessMetadata()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3999,7 +3999,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteBusinessMetadata_ShortVersion_Async()
+        public async Task Example_DeleteBusinessMetadata_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4044,7 +4044,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddOrUpdateBusinessMetadata_ShortVersion()
+        public void Example_AddOrUpdateBusinessMetadata()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4057,7 +4057,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddOrUpdateBusinessMetadata_ShortVersion_Async()
+        public async Task Example_AddOrUpdateBusinessMetadata_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4102,7 +4102,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteBusinessMetadataAttributes_ShortVersion()
+        public void Example_DeleteBusinessMetadataAttributes()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4115,7 +4115,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteBusinessMetadataAttributes_ShortVersion_Async()
+        public async Task Example_DeleteBusinessMetadataAttributes_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4160,7 +4160,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddOrUpdateBusinessMetadataAttributes_ShortVersion()
+        public void Example_AddOrUpdateBusinessMetadataAttributes()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4173,7 +4173,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddOrUpdateBusinessMetadataAttributes_ShortVersion_Async()
+        public async Task Example_AddOrUpdateBusinessMetadataAttributes_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4218,7 +4218,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSampleBusinessMetadataTemplate_ShortVersion()
+        public void Example_GetSampleBusinessMetadataTemplate()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4236,7 +4236,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSampleBusinessMetadataTemplate_ShortVersion_Async()
+        public async Task Example_GetSampleBusinessMetadataTemplate_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4290,7 +4290,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ImportBusinessMetadata_ShortVersion()
+        public void Example_ImportBusinessMetadata()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4305,7 +4305,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportBusinessMetadata_ShortVersion_Async()
+        public async Task Example_ImportBusinessMetadata_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4364,7 +4364,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteLabels_ShortVersion()
+        public void Example_DeleteLabels()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4377,7 +4377,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteLabels_ShortVersion_Async()
+        public async Task Example_DeleteLabels_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4422,7 +4422,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SetLabels_ShortVersion()
+        public void Example_SetLabels()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4435,7 +4435,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetLabels_ShortVersion_Async()
+        public async Task Example_SetLabels_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4480,7 +4480,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddLabel_ShortVersion()
+        public void Example_AddLabel()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4493,7 +4493,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddLabel_ShortVersion_Async()
+        public async Task Example_AddLabel_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4538,7 +4538,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteLabelsByUniqueAttribute_ShortVersion()
+        public void Example_DeleteLabelsByUniqueAttribute()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4551,7 +4551,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteLabelsByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_DeleteLabelsByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4596,7 +4596,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SetLabelsByUniqueAttribute_ShortVersion()
+        public void Example_SetLabelsByUniqueAttribute()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4609,7 +4609,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SetLabelsByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_SetLabelsByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4654,7 +4654,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddLabelsByUniqueAttribute_ShortVersion()
+        public void Example_AddLabelsByUniqueAttribute()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4667,7 +4667,7 @@ termGuid = "<termGuid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddLabelsByUniqueAttribute_ShortVersion_Async()
+        public async Task Example_AddLabelsByUniqueAttribute_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

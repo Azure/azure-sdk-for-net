@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Account.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCollection_ShortVersion()
+        public void Example_GetCollection()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCollection_ShortVersion_Async()
+        public async Task Example_GetCollection_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateCollection_ShortVersion()
+        public void Example_CreateOrUpdateCollection()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateCollection_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateCollection_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteCollection_ShortVersion()
+        public void Example_DeleteCollection()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteCollection_ShortVersion_Async()
+        public async Task Example_DeleteCollection_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -244,7 +244,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCollectionPath_ShortVersion()
+        public void Example_GetCollectionPath()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCollectionPath_ShortVersion_Async()
+        public async Task Example_GetCollectionPath_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetChildCollectionNames_ShortVersion()
+        public void Example_GetChildCollectionNames()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -317,7 +317,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetChildCollectionNames_ShortVersion_Async()
+        public async Task Example_GetChildCollectionNames_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

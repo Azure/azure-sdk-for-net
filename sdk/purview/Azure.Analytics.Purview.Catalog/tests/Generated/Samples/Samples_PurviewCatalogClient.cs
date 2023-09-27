@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Search_ShortVersion()
+        public void Example_Search()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_ShortVersion_Async()
+        public async Task Example_Search_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -197,7 +197,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Suggest_ShortVersion()
+        public void Example_Suggest()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -212,7 +212,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Suggest_ShortVersion_Async()
+        public async Task Example_Suggest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -299,7 +299,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Browse_ShortVersion()
+        public void Example_Browse()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -314,7 +314,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Browse_ShortVersion_Async()
+        public async Task Example_Browse_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -391,7 +391,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AutoComplete_ShortVersion()
+        public void Example_AutoComplete()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -406,7 +406,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AutoComplete_ShortVersion_Async()
+        public async Task Example_AutoComplete_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataRoles_ShortVersion()
+        public void Example_GetMetadataRoles()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataRoles_ShortVersion_Async()
+        public async Task Example_GetMetadataRoles_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

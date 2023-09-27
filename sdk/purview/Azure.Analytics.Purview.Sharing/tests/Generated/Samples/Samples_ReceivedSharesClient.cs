@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetReceivedShare_ShortVersion()
+        public void Example_GetReceivedShare()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetReceivedShare_ShortVersion_Async()
+        public async Task Example_GetReceivedShare_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ActivateTenantEmailRegistration_ShortVersion()
+        public void Example_ActivateTenantEmailRegistration()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ActivateTenantEmailRegistration_ShortVersion_Async()
+        public async Task Example_ActivateTenantEmailRegistration_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RegisterTenantEmailRegistration_ShortVersion()
+        public void Example_RegisterTenantEmailRegistration()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RegisterTenantEmailRegistration_ShortVersion_Async()
+        public async Task Example_RegisterTenantEmailRegistration_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllAttachedReceivedShares_ShortVersion()
+        public void Example_GetAllAttachedReceivedShares()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -254,7 +254,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllAttachedReceivedShares_ShortVersion_Async()
+        public async Task Example_GetAllAttachedReceivedShares_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -304,7 +304,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDetachedReceivedShares_ShortVersion()
+        public void Example_GetAllDetachedReceivedShares()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -320,7 +320,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDetachedReceivedShares_ShortVersion_Async()
+        public async Task Example_GetAllDetachedReceivedShares_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -370,7 +370,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrReplaceReceivedShare_ShortVersion()
+        public void Example_CreateOrReplaceReceivedShare()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -391,7 +391,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplaceReceivedShare_ShortVersion_Async()
+        public async Task Example_CreateOrReplaceReceivedShare_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -496,7 +496,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteReceivedShare_ShortVersion()
+        public void Example_DeleteReceivedShare()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -511,7 +511,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteReceivedShare_ShortVersion_Async()
+        public async Task Example_DeleteReceivedShare_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

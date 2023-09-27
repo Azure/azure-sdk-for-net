@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossaries_ShortVersion()
+        public void Example_GetGlossaries()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaries_ShortVersion_Async()
+        public async Task Example_GetGlossaries_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateGlossary_ShortVersion()
+        public void Example_CreateGlossary()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossary_ShortVersion_Async()
+        public async Task Example_CreateGlossary_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -390,7 +390,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateGlossaryCategories_ShortVersion()
+        public void Example_CreateGlossaryCategories()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -408,7 +408,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryCategories_ShortVersion_Async()
+        public async Task Example_CreateGlossaryCategories_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -672,7 +672,7 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateGlossaryCategory_ShortVersion()
+        public void Example_CreateGlossaryCategory()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -687,7 +687,7 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryCategory_ShortVersion_Async()
+        public async Task Example_CreateGlossaryCategory_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -942,7 +942,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossaryCategory_ShortVersion()
+        public void Example_GetGlossaryCategory()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -956,7 +956,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategory_ShortVersion_Async()
+        public async Task Example_GetGlossaryCategory_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1072,7 +1072,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateGlossaryCategory_ShortVersion()
+        public void Example_UpdateGlossaryCategory()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1087,7 +1087,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossaryCategory_ShortVersion_Async()
+        public async Task Example_UpdateGlossaryCategory_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1342,7 +1342,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteGlossaryCategory_ShortVersion()
+        public void Example_DeleteGlossaryCategory()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1354,7 +1354,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGlossaryCategory_ShortVersion_Async()
+        public async Task Example_DeleteGlossaryCategory_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1390,7 +1390,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PartialUpdateGlossaryCategory_ShortVersion()
+        public void Example_PartialUpdateGlossaryCategory()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1408,7 +1408,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossaryCategory_ShortVersion_Async()
+        public async Task Example_PartialUpdateGlossaryCategory_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1536,7 +1536,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRelatedCategories_ShortVersion()
+        public void Example_GetRelatedCategories()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1550,7 +1550,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelatedCategories_ShortVersion_Async()
+        public async Task Example_GetRelatedCategories_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1600,7 +1600,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCategoryTerms_ShortVersion()
+        public void Example_GetCategoryTerms()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1614,7 +1614,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCategoryTerms_ShortVersion_Async()
+        public async Task Example_GetCategoryTerms_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1670,7 +1670,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateGlossaryTerm_ShortVersion()
+        public void Example_CreateGlossaryTerm()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1685,7 +1685,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryTerm_ShortVersion_Async()
+        public async Task Example_CreateGlossaryTerm_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2402,7 +2402,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossaryTerm_ShortVersion()
+        public void Example_GetGlossaryTerm()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2416,7 +2416,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTerm_ShortVersion_Async()
+        public async Task Example_GetGlossaryTerm_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2770,7 +2770,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateGlossaryTerm_ShortVersion()
+        public void Example_UpdateGlossaryTerm()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2785,7 +2785,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossaryTerm_ShortVersion_Async()
+        public async Task Example_UpdateGlossaryTerm_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3502,7 +3502,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteGlossaryTerm_ShortVersion()
+        public void Example_DeleteGlossaryTerm()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3514,7 +3514,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGlossaryTerm_ShortVersion_Async()
+        public async Task Example_DeleteGlossaryTerm_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3550,7 +3550,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PartialUpdateGlossaryTerm_ShortVersion()
+        public void Example_PartialUpdateGlossaryTerm()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3568,7 +3568,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossaryTerm_ShortVersion_Async()
+        public async Task Example_PartialUpdateGlossaryTerm_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3928,7 +3928,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateGlossaryTerms_ShortVersion()
+        public void Example_CreateGlossaryTerms()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3946,7 +3946,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateGlossaryTerms_ShortVersion_Async()
+        public async Task Example_CreateGlossaryTerms_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4672,7 +4672,7 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEntitiesAssignedWithTerm_ShortVersion()
+        public void Example_GetEntitiesAssignedWithTerm()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4686,7 +4686,7 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEntitiesAssignedWithTerm_ShortVersion_Async()
+        public async Task Example_GetEntitiesAssignedWithTerm_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4748,7 +4748,7 @@ guid = "<guid>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AssignTermToEntities_ShortVersion()
+        public void Example_AssignTermToEntities()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4764,7 +4764,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AssignTermToEntities_ShortVersion_Async()
+        public async Task Example_AssignTermToEntities_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4856,7 +4856,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveTermAssignmentFromEntities_ShortVersion()
+        public void Example_RemoveTermAssignmentFromEntities()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4872,7 +4872,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveTermAssignmentFromEntities_ShortVersion_Async()
+        public async Task Example_RemoveTermAssignmentFromEntities_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4964,7 +4964,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTermAssignmentFromEntities_ShortVersion()
+        public void Example_DeleteTermAssignmentFromEntities()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4980,7 +4980,7 @@ new object()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTermAssignmentFromEntities_ShortVersion_Async()
+        public async Task Example_DeleteTermAssignmentFromEntities_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5072,7 +5072,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRelatedTerms_ShortVersion()
+        public void Example_GetRelatedTerms()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5086,7 +5086,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRelatedTerms_ShortVersion_Async()
+        public async Task Example_GetRelatedTerms_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5142,7 +5142,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossary_ShortVersion()
+        public void Example_GetGlossary()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5156,7 +5156,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossary_ShortVersion_Async()
+        public async Task Example_GetGlossary_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5260,7 +5260,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateGlossary_ShortVersion()
+        public void Example_UpdateGlossary()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5275,7 +5275,7 @@ key = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateGlossary_ShortVersion_Async()
+        public async Task Example_UpdateGlossary_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5510,7 +5510,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteGlossary_ShortVersion()
+        public void Example_DeleteGlossary()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5522,7 +5522,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGlossary_ShortVersion_Async()
+        public async Task Example_DeleteGlossary_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5558,7 +5558,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossaryCategories_ShortVersion()
+        public void Example_GetGlossaryCategories()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5572,7 +5572,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategories_ShortVersion_Async()
+        public async Task Example_GetGlossaryCategories_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5688,7 +5688,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossaryCategoriesHeaders_ShortVersion()
+        public void Example_GetGlossaryCategoriesHeaders()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5702,7 +5702,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryCategoriesHeaders_ShortVersion_Async()
+        public async Task Example_GetGlossaryCategoriesHeaders_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5752,7 +5752,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDetailedGlossary_ShortVersion()
+        public void Example_GetDetailedGlossary()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5766,7 +5766,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDetailedGlossary_ShortVersion_Async()
+        public async Task Example_GetDetailedGlossary_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6254,7 +6254,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PartialUpdateGlossary_ShortVersion()
+        public void Example_PartialUpdateGlossary()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6272,7 +6272,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PartialUpdateGlossary_ShortVersion_Async()
+        public async Task Example_PartialUpdateGlossary_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6388,7 +6388,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossaryTerms_ShortVersion()
+        public void Example_GetGlossaryTerms()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6402,7 +6402,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTerms_ShortVersion_Async()
+        public async Task Example_GetGlossaryTerms_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6750,7 +6750,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGlossaryTermHeaders_ShortVersion()
+        public void Example_GetGlossaryTermHeaders()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6764,7 +6764,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGlossaryTermHeaders_ShortVersion_Async()
+        public async Task Example_GetGlossaryTermHeaders_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6820,7 +6820,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetImportCsvOperationStatus_ShortVersion()
+        public void Example_GetImportCsvOperationStatus()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6834,7 +6834,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportCsvOperationStatus_ShortVersion_Async()
+        public async Task Example_GetImportCsvOperationStatus_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6890,7 +6890,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportGlossaryTermsAsCsv_ShortVersion()
+        public void Example_ExportGlossaryTermsAsCsv()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6908,7 +6908,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportGlossaryTermsAsCsv_ShortVersion_Async()
+        public async Task Example_ExportGlossaryTermsAsCsv_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6962,7 +6962,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTermsByGlossaryName_ShortVersion()
+        public void Example_GetTermsByGlossaryName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6976,7 +6976,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTermsByGlossaryName_ShortVersion_Async()
+        public async Task Example_GetTermsByGlossaryName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7324,7 +7324,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ImportGlossaryTermsViaCsv_ShortVersion()
+        public void Example_ImportGlossaryTermsViaCsv()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7340,7 +7340,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportGlossaryTermsViaCsv_ShortVersion_Async()
+        public async Task Example_ImportGlossaryTermsViaCsv_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7402,7 +7402,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ImportGlossaryTermsViaCsvByGlossaryName_ShortVersion()
+        public void Example_ImportGlossaryTermsViaCsvByGlossaryName()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -7418,7 +7418,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportGlossaryTermsViaCsvByGlossaryName_ShortVersion_Async()
+        public async Task Example_ImportGlossaryTermsViaCsvByGlossaryName_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
