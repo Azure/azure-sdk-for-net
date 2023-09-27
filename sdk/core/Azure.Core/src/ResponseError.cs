@@ -18,7 +18,7 @@ namespace Azure
     [TypeReferenceType(true, new string[] { nameof(Target), nameof(Details) })]
     public sealed class ResponseError
     {
-        private readonly JsonElement _element;
+        internal readonly JsonElement _element;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ResponseError"/>.
@@ -75,7 +75,7 @@ namespace Azure
         /// </summary>
         internal IReadOnlyList<ResponseError> Details { get; }
 
-        private class Converter : JsonConverter<ResponseError?>
+        internal class Converter : JsonConverter<ResponseError?>
         {
             public override ResponseError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
@@ -84,7 +84,7 @@ namespace Azure
                 return Read(element);
             }
 
-            private static ResponseError? Read(JsonElement element)
+            internal static ResponseError? Read(JsonElement element)
             {
                 if (element.ValueKind == JsonValueKind.Null)
                 {
