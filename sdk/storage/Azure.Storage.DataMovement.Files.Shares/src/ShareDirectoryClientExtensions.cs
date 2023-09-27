@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.Shares
         private static Lazy<ShareFilesStorageResourceProvider> s_shareFilesProvider = new();
 
         /// <summary>
-        /// Uploads the entire contents of local directory to the blob container.
+        /// Uploads the entire contents of local directory to the share directory.
         /// </summary>
         /// <param name="client">
         /// The <see cref="ShareDirectoryClient"/> used for service operations.
@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// Downloads the contents of a blob container.
+        /// Downloads the contents of a share directory.
         /// </summary>
         /// <param name="client">The <see cref="ShareDirectoryClient"/> used for service operations.</param>
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
