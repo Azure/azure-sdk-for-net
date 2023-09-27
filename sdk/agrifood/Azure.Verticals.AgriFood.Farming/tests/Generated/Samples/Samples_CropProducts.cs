@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_CropProducts
+    public partial class Samples_CropProducts
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -142,10 +141,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                cropIds = new List<object>()
-{
+                cropIds = new object[]
+            {
 "<cropIds>"
-},
+            },
                 brand = "<brand>",
                 product = "<product>",
                 trait = "<trait>",
@@ -154,10 +153,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     unit = "<unit>",
                     value = 123.45,
                 },
-                treatments = new List<object>()
-{
+                treatments = new object[]
+            {
 "<treatments>"
-},
+            },
                 status = "<status>",
                 source = "<source>",
                 name = "<name>",
@@ -199,10 +198,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                cropIds = new List<object>()
-{
+                cropIds = new object[]
+            {
 "<cropIds>"
-},
+            },
                 brand = "<brand>",
                 product = "<product>",
                 trait = "<trait>",
@@ -211,10 +210,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     unit = "<unit>",
                     value = 123.45,
                 },
-                treatments = new List<object>()
-{
+                treatments = new object[]
+            {
 "<treatments>"
-},
+            },
                 status = "<status>",
                 source = "<source>",
                 name = "<name>",
@@ -255,6 +254,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<cropProductId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -266,6 +266,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<cropProductId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -277,6 +278,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<cropProductId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -288,6 +290,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<cropProductId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -326,31 +329,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetCropProducts(new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<brands>"
-}, new List<string>()
-{
-"<products>"
-}, new List<string>()
-{
-"<traits>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetCropProducts(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("cropIds")[0].ToString());
@@ -381,31 +360,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetCropProductsAsync(new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<brands>"
-}, new List<string>()
-{
-"<products>"
-}, new List<string>()
-{
-"<traits>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetCropProductsAsync(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("cropIds")[0].ToString());

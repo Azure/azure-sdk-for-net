@@ -164,13 +164,7 @@ This sample shows how to call GetAuthenticatedFarmersDetailsAsync with all param
 TokenCredential credential = new DefaultAzureCredential();
 FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(new List<string>()
-{
-    "<authProviderIds>"
-}, new List<string>()
-{
-    "<partyIds>"
-}, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(new string[] { "<authProviderIds>" }, new string[] { "<partyIds>" }, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -201,13 +195,7 @@ This sample shows how to call GetAuthenticatedFarmersDetails with all parameters
 TokenCredential credential = new DefaultAzureCredential();
 FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetAuthenticatedFarmersDetails(new List<string>()
-{
-    "<authProviderIds>"
-}, new List<string>()
-{
-    "<partyIds>"
-}, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetAuthenticatedFarmersDetails(new string[] { "<authProviderIds>" }, new string[] { "<partyIds>" }, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("partyId").ToString());

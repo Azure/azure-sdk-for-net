@@ -217,6 +217,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
@@ -225,6 +226,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -236,6 +238,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
@@ -244,6 +247,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -265,25 +269,7 @@ This sample shows how to call GetDevicesAsync with all parameters and parse the 
 TokenCredential credential = new DefaultAzureCredential();
 Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", new List<string>()
-{
-    "<parentDeviceIds>"
-}, new List<string>()
-{
-    "<deviceDataModelIds>"
-}, new List<string>()
-{
-    "<ids>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", new string[] { "<parentDeviceIds>" }, new string[] { "<deviceDataModelIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("deviceDataModelId").ToString());
@@ -326,25 +312,7 @@ This sample shows how to call GetDevices with all parameters and parse the resul
 TokenCredential credential = new DefaultAzureCredential();
 Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetDevices("<sensorPartnerId>", new List<string>()
-{
-    "<parentDeviceIds>"
-}, new List<string>()
-{
-    "<deviceDataModelIds>"
-}, new List<string>()
-{
-    "<ids>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetDevices("<sensorPartnerId>", new string[] { "<parentDeviceIds>" }, new string[] { "<deviceDataModelIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("deviceDataModelId").ToString());

@@ -9,6 +9,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DownloadAsync("<filePath>", null);
+
 if (response.ContentStream != null)
 {
     using (Stream outFileStream = File.OpenWrite("<filepath>"))
@@ -23,6 +24,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DownloadAsync("<filePath>", null);
+
 if (response.ContentStream != null)
 {
     using (Stream outFileStream = File.OpenWrite("<filepath>"))
@@ -40,6 +42,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Download("<filePath>", null);
+
 if (response.ContentStream != null)
 {
     using (Stream outFileStream = File.OpenWrite("<filepath>"))
@@ -54,6 +57,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Download("<filePath>", null);
+
 if (response.ContentStream != null)
 {
     using (Stream outFileStream = File.OpenWrite("<filepath>"))
@@ -195,13 +199,13 @@ RequestContent content = RequestContent.Create(new
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     intersects = new
     {
-        coordinates = new List<object>()
+        coordinates = new object[]
         {
-            new List<object>()
+            new object[]
             {
-                new List<object>()
+                new object[]
                 {
-                    new List<object>()
+                    new object[]
                     {
                         123.45
                     }
@@ -210,11 +214,11 @@ RequestContent content = RequestContent.Create(new
         },
         type = "MultiPolygon",
     },
-    bbox = new List<object>()
+    bbox = new object[]
     {
         123.45
     },
-    featureIds = new List<object>()
+    featureIds = new object[]
     {
         "<featureIds>"
     },
@@ -276,13 +280,13 @@ RequestContent content = RequestContent.Create(new
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     intersects = new
     {
-        coordinates = new List<object>()
+        coordinates = new object[]
         {
-            new List<object>()
+            new object[]
             {
-                new List<object>()
+                new object[]
                 {
-                    new List<object>()
+                    new object[]
                     {
                         123.45
                     }
@@ -291,11 +295,11 @@ RequestContent content = RequestContent.Create(new
         },
         type = "MultiPolygon",
     },
-    bbox = new List<object>()
+    bbox = new object[]
     {
         123.45
     },
-    featureIds = new List<object>()
+    featureIds = new object[]
     {
         "<featureIds>"
     },
@@ -431,16 +435,7 @@ This sample shows how to call GetScenesAsync with all parameters and parse the r
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-    "<imageNames>"
-}, new List<double>()
-{
-    123.45
-}, new List<string>()
-{
-    "<imageFormats>"
-}, 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
@@ -479,16 +474,7 @@ This sample shows how to call GetScenes with all parameters and parse the result
 TokenCredential credential = new DefaultAzureCredential();
 Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-    "<imageNames>"
-}, new List<double>()
-{
-    123.45
-}, new List<string>()
-{
-    "<imageFormats>"
-}, 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
@@ -549,15 +535,15 @@ RequestContent content = RequestContent.Create(new
     source = "Sentinel_2_L2A",
     data = new
     {
-        imageNames = new List<object>()
+        imageNames = new object[]
         {
             "<imageNames>"
         },
-        imageFormats = new List<object>()
+        imageFormats = new object[]
         {
             "<imageFormats>"
         },
-        imageResolutions = new List<object>()
+        imageResolutions = new object[]
         {
             123.45
         },
@@ -638,15 +624,15 @@ RequestContent content = RequestContent.Create(new
     source = "Sentinel_2_L2A",
     data = new
     {
-        imageNames = new List<object>()
+        imageNames = new object[]
         {
             "<imageNames>"
         },
-        imageFormats = new List<object>()
+        imageFormats = new object[]
         {
             "<imageFormats>"
         },
-        imageResolutions = new List<object>()
+        imageResolutions = new object[]
         {
             123.45
         },

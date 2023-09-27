@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_Seasons
+    public partial class Samples_Seasons
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -219,6 +218,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<seasonId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -230,6 +230,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<seasonId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -241,6 +242,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<seasonId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -252,6 +254,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<seasonId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -290,22 +293,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetSeasons(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new List<int>()
-{
-1234
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetSeasons(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
@@ -333,22 +321,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Seasons client = new FarmBeatsClient(credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetSeasonsAsync(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new List<int>()
-{
-1234
-}, new List<string>()
-{
-"<seasonIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetSeasonsAsync(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("startDateTime").ToString());

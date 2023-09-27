@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -15,9 +14,9 @@ using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
+namespace Azure.AI.Language.QuestionAnswering.Samples
 {
-    public class Samples_QuestionAnsweringAuthoringClient
+    public partial class Samples_QuestionAnsweringAuthoringClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -477,6 +476,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateSynonyms("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -490,6 +490,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateSynonymsAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -503,19 +504,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                value = new List<object>()
-{
+                value = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
+            },
                 nextLink = "<nextLink>",
             });
             Response response = client.UpdateSynonyms("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -529,19 +531,20 @@ alterations = new List<object>()
 
             RequestContent content = RequestContent.Create(new
             {
-                value = new List<object>()
-{
+                value = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
+            },
                 nextLink = "<nextLink>",
             });
             Response response = await client.UpdateSynonymsAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -695,6 +698,7 @@ alterations = new List<object>()
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.AddFeedback("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -708,6 +712,7 @@ alterations = new List<object>()
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.AddFeedbackAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -721,17 +726,18 @@ alterations = new List<object>()
 
             RequestContent content = RequestContent.Create(new
             {
-                records = new List<object>()
-{
+                records = new object[]
+            {
 new
 {
 userId = "<userId>",
 userQuestion = "<userQuestion>",
 qnaId = 1234,
 }
-},
+            },
             });
             Response response = client.AddFeedback("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -745,17 +751,18 @@ qnaId = 1234,
 
             RequestContent content = RequestContent.Create(new
             {
-                records = new List<object>()
-{
+                records = new object[]
+            {
 new
 {
 userId = "<userId>",
 userQuestion = "<userQuestion>",
 qnaId = 1234,
 }
-},
+            },
             });
             Response response = await client.AddFeedbackAsync("<projectName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -1305,24 +1312,24 @@ qnaId = 1234,
                 },
                 assets = new
                 {
-                    synonyms = new List<object>()
-{
+                    synonyms = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
-                    qnas = new List<object>()
-{
+            },
+                    qnas = new object[]
+            {
 new
 {
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1333,7 +1340,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1344,7 +1351,7 @@ qna = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1352,12 +1359,12 @@ metadata = new
 {
 key = "<metadata>",
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1373,12 +1380,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 null
 },
 }
-},
+            },
                 },
                 fileUri = "<fileUri>",
             });
@@ -1415,24 +1422,24 @@ null
                 },
                 assets = new
                 {
-                    synonyms = new List<object>()
-{
+                    synonyms = new object[]
+            {
 new
 {
-alterations = new List<object>()
+alterations = new object[]
 {
 "<alterations>"
 },
 }
-},
-                    qnas = new List<object>()
-{
+            },
+                    qnas = new object[]
+            {
 new
 {
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1443,7 +1450,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1454,7 +1461,7 @@ qna = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1462,12 +1469,12 @@ metadata = new
 {
 key = "<metadata>",
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1483,12 +1490,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 null
 },
 }
-},
+            },
                 },
                 fileUri = "<fileUri>",
             });
@@ -1573,8 +1580,8 @@ null
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1584,8 +1591,9 @@ sourceUri = "http://localhost:3000",
 sourceKind = "file",
 },
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1602,8 +1610,8 @@ sourceKind = "file",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1613,8 +1621,9 @@ sourceUri = "http://localhost:3000",
 sourceKind = "file",
 },
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1631,8 +1640,8 @@ sourceKind = "file",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1645,8 +1654,9 @@ sourceKind = "file",
 contentStructureKind = "unstructured",
 },
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1666,8 +1676,8 @@ contentStructureKind = "unstructured",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1680,8 +1690,9 @@ sourceKind = "file",
 contentStructureKind = "unstructured",
 },
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1701,15 +1712,16 @@ contentStructureKind = "unstructured",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
 value = new object(),
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1725,15 +1737,16 @@ value = new object(),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
 value = new object(),
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1749,8 +1762,8 @@ value = new object(),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1759,7 +1772,7 @@ value = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1770,7 +1783,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1780,12 +1793,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1798,8 +1811,9 @@ autoSuggestedCount = 1234,
 },
 },
 }
-});
+            });
             Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+            Pageable<BinaryData> responseData = operation.Value;
             foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1836,8 +1850,8 @@ autoSuggestedCount = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 op = "add",
@@ -1846,7 +1860,7 @@ value = new
 id = 1234,
 answer = "<answer>",
 source = "<source>",
-questions = new List<object>()
+questions = new object[]
 {
 "<questions>"
 },
@@ -1857,7 +1871,7 @@ key = "<metadata>",
 dialog = new
 {
 isContextOnly = true,
-prompts = new List<object>()
+prompts = new object[]
 {
 new
 {
@@ -1867,12 +1881,12 @@ displayText = "<displayText>",
 }
 },
 },
-activeLearningSuggestions = new List<object>()
+activeLearningSuggestions = new object[]
 {
 new
 {
 clusterHead = "<clusterHead>",
-suggestedQuestions = new List<object>()
+suggestedQuestions = new object[]
 {
 new
 {
@@ -1885,8 +1899,9 @@ autoSuggestedCount = 1234,
 },
 },
 }
-});
+            });
             Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+            AsyncPageable<BinaryData> responseData = operation.Value;
             await foreach (BinaryData item in operation.Value)
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;

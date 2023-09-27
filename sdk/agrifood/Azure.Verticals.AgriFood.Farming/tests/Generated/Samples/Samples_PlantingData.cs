@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_PlantingData
+    public partial class Samples_PlantingData
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -175,13 +174,13 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     unit = "<unit>",
                     value = 123.45,
                 },
-                plantingProductDetails = new List<object>()
-{
+                plantingProductDetails = new object[]
+            {
 new
 {
 productName = "<productName>",
 }
-},
+            },
                 operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -246,13 +245,13 @@ productName = "<productName>",
                     unit = "<unit>",
                     value = 123.45,
                 },
-                plantingProductDetails = new List<object>()
-{
+                plantingProductDetails = new object[]
+            {
 new
 {
 productName = "<productName>",
 }
-},
+            },
                 operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
                 operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -311,6 +310,7 @@ productName = "<productName>",
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<plantingDataId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -322,6 +322,7 @@ productName = "<productName>",
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -333,6 +334,7 @@ productName = "<productName>",
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<plantingDataId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -344,6 +346,7 @@ productName = "<productName>",
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -460,25 +463,7 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<associatedBoundaryIds>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetAllPlantingDataByPartyId("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -523,25 +508,7 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<associatedBoundaryIds>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetAllPlantingDataByPartyIdAsync("<partyId>", 123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -614,25 +581,7 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetAllPlantingData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<associatedBoundaryIds>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-"<plantingDataIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetAllPlantingData(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -677,25 +626,7 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetAllPlantingDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<associatedBoundaryIds>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-"<plantingDataIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetAllPlantingDataAsync(123.45, 123.45, 123.45, 123.45, 123.45, 123.45, new string[] { "<sources>" }, new string[] { "<associatedBoundaryIds>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<plantingDataIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("avgPlantingRate").GetProperty("unit").ToString());

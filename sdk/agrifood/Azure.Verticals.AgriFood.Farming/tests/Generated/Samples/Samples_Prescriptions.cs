@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_Prescriptions
+    public partial class Samples_Prescriptions
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -247,6 +246,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<prescriptionId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -258,6 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<prescriptionId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -269,6 +270,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<prescriptionId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -280,6 +282,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<prescriptionId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -396,34 +399,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetPrescriptionsByPartyId("<partyId>", new List<string>()
-{
-"<prescriptionMapIds>"
-}, new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<productCodes>"
-}, new List<string>()
-{
-"<productNames>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetPrescriptionsByPartyId("<partyId>", new string[] { "<prescriptionMapIds>" }, new string[] { "<types>" }, new string[] { "<productCodes>" }, new string[] { "<productNames>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -454,34 +430,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetPrescriptionsByPartyIdAsync("<partyId>", new List<string>()
-{
-"<prescriptionMapIds>"
-}, new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<productCodes>"
-}, new List<string>()
-{
-"<productNames>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetPrescriptionsByPartyIdAsync("<partyId>", new string[] { "<prescriptionMapIds>" }, new string[] { "<types>" }, new string[] { "<productCodes>" }, new string[] { "<productNames>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -540,34 +489,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetPrescriptions(new List<string>()
-{
-"<prescriptionMapIds>"
-}, new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<productCodes>"
-}, new List<string>()
-{
-"<productNames>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetPrescriptions(new string[] { "<prescriptionMapIds>" }, new string[] { "<types>" }, new string[] { "<productCodes>" }, new string[] { "<productNames>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -598,34 +520,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Prescriptions client = new FarmBeatsClient(credential).GetPrescriptionsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetPrescriptionsAsync(new List<string>()
-{
-"<prescriptionMapIds>"
-}, new List<string>()
-{
-"<types>"
-}, new List<string>()
-{
-"<productCodes>"
-}, new List<string>()
-{
-"<productNames>"
-}, new List<string>()
-{
-"<sources>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetPrescriptionsAsync(new string[] { "<prescriptionMapIds>" }, new string[] { "<types>" }, new string[] { "<productCodes>" }, new string[] { "<productNames>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
