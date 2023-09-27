@@ -6,6 +6,8 @@
     <Folder Include="Scenario\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.ExtendedLocations" />
+    <PackageReference Include="Azure.ResourceManager.Kubernetes" />
+    <PackageReference Include="Azure.ResourceManager.KubernetesConfiguration" />
   </ItemGroup>
 </Project>
