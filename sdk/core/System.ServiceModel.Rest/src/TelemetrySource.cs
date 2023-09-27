@@ -5,7 +5,7 @@ using Azure.Core.Pipeline;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace System.ServiceModel.Rest
+namespace System.ServiceModel.Rest.Core
 {
     /// <summary>
     /// TBD.

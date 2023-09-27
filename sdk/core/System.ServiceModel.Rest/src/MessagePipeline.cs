@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ServiceModel.Rest.Core;
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest;
+namespace System.ServiceModel.Rest.Core.Pipeline;
 
 /// <summary>
 /// TBD.
@@ -123,19 +122,6 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return _transport.CreateMessage(options, classifier);
     }
 
-    ///// <summary>
-    ///// TBD.
-    ///// </summary>
-    ///// <param name="verb"></param>
-    ///// <param name="uri"></param>
-    ///// <returns></returns>
-    ///// <exception cref="NotImplementedException"></exception>
-    //public override PipelineMessage CreateMessage(string verb, Uri uri)
-    //{
-    //    var message = _transport.CreateMessage(verb, uri);
-    //    return message;
-    //}
-
     /// <summary>
     /// TBD.
     /// </summary>
@@ -144,18 +130,12 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     {
         var enumerator = new MessagePipelineExecutor(_policies, message);
         enumerator.ProcessNext();
-
-        // Send is complete, we can annotate the response.
-        message.PipelineResponse!.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
     public override async ValueTask SendAsync(PipelineMessage message)
     {
         var enumerator = new MessagePipelineExecutor(_policies, message);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
-
-        // Send is complete, we can annotate the response.
-        message.PipelineResponse!.IsError = message.ResponseErrorClassifier.IsErrorResponse(message);
     }
 
     internal class MessagePipelineExecutor : PipelineEnumerator

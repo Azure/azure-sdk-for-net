@@ -2,25 +2,126 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Net.Http;
 
 namespace System.ServiceModel.Rest.Core;
 
-// TODO: this does not include some members from Response (e.g. ClientRequestId). Is that OK?
-// TODO: can we turn it into a class?
-public abstract class PipelineResponse
+public class PipelineResponse : IDisposable
 {
-    public abstract int Status { get; }
-    public abstract BinaryData Content { get; }
-    public abstract Stream? ContentStream { get; set; }
-    public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value);
-    public abstract string ReasonPhrase { get; }
+    private readonly HttpResponseMessage? _netResponse;
+    private readonly Stream? _contentStream;
+
+    private bool _disposed;
+
+    protected PipelineResponse() { }
+
+    internal PipelineResponse(HttpResponseMessage netResponse, Stream? contentStream)
+    {
+        _netResponse = netResponse ?? throw new ArgumentNullException(nameof(netResponse));
+
+        //_netContent = _netResponse.Content;
+
+        // TODO: Why does Azure.Core handle the System.Net response content separately?
+        _contentStream = contentStream;
+    }
+
+    public virtual int Status
+    {
+        get
+        {
+            EnsureValid(nameof(Status));
+            return (int)_netResponse!.StatusCode;
+        }
+    }
+
+    public virtual string ReasonPhrase
+    {
+        get
+        {
+            EnsureValid(nameof(ReasonPhrase));
+            return _netResponse!.ReasonPhrase;
+        }
+    }
+
+    // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+    private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
+
+    public virtual BinaryData Content
+    {
+        get
+        {
+            if (ContentStream == null)
+            {
+                return s_EmptyBinaryData;
+            }
+
+            // TODO: is this still a valid check for buffering?
+            if (ContentStream is not MemoryStream memoryContent)
+            {
+                throw new InvalidOperationException($"The response is not fully buffered.");
+            }
+
+            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+            {
+                return new BinaryData(segment.AsMemory());
+            }
+            else
+            {
+                return new BinaryData(memoryContent.ToArray());
+            }
+        }
+    }
+
+    public virtual Stream? ContentStream
+    {
+        get => _contentStream;
+
+        // TODO: Buffer content
+        set => throw new NotSupportedException("Why?");
+    }
+
+    public virtual bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value)
+    {
+        // TODO: headers
+        value = default;
+        return false;
+    }
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    // TODO: we have to make IsError publicly settable, but we might not want this.  Rethink?
     public virtual bool IsError { get; set; }
 
-    // TODO: Add isError
+    private void EnsureValid(string name)
+    {
+        if (_netResponse is null)
+        {
+            throw new InvalidOperationException($"Must initialize response to retrieve '{name}'.");
+        }
+    }
+
+    #region IDisposable
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing && !_disposed)
+        {
+            var netResponse = _netResponse;
+            netResponse?.Dispose();
+
+            var contentStream = _contentStream;
+            contentStream?.Dispose();
+
+            _disposed = true;
+        }
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    #endregion
 }

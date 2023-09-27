@@ -13,12 +13,12 @@ namespace System.ServiceModel.Rest.Core
         /// </summary>
         public virtual bool IsErrorResponse(PipelineMessage message)
         {
-            if (message.PipelineResponse is null)
+            if (message.Response is null)
             {
                 throw new InvalidOperationException("IsErrorResponse must be called on a message where the Result is populated.");
             }
 
-            int statusKind = message.PipelineResponse.Status / 100;
+            int statusKind = message.Response.Status / 100;
             return statusKind == 4 || statusKind == 5;
         }
     }

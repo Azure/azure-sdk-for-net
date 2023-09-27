@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -14,7 +13,7 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : PipelineResponse, IDisposable
+    public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
@@ -102,44 +101,5 @@ namespace Azure
                 stream = null;
             }
         }
-
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
-
-        /// <summary>
-        /// Gets the contents of HTTP response, if it is available.
-        /// </summary>
-        /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
-        /// </remarks>
-        public override BinaryData Content
-        {
-            get
-            {
-                if (ContentStream == null)
-                {
-                    return s_EmptyBinaryData;
-                }
-
-                MemoryStream? memoryContent = ContentStream as MemoryStream;
-
-                if (memoryContent == null)
-                {
-                    throw new InvalidOperationException($"The response is not fully buffered.");
-                }
-
-                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    return new BinaryData(segment.AsMemory());
-                }
-                else
-                {
-                    return new BinaryData(memoryContent.ToArray());
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public abstract void Dispose();
     }
 }

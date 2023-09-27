@@ -93,7 +93,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
         }
     }
 
-    public readonly partial struct OptionalProperty<T>
+    public readonly struct OptionalProperty<T>
     {
         public OptionalProperty(T value) : this()
         {

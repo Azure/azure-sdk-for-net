@@ -1,28 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// Represents an HTTP pipeline transport used to send HTTP requests and receive responses.
     /// </summary>
-    public abstract class HttpPipelineTransport
+    public abstract class HttpPipelineTransport : PipelineTransport<HttpMessage>
     {
-        /// <summary>
-        /// Sends the request contained by the <paramref name="message"/> and sets the <see cref="HttpMessage.Response"/> property to received response synchronously.
-        /// </summary>
-        /// <param name="message">The <see cref="HttpMessage"/> containing request and response.</param>
-        public abstract void Process(HttpMessage message);
-
-        /// <summary>
-        /// Sends the request contained by the <paramref name="message"/> and sets the <see cref="HttpMessage.Response"/> property to received response asynchronously.
-        /// </summary>
-        /// <param name="message">The <see cref="HttpMessage"/> containing request and response.</param>
-        public abstract ValueTask ProcessAsync(HttpMessage message);
-
         /// <summary>
         /// Creates a new transport specific instance of <see cref="Request"/>. This should not be called directly, <see cref="HttpPipeline.CreateRequest"/> or
         /// <see cref="HttpPipeline.CreateMessage()"/> should be used instead.
@@ -55,5 +45,16 @@ namespace Azure.Core.Pipeline
                 _ => new HttpClientTransport(options)
             };
         }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="classifier"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override HttpMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
+            => throw new System.NotImplementedException();
     }
 }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
@@ -13,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public class HttpMessage : PipelineMessage, IDisposable
+    public sealed class HttpMessage : PipelineMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
@@ -25,14 +24,8 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : base(request, responseClassifier)
+            : this((PipelineRequest)request, responseClassifier)
         {
-            Argument.AssertNotNull(request, nameof(Request));
-
-            Request = request;
-            ResponseClassifier = responseClassifier;
-            BufferResponse = true;
-            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
         internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
@@ -40,12 +33,6 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(request, nameof(request));
 
-            Request = (Request)request;
-
-            // TODO: when we get here, the base class has already initialized
-            // the ResponseClassifier property, so this makes a second allocation
-            // that isn't needed.  Address this.
-            ResponseClassifier = new ResponseClassifierAdapter(classifier);
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -53,13 +40,13 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; private set; }
+        public new Request Request { get => (Request)base.Request; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
         {
             get
             {
@@ -71,27 +58,10 @@ namespace Azure.Core
                 }
                 return _response;
             }
-            set => _response = value;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PipelineResponse? PipelineResponse
-        {
-            get => Response;
-            set => _response = (Response?)value;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override PipelineRequest PipelineRequest
-        {
-            get => Request;
-            set => Request = (Request)value;
+            set
+            {
+                base.Response = _response = value;
+            }
         }
 
         /// <summary>
@@ -104,16 +74,10 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResponseErrorClassifier ResponseErrorClassifier
+        public new ResponseClassifier ResponseClassifier
         {
-            get => ResponseClassifier;
-            set => ResponseClassifier = new ResponseClassifierAdapter(value);
+            get => (ResponseClassifier)base.ResponseClassifier;
+            set => base.ResponseClassifier = value;
         }
 
         /// <summary>
@@ -246,12 +210,14 @@ namespace Azure.Core
             Request.Dispose();
             _propertyBag.Dispose();
 
-            var response = _response;
+            Response? response = _response;
             if (response != null)
             {
                 _response = null;
                 response.Dispose();
             }
+
+            base.Dispose();
         }
 
         private class ResponseShouldNotBeUsedStream : Stream
