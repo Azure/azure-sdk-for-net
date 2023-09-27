@@ -107,8 +107,8 @@ namespace Azure.Core.Pipeline
         /// <param name="context">Context specifying the message options.</param>
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
-            => (HttpMessage)CreateMessage((RequestOptions?)context, classifier);
+        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
+            => CreateMessage((RequestOptions?)context, classifier);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.

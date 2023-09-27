@@ -511,18 +511,6 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class RawRequestUri : Azure.Core.RequestUriBuilder
-    {
-        public RawRequestUri(System.ServiceModel.Rest.Experimental.Core.RequestUri uri) { }
-        public override void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
-        public override void AppendPath(string value) { }
-        public override void AppendPath(string value, bool escape) { }
-        public override void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
-        public override void AppendQuery(string name, string value) { }
-        public override void AppendQuery(string name, string value, bool escapeValue) { }
-        public override void Reset(System.Uri value) { }
-        public override System.Uri ToUri() { throw null; }
-    }
     public abstract partial class Request : System.ServiceModel.Rest.Core.PipelineRequest
     {
         protected Request() { }
@@ -976,7 +964,7 @@ namespace Azure.Core.Pipeline
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context) { throw null; }
-        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier) { throw null; }
+        public Azure.Core.HttpMessage CreateMessage(Azure.RequestContext? context, Azure.Core.ResponseClassifier? classifier = null) { throw null; }
         public override Azure.Core.HttpMessage CreateMessage(System.ServiceModel.Rest.RequestOptions? options, System.ServiceModel.Rest.Core.ResponseErrorClassifier? classifier = null) { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public override void Send(Azure.Core.HttpMessage message) { }

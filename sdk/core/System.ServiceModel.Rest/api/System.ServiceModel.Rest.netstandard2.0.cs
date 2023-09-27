@@ -55,20 +55,6 @@ namespace System.ServiceModel.Rest
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
     }
-    public partial class TelemetrySource
-    {
-        public TelemetrySource(System.ServiceModel.Rest.RequestOptions options, bool suppressNestedClientActivities = true) { }
-        public System.ServiceModel.Rest.TelemetrySpan CreateSpan(string name) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TelemetrySpan : System.IDisposable
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public void Dispose() { }
-        public void Failed(System.Exception exception) { }
-        public void Start() { }
-    }
 }
 namespace System.ServiceModel.Rest.Core
 {
@@ -125,6 +111,20 @@ namespace System.ServiceModel.Rest.Core
     {
         public StatusResponseClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
         public override bool IsErrorResponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
+    }
+    public partial class TelemetrySource
+    {
+        public TelemetrySource(System.ServiceModel.Rest.RequestOptions options, bool suppressNestedClientActivities = true) { }
+        public System.ServiceModel.Rest.Core.TelemetrySpan CreateSpan(string name) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TelemetrySpan : System.IDisposable
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public void Dispose() { }
+        public void Failed(System.Exception exception) { }
+        public void Start() { }
     }
 }
 namespace System.ServiceModel.Rest.Core.Pipeline
@@ -221,8 +221,8 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
     }
     public static partial class PipelineProtocolExtensions
     {
-        public static System.ServiceModel.Rest.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
+        public static System.ServiceModel.Rest.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
         public static System.ServiceModel.Rest.Core.PipelineResponse ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Core.PipelineResponse> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
