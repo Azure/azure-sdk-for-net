@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<MongoDBRoleDefinitionResource>> GetIfExistsAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
+
+            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoDBRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        public virtual NullableResponse<MongoDBRoleDefinitionResource> GetIfExists(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
+
+            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoDBRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MongoDBRoleDefinitionResource> IEnumerable<MongoDBRoleDefinitionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

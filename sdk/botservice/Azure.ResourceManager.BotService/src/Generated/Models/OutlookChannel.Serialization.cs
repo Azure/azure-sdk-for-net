@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.BotService.Models
                 if (ETag != null)
                 {
                     writer.WritePropertyName("etag"u8);
-                    writer.WriteStringValue(ETag.ToString());
+                    writer.WriteStringValue(ETag.Value.ToString());
                 }
                 else
                 {

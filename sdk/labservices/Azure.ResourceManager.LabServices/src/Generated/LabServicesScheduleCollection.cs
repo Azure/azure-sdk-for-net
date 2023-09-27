@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabServicesScheduleResource>> GetIfExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labServicesScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabServicesScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        public virtual NullableResponse<LabServicesScheduleResource> GetIfExists(string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            using var scope = _labServicesScheduleSchedulesClientDiagnostics.CreateScope("LabServicesScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labServicesScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabServicesScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new LabServicesScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LabServicesScheduleResource> IEnumerable<LabServicesScheduleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

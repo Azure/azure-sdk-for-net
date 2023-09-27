@@ -81,6 +81,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
         public System.TimeSpan MaxBatchWaitTime { get { throw null; } set { } }
         public int MaxConcurrentCalls { get { throw null; } set { } }
+        public int MaxConcurrentCallsPerSession { get { throw null; } set { } }
         public int MaxConcurrentSessions { get { throw null; } set { } }
         public int MaxMessageBatchSize { get { throw null; } set { } }
         public int MinMessageBatchSize { get { throw null; } set { } }

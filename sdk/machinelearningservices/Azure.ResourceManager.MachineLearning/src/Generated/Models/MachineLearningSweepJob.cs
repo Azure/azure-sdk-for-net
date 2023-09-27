@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="objective"> [Required] Optimization objective. </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
         /// <summary>
         /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </summary>
         public SamplingAlgorithm SamplingAlgorithm { get; set; }

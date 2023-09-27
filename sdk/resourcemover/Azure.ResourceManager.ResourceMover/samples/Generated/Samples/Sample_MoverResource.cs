@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_MoveResourcesCreate()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveResources_Create.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Create.json
             // this example is just showing the usage of "MoveResources_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             {
                 Properties = new MoverResourceProperties(new ResourceIdentifier("/subscriptions/subid/resourceGroups/eastusRG/providers/Microsoft.Compute/virtualMachines/eastusvm1"))
                 {
-                    ResourceSettings = new VirtualMachineResourceSettings("westusvm1")
+                    ResourceSettings = new VirtualMachineResourceSettings()
                     {
                         UserManagedIdentities =
 {
@@ -54,6 +54,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/eastusRG/providers/M
                         TargetAvailabilityZone = MoverTargetAvailabilityZone.Two,
                         TargetVmSize = null,
                         TargetAvailabilitySetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/eastusRG/providers/Microsoft.Compute/availabilitySets/avset1"),
+                        TargetResourceName = "westusvm1",
                     },
                     DependsOnOverrides =
 {
@@ -80,7 +81,7 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_MoveResourcesDelete()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveResources_Delete.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Delete.json
             // this example is just showing the usage of "MoveResources_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +110,7 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MoveResourcesGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveResources_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Get.json
             // this example is just showing the usage of "MoveResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -6,8 +6,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
@@ -20,6 +22,10 @@ namespace Azure.Core.Serialization
     /// This and related types are not intended to be mocked.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+    [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+    [RequiresDynamicCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+#endif
     [JsonConverter(typeof(DynamicDataJsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
@@ -32,6 +38,8 @@ namespace Azure.Core.Serialization
         private MutableJsonElement _element;
         private readonly DynamicDataOptions _options;
         private readonly JsonSerializerOptions _serializerOptions;
+
+        internal const string SerializationRequiresUnreferencedCodeClass = "This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
 
         internal DynamicData(MutableJsonElement element, DynamicDataOptions options)
         {
@@ -471,8 +479,14 @@ namespace Azure.Core.Serialization
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+        [RequiresUnreferencedCode(ClassIsIncompatibleWithTrimming)]
+#endif
+        [RequiresDynamicCode(ClassIsIncompatibleWithTrimming)]
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
+            public const string ClassIsIncompatibleWithTrimming = "Using DynamicData or DynamicDataConverter is not compatible with trimming due to reflection-based serialization.";
+
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);

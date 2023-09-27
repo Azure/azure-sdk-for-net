@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Shares_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shareName"> The name of the share to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataShareResource>> GetIfExistsAsync(string shareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataShareSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Shares_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shareName"> The name of the share to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual NullableResponse<DataShareResource> GetIfExists(string shareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataShareSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataShareResource> IEnumerable<DataShareResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
