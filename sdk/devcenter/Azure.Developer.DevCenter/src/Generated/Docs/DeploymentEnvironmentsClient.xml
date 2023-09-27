@@ -15,7 +15,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnvironmentAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -53,7 +52,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnvironment with all parameters and parse the result.
 <code><![CDATA[
@@ -221,7 +219,6 @@ await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>"
     Console.WriteLine(result[0].GetProperty("environmentType").ToString());
     Console.WriteLine(result[0].GetProperty("catalogName").ToString());
     Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllEnvironmentsAsync with all parameters and parse the result.
@@ -261,7 +258,6 @@ foreach (BinaryData item in client.GetAllEnvironments("<projectName>"))
     Console.WriteLine(result[0].GetProperty("environmentType").ToString());
     Console.WriteLine(result[0].GetProperty("catalogName").ToString());
     Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllEnvironments with all parameters and parse the result.
@@ -301,7 +297,6 @@ await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "
     Console.WriteLine(result[0].GetProperty("environmentType").ToString());
     Console.WriteLine(result[0].GetProperty("catalogName").ToString());
     Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironmentsAsync with all parameters and parse the result.
@@ -341,7 +336,6 @@ foreach (BinaryData item in client.GetEnvironments("<projectName>", "me"))
     Console.WriteLine(result[0].GetProperty("environmentType").ToString());
     Console.WriteLine(result[0].GetProperty("catalogName").ToString());
     Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetEnvironments with all parameters and parse the result.
@@ -672,7 +666,6 @@ JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateEnvironmentAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -725,7 +718,6 @@ JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateEnvironment with all parameters and request content and parse the result.
 <code><![CDATA[

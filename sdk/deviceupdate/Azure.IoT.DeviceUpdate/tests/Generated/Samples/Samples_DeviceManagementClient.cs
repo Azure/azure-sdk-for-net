@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -196,6 +195,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClass("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -208,6 +208,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -220,6 +221,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClass("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -232,6 +234,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -618,6 +621,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteGroup("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -630,6 +634,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteGroupAsync("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -642,6 +647,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteGroup("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -654,6 +660,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteGroupAsync("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -917,10 +924,10 @@ namespace Azure.IoT.DeviceUpdate.Samples
                     },
                 },
                 groupId = "<groupId>",
-                deviceClassSubgroups = new List<object>()
-{
+                deviceClassSubgroups = new object[]
+            {
 "<deviceClassSubgroups>"
-},
+            },
                 isCanceled = true,
                 isRetried = true,
                 rollbackPolicy = new
@@ -979,10 +986,10 @@ namespace Azure.IoT.DeviceUpdate.Samples
                     },
                 },
                 groupId = "<groupId>",
-                deviceClassSubgroups = new List<object>()
-{
+                deviceClassSubgroups = new object[]
+            {
 "<deviceClassSubgroups>"
-},
+            },
                 isCanceled = true,
                 isRetried = true,
                 rollbackPolicy = new
@@ -1028,6 +1035,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1040,6 +1048,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1052,6 +1061,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1064,6 +1074,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1254,6 +1265,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1266,6 +1278,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1278,6 +1291,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1290,6 +1304,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1552,6 +1567,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1564,6 +1580,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1576,6 +1593,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1588,6 +1606,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1979,13 +1998,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 }
-},
+            },
             });
             Response response = client.StartLogCollection("<logCollectionId>", content);
 
@@ -2003,13 +2022,13 @@ deviceId = "<deviceId>",
 
             RequestContent content = RequestContent.Create(new
             {
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 }
-},
+            },
             });
             Response response = await client.StartLogCollectionAsync("<logCollectionId>", content);
 
@@ -2028,14 +2047,14 @@ deviceId = "<deviceId>",
             RequestContent content = RequestContent.Create(new
             {
                 operationId = "<operationId>",
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 moduleId = "<moduleId>",
 }
-},
+            },
                 description = "<description>",
             });
             Response response = client.StartLogCollection("<logCollectionId>", content);
@@ -2061,14 +2080,14 @@ moduleId = "<moduleId>",
             RequestContent content = RequestContent.Create(new
             {
                 operationId = "<operationId>",
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 moduleId = "<moduleId>",
 }
-},
+            },
                 description = "<description>",
             });
             Response response = await client.StartLogCollectionAsync("<logCollectionId>", content);

@@ -374,6 +374,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
 Response response = await client.SkipActionAsync("<projectName>", "me", "<devBoxName>", "<actionName>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call SkipActionAsync with all parameters.
@@ -383,6 +384,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
 Response response = await client.SkipActionAsync("<projectName>", "me", "<devBoxName>", "<actionName>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -395,6 +397,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
 Response response = client.SkipAction("<projectName>", "me", "<devBoxName>", "<actionName>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call SkipAction with all parameters.
@@ -404,6 +407,7 @@ TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
 Response response = client.SkipAction("<projectName>", "me", "<devBoxName>", "<actionName>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>

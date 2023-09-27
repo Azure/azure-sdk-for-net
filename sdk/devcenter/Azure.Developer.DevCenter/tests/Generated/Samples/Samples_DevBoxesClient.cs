@@ -421,6 +421,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = client.SkipAction("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -433,6 +434,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = await client.SkipActionAsync("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -445,6 +447,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = client.SkipAction("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -457,6 +460,7 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             Response response = await client.SkipActionAsync("<projectName>", "me", "<devBoxName>", "<actionName>");
+
             Console.WriteLine(response.Status);
         }
 

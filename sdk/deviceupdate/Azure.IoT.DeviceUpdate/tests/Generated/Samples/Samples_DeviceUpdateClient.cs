@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -841,8 +840,8 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 importManifest = new
@@ -855,7 +854,7 @@ key = "<hashes>",
 },
 },
 }
-});
+            });
             Operation operation = client.StartImportUpdate(WaitUntil.Completed, content);
         }
 
@@ -867,8 +866,8 @@ key = "<hashes>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 importManifest = new
@@ -881,7 +880,7 @@ key = "<hashes>",
 },
 },
 }
-});
+            });
             Operation operation = await client.StartImportUpdateAsync(WaitUntil.Completed, content);
         }
 
@@ -893,8 +892,8 @@ key = "<hashes>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 importManifest = new
@@ -907,7 +906,7 @@ key = "<hashes>",
 },
 },
 friendlyName = "<friendlyName>",
-files = new List<object>()
+files = new object[]
 {
 new
 {
@@ -916,7 +915,7 @@ url = "<url>",
 }
 },
 }
-});
+            });
             Operation operation = client.StartImportUpdate(WaitUntil.Completed, content);
         }
 
@@ -928,8 +927,8 @@ url = "<url>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 importManifest = new
@@ -942,7 +941,7 @@ key = "<hashes>",
 },
 },
 friendlyName = "<friendlyName>",
-files = new List<object>()
+files = new object[]
 {
 new
 {
@@ -951,7 +950,7 @@ url = "<url>",
 }
 },
 }
-});
+            });
             Operation operation = await client.StartImportUpdateAsync(WaitUntil.Completed, content);
         }
     }
