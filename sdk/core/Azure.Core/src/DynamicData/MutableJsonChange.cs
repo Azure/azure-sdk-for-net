@@ -11,8 +11,6 @@ namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
     {
-        internal const string SerializationRequiresUnreferencedCode = "This method utilizes reflection-based JSON serialization which is not compatible with trimming.";
-
         public MutableJsonChange(string path,
             int index,
             object? value,
