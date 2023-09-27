@@ -464,6 +464,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = client.DeleteUser("<userId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -475,6 +476,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = await client.DeleteUserAsync("<userId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -486,6 +488,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = client.DeleteUser("<userId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -497,6 +500,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = await client.DeleteUserAsync("<userId>");
+
             Console.WriteLine(response.Status);
         }
 

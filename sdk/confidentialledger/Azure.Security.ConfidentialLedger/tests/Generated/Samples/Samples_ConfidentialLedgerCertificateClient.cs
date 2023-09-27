@@ -13,7 +13,7 @@ using Azure.Identity;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
-namespace Azure.Security.ConfidentialLedger.Certificate.Samples
+namespace Azure.Security.ConfidentialLedger.Samples
 {
     public class Samples_ConfidentialLedgerCertificateClient
     {
