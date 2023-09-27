@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_Scenes
+    public partial class Samples_Scenes
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,12 +27,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Download("<filePath>", null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -45,12 +43,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DownloadAsync("<filePath>", null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -62,12 +59,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Download("<filePath>", null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -79,12 +75,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DownloadAsync("<filePath>", null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -253,29 +248,29 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 endDateTime = "2022-05-10T18:57:31.2311892Z",
                 intersects = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
-                bbox = new List<object>()
-{
+                bbox = new object[]
+            {
 123.45
-},
-                featureIds = new List<object>()
-{
+            },
+                featureIds = new object[]
+            {
 "<featureIds>"
-},
+            },
             });
             Response response = client.SearchFeatures("Sentinel_2_L2A", content, maxpagesize: 1234, skip: 1234);
 
@@ -313,29 +308,29 @@ new List<object>()
                 endDateTime = "2022-05-10T18:57:31.2311892Z",
                 intersects = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
-                bbox = new List<object>()
-{
+                bbox = new object[]
+            {
 123.45
-},
-                featureIds = new List<object>()
-{
+            },
+                featureIds = new object[]
+            {
 "<featureIds>"
-},
+            },
             });
             Response response = await client.SearchFeaturesAsync("Sentinel_2_L2A", content, maxpagesize: 1234, skip: 1234);
 
@@ -466,7 +461,7 @@ new List<object>()
             foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -480,7 +475,7 @@ new List<object>()
             await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -491,33 +486,24 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-"<imageNames>"
-}, new List<double>()
-{
-123.45
-}, new List<string>()
-{
-"<imageFormats>"
-}, 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFormat").ToString());
-                Console.WriteLine(result[0].GetProperty("cloudCoverPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("darkPixelPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("ndviMedianValue").ToString());
-                Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+                Console.WriteLine(result.GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+                Console.WriteLine(result.GetProperty("imageFormat").ToString());
+                Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+                Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+                Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+                Console.WriteLine(result.GetProperty("boundaryId").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
             }
         }
 
@@ -528,33 +514,24 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new List<string>()
-{
-"<imageNames>"
-}, new List<double>()
-{
-123.45
-}, new List<string>()
-{
-"<imageFormats>"
-}, 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("sceneDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("source").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
-                Console.WriteLine(result[0].GetProperty("imageFormat").ToString());
-                Console.WriteLine(result[0].GetProperty("cloudCoverPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("darkPixelPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("ndviMedianValue").ToString());
-                Console.WriteLine(result[0].GetProperty("boundaryId").ToString());
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+                Console.WriteLine(result.GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("source").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+                Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+                Console.WriteLine(result.GetProperty("imageFormat").ToString());
+                Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+                Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+                Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+                Console.WriteLine(result.GetProperty("boundaryId").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
             }
         }
 
@@ -627,18 +604,18 @@ new List<object>()
                 source = "Sentinel_2_L2A",
                 data = new
                 {
-                    imageNames = new List<object>()
-{
+                    imageNames = new object[]
+            {
 "<imageNames>"
-},
-                    imageFormats = new List<object>()
-{
+            },
+                    imageFormats = new object[]
+            {
 "<imageFormats>"
-},
-                    imageResolutions = new List<object>()
-{
+            },
+                    imageResolutions = new object[]
+            {
 123.45
-},
+            },
                 },
                 name = "<name>",
                 description = "<description>",
@@ -693,18 +670,18 @@ new List<object>()
                 source = "Sentinel_2_L2A",
                 data = new
                 {
-                    imageNames = new List<object>()
-{
+                    imageNames = new object[]
+            {
 "<imageNames>"
-},
-                    imageFormats = new List<object>()
-{
+            },
+                    imageFormats = new object[]
+            {
 "<imageFormats>"
-},
-                    imageResolutions = new List<object>()
-{
+            },
+                    imageResolutions = new object[]
+            {
 123.45
-},
+            },
                 },
                 name = "<name>",
                 description = "<description>",
