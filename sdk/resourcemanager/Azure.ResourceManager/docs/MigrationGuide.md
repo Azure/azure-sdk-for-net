@@ -7,10 +7,18 @@ If you are using the old Azure management SDK for .Net, you may need to make som
     * [Setting up the clients](#setting-up-the-clients)
     * [Create a Resource Group](#create-a-resource-group)
     * [Create an Availability Set](#create-an-availability-set)
+    * [Create a Security Group](#create-a-security-group)
     * [Create a Virtual Network and Subnet](#create-a-virtual-network-and-subnet)
     * [Create a Network Interface](#create-a-network-interface)
     * [Create a Virtual Machine](#create-a-virtual-machine)
 * [Migrating from Track 1 Fluent SDK to Track 2 SDK](#migrating-from-track-1-fluent-sdk-to-track-2-sdk)
+    * [Import the namespaces](#import-the-namespaces-1)
+    * [Setting up the clients](#setting-up-the-clients-1)
+    * [Create a Security Group](#create-a-security-group-1)
+    * [Create a Virtual Network and Subnet](#create-a-virtual-network-and-subnet-1)
+    * [Create a Virtual Machine](#create-a-virtual-machine-1)
+    * [List all Virtual Networks](#list-all-virtual-networks)
+    * [Delete a Virtual Network](#delete-a-virtual-network)
 
 ## Migrating from Track 1 SDK to Track 2 SDK
 
@@ -30,6 +38,8 @@ using Microsoft.Azure.Management.ResourceManager;
 ```
 **New (Azure.ResourceManager._)**
 ```C# Snippet:Using_Statements
+using Azure.Core;
+using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
@@ -76,10 +86,9 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 
-AzureLocation location = AzureLocation.WestUS2;
 string resourceGroupName = "QuickStartRG";
 
-ResourceGroupData resourceGroupData = new ResourceGroupData(location);
+ResourceGroupData resourceGroupData = new ResourceGroupData(AzureLocation.WestUS2);
 ArmOperation<ResourceGroupResource> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
 ResourceGroupResource resourceGroup = resourceGroupOperation.Value;
 ```
@@ -113,14 +122,38 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 ```
 **New**
 ```C# Snippet:Create_AvailabilitySet
-string virtualMachineName = "quickstartvm";
-AvailabilitySetData availabilitySetData = new AvailabilitySetData(location);
+string availabilitySetName = "QuickstartAvailabilitySet";
+
+AvailabilitySetData availabilitySetData = new AvailabilitySetData(resourceGroup.Data.Location);
 AvailabilitySetCollection availabilitySets = resourceGroup.GetAvailabilitySets();
-ArmOperation<AvailabilitySetResource> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName + "_aSet", availabilitySetData);
+ArmOperation<AvailabilitySetResource> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, availabilitySetName + "_aSet", availabilitySetData);
 AvailabilitySetResource availabilitySet = availabilitySetOperation.Value;
 ```
 
 Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsCollection returned from the `GetAvailabilitySets()` extension method instead of using another client. 
+
+### Create a Security Group
+
+**Old**
+```C#
+string nsgName = vmName + "_nsg";
+NetworkSecurityGroup nsgParameters = new NetworkSecurityGroup()
+{
+    Location = location
+};
+
+NetworkSecurityGroup putNSgResponse = networkClient.NetworkSecurityGroups.CreateOrUpdate(rgName, nsgName, nsgParameters);
+NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
+```
+**New**
+```C# Snippet:Create_NetworkSecurityGroup
+string networkSecurityGroupName = "QuickstartNsg";
+
+NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData() { Location = resourceGroup.Data.Location };
+NetworkSecurityGroupCollection networkSecurityGroups = resourceGroup.GetNetworkSecurityGroups();
+ArmOperation<NetworkSecurityGroupResource> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
+NetworkSecurityGroupResource networkSecurityGroup = networkSecurityGroupOperation.Value;
+```
 
 ### Create a Virtual Network and Subnet
 
@@ -153,8 +186,8 @@ VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subn
 ```
 **New**
 ```C# Snippet:Create_Vnet_and_Subnet
-string virtualNetworkName = "MYVM" + "_vnet";
-string subnetName = "mySubnet";
+string virtualNetworkName = "QuickstartVnet";
+string subnetName = "QuickstartSubnet";
 
 VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
 {
@@ -167,35 +200,13 @@ VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
         }
     }
 };
-VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
 virtualNetworkData.AddressPrefixes.Add("10.0.0.0/16");
+VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
 ArmOperation<VirtualNetworkResource> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
 VirtualNetworkResource virtualNetwork = virtualNetworkOperation.Value;
 ```
 
 In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets collection using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
-
-### Create a Security Group
-
-**Old**
-```C#
-string nsgName = vmName + "_nsg";
-NetworkSecurityGroup nsgParameters = new NetworkSecurityGroup()
-{
-    Location = location
-};
-
-NetworkSecurityGroup putNSgResponse = networkClient.NetworkSecurityGroups.CreateOrUpdate(rgName, nsgName, nsgParameters);
-NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
-```
-**New**
-```C# Snippet:Create_NetworkSecurityGroup
-string networkSecurityGroupName = virtualMachineName + "_nsg";
-NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData() { Location = location };
-NetworkSecurityGroupCollection networkSecurityGroups = resourceGroup.GetNetworkSecurityGroups();
-ArmOperation<NetworkSecurityGroupResource> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
-NetworkSecurityGroupResource networkSecurityGroup = networkSecurityGroupOperation.Value;
-```
 
 ### Create a Network Interface
 
@@ -228,7 +239,8 @@ NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicna
 ```
 **New**
 ```C# Snippet:Create_NetworkInterface
-string networkInterfaceName = virtualMachineName + "_nic";
+string networkInterfaceName = "QuickstartNic";
+
 NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new NetworkInterfaceIPConfigurationData()
 {
     Name = "Primary",
@@ -237,8 +249,7 @@ NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new Networ
     PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
 };
 
-NetworkInterfaceData nicData = new NetworkInterfaceData();
-nicData.Location = location;
+NetworkInterfaceData nicData = new NetworkInterfaceData() { Location = resourceGroup.Data.Location };
 nicData.IPConfigurations.Add(networkInterfaceIPConfiguration);
 NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
 ArmOperation<NetworkInterfaceResource> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
@@ -302,7 +313,9 @@ VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, input
 ```
 **New**
 ```C# Snippet:Create_VirtualMachine
-VirtualMachineData virutalMachineData = new VirtualMachineData(location)
+string virtualMachineName = "QuickstartVm";
+
+VirtualMachineData virutalMachineData = new VirtualMachineData(resourceGroup.Data.Location)
 {
     OSProfile = new VirtualMachineOSProfile()
     {
@@ -326,7 +339,6 @@ VirtualMachineData virutalMachineData = new VirtualMachineData(location)
 VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
 ArmOperation<VirtualMachineResource> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
 VirtualMachineResource virtualMachine = virtualMachineOperation.Value;
-Console.WriteLine("VirtualMachine ID: " + virtualMachine.Id);
 ```
 
 Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.
@@ -335,6 +347,287 @@ Finally, as it can be seen here, from the resource group you can get the Virtual
 
 The old Track 1 Fluent  SDK uses package names that start with `Microsoft.Azure.Management` and end with `Fluent` suffix.
 To assist you with the migration process, we have prepared some examples for you.
+
+### Import the namespaces
+
+**Old (Microsoft.Azure.Management._.Fluent)**
+```C#
+using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
+using Microsoft.Azure.Management.Fluent;
+using Microsoft.Azure.Management.Network.Fluent.Models;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+...
+```
+**New (Azure.ResourceManager._)**
+```C# Snippet:Using_Statements
+using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+```
+
+### Setting up the clients
+
+**Old**
+```C#
+var credentials = SdkContext.AzureCredentialsFactory.FromFile("Filename");
+var azure = Azure.Configure()
+    .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
+    .Authenticate(credentials)
+    .WithDefaultSubscription();
+```
+**New**
+```C# Snippet:Construct_CreateClient
+string clientId = "CLIENT_ID";
+string clientSecret = "CLIENT_SECRET";
+string tenantId = "TENANT_ID";
+string subscription = "SUBSCRIPTION_ID";
+ClientSecretCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+ArmClient client = new ArmClient(credential, subscription);
+```
+As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the default subscription and start managing your resources.
+
+### Create a Security Group
+
+**Old**
+```C#
+var networkNsg = azure.NetworkSecurityGroups
+        .Define(VNet1BackEndSubnetNsgName)
+        .WithRegion(Region.USEast)
+        .WithNewResourceGroup(ResourceGroupName)
+        .DefineRule("DenyInternetInComing")
+            .DenyInbound()
+            .FromAddress("INTERNET")
+            .FromAnyPort()
+            .ToAnyAddress()
+            .ToAnyPort()
+            .WithAnyProtocol()
+            .Attach()
+        .DefineRule("DenyInternetOutGoing")
+            .DenyOutbound()
+            .FromAnyAddress()
+            .FromAnyPort()
+            .ToAddress("INTERNET")
+            .ToAnyPort()
+            .WithAnyProtocol()
+            .Attach()
+        .Create();
+```
+**New**
+```C# Snippet:Create_Fluent_Nsg
+string networkNsgName = "QuickstartNsg";
+
+NetworkSecurityGroupData networkNsgData = new NetworkSecurityGroupData()
+{
+    Location = resourceGroup.Data.Location,
+    SecurityRules =
+        {
+            new SecurityRuleData()
+            {
+                Name = "DenyInternetInComing",
+                Protocol = SecurityRuleProtocol.Asterisk,
+                SourcePortRange = "*",
+                DestinationPortRange = "*",
+                SourceAddressPrefix = "INTERNET",
+                DestinationAddressPrefix = "*",
+                Access = SecurityRuleAccess.Deny,
+                Priority = 100,
+                Direction = SecurityRuleDirection.Inbound,
+            },
+            new SecurityRuleData()
+            {
+                Name = "DenyInternetOutGoing",
+                Protocol = SecurityRuleProtocol.Asterisk,
+                SourcePortRange = "*",
+                DestinationPortRange = "*",
+                SourceAddressPrefix = "*",
+                DestinationAddressPrefix = "internet",
+                Access = SecurityRuleAccess.Deny,
+                Priority = 200,
+                Direction = SecurityRuleDirection.Outbound,
+            }
+        }
+};
+NetworkSecurityGroupCollection networkSecurityGroups = resourceGroup.GetNetworkSecurityGroups();
+ArmOperation<NetworkSecurityGroupResource> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkNsgName, networkNsgData);
+NetworkSecurityGroupResource networkSecurityGroup = networkSecurityGroupOperation.Value;
+```
+
+### Create a Virtual Network and Subnet
+
+**Old**
+```C#
+var virtualNetwork = azure.Networks.Define(virtualNetworkName)
+        .WithRegion(Region.USEast)
+        .WithExistingResourceGroup(ResourceGroupName)
+        .WithAddressSpace("192.168.0.0/16")
+        .WithSubnet("subnet1", "192.168.1.0/24")
+        .DefineSubnet(subnetName)
+            .WithAddressPrefix("192.168.2.0/24")
+            .WithExistingNetworkSecurityGroup(backEndSubnetNsg)
+            .Attach()
+        .Create();
+```
+**New**
+```C# Snippet:Create_Fluent_Vnet_and_Subnet
+string virtualNetworkName = "QuickstartVnet";
+string subnetName = "QuickstartSubnet";
+
+VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
+    {
+        Location = AzureLocation.EastUS,
+        AddressPrefixes = { "192.168.0.0/16" },
+        Subnets =
+        {
+            new SubnetData()
+                {
+                    AddressPrefix = "192.168.2.0/24",
+                    Name = subnetName,
+                    NetworkSecurityGroup = networkSecurityGroup.Data
+                },
+            new SubnetData()
+                {
+                    AddressPrefix = "192.168.1.0/24",
+                    Name = "subnet1"
+                }
+        },
+    };
+VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
+ArmOperation<VirtualNetworkResource> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
+VirtualNetworkResource virtualNetwork = virtualNetworkOperation.Value;
+```
+
+In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets collection using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
+
+### Create a Virtual Machine
+
+**Old**
+```C#
+var virutalMachine = azure.VirtualMachines.Define(virtualMachineName)
+        .WithRegion(Region.USEast)
+        .WithExistingResourceGroup(ResourceGroupName)
+        .WithExistingPrimaryNetwork(virtualNetwork)
+        .WithSubnet(subnetName)
+        .WithPrimaryPrivateIPAddressDynamic()
+        .WithNewPrimaryPublicIPAddress(publicIpAddress)
+        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+        .WithRootUsername(UserName)
+        .WithSsh(SshKey)
+        .WithSize(VirtualMachineSizeTypes.Parse("Standard_D2a_v4"))
+        .Create();
+```
+**New**
+```C# Snippet:Create_Fluent_VirtualMachine
+// Create Nic
+string networkInterfaceName = "QuickstartNic";
+
+NetworkInterfaceData nicData = new NetworkInterfaceData()
+{
+    Location = AzureLocation.EastUS,
+    IPConfigurations =
+    {
+        new NetworkInterfaceIPConfigurationData()
+        {
+            Name = "default-config",
+            PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+            Subnet = new SubnetData() { Id = virtualNetwork.Data.Subnets.First().Id },
+        }
+    }
+};
+NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
+ArmOperation<NetworkInterfaceResource> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
+NetworkInterfaceResource networkInterface = networkInterfaceOperation.Value;
+
+// Create VM
+string virtualMachineName = "QuickstartVm";
+
+VirtualMachineData virutalMachineData = new VirtualMachineData(AzureLocation.EastUS)
+{
+    HardwareProfile = new VirtualMachineHardwareProfile()
+    {
+        VmSize = VirtualMachineSizeType.StandardD2V3
+    },
+    StorageProfile = new VirtualMachineStorageProfile()
+    {
+        ImageReference = new ImageReference()
+        {
+            Publisher = "Canonical",
+            Offer = "0001-com-ubuntu-server-jammy",
+            Sku = "22_04-lts-gen2",
+            Version = "latest",
+        },
+        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+        {
+            OSType = SupportedOperatingSystemType.Windows,
+            Name = "QuickstartVmOSDisk",
+            Caching = CachingType.ReadOnly,
+            ManagedDisk = new VirtualMachineManagedDisk()
+            {
+                StorageAccountType = StorageAccountType.StandardLrs,
+            },
+        },
+    },
+    OSProfile = new VirtualMachineOSProfile()
+    {
+        AdminUsername = "admin-username",
+        AdminPassword = "admin-p4$$w0rd",
+        ComputerName = "computer-name"
+    },
+    NetworkProfile = new VirtualMachineNetworkProfile()
+    {
+        NetworkInterfaces =
+        {
+            new VirtualMachineNetworkInterfaceReference()
+            {
+                Id = networkInterface.Id,
+                Primary = true,
+            }
+        }
+    },
+};
+VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
+ArmOperation<VirtualMachineResource> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
+VirtualMachineResource virtualMachine = virtualMachineOperation.Value;
+```
+
+Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.
+
+### List all Virtual Networks
+
+**Old**
+```C#
+foreach (var virtualNetwork in azure.Networks.ListByResourceGroup(ResourceGroupName))
+{
+    // Do something
+    Console.WriteLine(virtualNetwork.Data.Name);
+}
+```
+**New**
+```C# Snippet:Create_Fluent_ListNetworks
+await foreach (VirtualNetworkResource virtualNetwork in resourceGroup.GetVirtualNetworks().GetAllAsync())
+{
+    // Do something
+    Console.WriteLine(virtualNetwork.Data.Name);
+}
+```
+
+### Delete a Virtual Network
+
+**Old**
+```C#
+azure.Networks.DeleteById(virtualNetwork.Id);
+```
+**New**
+```C# Snippet:Create_Fluent_DeleteNetwork
+await virtualNetwork.DeleteAsync(WaitUntil.Completed);
+```
 
 ## Next steps
 
