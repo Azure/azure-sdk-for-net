@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
@@ -13,6 +14,8 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
     {
         // TODO: These are copied from shared source files. If they become
         // public we need to refactor and consolidate to a single place.
+
+        #region JsonElement
 
         /// <summary>
         /// TBD.
@@ -62,6 +65,68 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
             }
         }
 
+        public static byte[]? GetBytesFromBase64(in this JsonElement element, string format)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            return format switch
+            {
+                "U" => TypeFormatters.FromBase64UrlString(element.GetRequiredString()),
+                "D" => element.GetBytesFromBase64(),
+                _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
+            };
+        }
+
+        public static DateTimeOffset GetDateTimeOffset(in this JsonElement element, string format) => format switch
+        {
+            "U" when element.ValueKind == JsonValueKind.Number => DateTimeOffset.FromUnixTimeSeconds(element.GetInt64()),
+            // relying on the param check of the inner call to throw ArgumentNullException if GetString() returns null
+            _ => TypeFormatters.ParseDateTimeOffset(element.GetString()!, format)
+        };
+
+        public static TimeSpan GetTimeSpan(in this JsonElement element, string format) =>
+            // relying on the param check of the inner call to throw ArgumentNullException if GetString() returns null
+            TypeFormatters.ParseTimeSpan(element.GetString()!, format);
+
+        public static char GetChar(this in JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.String)
+            {
+                var text = element.GetString();
+                if (text == null || text.Length != 1)
+                {
+                    throw new NotSupportedException($"Cannot convert \"{text}\" to a Char");
+                }
+                return text[0];
+            }
+            else
+            {
+                throw new NotSupportedException($"Cannot convert {element.ValueKind} to a Char");
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void ThrowNonNullablePropertyIsNull(this JsonProperty property)
+        {
+            throw new JsonException($"A property '{property.Name}' defined as non-nullable but received as null from the service. " +
+                                    $"This exception only happens in DEBUG builds of the library and would be ignored in the release build");
+        }
+
+        public static string GetRequiredString(in this JsonElement element)
+        {
+            var value = element.GetString();
+            if (value == null)
+                throw new InvalidOperationException($"The requested operation requires an element of type 'String', but the target element has type '{element.ValueKind}'.");
+
+            return value;
+        }
+
+        #endregion
+
+        #region Utf8JsonWriter
         public static void WriteStringValue(this Utf8JsonWriter writer, DateTimeOffset value, string format) =>
             writer.WriteStringValue(TypeFormatters.ToString(value, format));
 
@@ -197,6 +262,10 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
                     throw new NotSupportedException("Not supported type " + value.GetType());
             }
         }
+
+        #endregion
+
+        #region Type formatters
         private class TypeFormatters
         {
             private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
@@ -343,5 +412,6 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
                     _ => value.ToString()!
                 };
         }
+        #endregion
     }
 }
