@@ -146,6 +146,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class MessagePipelineTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
     {
         public MessagePipelineTransport() { }
+        public MessagePipelineTransport(System.Net.Http.HttpClient client) { }
         public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
         public void Dispose() { }
         public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }

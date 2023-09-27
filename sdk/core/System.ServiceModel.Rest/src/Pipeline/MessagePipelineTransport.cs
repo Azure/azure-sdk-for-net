@@ -9,17 +9,20 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-/// <summary>
-/// TBD.
-/// </summary>
-public partial class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDisposable
+public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
-    private HttpClient _transport;
+    private readonly HttpClient _transport;
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public MessagePipelineTransport()
+    public MessagePipelineTransport() : this(CreateDefaultClient())
+    {
+    }
+
+    public MessagePipelineTransport(HttpClient client)
+    {
+        _transport = client;
+    }
+
+    private static HttpClient CreateDefaultClient()
     {
         // TODO:
         //   - SSL settings?
@@ -31,7 +34,7 @@ public partial class MessagePipelineTransport : PipelineTransport<PipelineMessag
             AllowAutoRedirect = false
         };
 
-        _transport = new HttpClient(handler)
+        return new HttpClient(handler)
         {
             // TODO: Timeouts are handled by the pipeline
             Timeout = Timeout.InfiniteTimeSpan,
