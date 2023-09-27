@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalysis()
+        public void Example_GetNutrientAnalysis_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalysis_Async()
+        public async Task Example_GetNutrientAnalysis_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -117,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -131,7 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -271,7 +271,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -282,7 +282,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -315,7 +315,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalyses()
+        public void Example_GetNutrientAnalyses_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -329,7 +329,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalyses_Async()
+        public async Task Example_GetNutrientAnalyses_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -451,7 +451,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalysesByPartyId()
+        public void Example_GetNutrientAnalysesByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -465,7 +465,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalysesByPartyId_Async()
+        public async Task Example_GetNutrientAnalysesByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             NutrientAnalyses client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");

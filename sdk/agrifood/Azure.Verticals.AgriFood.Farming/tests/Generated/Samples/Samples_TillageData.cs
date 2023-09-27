@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTillageData()
+        public void Example_GetTillageData_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTillageData_Async()
+        public async Task Example_GetTillageData_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -117,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -131,7 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -255,7 +255,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -266,7 +266,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -299,7 +299,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails()
+        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -314,7 +314,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -377,7 +377,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllTillageDataByPartyId()
+        public void Example_GetAllTillageDataByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -391,7 +391,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTillageDataByPartyId_Async()
+        public async Task Example_GetAllTillageDataByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -513,7 +513,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllTillageData()
+        public void Example_GetAllTillageData_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -527,7 +527,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllTillageData_Async()
+        public async Task Example_GetAllTillageData_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -649,7 +649,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob()
+        public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");
@@ -665,7 +665,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
+        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TillageData client = new FarmBeatsClient(credential).GetTillageDataClient(apiVersion: "2022-11-01-preview");

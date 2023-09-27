@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails()
+        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -36,7 +36,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -99,7 +99,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -113,7 +113,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -265,7 +265,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundary()
+        public void Example_GetBoundary_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -278,7 +278,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundary_Async()
+        public async Task Example_GetBoundary_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -357,7 +357,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -368,7 +368,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -401,7 +401,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetOverlap()
+        public void Example_GetOverlap_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -414,7 +414,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOverlap_Async()
+        public async Task Example_GetOverlap_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -457,7 +457,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundaries()
+        public void Example_GetBoundaries_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -471,7 +471,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundaries_Async()
+        public async Task Example_GetBoundaries_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -575,7 +575,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Search()
+        public void Example_Search_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -590,7 +590,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_Async()
+        public async Task Example_Search_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -765,7 +765,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundariesByPartyId()
+        public void Example_GetBoundariesByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -779,7 +779,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundariesByPartyId_Async()
+        public async Task Example_GetBoundariesByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -883,7 +883,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SearchByPartyId()
+        public void Example_SearchByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -898,7 +898,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SearchByPartyId_Async()
+        public async Task Example_SearchByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -1073,7 +1073,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob()
+        public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
@@ -1089,7 +1089,7 @@ new List<object>()
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
+        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
