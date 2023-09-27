@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleDefinitions_ShortVersion()
+        public void Example_GetRoleDefinitions()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleDefinitions_ShortVersion_Async()
+        public async Task Example_GetRoleDefinitions_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleDefinitionById_ShortVersion()
+        public void Example_GetRoleDefinitionById()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleDefinitionById_ShortVersion_Async()
+        public async Task Example_GetRoleDefinitionById_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScopes_ShortVersion()
+        public void Example_GetScopes()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScopes_ShortVersion_Async()
+        public async Task Example_GetScopes_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
