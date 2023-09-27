@@ -59,7 +59,7 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushIm
     $kubeContext = (RunOrExitOnFailure kubectl config view -o json) | ConvertFrom-Json -AsHashtable
     $defaultNamespace = $null
     $targetContext = $kubeContext.contexts.Where({ $_.name -eq $clusterName }) | Select -First 1
-    if ($targetContext -ne $null -and $targetContext.Contains('context') -and $targetContext.Contains('namespace')) {
+    if ($targetContext -ne $null -and $targetContext.Contains('context') -and $targetContext.context.Contains('namespace')) {
         $defaultNamespace = $targetContext.context.namespace
     }
 
