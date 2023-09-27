@@ -16,8 +16,11 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("botAppId"u8);
-            writer.WriteStringValue(BotAppId);
+            if (Optional.IsDefined(BotAppId))
+            {
+                writer.WritePropertyName("botAppId"u8);
+                writer.WriteStringValue(BotAppId);
+            }
             writer.WritePropertyName("dialogContext"u8);
             writer.WriteStartObject();
             foreach (var item in DialogContext)
@@ -40,7 +43,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            string botAppId = default;
+            Optional<string> botAppId = default;
             IDictionary<string, object> dialogContext = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -67,7 +70,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogOptionsInternal(botAppId, dialogContext);
+            return new DialogOptionsInternal(botAppId.Value, dialogContext);
         }
     }
 }

@@ -287,8 +287,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentTypeDetails documentType0 = model.DocumentTypes[componentModel0.ModelId];
             DocumentTypeDetails documentType1 = model.DocumentTypes[componentModel1.ModelId];
 
-            AssertDocumentTypesAreEqual(expectedDocumentType0, documentType0);
-            AssertDocumentTypesAreEqual(expectedDocumentType1, documentType1);
+            DocumentAssert.AreEqual(expectedDocumentType0, documentType0);
+            DocumentAssert.AreEqual(expectedDocumentType1, documentType1);
         }
 
         [RecordedTest]
@@ -322,15 +322,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentModelDetails expected = disposableModel.Value;
             DocumentModelDetails model = await client.GetDocumentModelAsync(disposableModel.ModelId);
 
-            Assert.AreEqual(expected.ModelId, model.ModelId);
-            Assert.AreEqual(expected.Description, model.Description);
-            Assert.AreEqual(expected.ServiceVersion, model.ServiceVersion);
-            Assert.AreEqual(expected.CreatedOn, model.CreatedOn);
-            Assert.AreEqual(expected.ExpiresOn, model.ExpiresOn);
-
-            CollectionAssert.AreEquivalent(expected.Tags, model.Tags);
-
-            AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypes, model.DocumentTypes);
+            DocumentAssert.AreEqual(expected, model);
         }
 
         [RecordedTest]
@@ -444,61 +436,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(copyAuthorization.AccessToken);
             Assert.IsNotEmpty(copyAuthorization.AccessToken);
             Assert.Greater(copyAuthorization.ExpiresOn, Recording.UtcNow);
-        }
-
-        private void AssertFieldSchemasAreEqual(DocumentFieldSchema fieldSchema1, DocumentFieldSchema fieldSchema2)
-        {
-            if (fieldSchema1 == null)
-            {
-                Assert.Null(fieldSchema2);
-            }
-            else
-            {
-                Assert.NotNull(fieldSchema2);
-
-                Assert.AreEqual(fieldSchema1.Type, fieldSchema2.Type);
-                Assert.AreEqual(fieldSchema1.Description, fieldSchema2.Description);
-                Assert.AreEqual(fieldSchema1.Example, fieldSchema2.Example);
-
-                AssertFieldSchemasAreEqual(fieldSchema1.Items, fieldSchema2.Items);
-                AssertFieldSchemaDictionariesAreEquivalent(fieldSchema1.Properties, fieldSchema2.Properties);
-            }
-        }
-
-        private void AssertFieldSchemaDictionariesAreEquivalent(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchemas1, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchemas2)
-        {
-            Assert.AreEqual(fieldSchemas1.Count, fieldSchemas2.Count);
-
-            foreach (string key in fieldSchemas1.Keys)
-            {
-                DocumentFieldSchema fieldSchema1 = fieldSchemas1[key];
-                DocumentFieldSchema fieldSchema2 = fieldSchemas2[key];
-
-                AssertFieldSchemasAreEqual(fieldSchema1, fieldSchema2);
-            }
-        }
-
-        private void AssertDocumentTypesAreEqual(DocumentTypeDetails docType1, DocumentTypeDetails docType2)
-        {
-            Assert.AreEqual(docType1.Description, docType2.Description);
-            Assert.AreEqual(docType1.BuildMode, docType2.BuildMode);
-
-            CollectionAssert.AreEquivalent(docType1.FieldConfidence, docType2.FieldConfidence);
-
-            AssertFieldSchemaDictionariesAreEquivalent(docType1.FieldSchema, docType2.FieldSchema);
-        }
-
-        private void AssertDocumentTypeDictionariesAreEquivalent(IReadOnlyDictionary<string, DocumentTypeDetails> docTypes1, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes2)
-        {
-            Assert.AreEqual(docTypes1.Count, docTypes2.Count);
-
-            foreach (string key in docTypes1.Keys)
-            {
-                DocumentTypeDetails docType1 = docTypes1[key];
-                DocumentTypeDetails docType2 = docTypes2[key];
-
-                AssertDocumentTypesAreEqual(docType1, docType2);
-            }
         }
     }
 }

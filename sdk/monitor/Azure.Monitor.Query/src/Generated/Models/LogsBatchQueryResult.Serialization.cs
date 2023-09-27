@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure.Core;
-
 namespace Azure.Monitor.Query.Models
 {
     public partial class LogsBatchQueryResult

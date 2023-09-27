@@ -246,6 +246,80 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifiedPartners_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VerifiedPartnerResource>> GetIfExistsAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
+
+            using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _verifiedPartnerRestClient.GetAsync(verifiedPartnerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VerifiedPartnerResource>(response.GetRawResponse());
+                return Response.FromValue(new VerifiedPartnerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifiedPartners_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
+        public virtual NullableResponse<VerifiedPartnerResource> GetIfExists(string verifiedPartnerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
+
+            using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _verifiedPartnerRestClient.Get(verifiedPartnerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VerifiedPartnerResource>(response.GetRawResponse());
+                return Response.FromValue(new VerifiedPartnerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<VerifiedPartnerResource> IEnumerable<VerifiedPartnerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

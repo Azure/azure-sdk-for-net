@@ -253,6 +253,80 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareName"> Name of the installed software. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SoftwareInventoryResource>> GetIfExistsAsync(string softwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+
+            using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _softwareInventoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, softwareName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SoftwareInventoryResource>(response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/softwareInventories/{softwareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareName"> Name of the installed software. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareName"/> is null. </exception>
+        public virtual NullableResponse<SoftwareInventoryResource> GetIfExists(string softwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareName, nameof(softwareName));
+
+            using var scope = _softwareInventoryClientDiagnostics.CreateScope("SoftwareInventoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _softwareInventoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, softwareName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SoftwareInventoryResource>(response.GetRawResponse());
+                return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SoftwareInventoryResource> IEnumerable<SoftwareInventoryResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

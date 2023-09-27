@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetLanguagesAsync(string,string,string,string,CancellationToken)" />
-    <member name="GetLanguages(string,string,string,string,CancellationToken)" />
+    <member name="GetLanguagesAsync(string,string,string,ETag?,CancellationToken)" />
+    <member name="GetLanguages(string,string,string,ETag?,CancellationToken)" />
     <member name="GetLanguagesAsync(string,string,string,ETag?,RequestContext)" />
     <member name="GetLanguages(string,string,string,ETag?,RequestContext)" />
     <member name="TranslateAsync(IEnumerable{string},IEnumerable{InputTextItem},string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,CancellationToken)" />
