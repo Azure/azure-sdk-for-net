@@ -511,7 +511,7 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.ServiceModel.Rest.Core.PipelineRequest
+    public abstract partial class Request : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
     {
         protected Request() { }
         public abstract string ClientRequestId { get; set; }
@@ -521,6 +521,7 @@ namespace Azure.Core
         public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
+        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         protected internal abstract bool RemoveHeader(string name);
         protected internal virtual void SetHeader(string name, string value) { }

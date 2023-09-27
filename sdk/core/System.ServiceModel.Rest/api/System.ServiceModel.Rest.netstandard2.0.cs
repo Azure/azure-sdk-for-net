@@ -74,14 +74,12 @@ namespace System.ServiceModel.Rest.Core
         PerRetry = 1,
         BeforeTransport = 2,
     }
-    public partial class PipelineRequest : System.IDisposable
+    public partial class PipelineRequest
     {
         public PipelineRequest() { }
         public virtual System.ServiceModel.Rest.Core.RequestBody? Content { get { throw null; } set { } }
         public virtual System.Net.Http.HttpMethod Method { get { throw null; } set { } }
         public virtual System.Uri Uri { get { throw null; } set { } }
-        public virtual void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
         public virtual void SetHeaderValue(string name, string value) { }
     }
     public partial class PipelineResponse : System.IDisposable
