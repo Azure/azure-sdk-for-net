@@ -23,7 +23,7 @@ namespace Azure.Core.Json
     //   2. The internal static method SerializeToJsonElement uses reflection-based serialization. This method is used throughout the non-static methods within this struct.
     // In order to avoid annotating every single method, we are instead annotating the constructor, and the problematic static method.
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The constructor is marked as RequiresUnreferencedCode, since the whole struct is incompatible with trimming.")]
-    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL3050", Justification = "The constructor is marked as RequiresDynamicCode, since the whole struct is incompatible with trimming.")]
+    [UnconditionalSuppressMessage("ReflectionAnalysis", "IL3050", Justification = "The constructor is marked as RequiresDynamicCode, since the whole struct is incompatible with AOT.")]
     [JsonConverter(typeof(MutableJsonElementConverter))]
     internal readonly partial struct MutableJsonElement
     {
