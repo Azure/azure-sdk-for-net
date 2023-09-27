@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistryEnvironmentContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RegistryEnvironmentResource>> GetIfExistsAsync(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using var scope = _registryEnvironmentRegistryEnvironmentContainersClientDiagnostics.CreateScope("RegistryEnvironmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _registryEnvironmentRegistryEnvironmentContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RegistryEnvironmentResource>(response.GetRawResponse());
+                return Response.FromValue(new RegistryEnvironmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistryEnvironmentContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        public virtual NullableResponse<RegistryEnvironmentResource> GetIfExists(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using var scope = _registryEnvironmentRegistryEnvironmentContainersClientDiagnostics.CreateScope("RegistryEnvironmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _registryEnvironmentRegistryEnvironmentContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RegistryEnvironmentResource>(response.GetRawResponse());
+                return Response.FromValue(new RegistryEnvironmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RegistryEnvironmentResource> IEnumerable<RegistryEnvironmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkGroupName"> The name of the network group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkGroupResource>> GetIfExistsAsync(string networkGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
+
+            using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkGroupName"> The name of the network group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        public virtual NullableResponse<NetworkGroupResource> GetIfExists(string networkGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
+
+            using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkGroupResource> IEnumerable<NetworkGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

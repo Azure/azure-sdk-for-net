@@ -335,6 +335,84 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/labelingJobs/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabelingJobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
+        /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
+        /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabelingJobResource>> GetIfExistsAsync(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _labelingJobClientDiagnostics.CreateScope("LabelingJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labelingJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabelingJobResource>(response.GetRawResponse());
+                return Response.FromValue(new LabelingJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/labelingJobs/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabelingJobs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> The name and identifier for the LabelingJob. </param>
+        /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
+        /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual NullableResponse<LabelingJobResource> GetIfExists(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _labelingJobClientDiagnostics.CreateScope("LabelingJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labelingJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, includeJobInstructions, includeLabelCategories, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabelingJobResource>(response.GetRawResponse());
+                return Response.FromValue(new LabelingJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LabelingJobResource> IEnumerable<LabelingJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

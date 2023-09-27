@@ -126,6 +126,50 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get Registry Code Version.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetRegistryCodeVersion()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Registry/CodeVersion/get.json
+            // this example is just showing the usage of "RegistryCodeVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RegistryCodeResource created on azure
+            // for more information of creating RegistryCodeResource, please refer to the document of RegistryCodeResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string registryName = "my-aml-registry";
+            string codeName = "string";
+            ResourceIdentifier registryCodeResourceId = RegistryCodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, codeName);
+            RegistryCodeResource registryCode = client.GetRegistryCodeResource(registryCodeResourceId);
+
+            // get the collection of this RegistryCodeVersionResource
+            RegistryCodeVersionCollection collection = registryCode.GetRegistryCodeVersions();
+
+            // invoke the operation
+            string version = "string";
+            NullableResponse<RegistryCodeVersionResource> response = await collection.GetIfExistsAsync(version);
+            RegistryCodeVersionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MachineLearningCodeVersionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // CreateOrUpdate Registry Code Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

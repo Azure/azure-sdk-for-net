@@ -104,48 +104,6 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 
 ### Advanced configuration
 
-The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient). However, you can customize the instrumentation included or use additional instrumentation on your own using the OpenTelemetry API. Here are some examples of how to customize the instrumentation:
-
-#### Customizing AspNetCoreInstrumentationOptions
-
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<AspNetCoreInstrumentationOptions>(options =>
-{
-    options.RecordException = true;
-    options.Filter = (httpContext) =>
-    {
-        // only collect telemetry about HTTP GET requests
-        return HttpMethods.IsGet(httpContext.Request.Method);
-    };
-});
-```
-
-#### Customizing HttpClientInstrumentationOptions
-
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
-{
-    options.RecordException = true;
-    options.FilterHttpRequestMessage = (httpRequestMessage) =>
-    {
-        // only collect telemetry about HTTP GET requests
-        return HttpMethods.IsGet(httpRequestMessage.Method.Method);
-    };
-});
-```
-
-#### Customizing SqlClientInstrumentationOptions
-
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
-{
-    options.SetDbStatementForStoredProcedure = false;
-});
-```
-
 #### Customizing Sampling Percentage
 
 When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 50%. You can achieve this by modifying the code as follows:

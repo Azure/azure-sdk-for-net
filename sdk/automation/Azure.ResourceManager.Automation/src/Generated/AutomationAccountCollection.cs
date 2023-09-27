@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationAccountResource>> GetIfExistsAsync(string automationAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
+            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountName"/> is null. </exception>
+        public virtual NullableResponse<AutomationAccountResource> GetIfExists(string automationAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
+            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomationAccountResource> IEnumerable<AutomationAccountResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -126,6 +126,50 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get Workspace Code Version.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetWorkspaceCodeVersion()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/CodeVersion/get.json
+            // this example is just showing the usage of "CodeVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceCodeResource created on azure
+            // for more information of creating WorkspaceCodeResource, please refer to the document of WorkspaceCodeResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string name = "string";
+            ResourceIdentifier workspaceCodeResourceId = WorkspaceCodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            WorkspaceCodeResource workspaceCode = client.GetWorkspaceCodeResource(workspaceCodeResourceId);
+
+            // get the collection of this WorkspaceCodeVersionResource
+            WorkspaceCodeVersionCollection collection = workspaceCode.GetWorkspaceCodeVersions();
+
+            // invoke the operation
+            string version = "string";
+            NullableResponse<WorkspaceCodeVersionResource> response = await collection.GetIfExistsAsync(version);
+            WorkspaceCodeVersionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MachineLearningCodeVersionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // CreateOrUpdate Workspace Code Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

@@ -79,14 +79,14 @@ namespace Microsoft.Extensions.Hosting
         {
             // We need to register an instance of QueueScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
             // Since there can be more than one instance of QueueScalerProvider, we have to store a reference to the created instance to filter it out later.
-            QueueScalerProvider serviceBusScalerProvider = null;
+            QueueScalerProvider queueScalerProvider = null;
             builder.Services.AddSingleton(serviceProvider =>
             {
-                serviceBusScalerProvider = new QueueScalerProvider(serviceProvider, triggerMetadata);
-                return serviceBusScalerProvider;
+                queueScalerProvider = new QueueScalerProvider(serviceProvider, triggerMetadata);
+                return queueScalerProvider;
             });
-            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == serviceBusScalerProvider));
-            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == serviceBusScalerProvider));
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == queueScalerProvider));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<QueueScalerProvider>().Single(x => x == queueScalerProvider));
 
             return builder;
         }

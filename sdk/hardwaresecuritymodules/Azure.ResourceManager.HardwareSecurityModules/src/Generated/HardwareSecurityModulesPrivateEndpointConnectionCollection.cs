@@ -328,6 +328,80 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HardwareSecurityModulesPrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HardwareSecurityModulesPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        public virtual NullableResponse<HardwareSecurityModulesPrivateEndpointConnectionResource> GetIfExists(string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HardwareSecurityModulesPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<HardwareSecurityModulesPrivateEndpointConnectionResource> IEnumerable<HardwareSecurityModulesPrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

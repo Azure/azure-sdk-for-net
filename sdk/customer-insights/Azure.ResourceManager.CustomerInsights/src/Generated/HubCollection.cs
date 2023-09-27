@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hubName"> The name of the hub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HubResource>> GetIfExistsAsync(string hubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+
+            using var scope = _hubClientDiagnostics.CreateScope("HubCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HubResource>(response.GetRawResponse());
+                return Response.FromValue(new HubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hubName"> The name of the hub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        public virtual NullableResponse<HubResource> GetIfExists(string hubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+
+            using var scope = _hubClientDiagnostics.CreateScope("HubCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hubName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HubResource>(response.GetRawResponse());
+                return Response.FromValue(new HubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<HubResource> IEnumerable<HubResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

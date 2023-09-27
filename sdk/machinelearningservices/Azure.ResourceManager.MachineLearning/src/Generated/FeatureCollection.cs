@@ -249,6 +249,80 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featuresets/{featuresetName}/versions/{featuresetVersion}/features/{featureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="featureName"> Feature Name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FeatureResource>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FeatureResource>(response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featuresets/{featuresetName}/versions/{featuresetVersion}/features/{featureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="featureName"> Feature Name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        public virtual NullableResponse<FeatureResource> GetIfExists(string featureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _featureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, featureName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FeatureResource>(response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FeatureResource> IEnumerable<FeatureResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

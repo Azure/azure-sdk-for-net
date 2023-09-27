@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RegistryResource>> GetIfExistsAsync(string registryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+
+            using var scope = _registryClientDiagnostics.CreateScope("RegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _registryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new RegistryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        public virtual NullableResponse<RegistryResource> GetIfExists(string registryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+
+            using var scope = _registryClientDiagnostics.CreateScope("RegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _registryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new RegistryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<RegistryResource> IEnumerable<RegistryResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

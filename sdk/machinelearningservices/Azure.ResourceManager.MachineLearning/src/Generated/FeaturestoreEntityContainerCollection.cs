@@ -330,6 +330,80 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<FeaturestoreEntityContainerResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _featurestoreEntityContainerClientDiagnostics.CreateScope("FeaturestoreEntityContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _featurestoreEntityContainerRestClient.GetEntityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FeaturestoreEntityContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new FeaturestoreEntityContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<FeaturestoreEntityContainerResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _featurestoreEntityContainerClientDiagnostics.CreateScope("FeaturestoreEntityContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _featurestoreEntityContainerRestClient.GetEntity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FeaturestoreEntityContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new FeaturestoreEntityContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FeaturestoreEntityContainerResource> IEnumerable<FeaturestoreEntityContainerResource>.GetEnumerator()
         {
             return GetAll(options: null).GetEnumerator();

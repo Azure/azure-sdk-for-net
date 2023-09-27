@@ -8,7 +8,7 @@ public static class ManagedIdentityTests
 {
     public static void AuthToStorage()
     {
-        string resourceId = Environment.GetEnvironmentVariable("IDENTITY_WEBAPP_USER_DEFINED_IDENTITY")!;
+        string resourceId = Environment.GetEnvironmentVariable("IDENTITY_USER_DEFINED_IDENTITY")!;
         string account1 = Environment.GetEnvironmentVariable("IDENTITY_STORAGE_NAME_1")!;
         string account2 = Environment.GetEnvironmentVariable("IDENTITY_STORAGE_NAME_2")!;
 
