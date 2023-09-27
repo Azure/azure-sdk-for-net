@@ -249,7 +249,7 @@ namespace Azure.Storage.Blobs
             : this(
                   serviceUri,
                   credential.AsPolicy(
-                    BlobExtensions.CreateServiceAudience(options?.Audience),
+                    BlobExtensions.TryCreateServiceAudience(options?.Audience),
                     options),
                   credential,
                   options ?? new BlobClientOptions())

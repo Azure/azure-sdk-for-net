@@ -325,7 +325,7 @@ namespace Azure.Storage.Queues
             : this(
                   queueUri,
                   credential.AsPolicy(
-                    QueueExtensions.CreateServiceAudience(options?.Audience),
+                    QueueExtensions.TryCreateServiceAudience(options?.Audience),
                     options),
                   options,
                   sharedKeyCredential: null,
@@ -3269,8 +3269,8 @@ namespace Azure.Storage.Queues
         /// </summary>
         /// <param name="accountName"></param>
         /// <returns></returns>
-        internal static string CreateServiceAudience(string accountName)
-            => $"https://{accountName}.queue.core.windows.net{Constants.DefaultScope}";
+        internal static string TryCreateServiceAudience(string accountName)
+            => string.IsNullOrWhiteSpace(accountName) ? default : $"https://{accountName}.queue.core.windows.net{Constants.DefaultScope}";
     }
 }
 

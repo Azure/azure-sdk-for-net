@@ -244,7 +244,7 @@ namespace Azure.Storage.Files.DataLake
             : this(
                 directoryUri,
                 credential.AsPolicy(
-                    DataLakeExtensions.CreateServiceAudience(options?.Audience),
+                    DataLakeExtensions.TryCreateServiceAudience(options?.Audience),
                     options),
                 options,
                 tokenCredential: credential)

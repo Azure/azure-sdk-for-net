@@ -456,7 +456,7 @@ namespace Azure.Storage.Files.DataLake
             : this(
                 pathUri,
                 credential.AsPolicy(
-                    DataLakeExtensions.CreateServiceAudience(options?.Audience),
+                    DataLakeExtensions.TryCreateServiceAudience(options?.Audience),
                     options),
                 options,
                 storageSharedKeyCredential: null,

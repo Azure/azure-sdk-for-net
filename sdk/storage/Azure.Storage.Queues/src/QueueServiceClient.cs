@@ -241,7 +241,7 @@ namespace Azure.Storage.Queues
             : this(
                   serviceUri,
                   credential.AsPolicy(
-                    QueueExtensions.CreateServiceAudience(options?.Audience),
+                    QueueExtensions.TryCreateServiceAudience(options?.Audience),
                     options),
                   options,
                   sharedKeyCredential: null,

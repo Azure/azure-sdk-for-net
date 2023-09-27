@@ -1082,7 +1082,15 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion
 
-        internal static string CreateServiceAudience(string accountName)
-            => $"https://{accountName}.blob.core.windows.net{Constants.DefaultScope}";
+        /// <summary>
+        /// Attempts to create a service audience.
+        /// </summary>
+        /// <param name="accountName">The account name to construct an audience for that respective storage account.</param>
+        /// <returns>
+        /// If the account name is null, empty or whitespace it will return default.
+        /// Otherwise will return an audience for the respective storage account name.
+        /// </returns>
+        internal static string TryCreateServiceAudience(string accountName = default)
+            => string.IsNullOrWhiteSpace(accountName) ? default : $"https://{accountName}.blob.core.windows.net{Constants.DefaultScope}";
     }
 }
