@@ -301,6 +301,8 @@ namespace Azure.Core.Pipeline
                 // keep it alive because the ResponseBodyPolicy won't re-buffer it
                 DisposeStreamIfNotBuffered(ref _originalContentStream);
                 DisposeStreamIfNotBuffered(ref _contentStream);
+
+                base.Dispose();
             }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
@@ -373,6 +375,8 @@ namespace Azure.Core.Pipeline
                     Content = null;
                     content.Dispose();
                 }
+
+                base.Dispose();
             }
         }
 

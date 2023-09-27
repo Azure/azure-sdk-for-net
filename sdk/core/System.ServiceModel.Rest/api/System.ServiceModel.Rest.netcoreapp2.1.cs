@@ -66,6 +66,7 @@ namespace System.ServiceModel.Rest.Core
         public virtual System.ServiceModel.Rest.Core.PipelineResponse Response { get { throw null; } set { } }
         public virtual System.ServiceModel.Rest.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
     }
     public enum PipelinePosition
     {
@@ -80,6 +81,7 @@ namespace System.ServiceModel.Rest.Core
         public virtual System.Net.Http.HttpMethod Method { get { throw null; } set { } }
         public virtual System.Uri Uri { get { throw null; } set { } }
         public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public virtual void SetHeaderValue(string name, string value) { }
     }
     public partial class PipelineResponse : System.IDisposable
@@ -91,6 +93,7 @@ namespace System.ServiceModel.Rest.Core
         public virtual string ReasonPhrase { get { throw null; } }
         public virtual int Status { get { throw null; } }
         public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public virtual bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }
     public abstract partial class RequestBody : System.IDisposable
@@ -148,7 +151,8 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public MessagePipelineTransport() { }
         public MessagePipelineTransport(System.Net.Http.HttpClient client) { }
         public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
-        public void Dispose() { }
+        public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
@@ -324,6 +328,7 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
         public Utf8JsonRequestBody() { }
         public System.Text.Json.Utf8JsonWriter JsonWriter { get { throw null; } }
         public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
         public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }

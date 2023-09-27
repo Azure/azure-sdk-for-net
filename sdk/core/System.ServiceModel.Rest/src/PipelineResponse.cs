@@ -11,6 +11,8 @@ public class PipelineResponse : IDisposable
     private readonly HttpResponseMessage? _netResponse;
     private readonly Stream? _contentStream;
 
+    private bool _disposed;
+
     protected PipelineResponse() { }
 
     internal PipelineResponse(HttpResponseMessage netResponse, Stream? contentStream)
@@ -91,13 +93,6 @@ public class PipelineResponse : IDisposable
     /// </summary>
     public virtual bool IsError { get; set; }
 
-    public virtual void Dispose()
-    {
-        // TODO: implement pattern correctly
-        _netResponse?.Dispose();
-        _contentStream?.Dispose();
-    }
-
     private void EnsureValid(string name)
     {
         if (_netResponse is null)
@@ -105,4 +100,28 @@ public class PipelineResponse : IDisposable
             throw new InvalidOperationException($"Must initialize response to retrieve '{name}'.");
         }
     }
+
+    #region IDisposable
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing && !_disposed)
+        {
+            var netResponse = _netResponse;
+            netResponse?.Dispose();
+
+            var contentStream = _contentStream;
+            contentStream?.Dispose();
+
+            _disposed = true;
+        }
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    #endregion
 }

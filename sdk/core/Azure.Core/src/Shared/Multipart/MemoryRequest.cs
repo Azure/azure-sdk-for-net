@@ -72,6 +72,8 @@ namespace Azure.Core
         public override string ToString() => $"{Method} {Uri}";
 
         public override void Dispose()
-        { }
+        {
+            base.Dispose();
+        }
     }
 }

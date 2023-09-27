@@ -11,7 +11,9 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
-    private readonly HttpClient _transport;
+    private readonly HttpClient _httpClient;
+
+    private bool _disposed;
 
     public MessagePipelineTransport() : this(CreateDefaultClient())
     {
@@ -19,7 +21,7 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
 
     public MessagePipelineTransport(HttpClient client)
     {
-        _transport = client;
+        _httpClient = client;
     }
 
     private static HttpClient CreateDefaultClient()
@@ -49,14 +51,6 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
         // TODO: use options
 
         return message;
-    }
-
-    public void Dispose()
-    {
-        _transport.Dispose();
-
-        // TODO: do we need this?
-        GC.SuppressFinalize(this);
     }
 
     public override void Process(PipelineMessage message)
@@ -90,7 +84,7 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
             // TODO: we'll need to call message.ClearResponse() when we add retries.
 
             // TODO: Why does Azure.Core use HttpCompletionOption.ResponseHeadersRead?
-            responseMessage = await _transport.SendAsync(netRequest).ConfigureAwait(false);
+            responseMessage = await _httpClient.SendAsync(netRequest).ConfigureAwait(false);
 
             if (responseMessage.Content != null)
             {
@@ -107,6 +101,26 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
             throw new RequestErrorException(e.Message, e);
         }
     }
+
+    #region IDisposable
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing && !_disposed)
+        {
+            var httpClient = _httpClient;
+            httpClient?.Dispose();
+            _disposed = true;
+        }
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    #endregion
 
     private sealed class HttpContentAdapter : HttpContent
     {

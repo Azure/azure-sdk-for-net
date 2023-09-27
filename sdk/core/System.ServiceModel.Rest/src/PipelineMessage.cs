@@ -9,6 +9,8 @@ public class PipelineMessage : IDisposable
 {
     private PipelineResponse? _response;
 
+    private bool _disposed;
+
     protected internal PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
     {
         Request = request;
@@ -38,10 +40,28 @@ public class PipelineMessage : IDisposable
 
     public virtual ResponseErrorClassifier ResponseClassifier { get; set; }
 
+    #region IDisposable
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing && !_disposed)
+        {
+            var request = Request;
+            request?.Dispose();
+
+            var response = _response;
+            response?.Dispose();
+            _response = null;
+
+            _disposed = true;
+        }
+    }
+
     public virtual void Dispose()
     {
-        // TODO: implement Dispose pattern properly
-        Request.Dispose();
-        Response.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
+
+    #endregion
 }

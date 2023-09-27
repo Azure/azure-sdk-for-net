@@ -11,6 +11,8 @@ public class PipelineRequest : IDisposable
     private HttpMethod? _method;
     private Uri? _uri;
 
+    private bool _disposed;
+
     // TODO: optimize
     // Azure.Core has ArrayBackedPropertyBag and IgnoreCaseString
     // TODO: Azure.Core header dictionary stores a collection of values for a header.
@@ -77,13 +79,25 @@ public class PipelineRequest : IDisposable
         }
     }
 
-    public virtual void Dispose()
+    #region IDisposable
+
+    protected virtual void Dispose(bool disposing)
     {
-        // TODO: get this pattern right
-        if (Content is not null)
+        if (disposing && !_disposed)
         {
-            RequestBody body = Content;
-            body.Dispose();
+            var content = Content;
+            content?.Dispose();
+            Content = null;
+
+            _disposed = true;
         }
     }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    #endregion
 }

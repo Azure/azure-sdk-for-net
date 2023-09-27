@@ -216,6 +216,8 @@ namespace Azure.Core
                 _response = null;
                 response.Dispose();
             }
+
+            base.Dispose();
         }
 
         private class ResponseShouldNotBeUsedStream : Stream
