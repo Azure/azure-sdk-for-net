@@ -18,6 +18,7 @@ namespace Azure
     [TypeReferenceType(true, new string[] { nameof(Target), nameof(Details) })]
     public sealed class ResponseError
     {
+        // This field needs to be internal rather than private so that it can be used by the System.Text.Json source generator
         internal readonly JsonElement _element;
 
         /// <summary>
@@ -75,6 +76,7 @@ namespace Azure
         /// </summary>
         internal IReadOnlyList<ResponseError> Details { get; }
 
+        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
         internal class Converter : JsonConverter<ResponseError?>
         {
             public override ResponseError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -289,7 +289,7 @@ namespace Azure
             return error != null;
         }
 
-        // This needs to be internal rather than private so that it can be used by the System.Text.Json source generator
+        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
         internal class ErrorResponse
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
