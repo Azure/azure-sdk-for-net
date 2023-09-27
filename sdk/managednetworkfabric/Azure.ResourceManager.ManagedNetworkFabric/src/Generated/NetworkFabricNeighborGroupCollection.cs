@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricNeighborGroupResource>> GetIfExistsAsync(string neighborGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+
+            using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricNeighborGroupNeighborGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricNeighborGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricNeighborGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/neighborGroups/{neighborGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeighborGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="neighborGroupName"> Name of the Neighbor Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricNeighborGroupResource> GetIfExists(string neighborGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(neighborGroupName, nameof(neighborGroupName));
+
+            using var scope = _networkFabricNeighborGroupNeighborGroupsClientDiagnostics.CreateScope("NetworkFabricNeighborGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricNeighborGroupNeighborGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricNeighborGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricNeighborGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFabricNeighborGroupResource> IEnumerable<NetworkFabricNeighborGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

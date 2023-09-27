@@ -330,6 +330,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationAlertSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryAlertResource>> GetIfExistsAsync(string alertSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
+
+            using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteRecoveryAlertReplicationAlertSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationAlertSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
+        public virtual NullableResponse<SiteRecoveryAlertResource> GetIfExists(string alertSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
+
+            using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteRecoveryAlertReplicationAlertSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, alertSettingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SiteRecoveryAlertResource> IEnumerable<SiteRecoveryAlertResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

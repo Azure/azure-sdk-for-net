@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             {
                 Resources =
 {
-new DeploymentPreflightResource()
+new DeploymentPreflightResourceInfo()
 {
 Name = "xtgugoflfc",
 DeploymentPreflightResourceType = new ResourceType("nsnaptduolqcxsikrewvgjbxqpt"),

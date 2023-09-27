@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/inputs/{inputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Inputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inputName"> The name of the input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamingJobInputResource>> GetIfExistsAsync(string inputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+
+            using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamingJobInputInputsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inputName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobInputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobInputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/inputs/{inputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Inputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inputName"> The name of the input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
+        public virtual NullableResponse<StreamingJobInputResource> GetIfExists(string inputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+
+            using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamingJobInputInputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inputName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobInputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobInputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<StreamingJobInputResource> IEnumerable<StreamingJobInputResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
