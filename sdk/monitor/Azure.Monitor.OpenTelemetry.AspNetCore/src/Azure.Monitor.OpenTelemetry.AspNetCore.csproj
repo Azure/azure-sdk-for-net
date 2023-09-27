@@ -27,9 +27,5 @@
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared" />
-  </ItemGroup>
   
 </Project>
