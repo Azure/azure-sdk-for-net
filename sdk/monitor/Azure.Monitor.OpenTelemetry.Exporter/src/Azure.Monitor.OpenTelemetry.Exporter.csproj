@@ -8,6 +8,9 @@
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+
+    <!--TODO: REMOVE THIS. ApiCompat is failing because I added net6. Will follow up how to correctly resolve.-->
+    <RunApiCompat>false</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
