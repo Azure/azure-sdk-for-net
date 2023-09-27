@@ -417,6 +417,36 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_StartTranscriptionOperationsAsync))]
+        public void StartTranscriptionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_UpdateTranscriptionDataOperationsAsync))]
+        public void UpdateTranscriptionDataOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StopTranscriptionOperationsAsync))]
+        public void StopTranscriptionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
         [TestCaseSource(nameof(TestData_PlayOperations))]
         public void PlayOperations_Return404NotFound(Func<CallMedia, Response<PlayResult>> operation)
         {
