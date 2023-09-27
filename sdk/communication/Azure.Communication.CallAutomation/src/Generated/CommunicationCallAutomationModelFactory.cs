@@ -298,7 +298,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
-        public static TranscriptionUpdate TranscriptionUpdate(string transcriptionStatus = null, string transcriptionStatusDetails = null)
+        public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null)
         {
             return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
         }

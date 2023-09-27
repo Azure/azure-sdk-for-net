@@ -18,22 +18,30 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> transcriptionStatus = default;
-            Optional<string> transcriptionStatusDetails = default;
+            Optional<TranscriptionStatus> transcriptionStatus = default;
+            Optional<TranscriptionStatusDetails> transcriptionStatusDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transcriptionStatus"u8))
                 {
-                    transcriptionStatus = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transcriptionStatus = new TranscriptionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transcriptionStatusDetails"u8))
                 {
-                    transcriptionStatusDetails = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transcriptionStatusDetails = new TranscriptionStatusDetails(property.Value.GetString());
                     continue;
                 }
             }
-            return new TranscriptionUpdate(transcriptionStatus.Value, transcriptionStatusDetails.Value);
+            return new TranscriptionUpdate(Optional.ToNullable(transcriptionStatus), Optional.ToNullable(transcriptionStatusDetails));
         }
     }
 }
