@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Template.Samples
 {
-    public class Samples_TemplateClient
+    public partial class Samples_TemplateClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
