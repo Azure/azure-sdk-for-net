@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Administration.Samples
 {
-    internal class Samples_PurviewCollection
+    public partial class Samples_PurviewCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -203,6 +203,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = client.DeleteCollection();
+
             Console.WriteLine(response.Status);
         }
 
@@ -215,6 +216,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = await client.DeleteCollectionAsync();
+
             Console.WriteLine(response.Status);
         }
 
@@ -227,6 +229,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = client.DeleteCollection();
+
             Console.WriteLine(response.Status);
         }
 
@@ -239,6 +242,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             PurviewCollection client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<CollectionName>");
 
             Response response = await client.DeleteCollectionAsync();
+
             Console.WriteLine(response.Status);
         }
 

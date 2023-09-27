@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Analytics.Purview.Administration;
 using Azure.Core;
@@ -15,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Administration.Samples
 {
-    public class Samples_PurviewMetadataRolesClient
+    public partial class Samples_PurviewMetadataRolesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,8 +26,6 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             foreach (BinaryData item in client.GetMetadataRoles(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
             }
         }
 
@@ -42,8 +39,6 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
             }
         }
 
@@ -57,8 +52,6 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             foreach (BinaryData item in client.GetMetadataRoles(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
             }
         }
 
@@ -72,8 +65,6 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
             }
         }
     }

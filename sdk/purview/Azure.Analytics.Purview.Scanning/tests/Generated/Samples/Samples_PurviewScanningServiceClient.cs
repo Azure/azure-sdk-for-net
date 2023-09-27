@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public class Samples_PurviewScanningServiceClient
+    public partial class Samples_PurviewScanningServiceClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -235,7 +234,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -250,7 +248,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -304,7 +301,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -320,7 +316,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -336,14 +331,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 properties = new
                 {
                     description = "<description>",
-                    excludedSystemClassifications = new List<object>()
-{
+                    excludedSystemClassifications = new object[]
+            {
 "<excludedSystemClassifications>"
-},
-                    includedCustomClassificationRuleNames = new List<object>()
-{
+            },
+                    includedCustomClassificationRuleNames = new object[]
+            {
 "<includedCustomClassificationRuleNames>"
-},
+            },
                 },
                 kind = "AzureSubscription",
                 scanRulesetType = "Custom",
@@ -372,14 +367,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 properties = new
                 {
                     description = "<description>",
-                    excludedSystemClassifications = new List<object>()
-{
+                    excludedSystemClassifications = new object[]
+            {
 "<excludedSystemClassifications>"
-},
-                    includedCustomClassificationRuleNames = new List<object>()
-{
+            },
+                    includedCustomClassificationRuleNames = new object[]
+            {
 "<includedCustomClassificationRuleNames>"
-},
+            },
                 },
                 kind = "AzureSubscription",
                 scanRulesetType = "Custom",
@@ -407,7 +402,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -422,7 +416,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -475,7 +468,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -490,7 +482,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -543,7 +534,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -558,7 +548,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -611,7 +600,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -626,7 +614,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -745,7 +732,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -761,7 +747,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -811,7 +796,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -827,7 +811,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -933,7 +916,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -949,7 +931,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -1005,7 +986,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -1021,7 +1001,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -1077,7 +1056,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -1093,7 +1071,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
             }
         }
 
