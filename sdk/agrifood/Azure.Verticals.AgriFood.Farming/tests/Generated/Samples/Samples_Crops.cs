@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_Crops
+    public class Samples_Crops
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -231,6 +230,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<cropId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -242,6 +242,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<cropId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -253,6 +254,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<cropId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -264,6 +266,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<cropId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -302,25 +305,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetCrops(new List<string>()
-{
-"<phenotypes>"
-}, new List<string>()
-{
-"<breedingMethods>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetCrops(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("phenotype").ToString());
@@ -348,25 +333,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Crops client = new FarmBeatsClient(credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetCropsAsync(new List<string>()
-{
-"<phenotypes>"
-}, new List<string>()
-{
-"<breedingMethods>"
-}, new List<string>()
-{
-"<cropIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetCropsAsync(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("phenotype").ToString());

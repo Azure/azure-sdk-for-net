@@ -247,6 +247,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<fieldId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
@@ -255,6 +256,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<fieldId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -266,6 +268,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<fieldId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
@@ -274,6 +277,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<fieldId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -295,22 +299,7 @@ This sample shows how to call GetFieldsAsync with all parameters and parse the r
 TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetFieldsAsync(new List<string>()
-{
-    "<farmIds>"
-}, new List<string>()
-{
-    "<fieldIds>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetFieldsAsync(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("farmId").ToString());
@@ -347,22 +336,7 @@ This sample shows how to call GetFields with all parameters and parse the result
 TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetFields(new List<string>()
-{
-    "<farmIds>"
-}, new List<string>()
-{
-    "<fieldIds>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetFields(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("farmId").ToString());
@@ -399,22 +373,7 @@ This sample shows how to call GetFieldsByPartyIdAsync with all parameters and pa
 TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetFieldsByPartyIdAsync("<partyId>", new List<string>()
-{
-    "<farmIds>"
-}, new List<string>()
-{
-    "<ids>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetFieldsByPartyIdAsync("<partyId>", new string[] { "<farmIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("farmId").ToString());
@@ -451,22 +410,7 @@ This sample shows how to call GetFieldsByPartyId with all parameters and parse t
 TokenCredential credential = new DefaultAzureCredential();
 Fields client = new FarmBeatsClient(credential).GetFieldsClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetFieldsByPartyId("<partyId>", new List<string>()
-{
-    "<farmIds>"
-}, new List<string>()
-{
-    "<ids>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetFieldsByPartyId("<partyId>", new string[] { "<farmIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result[0].GetProperty("farmId").ToString());

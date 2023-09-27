@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_Devices
+    public class Samples_Devices
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -247,6 +246,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -258,6 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -269,6 +270,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -280,6 +282,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -318,25 +321,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetDevices("<sensorPartnerId>", new List<string>()
-{
-"<parentDeviceIds>"
-}, new List<string>()
-{
-"<deviceDataModelIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetDevices("<sensorPartnerId>", new string[] { "<parentDeviceIds>" }, new string[] { "<deviceDataModelIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("deviceDataModelId").ToString());
@@ -368,25 +353,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Devices client = new FarmBeatsClient(credential).GetDevicesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", new List<string>()
-{
-"<parentDeviceIds>"
-}, new List<string>()
-{
-"<deviceDataModelIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetDevicesAsync("<sensorPartnerId>", new string[] { "<parentDeviceIds>" }, new string[] { "<deviceDataModelIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("deviceDataModelId").ToString());

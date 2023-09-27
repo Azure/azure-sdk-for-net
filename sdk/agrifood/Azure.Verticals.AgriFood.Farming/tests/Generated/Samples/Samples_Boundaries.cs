@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_Boundaries
+    public class Samples_Boundaries
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -136,19 +135,19 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             {
                 geometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
                 type = "<type>",
@@ -205,19 +204,19 @@ new List<object>()
             {
                 geometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
                 type = "<type>",
@@ -363,6 +362,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -374,6 +374,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -385,6 +386,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -396,6 +398,7 @@ new List<object>()
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -490,22 +493,7 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetBoundaries("<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<boundaryIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetBoundaries("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -535,22 +523,7 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetBoundariesAsync("<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<boundaryIds>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetBoundariesAsync("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -612,22 +585,22 @@ new List<object>()
 
             RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -636,27 +609,27 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
@@ -692,22 +665,22 @@ new List<object>()
 
             RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -716,27 +689,27 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
@@ -798,22 +771,7 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -843,22 +801,7 @@ new List<object>()
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new List<string>()
-{
-"<parentIds>"
-}, 123.45, 123.45, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result[0].GetProperty("partyId").ToString());
@@ -920,22 +863,22 @@ new List<object>()
 
             RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -944,27 +887,27 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
@@ -1000,22 +943,22 @@ new List<object>()
 
             RequestContent content = RequestContent.Create(new
             {
-                ids = new List<object>()
-{
+                ids = new object[]
+            {
 "<ids>"
-},
-                names = new List<object>()
-{
+            },
+                names = new object[]
+            {
 "<names>"
-},
-                propertyFilters = new List<object>()
-{
+            },
+                propertyFilters = new object[]
+            {
 "<propertyFilters>"
-},
-                statuses = new List<object>()
-{
+            },
+                statuses = new object[]
+            {
 "<statuses>"
-},
+            },
                 minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
                 minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -1024,27 +967,27 @@ new List<object>()
                 skipToken = "<skipToken>",
                 parentType = "Field",
                 type = "<type>",
-                parentIds = new List<object>()
-{
+                parentIds = new object[]
+            {
 "<parentIds>"
-},
+            },
                 minArea = 123.45,
                 maxArea = 123.45,
                 intersectsWithGeometry = new
                 {
-                    coordinates = new List<object>()
+                    coordinates = new object[]
+            {
+new object[]
 {
-new List<object>()
+new object[]
 {
-new List<object>()
-{
-new List<object>()
+new object[]
 {
 123.45
 }
 }
 }
-},
+            },
                     type = "MultiPolygon",
                 },
             });
