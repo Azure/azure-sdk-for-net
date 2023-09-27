@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CheckPrincipalAccess()
+        public void Example_CheckPrincipalAccess_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -51,7 +51,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CheckPrincipalAccess_Async()
+        public async Task Example_CheckPrincipalAccess_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -161,7 +161,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignments()
+        public void Example_GetRoleAssignments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -175,7 +175,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignments_Async()
+        public async Task Example_GetRoleAssignments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -227,7 +227,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateRoleAssignment()
+        public void Example_CreateRoleAssignment_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -247,7 +247,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateRoleAssignment_Async()
+        public async Task Example_CreateRoleAssignment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -317,7 +317,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignmentById()
+        public void Example_GetRoleAssignmentById_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -331,7 +331,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignmentById_Async()
+        public async Task Example_GetRoleAssignmentById_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -381,7 +381,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteRoleAssignmentById()
+        public void Example_DeleteRoleAssignmentById_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -393,7 +393,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteRoleAssignmentById_Async()
+        public async Task Example_DeleteRoleAssignmentById_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
