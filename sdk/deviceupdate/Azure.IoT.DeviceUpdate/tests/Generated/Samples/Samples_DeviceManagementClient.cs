@@ -21,7 +21,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceClass_ShortVersion()
+        public void Example_GetDeviceClass()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClass_ShortVersion_Async()
+        public async Task Example_GetDeviceClass_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -97,7 +97,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateDeviceClass_ShortVersion()
+        public void Example_UpdateDeviceClass()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -116,7 +116,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateDeviceClass_ShortVersion_Async()
+        public async Task Example_UpdateDeviceClass_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -189,7 +189,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDeviceClass_ShortVersion()
+        public void Example_DeleteDeviceClass()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -201,7 +201,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeviceClass_ShortVersion_Async()
+        public async Task Example_DeleteDeviceClass_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -237,7 +237,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDevice_ShortVersion()
+        public void Example_GetDevice()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -253,7 +253,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDevice_ShortVersion_Async()
+        public async Task Example_GetDevice_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -353,7 +353,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceModule_ShortVersion()
+        public void Example_GetDeviceModule()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -369,7 +369,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceModule_ShortVersion_Async()
+        public async Task Example_GetDeviceModule_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -469,7 +469,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateCompliance_ShortVersion()
+        public void Example_GetUpdateCompliance()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -486,7 +486,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateCompliance_ShortVersion_Async()
+        public async Task Example_GetUpdateCompliance_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -537,7 +537,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGroup_ShortVersion()
+        public void Example_GetGroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -553,7 +553,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGroup_ShortVersion_Async()
+        public async Task Example_GetGroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -611,7 +611,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteGroup_ShortVersion()
+        public void Example_DeleteGroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -623,7 +623,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteGroup_ShortVersion_Async()
+        public async Task Example_DeleteGroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -659,7 +659,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateComplianceForGroup_ShortVersion()
+        public void Example_GetUpdateComplianceForGroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -676,7 +676,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateComplianceForGroup_ShortVersion_Async()
+        public async Task Example_GetUpdateComplianceForGroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -727,7 +727,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployment_ShortVersion()
+        public void Example_GetDeployment()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -746,7 +746,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployment_ShortVersion_Async()
+        public async Task Example_GetDeployment_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -829,7 +829,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateDeployment_ShortVersion()
+        public void Example_CreateOrUpdateDeployment()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -863,7 +863,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateDeployment_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateDeployment_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1021,7 +1021,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDeployment_ShortVersion()
+        public void Example_DeleteDeployment()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1033,7 +1033,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeployment_ShortVersion_Async()
+        public async Task Example_DeleteDeployment_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1069,7 +1069,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeploymentStatus_ShortVersion()
+        public void Example_GetDeploymentStatus()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1087,7 +1087,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentStatus_ShortVersion_Async()
+        public async Task Example_GetDeploymentStatus_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1179,7 +1179,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceClassSubgroup_ShortVersion()
+        public void Example_GetDeviceClassSubgroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1195,7 +1195,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroup_ShortVersion_Async()
+        public async Task Example_GetDeviceClassSubgroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1247,7 +1247,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDeviceClassSubgroup_ShortVersion()
+        public void Example_DeleteDeviceClassSubgroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1259,7 +1259,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeviceClassSubgroup_ShortVersion_Async()
+        public async Task Example_DeleteDeviceClassSubgroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1295,7 +1295,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceClassSubgroupUpdateCompliance_ShortVersion()
+        public void Example_GetDeviceClassSubgroupUpdateCompliance()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1312,7 +1312,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroupUpdateCompliance_ShortVersion_Async()
+        public async Task Example_GetDeviceClassSubgroupUpdateCompliance_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1363,7 +1363,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBestUpdatesForDeviceClassSubgroup_ShortVersion()
+        public void Example_GetBestUpdatesForDeviceClassSubgroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1382,7 +1382,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBestUpdatesForDeviceClassSubgroup_ShortVersion_Async()
+        public async Task Example_GetBestUpdatesForDeviceClassSubgroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1443,7 +1443,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeploymentForDeviceClassSubgroup_ShortVersion()
+        public void Example_GetDeploymentForDeviceClassSubgroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1462,7 +1462,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentForDeviceClassSubgroup_ShortVersion_Async()
+        public async Task Example_GetDeploymentForDeviceClassSubgroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1545,7 +1545,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDeploymentForDeviceClassSubgroup_ShortVersion()
+        public void Example_DeleteDeploymentForDeviceClassSubgroup()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1557,7 +1557,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeploymentForDeviceClassSubgroup_ShortVersion_Async()
+        public async Task Example_DeleteDeploymentForDeviceClassSubgroup_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1593,7 +1593,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_StopDeployment_ShortVersion()
+        public void Example_StopDeployment()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1612,7 +1612,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_StopDeployment_ShortVersion_Async()
+        public async Task Example_StopDeployment_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1695,7 +1695,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RetryDeployment_ShortVersion()
+        public void Example_RetryDeployment()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1714,7 +1714,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RetryDeployment_ShortVersion_Async()
+        public async Task Example_RetryDeployment_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1797,7 +1797,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceClassSubgroupDeploymentStatus_ShortVersion()
+        public void Example_GetDeviceClassSubgroupDeploymentStatus()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1813,7 +1813,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroupDeploymentStatus_ShortVersion_Async()
+        public async Task Example_GetDeviceClassSubgroupDeploymentStatus_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1885,7 +1885,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetOperationStatus_ShortVersion()
+        public void Example_GetOperationStatus()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1902,7 +1902,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOperationStatus_ShortVersion_Async()
+        public async Task Example_GetOperationStatus_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1971,7 +1971,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_StartLogCollection_ShortVersion()
+        public void Example_StartLogCollection()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1995,7 +1995,7 @@ deviceId = "<deviceId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_StartLogCollection_ShortVersion_Async()
+        public async Task Example_StartLogCollection_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2085,7 +2085,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLogCollection_ShortVersion()
+        public void Example_GetLogCollection()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2099,7 +2099,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLogCollection_ShortVersion_Async()
+        public async Task Example_GetLogCollection_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2153,7 +2153,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLogCollectionDetailedStatus_ShortVersion()
+        public void Example_GetLogCollectionDetailedStatus()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2167,7 +2167,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLogCollectionDetailedStatus_ShortVersion_Async()
+        public async Task Example_GetLogCollectionDetailedStatus_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2229,7 +2229,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceClasses_ShortVersion()
+        public void Example_GetDeviceClasses()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2245,7 +2245,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClasses_ShortVersion_Async()
+        public async Task Example_GetDeviceClasses_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2309,7 +2309,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetInstallableUpdatesForDeviceClasses_ShortVersion()
+        public void Example_GetInstallableUpdatesForDeviceClasses()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2326,7 +2326,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetInstallableUpdatesForDeviceClasses_ShortVersion_Async()
+        public async Task Example_GetInstallableUpdatesForDeviceClasses_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2381,7 +2381,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDevices_ShortVersion()
+        public void Example_GetDevices()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2398,7 +2398,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDevices_ShortVersion_Async()
+        public async Task Example_GetDevices_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2501,7 +2501,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetGroups_ShortVersion()
+        public void Example_GetGroups()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2518,7 +2518,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetGroups_ShortVersion_Async()
+        public async Task Example_GetGroups_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2579,7 +2579,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBestUpdatesForGroups_ShortVersion()
+        public void Example_GetBestUpdatesForGroups()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2599,7 +2599,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBestUpdatesForGroups_ShortVersion_Async()
+        public async Task Example_GetBestUpdatesForGroups_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2663,7 +2663,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeploymentsForGroups_ShortVersion()
+        public void Example_GetDeploymentsForGroups()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2683,7 +2683,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentsForGroups_ShortVersion_Async()
+        public async Task Example_GetDeploymentsForGroups_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2769,7 +2769,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceClassSubgroupsForGroups_ShortVersion()
+        public void Example_GetDeviceClassSubgroupsForGroups()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2786,7 +2786,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceClassSubgroupsForGroups_ShortVersion_Async()
+        public async Task Example_GetDeviceClassSubgroupsForGroups_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2841,7 +2841,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeploymentsForDeviceClassSubgroups_ShortVersion()
+        public void Example_GetDeploymentsForDeviceClassSubgroups()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2861,7 +2861,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentsForDeviceClassSubgroups_ShortVersion_Async()
+        public async Task Example_GetDeploymentsForDeviceClassSubgroups_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2947,7 +2947,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeviceStatesForDeviceClassSubgroupDeployments_ShortVersion()
+        public void Example_GetDeviceStatesForDeviceClassSubgroupDeployments()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2965,7 +2965,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeviceStatesForDeviceClassSubgroupDeployments_ShortVersion_Async()
+        public async Task Example_GetDeviceStatesForDeviceClassSubgroupDeployments_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3021,7 +3021,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetOperationStatuses_ShortVersion()
+        public void Example_GetOperationStatuses()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3039,7 +3039,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOperationStatuses_ShortVersion_Async()
+        public async Task Example_GetOperationStatuses_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3111,7 +3111,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLogCollections_ShortVersion()
+        public void Example_GetLogCollections()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3126,7 +3126,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLogCollections_ShortVersion_Async()
+        public async Task Example_GetLogCollections_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3183,7 +3183,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetHealthOfDevices_ShortVersion()
+        public void Example_GetHealthOfDevices()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3200,7 +3200,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetHealthOfDevices_ShortVersion_Async()
+        public async Task Example_GetHealthOfDevices_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3257,7 +3257,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ImportDevices_ShortVersion()
+        public void Example_ImportDevices()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3269,7 +3269,7 @@ moduleId = "<moduleId>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportDevices_ShortVersion_Async()
+        public async Task Example_ImportDevices_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
