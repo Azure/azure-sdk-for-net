@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Account.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAccountProperties()
+        public void Example_GetAccountProperties_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAccountProperties_Async()
+        public async Task Example_GetAccountProperties_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateAccountProperties()
+        public void Example_UpdateAccountProperties_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateAccountProperties_Async()
+        public async Task Example_UpdateAccountProperties_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -290,7 +290,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAccessKeys()
+        public void Example_GetAccessKeys_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -304,7 +304,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAccessKeys_Async()
+        public async Task Example_GetAccessKeys_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -348,7 +348,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RegenerateAccessKey()
+        public void Example_RegenerateAccessKey_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -363,7 +363,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RegenerateAccessKey_Async()
+        public async Task Example_RegenerateAccessKey_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -416,7 +416,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCollections()
+        public void Example_GetCollections_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -431,7 +431,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCollections_Async()
+        public async Task Example_GetCollections_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -498,7 +498,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetResourceSetRules()
+        public void Example_GetResourceSetRules_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -513,7 +513,7 @@ namespace Azure.Analytics.Purview.Account.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetResourceSetRules_Async()
+        public async Task Example_GetResourceSetRules_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
