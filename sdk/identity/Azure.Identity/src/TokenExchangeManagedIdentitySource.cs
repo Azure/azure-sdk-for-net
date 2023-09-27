@@ -83,7 +83,6 @@ namespace Azure.Identity
                         semaphore.Release();
                     }
                 }
-
                 return _tokenFileContents;
             }
         }
