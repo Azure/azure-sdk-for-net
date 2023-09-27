@@ -345,6 +345,80 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions/{portalRevisionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalRevision_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portalRevisionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementPortalRevisionResource>> GetIfExistsAsync(string portalRevisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
+
+            using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementPortalRevisionPortalRevisionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalRevisionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementPortalRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalRevisionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions/{portalRevisionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalRevision_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portalRevisionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementPortalRevisionResource> GetIfExists(string portalRevisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
+
+            using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementPortalRevisionPortalRevisionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalRevisionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementPortalRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalRevisionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApiManagementPortalRevisionResource> IEnumerable<ApiManagementPortalRevisionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkId"> The ID of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseReplicationLinkResource>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
+
+            using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseReplicationLinkSqlPoolReplicationLinksRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseReplicationLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkId"> The ID of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public virtual NullableResponse<SynapseReplicationLinkResource> GetIfExists(string linkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
+
+            using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseReplicationLinkSqlPoolReplicationLinksRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseReplicationLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SynapseReplicationLinkResource> IEnumerable<SynapseReplicationLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

@@ -38,5 +38,26 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(transferId, file.Id);
             Assert.AreEqual(filePath, file.FilePath);
         }
+
+        [Test]
+        public async Task LoadExistingJobPlanFile()
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            string transferId = GetNewTransferId();
+
+            // Setup existing job plan file
+            string filePath = Path.Combine(test.DirectoryPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
+            var data = Encoding.UTF8.GetBytes("Hello World!");
+            using (FileStream fileStream = File.OpenWrite(filePath))
+            {
+                await fileStream.WriteAsync(data, 0, data.Length);
+            }
+
+            JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(filePath);
+
+            Assert.NotNull(jobPlanFile);
+            Assert.AreEqual(transferId, jobPlanFile.Id);
+            Assert.AreEqual(filePath, jobPlanFile.FilePath);
+        }
     }
 }

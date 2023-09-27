@@ -1,5 +1,16 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fix LRO in ProtectionContainers PUT operation
+
+### Other Changes
+
 ## 1.1.0 (2023-09-08)
 
 ### Features Added

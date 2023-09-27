@@ -13,11 +13,21 @@ namespace: Azure.ResourceManager.Synapse
 tag: package-composite-v2
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update
+  - SqlPoolSensitivityLabels_CreateOrUpdate
+  - SqlPoolSensitivityLabels_Delete
 skip-csproj: true
 use-core-datafactory-replacements: false
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-mapping:
   AzureADOnlyAuthentication: SynapseAadOnlyAuthentication
@@ -172,6 +182,8 @@ rename-mapping:
   KustoPoolUpdate.properties.workspaceUID: WorkspaceUid|uuid
   PrivateLinkResources: SynapseKustoPoolPrivateLinkList
   KustoPoolPrivateLinkResources: SynapseKustoPoolPrivateLinkData
+  IntegrationRuntimeStatus.type: RuntimeType
+  EntityReference.type: IntegrationRuntimeEntityReferenceType
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
@@ -196,7 +208,7 @@ prepend-rp-prefix:
   - ExtendedSqlPoolBlobAuditingPolicyListResult
   - GeoBackupPolicy
   - GeoBackupPolicyListResult
-  - IPFirewallRuleInfo
+  - IpFirewallRuleInfo
   - Key
   - KustoPool
   - MaintenanceWindows
@@ -282,7 +294,7 @@ prepend-rp-prefix:
   - IntegrationRuntimeEntityReferenceType
   - IntegrationRuntimeInternalChannelEncryptionMode
   - IntegrationRuntimeLicenseType
-  - IntegrationRuntimeNodeIPAddress
+  - IntegrationRuntimeNodeIpAddress
   - IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
   - IntegrationRuntimeOutboundNetworkDependenciesEndpoint
   - IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
@@ -295,8 +307,8 @@ prepend-rp-prefix:
   - IntegrationRuntimeUpdateResult
   - IotHubDataConnection
   - IotHubDataFormat
-  - IPFirewallRuleInfoListResult
-  - IPFirewallRuleProperties
+  - IpFirewallRuleInfoListResult
+  - IpFirewallRuleProperties
   - LanguageExtension
   - LanguageExtensionName
   - LanguageExtensionsList

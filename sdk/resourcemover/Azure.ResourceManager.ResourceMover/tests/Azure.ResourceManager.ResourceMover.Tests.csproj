@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Remove="SessionRecords\**" />
+    <EmbeddedResource Remove="SessionRecords\**" />
+    <None Remove="SessionRecords\**" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.ResourceMover.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Network" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\MoverResourceTests\" />
   </ItemGroup>
 </Project>

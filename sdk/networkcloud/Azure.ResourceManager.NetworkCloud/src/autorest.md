@@ -11,6 +11,9 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/ed9bde6a3db71b84fdba
 #tag: package-2023-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -119,7 +122,7 @@ prepend-rp-prefix:
   - L3Network
   - NetworkInterface
   - Nic
-  - OSDisk
+  - OsDisk
   - Rack
   - RackDefinition
   - RackSku

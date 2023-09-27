@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Peering
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PeeringServiceResource>> GetIfExistsAsync(string peeringServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
+
+            using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _peeringServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, peeringServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PeeringServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new PeeringServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
+        public virtual NullableResponse<PeeringServiceResource> GetIfExists(string peeringServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
+
+            using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _peeringServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, peeringServiceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PeeringServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new PeeringServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<PeeringServiceResource> IEnumerable<PeeringServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

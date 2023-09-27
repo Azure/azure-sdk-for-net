@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Galleries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryName"> The name of the gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevCenterGalleryResource>> GetIfExistsAsync(string galleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+
+            using var scope = _devCenterGalleryGalleriesClientDiagnostics.CreateScope("DevCenterGalleryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devCenterGalleryGalleriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterGalleryResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterGalleryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Galleries_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryName"> The name of the gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
+        public virtual NullableResponse<DevCenterGalleryResource> GetIfExists(string galleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+
+            using var scope = _devCenterGalleryGalleriesClientDiagnostics.CreateScope("DevCenterGalleryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devCenterGalleryGalleriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterGalleryResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterGalleryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DevCenterGalleryResource> IEnumerable<DevCenterGalleryResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

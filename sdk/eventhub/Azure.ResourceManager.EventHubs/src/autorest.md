@@ -10,6 +10,9 @@ output-folder: $(this-folder)/Generated
 require: https://github.com/Azure/azure-rest-api-specs/blob/969e0846e56a0869203bcc52773415c71115f59e/specification/eventhub/resource-manager/readme.md
 # tag: package-2022-10-preview
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 
 modelerfour:

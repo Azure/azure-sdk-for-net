@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (HardwareSecurityModulesPrivateLinkResource item in cloudHsmCluster.GetCloudHsmClusterPrivateLinkResourcesAsync())
+            await foreach (HardwareSecurityModulesPrivateLinkData item in cloudHsmCluster.GetCloudHsmClusterPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

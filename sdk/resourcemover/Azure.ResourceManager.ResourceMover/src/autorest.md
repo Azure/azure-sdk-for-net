@@ -8,9 +8,13 @@ azure-arm: true
 csharp: true
 library-name: ResourceMover
 namespace: Azure.ResourceManager.ResourceMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/resourcemover/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/bf2585e9f0696cc8d5f230481612a37eac542f39/specification/resourcemover/resource-manager/readme.md
+#tag: package-2023-08-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -66,8 +70,9 @@ rename-mapping:
   LoadBalancerBackendAddressPoolReference: LoadBalancerBackendAddressPoolReferenceInfo
   LoadBalancerNatRuleReference: LoadBalancerNatRuleReferenceInfo
   MoveCollection: MoverResourceSet
-  MoveCollectionProperties.sourceRegion: -|azure-location
-  MoveCollectionProperties.targetRegion: -|azure-location
+  MoveCollectionProperties.sourceRegion: sourceLocation|azure-location
+  MoveCollectionProperties.targetRegion: targetLocation|azure-location
+  MoveCollectionProperties.moveRegion: moveLocation|azure-location
   MoveCollectionProperties: MoverResourceSetProperties
   MoveResource: MoverResource
   MoveResourceCollection: MoverResourceList

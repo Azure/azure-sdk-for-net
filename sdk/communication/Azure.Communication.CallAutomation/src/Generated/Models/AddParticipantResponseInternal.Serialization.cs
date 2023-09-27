@@ -20,6 +20,7 @@ namespace Azure.Communication.CallAutomation
             }
             Optional<CallParticipantInternal> participant = default;
             Optional<string> operationContext = default;
+            Optional<string> invitationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("participant"u8))
@@ -36,8 +37,13 @@ namespace Azure.Communication.CallAutomation
                     operationContext = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("invitationId"u8))
+                {
+                    invitationId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AddParticipantResponseInternal(participant.Value, operationContext.Value);
+            return new AddParticipantResponseInternal(participant.Value, operationContext.Value, invitationId.Value);
         }
     }
 }

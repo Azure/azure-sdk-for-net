@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricExternalNetworkResource>> GetIfExistsAsync(string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricExternalNetworkExternalNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, externalNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricExternalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricExternalNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricExternalNetworkResource> GetIfExists(string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricExternalNetworkExternalNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, externalNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricExternalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricExternalNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFabricExternalNetworkResource> IEnumerable<NetworkFabricExternalNetworkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

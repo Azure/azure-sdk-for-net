@@ -1,5 +1,17 @@
 # Release History
 
+## 1.3.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed `GetConfigurationSettings(SettingSelector)` not setting `ContentType` and `LastModified` properties [(#38524)](https://github.com/Azure/azure-sdk-for-net/issues/38524).
+
+### Other Changes
+
 ## 1.2.1 (2023-09-13)
 
 ### Bugs Fixed
