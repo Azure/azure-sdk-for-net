@@ -12,7 +12,7 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
     /// </summary>
     internal class TranscriptionData : TranscriptionPackageBase
     {
-        internal TranscriptionData(string text, string format, float confidence, int offset, IEnumerable<Word> words, string participantRawID, string resultStatus)
+        internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<Word> words, string participantRawID, string resultStatus)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
@@ -39,13 +39,13 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// <summary>
         /// Confidence of recognition of the whole phrase, from 0.0 (no confidence) to 1.0 (full confidence)
         /// </summary>
-        public float Confidence { get; set; }
+        public double Confidence { get; set; }
 
         /// <summary>
         /// The position of this payload
         /// </summary>
 
-        public int Offset { get; set; }
+        public ulong Offset { get; set; }
 
         /// <summary>
         /// The result for each word of the phrase

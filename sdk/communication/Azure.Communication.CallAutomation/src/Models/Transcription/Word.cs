@@ -16,6 +16,6 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// The word's position within the phrase.
         /// </summary>
         [JsonPropertyName("offset")]
-        public int Offset { get; set; }
+        public ulong Offset { get; set; }
     }
 }

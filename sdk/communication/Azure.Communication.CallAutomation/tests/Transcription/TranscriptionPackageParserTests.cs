@@ -73,7 +73,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             };
             jsonData["transcriptionData"]["text"] = "Hello World!";
             jsonData["transcriptionData"]["format"] = "display";
-            jsonData["transcriptionData"]["confidence"] = 0.98f;
+            jsonData["transcriptionData"]["confidence"] = 0.98d;
             jsonData["transcriptionData"]["offset"] = 1;
 
             JArray words = new();
@@ -112,7 +112,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             };
             jsonData["transcriptionData"]["text"] = "Hello World!";
             jsonData["transcriptionData"]["format"] = "display";
-            jsonData["transcriptionData"]["confidence"] = 0.98f;
+            jsonData["transcriptionData"]["confidence"] = 0.98d;
             jsonData["transcriptionData"]["offset"] = 1;
 
             JArray words = new();
@@ -155,8 +155,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             Assert.IsNotNull(transcription);
             Assert.AreEqual("Hello World!", transcription.Text);
             Assert.AreEqual(TextFormat.Display, transcription.Format);
-            Assert.AreEqual(0.98f, transcription.Confidence);
-            Assert.AreEqual(0.98, transcription.Confidence, 0.02);
+            Assert.AreEqual(0.98d, transcription.Confidence);
             Assert.AreEqual(1, transcription.Offset);
 
             // validate individual words

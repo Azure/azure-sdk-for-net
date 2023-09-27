@@ -27,14 +27,14 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// Confidence of recognition of the whole phrase, from 0.0 (no confidence) to 1.0 (full confidence)
         /// </summary>
         [JsonPropertyName("confidence")]
-        public float Confidence { get; set; }
+        public double Confidence { get; set; }
 
         /// <summary>
         /// The position of this payload
         /// </summary>
 
         [JsonPropertyName("offset")]
-        public int Offset { get; set; }
+        public ulong Offset { get; set; }
 
         /// <summary>
         /// The result for each word of the phrase
