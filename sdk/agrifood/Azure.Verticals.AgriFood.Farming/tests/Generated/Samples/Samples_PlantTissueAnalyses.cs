@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPlantTissueAnalysis()
+        public void Example_GetPlantTissueAnalysis_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPlantTissueAnalysis_Async()
+        public async Task Example_GetPlantTissueAnalysis_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -131,7 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -145,7 +145,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -305,7 +305,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -316,7 +316,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -349,7 +349,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails()
+        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -364,7 +364,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -427,7 +427,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPlantTissueAnalysesByPartyId()
+        public void Example_GetPlantTissueAnalysesByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -441,7 +441,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPlantTissueAnalysesByPartyId_Async()
+        public async Task Example_GetPlantTissueAnalysesByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -589,7 +589,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPlantTissueAnalyses()
+        public void Example_GetPlantTissueAnalyses_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -603,7 +603,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPlantTissueAnalyses_Async()
+        public async Task Example_GetPlantTissueAnalyses_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -751,7 +751,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob()
+        public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
@@ -767,7 +767,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
+        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");

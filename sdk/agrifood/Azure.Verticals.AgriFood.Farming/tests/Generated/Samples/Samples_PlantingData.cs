@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPlantingData()
+        public void Example_GetPlantingData_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPlantingData_Async()
+        public async Task Example_GetPlantingData_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -135,7 +135,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -149,7 +149,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -305,7 +305,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -316,7 +316,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -349,7 +349,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails()
+        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -364,7 +364,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_Async()
+        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -427,7 +427,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllPlantingDataByPartyId()
+        public void Example_GetAllPlantingDataByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -441,7 +441,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllPlantingDataByPartyId_Async()
+        public async Task Example_GetAllPlantingDataByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -581,7 +581,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllPlantingData()
+        public void Example_GetAllPlantingData_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -595,7 +595,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllPlantingData_Async()
+        public async Task Example_GetAllPlantingData_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -735,7 +735,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob()
+        public void Example_CreateCascadeDeleteJob_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");
@@ -751,7 +751,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_Async()
+        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             PlantingData client = new FarmBeatsClient(credential).GetPlantingDataClient(apiVersion: "2022-11-01-preview");

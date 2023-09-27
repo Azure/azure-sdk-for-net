@@ -21,7 +21,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCropProduct()
+        public void Example_GetCropProduct_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
@@ -34,7 +34,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCropProduct_Async()
+        public async Task Example_GetCropProduct_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
@@ -107,7 +107,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
@@ -121,7 +121,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
@@ -249,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
@@ -260,7 +260,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
@@ -293,7 +293,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCropProducts()
+        public void Example_GetCropProducts_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
@@ -307,7 +307,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCropProducts_Async()
+        public async Task Example_GetCropProducts_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");

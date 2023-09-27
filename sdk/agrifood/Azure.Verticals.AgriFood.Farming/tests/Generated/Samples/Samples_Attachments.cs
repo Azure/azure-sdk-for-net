@@ -22,7 +22,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAttachment()
+        public void Example_GetAttachment_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -35,7 +35,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAttachment_Async()
+        public async Task Example_GetAttachment_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -100,7 +100,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -114,7 +114,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -182,7 +182,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -193,7 +193,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -226,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Download()
+        public void Example_Download_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -243,7 +243,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Download_Async()
+        public async Task Example_Download_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -294,7 +294,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAttachmentsByPartyId()
+        public void Example_GetAttachmentsByPartyId_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
@@ -308,7 +308,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAttachmentsByPartyId_Async()
+        public async Task Example_GetAttachmentsByPartyId_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflow()
+        public void Example_GetWorkflow_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflow_Async()
+        public async Task Example_GetWorkflow_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrReplaceWorkflow()
+        public void Example_CreateOrReplaceWorkflow_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -143,7 +143,7 @@ type = "when_term_creation_is_requested",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplaceWorkflow_Async()
+        public async Task Example_CreateOrReplaceWorkflow_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -261,7 +261,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteWorkflow()
+        public void Example_DeleteWorkflow_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -273,7 +273,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteWorkflow_Async()
+        public async Task Example_DeleteWorkflow_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -309,7 +309,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SubmitUserRequests()
+        public void Example_SubmitUserRequests_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -338,7 +338,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SubmitUserRequests_Async()
+        public async Task Example_SubmitUserRequests_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -431,7 +431,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflowRun()
+        public void Example_GetWorkflowRun_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -447,7 +447,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowRun_Async()
+        public async Task Example_GetWorkflowRun_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -519,7 +519,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CancelWorkflowRun()
+        public void Example_CancelWorkflowRun_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -532,7 +532,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelWorkflowRun_Async()
+        public async Task Example_CancelWorkflowRun_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -577,7 +577,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflowTask()
+        public void Example_GetWorkflowTask_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -599,7 +599,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowTask_Async()
+        public async Task Example_GetWorkflowTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -685,7 +685,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ApproveApprovalTask()
+        public void Example_ApproveApprovalTask_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -698,7 +698,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ApproveApprovalTask_Async()
+        public async Task Example_ApproveApprovalTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -743,7 +743,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RejectApprovalTask()
+        public void Example_RejectApprovalTask_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -756,7 +756,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RejectApprovalTask_Async()
+        public async Task Example_RejectApprovalTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -801,7 +801,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReassignWorkflowTask()
+        public void Example_ReassignWorkflowTask_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -814,7 +814,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReassignWorkflowTask_Async()
+        public async Task Example_ReassignWorkflowTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -873,7 +873,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateTaskStatus()
+        public void Example_UpdateTaskStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -889,7 +889,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateTaskStatus_Async()
+        public async Task Example_UpdateTaskStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -939,7 +939,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflows()
+        public void Example_GetWorkflows_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -958,7 +958,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflows_Async()
+        public async Task Example_GetWorkflows_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1029,7 +1029,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflowRuns()
+        public void Example_GetWorkflowRuns_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1050,7 +1050,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowRuns_Async()
+        public async Task Example_GetWorkflowRuns_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1133,7 +1133,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflowTasks()
+        public void Example_GetWorkflowTasks_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1156,7 +1156,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowTasks_Async()
+        public async Task Example_GetWorkflowTasks_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
