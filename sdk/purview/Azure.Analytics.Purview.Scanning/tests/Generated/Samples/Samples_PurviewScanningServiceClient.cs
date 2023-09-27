@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetKeyVaultReference()
+        public void Example_GetKeyVaultReference_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetKeyVaultReference_Async()
+        public async Task Example_GetKeyVaultReference_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateKeyVaultReference()
+        public void Example_CreateOrUpdateKeyVaultReference_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateKeyVaultReference_Async()
+        public async Task Example_CreateOrUpdateKeyVaultReference_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteKeyVaultReference()
+        public void Example_DeleteKeyVaultReference_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteKeyVaultReference_Async()
+        public async Task Example_DeleteKeyVaultReference_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScanRuleset()
+        public void Example_GetScanRuleset_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScanRuleset_Async()
+        public async Task Example_GetScanRuleset_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -293,7 +293,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateScanRuleset()
+        public void Example_CreateOrUpdateScanRuleset_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -309,7 +309,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateScanRuleset_Async()
+        public async Task Example_CreateOrUpdateScanRuleset_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -397,7 +397,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteScanRuleset()
+        public void Example_DeleteScanRuleset_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -412,7 +412,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteScanRuleset_Async()
+        public async Task Example_DeleteScanRuleset_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -465,7 +465,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesetsForDataSource()
+        public void Example_GetSystemRulesetsForDataSource_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -480,7 +480,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesetsForDataSource_Async()
+        public async Task Example_GetSystemRulesetsForDataSource_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -533,7 +533,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesetsForVersion()
+        public void Example_GetSystemRulesetsForVersion_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -548,7 +548,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesetsForVersion_Async()
+        public async Task Example_GetSystemRulesetsForVersion_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -601,7 +601,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLatestSystemRulesets()
+        public void Example_GetLatestSystemRulesets_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -616,7 +616,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLatestSystemRulesets_Async()
+        public async Task Example_GetLatestSystemRulesets_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -669,7 +669,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetKeyVaultReferences()
+        public void Example_GetKeyVaultReferences_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -684,7 +684,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetKeyVaultReferences_Async()
+        public async Task Example_GetKeyVaultReferences_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -735,7 +735,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassificationRules()
+        public void Example_GetClassificationRules_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -751,7 +751,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationRules_Async()
+        public async Task Example_GetClassificationRules_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -801,7 +801,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDataSources()
+        public void Example_GetDataSources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -817,7 +817,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDataSources_Async()
+        public async Task Example_GetDataSources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -923,7 +923,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScanRulesets()
+        public void Example_GetScanRulesets_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -939,7 +939,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScanRulesets_Async()
+        public async Task Example_GetScanRulesets_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -995,7 +995,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesets()
+        public void Example_GetSystemRulesets_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1011,7 +1011,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesets_Async()
+        public async Task Example_GetSystemRulesets_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1067,7 +1067,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesetsVersions()
+        public void Example_GetSystemRulesetsVersions_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1083,7 +1083,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesetsVersions_Async()
+        public async Task Example_GetSystemRulesetsVersions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

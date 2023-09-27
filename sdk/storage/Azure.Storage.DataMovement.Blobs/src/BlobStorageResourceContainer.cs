@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The Storage Resource class for the Blob Client. Supports blob prefix directories as well as the root container.
     /// </summary>
-    internal class BlobStorageResourceContainer : StorageResourceContainer
+    internal class BlobStorageResourceContainer : StorageResourceContainerInternal
     {
         internal BlobContainerClient BlobContainerClient { get; }
         internal string DirectoryPrefix { get; }
