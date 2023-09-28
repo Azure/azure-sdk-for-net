@@ -188,7 +188,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 catch
                 {
                     AzureMonitorAspNetCoreEventSource.Log.NoInstrumentationPackageReference(packageActionPair.Key);
-                    Console.WriteLine($"No instrumentation package found with name: {packageActionPair.Key}");
                 }
 
                 if (instrumentationAssembly == null)

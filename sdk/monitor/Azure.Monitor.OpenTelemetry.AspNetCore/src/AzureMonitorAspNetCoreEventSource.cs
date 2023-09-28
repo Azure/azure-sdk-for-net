@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         [Event(1, Message = "Failed to configure AzureMonitorOptions using the connection string from environment variables due to an exception: {0}", Level = EventLevel.Error)]
         public void ConfigureFailed(string exceptionMessage) => WriteEvent(1, exceptionMessage);
 
-        [Event(2, Message = "Package reference for {0} found. Backing off from its vendor instrumentation.", Level = EventLevel.Warning)]
+        [Event(2, Message = "Package reference for {0} found. Backing off from default included instrumentation. Action Required: You must manually configure this instrumentation.", Level = EventLevel.Warning)]
         public void FoundInstrumentationPackageReference(string packageName) => WriteEvent(1, packageName);
 
         [Event(3, Message = "No instrumentation package found with name: {0}.", Level = EventLevel.Verbose)]
