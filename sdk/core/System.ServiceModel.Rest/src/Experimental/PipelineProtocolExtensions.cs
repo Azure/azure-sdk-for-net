@@ -8,20 +8,8 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
     public static class PipelineProtocolExtensions
     {
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="pipeline"></param>
-        /// <param name="message"></param>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="RequestErrorException"></exception>
         public static async ValueTask<PipelineResponse> ProcessMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, RequestOptions? requestContext, CancellationToken cancellationToken = default)
         {
             await pipeline.SendAsync(message).ConfigureAwait(false);
@@ -39,15 +27,6 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
             throw new RequestErrorException(message.Response);
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="pipeline"></param>
-        /// <param name="message"></param>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="RequestErrorException"></exception>
         public static PipelineResponse ProcessMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, RequestOptions? requestContext, CancellationToken cancellationToken = default)
         {
             pipeline.Send(message);
@@ -65,14 +44,6 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
             throw new RequestErrorException(message.Response);
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="pipeline"></param>
-        /// <param name="message"></param>
-        /// <param name="clientDiagnostics"></param>
-        /// <param name="requestContext"></param>
-        /// <returns></returns>
         public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions? requestContext)
         {
             PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
@@ -87,14 +58,6 @@ namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
             }
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="pipeline"></param>
-        /// <param name="message"></param>
-        /// <param name="clientDiagnostics"></param>
-        /// <param name="requestContext"></param>
-        /// <returns></returns>
         public static NullableResult<bool> ProcessHeadAsBoolMessage(this Pipeline<PipelineMessage> pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions? requestContext)
         {
             PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
