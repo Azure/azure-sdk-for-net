@@ -10,6 +10,8 @@
 
 - Fixed `GetConfigurationSettings(SettingSelector)` not setting `ContentType` and `LastModified` properties [(#38524)](https://github.com/Azure/azure-sdk-for-net/issues/38524).
 
+- `FeatureFlagConfigurationSetting`  will now allow custom attributes under the `conditions` element in the setting value.  Previously, only `client_filters` was recognized and other data would be discarded.
+
 ### Other Changes
 
 ## 1.2.1 (2023-09-13)

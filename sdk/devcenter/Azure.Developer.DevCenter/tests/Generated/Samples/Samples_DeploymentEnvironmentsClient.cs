@@ -16,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Samples
 {
-    public class Samples_DeploymentEnvironmentsClient
+    public partial class Samples_DeploymentEnvironmentsClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironment()
+        public void Example_GetEnvironment_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -32,12 +32,11 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironment_Async()
+        public async Task Example_GetEnvironment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -49,7 +48,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -102,7 +100,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCatalog()
+        public void Example_GetCatalog_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -116,7 +114,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalog_Async()
+        public async Task Example_GetCatalog_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -158,7 +156,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinition()
+        public void Example_GetEnvironmentDefinition_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -174,7 +172,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinition_Async()
+        public async Task Example_GetEnvironmentDefinition_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -244,7 +242,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllEnvironments()
+        public void Example_GetAllEnvironments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -253,16 +251,15 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllEnvironments("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllEnvironments_Async()
+        public async Task Example_GetAllEnvironments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -271,10 +268,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
             }
         }
 
@@ -289,17 +285,17 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllEnvironments("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("parameters").ToString());
             }
         }
 
@@ -314,23 +310,23 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("parameters").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironments()
+        public void Example_GetEnvironments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -339,16 +335,15 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironments("<projectName>", "me"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironments_Async()
+        public async Task Example_GetEnvironments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -357,10 +352,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "me"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
             }
         }
 
@@ -375,17 +369,17 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironments("<projectName>", "me", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("parameters").ToString());
             }
         }
 
@@ -400,23 +394,23 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "me", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentType").ToString());
-                Console.WriteLine(result[0].GetProperty("user").ToString());
-                Console.WriteLine(result[0].GetProperty("provisioningState").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceGroupId").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("environmentDefinitionName").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("environmentType").ToString());
+                Console.WriteLine(result.GetProperty("user").ToString());
+                Console.WriteLine(result.GetProperty("provisioningState").ToString());
+                Console.WriteLine(result.GetProperty("resourceGroupId").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("parameters").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCatalogs()
+        public void Example_GetCatalogs_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -425,13 +419,13 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetCatalogs("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalogs_Async()
+        public async Task Example_GetCatalogs_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -440,7 +434,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetCatalogsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -455,7 +449,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetCatalogs("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -470,13 +464,13 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetCatalogsAsync("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinitions()
+        public void Example_GetEnvironmentDefinitions_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -485,15 +479,15 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitions("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinitions_Async()
+        public async Task Example_GetEnvironmentDefinitions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -502,9 +496,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
             }
         }
 
@@ -519,20 +513,20 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitions("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-                Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+                Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }
 
@@ -547,26 +541,26 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-                Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+                Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinitionsByCatalog()
+        public void Example_GetEnvironmentDefinitionsByCatalog_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -575,15 +569,15 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinitionsByCatalog_Async()
+        public async Task Example_GetEnvironmentDefinitionsByCatalog_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -592,9 +586,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
             }
         }
 
@@ -609,20 +603,20 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-                Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+                Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }
 
@@ -637,26 +631,26 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("catalogName").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("default").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("readOnly").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("required").ToString());
-                Console.WriteLine(result[0].GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("parametersSchema").ToString());
-                Console.WriteLine(result[0].GetProperty("templatePath").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("catalogName").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("default").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
+                Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
+                Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentTypes()
+        public void Example_GetEnvironmentTypes_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -665,15 +659,15 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentTypes("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentTypes_Async()
+        public async Task Example_GetEnvironmentTypes_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -682,9 +676,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentTypesAsync("<projectName>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -699,9 +693,9 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentTypes("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -716,15 +710,15 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentTypesAsync("<projectName>", maxCount: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentTargetId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEnvironment()
+        public void Example_CreateOrUpdateEnvironment_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -743,12 +737,11 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEnvironment_Async()
+        public async Task Example_CreateOrUpdateEnvironment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -767,7 +760,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
             Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -836,7 +828,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteEnvironment()
+        public void Example_DeleteEnvironment_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -851,7 +843,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteEnvironment_Async()
+        public async Task Example_DeleteEnvironment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

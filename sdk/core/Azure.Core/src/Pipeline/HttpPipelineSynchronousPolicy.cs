@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -11,6 +12,9 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a <see cref="HttpPipelinePolicy"/> that doesn't do any asynchronous or synchronously blocking operations.
     /// </summary>
+#if !NET5_0 // DynamicallyAccessedMembers in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+    [DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
+#endif
     public abstract class HttpPipelineSynchronousPolicy : HttpPipelinePolicy
     {
         private static Type[] _onReceivedResponseParameters = new[] { typeof(HttpMessage) };

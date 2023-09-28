@@ -17,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Samples
 {
-    public class Samples_ConversationAnalysisClient
+    public partial class Samples_ConversationAnalysisClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversation()
+        public void Example_AnalyzeConversation_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversation_Async()
+        public async Task Example_AnalyzeConversation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -115,14 +115,14 @@ namespace Azure.AI.Language.Conversations.Samples
                         key = new
                         {
                             query = "<query>",
-                            callingOptions = new Dictionary<string, object>()
+                            callingOptions = new Dictionary<string, object>
                             {
                                 ["verbose"] = true,
                                 ["log"] = true,
                                 ["show-all-intents"] = true,
                                 ["timezoneOffset"] = 123.45F,
                                 ["spellCheck"] = true,
-                                ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>",
+                                ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>"
                             },
                             targetProjectKind = "Luis",
                             apiVersion = "<apiVersion>",
@@ -171,14 +171,14 @@ namespace Azure.AI.Language.Conversations.Samples
                         key = new
                         {
                             query = "<query>",
-                            callingOptions = new Dictionary<string, object>()
+                            callingOptions = new Dictionary<string, object>
                             {
                                 ["verbose"] = true,
                                 ["log"] = true,
                                 ["show-all-intents"] = true,
                                 ["timezoneOffset"] = 123.45F,
                                 ["spellCheck"] = true,
-                                ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>",
+                                ["bing-spell-check-subscription-key"] = "<bing-spell-check-subscription-key>"
                             },
                             targetProjectKind = "Luis",
                             apiVersion = "<apiVersion>",
@@ -195,7 +195,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAnalyzeConversationJobStatus()
+        public void Example_GetAnalyzeConversationJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -212,7 +212,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAnalyzeConversationJobStatus_Async()
+        public async Task Example_GetAnalyzeConversationJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -297,7 +297,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversations()
+        public void Example_AnalyzeConversations_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -307,11 +307,11 @@ namespace Azure.AI.Language.Conversations.Samples
             {
                 analysisInput = new
                 {
-                    conversations = new List<object>()
-{
+                    conversations = new object[]
+            {
 new
 {
-conversationItems = new List<object>()
+conversationItems = new object[]
 {
 new
 {
@@ -324,15 +324,15 @@ id = "<id>",
 language = "<language>",
 modality = "text",
 }
-},
+            },
                 },
-                tasks = new List<object>()
-{
+                tasks = new object[]
+            {
 new
 {
 kind = "ConversationalSummarizationTask",
 }
-},
+            },
             });
             Operation<BinaryData> operation = client.AnalyzeConversations(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
@@ -346,7 +346,7 @@ kind = "ConversationalSummarizationTask",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversations_Async()
+        public async Task Example_AnalyzeConversations_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -356,11 +356,11 @@ kind = "ConversationalSummarizationTask",
             {
                 analysisInput = new
                 {
-                    conversations = new List<object>()
-{
+                    conversations = new object[]
+            {
 new
 {
-conversationItems = new List<object>()
+conversationItems = new object[]
 {
 new
 {
@@ -373,15 +373,15 @@ id = "<id>",
 language = "<language>",
 modality = "text",
 }
-},
+            },
                 },
-                tasks = new List<object>()
-{
+                tasks = new object[]
+            {
 new
 {
 kind = "ConversationalSummarizationTask",
 }
-},
+            },
             });
             Operation<BinaryData> operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
@@ -406,11 +406,11 @@ kind = "ConversationalSummarizationTask",
                 displayName = "<displayName>",
                 analysisInput = new
                 {
-                    conversations = new List<object>()
-{
+                    conversations = new object[]
+            {
 new
 {
-conversationItems = new List<object>()
+conversationItems = new object[]
 {
 new
 {
@@ -427,15 +427,15 @@ language = "<language>",
 modality = "text",
 domain = "finance",
 }
-},
+            },
                 },
-                tasks = new List<object>()
-{
+                tasks = new object[]
+            {
 new
 {
 parameters = new
 {
-summaryAspects = new List<object>()
+summaryAspects = new object[]
 {
 "issue"
 },
@@ -445,7 +445,7 @@ loggingOptOut = true,
 kind = "ConversationalSummarizationTask",
 taskName = "<taskName>",
 }
-},
+            },
             });
             Operation<BinaryData> operation = client.AnalyzeConversations(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
@@ -487,11 +487,11 @@ taskName = "<taskName>",
                 displayName = "<displayName>",
                 analysisInput = new
                 {
-                    conversations = new List<object>()
-{
+                    conversations = new object[]
+            {
 new
 {
-conversationItems = new List<object>()
+conversationItems = new object[]
 {
 new
 {
@@ -508,15 +508,15 @@ language = "<language>",
 modality = "text",
 domain = "finance",
 }
-},
+            },
                 },
-                tasks = new List<object>()
-{
+                tasks = new object[]
+            {
 new
 {
 parameters = new
 {
-summaryAspects = new List<object>()
+summaryAspects = new object[]
 {
 "issue"
 },
@@ -526,7 +526,7 @@ loggingOptOut = true,
 kind = "ConversationalSummarizationTask",
 taskName = "<taskName>",
 }
-},
+            },
             });
             Operation<BinaryData> operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, content);
             BinaryData responseData = operation.Value;
@@ -557,7 +557,7 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CancelAnalyzeConversations()
+        public void Example_CancelAnalyzeConversations_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -568,7 +568,7 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelAnalyzeConversations_Async()
+        public async Task Example_CancelAnalyzeConversations_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
