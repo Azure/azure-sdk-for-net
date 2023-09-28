@@ -56,6 +56,25 @@ namespace Azure.AI.OpenAI
             Temperature = temperature;
             InternalNonAzureModelName = internalNonAzureModelName;
         }
+
+        /// <summary>
+        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData AudioData { get; }
         /// <summary> The requested format of the transcription response data, which will influence the content and detail of the result. </summary>
         public AudioTranscriptionFormat? ResponseFormat { get; set; }
         /// <summary>
@@ -75,5 +94,7 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </summary>
         public float? Temperature { get; set; }
+        /// <summary> The model to use for this transcription request. </summary>
+        public string InternalNonAzureModelName { get; set; }
     }
 }

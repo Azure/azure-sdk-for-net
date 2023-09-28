@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Defines the possible descriptors for available audio operation responses. </summary>
-    internal readonly partial struct AudioTaskLabel : IEquatable<AudioTaskLabel>
+    public readonly partial struct AudioTaskLabel : IEquatable<AudioTaskLabel>
     {
         private readonly string _value;
 
