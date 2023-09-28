@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.AccessControl.Samples
 {
-    public class Samples_RoleAssignmentsClient
+    public partial class Samples_RoleAssignmentsClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -33,14 +32,14 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
-                actions = new List<object>()
-{
+                actions = new object[]
+            {
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-},
+            },
                 scope = "<scope>",
             });
             Response response = client.CheckPrincipalAccess(content, new ContentType("application/json"));
@@ -63,14 +62,14 @@ isDataAction = true,
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
-                actions = new List<object>()
-{
+                actions = new object[]
+            {
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-},
+            },
                 scope = "<scope>",
             });
             Response response = await client.CheckPrincipalAccessAsync(content, new ContentType("application/json"));
@@ -92,19 +91,19 @@ isDataAction = true,
                 subject = new
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                    groupIds = new List<object>()
-{
+                    groupIds = new object[]
+            {
 "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
-},
+            },
                 },
-                actions = new List<object>()
-{
+                actions = new object[]
+            {
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-},
+            },
                 scope = "<scope>",
             });
             Response response = client.CheckPrincipalAccess(content, new ContentType("application/json"));
@@ -132,19 +131,19 @@ isDataAction = true,
                 subject = new
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                    groupIds = new List<object>()
-{
+                    groupIds = new object[]
+            {
 "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
-},
+            },
                 },
-                actions = new List<object>()
-{
+                actions = new object[]
+            {
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-},
+            },
                 scope = "<scope>",
             });
             Response response = await client.CheckPrincipalAccessAsync(content, new ContentType("application/json"));
@@ -388,6 +387,7 @@ isDataAction = true,
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -400,6 +400,7 @@ isDataAction = true,
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -412,6 +413,7 @@ isDataAction = true,
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", scope: "<scope>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -424,6 +426,7 @@ isDataAction = true,
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", scope: "<scope>");
+
             Console.WriteLine(response.Status);
         }
     }

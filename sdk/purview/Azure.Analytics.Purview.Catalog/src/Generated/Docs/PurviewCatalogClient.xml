@@ -27,7 +27,7 @@ RequestContent content = RequestContent.Create(new
     offset = 1234,
     limit = 1234,
     filter = new object(),
-    facets = new List<object>()
+    facets = new object[]
     {
         new
         {
@@ -38,7 +38,7 @@ RequestContent content = RequestContent.Create(new
     },
     taxonomySetting = new
     {
-        assetTypes = new List<object>()
+        assetTypes = new object[]
         {
             "<assetTypes>"
         },
@@ -112,7 +112,7 @@ RequestContent content = RequestContent.Create(new
     offset = 1234,
     limit = 1234,
     filter = new object(),
-    facets = new List<object>()
+    facets = new object[]
     {
         new
         {
@@ -123,7 +123,7 @@ RequestContent content = RequestContent.Create(new
     },
     taxonomySetting = new
     {
-        assetTypes = new List<object>()
+        assetTypes = new object[]
         {
             "<assetTypes>"
         },

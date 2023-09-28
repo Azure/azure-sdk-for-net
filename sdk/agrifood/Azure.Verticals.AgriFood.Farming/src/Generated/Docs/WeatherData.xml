@@ -31,7 +31,7 @@ WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVer
 
 RequestContent content = RequestContent.Create(new
 {
-    locations = new List<object>()
+    locations = new object[]
     {
         new
         {
@@ -149,7 +149,7 @@ WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVer
 
 RequestContent content = RequestContent.Create(new
 {
-    locations = new List<object>()
+    locations = new object[]
     {
         new
         {

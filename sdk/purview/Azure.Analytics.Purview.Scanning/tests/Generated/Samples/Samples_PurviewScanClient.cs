@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public class Samples_PurviewScanClient
+    public partial class Samples_PurviewScanClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -123,14 +122,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new List<object>()
-{
+                    excludeUriPrefixes = new object[]
+            {
 "<excludeUriPrefixes>"
-},
-                    includeUriPrefixes = new List<object>()
-{
+            },
+                    includeUriPrefixes = new object[]
+            {
 "<includeUriPrefixes>"
-},
+            },
                 },
             });
             Response response = client.CreateOrUpdateFilter(content);
@@ -154,14 +153,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new List<object>()
-{
+                    excludeUriPrefixes = new object[]
+            {
 "<excludeUriPrefixes>"
-},
-                    includeUriPrefixes = new List<object>()
-{
+            },
+                    includeUriPrefixes = new object[]
+            {
 "<includeUriPrefixes>"
-},
+            },
                 },
             });
             Response response = await client.CreateOrUpdateFilterAsync(content);
@@ -189,7 +188,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -208,7 +206,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -231,18 +228,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new List<object>()
-{
+                                excludePrefixes = new object[]
+            {
 "<excludePrefixes>"
-},
-                                includePrefixes = new List<object>()
-{
+            },
+                                includePrefixes = new object[]
+            {
 "<includePrefixes>"
-},
-                                resources = new List<object>()
-{
+            },
+                                resources = new object[]
+            {
 "<resources>"
-},
+            },
                             },
                             credential = new
                             {
@@ -323,18 +320,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new List<object>()
-{
+                                excludePrefixes = new object[]
+            {
 "<excludePrefixes>"
-},
-                                includePrefixes = new List<object>()
-{
+            },
+                                includePrefixes = new object[]
+            {
 "<includePrefixes>"
-},
-                                resources = new List<object>()
-{
+            },
+                                resources = new object[]
+            {
 "<resources>"
-},
+            },
                             },
                             credential = new
                             {
@@ -407,7 +404,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -422,7 +418,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -519,7 +514,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -534,7 +528,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -917,24 +910,24 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             {
                                 key = new object(),
                             },
-                            minutes = new List<object>()
-{
+                            minutes = new object[]
+            {
 1234
-},
-                            hours = new List<object>()
-{
+            },
+                            hours = new object[]
+            {
 1234
-},
-                            weekDays = new List<object>()
-{
+            },
+                            weekDays = new object[]
+            {
 "Sunday"
-},
-                            monthDays = new List<object>()
-{
+            },
+                            monthDays = new object[]
+            {
 1234
-},
-                            monthlyOccurrences = new List<object>()
-{
+            },
+                            monthlyOccurrences = new object[]
+            {
 new
 {
 additionalProperties = new
@@ -944,7 +937,7 @@ key = new object(),
 day = "Sunday",
 occurrence = 1234,
 }
-},
+            },
                         },
                         timeZone = "<timeZone>",
                     },
@@ -1003,24 +996,24 @@ occurrence = 1234,
                             {
                                 key = new object(),
                             },
-                            minutes = new List<object>()
-{
+                            minutes = new object[]
+            {
 1234
-},
-                            hours = new List<object>()
-{
+            },
+                            hours = new object[]
+            {
 1234
-},
-                            weekDays = new List<object>()
-{
+            },
+                            weekDays = new object[]
+            {
 "Sunday"
-},
-                            monthDays = new List<object>()
-{
+            },
+                            monthDays = new object[]
+            {
 1234
-},
-                            monthlyOccurrences = new List<object>()
-{
+            },
+                            monthlyOccurrences = new object[]
+            {
 new
 {
 additionalProperties = new
@@ -1030,7 +1023,7 @@ key = new object(),
 day = "Sunday",
 occurrence = 1234,
 }
-},
+            },
                         },
                         timeZone = "<timeZone>",
                     },
@@ -1172,7 +1165,7 @@ occurrence = 1234,
             foreach (BinaryData item in client.GetRuns(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1187,7 +1180,7 @@ occurrence = 1234,
             await foreach (BinaryData item in client.GetRunsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -1202,31 +1195,31 @@ occurrence = 1234,
             foreach (BinaryData item in client.GetRuns(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result[0].GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("queuedTime").ToString());
-                Console.WriteLine(result[0].GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result[0].GetProperty("errorMessage").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("runType").ToString());
-                Console.WriteLine(result[0].GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("resourceId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result.GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("queuedTime").ToString());
+                Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result.GetProperty("endTime").ToString());
+                Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result.GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result.GetProperty("errorMessage").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("runType").ToString());
+                Console.WriteLine(result.GetProperty("dataSourceType").ToString());
             }
         }
 
@@ -1241,31 +1234,31 @@ occurrence = 1234,
             await foreach (BinaryData item in client.GetRunsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result[0].GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result[0].GetProperty("queuedTime").ToString());
-                Console.WriteLine(result[0].GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result[0].GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result[0].GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result[0].GetProperty("errorMessage").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("runType").ToString());
-                Console.WriteLine(result[0].GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result.GetProperty("parentId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("resourceId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result.GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("startTime").ToString());
+                Console.WriteLine(result.GetProperty("queuedTime").ToString());
+                Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result.GetProperty("endTime").ToString());
+                Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result.GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result.GetProperty("errorMessage").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("runType").ToString());
+                Console.WriteLine(result.GetProperty("dataSourceType").ToString());
             }
         }
     }
