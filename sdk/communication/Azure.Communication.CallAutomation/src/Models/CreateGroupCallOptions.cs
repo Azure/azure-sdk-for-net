@@ -53,6 +53,11 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
+        /// Live Transcription Configuration.
+        /// </summary>
+        public TranscriptionOptions TranscriptionOptions { get; set; }
+
+        /// <summary>
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUri { get; set; }

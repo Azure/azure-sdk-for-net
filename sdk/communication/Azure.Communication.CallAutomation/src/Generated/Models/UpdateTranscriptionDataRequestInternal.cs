@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The UpdateTranscriptionDataRequest. </summary>
-    public partial class UpdateTranscriptionDataRequest
+    internal partial class UpdateTranscriptionDataRequestInternal
     {
-        /// <summary> Initializes a new instance of UpdateTranscriptionDataRequest. </summary>
+        /// <summary> Initializes a new instance of UpdateTranscriptionDataRequestInternal. </summary>
         /// <param name="locale"> Defines new locale for transcription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
-        public UpdateTranscriptionDataRequest(string locale)
+        public UpdateTranscriptionDataRequestInternal(string locale)
         {
             Argument.AssertNotNull(locale, nameof(locale));
 
