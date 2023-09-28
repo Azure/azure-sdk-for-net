@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
-            Optional<QueueSettings> queueSettings = default;
+            Optional<JobQueueSettings> queueSettings = default;
             Optional<MachineLearningJobResourceConfiguration> resources = default;
             AutoMLVertical taskDetails = default;
             Optional<ResourceIdentifier> componentId = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         queueSettings = null;
                         continue;
                     }
-                    queueSettings = QueueSettings.DeserializeQueueSettings(property.Value);
+                    queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))

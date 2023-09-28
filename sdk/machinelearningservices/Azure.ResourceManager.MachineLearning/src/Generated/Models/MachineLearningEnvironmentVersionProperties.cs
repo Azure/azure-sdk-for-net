@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="osType"> The OS type of the environment. </param>
         /// <param name="provisioningState"> Provisioning state for the environment version. </param>
         /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
-        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, IntellectualProperty intellectualProperty, MachineLearningOperatingSystemType? osType, AssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
+        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, IntellectualProperty intellectualProperty, MachineLearningOperatingSystemType? osType, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
         {
             AutoRebuild = autoRebuild;
             Build = build;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The OS type of the environment. </summary>
         public MachineLearningOperatingSystemType? OSType { get; set; }
         /// <summary> Provisioning state for the environment version. </summary>
-        public AssetProvisioningState? ProvisioningState { get; }
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
         /// <summary> Stage in the environment lifecycle assigned to this environment. </summary>
         public string Stage { get; set; }
     }

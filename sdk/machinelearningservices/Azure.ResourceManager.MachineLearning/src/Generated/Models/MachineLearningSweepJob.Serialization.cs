@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningSweepJobLimits> limits = default;
             MachineLearningObjective objective = default;
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
-            Optional<QueueSettings> queueSettings = default;
+            Optional<JobQueueSettings> queueSettings = default;
             SamplingAlgorithm samplingAlgorithm = default;
             BinaryData searchSpace = default;
             MachineLearningTrialComponent trial = default;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         queueSettings = null;
                         continue;
                     }
-                    queueSettings = QueueSettings.DeserializeQueueSettings(property.Value);
+                    queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithm"u8))

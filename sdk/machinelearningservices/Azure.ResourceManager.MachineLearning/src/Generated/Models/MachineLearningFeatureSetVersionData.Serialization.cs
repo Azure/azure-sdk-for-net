@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            FeaturesetVersionProperties properties = default;
+            MachineLearningFeatureSetVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = FeaturesetVersionProperties.DeserializeFeaturesetVersionProperties(property.Value);
+                    properties = MachineLearningFeatureSetVersionProperties.DeserializeMachineLearningFeatureSetVersionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

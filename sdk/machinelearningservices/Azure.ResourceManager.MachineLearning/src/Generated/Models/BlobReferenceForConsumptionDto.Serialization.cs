@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<Uri> blobUri = default;
             Optional<PendingUploadCredentialDto> credential = default;
-            Optional<string> storageAccountArmId = default;
+            Optional<ResourceIdentifier> storageAccountArmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobUri"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         storageAccountArmId = null;
                         continue;
                     }
-                    storageAccountArmId = property.Value.GetString();
+                    storageAccountArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

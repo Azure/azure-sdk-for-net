@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the code container. </param>
         /// <returns> A new <see cref="Models.MachineLearningCodeContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningCodeContainerProperties MachineLearningCodeContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, AssetProvisioningState? provisioningState = null)
+        public static MachineLearningCodeContainerProperties MachineLearningCodeContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="codeUri"> Uri where code is located. </param>
         /// <param name="provisioningState"> Provisioning state for the code version. </param>
         /// <returns> A new <see cref="Models.MachineLearningCodeVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningCodeVersionProperties MachineLearningCodeVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, Uri codeUri = null, AssetProvisioningState? provisioningState = null)
+        public static MachineLearningCodeVersionProperties MachineLearningCodeVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, Uri codeUri = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
         /// <returns> A new <see cref="Models.BlobReferenceForConsumptionDto"/> instance for mocking. </returns>
-        public static BlobReferenceForConsumptionDto BlobReferenceForConsumptionDto(Uri blobUri = null, PendingUploadCredentialDto credential = null, string storageAccountArmId = null)
+        public static BlobReferenceForConsumptionDto BlobReferenceForConsumptionDto(Uri blobUri = null, PendingUploadCredentialDto credential = null, ResourceIdentifier storageAccountArmId = null)
         {
             return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId);
         }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the component container. </param>
         /// <returns> A new <see cref="Models.MachineLearningComponentContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningComponentContainerProperties MachineLearningComponentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, AssetProvisioningState? provisioningState = null)
+        public static MachineLearningComponentContainerProperties MachineLearningComponentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the component version. </param>
         /// <param name="stage"> Stage in the component lifecycle. </param>
         /// <returns> A new <see cref="Models.MachineLearningComponentVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningComponentVersionProperties MachineLearningComponentVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, BinaryData componentSpec = null, AssetProvisioningState? provisioningState = null, string stage = null)
+        public static MachineLearningComponentVersionProperties MachineLearningComponentVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, BinaryData componentSpec = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the environment container. </param>
         /// <returns> A new <see cref="Models.MachineLearningEnvironmentContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningEnvironmentContainerProperties MachineLearningEnvironmentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, AssetProvisioningState? provisioningState = null)
+        public static MachineLearningEnvironmentContainerProperties MachineLearningEnvironmentContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the environment version. </param>
         /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
         /// <returns> A new <see cref="Models.MachineLearningEnvironmentVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningEnvironmentVersionProperties MachineLearningEnvironmentVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, AutoRebuildSetting? autoRebuild = null, MachineLearningBuildContext build = null, string condaFile = null, MachineLearningEnvironmentType? environmentType = null, string image = null, MachineLearningInferenceContainerProperties inferenceConfig = null, IntellectualProperty intellectualProperty = null, MachineLearningOperatingSystemType? osType = null, AssetProvisioningState? provisioningState = null, string stage = null)
+        public static MachineLearningEnvironmentVersionProperties MachineLearningEnvironmentVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, AutoRebuildSetting? autoRebuild = null, MachineLearningBuildContext build = null, string condaFile = null, MachineLearningEnvironmentType? environmentType = null, string image = null, MachineLearningInferenceContainerProperties inferenceConfig = null, IntellectualProperty intellectualProperty = null, MachineLearningOperatingSystemType? osType = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the model container. </param>
         /// <returns> A new <see cref="Models.MachineLearningModelContainerProperties"/> instance for mocking. </returns>
-        public static MachineLearningModelContainerProperties MachineLearningModelContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, AssetProvisioningState? provisioningState = null)
+        public static MachineLearningModelContainerProperties MachineLearningModelContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the model version. </param>
         /// <param name="stage"> Stage in the model lifecycle assigned to this model. </param>
         /// <returns> A new <see cref="Models.MachineLearningModelVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningModelVersionProperties MachineLearningModelVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IDictionary<string, MachineLearningFlavorData> flavors = null, IntellectualProperty intellectualProperty = null, string jobName = null, string modelType = null, Uri modelUri = null, AssetProvisioningState? provisioningState = null, string stage = null)
+        public static MachineLearningModelVersionProperties MachineLearningModelVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IDictionary<string, MachineLearningFlavorData> flavors = null, IntellectualProperty intellectualProperty = null, string jobName = null, string modelType = null, Uri modelUri = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -531,11 +531,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningModelVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, flavors, intellectualProperty, jobName, modelType, modelUri, provisioningState, stage);
         }
 
-        /// <summary> Initializes a new instance of PackageResponse. </summary>
+        /// <summary> Initializes a new instance of ModelPackageResult. </summary>
         /// <param name="baseEnvironmentSource">
         /// Base environment to start with.
         /// Please note <see cref="BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BaseEnvironmentId"/>.
+        /// The available derived classes include <see cref="BaseEnvironmentType"/>.
         /// </param>
         /// <param name="buildId"> Build id of the image build operation. </param>
         /// <param name="buildState"> Build state of the image build operation. </param>
@@ -550,14 +550,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelConfiguration"> Model configuration including the mount mode. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="targetEnvironmentId"> Asset ID of the target environment created by package operation. </param>
-        /// <returns> A new <see cref="Models.PackageResponse"/> instance for mocking. </returns>
-        public static PackageResponse PackageResponse(BaseEnvironmentSource baseEnvironmentSource = null, string buildId = null, PackageBuildState? buildState = null, IReadOnlyDictionary<string, string> environmentVariables = null, InferencingServer inferencingServer = null, IEnumerable<ModelPackageInput> inputs = null, Uri logUri = null, ModelConfiguration modelConfiguration = null, IReadOnlyDictionary<string, string> tags = null, string targetEnvironmentId = null)
+        /// <returns> A new <see cref="Models.ModelPackageResult"/> instance for mocking. </returns>
+        public static ModelPackageResult ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource = null, string buildId = null, PackageBuildState? buildState = null, IReadOnlyDictionary<string, string> environmentVariables = null, InferencingServer inferencingServer = null, IEnumerable<ModelPackageInput> inputs = null, Uri logUri = null, ModelConfiguration modelConfiguration = null, IReadOnlyDictionary<string, string> tags = null, string targetEnvironmentId = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             inputs ??= new List<ModelPackageInput>();
             tags ??= new Dictionary<string, string>();
 
-            return new PackageResponse(baseEnvironmentSource, buildId, buildState, environmentVariables, inferencingServer, inputs?.ToList(), logUri, modelConfiguration, tags, targetEnvironmentId);
+            return new ModelPackageResult(baseEnvironmentSource, buildId, buildState, environmentVariables, inferencingServer, inputs?.ToList(), logUri, modelConfiguration, tags, targetEnvironmentId);
         }
 
         /// <summary> Initializes a new instance of MachineLearningBatchEndpointData. </summary>
@@ -731,12 +731,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureSetContainerData"/> instance for mocking. </returns>
-        public static MachineLearningFeatureSetContainerData MachineLearningFeatureSetContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturesetContainerProperties properties = null)
+        public static MachineLearningFeatureSetContainerData MachineLearningFeatureSetContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureSetContainerProperties properties = null)
         {
             return new MachineLearningFeatureSetContainerData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of FeaturesetContainerProperties. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetContainerProperties. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -744,13 +744,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the featureset container. </param>
-        /// <returns> A new <see cref="Models.FeaturesetContainerProperties"/> instance for mocking. </returns>
-        public static FeaturesetContainerProperties FeaturesetContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, AssetProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.MachineLearningFeatureSetContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetContainerProperties MachineLearningFeatureSetContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new FeaturesetContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
+            return new MachineLearningFeatureSetContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
         }
 
         /// <summary> Initializes a new instance of MachineLearningFeatureData. </summary>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureData"/> instance for mocking. </returns>
-        public static MachineLearningFeatureData MachineLearningFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeatureProperties properties = null)
+        public static MachineLearningFeatureData MachineLearningFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureProperties properties = null)
         {
             return new MachineLearningFeatureData(id, name, resourceType, systemData, properties);
         }
@@ -772,12 +772,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureSetVersionData"/> instance for mocking. </returns>
-        public static MachineLearningFeatureSetVersionData MachineLearningFeatureSetVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturesetVersionProperties properties = null)
+        public static MachineLearningFeatureSetVersionData MachineLearningFeatureSetVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureSetVersionProperties properties = null)
         {
             return new MachineLearningFeatureSetVersionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of FeaturesetVersionProperties. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetVersionProperties. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -789,17 +789,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
         /// <param name="specificationPath"> Specifies the feature spec details. </param>
         /// <param name="stage"> Specifies the asset stage. </param>
-        /// <returns> A new <see cref="Models.FeaturesetVersionProperties"/> instance for mocking. </returns>
-        public static FeaturesetVersionProperties FeaturesetVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IEnumerable<string> entities = null, MaterializationSettings materializationSettings = null, AssetProvisioningState? provisioningState = null, string specificationPath = null, string stage = null)
+        /// <returns> A new <see cref="Models.MachineLearningFeatureSetVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetVersionProperties MachineLearningFeatureSetVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IEnumerable<string> entities = null, MaterializationSettings materializationSettings = null, RegistryAssetProvisioningState? provisioningState = null, string specificationPath = null, string stage = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
             entities ??= new List<string>();
 
-            return new FeaturesetVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, entities?.ToList(), materializationSettings, provisioningState, specificationPath != null ? new FeaturesetSpecification(specificationPath) : null, stage);
+            return new MachineLearningFeatureSetVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, entities?.ToList(), materializationSettings, provisioningState, specificationPath != null ? new FeaturesetSpecification(specificationPath) : null, stage);
         }
 
-        /// <summary> Initializes a new instance of FeaturesetJob. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetJob. </summary>
         /// <param name="createdOn"> Specifies the created date. </param>
         /// <param name="displayName"> Specifies the display name. </param>
         /// <param name="duration"> Specifies the duration. </param>
@@ -808,13 +808,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobId"> Specifies the job id. </param>
         /// <param name="status"> Specifies the job status. </param>
         /// <param name="tags"> Specifies the tags if any. </param>
-        /// <param name="featurestoreJobType"> Specifies the feature store job type. </param>
-        /// <returns> A new <see cref="Models.FeaturesetJob"/> instance for mocking. </returns>
-        public static FeaturesetJob FeaturesetJob(DateTimeOffset? createdOn = null, string displayName = null, TimeSpan? duration = null, string experimentId = null, FeatureWindow featureWindow = null, string jobId = null, MachineLearningJobStatus? status = null, IReadOnlyDictionary<string, string> tags = null, FeaturestoreJobType? featurestoreJobType = null)
+        /// <param name="featureStoreJobType"> Specifies the feature store job type. </param>
+        /// <returns> A new <see cref="Models.MachineLearningFeatureSetJob"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetJob MachineLearningFeatureSetJob(DateTimeOffset? createdOn = null, string displayName = null, TimeSpan? duration = null, string experimentId = null, FeatureWindow featureWindow = null, string jobId = null, MachineLearningJobStatus? status = null, IReadOnlyDictionary<string, string> tags = null, FeatureStoreJobType? featureStoreJobType = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FeaturesetJob(createdOn, displayName, duration, experimentId, featureWindow, jobId, status, tags, featurestoreJobType);
+            return new MachineLearningFeatureSetJob(createdOn, displayName, duration, experimentId, featureWindow, jobId, status, tags, featureStoreJobType);
         }
 
         /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerData. </summary>
@@ -824,12 +824,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureStoreEntityContainerData"/> instance for mocking. </returns>
-        public static MachineLearningFeatureStoreEntityContainerData MachineLearningFeatureStoreEntityContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturestoreEntityContainerProperties properties = null)
+        public static MachineLearningFeatureStoreEntityContainerData MachineLearningFeatureStoreEntityContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureStoreEntityContainerProperties properties = null)
         {
             return new MachineLearningFeatureStoreEntityContainerData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of FeaturestoreEntityContainerProperties. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerProperties. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -837,13 +837,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the featurestore entity container. </param>
-        /// <returns> A new <see cref="Models.FeaturestoreEntityContainerProperties"/> instance for mocking. </returns>
-        public static FeaturestoreEntityContainerProperties FeaturestoreEntityContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, AssetProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.MachineLearningFeatureStoreEntityContainerProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureStoreEntityContainerProperties MachineLearningFeatureStoreEntityContainerProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, bool? isArchived = null, string latestVersion = null, string nextVersion = null, RegistryAssetProvisioningState? provisioningState = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new FeaturestoreEntityContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
+            return new MachineLearningFeatureStoreEntityContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
         }
 
         /// <summary> Initializes a new instance of MachineLearningFeaturestoreEntityVersionData. </summary>
@@ -853,12 +853,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningFeaturestoreEntityVersionData"/> instance for mocking. </returns>
-        public static MachineLearningFeaturestoreEntityVersionData MachineLearningFeaturestoreEntityVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturestoreEntityVersionProperties properties = null)
+        public static MachineLearningFeaturestoreEntityVersionData MachineLearningFeaturestoreEntityVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningFeatureStoreEntityVersionProperties properties = null)
         {
             return new MachineLearningFeaturestoreEntityVersionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of FeaturestoreEntityVersionProperties. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityVersionProperties. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -868,14 +868,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="indexColumns"> Specifies index columns. </param>
         /// <param name="provisioningState"> Provisioning state for the featurestore entity version. </param>
         /// <param name="stage"> Specifies the asset stage. </param>
-        /// <returns> A new <see cref="Models.FeaturestoreEntityVersionProperties"/> instance for mocking. </returns>
-        public static FeaturestoreEntityVersionProperties FeaturestoreEntityVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IEnumerable<IndexColumn> indexColumns = null, AssetProvisioningState? provisioningState = null, string stage = null)
+        /// <returns> A new <see cref="Models.MachineLearningFeatureStoreEntityVersionProperties"/> instance for mocking. </returns>
+        public static MachineLearningFeatureStoreEntityVersionProperties MachineLearningFeatureStoreEntityVersionProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, AutoDeleteSetting autoDeleteSetting = null, bool? isAnonymous = null, bool? isArchived = null, IEnumerable<IndexColumn> indexColumns = null, RegistryAssetProvisioningState? provisioningState = null, string stage = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
             indexColumns ??= new List<IndexColumn>();
 
-            return new FeaturestoreEntityVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, indexColumns?.ToList(), provisioningState, stage);
+            return new MachineLearningFeatureStoreEntityVersionProperties(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, indexColumns?.ToList(), provisioningState, stage);
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobData. </summary>
@@ -935,14 +935,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nodes">
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="Nodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AllNodes"/>.
+        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </param>
         /// <param name="port"> Port for endpoint set by user. </param>
         /// <param name="properties"> Additional properties to set on the endpoint. </param>
         /// <param name="status"> Status of endpoint. </param>
         /// <returns> A new <see cref="Models.MachineLearningJobService"/> instance for mocking. </returns>
-        public static MachineLearningJobService MachineLearningJobService(string endpoint = null, string errorMessage = null, string jobServiceType = null, Nodes nodes = null, int? port = null, IDictionary<string, string> properties = null, string status = null)
+        public static MachineLearningJobService MachineLearningJobService(string endpoint = null, string errorMessage = null, string jobServiceType = null, JobNodes nodes = null, int? port = null, IDictionary<string, string> properties = null, string status = null)
         {
             properties ??= new Dictionary<string, string>();
 
@@ -994,22 +994,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="mlAssistConfiguration">
         /// Configuration of MLAssist feature in the job.
-        /// Please note <see cref="MLAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MLAssistConfigurationEnabled"/>.
+        /// Please note <see cref="MachineLearningAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MachineLearningAssistEnabledConfiguration"/>.
         /// </param>
         /// <param name="progressMetrics"> Progress metrics of the job. </param>
         /// <param name="projectId"> Internal id of the job(Previously called project). </param>
         /// <param name="provisioningState"> Specifies the labeling job provisioning state. </param>
         /// <param name="statusMessages"> Status messages of the job. </param>
         /// <returns> A new <see cref="Models.LabelingJobProperties"/> instance for mocking. </returns>
-        public static LabelingJobProperties LabelingJobProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, DateTimeOffset? createdOn = null, LabelingDataConfiguration dataConfiguration = null, Uri jobInstructionsUri = null, IDictionary<string, LabelCategory> labelCategories = null, LabelingJobMediaProperties labelingJobMediaProperties = null, MLAssistConfiguration mlAssistConfiguration = null, ProgressMetrics progressMetrics = null, Guid? projectId = null, JobProvisioningState? provisioningState = null, IEnumerable<StatusMessage> statusMessages = null)
+        public static LabelingJobProperties LabelingJobProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, DateTimeOffset? createdOn = null, LabelingDataConfiguration dataConfiguration = null, Uri jobInstructionsUri = null, IDictionary<string, LabelCategory> labelCategories = null, LabelingJobMediaProperties labelingJobMediaProperties = null, MachineLearningAssistConfiguration mlAssistConfiguration = null, ProgressMetrics progressMetrics = null, Guid? projectId = null, JobProvisioningState? provisioningState = null, IEnumerable<JobStatusMessage> statusMessages = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
             secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
             services ??= new Dictionary<string, MachineLearningJobService>();
             labelCategories ??= new Dictionary<string, LabelCategory>();
-            statusMessages ??= new List<StatusMessage>();
+            statusMessages ??= new List<JobStatusMessage>();
 
             return new LabelingJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Labeling, notificationSetting, secretsConfiguration, services, status, createdOn, dataConfiguration, jobInstructionsUri != null ? new LabelingJobInstructions(jobInstructionsUri) : null, labelCategories, labelingJobMediaProperties, mlAssistConfiguration, progressMetrics, projectId, provisioningState, statusMessages?.ToList());
         }
@@ -1025,15 +1025,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ProgressMetrics(completedDatapointCount, incrementalDataLastRefreshOn, skippedDatapointCount, totalDatapointCount);
         }
 
-        /// <summary> Initializes a new instance of StatusMessage. </summary>
+        /// <summary> Initializes a new instance of JobStatusMessage. </summary>
         /// <param name="code"> Service-defined message code. </param>
         /// <param name="createdOn"> Time in UTC at which the message was created. </param>
         /// <param name="level"> Severity level of message. </param>
         /// <param name="message"> A human-readable representation of the message code. </param>
-        /// <returns> A new <see cref="Models.StatusMessage"/> instance for mocking. </returns>
-        public static StatusMessage StatusMessage(string code = null, DateTimeOffset? createdOn = null, StatusMessageLevel? level = null, string message = null)
+        /// <returns> A new <see cref="Models.JobStatusMessage"/> instance for mocking. </returns>
+        public static JobStatusMessage JobStatusMessage(string code = null, DateTimeOffset? createdOn = null, JobStatusMessageLevel? level = null, string message = null)
         {
-            return new StatusMessage(code, createdOn, level, message);
+            return new JobStatusMessage(code, createdOn, level, message);
         }
 
         /// <summary> Initializes a new instance of ExportSummary. </summary>
@@ -1260,7 +1260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="regionDetails"> Details of each region the registry is in. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningRegistryData"/> instance for mocking. </returns>
-        public static MachineLearningRegistryData MachineLearningRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, Uri discoveryUri = null, string intellectualPropertyPublisher = null, string managedResourceId = null, Uri mlFlowRegistryUri = null, IEnumerable<RegistryPrivateEndpointConnection> privateEndpointConnections = null, string publicNetworkAccess = null, IEnumerable<RegistryRegionArmDetails> regionDetails = null)
+        public static MachineLearningRegistryData MachineLearningRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, Uri discoveryUri = null, string intellectualPropertyPublisher = null, ResourceIdentifier managedResourceId = null, Uri mlFlowRegistryUri = null, IEnumerable<RegistryPrivateEndpointConnection> privateEndpointConnections = null, string publicNetworkAccess = null, IEnumerable<RegistryRegionArmDetails> regionDetails = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<RegistryPrivateEndpointConnection>();
@@ -1269,21 +1269,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningRegistryData(id, name, resourceType, systemData, tags, location, identity, kind, sku, discoveryUri, intellectualPropertyPublisher, managedResourceId != null ? new ArmResourceId(managedResourceId) : null, mlFlowRegistryUri, privateEndpointConnections?.ToList(), publicNetworkAccess, regionDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointResource. </summary>
+        /// <summary> Initializes a new instance of RegistryPrivateEndpoint. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointResource"/> instance for mocking. </returns>
-        public static PrivateEndpointResource PrivateEndpointResource(string id = null, string subnetArmId = null)
+        /// <returns> A new <see cref="Models.RegistryPrivateEndpoint"/> instance for mocking. </returns>
+        public static RegistryPrivateEndpoint RegistryPrivateEndpoint(ResourceIdentifier id = null, ResourceIdentifier subnetArmId = null)
         {
-            return new PrivateEndpointResource(id, subnetArmId);
+            return new RegistryPrivateEndpoint(id, subnetArmId);
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of PrivateEndpointBase. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpoint"/> instance for mocking. </returns>
-        public static PrivateEndpoint PrivateEndpoint(string id = null)
+        /// <returns> A new <see cref="Models.PrivateEndpointBase"/> instance for mocking. </returns>
+        public static PrivateEndpointBase PrivateEndpointBase(ResourceIdentifier id = null)
         {
-            return new PrivateEndpoint(id);
+            return new PrivateEndpointBase(id);
         }
 
         /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, bool? allowPublicAccessWhenBehindVnet = null, string applicationInsights = null, IEnumerable<string> associatedWorkspaces = null, IEnumerable<string> containerRegistries = null, string containerRegistry = null, string description = null, Uri discoveryUri = null, bool? enableDataIsolation = null, MachineLearningEncryptionSetting encryption = null, IEnumerable<string> existingWorkspaces = null, FeatureStoreSettings featureStoreSettings = null, string friendlyName = null, bool? isHbiWorkspace = null, string hubResourceId = null, string imageBuildCompute = null, string keyVault = null, IEnumerable<string> keyVaults = null, ManagedNetworkSettings managedNetwork = null, Uri mlFlowTrackingUri = null, MachineLearningNotebookResourceInfo notebookInfo = null, string primaryUserAssignedIdentity = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, int? privateLinkCount = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccessType = null, int? cosmosDbCollectionsThroughput = null, string serviceProvisionedResourceGroup = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, int? softDeleteRetentionInDays = null, string storageAccount = null, IEnumerable<string> storageAccounts = null, bool? isStorageHnsEnabled = null, string systemDatastoresAuthMode = null, Guid? tenantId = null, bool? isV1LegacyMode = null, WorkspaceHubConfig workspaceHubConfig = null, string workspaceId = null)
+        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, bool? allowPublicAccessWhenBehindVnet = null, string applicationInsights = null, IEnumerable<string> associatedWorkspaces = null, IEnumerable<string> containerRegistries = null, string containerRegistry = null, string description = null, Uri discoveryUri = null, bool? enableDataIsolation = null, MachineLearningEncryptionSetting encryption = null, IEnumerable<string> existingWorkspaces = null, FeatureStoreSettings featureStoreSettings = null, string friendlyName = null, bool? isHbiWorkspace = null, ResourceIdentifier hubResourceId = null, string imageBuildCompute = null, string keyVault = null, IEnumerable<string> keyVaults = null, ManagedNetworkSettings managedNetwork = null, Uri mlFlowTrackingUri = null, MachineLearningNotebookResourceInfo notebookInfo = null, string primaryUserAssignedIdentity = null, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = null, int? privateLinkCount = null, MachineLearningProvisioningState? provisioningState = null, MachineLearningPublicNetworkAccessType? publicNetworkAccessType = null, int? cosmosDbCollectionsThroughput = null, string serviceProvisionedResourceGroup = null, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = null, int? softDeleteRetentionInDays = null, string storageAccount = null, IEnumerable<string> storageAccounts = null, bool? isStorageHnsEnabled = null, string systemDatastoresAuthMode = null, Guid? tenantId = null, bool? isV1LegacyMode = null, WorkspaceHubConfig workspaceHubConfig = null, string workspaceId = null)
         {
             tags ??= new Dictionary<string, string>();
             associatedWorkspaces ??= new List<string>();
@@ -1363,14 +1363,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="networkId"></param>
         /// <param name="outboundRules">
         /// Dictionary of &lt;OutboundRule&gt;
-        /// Please note <see cref="OutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </param>
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
         /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
-        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode = null, string networkId = null, IDictionary<string, OutboundRule> outboundRules = null, ManagedNetworkProvisionStatus status = null)
+        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode = null, string networkId = null, IDictionary<string, MachineLearningOutboundRule> outboundRules = null, ManagedNetworkProvisionStatus status = null)
         {
-            outboundRules ??= new Dictionary<string, OutboundRule>();
+            outboundRules ??= new Dictionary<string, MachineLearningOutboundRule>();
 
             return new ManagedNetworkSettings(isolationMode, networkId, outboundRules, status);
         }
@@ -1586,20 +1586,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningFqdnEndpointDetail(port);
         }
 
-        /// <summary> Initializes a new instance of OutboundRuleBasicResourceData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningOutboundRuleBasicData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Outbound Rule for the managed network of a machine learning workspace.
-        /// Please note <see cref="OutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </param>
-        /// <returns> A new <see cref="MachineLearning.OutboundRuleBasicResourceData"/> instance for mocking. </returns>
-        public static OutboundRuleBasicResourceData OutboundRuleBasicResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OutboundRule properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningOutboundRuleBasicData"/> instance for mocking. </returns>
+        public static MachineLearningOutboundRuleBasicData MachineLearningOutboundRuleBasicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningOutboundRule properties = null)
         {
-            return new OutboundRuleBasicResourceData(id, name, resourceType, systemData, properties);
+            return new MachineLearningOutboundRuleBasicData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
@@ -2072,7 +2072,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/> and <see cref="Models.TextNer"/>.
         /// </param>
         /// <returns> A new <see cref="Models.AutoMLJob"/> instance for mocking. </returns>
-        public static AutoMLJob AutoMLJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobOutput> outputs = null, QueueSettings queueSettings = null, MachineLearningJobResourceConfiguration resources = null, AutoMLVertical taskDetails = null)
+        public static AutoMLJob AutoMLJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobOutput> outputs = null, JobQueueSettings queueSettings = null, MachineLearningJobResourceConfiguration resources = null, AutoMLVertical taskDetails = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -2230,7 +2230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, Ray, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="Ray"/> and <see cref="TensorFlowDistributionConfiguration"/>.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="RayDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
@@ -2249,7 +2249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <returns> A new <see cref="Models.MachineLearningCommandJob"/> instance for mocking. </returns>
-        public static MachineLearningCommandJob MachineLearningCommandJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, MLFlowAutologgerState? mlflowAutologger = null, ResourceIdentifier codeId = null, string command = null, MachineLearningDistributionConfiguration distribution = null, ResourceIdentifier environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningCommandJobLimits limits = null, IDictionary<string, MachineLearningJobOutput> outputs = null, BinaryData parameters = null, QueueSettings queueSettings = null, MachineLearningJobResourceConfiguration resources = null)
+        public static MachineLearningCommandJob MachineLearningCommandJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, MachineLearningflowAutologgerState? mlflowAutologger = null, ResourceIdentifier codeId = null, string command = null, MachineLearningDistributionConfiguration distribution = null, ResourceIdentifier environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningCommandJobLimits limits = null, IDictionary<string, MachineLearningJobOutput> outputs = null, BinaryData parameters = null, JobQueueSettings queueSettings = null, MachineLearningJobResourceConfiguration resources = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -2510,7 +2510,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <returns> A new <see cref="Models.SparkJob"/> instance for mocking. </returns>
-        public static SparkJob SparkJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, IEnumerable<string> archives = null, string args = null, string codeId = null, IDictionary<string, string> conf = null, SparkJobEntry entry = null, string environmentId = null, IEnumerable<string> files = null, IDictionary<string, MachineLearningJobInput> inputs = null, IEnumerable<string> jars = null, IDictionary<string, MachineLearningJobOutput> outputs = null, IEnumerable<string> pyFiles = null, QueueSettings queueSettings = null, SparkResourceConfiguration resources = null)
+        public static SparkJob SparkJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, IEnumerable<string> archives = null, string args = null, string codeId = null, IDictionary<string, string> conf = null, SparkJobEntry entry = null, string environmentId = null, IEnumerable<string> files = null, IDictionary<string, MachineLearningJobInput> inputs = null, IEnumerable<string> jars = null, IDictionary<string, MachineLearningJobOutput> outputs = null, IEnumerable<string> pyFiles = null, JobQueueSettings queueSettings = null, SparkResourceConfiguration resources = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -2575,7 +2575,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> [Required] Trial component definition. </param>
         /// <returns> A new <see cref="Models.MachineLearningSweepJob"/> instance for mocking. </returns>
-        public static MachineLearningSweepJob MachineLearningSweepJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, MachineLearningEarlyTerminationPolicy earlyTermination = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningSweepJobLimits limits = null, MachineLearningObjective objective = null, IDictionary<string, MachineLearningJobOutput> outputs = null, QueueSettings queueSettings = null, SamplingAlgorithm samplingAlgorithm = null, BinaryData searchSpace = null, MachineLearningTrialComponent trial = null)
+        public static MachineLearningSweepJob MachineLearningSweepJob(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null, MachineLearningEarlyTerminationPolicy earlyTermination = null, IDictionary<string, MachineLearningJobInput> inputs = null, MachineLearningSweepJobLimits limits = null, MachineLearningObjective objective = null, IDictionary<string, MachineLearningJobOutput> outputs = null, JobQueueSettings queueSettings = null, SamplingAlgorithm samplingAlgorithm = null, BinaryData searchSpace = null, MachineLearningTrialComponent trial = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -2644,7 +2644,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="protocol"></param>
         /// <param name="serviceTag"></param>
         /// <returns> A new <see cref="Models.ServiceTagDestination"/> instance for mocking. </returns>
-        public static ServiceTagDestination ServiceTagDestination(RuleAction? action = null, IEnumerable<string> addressPrefixes = null, string portRanges = null, string protocol = null, string serviceTag = null)
+        public static ServiceTagDestination ServiceTagDestination(NetworkingRuleAction? action = null, IEnumerable<string> addressPrefixes = null, string portRanges = null, string protocol = null, string serviceTag = null)
         {
             addressPrefixes ??= new List<string>();
 

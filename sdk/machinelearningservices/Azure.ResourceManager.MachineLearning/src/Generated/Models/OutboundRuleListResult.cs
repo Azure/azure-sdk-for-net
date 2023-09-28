@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of OutboundRuleListResult. </summary>
         internal OutboundRuleListResult()
         {
-            Value = new ChangeTrackingList<OutboundRuleBasicResourceData>();
+            Value = new ChangeTrackingList<MachineLearningOutboundRuleBasicData>();
         }
 
         /// <summary> Initializes a new instance of OutboundRuleListResult. </summary>
         /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
         /// <param name="value"> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </param>
-        internal OutboundRuleListResult(string nextLink, IReadOnlyList<OutboundRuleBasicResourceData> value)
+        internal OutboundRuleListResult(string nextLink, IReadOnlyList<MachineLearningOutboundRuleBasicData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </summary>
-        public IReadOnlyList<OutboundRuleBasicResourceData> Value { get; }
+        public IReadOnlyList<MachineLearningOutboundRuleBasicData> Value { get; }
     }
 }

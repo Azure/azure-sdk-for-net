@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<FeaturesetJob>> value = default;
+            Optional<IReadOnlyList<MachineLearningFeatureSetJob>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<FeaturesetJob> array = new List<FeaturesetJob>();
+                    List<MachineLearningFeatureSetJob> array = new List<MachineLearningFeatureSetJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FeaturesetJob.DeserializeFeaturesetJob(item));
+                        array.Add(MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(item));
                     }
                     value = array;
                     continue;

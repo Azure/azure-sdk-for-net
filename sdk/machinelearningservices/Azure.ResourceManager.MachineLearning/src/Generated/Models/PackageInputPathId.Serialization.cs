@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             InputPathType inputPathType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resourceId = null;
                         continue;
                     }
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inputPathType"u8))

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownMLAssistConfiguration. </summary>
-    internal partial class UnknownMLAssistConfiguration : MLAssistConfiguration
+    internal partial class UnknownMLAssistConfiguration : MachineLearningAssistConfiguration
     {
         /// <summary> Initializes a new instance of UnknownMLAssistConfiguration. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>

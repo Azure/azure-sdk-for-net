@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string GitValue = "Git";
         private const string S3Value = "S3";
         private const string SnowflakeValue = "Snowflake";
-        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string AzureSqlDBValue = "AzureSqlDb";
         private const string AzureSynapseAnalyticsValue = "AzureSynapseAnalytics";
-        private const string AzureMySqlDbValue = "AzureMySqlDb";
-        private const string AzurePostgresDbValue = "AzurePostgresDb";
+        private const string AzureMySqlDBValue = "AzureMySqlDb";
+        private const string AzurePostgresDBValue = "AzurePostgresDb";
         private const string AdlsGen2Value = "ADLSGen2";
         private const string RedisValue = "Redis";
         private const string ApiKeyValue = "ApiKey";
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Snowflake. </summary>
         public static MachineLearningConnectionCategory Snowflake { get; } = new MachineLearningConnectionCategory(SnowflakeValue);
         /// <summary> AzureSqlDb. </summary>
-        public static MachineLearningConnectionCategory AzureSqlDb { get; } = new MachineLearningConnectionCategory(AzureSqlDbValue);
+        public static MachineLearningConnectionCategory AzureSqlDB { get; } = new MachineLearningConnectionCategory(AzureSqlDBValue);
         /// <summary> AzureSynapseAnalytics. </summary>
         public static MachineLearningConnectionCategory AzureSynapseAnalytics { get; } = new MachineLearningConnectionCategory(AzureSynapseAnalyticsValue);
         /// <summary> AzureMySqlDb. </summary>
-        public static MachineLearningConnectionCategory AzureMySqlDb { get; } = new MachineLearningConnectionCategory(AzureMySqlDbValue);
+        public static MachineLearningConnectionCategory AzureMySqlDB { get; } = new MachineLearningConnectionCategory(AzureMySqlDBValue);
         /// <summary> AzurePostgresDb. </summary>
-        public static MachineLearningConnectionCategory AzurePostgresDb { get; } = new MachineLearningConnectionCategory(AzurePostgresDbValue);
+        public static MachineLearningConnectionCategory AzurePostgresDB { get; } = new MachineLearningConnectionCategory(AzurePostgresDBValue);
         /// <summary> ADLSGen2. </summary>
         public static MachineLearningConnectionCategory AdlsGen2 { get; } = new MachineLearningConnectionCategory(AdlsGen2Value);
         /// <summary> Redis. </summary>

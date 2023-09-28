@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerData. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public MachineLearningFeatureStoreEntityContainerData(FeaturestoreEntityContainerProperties properties)
+        public MachineLearningFeatureStoreEntityContainerData(MachineLearningFeatureStoreEntityContainerProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal MachineLearningFeatureStoreEntityContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FeaturestoreEntityContainerProperties properties) : base(id, name, resourceType, systemData)
+        internal MachineLearningFeatureStoreEntityContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningFeatureStoreEntityContainerProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public FeaturestoreEntityContainerProperties Properties { get; set; }
+        public MachineLearningFeatureStoreEntityContainerProperties Properties { get; set; }
     }
 }

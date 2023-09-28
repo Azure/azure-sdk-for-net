@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> endpoint = default;
             Optional<string> errorMessage = default;
             Optional<string> jobServiceType = default;
-            Optional<Nodes> nodes = default;
+            Optional<JobNodes> nodes = default;
             Optional<int?> port = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<string> status = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nodes = null;
                         continue;
                     }
-                    nodes = Nodes.DeserializeNodes(property.Value);
+                    nodes = JobNodes.DeserializeJobNodes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("port"u8))

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="privateEndpoint"> The PE network resource that is linked to this PE connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The connection state. </param>
         /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
-        internal RegistryPrivateEndpointConnection(string id, AzureLocation? location, IList<string> groupIds, PrivateEndpointResource privateEndpoint, RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState)
+        internal RegistryPrivateEndpointConnection(ResourceIdentifier id, AzureLocation? location, IList<string> groupIds, RegistryPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState)
         {
             Id = id;
             Location = location;
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// This is the private endpoint connection name created on SRP
         /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/privateEndpointConnections/{peConnectionName}
         /// </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Same as workspace location. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The group ids. </summary>
         public IList<string> GroupIds { get; set; }
         /// <summary> The PE network resource that is linked to this PE connection. </summary>
-        public PrivateEndpointResource PrivateEndpoint { get; set; }
+        public RegistryPrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> The connection state. </summary>
         public RegistryPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </summary>

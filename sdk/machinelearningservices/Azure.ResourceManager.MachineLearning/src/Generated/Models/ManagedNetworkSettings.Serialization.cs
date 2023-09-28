@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<IsolationMode> isolationMode = default;
             Optional<string> networkId = default;
-            Optional<IDictionary<string, OutboundRule>> outboundRules = default;
+            Optional<IDictionary<string, MachineLearningOutboundRule>> outboundRules = default;
             Optional<ManagedNetworkProvisionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         outboundRules = null;
                         continue;
                     }
-                    Dictionary<string, OutboundRule> dictionary = new Dictionary<string, OutboundRule>();
+                    Dictionary<string, MachineLearningOutboundRule> dictionary = new Dictionary<string, MachineLearningOutboundRule>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, OutboundRule.DeserializeOutboundRule(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningOutboundRule.DeserializeMachineLearningOutboundRule(property0.Value));
                     }
                     outboundRules = dictionary;
                     continue;

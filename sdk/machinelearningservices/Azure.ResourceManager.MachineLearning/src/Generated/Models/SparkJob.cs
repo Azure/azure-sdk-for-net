@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="pyFiles"> Python files used in the job. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, string codeId, IDictionary<string, string> conf, SparkJobEntry entry, string environmentId, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, QueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, string codeId, IDictionary<string, string> conf, SparkJobEntry entry, string environmentId, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, JobQueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             Archives = archives;
             Args = args;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Python files used in the job. </summary>
         public IList<string> PyFiles { get; set; }
         /// <summary> Queue settings for the job. </summary>
-        public QueueSettings QueueSettings { get; set; }
+        public JobQueueSettings QueueSettings { get; set; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public SparkResourceConfiguration Resources { get; set; }
     }

@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             string id = "string";
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
-                MlflowAutologger = MLFlowAutologgerState.Disabled,
+                MlflowAutologger = MachineLearningflowAutologgerState.Disabled,
                 CodeId = new ResourceIdentifier("string"),
                 Distribution = new TensorFlowDistributionConfiguration()
                 {
@@ -669,7 +669,7 @@ Uri = new Uri("string"),
 Description = "string",
 },
 },
-                QueueSettings = new QueueSettings()
+                QueueSettings = new JobQueueSettings()
                 {
                     JobTier = JobTier.Premium,
                     Priority = 1,
@@ -714,7 +714,7 @@ EmailNotificationEnableType.JobCompleted
 {
 Endpoint = "string",
 JobServiceType = "string",
-Nodes = new AllNodes(),
+Nodes = new JobAllNodes(),
 Port = 1,
 Properties =
 {
@@ -770,7 +770,7 @@ Properties =
             string id = "string";
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
-                MlflowAutologger = MLFlowAutologgerState.Disabled,
+                MlflowAutologger = MachineLearningflowAutologgerState.Disabled,
                 CodeId = new ResourceIdentifier("string"),
                 Distribution = new TensorFlowDistributionConfiguration()
                 {
@@ -803,7 +803,7 @@ Uri = new Uri("string"),
 Description = "string",
 },
 },
-                QueueSettings = new QueueSettings()
+                QueueSettings = new JobQueueSettings()
                 {
                     JobTier = JobTier.Basic,
                     Priority = 1,
@@ -848,7 +848,7 @@ EmailNotificationEnableType.JobCancelled
 {
 Endpoint = "string",
 JobServiceType = "string",
-Nodes = new AllNodes(),
+Nodes = new JobAllNodes(),
 Port = 1,
 Properties =
 {
@@ -987,7 +987,7 @@ Properties =
             string id = "string";
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
-                MlflowAutologger = MLFlowAutologgerState.Disabled,
+                MlflowAutologger = MachineLearningflowAutologgerState.Disabled,
                 CodeId = new ResourceIdentifier("string"),
                 Distribution = new TensorFlowDistributionConfiguration()
                 {
@@ -1020,7 +1020,7 @@ Uri = new Uri("string"),
 Description = "string",
 },
 },
-                QueueSettings = new QueueSettings()
+                QueueSettings = new JobQueueSettings()
                 {
                     JobTier = JobTier.Basic,
                     Priority = 1,
@@ -1065,7 +1065,7 @@ EmailNotificationEnableType.JobCompleted
 {
 Endpoint = "string",
 JobServiceType = "string",
-Nodes = new AllNodes(),
+Nodes = new JobAllNodes(),
 Port = 1,
 Properties =
 {

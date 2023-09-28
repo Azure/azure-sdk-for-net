@@ -72,6 +72,7 @@ override-operation-name:
 no-property-type-replacement:
 - ResourceId
 - VirtualMachineImage
+- AllFeatures
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}: MachineLearningCodeContainer
@@ -97,14 +98,24 @@ request-path-to-resource-name:
 
 prepend-rp-prefix:
   - Feature
+  - FeatureProperties
   - LabelingJob
   - Registry
+  - Webhook
+  - WebhookType
 
 rename-mapping:
   FeaturesetContainer: MachineLearningFeatureSetContainer
+  FeaturesetContainerProperties: MachineLearningFeatureSetContainerProperties
+  FeaturesetJob: MachineLearningFeatureSetJob
   FeaturesetVersion: MachineLearningFeatureSetVersion
+  FeaturesetVersionBackfillRequest: FeatureSetVersionBackfillContent
+  FeaturesetVersionProperties: MachineLearningFeatureSetVersionProperties
   FeaturestoreEntityContainer: MachineLearningFeatureStoreEntityContainer
+  FeaturestoreEntityContainerProperties: MachineLearningFeatureStoreEntityContainerProperties
   FeaturestoreEntityVersion: MachineLearningFeaturestoreEntityVersion
+  FeaturestoreEntityVersionProperties: MachineLearningFeatureStoreEntityVersionProperties
+  FeaturestoreJobType: FeatureStoreJobType
   ComputeInstanceProperties.setupScripts: SetupScriptsSettings
   Workspace: MachineLearningWorkspace
   ComputeResource: MachineLearningCompute
@@ -459,6 +470,51 @@ rename-mapping:
   Cron: ComputeStartStopCronSchedule
   Recurrence: ComputeStartStopRecurrenceSchedule
   EndpointServiceConnectionStatus: MachineLearningPrivateEndpointServiceConnectionStatus
+  ArmResourceId.resourceId: -|arm-id
+  Workspace.properties.hubResourceId: -|arm-id
+  OutboundRuleBasicResource: MachineLearningOutboundRuleBasic
+  OutboundRule: MachineLearningOutboundRule
+  BindOptions: MountBindOptions
+  BindOptions.createHostPath: DoesCreateHostPath
+  AcrDetails: RegistryAcrDetails
+  AllNodes: JobAllNodes
+  Nodes: JobNodes
+  AssetProvisioningState: RegistryAssetProvisioningState
+  BaseEnvironmentId: BaseEnvironmentType
+  BaseEnvironmentId.resourceId: -|arm-id
+  BlobReferenceForConsumptionDto.storageAccountArmId: -|arm-id
+  Collection: DataCollection
+  Docker: DockerSetting
+  Endpoint: ContainerEndpoint
+  Protocol: ContainerCommunicationProtocol
+  Image: ImageSetting
+  ConnectionCategory.AzureSqlDb: AzureSqlDB
+  ConnectionCategory.AzureMySqlDb: AzureMySqlDB
+  ConnectionCategory.AzurePostgresDb: AzurePostgresDB
+  EncryptionProperty.cosmosDbResourceId: CosmosDBResourceId|arm-id
+  EncryptionProperty.searchAccountResourceId: -|arm-id
+  EncryptionProperty.storageAccountResourceId: -|arm-id
+  MLAssistConfiguration: MachineLearningAssistConfiguration
+  MLAssistConfigurationEnabled: MachineLearningAssistEnabledConfiguration
+  MlflowAutologger: MachineLearningflowAutologger
+  MLFlowAutologgerState: MachineLearningflowAutologgerState
+  MultiSelect: LabelCategoryMultiSelect
+  PackageRequest: ModelPackageContent
+  PackageResponse: ModelPackageResult
+  PackageInputPathId.resourceId: -|arm-id
+  PrivateEndpointResource: RegistryPrivateEndpoint
+  PrivateEndpointResource.subnetArmId: -|arm-id
+  PrivateEndpoint: PrivateEndpointBase
+  PrivateEndpoint.id: -|arm-id
+  QueueSettings: JobQueueSettings
+  Ray: RayDistributionConfiguration
+  RegistryPrivateEndpointConnection.id: -|arm-id
+  RuleAction: NetworkingRuleAction
+  RuleCategory: OutboundRuleCategory
+  RuleStatus: OutboundRuleStatus
+  RuleType: OutboundRuleType
+  StatusMessage: JobStatusMessage
+  StatusMessageLevel: JobStatusMessageLevel
 
 directive:
   - from: swagger-document

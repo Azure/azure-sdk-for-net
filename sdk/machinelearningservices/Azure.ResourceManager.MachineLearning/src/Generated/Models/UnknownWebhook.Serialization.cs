@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> eventType = default;
-            WebhookType webhookType = "Unknown";
+            MachineLearningWebhookType webhookType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventType"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("webhookType"u8))
                 {
-                    webhookType = new WebhookType(property.Value.GetString());
+                    webhookType = new MachineLearningWebhookType(property.Value.GetString());
                     continue;
                 }
             }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<AcrDetails>> acrDetails = default;
+            Optional<IList<RegistryAcrDetails>> acrDetails = default;
             Optional<AzureLocation?> location = default;
             Optional<IList<StorageAccountDetails>> storageAccountDetails = default;
             foreach (var property in element.EnumerateObject())
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         acrDetails = null;
                         continue;
                     }
-                    List<AcrDetails> array = new List<AcrDetails>();
+                    List<RegistryAcrDetails> array = new List<RegistryAcrDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AcrDetails.DeserializeAcrDetails(item));
+                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item));
                     }
                     acrDetails = array;
                     continue;

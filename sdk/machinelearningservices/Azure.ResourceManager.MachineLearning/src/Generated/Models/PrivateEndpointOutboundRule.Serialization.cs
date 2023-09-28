@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(OutboundRuleType.ToString());
             writer.WriteEndObject();
         }
 
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<PrivateEndpointDestination> destination = default;
-            Optional<RuleCategory> category = default;
-            Optional<RuleStatus> status = default;
-            RuleType type = default;
+            Optional<OutboundRuleCategory> category = default;
+            Optional<OutboundRuleStatus> status = default;
+            OutboundRuleType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destination"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    category = new RuleCategory(property.Value.GetString());
+                    category = new OutboundRuleCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    status = new RuleStatus(property.Value.GetString());
+                    status = new OutboundRuleStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new RuleType(property.Value.GetString());
+                    type = new OutboundRuleType(property.Value.GetString());
                     continue;
                 }
             }

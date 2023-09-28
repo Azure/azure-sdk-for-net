@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="bind"> Bind Options of the mount. </param>
         /// <param name="volume"> Volume Options of the mount. </param>
         /// <param name="tmpfs"> tmpfs option of the mount. </param>
-        internal VolumeDefinition(VolumeDefinitionType? definitionType, bool? readOnly, string source, string target, string consistency, BindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs)
+        internal VolumeDefinition(VolumeDefinitionType? definitionType, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs)
         {
             DefinitionType = definitionType;
             ReadOnly = readOnly;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Consistency of the volume. </summary>
         public string Consistency { get; set; }
         /// <summary> Bind Options of the mount. </summary>
-        public BindOptions Bind { get; set; }
+        public MountBindOptions Bind { get; set; }
         /// <summary> Volume Options of the mount. </summary>
         internal VolumeOptions Volume { get; set; }
         /// <summary> Indicate whether volume is nocopy. </summary>

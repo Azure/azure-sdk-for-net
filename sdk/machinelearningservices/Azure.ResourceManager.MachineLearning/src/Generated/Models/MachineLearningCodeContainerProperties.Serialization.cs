@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AssetProvisioningState> provisioningState = default;
+            Optional<RegistryAssetProvisioningState> provisioningState = default;
             Optional<bool> isArchived = default;
             Optional<string> latestVersion = default;
             Optional<string> nextVersion = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    provisioningState = new AssetProvisioningState(property.Value.GetString());
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isArchived"u8))

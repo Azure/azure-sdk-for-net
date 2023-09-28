@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<LabelingJobInstructions> jobInstructions = default;
             Optional<IDictionary<string, LabelCategory>> labelCategories = default;
             Optional<LabelingJobMediaProperties> labelingJobMediaProperties = default;
-            Optional<MLAssistConfiguration> mlAssistConfiguration = default;
+            Optional<MachineLearningAssistConfiguration> mlAssistConfiguration = default;
             Optional<ProgressMetrics> progressMetrics = default;
             Optional<Guid> projectId = default;
             Optional<JobProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<StatusMessage>> statusMessages = default;
+            Optional<IReadOnlyList<JobStatusMessage>> statusMessages = default;
             Optional<ResourceIdentifier> componentId = default;
             Optional<ResourceIdentifier> computeId = default;
             Optional<string> displayName = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    mlAssistConfiguration = MLAssistConfiguration.DeserializeMLAssistConfiguration(property.Value);
+                    mlAssistConfiguration = MachineLearningAssistConfiguration.DeserializeMachineLearningAssistConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("progressMetrics"u8))
@@ -366,10 +366,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         statusMessages = null;
                         continue;
                     }
-                    List<StatusMessage> array = new List<StatusMessage>();
+                    List<JobStatusMessage> array = new List<JobStatusMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusMessage.DeserializeStatusMessage(item));
+                        array.Add(JobStatusMessage.DeserializeJobStatusMessage(item));
                     }
                     statusMessages = array;
                     continue;

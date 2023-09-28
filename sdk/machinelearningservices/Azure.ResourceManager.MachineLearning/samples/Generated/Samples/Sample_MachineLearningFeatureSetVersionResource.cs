@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningFeatureSetVersionResource machineLearningFeatureSetVersion = client.GetMachineLearningFeatureSetVersionResource(machineLearningFeatureSetVersionResourceId);
 
             // invoke the operation
-            MachineLearningFeatureSetVersionData data = new MachineLearningFeatureSetVersionData(new FeaturesetVersionProperties()
+            MachineLearningFeatureSetVersionData data = new MachineLearningFeatureSetVersionData(new MachineLearningFeatureSetVersionProperties()
             {
                 Entities =
 {
@@ -201,7 +201,7 @@ MachineLearningDayOfWeek.Monday
             MachineLearningFeatureSetVersionResource machineLearningFeatureSetVersion = client.GetMachineLearningFeatureSetVersionResource(machineLearningFeatureSetVersionResourceId);
 
             // invoke the operation
-            FeaturesetVersionBackfillContent content = new FeaturesetVersionBackfillContent()
+            FeatureSetVersionBackfillContent content = new FeatureSetVersionBackfillContent()
             {
                 Description = "string",
                 DisplayName = "string",
@@ -220,8 +220,8 @@ MachineLearningDayOfWeek.Monday
 ["string"] = "string",
 },
             };
-            ArmOperation<FeaturesetJob> lro = await machineLearningFeatureSetVersion.BackfillAsync(WaitUntil.Completed, content);
-            FeaturesetJob result = lro.Value;
+            ArmOperation<MachineLearningFeatureSetJob> lro = await machineLearningFeatureSetVersion.BackfillAsync(WaitUntil.Completed, content);
+            MachineLearningFeatureSetJob result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -253,7 +253,7 @@ MachineLearningDayOfWeek.Monday
             string filters = "string";
             string featureWindowStart = "string";
             string featureWindowEnd = "string";
-            await foreach (FeaturesetJob item in machineLearningFeatureSetVersion.GetMaterializationJobsAsync(filters: filters, featureWindowStart: featureWindowStart, featureWindowEnd: featureWindowEnd))
+            await foreach (MachineLearningFeatureSetJob item in machineLearningFeatureSetVersion.GetMaterializationJobsAsync(filters: filters, featureWindowStart: featureWindowStart, featureWindowEnd: featureWindowEnd))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

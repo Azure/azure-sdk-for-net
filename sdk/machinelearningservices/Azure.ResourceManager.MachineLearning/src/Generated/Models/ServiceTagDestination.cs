@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="portRanges"></param>
         /// <param name="protocol"></param>
         /// <param name="serviceTag"></param>
-        internal ServiceTagDestination(RuleAction? action, IReadOnlyList<string> addressPrefixes, string portRanges, string protocol, string serviceTag)
+        internal ServiceTagDestination(NetworkingRuleAction? action, IReadOnlyList<string> addressPrefixes, string portRanges, string protocol, string serviceTag)
         {
             Action = action;
             AddressPrefixes = addressPrefixes;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The action enum for networking rule. </summary>
-        public RuleAction? Action { get; set; }
+        public NetworkingRuleAction? Action { get; set; }
         /// <summary> Optional, if provided, the ServiceTag property will be ignored. </summary>
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> Gets or sets the port ranges. </summary>

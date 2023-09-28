@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of MachineLearningFeatureSetVersionData. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public MachineLearningFeatureSetVersionData(FeaturesetVersionProperties properties)
+        public MachineLearningFeatureSetVersionData(MachineLearningFeatureSetVersionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal MachineLearningFeatureSetVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FeaturesetVersionProperties properties) : base(id, name, resourceType, systemData)
+        internal MachineLearningFeatureSetVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningFeatureSetVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public FeaturesetVersionProperties Properties { get; set; }
+        public MachineLearningFeatureSetVersionProperties Properties { get; set; }
     }
 }

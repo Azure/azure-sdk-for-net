@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
         public ManagedNetworkSettings()
         {
-            OutboundRules = new ChangeTrackingDictionary<string, OutboundRule>();
+            OutboundRules = new ChangeTrackingDictionary<string, MachineLearningOutboundRule>();
         }
 
         /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="networkId"></param>
         /// <param name="outboundRules">
         /// Dictionary of &lt;OutboundRule&gt;
-        /// Please note <see cref="OutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </param>
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
-        internal ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, OutboundRule> outboundRules, ManagedNetworkProvisionStatus status)
+        internal ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status)
         {
             IsolationMode = isolationMode;
             NetworkId = networkId;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string NetworkId { get; }
         /// <summary>
         /// Dictionary of &lt;OutboundRule&gt;
-        /// Please note <see cref="OutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </summary>
-        public IDictionary<string, OutboundRule> OutboundRules { get; set; }
+        public IDictionary<string, MachineLearningOutboundRule> OutboundRules { get; set; }
         /// <summary> Status of the Provisioning for the managed network of a machine learning workspace. </summary>
         public ManagedNetworkProvisionStatus Status { get; set; }
     }

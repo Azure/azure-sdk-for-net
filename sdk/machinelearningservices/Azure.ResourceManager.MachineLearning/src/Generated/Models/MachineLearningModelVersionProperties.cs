@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelUri"> The URI path to the model contents. </param>
         /// <param name="provisioningState"> Provisioning state for the model version. </param>
         /// <param name="stage"> Stage in the model lifecycle assigned to this model. </param>
-        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, IntellectualProperty intellectualProperty, string jobName, string modelType, Uri modelUri, AssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
+        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, IntellectualProperty intellectualProperty, string jobName, string modelType, Uri modelUri, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
         {
             Flavors = flavors;
             IntellectualProperty = intellectualProperty;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The URI path to the model contents. </summary>
         public Uri ModelUri { get; set; }
         /// <summary> Provisioning state for the model version. </summary>
-        public AssetProvisioningState? ProvisioningState { get; }
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
         /// <summary> Stage in the model lifecycle assigned to this model. </summary>
         public string Stage { get; set; }
     }

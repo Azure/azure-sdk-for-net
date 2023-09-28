@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<Image> image = default;
+            Optional<ImageSetting> image = default;
             Optional<IDictionary<string, EnvironmentVariable>> environmentVariables = default;
-            Optional<Docker> docker = default;
-            Optional<IList<Endpoint>> endpoints = default;
+            Optional<DockerSetting> docker = default;
+            Optional<IList<ContainerEndpoint>> endpoints = default;
             Optional<IList<VolumeDefinition>> volumes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    image = Image.DeserializeImage(property.Value);
+                    image = ImageSetting.DeserializeImageSetting(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         docker = null;
                         continue;
                     }
-                    docker = Docker.DeserializeDocker(property.Value);
+                    docker = DockerSetting.DeserializeDockerSetting(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endpoints"u8))
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<Endpoint> array = new List<Endpoint>();
+                    List<ContainerEndpoint> array = new List<ContainerEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Endpoint.DeserializeEndpoint(item));
+                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item));
                     }
                     endpoints = array;
                     continue;

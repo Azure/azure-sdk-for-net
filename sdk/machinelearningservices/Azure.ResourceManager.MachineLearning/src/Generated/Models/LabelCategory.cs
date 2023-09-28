@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="classes"> Dictionary of label classes in this category. </param>
         /// <param name="displayName"> Display name of the label category. </param>
         /// <param name="multiSelect"> Indicates whether it is allowed to select multiple classes in this category. </param>
-        internal LabelCategory(IDictionary<string, LabelClass> classes, string displayName, MultiSelect? multiSelect)
+        internal LabelCategory(IDictionary<string, LabelClass> classes, string displayName, LabelCategoryMultiSelect? multiSelect)
         {
             Classes = classes;
             DisplayName = displayName;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Display name of the label category. </summary>
         public string DisplayName { get; set; }
         /// <summary> Indicates whether it is allowed to select multiple classes in this category. </summary>
-        public MultiSelect? MultiSelect { get; set; }
+        public LabelCategoryMultiSelect? MultiSelect { get; set; }
     }
 }

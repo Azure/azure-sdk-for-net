@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownNodes. </summary>
-    internal partial class UnknownNodes : Nodes
+    internal partial class UnknownNodes : JobNodes
     {
         /// <summary> Initializes a new instance of UnknownNodes. </summary>
         /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>

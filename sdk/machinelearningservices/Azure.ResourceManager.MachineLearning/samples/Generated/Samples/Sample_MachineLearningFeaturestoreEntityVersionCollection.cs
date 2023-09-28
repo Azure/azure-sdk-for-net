@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // invoke the operation
             string version = "string";
-            MachineLearningFeaturestoreEntityVersionData data = new MachineLearningFeaturestoreEntityVersionData(new FeaturestoreEntityVersionProperties()
+            MachineLearningFeaturestoreEntityVersionData data = new MachineLearningFeaturestoreEntityVersionData(new MachineLearningFeatureStoreEntityVersionProperties()
             {
                 IndexColumns =
 {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EnvironmentAsset": return BaseEnvironmentId.DeserializeBaseEnvironmentId(element);
+                    case "EnvironmentAsset": return BaseEnvironmentType.DeserializeBaseEnvironmentType(element);
                 }
             }
             return UnknownBaseEnvironmentSource.DeserializeUnknownBaseEnvironmentSource(element);

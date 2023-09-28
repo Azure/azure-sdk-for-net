@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            FeaturestoreEntityContainerProperties properties = default;
+            MachineLearningFeatureStoreEntityContainerProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = FeaturestoreEntityContainerProperties.DeserializeFeaturestoreEntityContainerProperties(property.Value);
+                    properties = MachineLearningFeatureStoreEntityContainerProperties.DeserializeMachineLearningFeatureStoreEntityContainerProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

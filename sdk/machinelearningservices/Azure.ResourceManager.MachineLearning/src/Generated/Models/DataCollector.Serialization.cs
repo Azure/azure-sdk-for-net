@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IDictionary<string, Collection> collections = default;
+            IDictionary<string, DataCollection> collections = default;
             Optional<RequestLogging> requestLogging = default;
             Optional<RollingRateType> rollingRate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collections"u8))
                 {
-                    Dictionary<string, Collection> dictionary = new Dictionary<string, Collection>();
+                    Dictionary<string, DataCollection> dictionary = new Dictionary<string, DataCollection>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Collection.DeserializeCollection(property0.Value));
+                        dictionary.Add(property0.Name, DataCollection.DeserializeDataCollection(property0.Value));
                     }
                     collections = dictionary;
                     continue;

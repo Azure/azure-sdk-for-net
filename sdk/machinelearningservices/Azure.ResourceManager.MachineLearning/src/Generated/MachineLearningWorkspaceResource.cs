@@ -901,11 +901,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningWorkspaceConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OutboundRuleBasicResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of OutboundRuleBasicResources and their operations over a OutboundRuleBasicResource. </returns>
-        public virtual OutboundRuleBasicResourceCollection GetOutboundRuleBasicResources()
+        /// <summary> Gets a collection of MachineLearningOutboundRuleBasicResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningOutboundRuleBasicResources and their operations over a MachineLearningOutboundRuleBasicResource. </returns>
+        public virtual MachineLearningOutboundRuleBasicCollection GetMachineLearningOutboundRuleBasics()
         {
-            return GetCachedClient(Client => new OutboundRuleBasicResourceCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningOutboundRuleBasicCollection(Client, Id));
         }
 
         /// <summary>
@@ -926,9 +926,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OutboundRuleBasicResource>> GetOutboundRuleBasicResourceAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningOutboundRuleBasicResource>> GetMachineLearningOutboundRuleBasicAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            return await GetOutboundRuleBasicResources().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningOutboundRuleBasics().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -949,9 +949,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OutboundRuleBasicResource> GetOutboundRuleBasicResource(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningOutboundRuleBasicResource> GetMachineLearningOutboundRuleBasic(string ruleName, CancellationToken cancellationToken = default)
         {
-            return GetOutboundRuleBasicResources().Get(ruleName, cancellationToken);
+            return GetMachineLearningOutboundRuleBasics().Get(ruleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MachineLearningPrivateEndpointConnectionResources in the MachineLearningWorkspace. </summary>

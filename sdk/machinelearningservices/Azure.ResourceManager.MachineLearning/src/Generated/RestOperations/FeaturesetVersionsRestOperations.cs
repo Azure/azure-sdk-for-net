@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal HttpMessage CreateBackfillRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, FeaturesetVersionBackfillContent content)
+        internal HttpMessage CreateBackfillRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, FeatureSetVersionBackfillContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BackfillAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, FeaturesetVersionBackfillContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> BackfillAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Backfill(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, FeaturesetVersionBackfillContent content, CancellationToken cancellationToken = default)
+        public Response Backfill(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

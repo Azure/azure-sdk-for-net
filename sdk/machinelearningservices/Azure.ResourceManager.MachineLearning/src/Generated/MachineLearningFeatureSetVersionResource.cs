@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> Feature set version backfill request entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<FeaturesetJob>> BackfillAsync(WaitUntil waitUntil, FeaturesetVersionBackfillContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningFeatureSetJob>> BackfillAsync(WaitUntil waitUntil, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.BackfillAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<FeaturesetJob>(new FeaturesetJobOperationSource(), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateBackfillRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningFeatureSetJob>(new MachineLearningFeatureSetJobOperationSource(), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateBackfillRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> Feature set version backfill request entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<FeaturesetJob> Backfill(WaitUntil waitUntil, FeaturesetVersionBackfillContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningFeatureSetJob> Backfill(WaitUntil waitUntil, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.Backfill(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new MachineLearningArmOperation<FeaturesetJob>(new FeaturesetJobOperationSource(), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateBackfillRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningFeatureSetJob>(new MachineLearningFeatureSetJobOperationSource(), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateBackfillRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -443,12 +443,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="featureWindowStart"> Start time of the feature window to filter materialization jobs. </param>
         /// <param name="featureWindowEnd"> End time of the feature window to filter materialization jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FeaturesetJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FeaturesetJob> GetMaterializationJobsAsync(string skip = null, string filters = null, string featureWindowStart = null, string featureWindowEnd = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningFeatureSetJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningFeatureSetJob> GetMaterializationJobsAsync(string skip = null, string filters = null, string featureWindowStart = null, string featureWindowEnd = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FeaturesetJob.DeserializeFeaturesetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -469,12 +469,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="featureWindowStart"> Start time of the feature window to filter materialization jobs. </param>
         /// <param name="featureWindowEnd"> End time of the feature window to filter materialization jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FeaturesetJob" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FeaturesetJob> GetMaterializationJobs(string skip = null, string filters = null, string featureWindowStart = null, string featureWindowEnd = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningFeatureSetJob" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningFeatureSetJob> GetMaterializationJobs(string skip = null, string filters = null, string featureWindowStart = null, string featureWindowEnd = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListMaterializationJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, filters, featureWindowStart, featureWindowEnd);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FeaturesetJob.DeserializeFeaturesetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob, _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionResource.GetMaterializationJobs", "value", "nextLink", cancellationToken);
         }
     }
 }

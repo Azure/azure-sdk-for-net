@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
-        /// <param name="cosmosDbResourceId">
+        /// <param name="cosmosDBResourceId">
         /// The byok cosmosdb account that customer brings to store customer's data
         /// with encryption
         /// </param>
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The byok storage account that customer brings to store customer's data
         /// with encryption
         /// </param>
-        internal MachineLearningEncryptionSetting(string cosmosDbResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, string searchAccountResourceId, MachineLearningEncryptionStatus status, string storageAccountResourceId)
+        internal MachineLearningEncryptionSetting(ResourceIdentifier cosmosDBResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId)
         {
-            CosmosDbResourceId = cosmosDbResourceId;
+            CosmosDBResourceId = cosmosDBResourceId;
             Identity = identity;
             KeyVaultProperties = keyVaultProperties;
             SearchAccountResourceId = searchAccountResourceId;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The byok cosmosdb account that customer brings to store customer's data
         /// with encryption
         /// </summary>
-        public string CosmosDbResourceId { get; set; }
+        public ResourceIdentifier CosmosDBResourceId { get; set; }
         /// <summary> Identity to be used with the keyVault. </summary>
         internal MachineLearningCmkIdentity Identity { get; set; }
         /// <summary> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </summary>
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The byok search account that customer brings to store customer's data
         /// with encryption
         /// </summary>
-        public string SearchAccountResourceId { get; set; }
+        public ResourceIdentifier SearchAccountResourceId { get; set; }
         /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
         public MachineLearningEncryptionStatus Status { get; set; }
         /// <summary>
         /// The byok storage account that customer brings to store customer's data
         /// with encryption
         /// </summary>
-        public string StorageAccountResourceId { get; set; }
+        public ResourceIdentifier StorageAccountResourceId { get; set; }
     }
 }

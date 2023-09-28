@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
         /// </summary>
-        public string ManagedResourceId
+        public ResourceIdentifier ManagedResourceId
         {
             get => ManagedResourceGroup is null ? default : ManagedResourceGroup.ResourceId;
             set

@@ -753,20 +753,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region OutboundRuleBasicResource
+        #region MachineLearningOutboundRuleBasicResource
         /// <summary>
-        /// Gets an object representing an <see cref="OutboundRuleBasicResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OutboundRuleBasicResource.CreateResourceIdentifier" /> to create an <see cref="OutboundRuleBasicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningOutboundRuleBasicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningOutboundRuleBasicResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOutboundRuleBasicResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OutboundRuleBasicResource" /> object. </returns>
-        public static OutboundRuleBasicResource GetOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource" /> object. </returns>
+        public static MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OutboundRuleBasicResource.ValidateResourceId(id);
-                return new OutboundRuleBasicResource(client, id);
+                MachineLearningOutboundRuleBasicResource.ValidateResourceId(id);
+                return new MachineLearningOutboundRuleBasicResource(client, id);
             }
             );
         }

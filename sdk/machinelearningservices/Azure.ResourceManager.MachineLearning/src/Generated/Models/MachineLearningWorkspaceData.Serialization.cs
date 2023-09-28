@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<FeatureStoreSettings> featureStoreSettings = default;
             Optional<string> friendlyName = default;
             Optional<bool> hbiWorkspace = default;
-            Optional<string> hubResourceId = default;
+            Optional<ResourceIdentifier> hubResourceId = default;
             Optional<string> imageBuildCompute = default;
             Optional<string> keyVault = default;
             Optional<IList<string>> keyVaults = default;
@@ -472,7 +472,11 @@ namespace Azure.ResourceManager.MachineLearning
                         }
                         if (property0.NameEquals("hubResourceId"u8))
                         {
-                            hubResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hubResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("imageBuildCompute"u8))

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<Uri> codeUri = default;
-            Optional<AssetProvisioningState> provisioningState = default;
+            Optional<RegistryAssetProvisioningState> provisioningState = default;
             Optional<AutoDeleteSetting> autoDeleteSetting = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    provisioningState = new AssetProvisioningState(property.Value.GetString());
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("autoDeleteSetting"u8))

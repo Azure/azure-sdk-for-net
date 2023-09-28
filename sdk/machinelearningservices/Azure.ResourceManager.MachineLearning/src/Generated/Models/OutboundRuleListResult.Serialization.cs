@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<OutboundRuleBasicResourceData>> value = default;
+            Optional<IReadOnlyList<MachineLearningOutboundRuleBasicData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<OutboundRuleBasicResourceData> array = new List<OutboundRuleBasicResourceData>();
+                    List<MachineLearningOutboundRuleBasicData> array = new List<MachineLearningOutboundRuleBasicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundRuleBasicResourceData.DeserializeOutboundRuleBasicResourceData(item));
+                        array.Add(MachineLearningOutboundRuleBasicData.DeserializeMachineLearningOutboundRuleBasicData(item));
                     }
                     value = array;
                     continue;

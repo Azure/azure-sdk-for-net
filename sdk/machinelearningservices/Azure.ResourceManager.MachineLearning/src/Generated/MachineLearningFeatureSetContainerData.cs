@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of MachineLearningFeatureSetContainerData. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public MachineLearningFeatureSetContainerData(FeaturesetContainerProperties properties)
+        public MachineLearningFeatureSetContainerData(MachineLearningFeatureSetContainerProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal MachineLearningFeatureSetContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FeaturesetContainerProperties properties) : base(id, name, resourceType, systemData)
+        internal MachineLearningFeatureSetContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningFeatureSetContainerProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public FeaturesetContainerProperties Properties { get; set; }
+        public MachineLearningFeatureSetContainerProperties Properties { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<IDictionary<string, LabelClass>> classes = default;
             Optional<string> displayName = default;
-            Optional<MultiSelect> multiSelect = default;
+            Optional<LabelCategoryMultiSelect> multiSelect = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classes"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    multiSelect = new MultiSelect(property.Value.GetString());
+                    multiSelect = new LabelCategoryMultiSelect(property.Value.GetString());
                     continue;
                 }
             }

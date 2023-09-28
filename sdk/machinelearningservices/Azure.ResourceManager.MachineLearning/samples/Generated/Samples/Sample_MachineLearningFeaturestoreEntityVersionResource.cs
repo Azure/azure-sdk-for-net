@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningFeaturestoreEntityVersionResource machineLearningFeaturestoreEntityVersion = client.GetMachineLearningFeaturestoreEntityVersionResource(machineLearningFeaturestoreEntityVersionResourceId);
 
             // invoke the operation
-            MachineLearningFeaturestoreEntityVersionData data = new MachineLearningFeaturestoreEntityVersionData(new FeaturestoreEntityVersionProperties()
+            MachineLearningFeaturestoreEntityVersionData data = new MachineLearningFeaturestoreEntityVersionData(new MachineLearningFeatureStoreEntityVersionProperties()
             {
                 IndexColumns =
 {

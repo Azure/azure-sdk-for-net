@@ -163,7 +163,7 @@ Data =
             MachineLearningRegistryModelVersionResource machineLearningRegistryModelVersion = client.GetMachineLearningRegistryModelVersionResource(machineLearningRegistryModelVersionResourceId);
 
             // invoke the operation
-            PackageRequest body = new PackageRequest(new AzureMLBatchInferencingServer()
+            ModelPackageContent content = new ModelPackageContent(new AzureMLBatchInferencingServer()
             {
                 CodeConfiguration = new MachineLearningCodeConfiguration("string")
                 {
@@ -171,7 +171,7 @@ Data =
                 },
             }, "string")
             {
-                BaseEnvironmentSource = new BaseEnvironmentId("string"),
+                BaseEnvironmentSource = new BaseEnvironmentType(new ResourceIdentifier("string")),
                 EnvironmentVariables =
 {
 ["string"] = "string",
@@ -197,8 +197,8 @@ MountPath = "string",
 ["string"] = "string",
 },
             };
-            ArmOperation<PackageResponse> lro = await machineLearningRegistryModelVersion.PackageAsync(WaitUntil.Completed, body);
-            PackageResponse result = lro.Value;
+            ArmOperation<ModelPackageResult> lro = await machineLearningRegistryModelVersion.PackageAsync(WaitUntil.Completed, content);
+            ModelPackageResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

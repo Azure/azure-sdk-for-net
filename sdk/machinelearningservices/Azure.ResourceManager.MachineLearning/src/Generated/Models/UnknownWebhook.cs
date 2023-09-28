@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownWebhook. </summary>
-    internal partial class UnknownWebhook : Webhook
+    internal partial class UnknownWebhook : MachineLearningWebhook
     {
         /// <summary> Initializes a new instance of UnknownWebhook. </summary>
         /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
-        internal UnknownWebhook(string eventType, WebhookType webhookType) : base(eventType, webhookType)
+        internal UnknownWebhook(string eventType, MachineLearningWebhookType webhookType) : base(eventType, webhookType)
         {
             WebhookType = webhookType;
         }

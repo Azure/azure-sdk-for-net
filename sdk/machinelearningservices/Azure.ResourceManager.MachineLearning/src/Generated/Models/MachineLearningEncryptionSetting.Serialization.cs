@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CosmosDbResourceId))
+            if (Optional.IsDefined(CosmosDBResourceId))
             {
                 writer.WritePropertyName("cosmosDbResourceId"u8);
-                writer.WriteStringValue(CosmosDbResourceId);
+                writer.WriteStringValue(CosmosDBResourceId);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -48,17 +48,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> cosmosDbResourceId = default;
+            Optional<ResourceIdentifier> cosmosDbResourceId = default;
             Optional<MachineLearningCmkIdentity> identity = default;
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
-            Optional<string> searchAccountResourceId = default;
+            Optional<ResourceIdentifier> searchAccountResourceId = default;
             MachineLearningEncryptionStatus status = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cosmosDbResourceId"u8))
                 {
-                    cosmosDbResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cosmosDbResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -77,7 +81,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("searchAccountResourceId"u8))
                 {
-                    searchAccountResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchAccountResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -87,7 +95,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("storageAccountResourceId"u8))
                 {
-                    storageAccountResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

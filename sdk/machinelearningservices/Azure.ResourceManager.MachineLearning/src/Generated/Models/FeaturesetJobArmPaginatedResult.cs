@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of FeaturesetJobArmPaginatedResult. </summary>
         internal FeaturesetJobArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<FeaturesetJob>();
+            Value = new ChangeTrackingList<MachineLearningFeatureSetJob>();
         }
 
         /// <summary> Initializes a new instance of FeaturesetJobArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturesetJob objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturesetJob. </param>
-        internal FeaturesetJobArmPaginatedResult(string nextLink, IReadOnlyList<FeaturesetJob> value)
+        internal FeaturesetJobArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetJob> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of FeaturesetJob objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type FeaturesetJob. </summary>
-        public IReadOnlyList<FeaturesetJob> Value { get; }
+        public IReadOnlyList<MachineLearningFeatureSetJob> Value { get; }
     }
 }

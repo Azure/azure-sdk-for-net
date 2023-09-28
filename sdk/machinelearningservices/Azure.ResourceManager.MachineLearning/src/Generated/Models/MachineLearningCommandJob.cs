@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, Ray, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="Ray"/> and <see cref="TensorFlowDistributionConfiguration"/>.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="RayDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="parameters"> Input parameters. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, AutologgerSettings autologgerSettings, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, QueueSettings queueSettings, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, AutologgerSettings autologgerSettings, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, JobQueueSettings queueSettings, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             AutologgerSettings = autologgerSettings;
             CodeId = codeId;
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
         internal AutologgerSettings AutologgerSettings { get; set; }
         /// <summary> [Required] Indicates whether mlflow autologger is enabled. </summary>
-        public MLFlowAutologgerState? MlflowAutologger
+        public MachineLearningflowAutologgerState? MlflowAutologger
         {
-            get => AutologgerSettings is null ? default(MLFlowAutologgerState?) : AutologgerSettings.MlflowAutologger;
+            get => AutologgerSettings is null ? default(MachineLearningflowAutologgerState?) : AutologgerSettings.MlflowAutologger;
             set
             {
                 AutologgerSettings = value.HasValue ? new AutologgerSettings(value.Value) : null;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, Ray, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="Ray"/> and <see cref="TensorFlowDistributionConfiguration"/>.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="RayDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </summary>
         public MachineLearningDistributionConfiguration Distribution { get; set; }
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public BinaryData Parameters { get; }
         /// <summary> Queue settings for the job. </summary>
-        public QueueSettings QueueSettings { get; set; }
+        public JobQueueSettings QueueSettings { get; set; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public MachineLearningJobResourceConfiguration Resources { get; set; }
     }

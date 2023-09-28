@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Package input path specified with a resource id. </summary>
@@ -19,13 +21,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of PackageInputPathId. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
         /// <param name="resourceId"> Input resource id. </param>
-        internal PackageInputPathId(InputPathType inputPathType, string resourceId) : base(inputPathType)
+        internal PackageInputPathId(InputPathType inputPathType, ResourceIdentifier resourceId) : base(inputPathType)
         {
             ResourceId = resourceId;
             InputPathType = inputPathType;
         }
 
         /// <summary> Input resource id. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

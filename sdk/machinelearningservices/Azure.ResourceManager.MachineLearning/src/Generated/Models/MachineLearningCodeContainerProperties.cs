@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
         /// <param name="provisioningState"> Provisioning state for the code container. </param>
-        internal MachineLearningCodeContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, AssetProvisioningState? provisioningState) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
+        internal MachineLearningCodeContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, RegistryAssetProvisioningState? provisioningState) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
         {
             ProvisioningState = provisioningState;
         }
 
         /// <summary> Provisioning state for the code container. </summary>
-        public AssetProvisioningState? ProvisioningState { get; }
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

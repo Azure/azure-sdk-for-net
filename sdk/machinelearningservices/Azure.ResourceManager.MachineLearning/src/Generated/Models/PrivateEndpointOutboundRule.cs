@@ -8,23 +8,23 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </summary>
-    public partial class PrivateEndpointOutboundRule : OutboundRule
+    public partial class PrivateEndpointOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of PrivateEndpointOutboundRule. </summary>
         public PrivateEndpointOutboundRule()
         {
-            RuleType = RuleType.PrivateEndpoint;
+            OutboundRuleType = OutboundRuleType.PrivateEndpoint;
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointOutboundRule. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="ruleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="destination"> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </param>
-        internal PrivateEndpointOutboundRule(RuleCategory? category, RuleStatus? status, RuleType ruleType, PrivateEndpointDestination destination) : base(category, status, ruleType)
+        internal PrivateEndpointOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, PrivateEndpointDestination destination) : base(category, status, outboundRuleType)
         {
             Destination = destination;
-            RuleType = ruleType;
+            OutboundRuleType = outboundRuleType;
         }
 
         /// <summary> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </summary>

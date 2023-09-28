@@ -128,7 +128,7 @@ Subclasses =
 },
 },
 DisplayName = "myCategory1Title",
-MultiSelect = MultiSelect.Disabled,
+MultiSelect = LabelCategoryMultiSelect.Disabled,
 },
 ["myCategory2"] = new LabelCategory()
 {
@@ -150,11 +150,11 @@ Subclasses =
 },
 },
 DisplayName = "myCategory2Title",
-MultiSelect = MultiSelect.Disabled,
+MultiSelect = LabelCategoryMultiSelect.Disabled,
 },
 },
                 LabelingJobMediaProperties = new LabelingJobImageProperties(),
-                MlAssistConfiguration = new MLAssistConfigurationEnabled("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/computes/myscoringcompute", "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/computes/mytrainingompute"),
+                MlAssistConfiguration = new MachineLearningAssistEnabledConfiguration("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/computes/myscoringcompute", "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/resourceGroup-1234/providers/Microsoft.MachineLearningServices/workspaces/testworkspace/computes/mytrainingompute"),
                 Description = "string",
                 Properties =
 {

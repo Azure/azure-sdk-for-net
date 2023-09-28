@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sparkEnabled"></param>
         /// <param name="sparkStatus"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="subresourceTarget"></param>
-        internal PrivateEndpointDestination(string serviceResourceId, bool? sparkEnabled, RuleStatus? sparkStatus, string subresourceTarget)
+        internal PrivateEndpointDestination(string serviceResourceId, bool? sparkEnabled, OutboundRuleStatus? sparkStatus, string subresourceTarget)
         {
             ServiceResourceId = serviceResourceId;
             SparkEnabled = sparkEnabled;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets or sets the spark enabled. </summary>
         public bool? SparkEnabled { get; set; }
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
-        public RuleStatus? SparkStatus { get; set; }
+        public OutboundRuleStatus? SparkStatus { get; set; }
         /// <summary> Gets or sets the subresource target. </summary>
         public string SubresourceTarget { get; set; }
     }

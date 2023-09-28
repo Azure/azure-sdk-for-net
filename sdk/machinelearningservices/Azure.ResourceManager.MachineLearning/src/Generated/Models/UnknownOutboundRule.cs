@@ -8,15 +8,15 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownOutboundRule. </summary>
-    internal partial class UnknownOutboundRule : OutboundRule
+    internal partial class UnknownOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of UnknownOutboundRule. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="ruleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        internal UnknownOutboundRule(RuleCategory? category, RuleStatus? status, RuleType ruleType) : base(category, status, ruleType)
+        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        internal UnknownOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType) : base(category, status, outboundRuleType)
         {
-            RuleType = ruleType;
+            OutboundRuleType = outboundRuleType;
         }
     }
 }

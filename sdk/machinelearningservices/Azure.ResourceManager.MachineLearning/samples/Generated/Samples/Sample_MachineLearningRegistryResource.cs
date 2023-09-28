@@ -203,21 +203,21 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 },
                 DiscoveryUri = new Uri("string"),
                 IntellectualPropertyPublisher = "string",
-                ManagedResourceId = "string",
+                ManagedResourceId = new ResourceIdentifier("string"),
                 MlFlowRegistryUri = new Uri("string"),
                 PrivateEndpointConnections =
 {
 new RegistryPrivateEndpointConnection()
 {
-Id = "string",
+Id = new ResourceIdentifier("string"),
 Location = new AzureLocation("string"),
 GroupIds =
 {
 "string"
 },
-PrivateEndpoint = new PrivateEndpointResource()
+PrivateEndpoint = new RegistryPrivateEndpoint()
 {
-SubnetArmId = "string",
+SubnetArmId = new ResourceIdentifier("string"),
 },
 PrivateLinkServiceConnectionState = new RegistryPrivateLinkServiceConnectionState()
 {
@@ -235,13 +235,13 @@ new RegistryRegionArmDetails()
 {
 AcrDetails =
 {
-new AcrDetails()
+new RegistryAcrDetails()
 {
 SystemCreatedAcrAccount = new SystemCreatedAcrAccount()
 {
 AcrAccountName = "string",
 AcrAccountSku = "string",
-ArmResourceId = "string",
+ArmResourceId = new ResourceIdentifier("string"),
 },
 }
 },
@@ -253,7 +253,7 @@ new StorageAccountDetails()
 SystemCreatedStorageAccount = new SystemCreatedStorageAccount()
 {
 AllowBlobPublicAccess = false,
-ArmResourceId = "string",
+ArmResourceId = new ResourceIdentifier("string"),
 StorageAccountHnsEnabled = false,
 StorageAccountName = "string",
 StorageAccountType = "string",

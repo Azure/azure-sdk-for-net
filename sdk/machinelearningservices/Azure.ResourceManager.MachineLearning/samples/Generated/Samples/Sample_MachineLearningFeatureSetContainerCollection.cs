@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // invoke the operation
             string name = "string";
-            MachineLearningFeatureSetContainerData data = new MachineLearningFeatureSetContainerData(new FeaturesetContainerProperties()
+            MachineLearningFeatureSetContainerData data = new MachineLearningFeatureSetContainerData(new MachineLearningFeatureSetContainerProperties()
             {
                 IsArchived = false,
                 Description = "string",

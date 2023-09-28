@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of AutologgerSettings. </summary>
         /// <param name="mlflowAutologger"> [Required] Indicates whether mlflow autologger is enabled. </param>
-        public AutologgerSettings(MLFlowAutologgerState mlflowAutologger)
+        public AutologgerSettings(MachineLearningflowAutologgerState mlflowAutologger)
         {
             MlflowAutologger = mlflowAutologger;
         }
 
         /// <summary> [Required] Indicates whether mlflow autologger is enabled. </summary>
-        public MLFlowAutologgerState MlflowAutologger { get; set; }
+        public MachineLearningflowAutologgerState MlflowAutologger { get; set; }
     }
 }

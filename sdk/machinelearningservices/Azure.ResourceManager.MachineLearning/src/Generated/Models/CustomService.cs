@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public CustomService()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, EnvironmentVariable>();
-            Endpoints = new ChangeTrackingList<Endpoint>();
+            Endpoints = new ChangeTrackingList<ContainerEndpoint>();
             Volumes = new ChangeTrackingList<VolumeDefinition>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpoints"> Configuring the endpoints for the container. </param>
         /// <param name="volumes"> Configuring the volumes for the container. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CustomService(string name, Image image, IDictionary<string, EnvironmentVariable> environmentVariables, Docker docker, IList<Endpoint> endpoints, IList<VolumeDefinition> volumes, IDictionary<string, BinaryData> additionalProperties)
+        internal CustomService(string name, ImageSetting image, IDictionary<string, EnvironmentVariable> environmentVariables, DockerSetting docker, IList<ContainerEndpoint> endpoints, IList<VolumeDefinition> volumes, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             Image = image;
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Name of the Custom Service. </summary>
         public string Name { get; set; }
         /// <summary> Describes the Image Specifications. </summary>
-        public Image Image { get; set; }
+        public ImageSetting Image { get; set; }
         /// <summary> Environment Variable for the container. </summary>
         public IDictionary<string, EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Describes the docker settings for the image. </summary>
-        public Docker Docker { get; set; }
+        public DockerSetting Docker { get; set; }
         /// <summary> Configuring the endpoints for the container. </summary>
-        public IList<Endpoint> Endpoints { get; }
+        public IList<ContainerEndpoint> Endpoints { get; }
         /// <summary> Configuring the volumes for the container. </summary>
         public IList<VolumeDefinition> Volumes { get; }
         /// <summary>

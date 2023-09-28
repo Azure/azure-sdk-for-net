@@ -737,7 +737,7 @@ Limits =
                         VmSize = "STANDARD_NC6",
                         SubnetId = new ResourceIdentifier("test-subnet-resource-id"),
                         ApplicationSharingPolicy = MachineLearningApplicationSharingPolicy.Personal,
-                        MlflowAutologger = MlflowAutologger.Enabled,
+                        MlflowAutologger = MachineLearningflowAutologger.Enabled,
                         SshSettings = new MachineLearningComputeInstanceSshSettings()
                         {
                             SshPublicAccess = MachineLearningSshPublicAccess.Disabled,
@@ -747,7 +747,7 @@ Limits =
 new CustomService()
 {
 Name = "rstudio-workbench",
-Image = new Image()
+Image = new ImageSetting()
 {
 ImageType = ImageType.Docker,
 Reference = "ghcr.io/azure/rstudio-workbench:latest",
@@ -760,15 +760,15 @@ VariableType = EnvironmentVariableType.Local,
 Value = "XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX",
 },
 },
-Docker = new Docker()
+Docker = new DockerSetting()
 {
 Privileged = true,
 },
 Endpoints =
 {
-new Endpoint()
+new ContainerEndpoint()
 {
-Protocol = Protocol.Http,
+Protocol = ContainerCommunicationProtocol.Http,
 Name = "connect",
 Target = 8787,
 Published = 4444,

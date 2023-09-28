@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<string> serviceResourceId = default;
             Optional<bool> sparkEnabled = default;
-            Optional<RuleStatus> sparkStatus = default;
+            Optional<OutboundRuleStatus> sparkStatus = default;
             Optional<string> subresourceTarget = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    sparkStatus = new RuleStatus(property.Value.GetString());
+                    sparkStatus = new OutboundRuleStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subresourceTarget"u8))

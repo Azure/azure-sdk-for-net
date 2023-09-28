@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IList<string>> jars = default;
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
             Optional<IList<string>> pyFiles = default;
-            Optional<QueueSettings> queueSettings = default;
+            Optional<JobQueueSettings> queueSettings = default;
             Optional<SparkResourceConfiguration> resources = default;
             Optional<ResourceIdentifier> componentId = default;
             Optional<ResourceIdentifier> computeId = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         queueSettings = null;
                         continue;
                     }
-                    queueSettings = QueueSettings.DeserializeQueueSettings(property.Value);
+                    queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))

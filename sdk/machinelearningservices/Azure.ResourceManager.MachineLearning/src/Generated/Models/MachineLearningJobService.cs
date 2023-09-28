@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nodes">
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="Models.Nodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AllNodes"/>.
+        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </param>
         /// <param name="port"> Port for endpoint set by user. </param>
         /// <param name="properties"> Additional properties to set on the endpoint. </param>
         /// <param name="status"> Status of endpoint. </param>
-        internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, Nodes nodes, int? port, IDictionary<string, string> properties, string status)
+        internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, JobNodes nodes, int? port, IDictionary<string, string> properties, string status)
         {
             Endpoint = endpoint;
             ErrorMessage = errorMessage;
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="Models.Nodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AllNodes"/>.
+        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </summary>
-        public Nodes Nodes { get; set; }
+        public JobNodes Nodes { get; set; }
         /// <summary> Port for endpoint set by user. </summary>
         public int? Port { get; set; }
         /// <summary> Additional properties to set on the endpoint. </summary>

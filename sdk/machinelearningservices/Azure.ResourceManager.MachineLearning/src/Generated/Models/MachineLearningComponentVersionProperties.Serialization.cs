@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<BinaryData> componentSpec = default;
-            Optional<AssetProvisioningState> provisioningState = default;
+            Optional<RegistryAssetProvisioningState> provisioningState = default;
             Optional<string> stage = default;
             Optional<AutoDeleteSetting> autoDeleteSetting = default;
             Optional<bool> isAnonymous = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    provisioningState = new AssetProvisioningState(property.Value.GetString());
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stage"u8))

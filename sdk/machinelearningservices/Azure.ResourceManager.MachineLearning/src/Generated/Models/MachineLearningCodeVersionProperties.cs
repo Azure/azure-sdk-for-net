@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
         /// <param name="codeUri"> Uri where code is located. </param>
         /// <param name="provisioningState"> Provisioning state for the code version. </param>
-        internal MachineLearningCodeVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, Uri codeUri, AssetProvisioningState? provisioningState) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
+        internal MachineLearningCodeVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, Uri codeUri, RegistryAssetProvisioningState? provisioningState) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
         {
             CodeUri = codeUri;
             ProvisioningState = provisioningState;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Uri where code is located. </summary>
         public Uri CodeUri { get; set; }
         /// <summary> Provisioning state for the code version. </summary>
-        public AssetProvisioningState? ProvisioningState { get; }
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

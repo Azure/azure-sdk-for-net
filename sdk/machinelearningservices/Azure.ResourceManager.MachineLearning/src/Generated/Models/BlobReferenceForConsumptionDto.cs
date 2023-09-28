@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="SasCredentialDto"/>.
         /// </param>
         /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
-        internal BlobReferenceForConsumptionDto(Uri blobUri, PendingUploadCredentialDto credential, string storageAccountArmId)
+        internal BlobReferenceForConsumptionDto(Uri blobUri, PendingUploadCredentialDto credential, ResourceIdentifier storageAccountArmId)
         {
             BlobUri = blobUri;
             Credential = credential;
@@ -47,6 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public PendingUploadCredentialDto Credential { get; }
         /// <summary> Arm ID of the storage account to use. </summary>
-        public string StorageAccountArmId { get; }
+        public ResourceIdentifier StorageAccountArmId { get; }
     }
 }

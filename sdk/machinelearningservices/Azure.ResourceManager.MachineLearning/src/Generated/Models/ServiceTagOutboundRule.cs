@@ -8,23 +8,23 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Service Tag Outbound Rule for the managed network of a machine learning workspace. </summary>
-    public partial class ServiceTagOutboundRule : OutboundRule
+    public partial class ServiceTagOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of ServiceTagOutboundRule. </summary>
         public ServiceTagOutboundRule()
         {
-            RuleType = RuleType.ServiceTag;
+            OutboundRuleType = OutboundRuleType.ServiceTag;
         }
 
         /// <summary> Initializes a new instance of ServiceTagOutboundRule. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="ruleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="destination"> Service Tag destination for a Service Tag Outbound Rule for the managed network of a machine learning workspace. </param>
-        internal ServiceTagOutboundRule(RuleCategory? category, RuleStatus? status, RuleType ruleType, ServiceTagDestination destination) : base(category, status, ruleType)
+        internal ServiceTagOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, ServiceTagDestination destination) : base(category, status, outboundRuleType)
         {
             Destination = destination;
-            RuleType = ruleType;
+            OutboundRuleType = outboundRuleType;
         }
 
         /// <summary> Service Tag destination for a Service Tag Outbound Rule for the managed network of a machine learning workspace. </summary>

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> source = default;
             Optional<string> target = default;
             Optional<string> consistency = default;
-            Optional<BindOptions> bind = default;
+            Optional<MountBindOptions> bind = default;
             Optional<VolumeOptions> volume = default;
             Optional<TmpfsOptions> tmpfs = default;
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         bind = null;
                         continue;
                     }
-                    bind = BindOptions.DeserializeBindOptions(property.Value);
+                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volume"u8))

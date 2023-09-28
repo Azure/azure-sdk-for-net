@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OutboundRuleBasicResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningOutboundRuleBasicData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        OutboundRuleBasicResourceData value = default;
+                        MachineLearningOutboundRuleBasicData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutboundRuleBasicResourceData.DeserializeOutboundRuleBasicResourceData(document.RootElement);
+                        value = MachineLearningOutboundRuleBasicData.DeserializeMachineLearningOutboundRuleBasicData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OutboundRuleBasicResourceData)null, message.Response);
+                    return Response.FromValue((MachineLearningOutboundRuleBasicData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OutboundRuleBasicResourceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
+        public Response<MachineLearningOutboundRuleBasicData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -270,19 +270,19 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        OutboundRuleBasicResourceData value = default;
+                        MachineLearningOutboundRuleBasicData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutboundRuleBasicResourceData.DeserializeOutboundRuleBasicResourceData(document.RootElement);
+                        value = MachineLearningOutboundRuleBasicData.DeserializeMachineLearningOutboundRuleBasicData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OutboundRuleBasicResourceData)null, message.Response);
+                    return Response.FromValue((MachineLearningOutboundRuleBasicData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, OutboundRuleBasicResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, MachineLearningOutboundRuleBasicData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, OutboundRuleBasicResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, OutboundRuleBasicResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

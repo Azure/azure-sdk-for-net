@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<RuleAction> action = default;
+            Optional<NetworkingRuleAction> action = default;
             Optional<IReadOnlyList<string>> addressPrefixes = default;
             Optional<string> portRanges = default;
             Optional<string> protocol = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    action = new RuleAction(property.Value.GetString());
+                    action = new NetworkingRuleAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addressPrefixes"u8))

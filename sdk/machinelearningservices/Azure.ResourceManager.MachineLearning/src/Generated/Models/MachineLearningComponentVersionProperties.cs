@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="provisioningState"> Provisioning state for the component version. </param>
         /// <param name="stage"> Stage in the component lifecycle. </param>
-        internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, BinaryData componentSpec, AssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
+        internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, BinaryData componentSpec, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
         {
             ComponentSpec = componentSpec;
             ProvisioningState = provisioningState;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public BinaryData ComponentSpec { get; set; }
         /// <summary> Provisioning state for the component version. </summary>
-        public AssetProvisioningState? ProvisioningState { get; }
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
         /// <summary> Stage in the component lifecycle. </summary>
         public string Stage { get; set; }
     }

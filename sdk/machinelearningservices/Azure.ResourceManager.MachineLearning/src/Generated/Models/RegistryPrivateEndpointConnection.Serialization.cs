@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<AzureLocation?> location = default;
             Optional<IList<string>> groupIds = default;
-            Optional<PrivateEndpointResource> privateEndpoint = default;
+            Optional<RegistryPrivateEndpoint> privateEndpoint = default;
             Optional<RegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         id = null;
                         continue;
                     }
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 privateEndpoint = null;
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpointResource.DeserializePrivateEndpointResource(property0.Value);
+                            privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))

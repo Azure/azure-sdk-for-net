@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningFeatureStoreEntityContainerResource machineLearningFeatureStoreEntityContainer = client.GetMachineLearningFeatureStoreEntityContainerResource(machineLearningFeatureStoreEntityContainerResourceId);
 
             // invoke the operation
-            MachineLearningFeatureStoreEntityContainerData data = new MachineLearningFeatureStoreEntityContainerData(new FeaturestoreEntityContainerProperties()
+            MachineLearningFeatureStoreEntityContainerData data = new MachineLearningFeatureStoreEntityContainerData(new MachineLearningFeatureStoreEntityContainerProperties()
             {
                 IsArchived = false,
                 Description = "string",

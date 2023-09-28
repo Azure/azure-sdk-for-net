@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<IList<EmailNotificationEnableType>> emailOn = default;
             Optional<IList<string>> emails = default;
-            Optional<IDictionary<string, Webhook>> webhooks = default;
+            Optional<IDictionary<string, MachineLearningWebhook>> webhooks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailOn"u8))
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         webhooks = null;
                         continue;
                     }
-                    Dictionary<string, Webhook> dictionary = new Dictionary<string, Webhook>();
+                    Dictionary<string, MachineLearningWebhook> dictionary = new Dictionary<string, MachineLearningWebhook>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Webhook.DeserializeWebhook(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningWebhook.DeserializeMachineLearningWebhook(property0.Value));
                     }
                     webhooks = dictionary;
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public LabelingJobProperties()
         {
             LabelCategories = new ChangeTrackingDictionary<string, LabelCategory>();
-            StatusMessages = new ChangeTrackingList<StatusMessage>();
+            StatusMessages = new ChangeTrackingList<JobStatusMessage>();
             JobType = JobType.Labeling;
         }
 
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="mlAssistConfiguration">
         /// Configuration of MLAssist feature in the job.
-        /// Please note <see cref="MLAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MLAssistConfigurationEnabled"/>.
+        /// Please note <see cref="MachineLearningAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MachineLearningAssistEnabledConfiguration"/>.
         /// </param>
         /// <param name="progressMetrics"> Progress metrics of the job. </param>
         /// <param name="projectId"> Internal id of the job(Previously called project). </param>
         /// <param name="provisioningState"> Specifies the labeling job provisioning state. </param>
         /// <param name="statusMessages"> Status messages of the job. </param>
-        internal LabelingJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, DateTimeOffset? createdOn, LabelingDataConfiguration dataConfiguration, LabelingJobInstructions jobInstructions, IDictionary<string, LabelCategory> labelCategories, LabelingJobMediaProperties labelingJobMediaProperties, MLAssistConfiguration mlAssistConfiguration, ProgressMetrics progressMetrics, Guid? projectId, JobProvisioningState? provisioningState, IReadOnlyList<StatusMessage> statusMessages) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal LabelingJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, DateTimeOffset? createdOn, LabelingDataConfiguration dataConfiguration, LabelingJobInstructions jobInstructions, IDictionary<string, LabelCategory> labelCategories, LabelingJobMediaProperties labelingJobMediaProperties, MachineLearningAssistConfiguration mlAssistConfiguration, ProgressMetrics progressMetrics, Guid? projectId, JobProvisioningState? provisioningState, IReadOnlyList<JobStatusMessage> statusMessages) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             CreatedOn = createdOn;
             DataConfiguration = dataConfiguration;
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public LabelingJobMediaProperties LabelingJobMediaProperties { get; set; }
         /// <summary>
         /// Configuration of MLAssist feature in the job.
-        /// Please note <see cref="MLAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MLAssistConfigurationEnabled"/>.
+        /// Please note <see cref="MachineLearningAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MachineLearningAssistEnabledConfiguration"/>.
         /// </summary>
-        public MLAssistConfiguration MlAssistConfiguration { get; set; }
+        public MachineLearningAssistConfiguration MlAssistConfiguration { get; set; }
         /// <summary> Progress metrics of the job. </summary>
         public ProgressMetrics ProgressMetrics { get; }
         /// <summary> Internal id of the job(Previously called project). </summary>
@@ -117,6 +117,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Specifies the labeling job provisioning state. </summary>
         public JobProvisioningState? ProvisioningState { get; }
         /// <summary> Status messages of the job. </summary>
-        public IReadOnlyList<StatusMessage> StatusMessages { get; }
+        public IReadOnlyList<JobStatusMessage> StatusMessages { get; }
     }
 }

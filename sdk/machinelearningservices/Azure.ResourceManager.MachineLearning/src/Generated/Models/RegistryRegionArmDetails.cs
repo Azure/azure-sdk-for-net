@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of RegistryRegionArmDetails. </summary>
         public RegistryRegionArmDetails()
         {
-            AcrDetails = new ChangeTrackingList<AcrDetails>();
+            AcrDetails = new ChangeTrackingList<RegistryAcrDetails>();
             StorageAccountDetails = new ChangeTrackingList<StorageAccountDetails>();
         }
 
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="acrDetails"> List of ACR accounts. </param>
         /// <param name="location"> The location where the registry exists. </param>
         /// <param name="storageAccountDetails"> List of storage accounts. </param>
-        internal RegistryRegionArmDetails(IList<AcrDetails> acrDetails, AzureLocation? location, IList<StorageAccountDetails> storageAccountDetails)
+        internal RegistryRegionArmDetails(IList<RegistryAcrDetails> acrDetails, AzureLocation? location, IList<StorageAccountDetails> storageAccountDetails)
         {
             AcrDetails = acrDetails;
             Location = location;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> List of ACR accounts. </summary>
-        public IList<AcrDetails> AcrDetails { get; set; }
+        public IList<RegistryAcrDetails> AcrDetails { get; set; }
         /// <summary> The location where the registry exists. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> List of storage accounts. </summary>
