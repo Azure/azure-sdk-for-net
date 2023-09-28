@@ -1374,10 +1374,10 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionOptions
     {
-        public TranscriptionOptions(System.Uri transportUrl, Azure.Communication.CallAutomation.TranscriptionTransport transportType, string locale, bool startTranscription) { }
+        public TranscriptionOptions(System.Uri transportUri, Azure.Communication.CallAutomation.TranscriptionTransport transportType, string locale, bool startTranscription) { }
         public string Locale { get { throw null; } }
         public bool StartTranscription { get { throw null; } }
-        public Azure.Communication.CallAutomation.TranscriptionTransport TransportType { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionTransport TranscriptionTransport { get { throw null; } }
         public System.Uri TransportUrl { get { throw null; } }
     }
     public abstract partial class TranscriptionPackageBase
