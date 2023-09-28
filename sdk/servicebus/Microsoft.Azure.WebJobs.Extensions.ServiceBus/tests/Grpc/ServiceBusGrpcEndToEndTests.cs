@@ -39,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
         }
@@ -60,6 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
         }
@@ -81,6 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
         }
@@ -102,6 +105,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
         }
@@ -123,6 +127,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
         }
@@ -144,6 +149,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
             }
             Assert.IsEmpty(provider.ActionsCache);
         }
