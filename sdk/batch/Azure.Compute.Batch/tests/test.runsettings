@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File name extension must be .runsettings -->
+<RunSettings>
+    <RunConfiguration>
+        <EnvironmentVariables>
+            <!-- List of environment variables we want to set-->
+            <AZURE_TEST_MODE>Live</AZURE_TEST_MODE>
+            <BATCHACCOUNT_NAME>https://sanitized.azure-api.net/</BATCHACCOUNT_NAME>
+            <BATCHACCOUNT_KEY>000000000000000000000000</BATCHACCOUNT_KEY>
+        </EnvironmentVariables>
+    </RunConfiguration>
+</RunSettings>
