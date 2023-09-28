@@ -109,6 +109,7 @@ null
 },
                     collection = new
                     {
+                        type = "<type>",
                         referenceName = "<referenceName>",
                     },
                     parentCollectionName = "<parentCollectionName>",
@@ -201,6 +202,7 @@ null
 },
                     collection = new
                     {
+                        type = "<type>",
                         referenceName = "<referenceName>",
                     },
                     parentCollectionName = "<parentCollectionName>",
@@ -342,7 +344,7 @@ null
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -357,7 +359,7 @@ null
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -372,7 +374,28 @@ null
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("parentCollectionName").ToString());
             }
         }
 
@@ -387,7 +410,28 @@ null
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("parentCollectionName").ToString());
             }
         }
     }
