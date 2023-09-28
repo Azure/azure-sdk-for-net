@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading.Tasks;
 
@@ -58,11 +59,7 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-#if NETCOREAPP2_1
-            using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
-#else
-            using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
-#endif
+            using var scope = CreateDiagnosticScope(message);
 
             bool isActivitySourceEnabled = IsActivitySourceEnabled;
 
@@ -136,6 +133,16 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicallyAccessedMembers.")]
+        private DiagnosticScope CreateDiagnosticScope<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T sourceArgs)
+        {
+#if NETCOREAPP2_1
+            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
+#else
+            return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, sourceArgs, s_activitySource, System.Diagnostics.ActivityKind.Client, false);
+#endif
+        }
+
         private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             Activity? currentActivity = Activity.Current;
@@ -187,13 +194,13 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
             (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
 #else
-            (s_diagnosticSource.IsEnabled() || s_activitySource.HasListeners());
+            (s_diagnosticSource.IsEnabled() || IsActivitySourceEnabled);
 #endif
 
 #if NETCOREAPP2_1
         private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
 #else
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners() && ActivityExtensions.SupportsActivitySource;
 #endif
     }
 }

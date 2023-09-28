@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabUserUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabUserUsersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabUserUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabUserUsersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabUserResource(Client, DevTestLabUserData.DeserializeDevTestLabUserData(e)), _devTestLabUserUsersClientDiagnostics, Pipeline, "DevTestLabUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -326,6 +327,82 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 var response = _devTestLabUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the user profile. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevTestLabUserResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabUserUsersClientDiagnostics.CreateScope("DevTestLabUserCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devTestLabUserUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabUserResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the user profile. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DevTestLabUserResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabUserUsersClientDiagnostics.CreateScope("DevTestLabUserCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devTestLabUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabUserResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

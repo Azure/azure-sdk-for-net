@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cosmosDBSqlTriggerSqlResourcesRestClient.GetSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlTrigger</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="triggerName"> Cosmos DB trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CosmosDBSqlTriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBSqlTriggerSqlResourcesRestClient.GetSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlTriggerResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlTriggerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlTrigger</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="triggerName"> Cosmos DB trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual NullableResponse<CosmosDBSqlTriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBSqlTriggerSqlResourcesRestClient.GetSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlTriggerResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

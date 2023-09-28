@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionProtectorRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionProtectorRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,6 +296,72 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _encryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EncryptionProtectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<EncryptionProtectorResource>> GetIfExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _encryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EncryptionProtectorResource>(response.GetRawResponse());
+                return Response.FromValue(new EncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EncryptionProtectors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<EncryptionProtectorResource> GetIfExists(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _encryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EncryptionProtectorResource>(response.GetRawResponse());
+                return Response.FromValue(new EncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

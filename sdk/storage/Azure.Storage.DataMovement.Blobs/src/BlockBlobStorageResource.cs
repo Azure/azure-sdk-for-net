@@ -11,14 +11,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The BlockBlobStorageResource class.
     /// </summary>
-    public class BlockBlobStorageResource : StorageResourceItem
+    internal class BlockBlobStorageResource : StorageResourceItem
     {
         internal BlockBlobClient BlobClient { get; set; }
         internal BlockBlobStorageResourceOptions _options;
@@ -37,19 +36,9 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ResourceId => "BlockBlob";
 
         /// <summary>
-        /// Gets the URL of the storage resource.
+        /// Gets the Uri of the StorageResource
         /// </summary>
         public override Uri Uri => BlobClient.Uri;
-
-        /// <summary>
-        /// Gets the path of the storage resource.
-        /// </summary>
-        public override string Path => BlobClient.Name;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
@@ -341,163 +330,27 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Rehydrates from Checkpointer.
+        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
         /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath)),
-                options);
+            return new BlobSourceCheckpointData();
         }
 
         /// <summary>
-        /// Rehydrates from Checkpointer.
+        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
         /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="sharedKeyCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            StorageSharedKeyCredential sharedKeyCredential,
-            CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath), sharedKeyCredential),
-                options);
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="tokenCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            TokenCredential tokenCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath), tokenCredential),
-                options);
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="sasCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<BlockBlobStorageResource> RehydrateResourceAsync(
-            DataTransferProperties transferProperties,
-            bool isSource,
-            AzureSasCredential sasCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            BlockBlobStorageResourceOptions options =
-                await checkpointer.GetBlockBlobResourceOptionsAsync(
-                    transferProperties.TransferId,
-                    isSource,
-                    cancellationToken).ConfigureAwait(false);
-
-            return new BlockBlobStorageResource(
-                new BlockBlobClient(new Uri(storedPath),sasCredential),
-                options);
+            return new BlobDestinationCheckpointData(
+                BlobType.Block,
+                _options.HttpHeaders,
+                _options.AccessTier,
+                _options.Metadata,
+                _options.Tags,
+                default); // TODO: Update when we support encryption scopes
         }
 
         private void GrabEtag(Response response)

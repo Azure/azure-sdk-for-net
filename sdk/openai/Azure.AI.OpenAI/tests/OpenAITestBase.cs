@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -33,34 +34,84 @@ namespace Azure.AI.OpenAI.Tests
         private string _chatCompletionsDeploymentId;
         private string _embeddingsDeploymentId;
         private string _nonAzureApiKey;
+        private string _azureCognitiveSearchApiKey;
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")", "$1placeholder$2"));
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
             SanitizedQueryParameters.Add("sig");
         }
 
         protected OpenAIClient GetAzureClientWithKey(
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
+            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null,
+            string azureResourceUrlVariableName = null,
+            string azureResourceApiKeyVariableName = null)
             => InstrumentClient(new OpenAIClient(
-                _endpoint,
-                GetAzureApiKey(),
+                !string.IsNullOrEmpty(azureResourceUrlVariableName)
+                    ? TestEnvironment.GetUrlVariable(azureResourceUrlVariableName)
+                    : _endpoint,
+                !string.IsNullOrEmpty(azureResourceApiKeyVariableName)
+                    ? TestEnvironment.GetKeyVariable(azureResourceApiKeyVariableName)
+                    : GetAzureApiKey(),
                 GetInstrumentedClientOptions(azureServiceVersionOverride)));
 
         protected OpenAIClient GetAzureClientWithToken(
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
+            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null,
+            string azureResourceUrlVariableName = null)
             => InstrumentClient(new OpenAIClient(
-                _endpoint,
+                !string.IsNullOrEmpty(azureResourceUrlVariableName)
+                    ? TestEnvironment.GetUrlVariable(azureResourceUrlVariableName)
+                    : _endpoint,
                 TestEnvironment.Credential,
                 GetInstrumentedClientOptions(azureServiceVersionOverride)));
 
         protected OpenAIClient GetNonAzureClientWithKey() => InstrumentClient(
             new OpenAIClient(GetNonAzureApiKey(), GetInstrumentedClientOptions()));
 
-        protected AzureKeyCredential GetAzureApiKey() => _azureApiKey ?? new AzureKeyCredential("placeholder");
+        protected AzureKeyCredential GetAzureApiKey(string overrideVariableName = null)
+        {
+            if (!string.IsNullOrEmpty(overrideVariableName))
+            {
+                return TestEnvironment.GetKeyVariable(overrideVariableName);
+            }
+            return _azureApiKey ?? new AzureKeyCredential("placeholder");
+        }
         protected string GetNonAzureApiKey() => string.IsNullOrEmpty(_nonAzureApiKey) ? "placeholder" : _nonAzureApiKey;
+
+        protected AzureKeyCredential GetCognitiveSearchApiKey()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new AzureKeyCredential("placeholder");
+            }
+            else if (!string.IsNullOrEmpty(_azureCognitiveSearchApiKey))
+            {
+                return new AzureKeyCredential(_azureCognitiveSearchApiKey);
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "No Azure Cognitive Search API key found. Please set the appropriate environment variable to "
+                    + "use this value.");
+            }
+        }
+
+        protected Stream GetTestAudioInputStream(string language = "en")
+        {
+            Recording.DisableRequestBodyRecording();
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new MemoryStream();
+            }
+            return File.OpenRead(language switch
+            {
+                "en" => TestEnvironment.TestAudioInputPathEnglish,
+                _ => throw new NotImplementedException(),
+            });
+        }
 
         [SetUp]
         public void CreateDeployment()
@@ -130,7 +181,8 @@ namespace Azure.AI.OpenAI.Tests
 
                         ServiceAccountApiKeys keys = openAIResource.GetKeys();
                         _azureApiKey = new AzureKeyCredential(keys.Key1);
-                        _nonAzureApiKey = TestEnvironment.PublicOpenAiApiKey;
+                        _nonAzureApiKey = TestEnvironment.NonAzureOpenAIApiKey;
+                        _azureCognitiveSearchApiKey = TestEnvironment.AzureCognitiveSearchApiKey;
                     }
                 }
             }
@@ -276,6 +328,12 @@ namespace Azure.AI.OpenAI.Tests
                 EnvironmentVariableName = "EMBEDDINGS_DEPLOYMENT_NAME",
             };
 
+            public static readonly ModelDeploymentEntry AudioTranscription = new()
+            {
+                AzureDeploymentName = "whisper-deployment",
+                NonAzureModelName = "whisper-1",
+            };
+
             public string AzureDeploymentName { get; set; }
             public string AzureModelName { get; set; }
             public string NonAzureModelName { get; set; }
@@ -316,6 +374,35 @@ namespace Azure.AI.OpenAI.Tests
             };
         }
 
+        public OpenAIClient GetDevelopmentTestClient(
+            OpenAIClientServiceTarget serviceTarget,
+            string azureDevelopmentResourceUrlVariableName,
+            string azureDevelopmentResourceApiKeyVariableName,
+            OpenAIClientAuthenticationType authenticationType = OpenAIClientAuthenticationType.ApiKey,
+            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
+        {
+            if (serviceTarget == OpenAIClientServiceTarget.NonAzure)
+            {
+                return GetTestClient(serviceTarget, authenticationType, azureServiceVersionOverride);
+            }
+            else
+            {
+                return authenticationType switch
+                {
+                    OpenAIClientAuthenticationType.ApiKey
+                        => GetAzureClientWithKey(
+                            azureServiceVersionOverride,
+                            azureDevelopmentResourceUrlVariableName,
+                            azureDevelopmentResourceApiKeyVariableName),
+                    OpenAIClientAuthenticationType.Token
+                        => GetAzureClientWithToken(
+                            azureServiceVersionOverride,
+                            azureDevelopmentResourceUrlVariableName),
+                    _ => throw new NotImplementedException()
+                };
+            }
+        }
+
         public enum OpenAIClientScenario
         {
             None,
@@ -323,6 +410,7 @@ namespace Azure.AI.OpenAI.Tests
             Completions,
             ChatCompletions,
             Embeddings,
+            AudioTranscription,
         }
 
         protected static string GetDeploymentOrModelName(
@@ -339,6 +427,8 @@ namespace Azure.AI.OpenAI.Tests
                     => ModelDeploymentEntry.Completions.AzureDeploymentName,
                 (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.Embeddings)
                     => ModelDeploymentEntry.Embeddings.AzureDeploymentName,
+                (OpenAIClientServiceTarget.Azure, OpenAIClientScenario.AudioTranscription)
+                    => ModelDeploymentEntry.AudioTranscription.AzureDeploymentName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.LegacyCompletions)
                     => ModelDeploymentEntry.LegacyCompletions.NonAzureModelName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Completions)
@@ -347,6 +437,8 @@ namespace Azure.AI.OpenAI.Tests
                     => ModelDeploymentEntry.ChatCompletions.NonAzureModelName,
                 (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.Embeddings)
                     => ModelDeploymentEntry.Embeddings.NonAzureModelName,
+                (OpenAIClientServiceTarget.NonAzure, OpenAIClientScenario.AudioTranscription)
+                    => ModelDeploymentEntry.AudioTranscription.NonAzureModelName,
                 _ => throw new ArgumentException("Unsupported service target / scenario combination")
             };
         }

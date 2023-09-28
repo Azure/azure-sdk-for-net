@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<PacketCaptureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PacketCaptureResource(Client, PacketCaptureData.DeserializePacketCaptureData(e)), _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PacketCaptureResource(Client, PacketCaptureData.DeserializePacketCaptureData(e)), _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<PacketCaptureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PacketCaptureResource(Client, PacketCaptureData.DeserializePacketCaptureData(e)), _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PacketCaptureResource(Client, PacketCaptureData.DeserializePacketCaptureData(e)), _packetCaptureClientDiagnostics, Pipeline, "PacketCaptureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PacketCaptureResource>> GetIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _packetCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PacketCaptureResource>(response.GetRawResponse());
+                return Response.FromValue(new PacketCaptureResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual NullableResponse<PacketCaptureResource> GetIfExists(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PacketCaptureResource>(response.GetRawResponse());
+                return Response.FromValue(new PacketCaptureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

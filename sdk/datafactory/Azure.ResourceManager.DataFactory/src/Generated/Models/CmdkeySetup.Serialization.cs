@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
 #endif
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, Password);
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 

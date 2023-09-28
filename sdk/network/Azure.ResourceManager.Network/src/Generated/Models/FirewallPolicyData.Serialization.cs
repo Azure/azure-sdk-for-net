@@ -120,6 +120,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<string> size = default;
             Optional<IReadOnlyList<WritableSubResource>> ruleCollectionGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<WritableSubResource> basePolicy = default;
@@ -210,6 +211,11 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("size"u8))
+                        {
+                            size = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("ruleCollectionGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -364,7 +370,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, sql.Value, dnsSettings.Value, explicitProxy.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
+            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, size.Value, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, sql.Value, dnsSettings.Value, explicitProxy.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDatasetResource(Client, DataFactoryDatasetData.DeserializeDataFactoryDatasetData(e)), _dataFactoryDatasetDatasetsClientDiagnostics, Pipeline, "DataFactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDatasetResource(Client, DataFactoryDatasetData.DeserializeDataFactoryDatasetData(e)), _dataFactoryDatasetDatasetsClientDiagnostics, Pipeline, "DataFactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDatasetResource(Client, DataFactoryDatasetData.DeserializeDataFactoryDatasetData(e)), _dataFactoryDatasetDatasetsClientDiagnostics, Pipeline, "DataFactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDatasetResource(Client, DataFactoryDatasetData.DeserializeDataFactoryDatasetData(e)), _dataFactoryDatasetDatasetsClientDiagnostics, Pipeline, "DataFactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,6 +321,82 @@ namespace Azure.ResourceManager.DataFactory
             {
                 var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datasets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataFactoryDatasetResource>> GetIfExistsAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataFactoryDatasetDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryDatasetResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datasets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
+        public virtual NullableResponse<DataFactoryDatasetResource> GetIfExists(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
+
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataFactoryDatasetResource>(response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

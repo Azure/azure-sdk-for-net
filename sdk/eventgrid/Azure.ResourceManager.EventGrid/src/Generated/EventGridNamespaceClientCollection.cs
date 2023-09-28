@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceClientResource(Client, EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(e)), _eventGridNamespaceClientClientsClientDiagnostics, Pipeline, "EventGridNamespaceClientCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,6 +319,80 @@ namespace Azure.ResourceManager.EventGrid
             {
                 var response = _eventGridNamespaceClientClientsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/clients/{clientName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clients_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientName"> Name of the client. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EventGridNamespaceClientResource>> GetIfExistsAsync(string clientName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
+
+            using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _eventGridNamespaceClientClientsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespaceClientResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespaceClientResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/clients/{clientName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clients_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientName"> Name of the client. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
+        public virtual NullableResponse<EventGridNamespaceClientResource> GetIfExists(string clientName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
+
+            using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _eventGridNamespaceClientClientsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespaceClientResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespaceClientResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

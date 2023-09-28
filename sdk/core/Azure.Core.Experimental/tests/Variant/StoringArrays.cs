@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringArrays
     {
@@ -14,7 +14,7 @@ namespace Azure
             byte[] b = new byte[10];
 
             var watch = MemoryWatch.Create();
-            Value value = Value.Create(b);
+            Variant value = Variant.Create(b);
             watch.Validate();
 
             Assert.AreEqual(typeof(byte[]), value.Type);
@@ -30,7 +30,7 @@ namespace Azure
             char[] b = new char[10];
 
             var watch = MemoryWatch.Create();
-            Value value = Value.Create(b);
+            Variant value = Variant.Create(b);
             watch.Validate();
 
             Assert.AreEqual(typeof(char[]), value.Type);
@@ -47,7 +47,7 @@ namespace Azure
             ArraySegment<byte> segment = new(b);
 
             var watch = MemoryWatch.Create();
-            Value value = Value.Create(segment);
+            Variant value = Variant.Create(segment);
             watch.Validate();
 
             Assert.AreEqual(typeof(ArraySegment<byte>), value.Type);
@@ -56,14 +56,14 @@ namespace Azure
             Assert.Throws<InvalidCastException>(() => value.As<byte[]>());
 
             segment = new(b, 0, 0);
-            value = Value.Create(segment);
+            value = Variant.Create(segment);
             Assert.AreEqual(typeof(ArraySegment<byte>), value.Type);
             Assert.AreEqual(segment, value.As<ArraySegment<byte>>());
             Assert.AreEqual(segment, (ArraySegment<byte>)value.As<object>());
             Assert.Throws<InvalidCastException>(() => value.As<byte[]>());
 
             segment = new(b, 1, 1);
-            value = Value.Create(segment);
+            value = Variant.Create(segment);
             Assert.AreEqual(typeof(ArraySegment<byte>), value.Type);
             Assert.AreEqual(segment, value.As<ArraySegment<byte>>());
             Assert.AreEqual(segment, (ArraySegment<byte>)value.As<object>());
@@ -77,7 +77,7 @@ namespace Azure
             ArraySegment<char> segment = new(b);
 
             var watch = MemoryWatch.Create();
-            Value value = Value.Create(segment);
+            Variant value = Variant.Create(segment);
             watch.Validate();
 
             Assert.AreEqual(typeof(ArraySegment<char>), value.Type);
@@ -86,14 +86,14 @@ namespace Azure
             Assert.Throws<InvalidCastException>(() => value.As<char[]>());
 
             segment = new(b, 0, 0);
-            value = Value.Create(segment);
+            value = Variant.Create(segment);
             Assert.AreEqual(typeof(ArraySegment<char>), value.Type);
             Assert.AreEqual(segment, value.As<ArraySegment<char>>());
             Assert.AreEqual(segment, (ArraySegment<char>)value.As<object>());
             Assert.Throws<InvalidCastException>(() => value.As<char[]>());
 
             segment = new(b, 1, 1);
-            value = Value.Create(segment);
+            value = Variant.Create(segment);
             Assert.AreEqual(typeof(ArraySegment<char>), value.Type);
             Assert.AreEqual(segment, value.As<ArraySegment<char>>());
             Assert.AreEqual(segment, (ArraySegment<char>)value.As<object>());

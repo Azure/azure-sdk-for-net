@@ -12,6 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
     /// <summary>
     /// EventSource for the AzureMonitorExporter.
     /// EventSource Guid at Runtime: bb5be13f-ec3a-5ab2-6a6a-0f881d6e0d5b.
+    /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
     /// PerfView Instructions:
@@ -37,7 +38,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         internal const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
 
         internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
+#if DEBUG
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+#endif
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -132,7 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. If not hosted in an Azure VM this can safely be ignored. {0}", Level = EventLevel.Informational)]
+        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Informational)]
         public void VmMetadataFailed(string exceptionMessage) => WriteEvent(10, exceptionMessage);
 
         [NonEvent]

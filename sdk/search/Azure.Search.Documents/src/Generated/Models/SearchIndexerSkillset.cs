@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </param>
         /// <param name="cognitiveServicesAccount">
         /// Details about cognitive services to be used when running skills.
-        /// Please note <see cref="CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
         /// </param>
         /// <param name="knowledgeStore"> Definition of additional projections to azure blob, table, or files, of enriched data. </param>
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get; set; }
         /// <summary>
         /// Details about cognitive services to be used when running skills.
-        /// Please note <see cref="CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
         /// </summary>
         public CognitiveServicesAccount CognitiveServicesAccount { get; set; }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultSecretSecretsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, KeyVaultSecretData.DeserializeKeyVaultSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, KeyVaultSecretData.DeserializeKeyVaultSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultSecretSecretsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, KeyVaultSecretData.DeserializeKeyVaultSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultSecretResource(Client, KeyVaultSecretData.DeserializeKeyVaultSecretData(e)), _keyVaultSecretSecretsClientDiagnostics, Pipeline, "KeyVaultSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,6 +318,80 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _keyVaultSecretSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="secretName"> The name of the secret. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        public virtual async Task<NullableResponse<KeyVaultSecretResource>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+
+            using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _keyVaultSecretSecretsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<KeyVaultSecretResource>(response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="secretName"> The name of the secret. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        public virtual NullableResponse<KeyVaultSecretResource> GetIfExists(string secretName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+
+            using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _keyVaultSecretSecretsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<KeyVaultSecretResource>(response.GetRawResponse());
+                return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

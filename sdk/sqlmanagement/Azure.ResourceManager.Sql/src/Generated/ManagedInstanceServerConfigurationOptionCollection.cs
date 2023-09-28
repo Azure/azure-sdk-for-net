@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,6 +296,72 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverConfigurationOptionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConfigurationOptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ManagedInstanceServerConfigurationOptionResource>> GetIfExistsAsync(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics.CreateScope("ManagedInstanceServerConfigurationOptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverConfigurationOptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceServerConfigurationOptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceServerConfigurationOptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConfigurationOptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ManagedInstanceServerConfigurationOptionResource> GetIfExists(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics.CreateScope("ManagedInstanceServerConfigurationOptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverConfigurationOptionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceServerConfigurationOptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceServerConfigurationOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

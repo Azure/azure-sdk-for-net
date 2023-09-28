@@ -36,6 +36,19 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public string Id => GetLocked(() => _baseCompletions.Last().Id);
 
+        /// <summary>
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </summary>
+        public IReadOnlyList<PromptFilterResult> PromptFilterResults
+            => GetLocked(() =>
+            {
+                return _baseCompletions.Where(singleBaseCompletion => singleBaseCompletion.PromptFilterResults != null)
+                    .SelectMany(singleBaseCompletion => singleBaseCompletion.PromptFilterResults)
+                    .OrderBy(singleBaseCompletion => singleBaseCompletion.PromptIndex)
+                    .ToList();
+            });
+
         internal StreamingCompletions(Response response)
         {
             _baseResponse = response;
@@ -109,7 +122,7 @@ namespace Azure.AI.OpenAI
                         // hanging!) now.
                         foreach (StreamingChoice streamingChoice in _streamingChoices)
                         {
-                            streamingChoice.EnsureFinishStreaming();
+                            streamingChoice.EnsureFinishStreaming(_pumpException);
                         }
                     }
                     _streamingTaskComplete = true;
@@ -124,11 +137,6 @@ namespace Azure.AI.OpenAI
             bool isFinalIndex = false;
             for (int i = 0; !isFinalIndex && !cancellationToken.IsCancellationRequested; i++)
             {
-                if (_pumpException != null)
-                {
-                    throw _pumpException;
-                }
-
                 bool doneWaiting = false;
                 while (!doneWaiting)
                 {
@@ -142,6 +150,11 @@ namespace Azure.AI.OpenAI
                     {
                         await _updateAvailableEvent.WaitAsync(cancellationToken).ConfigureAwait(false);
                     }
+                }
+
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
                 }
 
                 StreamingChoice newChoice = null;

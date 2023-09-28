@@ -12,12 +12,11 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SetRetentionPeriodUsingConstructor()
         {
-            var settingSnapshot = new ConfigurationSettingsSnapshot(
+            var settingSnapshot = new ConfigurationSnapshot(
                 "name",
-                SnapshotStatus.Ready,
-                1,
+                ConfigurationSnapshotStatus.Ready,
                 new List<SnapshotSettingFilter>(),
-                new CompositionType(),
+                new SnapshotComposition(),
                 DateTime.UtcNow,
                 DateTime.UtcNow,
                 10675199, // retention period
@@ -35,7 +34,7 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             List<SnapshotSettingFilter> filters = new() { new SnapshotSettingFilter("key", "val") };
 
-            var settingSnapshot = new ConfigurationSettingsSnapshot(filters);
+            var settingSnapshot = new ConfigurationSnapshot(filters);
             settingSnapshot.RetentionPeriod = TimeSpan.FromSeconds(10675199);
 
             Assert.AreEqual(settingSnapshot.RetentionPeriod, TimeSpan.FromSeconds(10675199));

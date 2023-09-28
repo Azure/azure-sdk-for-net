@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _updateRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _updateRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _updateRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UpdateRunResource(Client, UpdateRunData.DeserializeUpdateRunData(e)), _updateRunClientDiagnostics, Pipeline, "UpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.Hci
             {
                 var response = _updateRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="updateRunName"> The name of the Update Run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        public virtual async Task<NullableResponse<UpdateRunResource>> GetIfExistsAsync(string updateRunName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+
+            using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _updateRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<UpdateRunResource>(response.GetRawResponse());
+                return Response.FromValue(new UpdateRunResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="updateRunName"> The name of the Update Run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        public virtual NullableResponse<UpdateRunResource> GetIfExists(string updateRunName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+
+            using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _updateRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<UpdateRunResource>(response.GetRawResponse());
+                return Response.FromValue(new UpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

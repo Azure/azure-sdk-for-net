@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectAttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "ProjectAttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectAttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "ProjectAttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectAttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "ProjectAttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectAttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "ProjectAttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,6 +235,80 @@ namespace Azure.ResourceManager.DevCenter
             {
                 var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_GetByProject</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProjectAttachedNetworkConnectionResource>> GetIfExistsAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectAttachedNetworkConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_GetByProject</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        public virtual NullableResponse<ProjectAttachedNetworkConnectionResource> GetIfExists(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+
+            using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.GetByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectAttachedNetworkConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectAttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

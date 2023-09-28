@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Orbital.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contactProfile"u8);
-            JsonSerializer.Serialize(writer, ContactProfile); writer.WritePropertyName("groundStationName"u8);
+            JsonSerializer.Serialize(writer, ContactProfile);
+            writer.WritePropertyName("groundStationName"u8);
             writer.WriteStringValue(GroundStationName);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");

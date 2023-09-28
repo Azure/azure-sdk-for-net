@@ -6,28 +6,38 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
+using Azure.Analytics.Purview.Administration;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Administration.Samples
 {
-    public class Samples_PurviewMetadataRolesClient
+    public partial class Samples_PurviewMetadataRolesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataRoles()
+        public void Example_GetMetadataRoles_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataRolesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
 
-            foreach (var item in client.GetMetadataRoles(new RequestContext()))
+            foreach (BinaryData item in client.GetMetadataRoles(null))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetadataRoles_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
             {
             }
         }
@@ -36,24 +46,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataRoles_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataRolesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
 
-            foreach (var item in client.GetMetadataRoles(new RequestContext()))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataRoles_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataRolesClient(endpoint, credential);
-
-            await foreach (var item in client.GetMetadataRolesAsync(new RequestContext()))
+            foreach (BinaryData item in client.GetMetadataRoles(null))
             {
             }
         }
@@ -62,11 +59,11 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataRoles_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewMetadataRolesClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
 
-            await foreach (var item in client.GetMetadataRolesAsync(new RequestContext()))
+            await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
             {
             }
         }

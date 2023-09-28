@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,6 +233,78 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 var response = _policyMetadataPolicyMetadataRestClient.GetResource(resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the policy metadata resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PolicyMetadataResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceName, nameof(resourceName));
+
+            using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _policyMetadataPolicyMetadataRestClient.GetResourceAsync(resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PolicyMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new PolicyMetadataResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the policy metadata resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual NullableResponse<PolicyMetadataResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceName, nameof(resourceName));
+
+            using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _policyMetadataPolicyMetadataRestClient.GetResource(resourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PolicyMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new PolicyMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
