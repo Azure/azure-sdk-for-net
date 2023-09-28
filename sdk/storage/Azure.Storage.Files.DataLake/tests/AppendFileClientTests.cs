@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertValidStoragePathInfo(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateAsync_Error()
         {
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
@@ -110,7 +110,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(CacheControl, response.Value.CacheControl);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata, isDirectory: false);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
@@ -393,7 +393,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(options.ScheduleDeletionOptions.ExpiresOn, propertiesResponse.Value.ExpiresOn);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateAsync_Conditions()
         {
@@ -428,7 +428,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateAsync_ConditionsFail()
         {
@@ -519,7 +519,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(encryptionContext, paths[1].EncryptionContext);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateIfNotExistsAsync_NotExists()
         {
@@ -535,7 +535,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.Value.ETag);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateIfNotExistsAsync_Exists()
         {
@@ -552,7 +552,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(response);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task CreateIfNotExistsAsync_Error()
         {
@@ -568,7 +568,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
         public async Task AppendAsync()
         {
@@ -591,7 +591,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AppendAsync_Error()
         {
@@ -608,7 +608,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual("PathNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AppendAsync_ContentHash()
         {
@@ -625,7 +625,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.AppendAsync(stream, contentHash: contentHash);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AppendAsync_ProgressReporting()
         {
@@ -647,7 +647,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(Constants.KB, progress.List[progress.List.Count - 1]);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AppendAsync_CreateIfNotExists()
         {
