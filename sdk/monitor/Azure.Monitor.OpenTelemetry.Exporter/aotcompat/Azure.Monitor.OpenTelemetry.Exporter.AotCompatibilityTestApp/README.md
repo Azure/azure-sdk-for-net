@@ -1,4 +1,4 @@
-# AOT Compatibility Test App for Azure Monitor Exporter
+# AOT Compatibility Test App for Azure Monitor Exporter client library for .NET
 
 This project exists to help verify that the Azure Monitor Exporter is AOT compatible.
 
