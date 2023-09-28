@@ -1,5 +1,11 @@
 namespace Azure.Storage.DataMovement.Files.Shares
 {
+    public partial class ShareDirectoryClientTransferOptions
+    {
+        public ShareDirectoryClientTransferOptions() { }
+        public Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions ShareDirectoryOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferOptions TransferOptions { get { throw null; } set { } }
+    }
     public partial class ShareFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
         public ShareFilesStorageResourceProvider() { }
@@ -34,5 +40,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
+    }
+}
+namespace Azure.Storage.Files.Shares
+{
+    public static partial class ShareDirectoryClientExtensions
+    {
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartDownloadToDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartUploadDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null) { throw null; }
     }
 }
