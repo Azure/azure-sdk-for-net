@@ -54,11 +54,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// TBD.
+        /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        // TODO: would it make sense to template classifier to avoid this override?
         public virtual bool IsErrorResponse(HttpMessage message) => base.IsErrorResponse(message);
     }
 }

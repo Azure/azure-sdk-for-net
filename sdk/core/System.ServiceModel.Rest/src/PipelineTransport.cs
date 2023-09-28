@@ -7,19 +7,11 @@ using System.Threading.Tasks;
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
+    // TODO: remove this constraint
     where TMessage : PipelineMessage
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="message"></param>
     public abstract void Process(TMessage message);
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
     public abstract ValueTask ProcessAsync(TMessage message);
 
     public abstract TMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier);

@@ -7,18 +7,10 @@ using System.Reflection;
 
 namespace System.ServiceModel.Rest.Core
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
     public class TelemetrySource
     {
         private readonly DiagnosticScopeFactory _factory;
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="suppressNestedClientActivities"></param>
         public TelemetrySource(RequestOptions options, bool suppressNestedClientActivities = true)
         {
             _factory = new DiagnosticScopeFactory(
@@ -29,11 +21,6 @@ namespace System.ServiceModel.Rest.Core
                 suppressNestedClientActivities);
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public TelemetrySpan CreateSpan(string name)
         {
 #if NETCOREAPP2_1

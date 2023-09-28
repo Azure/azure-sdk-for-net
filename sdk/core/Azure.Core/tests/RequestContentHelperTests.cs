@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Xml;
-using System.Xml.Linq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -21,6 +20,11 @@ namespace Azure.Core.Tests
         public static IEnumerable<TestCaseData> GetDateTimeData()
         {
             yield return new TestCaseData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"), DateTimeOffset.Parse("2022-09-26T18:38:00Z"));
+        }
+
+        public static IEnumerable<TestCaseData> GetOneDateTimeData()
+        {
+            yield return new TestCaseData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"));
         }
 
         [TestCase(1, 2)]

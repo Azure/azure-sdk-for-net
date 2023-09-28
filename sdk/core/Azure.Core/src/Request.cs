@@ -37,11 +37,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// TBD.
-        /// </summary>
-        public abstract string ClientRequestId { get; set; }
-
-        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
         public new virtual RequestMethod Method
@@ -102,6 +97,11 @@ namespace Azure.Core
             get => (RequestContent?)base.Content;
             set => base.Content = value;
         }
+
+        /// <summary>
+        /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
+        /// </summary>
+        public abstract string ClientRequestId { get; set; }
 
         /// <summary>
         /// Adds a header value to the header collection.

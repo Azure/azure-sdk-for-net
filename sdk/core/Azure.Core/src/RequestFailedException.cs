@@ -25,14 +25,14 @@ namespace Azure
         private const string DefaultMessage = "Service request failed.";
 
         /// <summary>
-        /// Gets the response, if any, that led to the exception.
-        /// </summary>
-        private readonly Response? _response;
-
-        /// <summary>
         /// Gets the service specific error code if available. Please refer to the client documentation for the list of supported error codes.
         /// </summary>
         public string? ErrorCode { get; }
+
+        /// <summary>
+        /// Gets the response, if any, that led to the exception.
+        /// </summary>
+        private readonly Response? _response;
 
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class with a specified error message.</summary>
         /// <param name="message">The message that describes the error.</param>

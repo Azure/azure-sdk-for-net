@@ -58,10 +58,7 @@ namespace Azure.Core
                 }
                 return _response;
             }
-            set
-            {
-                base.Response = _response = value;
-            }
+            set => base.Response = _response = value;
         }
 
         /// <summary>
