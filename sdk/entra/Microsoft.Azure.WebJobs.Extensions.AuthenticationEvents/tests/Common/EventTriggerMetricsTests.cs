@@ -16,7 +16,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             HttpResponseMessage message = null;
             Assert.DoesNotThrow(() => EventTriggerMetrics.SetMetricHeaders(message));
-            Assert.IsNull(message, "Verify AuthenticationEventRequestBase is not set to anything when null.");
+            Assert.IsNull(
+                anObject: message,
+                message: "Verify AuthenticationEventRequestBase is not set to anything when null.");
         }
 
         [Test]
@@ -27,36 +29,34 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             EventTriggerMetrics.SetMetricHeaders(message);
 
             var headers = message.Headers;
-            Assert.IsTrue(headers.Contains(EventTriggerMetrics.HeaderKeys.Platform));
-            Assert.IsTrue(headers.Contains(EventTriggerMetrics.HeaderKeys.ProductVersion));
-            Assert.IsTrue(headers.Contains(EventTriggerMetrics.HeaderKeys.Runtime));
-
-            Assert.AreEqual("windows", headers.GetValues(EventTriggerMetrics.HeaderKeys.Platform).First(), "Verify the platform");
-            Assert.AreEqual("1.0.0.0", headers.GetValues(EventTriggerMetrics.HeaderKeys.ProductVersion).First(), "Verify the version. Needs to be updated when version is updated.");
-            Assert.AreEqual(".NET", headers.GetValues(EventTriggerMetrics.HeaderKeys.Runtime).First(), "Verify the runtime.");
+            Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
+            
+            string headerValue = headers.GetValues(EventTriggerMetrics.MetricsHeader).First();
+            Assert.AreEqual(GetTestHeaderValue(), headerValue, "Verify default header values match");
         }
 
         [Test]
-        [Description("Verify it sets the headers to the correct custom override values")]
-        public void TestSetMetricHeadersOverride()
+        [Description("Verify it sets the headers to the correct default values when there is already a value")]
+        public void TestAppendMetricHeaders()
         {
             HttpResponseMessage message = new() { };
-
-            EventTriggerMetrics.Platform = "linux";
-            EventTriggerMetrics.ProductVersion = "10.0.0";
-            EventTriggerMetrics.RunTime = "JS";
+            message.Headers.Add(EventTriggerMetrics.MetricsHeader, "test");
 
             EventTriggerMetrics.SetMetricHeaders(message);
 
             var headers = message.Headers;
+            Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
 
-            Assert.IsTrue(headers.Contains(EventTriggerMetrics.HeaderKeys.Platform));
-            Assert.IsTrue(headers.Contains(EventTriggerMetrics.HeaderKeys.ProductVersion));
-            Assert.IsTrue(headers.Contains(EventTriggerMetrics.HeaderKeys.Runtime));
+            string headerValue = headers.GetValues(EventTriggerMetrics.MetricsHeader).First();
+            Assert.AreEqual("test " + GetTestHeaderValue(), headerValue, "Verify default header values match");
+        }
 
-            Assert.AreEqual("linux", headers.GetValues(EventTriggerMetrics.HeaderKeys.Platform).First(), "Verify the platform");
-            Assert.AreEqual("10.0.0", headers.GetValues(EventTriggerMetrics.HeaderKeys.ProductVersion).First(), "Verify the version. Needs to be updated when version is updated.");
-            Assert.AreEqual("JS", headers.GetValues(EventTriggerMetrics.HeaderKeys.Runtime).First(), "Verify the runtime.");
+        private static string GetTestHeaderValue(
+            string framework = ".NETStandard,Version=v2.0",
+            string version = "1.0.0.0",
+            string platform = "Microsoft Windows 10.0.22621")
+        {
+            return $"azsdk-net-{EventTriggerMetrics.ProductName}/{version} ({framework}; {platform})";
         }
     }
 }
