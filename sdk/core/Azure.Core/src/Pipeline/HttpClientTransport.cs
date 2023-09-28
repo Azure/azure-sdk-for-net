@@ -65,7 +65,7 @@ namespace Azure.Core.Pipeline
 
         /// <inheritdoc />
         public sealed override Request CreateRequest()
-            => new PipelineRequest();
+            => new HttpClientTransportRequest();
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
@@ -200,7 +200,7 @@ namespace Azure.Core.Pipeline
 
         private static HttpRequestMessage BuildRequestMessage(HttpMessage message)
         {
-            if (!(message.Request is PipelineRequest pipelineRequest))
+            if (!(message.Request is HttpClientTransportRequest pipelineRequest))
             {
                 throw new InvalidOperationException("the request is not compatible with the transport");
             }
@@ -359,12 +359,12 @@ namespace Azure.Core.Pipeline
         }
 #endif
 
-        private sealed class PipelineRequest : Request
+        private sealed class HttpClientTransportRequest : Request
         {
-            private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
             private string? _clientRequestId;
+            private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 
-            public PipelineRequest()
+            public HttpClientTransportRequest()
             {
                 Method = RequestMethod.Get;
                 _headers = new ArrayBackedPropertyBag<IgnoreCaseString, object>();

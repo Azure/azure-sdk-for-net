@@ -3,31 +3,17 @@
 
 namespace System.ServiceModel.Rest;
 
-/// <summary>
-/// TBD.
-/// </summary>
 public class KeyCredential
 {
     private string _key;
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="key"></param>
     public KeyCredential(string key)
     {
         _key = key;
     }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
     public string Key => _key;
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="key"></param>
     public void Update(string key)
     {
         _key = key;

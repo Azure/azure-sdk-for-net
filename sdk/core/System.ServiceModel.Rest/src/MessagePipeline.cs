@@ -5,19 +5,11 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-/// <summary>
-/// TBD.
-/// </summary>
 public class MessagePipeline : Pipeline<PipelineMessage>
 {
     private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
     private readonly PipelineTransport<PipelineMessage> _transport;
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="transport"></param>
-    /// <param name="policies"></param>
     public MessagePipeline(
         PipelineTransport<PipelineMessage> transport,
         ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies
@@ -36,29 +28,12 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         _policies = policies;
     }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="defaultTransport">TDODO: this should be removed</param>
-    /// <param name="options">User settings and policies</param>
-    /// <param name="clientPerTryPolicies">client implementation policies</param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public static MessagePipeline Create(
         PipelineTransport<PipelineMessage> defaultTransport, // TODO: this parameter should be removed
         RequestOptions options,
         params IPipelinePolicy<PipelineMessage>[] clientPerTryPolicies)
         => Create(defaultTransport, options, clientPerTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage>>.Empty);
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="defaultTransport">TDODO: this should be removed</param>
-    /// <param name="options">User settings and policies</param>
-    /// <param name="clientPerTryPolicies">client implementation policies</param>
-    /// <param name="clientPerCallPolicies">client implementation policies</param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public static MessagePipeline Create(
         PipelineTransport<PipelineMessage> defaultTransport, // TODO: this parameter should be removed
         RequestOptions options,
@@ -122,10 +97,6 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return _transport.CreateMessage(options, classifier);
     }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="message"></param>
     public override void Send(PipelineMessage message)
     {
         var enumerator = new MessagePipelineExecutor(_policies, message);

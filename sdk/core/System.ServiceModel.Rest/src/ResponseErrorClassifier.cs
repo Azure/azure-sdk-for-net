@@ -3,9 +3,6 @@
 
 namespace System.ServiceModel.Rest.Core
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
     public class ResponseErrorClassifier
     {
         /// <summary>

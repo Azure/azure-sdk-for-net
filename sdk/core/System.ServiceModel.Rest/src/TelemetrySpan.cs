@@ -6,9 +6,6 @@ using Azure.Core.Pipeline;
 
 namespace System.ServiceModel.Rest.Core
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
     public readonly struct TelemetrySpan : IDisposable
     {
         private readonly DiagnosticScope _scope;
@@ -18,15 +15,8 @@ namespace System.ServiceModel.Rest.Core
             _scope = scope;
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
         public void Start() => _scope.Start();
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="exception"></param>
         public void Failed(Exception exception) => _scope.Failed(exception);
 
         /// <inheritdoc/>

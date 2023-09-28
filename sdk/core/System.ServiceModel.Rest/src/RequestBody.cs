@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core
 {
-    /// <summary>
-    /// TBD
-    /// </summary>
     public abstract class RequestBody : IDisposable
     {
         /// <summary>

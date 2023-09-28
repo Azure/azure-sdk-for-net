@@ -5,9 +5,6 @@ using System.ServiceModel.Rest.Experimental;
 
 namespace System.ServiceModel.Rest.Core
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
     public class StatusResponseClassifier : ResponseErrorClassifier
     {
         // We need 10 ulongs to represent status codes 100 - 599.

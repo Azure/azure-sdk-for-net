@@ -6,9 +6,6 @@ using System.ServiceModel.Rest.Core;
 
 namespace System.ServiceModel.Rest
 {
-    /// <summary>
-    /// TODO
-    /// </summary>
     public class RequestErrorException : Exception
     {
         /// <summary>
@@ -16,21 +13,11 @@ namespace System.ServiceModel.Rest
         /// </summary>
         public int Status { get; }
 
-        /// <summary>
-        /// TBD
-        /// </summary>
-        /// <param name="response"></param>
         public RequestErrorException(PipelineResponse response) : base(GetMessageFromResponse(response))
         {
             Status = response.Status;
         }
 
-        /// <summary>
-        /// TBD
-        /// </summary>
-        /// <param name="response"></param>
-        /// <param name="message"></param>
-        /// <param name="innerException"></param>
         protected RequestErrorException(PipelineResponse response, string message, Exception? innerException)
             // TODO: what is the actual behavior of the EBN RFE constructor that takes both erroCode and message?
             // Duplicate that here.

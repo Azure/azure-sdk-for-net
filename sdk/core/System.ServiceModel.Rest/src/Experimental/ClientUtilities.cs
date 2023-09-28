@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Experimental
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
     public class ClientUtilities
     {
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"></exception>
         public static void AssertNotNull<T>(T value, string name)
         {
             if (value is null)
@@ -26,13 +16,6 @@ namespace System.ServiceModel.Rest.Experimental
             }
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
         public static void AssertNotNullOrEmpty(string value, string name)
         {
             if (value is null)
