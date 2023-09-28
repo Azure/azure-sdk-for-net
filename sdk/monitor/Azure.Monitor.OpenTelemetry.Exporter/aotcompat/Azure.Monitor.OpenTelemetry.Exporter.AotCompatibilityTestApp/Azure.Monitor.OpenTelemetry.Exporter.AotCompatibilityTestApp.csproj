@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net7.0;netstandard2.0</TargetFrameworks>
+    <PublishAot>true</PublishAot>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <IsTestSupportProject>true</IsTestSupportProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+
+    <TrimmerRootAssembly Include="Azure.Monitor.OpenTelemetry.Exporter" />
+
+    <!-- Update this dependency to its latest, which has all the annotations -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" VersionOverride="8.0.0-rc.1.23419.4" />
+  </ItemGroup>
+
+  <!--https://github.com/dotnet/runtime/issues/91965-->
+  <ItemGroup>
+    <_NoWarn Include="$(NoWarn)" />
+  </ItemGroup>
+  <PropertyGroup>
+    <NoWarn>@(_NoWarn)</NoWarn>
+  </PropertyGroup>
+
+</Project>

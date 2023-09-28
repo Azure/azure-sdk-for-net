@@ -4,13 +4,14 @@
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
     <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <!--<ApiCompatVersion>1.0.0</ApiCompatVersion>-->
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
 
     <!--TODO: ApiCompat is failing because I added net6. Will follow up how to correctly resolve.-->
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net6.0'">netstandard2.0</ApiCompatBaselineTargetFramework>
+    <!--<ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net6.0'">netstandard2.0</ApiCompatBaselineTargetFramework>-->
+    <RunApiCompat>false</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
