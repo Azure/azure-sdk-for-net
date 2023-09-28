@@ -4,7 +4,6 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
@@ -17,7 +16,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline : MessagePipeline
+    public class HttpPipeline : Pipeline<HttpMessage>
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -109,7 +108,7 @@ namespace Azure.Core.Pipeline
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
-            => CreateMessage((PipelineOptions?)context, classifier);
+            => CreateMessage((RequestOptions?)context, classifier);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -117,34 +116,18 @@ namespace Azure.Core.Pipeline
         /// <param name="options">Request options to be used by the pipeline when sending the message request.</param>
         /// <param name="classifier">Classifier to apply to the response.</param>
         /// <returns>The HTTP message.</returns>
-        public HttpMessage CreateMessage(PipelineOptions? options, ResponseClassifier? classifier = default)
+        public override HttpMessage CreateMessage(RequestOptions? options, ResponseErrorClassifier? classifier = default)
         {
-            HttpMessage message = CreateMessage();
+            classifier ??= ResponseClassifier.Shared;
 
-            if (classifier != null)
-            {
-                message.ResponseClassifier = classifier;
-            }
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier);
 
             if (options is RequestContext context)
             {
-                message.ApplyRequestContext(context, classifier);
+                message.ApplyRequestContext(context, (ResponseClassifier?)classifier);
             }
 
             return message;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="classifier"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override RestMessage CreateRestMessage(PipelineOptions options, ResponseErrorClassifier classifier)
-        {
-            return CreateMessage((PipelineOptions?)options, (ResponseClassifier?)classifier);
         }
 
         /// <summary>
@@ -172,10 +155,16 @@ namespace Azure.Core.Pipeline
             return SendAsync(message);
         }
 
-        private async ValueTask SendAsync(HttpMessage message)
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public override async ValueTask SendAsync(HttpMessage message)
         {
-            var length = _pipeline.Length + message.Policies!.Count;
+            int length = _pipeline.Length + message.Policies!.Count;
             var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
             try
             {
                 var pipeline = CreateRequestPipeline(policies, message.Policies);
@@ -201,20 +190,29 @@ namespace Azure.Core.Pipeline
             if (message.Policies == null || message.Policies.Count == 0)
             {
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+                return;
             }
-            else
+
+            Send(message);
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Send(HttpMessage message)
+        {
+            int length = _pipeline.Length + message.Policies!.Count;
+            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
+            try
             {
-                var length = _pipeline.Length + message.Policies.Count;
-                var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-                try
-                {
-                    var pipeline = CreateRequestPipeline(policies, message.Policies);
-                    pipeline.Span[0].Process(message, pipeline.Slice(1));
-                }
-                finally
-                {
-                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
-                }
+                var pipeline = CreateRequestPipeline(policies, message.Policies);
+                pipeline.Span[0].Process(message, pipeline.Slice(1));
+            }
+            finally
+            {
+                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
             }
         }
 
@@ -345,25 +343,6 @@ namespace Azure.Core.Pipeline
                 }
             }
         }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ValueTask SendAsync(RestMessage message, CancellationToken cancellationToken)
-            => SendAsync((HttpMessage)message, cancellationToken);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override void Send(RestMessage message, CancellationToken cancellationToken)
-            => Send((HttpMessage)message, cancellationToken);
 
         private class HttpMessagePropertiesScope : IDisposable
         {

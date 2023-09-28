@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ServiceModel.Rest.Core;
+
 namespace Azure.Core
 {
     /// <summary>

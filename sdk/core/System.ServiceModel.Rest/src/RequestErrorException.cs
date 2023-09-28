@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.Serialization;
+using System.ServiceModel.Rest.Core;
 
 namespace System.ServiceModel.Rest
 {
@@ -18,30 +19,35 @@ namespace System.ServiceModel.Rest
         /// <summary>
         /// TBD
         /// </summary>
-        /// <param name="result"></param>
-        public RequestErrorException(Result result) : base(GetMessageFromResult(result))
+        /// <param name="response"></param>
+        public RequestErrorException(PipelineResponse response) : base(GetMessageFromResponse(response))
         {
-            Status = result.Status;
+            Status = response.Status;
         }
 
         /// <summary>
         /// TBD
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="response"></param>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        protected RequestErrorException(Result result, string message, Exception? innerException)
+        protected RequestErrorException(PipelineResponse response, string message, Exception? innerException)
             // TODO: what is the actual behavior of the EBN RFE constructor that takes both erroCode and message?
             // Duplicate that here.
             : base(message, innerException)
         {
-            Status = result.Status;
+            Status = response.Status;
         }
 
-        private static string GetMessageFromResult(Result result)
+        internal RequestErrorException(string message, Exception? innerException) : base(message, innerException)
+        {
+            // TODO: What is the experience if someone tries to access this.Response?
+        }
+
+        private static string GetMessageFromResponse(PipelineResponse response)
         {
             // TODO: implement for real
-            return $"Service error: {result.Status}";
+            return $"Service error: {response.Status}";
         }
 
         /// <summary>

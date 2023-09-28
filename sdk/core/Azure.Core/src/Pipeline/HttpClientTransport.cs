@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -142,7 +141,7 @@ namespace Azure.Core.Pipeline
                 throw new RequestFailedException(e.Message, e);
             }
 
-            message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
+            message.Response = new HttpClientTransportResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
@@ -362,8 +361,8 @@ namespace Azure.Core.Pipeline
 
         private sealed class PipelineRequest : Request
         {
-            private string? _clientRequestId;
             private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
+            private string? _clientRequestId;
 
             public PipelineRequest()
             {
@@ -422,7 +421,7 @@ namespace Azure.Core.Pipeline
                 {
                     values = value switch
                     {
-                        string headerValue => new[]{ headerValue },
+                        string headerValue => new[] { headerValue },
                         List<string> headerValues => headerValues,
                         _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value.GetType()}")
                     };
@@ -619,7 +618,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private sealed class PipelineResponse : Response
+        private sealed class HttpClientTransportResponse : Response
         {
             private readonly HttpResponseMessage _responseMessage;
 
@@ -629,7 +628,7 @@ namespace Azure.Core.Pipeline
             private Stream? _contentStream;
 #pragma warning restore CA2213
 
-            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
+            public HttpClientTransportResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
@@ -655,7 +654,7 @@ namespace Azure.Core.Pipeline
 
             public override string ClientRequestId { get; set; }
 
-            protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseContent, name, out values);
 
@@ -667,6 +666,8 @@ namespace Azure.Core.Pipeline
             {
                 _responseMessage?.Dispose();
                 DisposeStreamIfNotBuffered(ref _contentStream);
+
+                base.Dispose();
             }
 
             public override string ToString() => _responseMessage.ToString();
@@ -691,11 +692,11 @@ namespace Azure.Core.Pipeline
                             sslPolicyErrors));
             }
             // Set ClientCertificates
-             foreach (var cert in options.ClientCertificates)
+            foreach (var cert in options.ClientCertificates)
             {
-               httpHandler.SslOptions ??= new System.Net.Security.SslClientAuthenticationOptions();
-               httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
-               httpHandler.SslOptions.ClientCertificates!.Add(cert);
+                httpHandler.SslOptions ??= new System.Net.Security.SslClientAuthenticationOptions();
+                httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
+                httpHandler.SslOptions.ClientCertificates!.Add(cert);
             }
 #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
@@ -720,7 +721,7 @@ namespace Azure.Core.Pipeline
             // Set ClientCertificates
             foreach (var cert in options.ClientCertificates)
             {
-               httpHandler.ClientCertificates.Add(cert);
+                httpHandler.ClientCertificates.Add(cert);
             }
             return httpHandler;
         }

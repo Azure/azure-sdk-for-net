@@ -47,13 +47,11 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
             ProcessInternal(message, false).EnsureCompleted();
         }
 
-        /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
         {
             await ProcessInternal(message, true).ConfigureAwait(false);
@@ -259,7 +257,6 @@ namespace Azure.Core.Pipeline
             return request;
         }
 
-        /// <inheritdoc />
         public override Request CreateRequest()
         {
             return new HttpWebRequestImplementation();
@@ -304,9 +301,11 @@ namespace Azure.Core.Pipeline
                 // keep it alive because the ResponseBodyPolicy won't re-buffer it
                 DisposeStreamIfNotBuffered(ref _originalContentStream);
                 DisposeStreamIfNotBuffered(ref _contentStream);
+
+                base.Dispose();
             }
 
-            protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
             {
                 value = _webResponse.Headers.Get(name);
                 return value != null;

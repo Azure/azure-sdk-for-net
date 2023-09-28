@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace System.ServiceModel.Rest.Shared.Core.Serialization
+namespace System.ServiceModel.Rest.Experimental.Core.Serialization
 {
     public static class OptionalProperty
     {
@@ -93,7 +93,7 @@ namespace System.ServiceModel.Rest.Shared.Core.Serialization
         }
     }
 
-    public readonly partial struct OptionalProperty<T>
+    public readonly struct OptionalProperty<T>
     {
         public OptionalProperty(T value) : this()
         {

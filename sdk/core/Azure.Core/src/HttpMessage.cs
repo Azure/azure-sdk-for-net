@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
 
@@ -15,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : RestMessage
+    public sealed class HttpMessage : PipelineMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
@@ -27,29 +24,15 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
+            : this((PipelineRequest)request, responseClassifier)
         {
-            Argument.AssertNotNull(request, nameof(Request));
-            Request = request;
-            ResponseClassifier = responseClassifier;
-            BufferResponse = true;
-            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <exception cref="ArgumentException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpMessage(RestMessage message)
+        internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+            : base(request, classifier)
         {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new ArgumentException("Unsupported type.");
-            }
+            Argument.AssertNotNull(request, nameof(request));
 
-            Request = httpMessage.Request;
-            ResponseClassifier = httpMessage.ResponseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -57,13 +40,13 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        public new Request Request { get => (Request)base.Request; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
         {
             get
             {
@@ -75,7 +58,10 @@ namespace Azure.Core
                 }
                 return _response;
             }
-            set => _response = value;
+            set
+            {
+                base.Response = _response = value;
+            }
         }
 
         /// <summary>
@@ -88,7 +74,11 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public new ResponseClassifier ResponseClassifier
+        {
+            get => (ResponseClassifier)base.ResponseClassifier;
+            set => base.ResponseClassifier = value;
+        }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -132,12 +122,6 @@ namespace Azure.Core
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Result? Result => _response;
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -201,7 +185,7 @@ namespace Azure.Core
             _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="System.ServiceModel.Rest.Result.ContentStream"/> or <see cref="System.ServiceModel.Rest.Result.Content"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
@@ -226,12 +210,14 @@ namespace Azure.Core
             Request.Dispose();
             _propertyBag.Dispose();
 
-            var response = _response;
+            Response? response = _response;
             if (response != null)
             {
                 _response = null;
                 response.Dispose();
             }
+
+            base.Dispose();
         }
 
         private class ResponseShouldNotBeUsedStream : Stream
