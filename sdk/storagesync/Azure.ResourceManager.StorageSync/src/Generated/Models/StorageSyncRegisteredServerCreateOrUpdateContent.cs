@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="clusterName"> Registered Server clusterName. </param>
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
-        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName) : base(id, name, resourceType, systemData)
+        /// <param name="applicationId"> Server ServicePrincipal Id. </param>
+        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName, string applicationId) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             ClusterName = clusterName;
             ServerId = serverId;
             FriendlyName = friendlyName;
+            ApplicationId = applicationId;
         }
 
         /// <summary>
@@ -93,5 +95,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public Guid? ServerId { get; set; }
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
+        /// <summary> Server ServicePrincipal Id. </summary>
+        public string ApplicationId { get; set; }
     }
 }

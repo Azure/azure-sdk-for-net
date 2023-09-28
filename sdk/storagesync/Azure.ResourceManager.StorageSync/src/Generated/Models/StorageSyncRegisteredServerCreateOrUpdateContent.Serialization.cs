@@ -68,6 +68,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("ApplicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<string> clusterName = default;
             Optional<Guid> serverId = default;
             Optional<string> friendlyName = default;
+            Optional<string> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -183,11 +189,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("ApplicationId"u8))
+                        {
+                            applicationId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value);
+            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value, applicationId.Value);
         }
     }
 }
