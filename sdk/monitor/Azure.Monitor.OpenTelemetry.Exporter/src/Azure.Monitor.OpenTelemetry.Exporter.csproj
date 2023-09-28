@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
@@ -9,8 +9,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
 
-    <!--TODO: REMOVE THIS. ApiCompat is failing because I added net6. Will follow up how to correctly resolve.-->
-    <RunApiCompat>false</RunApiCompat>
+    <!--TODO: ApiCompat is failing because I added net6. Will follow up how to correctly resolve.-->
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net6.0'">netstandard2.0</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
