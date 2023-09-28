@@ -1073,7 +1073,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             expectedOutputLines = expectedOutputLines.Select(x => x.Replace(" ", string.Empty)).ToArray();
             consoleOutputLines = consoleOutputLines.Select(x => x.Replace(" ", string.Empty)).ToArray();
-            // Assert.AreEqual(expectedOutputLines.Length, consoleOutputLines.Length);
+            Assert.AreEqual(expectedOutputLines.Length, consoleOutputLines.Length);
             for (int i = 0; i < expectedOutputLines.Length; i++)
             {
                 StringAssert.StartsWith(expectedOutputLines[i], consoleOutputLines[i]);
