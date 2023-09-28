@@ -17,12 +17,6 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
 
         #region JsonElement
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
         public static object? GetObject(in this JsonElement element)
         {
             switch (element.ValueKind)
