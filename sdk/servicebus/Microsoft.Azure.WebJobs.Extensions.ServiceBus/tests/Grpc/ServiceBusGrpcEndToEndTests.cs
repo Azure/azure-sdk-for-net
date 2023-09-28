@@ -86,6 +86,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task BindToBatchAndDeadletter()
+        {
+            var host = BuildHost<ServiceBusBindToBatchAndDeadletter>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToBatchAndDeadletter.SettlementService = settlementImpl;
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+            Assert.IsEmpty(provider.ActionsCache);
+        }
+
+        [Test]
         public async Task BindToMessageAndDefer()
         {
             var host = BuildHost<ServiceBusBindToMessageAndDefer>();
@@ -107,12 +128,58 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task BindToBatchAndDefer()
+        {
+            var host = BuildHost<ServiceBusBindToBatchAndDefer>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToBatchAndDefer.SettlementService = settlementImpl;
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar");
+                await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+            Assert.IsEmpty(provider.ActionsCache);
+        }
+
+        [Test]
         public async Task BindToMessageAndAbandon()
         {
             var host = BuildHost<ServiceBusBindToMessageAndAbandon>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
             ServiceBusBindToMessageAndAbandon.SettlementService = settlementImpl;
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar");
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+
+            var abandonedMessage = (await client.CreateReceiver(FirstQueueScope.QueueName).ReceiveMessagesAsync(1)).Single();
+            Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
+            Assert.AreEqual("value", abandonedMessage.ApplicationProperties["key"]);
+            Assert.IsEmpty(provider.ActionsCache);
+        }
+
+        [Test]
+        public async Task BindToBatchAndAbandon()
+        {
+            var host = BuildHost<ServiceBusBindToBatchAndAbandon>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToBatchAndAbandon.SettlementService = settlementImpl;
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
 
             using (host)
@@ -183,6 +250,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class ServiceBusBindToBatchAndDeadletter
+        {
+            internal static SettlementService SettlementService { get; set; }
+
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages, ServiceBusClient client)
+            {
+                var message = messages.Single();
+
+                Assert.AreEqual("foobar", message.Body.ToString());
+                await SettlementService.Deadletter(
+                    new DeadletterRequest()
+                    {
+                        Locktoken = message.LockToken,
+                        DeadletterErrorDescription = "description",
+                        DeadletterReason = "reason",
+                        PropertiesToModify = { { "key", new SettlementProperties { IntValue = 42 } } }
+                    },
+                    new MockServerCallContext());
+
+                var receiver = client.CreateReceiver(FirstQueueScope.QueueName,
+                    new ServiceBusReceiverOptions { SubQueue = SubQueue.DeadLetter });
+                var deadletterMessage = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual("foobar", deadletterMessage.Body.ToString());
+                Assert.AreEqual("description", deadletterMessage.DeadLetterErrorDescription);
+                Assert.AreEqual("reason", deadletterMessage.DeadLetterReason);
+                Assert.AreEqual(42, deadletterMessage.ApplicationProperties["key"]);
+                _waitHandle1.Set();
+            }
+        }
+
         public class ServiceBusBindToMessageAndDefer
         {
             internal static SettlementService SettlementService { get; set; }
@@ -205,12 +303,56 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class ServiceBusBindToBatchAndDefer
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages, ServiceBusReceiveActions receiveActions)
+            {
+                var message = messages.Single();
+
+                Assert.AreEqual("foobar", message.Body.ToString());
+                await SettlementService.Defer(
+                    new DeferRequest
+                    {
+                        Locktoken = message.LockToken,
+                        PropertiesToModify = {{ "key", new SettlementProperties { BoolValue = true} }}
+                    },
+                    new MockServerCallContext());
+                var deferredMessage = (await receiveActions.ReceiveDeferredMessagesAsync(
+                    new[] { message.SequenceNumber })).Single();
+                Assert.AreEqual("foobar", deferredMessage.Body.ToString());
+                Assert.IsTrue((bool)deferredMessage.ApplicationProperties["key"]);
+                _waitHandle1.Set();
+            }
+        }
+
         public class ServiceBusBindToMessageAndAbandon
         {
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
+                Assert.AreEqual("foobar", message.Body.ToString());
+                await SettlementService.Abandon(
+                    new AbandonRequest
+                    {
+                        Locktoken = message.LockToken,
+                        PropertiesToModify = {{ "key", new SettlementProperties { StringValue = "value"} }}
+                    },
+                    new MockServerCallContext());
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusBindToBatchAndAbandon
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages, ServiceBusReceiveActions receiveActions)
+            {
+                var message = messages.Single();
+
                 Assert.AreEqual("foobar", message.Body.ToString());
                 await SettlementService.Abandon(
                     new AbandonRequest
