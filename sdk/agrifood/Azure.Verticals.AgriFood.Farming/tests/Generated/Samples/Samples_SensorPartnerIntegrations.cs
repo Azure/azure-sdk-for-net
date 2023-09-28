@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_SensorPartnerIntegrations
+    public partial class Samples_SensorPartnerIntegrations
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -203,6 +202,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<sensorPartnerId>", "<integrationId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -214,6 +214,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -225,6 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
             Response response = client.Delete("<sensorPartnerId>", "<integrationId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -236,6 +238,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -359,7 +362,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             foreach (BinaryData item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -373,7 +376,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             await foreach (BinaryData item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -384,40 +387,22 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", new List<string>()
-{
-"<integrationIds>"
-}, new List<string>()
-{
-"<partyIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetSensorPartnerIntegrations("<sensorPartnerId>", new string[] { "<integrationIds>" }, new string[] { "<partyIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("integrationId").ToString());
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("sensorPartnerId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("integrationId").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
 
@@ -428,40 +413,22 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SensorPartnerIntegrations client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", new List<string>()
-{
-"<integrationIds>"
-}, new List<string>()
-{
-"<partyIds>"
-}, new List<string>()
-{
-"<ids>"
-}, new List<string>()
-{
-"<names>"
-}, new List<string>()
-{
-"<propertyFilters>"
-}, new List<string>()
-{
-"<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetSensorPartnerIntegrationsAsync("<sensorPartnerId>", new string[] { "<integrationIds>" }, new string[] { "<partyIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("integrationId").ToString());
-                Console.WriteLine(result[0].GetProperty("partyId").ToString());
-                Console.WriteLine(result[0].GetProperty("sensorPartnerId").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("eTag").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-                Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-                Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("integrationId").ToString());
+                Console.WriteLine(result.GetProperty("partyId").ToString());
+                Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+                Console.WriteLine(result.GetProperty("eTag").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdBy").ToString());
+                Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+                Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
             }
         }
     }
