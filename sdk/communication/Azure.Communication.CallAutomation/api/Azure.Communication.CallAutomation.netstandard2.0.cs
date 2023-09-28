@@ -59,7 +59,7 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOption { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
     public partial class AnswerCallResult
     {
@@ -567,7 +567,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallInvite CallInvite { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOption { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
     public partial class CreateCallResult
     {
@@ -588,7 +588,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
-        public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOption { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
     public partial class CustomContext
     {

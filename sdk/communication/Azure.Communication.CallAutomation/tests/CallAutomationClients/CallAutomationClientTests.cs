@@ -59,7 +59,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
                 MediaStreamingOptions = _mediaStreamingConfiguration,
-                TranscriptionOption = _transcriptionConfiguration,
+                TranscriptionOptions = _transcriptionConfiguration,
                 OperationContext = "operation_context"
             };
 
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: callbackUri)
             {
                 MediaStreamingOptions = _mediaStreamingConfiguration,
-                TranscriptionOption = _transcriptionConfiguration
+                TranscriptionOptions = _transcriptionConfiguration
             };
 
             var response = callAutomationClient.AnswerCall(options);
@@ -244,7 +244,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 callbackUri: callbackUri)
             {
                 MediaStreamingOptions = _mediaStreamingConfiguration,
-                TranscriptionOption = _transcriptionConfiguration
+                TranscriptionOptions = _transcriptionConfiguration
             };
 
             var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
@@ -266,7 +266,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 callbackUri: callbackUri)
             {
                 MediaStreamingOptions = _mediaStreamingConfiguration,
-                TranscriptionOption = _transcriptionConfiguration
+                TranscriptionOptions = _transcriptionConfiguration
             };
 
             var response = callAutomationClient.CreateCall(options);
@@ -324,7 +324,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 callbackUri: callbackUri)
             {
                 MediaStreamingOptions = _mediaStreamingConfiguration,
-                TranscriptionOption = _transcriptionConfiguration,
+                TranscriptionOptions = _transcriptionConfiguration,
                 SourceCallerIdNumber = callerIdNumber,
             };
 
