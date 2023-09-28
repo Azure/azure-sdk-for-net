@@ -216,6 +216,10 @@ namespace System.ServiceModel.Rest.Experimental.Core
 }
 namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
 {
+    public partial class BearerAuthenticationPolicy : System.ServiceModel.Rest.Experimental.Core.Pipeline.KeyCredentialPolicy
+    {
+        public BearerAuthenticationPolicy(System.ServiceModel.Rest.KeyCredential credential) : base (default(System.ServiceModel.Rest.KeyCredential), default(string), default(string)) { }
+    }
     public partial class KeyCredentialPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
     {
         public KeyCredentialPolicy(System.ServiceModel.Rest.KeyCredential credential, string name, string? prefix = null) { }
@@ -238,7 +242,14 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
     }
     public static partial class ModelSerializationExtensions
     {
+        public static byte[]? GetBytesFromBase64(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        public static char GetChar(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.DateTimeOffset GetDateTimeOffset(this in System.Text.Json.JsonElement element, string format) { throw null; }
         public static object? GetObject(this in System.Text.Json.JsonElement element) { throw null; }
+        public static string GetRequiredString(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.TimeSpan GetTimeSpan(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        [System.Diagnostics.ConditionalAttribute("DEBUG")]
+        public static void ThrowNonNullablePropertyIsNull(this System.Text.Json.JsonProperty property) { }
         public static void WriteBase64StringValue(this System.Text.Json.Utf8JsonWriter writer, byte[] value, string format) { }
         public static void WriteNonEmptyArray(this System.Text.Json.Utf8JsonWriter writer, string name, System.Collections.Generic.IReadOnlyList<string> values) { }
         public static void WriteNumberValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
