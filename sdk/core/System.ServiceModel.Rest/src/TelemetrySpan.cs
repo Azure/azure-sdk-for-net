@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// TODO: remove this dependency
 using Azure.Core.Pipeline;
 
-namespace System.ServiceModel.Rest
+namespace System.ServiceModel.Rest.Core
 {
     /// <summary>
     /// TBD.

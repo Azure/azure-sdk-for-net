@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace System.ServiceModel.Rest.Core;
+namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public abstract class Pipeline<TMessage>
 {

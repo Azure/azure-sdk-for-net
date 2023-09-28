@@ -14,7 +14,7 @@ namespace Azure.Core
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="PipelineRequest.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         public TokenRequestContext(string[] scopes, string? parentRequestId)
         {
             Scopes = scopes;
@@ -27,7 +27,7 @@ namespace Azure.Core
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="PipelineRequest.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims)
         {
@@ -41,7 +41,7 @@ namespace Azure.Core
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="PipelineRequest.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request. </param>
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId)
@@ -56,7 +56,7 @@ namespace Azure.Core
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
         /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="PipelineRequest.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
@@ -75,7 +75,7 @@ namespace Azure.Core
         public string[] Scopes { get; }
 
         /// <summary>
-        /// The <see cref="PipelineRequest.ClientRequestId"/> of the request requiring a token for authentication, if applicable.
+        /// The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.
         /// </summary>
         public string? ParentRequestId { get; }
 

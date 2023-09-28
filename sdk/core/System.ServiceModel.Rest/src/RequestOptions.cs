@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 
 namespace System.ServiceModel.Rest;
 
-// Make options freezable
+// TODO: Make options freezable
 public class RequestOptions
 {
     public CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;

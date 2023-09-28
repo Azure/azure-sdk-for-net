@@ -5,21 +5,60 @@ using System.Threading;
 
 namespace System.ServiceModel.Rest.Core;
 
-public abstract class PipelineMessage : IDisposable
+public class PipelineMessage : IDisposable
 {
-    protected PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+    private PipelineResponse? _response;
+
+    private bool _disposed;
+
+    protected internal PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
     {
-        PipelineRequest = request;
-        ResponseErrorClassifier = classifier;
+        Request = request;
+        ResponseClassifier = classifier;
+
+        // TODO: take options and wire them through?
     }
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
-    public abstract PipelineResponse? PipelineResponse { get; set; }
+    public virtual PipelineRequest Request { get; }
 
-    public abstract PipelineRequest PipelineRequest { get; set; }
+    public virtual PipelineResponse Response
+    {
+        get
+        {
+            if (_response is null)
+            {
+                throw new InvalidOperationException("Response has not been set on Message.");
+            }
 
-    public abstract ResponseErrorClassifier ResponseErrorClassifier { get; set; }
+            return _response;
+        }
 
-    public abstract void Dispose();
+        set => _response = value;
+    }
+
+    public virtual ResponseErrorClassifier ResponseClassifier { get; set; }
+
+    #region IDisposable
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing && !_disposed)
+        {
+            var response = _response;
+            response?.Dispose();
+            _response = null;
+
+            _disposed = true;
+        }
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    #endregion
 }

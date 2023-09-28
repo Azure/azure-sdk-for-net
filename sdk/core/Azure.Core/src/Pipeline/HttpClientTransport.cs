@@ -370,12 +370,6 @@ namespace Azure.Core.Pipeline
                 _headers = new ArrayBackedPropertyBag<IgnoreCaseString, object>();
             }
 
-            //public override bool IsHttps => Uri.Scheme == System.Uri.UriSchemeHttps;
-            //public sealed override bool RemoveHeaderValue(string name) => RemoveHeader(name);
-            //public sealed override void SetContent(BinaryData content) => Content = content;
-            //public sealed override void SetHeaderValue(string key, string value) => SetHeader(key, value);
-            //public override bool TryGetHeaderValue(string name, out string? value) => TryGetHeader(name, out value);
-
             public override string ClientRequestId
             {
                 get => _clientRequestId ??= Guid.NewGuid().ToString();
@@ -672,6 +666,8 @@ namespace Azure.Core.Pipeline
             {
                 _responseMessage?.Dispose();
                 DisposeStreamIfNotBuffered(ref _contentStream);
+
+                base.Dispose();
             }
 
             public override string ToString() => _responseMessage.ToString();

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System.IO;
 using System.ServiceModel.Rest.Core;
 using System.Text.Json;
@@ -11,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Experimental.Core.Serialization
 {
+    // TODO: it might be nice to make this type internal and have a method
+    // on a different type that returns this as an implementation of RequestBody
+    // This would probably require modifications to generated code.
     public class Utf8JsonRequestBody : RequestBody
     {
         private readonly MemoryStream _stream;
         private readonly RequestBody _content;
+
+        private bool _disposed;
 
         public Utf8JsonWriter JsonWriter { get; }
 
@@ -43,11 +46,31 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
             return true;
         }
 
+        #region IDisposable
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                var stream = _stream;
+                stream?.Dispose();
+
+                var content = _content;
+                content?.Dispose();
+
+                var writer = JsonWriter;
+                writer?.Dispose();
+
+                _disposed = true;
+            }
+        }
+
         public override void Dispose()
         {
-            JsonWriter.Dispose();
-            _content.Dispose();
-            _stream.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        #endregion
     }
 }
