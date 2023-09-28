@@ -8,23 +8,29 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TranscriptionResumed. </summary>
-    internal partial class TranscriptionResumed
+    public partial class TranscriptionResumed
     {
         /// <summary> Initializes a new instance of TranscriptionResumed. </summary>
         internal TranscriptionResumed()
         {
         }
 
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
-        /// <summary> Used by customers when calling answerCall action to correlate the request to the response event. </summary>
-        public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
-        public ResultInformation ResultInformation { get; }
+        /// <summary> Initializes a new instance of TranscriptionResumed. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="transcriptionUpdateResult"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        internal TranscriptionResumed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdateResult)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            TranscriptionUpdateResult = transcriptionUpdateResult;
+        }
         /// <summary> Defines the result for TranscriptionUpdate with the current status and the details about the status. </summary>
         public TranscriptionUpdate TranscriptionUpdateResult { get; }
     }
