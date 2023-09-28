@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Live Transcription Configuration.
         /// </summary>
-        public TranscriptionOptions TranscriptionOption { get; set; }
+        public TranscriptionOptions TranscriptionOptions { get; set; }
 
         /// <summary>
         /// The endpoint uri of the Azure Cognitive Services resource attached
