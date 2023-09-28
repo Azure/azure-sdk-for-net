@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Sharing.Samples
 {
-    public class Samples_ReceivedSharesClient
+    public partial class Samples_ReceivedSharesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -30,7 +30,6 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -45,7 +44,6 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -247,8 +245,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllAttachedReceivedShares("<referenceName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
@@ -263,8 +260,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
@@ -279,9 +275,9 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllAttachedReceivedShares("<referenceName>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
@@ -296,9 +292,9 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
@@ -313,8 +309,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllDetachedReceivedShares(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
@@ -329,8 +324,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllDetachedReceivedSharesAsync(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
@@ -345,9 +339,9 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllDetachedReceivedShares("<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
@@ -362,9 +356,9 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllDetachedReceivedSharesAsync("<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
@@ -386,7 +380,6 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -407,7 +400,6 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]

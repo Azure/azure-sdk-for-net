@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Catalog.Samples
 {
-    public class Samples_PurviewCatalogClient
+    public partial class Samples_PurviewCatalogClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -63,21 +62,21 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 offset = 1234,
                 limit = 1234,
                 filter = new object(),
-                facets = new List<object>()
-{
+                facets = new object[]
+            {
 new
 {
 count = 1234,
 facet = "<facet>",
 sort = new object(),
 }
-},
+            },
                 taxonomySetting = new
                 {
-                    assetTypes = new List<object>()
-{
+                    assetTypes = new object[]
+            {
 "<assetTypes>"
-},
+            },
                 },
             });
             Response response = client.Search(content);
@@ -136,21 +135,21 @@ sort = new object(),
                 offset = 1234,
                 limit = 1234,
                 filter = new object(),
-                facets = new List<object>()
-{
+                facets = new object[]
+            {
 new
 {
 count = 1234,
 facet = "<facet>",
 sort = new object(),
 }
-},
+            },
                 taxonomySetting = new
                 {
-                    assetTypes = new List<object>()
-{
+                    assetTypes = new object[]
+            {
 "<assetTypes>"
-},
+            },
                 },
             });
             Response response = await client.SearchAsync(content);

@@ -94,7 +94,7 @@ RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",
-    shapefileColumnNames = new List<object>()
+    shapefileColumnNames = new object[]
     {
         "<shapefileColumnNames>"
     },
@@ -116,7 +116,7 @@ RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",
-    shapefileColumnNames = new List<object>()
+    shapefileColumnNames = new object[]
     {
         "<shapefileColumnNames>"
     },
@@ -161,7 +161,7 @@ RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",
-    shapefileColumnNames = new List<object>()
+    shapefileColumnNames = new object[]
     {
         "<shapefileColumnNames>"
     },
@@ -183,7 +183,7 @@ RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",
-    shapefileColumnNames = new List<object>()
+    shapefileColumnNames = new object[]
     {
         "<shapefileColumnNames>"
     },

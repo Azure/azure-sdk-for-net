@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.IoT.DeviceUpdate.Samples
 {
-    public class Samples_DeviceManagementClient
+    public partial class Samples_DeviceManagementClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -196,6 +195,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClass("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -208,6 +208,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -220,6 +221,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClass("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -232,6 +234,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassAsync("<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -618,6 +621,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteGroup("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -630,6 +634,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteGroupAsync("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -642,6 +647,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteGroup("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -654,6 +660,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteGroupAsync("<groupId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -917,10 +924,10 @@ namespace Azure.IoT.DeviceUpdate.Samples
                     },
                 },
                 groupId = "<groupId>",
-                deviceClassSubgroups = new List<object>()
-{
+                deviceClassSubgroups = new object[]
+            {
 "<deviceClassSubgroups>"
-},
+            },
                 isCanceled = true,
                 isRetried = true,
                 rollbackPolicy = new
@@ -979,10 +986,10 @@ namespace Azure.IoT.DeviceUpdate.Samples
                     },
                 },
                 groupId = "<groupId>",
-                deviceClassSubgroups = new List<object>()
-{
+                deviceClassSubgroups = new object[]
+            {
 "<deviceClassSubgroups>"
-},
+            },
                 isCanceled = true,
                 isRetried = true,
                 rollbackPolicy = new
@@ -1028,6 +1035,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1040,6 +1048,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1052,6 +1061,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1064,6 +1074,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1254,6 +1265,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1266,6 +1278,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1278,6 +1291,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1290,6 +1304,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1552,6 +1567,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1564,6 +1580,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1576,6 +1593,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = client.DeleteDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1588,6 +1606,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
             Response response = await client.DeleteDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1979,13 +1998,13 @@ namespace Azure.IoT.DeviceUpdate.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 }
-},
+            },
             });
             Response response = client.StartLogCollection("<logCollectionId>", content);
 
@@ -2003,13 +2022,13 @@ deviceId = "<deviceId>",
 
             RequestContent content = RequestContent.Create(new
             {
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 }
-},
+            },
             });
             Response response = await client.StartLogCollectionAsync("<logCollectionId>", content);
 
@@ -2028,14 +2047,14 @@ deviceId = "<deviceId>",
             RequestContent content = RequestContent.Create(new
             {
                 operationId = "<operationId>",
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 moduleId = "<moduleId>",
 }
-},
+            },
                 description = "<description>",
             });
             Response response = client.StartLogCollection("<logCollectionId>", content);
@@ -2061,14 +2080,14 @@ moduleId = "<moduleId>",
             RequestContent content = RequestContent.Create(new
             {
                 operationId = "<operationId>",
-                deviceList = new List<object>()
-{
+                deviceList = new object[]
+            {
 new
 {
 deviceId = "<deviceId>",
 moduleId = "<moduleId>",
 }
-},
+            },
                 description = "<description>",
             });
             Response response = await client.StartLogCollectionAsync("<logCollectionId>", content);
@@ -2238,8 +2257,8 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeviceClasses())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
             }
         }
 
@@ -2254,8 +2273,8 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeviceClassesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
             }
         }
 
@@ -2270,16 +2289,16 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeviceClasses(filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
             }
         }
 
@@ -2294,16 +2313,16 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeviceClassesAsync(filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("contractModel").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friendlyName").ToString());
             }
         }
 
@@ -2318,9 +2337,9 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClasses("<deviceClassId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
             }
         }
 
@@ -2335,9 +2354,9 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
             }
         }
 
@@ -2352,11 +2371,11 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClasses("<deviceClassId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("friendlyName").ToString());
             }
         }
 
@@ -2371,11 +2390,11 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("friendlyName").ToString());
             }
         }
 
@@ -2390,9 +2409,9 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDevices())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("onLatestUpdate").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
             }
         }
 
@@ -2407,9 +2426,9 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDevicesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("onLatestUpdate").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
             }
         }
 
@@ -2424,35 +2443,35 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDevices(filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentStatus").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("onLatestUpdate").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("extendedResultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deploymentStatus").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
+                Console.WriteLine(result.GetProperty("lastDeploymentId").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("extendedResultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
             }
         }
 
@@ -2467,35 +2486,35 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDevicesAsync(filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("lastAttemptedUpdate").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentStatus").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("installedUpdate").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("onLatestUpdate").ToString());
-                Console.WriteLine(result[0].GetProperty("lastDeploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("extendedResultCode").ToString());
-                Console.WriteLine(result[0].GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("lastAttemptedUpdate").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deploymentStatus").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("installedUpdate").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
+                Console.WriteLine(result.GetProperty("lastDeploymentId").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("extendedResultCode").ToString());
+                Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults")[0].GetProperty("resultDetails").ToString());
             }
         }
 
@@ -2510,9 +2529,9 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetGroups())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupType").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("groupType").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -2527,9 +2546,9 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetGroupsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupType").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("groupType").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -2544,14 +2563,14 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetGroups(orderBy: "<orderBy>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupType").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
-                Console.WriteLine(result[0].GetProperty("subgroupsWithNewUpdatesAvailableCount").ToString());
-                Console.WriteLine(result[0].GetProperty("subgroupsWithUpdatesInProgressCount").ToString());
-                Console.WriteLine(result[0].GetProperty("subgroupsWithOnLatestUpdateCount").ToString());
-                Console.WriteLine(result[0].GetProperty("deployments")[0].ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("groupType").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("subgroupsWithNewUpdatesAvailableCount").ToString());
+                Console.WriteLine(result.GetProperty("subgroupsWithUpdatesInProgressCount").ToString());
+                Console.WriteLine(result.GetProperty("subgroupsWithOnLatestUpdateCount").ToString());
+                Console.WriteLine(result.GetProperty("deployments")[0].ToString());
             }
         }
 
@@ -2566,14 +2585,14 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetGroupsAsync(orderBy: "<orderBy>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupType").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
-                Console.WriteLine(result[0].GetProperty("subgroupsWithNewUpdatesAvailableCount").ToString());
-                Console.WriteLine(result[0].GetProperty("subgroupsWithUpdatesInProgressCount").ToString());
-                Console.WriteLine(result[0].GetProperty("subgroupsWithOnLatestUpdateCount").ToString());
-                Console.WriteLine(result[0].GetProperty("deployments")[0].ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("groupType").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("subgroupsWithNewUpdatesAvailableCount").ToString());
+                Console.WriteLine(result.GetProperty("subgroupsWithUpdatesInProgressCount").ToString());
+                Console.WriteLine(result.GetProperty("subgroupsWithOnLatestUpdateCount").ToString());
+                Console.WriteLine(result.GetProperty("deployments")[0].ToString());
             }
         }
 
@@ -2588,12 +2607,12 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetBestUpdatesForGroups("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
             }
         }
 
@@ -2608,12 +2627,12 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetBestUpdatesForGroupsAsync("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
             }
         }
 
@@ -2628,14 +2647,14 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetBestUpdatesForGroups("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
             }
         }
 
@@ -2650,14 +2669,14 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetBestUpdatesForGroupsAsync("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
             }
         }
 
@@ -2672,12 +2691,12 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeploymentsForGroups("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
             }
         }
 
@@ -2692,12 +2711,12 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeploymentsForGroupsAsync("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
             }
         }
 
@@ -2712,25 +2731,25 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeploymentsForGroups("<groupId>", orderBy: "<orderBy>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassSubgroups")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("isCanceled").ToString());
-                Console.WriteLine(result[0].GetProperty("isRetried").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("isCloudInitiatedRollback").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassSubgroups")[0].ToString());
+                Console.WriteLine(result.GetProperty("isCanceled").ToString());
+                Console.WriteLine(result.GetProperty("isRetried").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
+                Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
             }
         }
 
@@ -2745,25 +2764,25 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeploymentsForGroupsAsync("<groupId>", orderBy: "<orderBy>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassSubgroups")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("isCanceled").ToString());
-                Console.WriteLine(result[0].GetProperty("isRetried").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("isCloudInitiatedRollback").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassSubgroups")[0].ToString());
+                Console.WriteLine(result.GetProperty("isCanceled").ToString());
+                Console.WriteLine(result.GetProperty("isRetried").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
+                Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
             }
         }
 
@@ -2778,9 +2797,9 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroups("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -2795,9 +2814,9 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroupsAsync("<groupId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -2812,11 +2831,11 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroups("<groupId>", filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
             }
         }
 
@@ -2831,11 +2850,11 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroupsAsync("<groupId>", filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceClassId").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceCount").ToString());
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("deviceCount").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
             }
         }
 
@@ -2850,12 +2869,12 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroups("<groupId>", "<deviceClassId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
             }
         }
 
@@ -2870,12 +2889,12 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroupsAsync("<groupId>", "<deviceClassId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
             }
         }
 
@@ -2890,25 +2909,25 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroups("<groupId>", "<deviceClassId>", orderBy: "<orderBy>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassSubgroups")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("isCanceled").ToString());
-                Console.WriteLine(result[0].GetProperty("isRetried").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("isCloudInitiatedRollback").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassSubgroups")[0].ToString());
+                Console.WriteLine(result.GetProperty("isCanceled").ToString());
+                Console.WriteLine(result.GetProperty("isRetried").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
+                Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
             }
         }
 
@@ -2923,25 +2942,25 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroupsAsync("<groupId>", "<deviceClassId>", orderBy: "<orderBy>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deploymentId").ToString());
-                Console.WriteLine(result[0].GetProperty("startDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("groupId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceClassSubgroups")[0].ToString());
-                Console.WriteLine(result[0].GetProperty("isCanceled").ToString());
-                Console.WriteLine(result[0].GetProperty("isRetried").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
-                Console.WriteLine(result[0].GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
-                Console.WriteLine(result[0].GetProperty("isCloudInitiatedRollback").ToString());
+                Console.WriteLine(result.GetProperty("deploymentId").ToString());
+                Console.WriteLine(result.GetProperty("startDateTime").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("groupId").ToString());
+                Console.WriteLine(result.GetProperty("deviceClassSubgroups")[0].ToString());
+                Console.WriteLine(result.GetProperty("isCanceled").ToString());
+                Console.WriteLine(result.GetProperty("isRetried").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("update").GetProperty("friendlyName").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedPercentage").ToString());
+                Console.WriteLine(result.GetProperty("rollbackPolicy").GetProperty("failure").GetProperty("devicesFailedCount").ToString());
+                Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
             }
         }
 
@@ -2956,10 +2975,10 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeployments("<groupId>", "<deviceClassId>", "<deploymentId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("retryCount").ToString());
-                Console.WriteLine(result[0].GetProperty("movedOnToNewDeployment").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceState").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("retryCount").ToString());
+                Console.WriteLine(result.GetProperty("movedOnToNewDeployment").ToString());
+                Console.WriteLine(result.GetProperty("deviceState").ToString());
             }
         }
 
@@ -2974,10 +2993,10 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync("<groupId>", "<deviceClassId>", "<deploymentId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("retryCount").ToString());
-                Console.WriteLine(result[0].GetProperty("movedOnToNewDeployment").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceState").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("retryCount").ToString());
+                Console.WriteLine(result.GetProperty("movedOnToNewDeployment").ToString());
+                Console.WriteLine(result.GetProperty("deviceState").ToString());
             }
         }
 
@@ -2992,11 +3011,11 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeployments("<groupId>", "<deviceClassId>", "<deploymentId>", filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("retryCount").ToString());
-                Console.WriteLine(result[0].GetProperty("movedOnToNewDeployment").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceState").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("retryCount").ToString());
+                Console.WriteLine(result.GetProperty("movedOnToNewDeployment").ToString());
+                Console.WriteLine(result.GetProperty("deviceState").ToString());
             }
         }
 
@@ -3011,11 +3030,11 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync("<groupId>", "<deviceClassId>", "<deploymentId>", filter: "<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("retryCount").ToString());
-                Console.WriteLine(result[0].GetProperty("movedOnToNewDeployment").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceState").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("retryCount").ToString());
+                Console.WriteLine(result.GetProperty("movedOnToNewDeployment").ToString());
+                Console.WriteLine(result.GetProperty("deviceState").ToString());
             }
         }
 
@@ -3030,10 +3049,10 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetOperationStatuses())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("operationId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("operationId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -3048,10 +3067,10 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetOperationStatusesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("operationId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("operationId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             }
         }
 
@@ -3066,19 +3085,19 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetOperationStatuses(filter: "<filter>", top: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("operationId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("traceId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("operationId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("occurredDateTime").ToString());
+                Console.WriteLine(result.GetProperty("traceId").ToString());
+                Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -3093,19 +3112,19 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetOperationStatusesAsync(filter: "<filter>", top: 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("operationId").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
-                Console.WriteLine(result[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("traceId").ToString());
-                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("operationId").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("occurredDateTime").ToString());
+                Console.WriteLine(result.GetProperty("traceId").ToString());
+                Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("etag").ToString());
             }
         }
 
@@ -3120,7 +3139,7 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetLogCollections())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
             }
         }
 
@@ -3135,7 +3154,7 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetLogCollectionsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
             }
         }
 
@@ -3150,13 +3169,13 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetLogCollections())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("operationId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("operationId").ToString());
+                Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -3171,13 +3190,13 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetLogCollectionsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("operationId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("deviceList")[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("description").ToString());
-                Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("lastActionDateTime").ToString());
-                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("operationId").ToString());
+                Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
@@ -3192,9 +3211,9 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetHealthOfDevices("<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("state").ToString());
-                Console.WriteLine(result[0].GetProperty("healthChecks")[0].ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("state").ToString());
+                Console.WriteLine(result.GetProperty("healthChecks")[0].ToString());
             }
         }
 
@@ -3209,9 +3228,9 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetHealthOfDevicesAsync("<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("state").ToString());
-                Console.WriteLine(result[0].GetProperty("healthChecks")[0].ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("state").ToString());
+                Console.WriteLine(result.GetProperty("healthChecks")[0].ToString());
             }
         }
 
@@ -3226,12 +3245,12 @@ moduleId = "<moduleId>",
             foreach (BinaryData item in client.GetHealthOfDevices("<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("state").ToString());
-                Console.WriteLine(result[0].GetProperty("digitalTwinModelId").ToString());
-                Console.WriteLine(result[0].GetProperty("healthChecks")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("healthChecks")[0].GetProperty("result").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("state").ToString());
+                Console.WriteLine(result.GetProperty("digitalTwinModelId").ToString());
+                Console.WriteLine(result.GetProperty("healthChecks")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("healthChecks")[0].GetProperty("result").ToString());
             }
         }
 
@@ -3246,12 +3265,12 @@ moduleId = "<moduleId>",
             await foreach (BinaryData item in client.GetHealthOfDevicesAsync("<filter>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("deviceId").ToString());
-                Console.WriteLine(result[0].GetProperty("moduleId").ToString());
-                Console.WriteLine(result[0].GetProperty("state").ToString());
-                Console.WriteLine(result[0].GetProperty("digitalTwinModelId").ToString());
-                Console.WriteLine(result[0].GetProperty("healthChecks")[0].GetProperty("name").ToString());
-                Console.WriteLine(result[0].GetProperty("healthChecks")[0].GetProperty("result").ToString());
+                Console.WriteLine(result.GetProperty("deviceId").ToString());
+                Console.WriteLine(result.GetProperty("moduleId").ToString());
+                Console.WriteLine(result.GetProperty("state").ToString());
+                Console.WriteLine(result.GetProperty("digitalTwinModelId").ToString());
+                Console.WriteLine(result.GetProperty("healthChecks")[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("healthChecks")[0].GetProperty("result").ToString());
             }
         }
 

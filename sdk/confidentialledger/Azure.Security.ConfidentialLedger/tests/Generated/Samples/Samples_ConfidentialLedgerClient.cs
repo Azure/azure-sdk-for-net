@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Samples
 {
-    public class Samples_ConfidentialLedgerClient
+    public partial class Samples_ConfidentialLedgerClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -464,6 +464,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = client.DeleteUser("<userId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -475,6 +476,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = await client.DeleteUserAsync("<userId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -486,6 +488,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = client.DeleteUser("<userId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -497,6 +500,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(new Uri("http://localhost:3000"), credential);
 
             Response response = await client.DeleteUserAsync("<userId>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -634,8 +638,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
             foreach (BinaryData item in client.GetConsortiumMembers())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -649,8 +653,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
             await foreach (BinaryData item in client.GetConsortiumMembersAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -664,8 +668,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
             foreach (BinaryData item in client.GetConsortiumMembers())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -679,8 +683,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
             await foreach (BinaryData item in client.GetConsortiumMembersAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("certificate").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("certificate").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
             }
         }
 
@@ -694,7 +698,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             foreach (BinaryData item in client.GetCollections())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
             }
         }
 
@@ -708,7 +712,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             await foreach (BinaryData item in client.GetCollectionsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
             }
         }
 
@@ -722,7 +726,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             foreach (BinaryData item in client.GetCollections())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
             }
         }
 
@@ -736,7 +740,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             await foreach (BinaryData item in client.GetCollectionsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
             }
         }
 
@@ -750,7 +754,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             foreach (BinaryData item in client.GetLedgerEntries())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
+                Console.WriteLine(result.GetProperty("contents").ToString());
             }
         }
 
@@ -764,7 +768,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             await foreach (BinaryData item in client.GetLedgerEntriesAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
+                Console.WriteLine(result.GetProperty("contents").ToString());
             }
         }
 
@@ -778,9 +782,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
             foreach (BinaryData item in client.GetLedgerEntries(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
-                Console.WriteLine(result[0].GetProperty("transactionId").ToString());
+                Console.WriteLine(result.GetProperty("contents").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("transactionId").ToString());
             }
         }
 
@@ -794,9 +798,9 @@ namespace Azure.Security.ConfidentialLedger.Samples
             await foreach (BinaryData item in client.GetLedgerEntriesAsync(collectionId: "<collectionId>", fromTransactionId: "<fromTransactionId>", toTransactionId: "<toTransactionId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("contents").ToString());
-                Console.WriteLine(result[0].GetProperty("collectionId").ToString());
-                Console.WriteLine(result[0].GetProperty("transactionId").ToString());
+                Console.WriteLine(result.GetProperty("contents").ToString());
+                Console.WriteLine(result.GetProperty("collectionId").ToString());
+                Console.WriteLine(result.GetProperty("transactionId").ToString());
             }
         }
     }

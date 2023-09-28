@@ -446,6 +446,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
 Response response = await client.DeleteAsync("<guid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
@@ -455,6 +456,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
 Response response = await client.DeleteAsync("<guid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -467,6 +469,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
 Response response = client.Delete("<guid>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
@@ -476,6 +479,7 @@ TokenCredential credential = new DefaultAzureCredential();
 PurviewRelationships client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
 
 Response response = client.Delete("<guid>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>

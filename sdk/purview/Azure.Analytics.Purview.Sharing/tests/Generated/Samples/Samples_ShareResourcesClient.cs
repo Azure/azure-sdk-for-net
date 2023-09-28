@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Sharing.Samples
 {
-    public class Samples_ShareResourcesClient
+    public partial class Samples_ShareResourcesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllShareResources(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllShareResourcesAsync(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -58,13 +58,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllShareResources("<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("receivedSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("sentSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("storeKind").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("referenceName").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("sentSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("storeKind").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("referenceName").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
@@ -79,13 +79,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllShareResourcesAsync("<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("receivedSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("sentSharesCount").ToString());
-                Console.WriteLine(result[0].GetProperty("storeKind").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("referenceName").ToString());
-                Console.WriteLine(result[0].GetProperty("storeReference").GetProperty("type").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("receivedSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("sentSharesCount").ToString());
+                Console.WriteLine(result.GetProperty("storeKind").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("referenceName").ToString());
+                Console.WriteLine(result.GetProperty("storeReference").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
     }

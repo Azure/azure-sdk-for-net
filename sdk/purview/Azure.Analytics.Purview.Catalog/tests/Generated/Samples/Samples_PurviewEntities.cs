@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Catalog.Samples
 {
-    internal class Samples_PurviewEntities
+    public partial class Samples_PurviewEntities
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -66,14 +65,14 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     {
                         key = new object(),
                     },
-                    classifications = new List<object>()
-{
+                    classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -94,7 +93,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                     createTime = 123.45F,
                     createdBy = "<createdBy>",
                     customAttributes = new
@@ -104,12 +103,12 @@ lastModifiedTS = "<lastModifiedTS>",
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
+                    labels = new object[]
+            {
 "<labels>"
-},
-                    meanings = new List<object>()
-{
+            },
+                    meanings = new object[]
+            {
 new
 {
 confidence = 1234,
@@ -123,7 +122,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                     provenanceType = 123.45F,
                     proxy = true,
                     relationshipAttributes = new
@@ -141,14 +140,14 @@ termGuid = "<termGuid>",
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
+                        key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                     },
                     attributes = new
                     {
@@ -157,9 +156,7 @@ info = "<info>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                referredEntities = new
-                {
-                },
+                referredEntities = new { },
             });
             Response response = client.CreateOrUpdate(content);
 
@@ -245,14 +242,14 @@ info = "<info>",
                     {
                         key = new object(),
                     },
-                    classifications = new List<object>()
-{
+                    classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -273,7 +270,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                     createTime = 123.45F,
                     createdBy = "<createdBy>",
                     customAttributes = new
@@ -283,12 +280,12 @@ lastModifiedTS = "<lastModifiedTS>",
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
+                    labels = new object[]
+            {
 "<labels>"
-},
-                    meanings = new List<object>()
-{
+            },
+                    meanings = new object[]
+            {
 new
 {
 confidence = 1234,
@@ -302,7 +299,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                     provenanceType = 123.45F,
                     proxy = true,
                     relationshipAttributes = new
@@ -320,14 +317,14 @@ termGuid = "<termGuid>",
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
+                        key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                     },
                     attributes = new
                     {
@@ -336,9 +333,7 @@ info = "<info>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                referredEntities = new
-                {
-                },
+                referredEntities = new { },
             });
             Response response = await client.CreateOrUpdateAsync(content);
 
@@ -416,10 +411,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuids(new List<string>()
-{
-"<guids>"
-}, null, null, null, null);
+            Response response = client.GetByGuids(new string[] { "<guids>" }, null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -433,10 +425,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null, null, null, null);
+            Response response = await client.GetByGuidsAsync(new string[] { "<guids>" }, null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -450,13 +439,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.GetByGuids(new List<string>()
-{
-"<guids>"
-}, true, true, new List<string>()
-{
-"<excludeRelationshipTypes>"
-}, null);
+            Response response = client.GetByGuids(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<key>").ToString());
@@ -555,13 +538,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.GetByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, true, true, new List<string>()
-{
-"<excludeRelationshipTypes>"
-}, null);
+            Response response = await client.GetByGuidsAsync(new string[] { "<guids>" }, true, true, new string[] { "<excludeRelationshipTypes>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<key>").ToString());
@@ -692,22 +669,22 @@ info = "<info>",
 
             RequestContent content = RequestContent.Create(new
             {
-                entities = new List<object>()
-{
+                entities = new object[]
+            {
 new
 {
 businessAttributes = new
 {
 key = new object(),
 },
-classifications = new List<object>()
+classifications = new object[]
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -738,11 +715,11 @@ key = "<customAttributes>",
 guid = "<guid>",
 homeId = "<homeId>",
 isIncomplete = true,
-labels = new List<object>()
+labels = new object[]
 {
 "<labels>"
 },
-meanings = new List<object>()
+meanings = new object[]
 {
 new
 {
@@ -775,7 +752,7 @@ key = new object(),
 },
 contacts = new
 {
-key = new List<object>()
+key = new object[]
 {
 new
 {
@@ -791,10 +768,8 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
-                referredEntities = new
-                {
-                },
+            },
+                referredEntities = new { },
             });
             Response response = client.CreateOrUpdateEntities(content);
 
@@ -874,22 +849,22 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new
             {
-                entities = new List<object>()
-{
+                entities = new object[]
+            {
 new
 {
 businessAttributes = new
 {
 key = new object(),
 },
-classifications = new List<object>()
+classifications = new object[]
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -920,11 +895,11 @@ key = "<customAttributes>",
 guid = "<guid>",
 homeId = "<homeId>",
 isIncomplete = true,
-labels = new List<object>()
+labels = new object[]
 {
 "<labels>"
 },
-meanings = new List<object>()
+meanings = new object[]
 {
 new
 {
@@ -957,7 +932,7 @@ key = new object(),
 },
 contacts = new
 {
-key = new List<object>()
+key = new object[]
 {
 new
 {
@@ -973,10 +948,8 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
-                referredEntities = new
-                {
-                },
+            },
+                referredEntities = new { },
             });
             Response response = await client.CreateOrUpdateEntitiesAsync(content);
 
@@ -1054,10 +1027,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuids(new List<string>()
-{
-"<guids>"
-}, null);
+            Response response = client.DeleteByGuids(new string[] { "<guids>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1071,10 +1041,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null);
+            Response response = await client.DeleteByGuidsAsync(new string[] { "<guids>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1088,10 +1055,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteByGuids(new List<string>()
-{
-"<guids>"
-}, null);
+            Response response = client.DeleteByGuids(new string[] { "<guids>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
@@ -1167,10 +1131,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteByGuidsAsync(new List<string>()
-{
-"<guids>"
-}, null);
+            Response response = await client.DeleteByGuidsAsync(new string[] { "<guids>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<key>").ToString());
@@ -1248,6 +1209,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.AddClassification(content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -1261,6 +1223,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.AddClassificationAsync(content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -1279,15 +1242,15 @@ lastModifiedTS = "<lastModifiedTS>",
                     entityGuid = "<entityGuid>",
                     entityStatus = "ACTIVE",
                     removePropagationsOnEntityDelete = true,
-                    validityPeriods = new List<object>()
-{
+                    validityPeriods = new object[]
+            {
 new
 {
 endTime = "<endTime>",
 startTime = "<startTime>",
 timeZone = "<timeZone>",
 }
-},
+            },
                     source = "<source>",
                     sourceDetails = new
                     {
@@ -1300,12 +1263,13 @@ timeZone = "<timeZone>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                entityGuids = new List<object>()
-{
+                entityGuids = new object[]
+            {
 "<entityGuids>"
-},
+            },
             });
             Response response = client.AddClassification(content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -1324,15 +1288,15 @@ timeZone = "<timeZone>",
                     entityGuid = "<entityGuid>",
                     entityStatus = "ACTIVE",
                     removePropagationsOnEntityDelete = true,
-                    validityPeriods = new List<object>()
-{
+                    validityPeriods = new object[]
+            {
 new
 {
 endTime = "<endTime>",
 startTime = "<startTime>",
 timeZone = "<timeZone>",
 }
-},
+            },
                     source = "<source>",
                     sourceDetails = new
                     {
@@ -1345,12 +1309,13 @@ timeZone = "<timeZone>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                entityGuids = new List<object>()
-{
+                entityGuids = new object[]
+            {
 "<entityGuids>"
-},
+            },
             });
             Response response = await client.AddClassificationAsync(content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2029,6 +1994,7 @@ timeZone = "<timeZone>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.DeleteClassification("<guid>", "<classificationName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -2041,6 +2007,7 @@ timeZone = "<timeZone>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -2053,6 +2020,7 @@ timeZone = "<timeZone>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.DeleteClassification("<guid>", "<classificationName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -2065,6 +2033,7 @@ timeZone = "<timeZone>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -2142,11 +2111,12 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.AddClassifications("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2158,11 +2128,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.AddClassificationsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2174,14 +2145,14 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2202,8 +2173,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = client.AddClassifications("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2215,14 +2187,14 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2243,8 +2215,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = await client.AddClassificationsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2256,11 +2229,12 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.UpdateClassifications("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2272,11 +2246,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.UpdateClassificationsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2288,14 +2263,14 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2316,8 +2291,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = client.UpdateClassifications("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2329,14 +2305,14 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2357,8 +2333,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = await client.UpdateClassificationsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -2634,14 +2611,14 @@ lastModifiedTS = "<lastModifiedTS>",
                     {
                         key = new object(),
                     },
-                    classifications = new List<object>()
-{
+                    classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2662,7 +2639,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                     createTime = 123.45F,
                     createdBy = "<createdBy>",
                     customAttributes = new
@@ -2672,12 +2649,12 @@ lastModifiedTS = "<lastModifiedTS>",
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
+                    labels = new object[]
+            {
 "<labels>"
-},
-                    meanings = new List<object>()
-{
+            },
+                    meanings = new object[]
+            {
 new
 {
 confidence = 1234,
@@ -2691,7 +2668,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                     provenanceType = 123.45F,
                     proxy = true,
                     relationshipAttributes = new
@@ -2709,14 +2686,14 @@ termGuid = "<termGuid>",
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
+                        key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                     },
                     attributes = new
                     {
@@ -2725,9 +2702,7 @@ info = "<info>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                referredEntities = new
-                {
-                },
+                referredEntities = new { },
             });
             Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
 
@@ -2813,14 +2788,14 @@ info = "<info>",
                     {
                         key = new object(),
                     },
-                    classifications = new List<object>()
-{
+                    classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2841,7 +2816,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                     createTime = 123.45F,
                     createdBy = "<createdBy>",
                     customAttributes = new
@@ -2851,12 +2826,12 @@ lastModifiedTS = "<lastModifiedTS>",
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new List<object>()
-{
+                    labels = new object[]
+            {
 "<labels>"
-},
-                    meanings = new List<object>()
-{
+            },
+                    meanings = new object[]
+            {
 new
 {
 confidence = 1234,
@@ -2870,7 +2845,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                     provenanceType = 123.45F,
                     proxy = true,
                     relationshipAttributes = new
@@ -2888,14 +2863,14 @@ termGuid = "<termGuid>",
                     },
                     contacts = new
                     {
-                        key = new List<object>()
-{
+                        key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                     },
                     attributes = new
                     {
@@ -2904,9 +2879,7 @@ info = "<info>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                referredEntities = new
-                {
-                },
+                referredEntities = new { },
             });
             Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
 
@@ -3165,6 +3138,7 @@ info = "<info>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3177,6 +3151,7 @@ info = "<info>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3189,6 +3164,7 @@ info = "<info>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3201,6 +3177,7 @@ info = "<info>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3212,11 +3189,12 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.AddClassificationsByUniqueAttribute("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -3228,11 +3206,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -3244,14 +3223,14 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -3272,8 +3251,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = client.AddClassificationsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3285,14 +3265,14 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -3313,8 +3293,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3326,11 +3307,12 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -3342,11 +3324,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -3358,14 +3341,14 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -3386,8 +3369,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3399,14 +3383,14 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -3427,8 +3411,9 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-});
+            });
             Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3476,18 +3461,18 @@ lastModifiedTS = "<lastModifiedTS>",
                 {
                     key = new
                     {
-                        classificationNames = new List<object>()
-{
+                        classificationNames = new object[]
+            {
 "<classificationNames>"
-},
-                        classifications = new List<object>()
-{
+            },
+                        classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -3508,20 +3493,20 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                         displayText = "<displayText>",
                         guid = "<guid>",
                         isIncomplete = true,
-                        labels = new List<object>()
-{
+                        labels = new object[]
+            {
 "<labels>"
-},
-                        meaningNames = new List<object>()
-{
+            },
+                        meaningNames = new object[]
+            {
 "<meaningNames>"
-},
-                        meanings = new List<object>()
-{
+            },
+                        meanings = new object[]
+            {
 new
 {
 confidence = 1234,
@@ -3535,7 +3520,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                         status = "ACTIVE",
                         attributes = new
                         {
@@ -3566,18 +3551,18 @@ termGuid = "<termGuid>",
                 {
                     key = new
                     {
-                        classificationNames = new List<object>()
-{
+                        classificationNames = new object[]
+            {
 "<classificationNames>"
-},
-                        classifications = new List<object>()
-{
+            },
+                        classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -3598,20 +3583,20 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                         displayText = "<displayText>",
                         guid = "<guid>",
                         isIncomplete = true,
-                        labels = new List<object>()
-{
+                        labels = new object[]
+            {
 "<labels>"
-},
-                        meaningNames = new List<object>()
-{
+            },
+                        meaningNames = new object[]
+            {
 "<meaningNames>"
-},
-                        meanings = new List<object>()
-{
+            },
+                        meanings = new object[]
+            {
 new
 {
 confidence = 1234,
@@ -3625,7 +3610,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                         status = "ACTIVE",
                         attributes = new
                         {
@@ -3994,6 +3979,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.DeleteBusinessMetadata("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4007,6 +3993,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.DeleteBusinessMetadataAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4023,6 +4010,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.DeleteBusinessMetadata("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4039,6 +4027,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = await client.DeleteBusinessMetadataAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4052,6 +4041,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.AddOrUpdateBusinessMetadata("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4065,6 +4055,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4081,6 +4072,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.AddOrUpdateBusinessMetadata("<guid>", content, isOverwrite: true);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4097,6 +4089,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = await client.AddOrUpdateBusinessMetadataAsync("<guid>", content, isOverwrite: true);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4110,6 +4103,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4123,6 +4117,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4139,6 +4134,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.DeleteBusinessMetadataAttributes("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4155,6 +4151,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = await client.DeleteBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4168,6 +4165,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4181,6 +4179,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4197,6 +4196,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = client.AddOrUpdateBusinessMetadataAttributes("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4213,6 +4213,7 @@ termGuid = "<termGuid>",
                 key = new object(),
             });
             Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("<guid>", "<bmName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4225,12 +4226,11 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.GetSampleBusinessMetadataTemplate(null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -4243,12 +4243,11 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.GetSampleBusinessMetadataTemplateAsync(null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -4261,12 +4260,11 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = client.GetSampleBusinessMetadataTemplate(null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -4279,12 +4277,11 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             Response response = await client.GetSampleBusinessMetadataTemplateAsync(null);
+
             if (response.ContentStream != null)
             {
-                using (Stream outFileStream = File.OpenWrite("<filepath>"))
-                {
-                    response.ContentStream.CopyTo(outFileStream);
-                }
+                using Stream outFileStream = File.OpenWrite("<filepath>");
+                response.ContentStream.CopyTo(outFileStream);
             }
         }
 
@@ -4372,6 +4369,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.DeleteLabels("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4385,6 +4383,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.DeleteLabelsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4396,11 +4395,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = client.DeleteLabels("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4412,11 +4412,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = await client.DeleteLabelsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4430,6 +4431,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.SetLabels("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4443,6 +4445,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.SetLabelsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4454,11 +4457,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = client.SetLabels("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4470,11 +4474,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = await client.SetLabelsAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4488,6 +4493,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.AddLabel("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4501,6 +4507,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.AddLabelAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4512,11 +4519,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = client.AddLabel("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4528,11 +4536,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = await client.AddLabelAsync("<guid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4546,6 +4555,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4559,6 +4569,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4570,11 +4581,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = client.DeleteLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -4586,11 +4598,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = await client.DeleteLabelsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -4604,6 +4617,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.SetLabelsByUniqueAttribute("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4617,6 +4631,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4628,11 +4643,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = client.SetLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -4644,11 +4660,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = await client.SetLabelsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -4662,6 +4679,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = client.AddLabelsByUniqueAttribute("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4675,6 +4693,7 @@ termGuid = "<termGuid>",
 
             RequestContent content = null;
             Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4686,11 +4705,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = client.AddLabelsByUniqueAttribute("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -4702,11 +4722,12 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<body>"
-});
+            });
             Response response = await client.AddLabelsByUniqueAttributeAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
+
             Console.WriteLine(response.Status);
         }
     }
