@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("vaultCertificates"u8);
+            JsonSerializer.Serialize(writer, SourceVault);
+            writer.WritePropertyName("vaultCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in VaultCertificates)
             {

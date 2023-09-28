@@ -311,6 +311,80 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DiagnosticSettingResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _diagnosticSettingRestClient.GetAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DiagnosticSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the diagnostic setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DiagnosticSettingResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _diagnosticSettingRestClient.Get(Id, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DiagnosticSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DiagnosticSettingResource> IEnumerable<DiagnosticSettingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

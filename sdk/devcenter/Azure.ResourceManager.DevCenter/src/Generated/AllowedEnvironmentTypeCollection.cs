@@ -243,6 +243,80 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AllowedEnvironmentTypeResource>> GetIfExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AllowedEnvironmentTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new AllowedEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual NullableResponse<AllowedEnvironmentTypeResource> GetIfExists(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AllowedEnvironmentTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new AllowedEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AllowedEnvironmentTypeResource> IEnumerable<AllowedEnvironmentTypeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

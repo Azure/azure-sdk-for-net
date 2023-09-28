@@ -334,6 +334,80 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamedValue_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementNamedValueResource>> GetIfExistsAsync(string namedValueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
+
+            using var scope = _apiManagementNamedValueNamedValueClientDiagnostics.CreateScope("ApiManagementNamedValueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementNamedValueNamedValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementNamedValueResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNamedValueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamedValue_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementNamedValueResource> GetIfExists(string namedValueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
+
+            using var scope = _apiManagementNamedValueNamedValueClientDiagnostics.CreateScope("ApiManagementNamedValueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementNamedValueNamedValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementNamedValueResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementNamedValueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApiManagementNamedValueResource> IEnumerable<ApiManagementNamedValueResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

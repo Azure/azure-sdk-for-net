@@ -321,6 +321,80 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/roles/{roleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleName"> The name of the cluster role. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CosmosDBForPostgreSqlRoleResource>> GetIfExistsAsync(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+
+            using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBForPostgreSqlRoleRolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBForPostgreSqlRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlRoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/roles/{roleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleName"> The name of the cluster role. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        public virtual NullableResponse<CosmosDBForPostgreSqlRoleResource> GetIfExists(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+
+            using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBForPostgreSqlRoleRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBForPostgreSqlRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlRoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<CosmosDBForPostgreSqlRoleResource> IEnumerable<CosmosDBForPostgreSqlRoleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

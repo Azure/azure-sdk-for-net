@@ -89,7 +89,7 @@
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0-beta.4" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.2" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.3" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.16.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
@@ -107,13 +107,13 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.3" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.54.1" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.31.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.56.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.56.0" />
     <!--
       TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
       Currently, it is referencd by Azure.Identity.BrokeredAuthentication which is still in beta
     -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.54.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.56.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
@@ -129,7 +129,7 @@
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.5.1-beta.1" />
     <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.5.1-beta.1" />
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
-    <PackageReference Update="OpenTelemetry.ResourceDetectors.Azure" Version="1.0.0-beta.2" />
+    <PackageReference Update="OpenTelemetry.ResourceDetectors.Azure" Version="1.0.0-beta.3" />
   </ItemGroup>
 
   <!--
@@ -142,9 +142,9 @@
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="MessagePack" Version="1.9.11" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
-    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.21.4" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.21.4" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.21.4" />
+    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.21.6" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.21.6" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.21.6" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" />
@@ -174,8 +174,8 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230907.2" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230911.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230927.1" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230927.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
@@ -204,6 +204,7 @@
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.PrivateDns" Version="1.0.0" />
+    <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />

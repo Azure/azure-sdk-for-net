@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="properties">
         /// Properties of cluster job.
         /// Please note <see cref="ClusterJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FlinkJobProperties"/>.
+        /// The available derived classes include <see cref="Models.FlinkJobProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ClusterJob"/> instance for mocking. </returns>
         public static ClusterJob ClusterJob(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ClusterJobProperties properties = null)

@@ -39,6 +39,94 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(value, v.ToString());
         }
 
+        [Test]
+        public void VariantDoesntStoreVariant()
+        {
+            Variant a = new("hi");
+            Variant b = new(a);
+
+            Assert.AreEqual(a, b);
+            Assert.AreEqual(typeof(string), b.Type);
+        }
+
+        [Test]
+        public void VariantAssignmentHasReferenceSemantics()
+        {
+            // Variant should use reference semantics with reference types
+            // so that it behaves like object in these cases.
+            //
+            // e.g. since:
+            //   List<string> list = new List<string> { "1" };
+            //   object oa = list;
+            //   object ob = oa;
+            //   list[0] = "2";
+            //
+            //   Assert.AreEqual("2", list[0]);
+            //   Assert.AreEqual("2", ((List<string>)oa)[0]);
+            //   Assert.AreEqual("2", ((List<string>)ob)[0]);
+            //
+            // Variant should do the same.
+            // The following test validates this functionality.
+
+            List<string> list = new List<string> { "1" };
+            Variant a = new(list);
+
+            Assert.AreEqual("1", list[0]);
+            Assert.AreEqual("1", a.As<List<string>>()[0]);
+
+            list[0] = "2";
+
+            Assert.AreEqual("2", list[0]);
+            Assert.AreEqual("2", a.As<List<string>>()[0]);
+
+            Variant b = new(a);
+
+            Assert.AreEqual(a, b);
+            Assert.AreEqual("2", b.As<List<string>>()[0]);
+
+            list[0] = "3";
+
+            Assert.AreEqual("3", list[0]);
+            Assert.AreEqual("3", a.As<List<string>>()[0]);
+            Assert.AreEqual("3", b.As<List<string>>()[0]);
+        }
+
+        [Test]
+        public void ReferenceTypesCanBeNull()
+        {
+            string s = null;
+            Variant stringVariant = new(s);
+
+            Assert.AreEqual(Variant.Null, stringVariant);
+            Assert.IsNull(stringVariant.As<string>());
+
+            List<int> list = null;
+            Variant listVariant = new(list);
+
+            Assert.AreEqual(Variant.Null, listVariant);
+            Assert.IsNull(listVariant.As<string>());
+        }
+
+        [Test]
+        public void NonNullableValueTypesCannotBeNull()
+        {
+            int? i = null;
+            Variant intVariant = new(i);
+
+            Assert.AreEqual(Variant.Null, intVariant);
+            Assert.Throws<InvalidCastException>(() => intVariant.As<int>());
+        }
+
+        [Test]
+        public void NullableValueTypesCanBeNull()
+        {
+            int? i = null;
+            Variant intVariant = new(i);
+
+            Assert.AreEqual(Variant.Null, intVariant);
+            Assert.IsNull(intVariant.As<int?>());
+        }
+
         #region Helpers
         public static IEnumerable<Variant[]> VariantValues()
         {

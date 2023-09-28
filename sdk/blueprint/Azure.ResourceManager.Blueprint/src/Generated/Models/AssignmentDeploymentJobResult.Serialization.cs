@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             Optional<AzureResourceManagerError> error = default;
-            Optional<IList<AssignmentJobCreatedResource>> resources = default;
+            Optional<IList<AssignmentJobCreatedResult>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    List<AssignmentJobCreatedResource> array = new List<AssignmentJobCreatedResource>();
+                    List<AssignmentJobCreatedResult> array = new List<AssignmentJobCreatedResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentJobCreatedResource.DeserializeAssignmentJobCreatedResource(item));
+                        array.Add(AssignmentJobCreatedResult.DeserializeAssignmentJobCreatedResult(item));
                     }
                     resources = array;
                     continue;

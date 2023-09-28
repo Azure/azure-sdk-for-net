@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyDictionary<string, string>> targetManagedDiskTags = default;
             Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
             Optional<IReadOnlyList<HyperVReplicaAzureManagedDiskDetails>> protectedManagedDisks = default;
+            Optional<IReadOnlyList<OSUpgradeSupportedVersions>> allAvailableOSUpgradeConfigurations = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -336,13 +337,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedManagedDisks = array;
                     continue;
                 }
+                if (property.NameEquals("allAvailableOSUpgradeConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OSUpgradeSupportedVersions> array = new List<OSUpgradeSupportedVersions>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item));
+                    }
+                    allAvailableOSUpgradeConfigurations = array;
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
             }
-            return new HyperVReplicaAzureReplicationDetails(instanceType, Optional.ToList(azureVmDiskDetails), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Optional.ToNullable(lastReplicatedTime), Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmNics), selectedRecoveryAzureNetworkId.Value, selectedSourceNicId.Value, encryption.Value, osDetails.Value, Optional.ToNullable(sourceVmRamSizeInMB), Optional.ToNullable(sourceVmCpuCount), enableRdpOnTargetOption.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToList(protectedManagedDisks));
+            return new HyperVReplicaAzureReplicationDetails(instanceType, Optional.ToList(azureVmDiskDetails), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Optional.ToNullable(lastReplicatedTime), Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmNics), selectedRecoveryAzureNetworkId.Value, selectedSourceNicId.Value, encryption.Value, osDetails.Value, Optional.ToNullable(sourceVmRamSizeInMB), Optional.ToNullable(sourceVmCpuCount), enableRdpOnTargetOption.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToList(protectedManagedDisks), Optional.ToList(allAvailableOSUpgradeConfigurations));
         }
     }
 }
