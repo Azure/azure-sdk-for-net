@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public class Samples_PurviewClassificationRuleClient
+    public partial class Samples_PurviewClassificationRuleClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -30,7 +30,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -45,7 +44,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -93,7 +91,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -109,7 +106,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -176,7 +172,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -191,7 +186,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -311,8 +305,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -327,8 +320,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetVersionsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -343,9 +335,9 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -360,9 +352,9 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetVersionsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
     }

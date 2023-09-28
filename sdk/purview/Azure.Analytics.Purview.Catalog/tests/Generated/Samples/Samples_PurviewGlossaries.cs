@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Catalog.Samples
 {
-    internal class Samples_PurviewGlossaries
+    public partial class Samples_PurviewGlossaries
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -178,8 +177,8 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -188,10 +187,10 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
+            },
                 language = "<language>",
-                terms = new List<object>()
-{
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -203,16 +202,16 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -233,7 +232,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -288,8 +287,8 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new
             {
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -298,10 +297,10 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
+            },
                 language = "<language>",
-                terms = new List<object>()
-{
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -313,16 +312,16 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -343,7 +342,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -396,10 +395,10 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.CreateGlossaryCategories(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -414,10 +413,10 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.CreateGlossaryCategoriesAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -432,8 +431,8 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 anchor = new
@@ -442,7 +441,7 @@ displayText = "<displayText>",
 glossaryGuid = "<glossaryGuid>",
 relationGuid = "<relationGuid>",
 },
-childrenCategories = new List<object>()
+childrenCategories = new object[]
 {
 new
 {
@@ -453,7 +452,7 @@ parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
 },
-terms = new List<object>()
+terms = new object[]
 {
 new
 {
@@ -467,14 +466,14 @@ steward = "<steward>",
 termGuid = "<termGuid>",
 }
 },
-classifications = new List<object>()
+classifications = new object[]
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -503,7 +502,7 @@ shortDescription = "<shortDescription>",
 lastModifiedTS = "<lastModifiedTS>",
 guid = "<guid>",
 }
-});
+            });
             Response response = client.CreateGlossaryCategories(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -555,8 +554,8 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 anchor = new
@@ -565,7 +564,7 @@ displayText = "<displayText>",
 glossaryGuid = "<glossaryGuid>",
 relationGuid = "<relationGuid>",
 },
-childrenCategories = new List<object>()
+childrenCategories = new object[]
 {
 new
 {
@@ -576,7 +575,7 @@ parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
 },
-terms = new List<object>()
+terms = new object[]
 {
 new
 {
@@ -590,14 +589,14 @@ steward = "<steward>",
 termGuid = "<termGuid>",
 }
 },
-classifications = new List<object>()
+classifications = new object[]
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -626,7 +625,7 @@ shortDescription = "<shortDescription>",
 lastModifiedTS = "<lastModifiedTS>",
 guid = "<guid>",
 }
-});
+            });
             Response response = await client.CreateGlossaryCategoriesAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -716,8 +715,8 @@ guid = "<guid>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
+                childrenCategories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -726,9 +725,9 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
-                terms = new List<object>()
-{
+            },
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -740,15 +739,15 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -769,7 +768,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -836,8 +835,8 @@ lastModifiedTS = "<lastModifiedTS>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
+                childrenCategories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -846,9 +845,9 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
-                terms = new List<object>()
-{
+            },
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -860,15 +859,15 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -889,7 +888,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -1116,8 +1115,8 @@ lastModifiedTS = "<lastModifiedTS>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
+                childrenCategories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -1126,9 +1125,9 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
-                terms = new List<object>()
-{
+            },
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -1140,15 +1139,15 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -1169,7 +1168,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -1236,8 +1235,8 @@ lastModifiedTS = "<lastModifiedTS>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                childrenCategories = new List<object>()
-{
+                childrenCategories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -1246,9 +1245,9 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
-                terms = new List<object>()
-{
+            },
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -1260,15 +1259,15 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -1289,7 +1288,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -1349,6 +1348,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryCategory("<categoryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1361,6 +1361,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1373,6 +1374,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryCategory("<categoryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1385,6 +1387,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -1709,18 +1712,18 @@ lastModifiedTS = "<lastModifiedTS>",
             RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
+                templateName = new object[]
+            {
 new object()
-},
+            },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
+                antonyms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -1732,30 +1735,30 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
                 updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
+                resources = new object[]
+            {
 new
 {
 displayName = "<displayName>",
 url = "<url>",
 }
-},
+            },
                 contacts = new
                 {
-                    key = new List<object>()
-{
+                    key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                 },
                 attributes = new
                 {
@@ -1764,8 +1767,8 @@ info = "<info>",
                         key = new object(),
                     },
                 },
-                assignedEntities = new List<object>()
-{
+                assignedEntities = new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -1789,9 +1792,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-},
-                categories = new List<object>()
-{
+            },
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -1800,68 +1803,68 @@ displayText = "<displayText>",
 relationGuid = "<relationGuid>",
 status = "DRAFT",
 }
-},
-                classifies = new List<object>()
-{
+            },
+                classifies = new object[]
+            {
 null
-},
-                examples = new List<object>()
-{
+            },
+                examples = new object[]
+            {
 "<examples>"
-},
-                isA = new List<object>()
-{
+            },
+                isA = new object[]
+            {
 null
-},
-                preferredTerms = new List<object>()
-{
+            },
+                preferredTerms = new object[]
+            {
 null
-},
-                preferredToTerms = new List<object>()
-{
+            },
+                preferredToTerms = new object[]
+            {
 null
-},
-                replacedBy = new List<object>()
-{
+            },
+                replacedBy = new object[]
+            {
 null
-},
-                replacementTerms = new List<object>()
-{
+            },
+                replacementTerms = new object[]
+            {
 null
-},
-                seeAlso = new List<object>()
-{
+            },
+                seeAlso = new object[]
+            {
 null
-},
-                synonyms = new List<object>()
-{
+            },
+                synonyms = new object[]
+            {
 null
-},
-                translatedTerms = new List<object>()
-{
+            },
+                translatedTerms = new object[]
+            {
 null
-},
-                translationTerms = new List<object>()
-{
+            },
+                translationTerms = new object[]
+            {
 null
-},
+            },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
+                validValues = new object[]
+            {
 null
-},
-                validValuesFor = new List<object>()
-{
+            },
+                validValuesFor = new object[]
+            {
 null
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -1882,7 +1885,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -2060,18 +2063,18 @@ lastModifiedTS = "<lastModifiedTS>",
             RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
+                templateName = new object[]
+            {
 new object()
-},
+            },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
+                antonyms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -2083,30 +2086,30 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
                 updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
+                resources = new object[]
+            {
 new
 {
 displayName = "<displayName>",
 url = "<url>",
 }
-},
+            },
                 contacts = new
                 {
-                    key = new List<object>()
-{
+                    key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                 },
                 attributes = new
                 {
@@ -2115,8 +2118,8 @@ info = "<info>",
                         key = new object(),
                     },
                 },
-                assignedEntities = new List<object>()
-{
+                assignedEntities = new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -2140,9 +2143,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-},
-                categories = new List<object>()
-{
+            },
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -2151,68 +2154,68 @@ displayText = "<displayText>",
 relationGuid = "<relationGuid>",
 status = "DRAFT",
 }
-},
-                classifies = new List<object>()
-{
+            },
+                classifies = new object[]
+            {
 null
-},
-                examples = new List<object>()
-{
+            },
+                examples = new object[]
+            {
 "<examples>"
-},
-                isA = new List<object>()
-{
+            },
+                isA = new object[]
+            {
 null
-},
-                preferredTerms = new List<object>()
-{
+            },
+                preferredTerms = new object[]
+            {
 null
-},
-                preferredToTerms = new List<object>()
-{
+            },
+                preferredToTerms = new object[]
+            {
 null
-},
-                replacedBy = new List<object>()
-{
+            },
+                replacedBy = new object[]
+            {
 null
-},
-                replacementTerms = new List<object>()
-{
+            },
+                replacementTerms = new object[]
+            {
 null
-},
-                seeAlso = new List<object>()
-{
+            },
+                seeAlso = new object[]
+            {
 null
-},
-                synonyms = new List<object>()
-{
+            },
+                synonyms = new object[]
+            {
 null
-},
-                translatedTerms = new List<object>()
-{
+            },
+                translatedTerms = new object[]
+            {
 null
-},
-                translationTerms = new List<object>()
-{
+            },
+                translationTerms = new object[]
+            {
 null
-},
+            },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
+                validValues = new object[]
+            {
 null
-},
-                validValuesFor = new List<object>()
-{
+            },
+                validValuesFor = new object[]
+            {
 null
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2233,7 +2236,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -2436,10 +2439,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = client.GetGlossaryTerm("<termGuid>", true, new List<string>()
-{
-"<excludeRelationshipTypeList>"
-}, null);
+            Response response = client.GetGlossaryTerm("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2606,10 +2606,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new List<string>()
-{
-"<excludeRelationshipTypeList>"
-}, null);
+            Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new string[] { "<excludeRelationshipTypeList>" }, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("abbreviation").ToString());
@@ -2809,18 +2806,18 @@ lastModifiedTS = "<lastModifiedTS>",
             RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
+                templateName = new object[]
+            {
 new object()
-},
+            },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
+                antonyms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -2832,30 +2829,30 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
                 updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
+                resources = new object[]
+            {
 new
 {
 displayName = "<displayName>",
 url = "<url>",
 }
-},
+            },
                 contacts = new
                 {
-                    key = new List<object>()
-{
+                    key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                 },
                 attributes = new
                 {
@@ -2864,8 +2861,8 @@ info = "<info>",
                         key = new object(),
                     },
                 },
-                assignedEntities = new List<object>()
-{
+                assignedEntities = new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -2889,9 +2886,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-},
-                categories = new List<object>()
-{
+            },
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -2900,68 +2897,68 @@ displayText = "<displayText>",
 relationGuid = "<relationGuid>",
 status = "DRAFT",
 }
-},
-                classifies = new List<object>()
-{
+            },
+                classifies = new object[]
+            {
 null
-},
-                examples = new List<object>()
-{
+            },
+                examples = new object[]
+            {
 "<examples>"
-},
-                isA = new List<object>()
-{
+            },
+                isA = new object[]
+            {
 null
-},
-                preferredTerms = new List<object>()
-{
+            },
+                preferredTerms = new object[]
+            {
 null
-},
-                preferredToTerms = new List<object>()
-{
+            },
+                preferredToTerms = new object[]
+            {
 null
-},
-                replacedBy = new List<object>()
-{
+            },
+                replacedBy = new object[]
+            {
 null
-},
-                replacementTerms = new List<object>()
-{
+            },
+                replacementTerms = new object[]
+            {
 null
-},
-                seeAlso = new List<object>()
-{
+            },
+                seeAlso = new object[]
+            {
 null
-},
-                synonyms = new List<object>()
-{
+            },
+                synonyms = new object[]
+            {
 null
-},
-                translatedTerms = new List<object>()
-{
+            },
+                translatedTerms = new object[]
+            {
 null
-},
-                translationTerms = new List<object>()
-{
+            },
+                translationTerms = new object[]
+            {
 null
-},
+            },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
+                validValues = new object[]
+            {
 null
-},
-                validValuesFor = new List<object>()
-{
+            },
+                validValuesFor = new object[]
+            {
 null
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -2982,7 +2979,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -3160,18 +3157,18 @@ lastModifiedTS = "<lastModifiedTS>",
             RequestContent content = RequestContent.Create(new
             {
                 abbreviation = "<abbreviation>",
-                templateName = new List<object>()
-{
+                templateName = new object[]
+            {
 new object()
-},
+            },
                 anchor = new
                 {
                     displayText = "<displayText>",
                     glossaryGuid = "<glossaryGuid>",
                     relationGuid = "<relationGuid>",
                 },
-                antonyms = new List<object>()
-{
+                antonyms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -3183,30 +3180,30 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 createTime = 123.45F,
                 createdBy = "<createdBy>",
                 updateTime = 123.45F,
                 updatedBy = "<updatedBy>",
                 status = "Draft",
-                resources = new List<object>()
-{
+                resources = new object[]
+            {
 new
 {
 displayName = "<displayName>",
 url = "<url>",
 }
-},
+            },
                 contacts = new
                 {
-                    key = new List<object>()
-{
+                    key = new object[]
+            {
 new
 {
 id = "<id>",
 info = "<info>",
 }
-},
+            },
                 },
                 attributes = new
                 {
@@ -3215,8 +3212,8 @@ info = "<info>",
                         key = new object(),
                     },
                 },
-                assignedEntities = new List<object>()
-{
+                assignedEntities = new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -3240,9 +3237,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-},
-                categories = new List<object>()
-{
+            },
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -3251,68 +3248,68 @@ displayText = "<displayText>",
 relationGuid = "<relationGuid>",
 status = "DRAFT",
 }
-},
-                classifies = new List<object>()
-{
+            },
+                classifies = new object[]
+            {
 null
-},
-                examples = new List<object>()
-{
+            },
+                examples = new object[]
+            {
 "<examples>"
-},
-                isA = new List<object>()
-{
+            },
+                isA = new object[]
+            {
 null
-},
-                preferredTerms = new List<object>()
-{
+            },
+                preferredTerms = new object[]
+            {
 null
-},
-                preferredToTerms = new List<object>()
-{
+            },
+                preferredToTerms = new object[]
+            {
 null
-},
-                replacedBy = new List<object>()
-{
+            },
+                replacedBy = new object[]
+            {
 null
-},
-                replacementTerms = new List<object>()
-{
+            },
+                replacementTerms = new object[]
+            {
 null
-},
-                seeAlso = new List<object>()
-{
+            },
+                seeAlso = new object[]
+            {
 null
-},
-                synonyms = new List<object>()
-{
+            },
+                synonyms = new object[]
+            {
 null
-},
-                translatedTerms = new List<object>()
-{
+            },
+                translatedTerms = new object[]
+            {
 null
-},
-                translationTerms = new List<object>()
-{
+            },
+                translationTerms = new object[]
+            {
 null
-},
+            },
                 usage = "<usage>",
-                validValues = new List<object>()
-{
+                validValues = new object[]
+            {
 null
-},
-                validValuesFor = new List<object>()
-{
+            },
+                validValuesFor = new object[]
+            {
 null
-},
-                classifications = new List<object>()
-{
+            },
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -3333,7 +3330,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -3509,6 +3506,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryTerm("<termGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3521,6 +3519,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3533,6 +3532,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossaryTerm("<termGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3545,6 +3545,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -3934,10 +3935,10 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.CreateGlossaryTerms(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3952,10 +3953,10 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.CreateGlossaryTermsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3970,12 +3971,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 abbreviation = "<abbreviation>",
-templateName = new List<object>()
+templateName = new object[]
 {
 new object()
 },
@@ -3985,7 +3986,7 @@ displayText = "<displayText>",
 glossaryGuid = "<glossaryGuid>",
 relationGuid = "<relationGuid>",
 },
-antonyms = new List<object>()
+antonyms = new object[]
 {
 new
 {
@@ -4004,7 +4005,7 @@ createdBy = "<createdBy>",
 updateTime = 123.45F,
 updatedBy = "<updatedBy>",
 status = "Draft",
-resources = new List<object>()
+resources = new object[]
 {
 new
 {
@@ -4014,7 +4015,7 @@ url = "<url>",
 },
 contacts = new
 {
-key = new List<object>()
+key = new object[]
 {
 new
 {
@@ -4030,7 +4031,7 @@ key = new
 key = new object(),
 },
 },
-assignedEntities = new List<object>()
+assignedEntities = new object[]
 {
 new
 {
@@ -4056,7 +4057,7 @@ key = new object(),
 },
 }
 },
-categories = new List<object>()
+categories = new object[]
 {
 new
 {
@@ -4067,67 +4068,67 @@ relationGuid = "<relationGuid>",
 status = "DRAFT",
 }
 },
-classifies = new List<object>()
+classifies = new object[]
 {
 null
 },
-examples = new List<object>()
+examples = new object[]
 {
 "<examples>"
 },
-isA = new List<object>()
+isA = new object[]
 {
 null
 },
-preferredTerms = new List<object>()
+preferredTerms = new object[]
 {
 null
 },
-preferredToTerms = new List<object>()
+preferredToTerms = new object[]
 {
 null
 },
-replacedBy = new List<object>()
+replacedBy = new object[]
 {
 null
 },
-replacementTerms = new List<object>()
+replacementTerms = new object[]
 {
 null
 },
-seeAlso = new List<object>()
+seeAlso = new object[]
 {
 null
 },
-synonyms = new List<object>()
+synonyms = new object[]
 {
 null
 },
-translatedTerms = new List<object>()
+translatedTerms = new object[]
 {
 null
 },
-translationTerms = new List<object>()
+translationTerms = new object[]
 {
 null
 },
 usage = "<usage>",
-validValues = new List<object>()
+validValues = new object[]
 {
 null
 },
-validValuesFor = new List<object>()
+validValuesFor = new object[]
 {
 null
 },
-classifications = new List<object>()
+classifications = new object[]
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -4156,7 +4157,7 @@ shortDescription = "<shortDescription>",
 lastModifiedTS = "<lastModifiedTS>",
 guid = "<guid>",
 }
-});
+            });
             Response response = client.CreateGlossaryTerms(content, includeTermHierarchy: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4324,12 +4325,12 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 abbreviation = "<abbreviation>",
-templateName = new List<object>()
+templateName = new object[]
 {
 new object()
 },
@@ -4339,7 +4340,7 @@ displayText = "<displayText>",
 glossaryGuid = "<glossaryGuid>",
 relationGuid = "<relationGuid>",
 },
-antonyms = new List<object>()
+antonyms = new object[]
 {
 new
 {
@@ -4358,7 +4359,7 @@ createdBy = "<createdBy>",
 updateTime = 123.45F,
 updatedBy = "<updatedBy>",
 status = "Draft",
-resources = new List<object>()
+resources = new object[]
 {
 new
 {
@@ -4368,7 +4369,7 @@ url = "<url>",
 },
 contacts = new
 {
-key = new List<object>()
+key = new object[]
 {
 new
 {
@@ -4384,7 +4385,7 @@ key = new
 key = new object(),
 },
 },
-assignedEntities = new List<object>()
+assignedEntities = new object[]
 {
 new
 {
@@ -4410,7 +4411,7 @@ key = new object(),
 },
 }
 },
-categories = new List<object>()
+categories = new object[]
 {
 new
 {
@@ -4421,67 +4422,67 @@ relationGuid = "<relationGuid>",
 status = "DRAFT",
 }
 },
-classifies = new List<object>()
+classifies = new object[]
 {
 null
 },
-examples = new List<object>()
+examples = new object[]
 {
 "<examples>"
 },
-isA = new List<object>()
+isA = new object[]
 {
 null
 },
-preferredTerms = new List<object>()
+preferredTerms = new object[]
 {
 null
 },
-preferredToTerms = new List<object>()
+preferredToTerms = new object[]
 {
 null
 },
-replacedBy = new List<object>()
+replacedBy = new object[]
 {
 null
 },
-replacementTerms = new List<object>()
+replacementTerms = new object[]
 {
 null
 },
-seeAlso = new List<object>()
+seeAlso = new object[]
 {
 null
 },
-synonyms = new List<object>()
+synonyms = new object[]
 {
 null
 },
-translatedTerms = new List<object>()
+translatedTerms = new object[]
 {
 null
 },
-translationTerms = new List<object>()
+translationTerms = new object[]
 {
 null
 },
 usage = "<usage>",
-validValues = new List<object>()
+validValues = new object[]
 {
 null
 },
-validValuesFor = new List<object>()
+validValuesFor = new object[]
 {
 null
 },
-classifications = new List<object>()
+classifications = new object[]
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -4510,7 +4511,7 @@ shortDescription = "<shortDescription>",
 lastModifiedTS = "<lastModifiedTS>",
 guid = "<guid>",
 }
-});
+            });
             Response response = await client.CreateGlossaryTermsAsync(content, includeTermHierarchy: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4754,11 +4755,12 @@ guid = "<guid>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.AssignTermToEntities("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4770,11 +4772,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4786,8 +4789,8 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -4811,8 +4814,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-});
+            });
             Response response = client.AssignTermToEntities("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4824,8 +4828,8 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -4849,8 +4853,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-});
+            });
             Response response = await client.AssignTermToEntitiesAsync("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4862,11 +4867,12 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4878,11 +4884,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4894,8 +4901,8 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -4919,8 +4926,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-});
+            });
             Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4932,8 +4940,8 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -4957,8 +4965,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-});
+            });
             Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4970,11 +4979,12 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -4986,11 +4996,12 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new object()
-});
+            });
             Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -5002,8 +5013,8 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -5027,8 +5038,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-});
+            });
             Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -5040,8 +5052,8 @@ key = new object(),
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 new
 {
 displayText = "<displayText>",
@@ -5065,8 +5077,9 @@ uniqueAttributes = new
 key = new object(),
 },
 }
-});
+            });
             Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -5298,8 +5311,8 @@ key = new object(),
 
             RequestContent content = RequestContent.Create(new
             {
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -5308,10 +5321,10 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
+            },
                 language = "<language>",
-                terms = new List<object>()
-{
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -5323,16 +5336,16 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -5353,7 +5366,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -5408,8 +5421,8 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new
             {
-                categories = new List<object>()
-{
+                categories = new object[]
+            {
 new
 {
 categoryGuid = "<categoryGuid>",
@@ -5418,10 +5431,10 @@ displayText = "<displayText>",
 parentCategoryGuid = "<parentCategoryGuid>",
 relationGuid = "<relationGuid>",
 }
-},
+            },
                 language = "<language>",
-                terms = new List<object>()
-{
+                terms = new object[]
+            {
 new
 {
 description = "<description>",
@@ -5433,16 +5446,16 @@ status = "DRAFT",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-},
+            },
                 usage = "<usage>",
-                classifications = new List<object>()
-{
+                classifications = new object[]
+            {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new List<object>()
+validityPeriods = new object[]
 {
 new
 {
@@ -5463,7 +5476,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-},
+            },
                 longDescription = "<longDescription>",
                 name = "<name>",
                 qualifiedName = "<qualifiedName>",
@@ -5517,6 +5530,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossary("<glossaryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -5529,6 +5543,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -5541,6 +5556,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = client.DeleteGlossary("<glossaryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -5553,6 +5569,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
+
             Console.WriteLine(response.Status);
         }
 
@@ -6896,10 +6913,10 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<termGuids>"
-});
+            });
             Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -6914,10 +6931,10 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<termGuids>"
-});
+            });
             Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -6932,10 +6949,10 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<termGuids>"
-});
+            });
             Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", content, includeTermHierarchy: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -6950,10 +6967,10 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
-            RequestContent content = RequestContent.Create(new List<object>()
-{
+            RequestContent content = RequestContent.Create(new object[]
+            {
 "<termGuids>"
-});
+            });
             Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", content, includeTermHierarchy: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
