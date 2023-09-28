@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_SensorEvents
+    public partial class Samples_SensorEvents
     {
         [Test]
         [Ignore("Only validating compilation of examples")]

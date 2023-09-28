@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.AccessControl.Samples
 {
-    public class Samples_RoleDefinitionsClient
+    public partial class Samples_RoleDefinitionsClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]

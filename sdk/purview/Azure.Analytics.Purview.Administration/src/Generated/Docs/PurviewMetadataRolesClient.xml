@@ -11,8 +11,6 @@ PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, cre
 
 await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetadataRolesAsync with all parameters and parse the result.
@@ -23,8 +21,6 @@ PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, cre
 
 await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code></example>
     </member>
@@ -38,8 +34,6 @@ PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, cre
 
 foreach (BinaryData item in client.GetMetadataRoles(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetadataRoles with all parameters and parse the result.
@@ -50,8 +44,6 @@ PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, cre
 
 foreach (BinaryData item in client.GetMetadataRoles(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code></example>
     </member>
