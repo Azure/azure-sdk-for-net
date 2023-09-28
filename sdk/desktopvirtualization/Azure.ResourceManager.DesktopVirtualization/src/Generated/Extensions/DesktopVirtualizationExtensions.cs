@@ -68,6 +68,44 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
         #endregion
 
+        #region WorkspacePrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource" /> object. </returns>
+        public static WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                WorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new WorkspacePrivateEndpointConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HostPoolPrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HostPoolPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostPoolPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HostPoolPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource" /> object. </returns>
+        public static HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HostPoolPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new HostPoolPrivateEndpointConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ScalingPlanResource
         /// <summary>
         /// Gets an object representing a <see cref="ScalingPlanResource" /> along with the instance operations that can be performed on it but with no data.
@@ -101,6 +139,25 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 ScalingPlanPooledScheduleResource.ValidateResourceId(id);
                 return new ScalingPlanPooledScheduleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ScalingPlanPersonalScheduleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ScalingPlanPersonalScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScalingPlanPersonalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanPersonalScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScalingPlanPersonalScheduleResource" /> object. </returns>
+        public static ScalingPlanPersonalScheduleResource GetScalingPlanPersonalScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ScalingPlanPersonalScheduleResource.ValidateResourceId(id);
+                return new ScalingPlanPersonalScheduleResource(client, id);
             }
             );
         }
