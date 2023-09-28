@@ -55,12 +55,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public void ConfigureFailed(string exceptionMessage) => WriteEvent(1, exceptionMessage);
 
         [Event(2, Message = "Package reference for {0} found. Backing off from default included instrumentation. Action Required: You must manually configure this instrumentation.", Level = EventLevel.Warning)]
-        public void FoundInstrumentationPackageReference(string packageName) => WriteEvent(1, packageName);
+        public void FoundInstrumentationPackageReference(string packageName) => WriteEvent(2, packageName);
 
         [Event(3, Message = "No instrumentation package found with name: {0}.", Level = EventLevel.Verbose)]
-        public void NoInstrumentationPackageReference(string packageName) => WriteEvent(1, packageName);
+        public void NoInstrumentationPackageReference(string packageName) => WriteEvent(3, packageName);
 
         [Event(4, Message = "Vendor instrumentation added for: {0}.", Level = EventLevel.Verbose)]
-        public void VendorInstrumentationAdded(string packageName) => WriteEvent(1, packageName);
+        public void VendorInstrumentationAdded(string packageName) => WriteEvent(4, packageName);
     }
 }
