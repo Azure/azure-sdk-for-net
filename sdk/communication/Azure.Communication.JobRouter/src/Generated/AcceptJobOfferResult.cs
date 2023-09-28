@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// Response containing Id's for the worker, job, and assignment from an accepted

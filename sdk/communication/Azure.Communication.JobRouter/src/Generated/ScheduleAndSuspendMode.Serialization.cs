@@ -20,20 +20,16 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<DateTimeOffset> scheduleAt = default;
+            DateTimeOffset scheduleAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     scheduleAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new ScheduleAndSuspendMode(Optional.ToNullable(scheduleAt));
+            return new ScheduleAndSuspendMode(scheduleAt);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

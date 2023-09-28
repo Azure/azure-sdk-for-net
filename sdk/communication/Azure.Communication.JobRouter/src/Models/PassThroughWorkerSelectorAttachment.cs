@@ -2,15 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Communication.JobRouter.Models;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("PassThroughWorkerSelectorAttachment")]
-    public partial class PassThroughWorkerSelectorAttachment
+    public partial class PassThroughWorkerSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>
         /// <param name="key"> The label key to query against. </param>
@@ -36,6 +34,23 @@ namespace Azure.Communication.JobRouter
             {
                 ExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
             }
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
+            writer.WritePropertyName("labelOperator"u8);
+            writer.WriteStringValue(LabelOperator.ToString());
+            if (Optional.IsDefined(_expiresAfterSeconds))
+            {
+                writer.WritePropertyName("expiresAfterSeconds"u8);
+                writer.WriteNumberValue(_expiresAfterSeconds.Value);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            writer.WriteEndObject();
         }
     }
 }

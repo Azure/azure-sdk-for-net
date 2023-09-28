@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Client options for Azure.Communication.JobRouter library clients. </summary>
-    public partial class AzureCommunicationJobRouterClientOptions : ClientOptions
+    internal partial class AzureCommunicationJobRouterClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;
 
         /// <summary> The version of the service to use. </summary>
-        internal enum ServiceVersion
+        public enum ServiceVersion
         {
             /// <summary> Service version "2023-11-01". </summary>
             V2023_11_01 = 1,

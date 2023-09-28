@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.JobRouter.Models;
 
 namespace Azure.Communication.JobRouter
 {
@@ -146,7 +145,7 @@ namespace Azure.Communication.JobRouter
         /// If false, will sort scores by ascending order. By default, set to
         /// true.
         /// </param>
-        /// <returns> A new <see cref="Models.ScoringRuleOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="JobRouter.ScoringRuleOptions"/> instance for mocking. </returns>
         public static ScoringRuleOptions ScoringRuleOptions(int? batchSize = null, IEnumerable<ScoringRuleParameterSelector> scoringParameters = null, bool? allowScoringBatchOfWorkers = null, bool? descendingOrder = null)
         {
             scoringParameters ??= new List<ScoringRuleParameterSelector>();
@@ -434,7 +433,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
         /// <param name="scheduleAt"> Scheduled time. </param>
         /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
-        public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset? scheduleAt = null)
+        public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
         {
             return new ScheduleAndSuspendMode(scheduleAt);
         }
@@ -443,7 +442,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="jobId"> The Id of the job unassigned. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.UnassignJobResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="JobRouter.UnassignJobResult"/> instance for mocking. </returns>
         public static UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = default)
         {
             if (jobId == null)
@@ -459,7 +458,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/> or <paramref name="workerId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.AcceptJobOfferResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
         public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
         {
             if (assignmentId == null)
@@ -486,7 +485,7 @@ namespace Azure.Communication.JobRouter
         /// by job priority
         /// </param>
         /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
-        /// <returns> A new <see cref="Models.RouterQueueStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
         public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = null)
         {
             estimatedWaitTimeMinutes ??= new Dictionary<string, double>();
@@ -512,7 +511,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <param name="offeredAt"> The time the offer was created in UTC. </param>
         /// <param name="expiresAt"> The time that the offer will expire in UTC. </param>
-        /// <returns> A new <see cref="Models.RouterJobOffer"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="JobRouter.RouterJobOffer"/> instance for mocking. </returns>
         public static RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = default, DateTimeOffset? offeredAt = null, DateTimeOffset? expiresAt = null)
         {
             return new RouterJobOffer(offerId, jobId, capacityCost, offeredAt, expiresAt);
@@ -524,7 +523,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> or <paramref name="jobId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.RouterWorkerAssignment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="JobRouter.RouterWorkerAssignment"/> instance for mocking. </returns>
         public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = null, string jobId = null, int capacityCost = default, DateTimeOffset assignedAt = default)
         {
             if (assignmentId == null)

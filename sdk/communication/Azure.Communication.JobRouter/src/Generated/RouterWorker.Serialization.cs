@@ -9,10 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class RouterWorker
     {

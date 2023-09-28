@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> The assignment for a worker to a job. </summary>
     public partial class RouterWorkerAssignment

@@ -9,8 +9,7 @@ namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("JobMatchingMode")]
     [CodeGenSuppress("JobMatchingMode")]
-    [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
-    public partial class JobMatchingMode
+    public partial class JobMatchingMode : IUtf8JsonSerializable
     {
         /// <summary> Gets or sets the mode type. </summary>
         public JobMatchModeType? ModeType { get; internal set; }

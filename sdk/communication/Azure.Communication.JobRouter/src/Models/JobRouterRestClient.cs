@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Threading;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter

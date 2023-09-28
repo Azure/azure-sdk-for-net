@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterJob")]
     [CodeGenSuppress("RouterJob")]
-    public partial class RouterJob
+    public partial class RouterJob : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of RouterJob. </summary>
         internal RouterJob()
@@ -138,6 +138,100 @@ namespace Azure.Communication.JobRouter
             {
                 RequestedWorkerSelectors.AddRange(value);
             }
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ChannelReference))
+            {
+                writer.WritePropertyName("channelReference"u8);
+                writer.WriteStringValue(ChannelReference);
+            }
+            if (Optional.IsDefined(ChannelId))
+            {
+                writer.WritePropertyName("channelId"u8);
+                writer.WriteStringValue(ChannelId);
+            }
+            if (Optional.IsDefined(ClassificationPolicyId))
+            {
+                writer.WritePropertyName("classificationPolicyId"u8);
+                writer.WriteStringValue(ClassificationPolicyId);
+            }
+            if (Optional.IsDefined(QueueId))
+            {
+                writer.WritePropertyName("queueId"u8);
+                writer.WriteStringValue(QueueId);
+            }
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (Optional.IsDefined(DispositionCode))
+            {
+                writer.WritePropertyName("dispositionCode"u8);
+                writer.WriteStringValue(DispositionCode);
+            }
+            if (Optional.IsCollectionDefined(_requestedWorkerSelectors))
+            {
+                writer.WritePropertyName("requestedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in _requestedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(_labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in _tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_notes))
+            {
+                writer.WritePropertyName("notes"u8);
+                writer.WriteStartObject();
+                foreach (var item in _notes)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(MatchingMode))
+            {
+                writer.WritePropertyName("matchingMode"u8);
+                writer.WriteObjectValue(MatchingMode);
+            }
+            writer.WriteEndObject();
         }
     }
 }

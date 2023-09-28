@@ -6,10 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// Encapsulates all options that can be passed as parameters for scoring rule with

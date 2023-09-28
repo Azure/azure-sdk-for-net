@@ -18,6 +18,6 @@ namespace Azure.Communication.JobRouter
     public partial class ScheduleAndSuspendMode
     {
         /// <summary> Scheduled time. </summary>
-        public DateTimeOffset? ScheduleAt { get; }
+        public DateTimeOffset ScheduleAt { get; }
     }
 }

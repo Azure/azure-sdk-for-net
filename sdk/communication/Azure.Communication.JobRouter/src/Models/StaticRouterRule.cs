@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("StaticRouterRule")]
-    public partial class StaticRouterRule : RouterRule
+    public partial class StaticRouterRule : IUtf8JsonSerializable
     {
         /// <summary> The static value this rule always returns. </summary>
         public LabelValue Value { get; set; }
@@ -31,6 +30,19 @@ namespace Azure.Communication.JobRouter
         public StaticRouterRule(LabelValue value) : this(null, BinaryData.FromObjectAsJson(value.Value))
         {
             Kind = "static-rule";
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(_value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteObjectValue(_value);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            writer.WriteEndObject();
         }
     }
 }

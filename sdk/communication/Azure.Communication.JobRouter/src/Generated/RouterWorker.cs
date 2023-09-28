@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker

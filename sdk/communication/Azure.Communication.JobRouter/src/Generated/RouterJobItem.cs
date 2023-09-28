@@ -6,10 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Paged instance of RouterJob. </summary>
     public partial class RouterJobItem

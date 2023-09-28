@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Communication.JobRouter;
-
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
     public partial class DistributionPolicy

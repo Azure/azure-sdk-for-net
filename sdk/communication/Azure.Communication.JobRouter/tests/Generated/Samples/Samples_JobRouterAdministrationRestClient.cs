@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -21,14 +21,27 @@ namespace Azure.Communication.JobRouter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertDistributionPolicy()
+        public void Example_UpsertDistributionPolicy_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpsertDistributionPolicy("<id>", content);
 
-            Response response = client.UpsertDistributionPolicy("<id>", RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpsertDistributionPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpsertDistributionPolicyAsync("<id>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -38,13 +51,13 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpsertDistributionPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
-                offerExpiresAfterSeconds = 123.45d,
+                offerExpiresAfterSeconds = 123.45,
                 mode = new
                 {
                     scoringRule = new
@@ -54,9 +67,10 @@ namespace Azure.Communication.JobRouter.Samples
                     scoringRuleOptions = new
                     {
                         batchSize = 1234,
-                        scoringParameters = new[] {
-                "jobLabels"
-            },
+                        scoringParameters = new List<object>()
+{
+"jobLabels"
+},
                         allowScoringBatchOfWorkers = true,
                         descendingOrder = true,
                     },
@@ -65,9 +79,8 @@ namespace Azure.Communication.JobRouter.Samples
                     maxConcurrentOffers = 1234,
                     bypassSelectors = true,
                 },
-            };
-
-            Response response = client.UpsertDistributionPolicy("<id>", RequestContent.Create(data), null);
+            });
+            Response response = client.UpsertDistributionPolicy("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -77,34 +90,19 @@ namespace Azure.Communication.JobRouter.Samples
             Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
             Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
             Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertDistributionPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            var data = new { };
-
-            Response response = await client.UpsertDistributionPolicyAsync("<id>", RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpsertDistributionPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
-                offerExpiresAfterSeconds = 123.45d,
+                offerExpiresAfterSeconds = 123.45,
                 mode = new
                 {
                     scoringRule = new
@@ -114,9 +112,10 @@ namespace Azure.Communication.JobRouter.Samples
                     scoringRuleOptions = new
                     {
                         batchSize = 1234,
-                        scoringParameters = new[] {
-                "jobLabels"
-            },
+                        scoringParameters = new List<object>()
+{
+"jobLabels"
+},
                         allowScoringBatchOfWorkers = true,
                         descendingOrder = true,
                     },
@@ -125,9 +124,8 @@ namespace Azure.Communication.JobRouter.Samples
                     maxConcurrentOffers = 1234,
                     bypassSelectors = true,
                 },
-            };
-
-            Response response = await client.UpsertDistributionPolicyAsync("<id>", RequestContent.Create(data), null);
+            });
+            Response response = await client.UpsertDistributionPolicyAsync("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -141,25 +139,58 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDistributionPolicy()
+        public void Example_GetDistributionPolicy_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetDistributionPolicy("<id>", new RequestContext());
+            Response response = client.GetDistributionPolicy("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDistributionPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.GetDistributionPolicyAsync("<id>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetDistributionPolicy_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<DistributionPolicy> response = client.GetDistributionPolicy("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDistributionPolicy_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetDistributionPolicy("<id>", new RequestContext());
+            Response response = client.GetDistributionPolicy("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -169,29 +200,16 @@ namespace Azure.Communication.JobRouter.Samples
             Console.WriteLine(result.GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
             Console.WriteLine(result.GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
             Console.WriteLine(result.GetProperty("mode").GetProperty("bypassSelectors").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDistributionPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.GetDistributionPolicyAsync("<id>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = await client.GetDistributionPolicyAsync("<id>", new RequestContext());
+            Response response = await client.GetDistributionPolicyAsync("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -205,22 +223,43 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDistributionPolicy_Convenience_Async()
+        public void Example_GetDistributionPolicy_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var result = await client.GetDistributionPolicyAsync("<id>");
+            Response<DistributionPolicy> response = client.GetDistributionPolicy("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDistributionPolicy()
+        public async Task Example_GetDistributionPolicy_AllParameters_Convenience_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<DistributionPolicy> response = await client.GetDistributionPolicyAsync("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteDistributionPolicy_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteDistributionPolicy("<id>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteDistributionPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.DeleteDistributionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
         }
 
@@ -228,8 +267,8 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteDistributionPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteDistributionPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -237,21 +276,10 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDistributionPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.DeleteDistributionPolicyAsync("<id>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteDistributionPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = await client.DeleteDistributionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -259,14 +287,27 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertClassificationPolicy()
+        public void Example_UpsertClassificationPolicy_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpsertClassificationPolicy("<id>", content);
 
-            Response response = client.UpsertClassificationPolicy("<id>", RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpsertClassificationPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpsertClassificationPolicyAsync("<id>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -276,52 +317,53 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpsertClassificationPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 fallbackQueueId = "<fallbackQueueId>",
-                queueSelectors = new[] {
-        new {
-            condition = new {
-                kind = "direct-map-rule",
-            },
-            queueSelectors = new[] {
-                new {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new {},
-                }
-            },
-            kind = "conditional",
-        }
-    },
-                prioritizationRule = new
-                {
-                    kind = "direct-map-rule",
-                },
-                workerSelectors = new[] {
-        new {
-            condition = new {
-                kind = "direct-map-rule",
-            },
-            workerSelectors = new[] {
-                new {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new {},
-                    expiresAfterSeconds = 123.45d,
-                    expedite = true,
-                }
-            },
-            kind = "conditional",
-        }
-    },
-            };
-
-            Response response = client.UpsertClassificationPolicy("<id>", RequestContent.Create(data), null);
+                queueSelectors = new List<object>()
+{
+new
+{
+condition = new
+{
+kind = "direct-map-rule",
+},
+queueSelectors = new List<object>()
+{
+new
+{
+key = "<key>",
+labelOperator = "equal",
+value = new object(),
+}
+},
+kind = "conditional",
+}
+},
+                workerSelectors = new List<object>()
+{
+new
+{
+workerSelectors = new List<object>()
+{
+new
+{
+key = "<key>",
+labelOperator = "equal",
+value = new object(),
+expiresAfterSeconds = 123.45,
+expedite = true,
+}
+},
+kind = "conditional",
+}
+},
+            });
+            Response response = client.UpsertClassificationPolicy("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -330,73 +372,59 @@ namespace Azure.Communication.JobRouter.Samples
             Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertClassificationPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            var data = new { };
-
-            Response response = await client.UpsertClassificationPolicyAsync("<id>", RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpsertClassificationPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 fallbackQueueId = "<fallbackQueueId>",
-                queueSelectors = new[] {
-        new {
-            condition = new {
-                kind = "direct-map-rule",
-            },
-            queueSelectors = new[] {
-                new {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new {},
-                }
-            },
-            kind = "conditional",
-        }
-    },
-                prioritizationRule = new
-                {
-                    kind = "direct-map-rule",
-                },
-                workerSelectors = new[] {
-        new {
-            condition = new {
-                kind = "direct-map-rule",
-            },
-            workerSelectors = new[] {
-                new {
-                    key = "<key>",
-                    labelOperator = "equal",
-                    value = new {},
-                    expiresAfterSeconds = 123.45d,
-                    expedite = true,
-                }
-            },
-            kind = "conditional",
-        }
-    },
-            };
-
-            Response response = await client.UpsertClassificationPolicyAsync("<id>", RequestContent.Create(data), null);
+                queueSelectors = new List<object>()
+{
+new
+{
+condition = new
+{
+kind = "direct-map-rule",
+},
+queueSelectors = new List<object>()
+{
+new
+{
+key = "<key>",
+labelOperator = "equal",
+value = new object(),
+}
+},
+kind = "conditional",
+}
+},
+                workerSelectors = new List<object>()
+{
+new
+{
+workerSelectors = new List<object>()
+{
+new
+{
+key = "<key>",
+labelOperator = "equal",
+value = new object(),
+expiresAfterSeconds = 123.45,
+expedite = true,
+}
+},
+kind = "conditional",
+}
+},
+            });
+            Response response = await client.UpsertClassificationPolicyAsync("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -409,25 +437,58 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassificationPolicy()
+        public void Example_GetClassificationPolicy_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetClassificationPolicy("<id>", new RequestContext());
+            Response response = client.GetClassificationPolicy("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.GetClassificationPolicyAsync("<id>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetClassificationPolicy_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<ClassificationPolicy> response = client.GetClassificationPolicy("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationPolicy_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetClassificationPolicy("<id>", new RequestContext());
+            Response response = client.GetClassificationPolicy("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -436,29 +497,16 @@ namespace Azure.Communication.JobRouter.Samples
             Console.WriteLine(result.GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("prioritizationRule").GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.GetClassificationPolicyAsync("<id>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = await client.GetClassificationPolicyAsync("<id>", new RequestContext());
+            Response response = await client.GetClassificationPolicyAsync("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -471,22 +519,43 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationPolicy_Convenience_Async()
+        public void Example_GetClassificationPolicy_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var result = await client.GetClassificationPolicyAsync("<id>");
+            Response<ClassificationPolicy> response = client.GetClassificationPolicy("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteClassificationPolicy()
+        public async Task Example_GetClassificationPolicy_AllParameters_Convenience_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<ClassificationPolicy> response = await client.GetClassificationPolicyAsync("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteClassificationPolicy_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteClassificationPolicy("<id>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteClassificationPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.DeleteClassificationPolicyAsync("<id>");
             Console.WriteLine(response.Status);
         }
 
@@ -494,8 +563,8 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteClassificationPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteClassificationPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -503,21 +572,10 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteClassificationPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.DeleteClassificationPolicyAsync("<id>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteClassificationPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = await client.DeleteClassificationPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -525,14 +583,27 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertExceptionPolicy()
+        public void Example_UpsertExceptionPolicy_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpsertExceptionPolicy("<id>", content);
 
-            Response response = client.UpsertExceptionPolicy("<id>", RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpsertExceptionPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpsertExceptionPolicyAsync("<id>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -542,10 +613,10 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpsertExceptionPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 exceptionRules = new
@@ -568,40 +639,24 @@ namespace Azure.Communication.JobRouter.Samples
                         },
                     },
                 },
-            };
-
-            Response response = client.UpsertExceptionPolicy("<id>", RequestContent.Create(data), null);
+            });
+            Response response = client.UpsertExceptionPolicy("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertExceptionPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            var data = new { };
-
-            Response response = await client.UpsertExceptionPolicyAsync("<id>", RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpsertExceptionPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 exceptionRules = new
@@ -624,93 +679,133 @@ namespace Azure.Communication.JobRouter.Samples
                         },
                     },
                 },
-            };
-
-            Response response = await client.UpsertExceptionPolicyAsync("<id>", RequestContent.Create(data), null);
+            });
+            Response response = await client.UpsertExceptionPolicyAsync("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExceptionPolicy()
+        public void Example_GetExceptionPolicy_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetExceptionPolicy("<id>", new RequestContext());
+            Response response = client.GetExceptionPolicy("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetExceptionPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.GetExceptionPolicyAsync("<id>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetExceptionPolicy_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<ExceptionPolicy> response = client.GetExceptionPolicy("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetExceptionPolicy_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetExceptionPolicy("<id>", new RequestContext());
+            Response response = client.GetExceptionPolicy("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExceptionPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.GetExceptionPolicyAsync("<id>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = await client.GetExceptionPolicyAsync("<id>", new RequestContext());
+            Response response = await client.GetExceptionPolicyAsync("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExceptionPolicy_Convenience_Async()
+        public void Example_GetExceptionPolicy_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var result = await client.GetExceptionPolicyAsync("<id>");
+            Response<ExceptionPolicy> response = client.GetExceptionPolicy("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteExceptionPolicy()
+        public async Task Example_GetExceptionPolicy_AllParameters_Convenience_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<ExceptionPolicy> response = await client.GetExceptionPolicyAsync("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteExceptionPolicy_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteExceptionPolicy("<id>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteExceptionPolicy_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.DeleteExceptionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
         }
 
@@ -718,8 +813,8 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteExceptionPolicy_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteExceptionPolicy("<id>");
             Console.WriteLine(response.Status);
@@ -727,21 +822,10 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteExceptionPolicy_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.DeleteExceptionPolicyAsync("<id>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteExceptionPolicy_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = await client.DeleteExceptionPolicyAsync("<id>");
             Console.WriteLine(response.Status);
@@ -749,14 +833,27 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpsertQueue()
+        public void Example_UpsertQueue_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new { };
+            RequestContent content = RequestContent.Create(new object());
+            Response response = client.UpsertQueue("<id>", content);
 
-            Response response = client.UpsertQueue("<id>", RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_UpsertQueue_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            RequestContent content = RequestContent.Create(new object());
+            Response response = await client.UpsertQueueAsync("<id>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -766,151 +863,175 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpsertQueue_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 distributionPolicyId = "<distributionPolicyId>",
                 labels = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
                 exceptionPolicyId = "<exceptionPolicyId>",
-            };
-
-            Response response = client.UpsertQueue("<id>", RequestContent.Create(data), null);
+            });
+            Response response = client.UpsertQueue("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-            Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpsertQueue_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            var data = new { };
-
-            Response response = await client.UpsertQueueAsync("<id>", RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpsertQueue_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var data = new
+            RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 distributionPolicyId = "<distributionPolicyId>",
                 labels = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
                 exceptionPolicyId = "<exceptionPolicyId>",
-            };
-
-            Response response = await client.UpsertQueueAsync("<id>", RequestContent.Create(data), null);
+            });
+            Response response = await client.UpsertQueueAsync("<id>", content, requestConditions: null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-            Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetQueue()
+        public void Example_GetQueue_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetQueue("<id>", new RequestContext());
+            Response response = client.GetQueue("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetQueue_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.GetQueueAsync("<id>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetQueue_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<RouterQueue> response = client.GetQueue("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetQueue_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<RouterQueue> response = await client.GetQueueAsync("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueue_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = client.GetQueue("<id>", new RequestContext());
+            Response response = client.GetQueue("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-            Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQueue_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.GetQueueAsync("<id>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueue_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            Response response = await client.GetQueueAsync("<id>", new RequestContext());
+            Response response = await client.GetQueueAsync("<id>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("distributionPolicyId").ToString());
-            Console.WriteLine(result.GetProperty("labels").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("labels").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("exceptionPolicyId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQueue_Convenience_Async()
+        public void Example_GetQueue_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            var result = await client.GetQueueAsync("<id>");
+            Response<RouterQueue> response = client.GetQueue("<id>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteQueue()
+        public async Task Example_GetQueue_AllParameters_Convenience_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response<RouterQueue> response = await client.GetQueueAsync("<id>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteQueue_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteQueue("<id>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteQueue_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            Response response = await client.DeleteQueueAsync("<id>");
             Console.WriteLine(response.Status);
         }
 
@@ -918,8 +1039,8 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteQueue_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = client.DeleteQueue("<id>");
             Console.WriteLine(response.Status);
@@ -927,21 +1048,10 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteQueue_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            Response response = await client.DeleteQueueAsync("<id>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteQueue_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
             Response response = await client.DeleteQueueAsync("<id>");
             Console.WriteLine(response.Status);
@@ -949,16 +1059,55 @@ namespace Azure.Communication.JobRouter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDistributionPolicies()
+        public void Example_GetDistributionPolicies_ShortVersion()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetDistributionPolicies(1234, new RequestContext()))
+            foreach (BinaryData item in client.GetDistributionPolicies(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDistributionPolicies_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (BinaryData item in client.GetDistributionPoliciesAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetDistributionPolicies_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            foreach (DistributionPolicyItem item in client.GetDistributionPolicies())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetDistributionPolicies_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsync())
+            {
             }
         }
 
@@ -966,35 +1115,20 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDistributionPolicies_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetDistributionPolicies(1234, new RequestContext()))
+            foreach (BinaryData item in client.GetDistributionPolicies(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDistributionPolicies_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            await foreach (var item in client.GetDistributionPoliciesAsync(1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
@@ -1002,47 +1136,98 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDistributionPolicies_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetDistributionPoliciesAsync(1234, new RequestContext()))
+            await foreach (BinaryData item in client.GetDistributionPoliciesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
-                Console.WriteLine(result.GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("offerExpiresAfterSeconds").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("minConcurrentOffers").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("maxConcurrentOffers").ToString());
+                Console.WriteLine(result[0].GetProperty("distributionPolicy").GetProperty("mode").GetProperty("bypassSelectors").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDistributionPolicies_Convenience_Async()
+        public void Example_GetDistributionPolicies_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetDistributionPoliciesAsync(1234))
+            foreach (DistributionPolicyItem item in client.GetDistributionPolicies(maxpagesize: 1234))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassificationPolicies()
+        public async Task Example_GetDistributionPolicies_AllParameters_Convenience_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetClassificationPolicies(1234, new RequestContext()))
+            await foreach (DistributionPolicyItem item in client.GetDistributionPoliciesAsync(maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetClassificationPolicies_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            foreach (BinaryData item in client.GetClassificationPolicies(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationPolicies_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (BinaryData item in client.GetClassificationPoliciesAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetClassificationPolicies_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            foreach (ClassificationPolicyItem item in client.GetClassificationPolicies())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetClassificationPolicies_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (ClassificationPolicyItem item in client.GetClassificationPoliciesAsync())
+            {
             }
         }
 
@@ -1050,34 +1235,19 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationPolicies_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetClassificationPolicies(1234, new RequestContext()))
+            foreach (BinaryData item in client.GetClassificationPolicies(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationPolicies_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            await foreach (var item in client.GetClassificationPoliciesAsync(1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
@@ -1085,46 +1255,97 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationPolicies_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetClassificationPoliciesAsync(1234, new RequestContext()))
+            await foreach (BinaryData item in client.GetClassificationPoliciesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("fallbackQueueId").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("queueSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("prioritizationRule").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("classificationPolicy").GetProperty("workerSelectors")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationPolicies_Convenience_Async()
+        public void Example_GetClassificationPolicies_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetClassificationPoliciesAsync(1234))
+            foreach (ClassificationPolicyItem item in client.GetClassificationPolicies(maxpagesize: 1234))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExceptionPolicies()
+        public async Task Example_GetClassificationPolicies_AllParameters_Convenience_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetExceptionPolicies(1234, new RequestContext()))
+            await foreach (ClassificationPolicyItem item in client.GetClassificationPoliciesAsync(maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetExceptionPolicies_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            foreach (BinaryData item in client.GetExceptionPolicies(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetExceptionPolicies_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (BinaryData item in client.GetExceptionPoliciesAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetExceptionPolicies_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            foreach (ExceptionPolicyItem item in client.GetExceptionPolicies())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetExceptionPolicies_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync())
+            {
             }
         }
 
@@ -1132,32 +1353,17 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExceptionPolicies_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetExceptionPolicies(1234, new RequestContext()))
+            foreach (BinaryData item in client.GetExceptionPolicies(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExceptionPolicies_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            await foreach (var item in client.GetExceptionPoliciesAsync(1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
@@ -1165,44 +1371,95 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExceptionPolicies_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetExceptionPoliciesAsync(1234, new RequestContext()))
+            await foreach (BinaryData item in client.GetExceptionPoliciesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("trigger").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<test>").GetProperty("actions").GetProperty("<test>").GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("trigger").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("exceptionPolicy").GetProperty("exceptionRules").GetProperty("<key>").GetProperty("actions").GetProperty("<key>").GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExceptionPolicies_Convenience_Async()
+        public void Example_GetExceptionPolicies_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetExceptionPoliciesAsync(1234))
+            foreach (ExceptionPolicyItem item in client.GetExceptionPolicies(maxpagesize: 1234))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetQueues()
+        public async Task Example_GetExceptionPolicies_AllParameters_Convenience_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetQueues(1234, new RequestContext()))
+            await foreach (ExceptionPolicyItem item in client.GetExceptionPoliciesAsync(maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetQueues_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            foreach (BinaryData item in client.GetQueues(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetQueues_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (BinaryData item in client.GetQueuesAsync(null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetQueues_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            foreach (RouterQueueItem item in client.GetQueues())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetQueues_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (RouterQueueItem item in client.GetQueuesAsync())
+            {
             }
         }
 
@@ -1210,33 +1467,18 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQueues_AllParameters()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            foreach (var item in client.GetQueues(1234, new RequestContext()))
+            foreach (BinaryData item in client.GetQueues(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("distributionPolicyId").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("labels").GetProperty("<test>").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQueues_Async()
-        {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
-
-            await foreach (var item in client.GetQueuesAsync(1234, new RequestContext()))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("distributionPolicyId").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
@@ -1244,29 +1486,41 @@ namespace Azure.Communication.JobRouter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQueues_AllParameters_Async()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetQueuesAsync(1234, new RequestContext()))
+            await foreach (BinaryData item in client.GetQueuesAsync(1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("queue").GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("distributionPolicyId").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("labels").GetProperty("<test>").ToString());
-                Console.WriteLine(result.GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
-                Console.WriteLine(result.GetProperty("etag").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("distributionPolicyId").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("labels").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("queue").GetProperty("exceptionPolicyId").ToString());
+                Console.WriteLine(result[0].GetProperty("etag").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQueues_Convenience_Async()
+        public void Example_GetQueues_AllParameters_Convenience()
         {
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new JobRouterAdministrationRestClient(endpoint);
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
 
-            await foreach (var item in client.GetQueuesAsync(1234))
+            foreach (RouterQueueItem item in client.GetQueues(maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetQueues_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            JobRouterAdministrationRestClient client = new JobRouterAdministrationRestClient(endpoint);
+
+            await foreach (RouterQueueItem item in client.GetQueuesAsync(maxpagesize: 1234))
             {
             }
         }

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -43,7 +42,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRuleOptions = Models.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
+                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

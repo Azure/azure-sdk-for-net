@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -106,9 +102,11 @@ namespace Azure.Communication.JobRouter
         /// <summary> Creates a classification policy. </summary>
         /// <param name="options"> (Optional) Options for creating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ClassificationPolicy>> CreateClassificationPolicyAsync(
             CreateClassificationPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(CreateClassificationPolicy)}");
@@ -125,11 +123,14 @@ namespace Azure.Communication.JobRouter
                 request.QueueSelectors.AddRange(options.QueueSelectors);
                 request.WorkerSelectors.AddRange(options.WorkerSelectors);
 
-                return await RestClient.UpsertClassificationPolicyAsync(
+                var result = await RestClient.UpsertClassificationPolicyAsync(
                         id: options.ClassificationPolicyId,
-                        patch: request,
-                        cancellationToken: cancellationToken)
+                        content: request.ToRequestContent(),
+                        context: null,
+                        requestConditions: requestConditions)
                     .ConfigureAwait(false);
+
+                return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
             }
             catch (Exception ex)
             {
@@ -139,11 +140,13 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Creates or updates a classification policy. </summary>
-        /// <param name="options"> (Optional) Options for creating classification policy.. </param>
+        /// <param name="options"> (Optional) Options for creating classification policy. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ClassificationPolicy> CreateClassificationPolicy(
             CreateClassificationPolicyOptions options,
+            RequestConditions requestConditions = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(CreateClassificationPolicy)}");
@@ -160,10 +163,13 @@ namespace Azure.Communication.JobRouter
                 request.QueueSelectors.AddRange(options.QueueSelectors);
                 request.WorkerSelectors.AddRange(options.WorkerSelectors);
 
-                return RestClient.UpsertClassificationPolicy(
+                var result = RestClient.UpsertClassificationPolicy(
                     id: options.ClassificationPolicyId,
-                    patch: request,
-                    cancellationToken: cancellationToken);
+                    content: request.ToRequestContent(),
+                    requestConditions: requestConditions,
+                    context: null);
+
+                return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
             }
             catch (Exception ex)
             {

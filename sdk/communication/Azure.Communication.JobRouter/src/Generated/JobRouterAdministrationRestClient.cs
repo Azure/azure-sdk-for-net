@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -1114,10 +1113,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int,CancellationToken)']/*" />
-        public virtual AsyncPageable<DistributionPolicyItem> GetDistributionPoliciesAsync(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<DistributionPolicyItem> GetDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
@@ -1126,10 +1125,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int,CancellationToken)']/*" />
-        public virtual Pageable<DistributionPolicyItem> GetDistributionPolicies(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,CancellationToken)']/*" />
+        public virtual Pageable<DistributionPolicyItem> GetDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
@@ -1147,17 +1146,17 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDistributionPoliciesAsync(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDistributionPoliciesAsync(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1174,17 +1173,17 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDistributionPolicies(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDistributionPolicies(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDistributionPolicies(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDistributionPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1192,10 +1191,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int,CancellationToken)']/*" />
-        public virtual AsyncPageable<ClassificationPolicyItem> GetClassificationPoliciesAsync(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<ClassificationPolicyItem> GetClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
@@ -1204,10 +1203,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int,CancellationToken)']/*" />
-        public virtual Pageable<ClassificationPolicyItem> GetClassificationPolicies(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,CancellationToken)']/*" />
+        public virtual Pageable<ClassificationPolicyItem> GetClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
@@ -1225,17 +1224,17 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetClassificationPoliciesAsync(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetClassificationPoliciesAsync(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1252,17 +1251,17 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetClassificationPolicies(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetClassificationPolicies(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Maximum page size. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetClassificationPolicies(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetClassificationPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1272,8 +1271,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int,CancellationToken)']/*" />
-        public virtual AsyncPageable<ExceptionPolicyItem> GetExceptionPoliciesAsync(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<ExceptionPolicyItem> GetExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
@@ -1284,8 +1283,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int,CancellationToken)']/*" />
-        public virtual Pageable<ExceptionPolicyItem> GetExceptionPolicies(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,CancellationToken)']/*" />
+        public virtual Pageable<ExceptionPolicyItem> GetExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
@@ -1303,7 +1302,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetExceptionPoliciesAsync(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetExceptionPoliciesAsync(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1312,8 +1311,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1330,7 +1329,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetExceptionPolicies(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetExceptionPolicies(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1339,8 +1338,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetExceptionPolicies(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetExceptionPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1350,8 +1349,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueuesAsync(int,CancellationToken)']/*" />
-        public virtual AsyncPageable<RouterQueueItem> GetQueuesAsync(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<RouterQueueItem> GetQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
@@ -1362,8 +1361,8 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueues(int,CancellationToken)']/*" />
-        public virtual Pageable<RouterQueueItem> GetQueues(int maxpagesize, CancellationToken cancellationToken = default)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueues(int?,CancellationToken)']/*" />
+        public virtual Pageable<RouterQueueItem> GetQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
@@ -1381,7 +1380,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetQueuesAsync(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetQueuesAsync(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1390,8 +1389,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueuesAsync(int,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetQueuesAsync(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetQueuesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
@@ -1408,7 +1407,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetQueues(int,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetQueues(int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1417,8 +1416,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueues(int,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetQueues(int maxpagesize, RequestContext context)
+        /// <include file="Docs/JobRouterAdministrationRestClient.xml" path="doc/members/member[@name='GetQueues(int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetQueues(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
@@ -1461,7 +1460,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetDistributionPoliciesRequest(int maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDistributionPoliciesRequest(int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1469,8 +1468,11 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/distributionPolicies", false);
-            uri.AppendQuery("maxpagesize", maxpagesize, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1527,7 +1529,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetClassificationPoliciesRequest(int maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetClassificationPoliciesRequest(int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1535,8 +1537,11 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/classificationPolicies", false);
-            uri.AppendQuery("maxpagesize", maxpagesize, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1593,7 +1598,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetExceptionPoliciesRequest(int maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetExceptionPoliciesRequest(int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1601,8 +1606,11 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/exceptionPolicies", false);
-            uri.AppendQuery("maxpagesize", maxpagesize, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1659,7 +1667,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetQueuesRequest(int maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQueuesRequest(int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1667,8 +1675,11 @@ namespace Azure.Communication.JobRouter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/routing/queues", false);
-            uri.AppendQuery("maxpagesize", maxpagesize, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1684,6 +1695,58 @@ namespace Azure.Communication.JobRouter
             uri.AppendPath("/routing/queues/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDistributionPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetClassificationPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetExceptionPoliciesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetQueuesNextPageRequest(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

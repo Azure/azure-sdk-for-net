@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
+using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterWorker")]
-    public partial class RouterWorker
+    public partial class RouterWorker : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of RouterWorker. </summary>
         internal RouterWorker()
@@ -122,6 +122,81 @@ namespace Azure.Communication.JobRouter.Models
                     QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
                 }
             }
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(_queueAssignments))
+            {
+                writer.WritePropertyName("queueAssignments"u8);
+                writer.WriteStartObject();
+                foreach (var item in _queueAssignments)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(TotalCapacity))
+            {
+                writer.WritePropertyName("totalCapacity"u8);
+                writer.WriteNumberValue(TotalCapacity.Value);
+            }
+            if (Optional.IsCollectionDefined(_labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in _tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_channelConfigurations))
+            {
+                writer.WritePropertyName("channelConfigurations"u8);
+                writer.WriteStartObject();
+                foreach (var item in _channelConfigurations)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(AvailableForOffers))
+            {
+                writer.WritePropertyName("availableForOffers"u8);
+                writer.WriteBooleanValue(AvailableForOffers.Value);
+            }
+            writer.WriteEndObject();
         }
     }
 }

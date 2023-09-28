@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> The status of the Job. </summary>
     public readonly partial struct RouterJobStatus : IEquatable<RouterJobStatus>
