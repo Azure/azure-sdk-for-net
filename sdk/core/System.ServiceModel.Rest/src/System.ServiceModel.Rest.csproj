@@ -31,6 +31,7 @@
 		<Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared" />
 		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared" />
 		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared" />
+		<Compile Include="..\..\..\core\Azure.Core\src\Shared\TrimmingAttribute.cs" LinkBase="Shared" />
 	</ItemGroup>
 
 </Project>
