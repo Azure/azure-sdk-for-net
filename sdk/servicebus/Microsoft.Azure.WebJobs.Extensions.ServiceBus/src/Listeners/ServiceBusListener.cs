@@ -686,7 +686,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // Complete batch of messages only if the execution was successful
                 if (_autoCompleteMessages && result.Succeeded)
                 {
-                    List<Task> completeTasks = new List<Task>();
+                    List<Task> completeTasks = new List<Task>(messagesArray.Length + receiveActions.Messages.Keys.Count);
                     foreach (ServiceBusReceivedMessage message in processedMessages)
                     {
                         // Skip messages that were settled in the user's function
