@@ -17,7 +17,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" VersionOverride="8.0.0-rc.1.23419.4" />
   </ItemGroup>
 
-  <!--https://github.com/dotnet/runtime/issues/91965-->
+  <!--Temp fix for "EXEC : error : No files matching ;NU5105;CA1812;"-->
+  <!--Real fix coming in .NET 8 RC2: https://github.com/dotnet/runtime/issues/91965-->
   <ItemGroup>
     <_NoWarn Include="$(NoWarn)" />
   </ItemGroup>
