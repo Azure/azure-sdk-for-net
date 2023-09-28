@@ -202,12 +202,35 @@ namespace System.ServiceModel.Rest.Experimental.Core
         public virtual int Port { get { throw null; } set { } }
         public virtual string Query { get { throw null; } set { } }
         public virtual string? Scheme { get { throw null; } set { } }
+        public void AppendPath(bool value, bool escape = false) { }
+        public void AppendPath(byte[] value, string format, bool escape = true) { }
+        public void AppendPath(System.Collections.Generic.IEnumerable<string> value, bool escape = true) { }
+        public void AppendPath(System.DateTimeOffset value, string format, bool escape = true) { }
+        public void AppendPath(double value, bool escape = true) { }
+        public void AppendPath(System.Guid value, bool escape = true) { }
+        public void AppendPath(int value, bool escape = true) { }
+        public void AppendPath(long value, bool escape = true) { }
         public virtual void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
+        public void AppendPath(float value, bool escape = true) { }
         public virtual void AppendPath(string value) { }
         public virtual void AppendPath(string value, bool escape) { }
+        public void AppendPath(System.TimeSpan value, string format, bool escape = true) { }
         public virtual void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
+        public void AppendQuery(string name, bool value, bool escape = false) { }
+        public void AppendQuery(string name, byte[] value, string format, bool escape = true) { }
+        public void AppendQuery(string name, System.DateTimeOffset value, string format, bool escape = true) { }
+        public void AppendQuery(string name, decimal value, bool escape = true) { }
+        public void AppendQuery(string name, double value, bool escape = true) { }
+        public void AppendQuery(string name, System.Guid value, bool escape = true) { }
+        public void AppendQuery(string name, int value, bool escape = true) { }
+        public void AppendQuery(string name, long value, bool escape = true) { }
+        public void AppendQuery(string name, float value, bool escape = true) { }
         public virtual void AppendQuery(string name, string value) { }
         public virtual void AppendQuery(string name, string value, bool escapeValue) { }
+        public void AppendQuery(string name, System.TimeSpan value, bool escape = true) { }
+        public void AppendQuery(string name, System.TimeSpan value, string format, bool escape = true) { }
+        public void AppendQueryDelimited<T>(string name, System.Collections.Generic.IEnumerable<T> value, string delimiter, bool escape = true) { }
+        public void AppendQueryDelimited<T>(string name, System.Collections.Generic.IEnumerable<T> value, string delimiter, string format, bool escape = true) { }
         public void AppendRawPathOrQueryOrHostOrScheme(string value, bool escape) { }
         public virtual void Reset(System.Uri value) { }
         public override string ToString() { throw null; }
@@ -238,7 +261,14 @@ namespace System.ServiceModel.Rest.Experimental.Core.Serialization
     }
     public static partial class ModelSerializationExtensions
     {
+        public static byte[]? GetBytesFromBase64(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        public static char GetChar(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.DateTimeOffset GetDateTimeOffset(this in System.Text.Json.JsonElement element, string format) { throw null; }
         public static object? GetObject(this in System.Text.Json.JsonElement element) { throw null; }
+        public static string GetRequiredString(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.TimeSpan GetTimeSpan(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        [System.Diagnostics.ConditionalAttribute("DEBUG")]
+        public static void ThrowNonNullablePropertyIsNull(this System.Text.Json.JsonProperty property) { }
         public static void WriteBase64StringValue(this System.Text.Json.Utf8JsonWriter writer, byte[] value, string format) { }
         public static void WriteNonEmptyArray(this System.Text.Json.Utf8JsonWriter writer, string name, System.Collections.Generic.IReadOnlyList<string> values) { }
         public static void WriteNumberValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
