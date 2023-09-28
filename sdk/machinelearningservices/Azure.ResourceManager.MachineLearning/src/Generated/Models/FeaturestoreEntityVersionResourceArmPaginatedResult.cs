@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of FeaturestoreEntityVersionResourceArmPaginatedResult. </summary>
         internal FeaturestoreEntityVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<FeaturestoreEntityVersionData>();
+            Value = new ChangeTrackingList<MachineLearningFeaturestoreEntityVersionData>();
         }
 
         /// <summary> Initializes a new instance of FeaturestoreEntityVersionResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturestoreEntityVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturestoreEntityVersion. </param>
-        internal FeaturestoreEntityVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<FeaturestoreEntityVersionData> value)
+        internal FeaturestoreEntityVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeaturestoreEntityVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of FeaturestoreEntityVersion objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type FeaturestoreEntityVersion. </summary>
-        public IReadOnlyList<FeaturestoreEntityVersionData> Value { get; }
+        public IReadOnlyList<MachineLearningFeaturestoreEntityVersionData> Value { get; }
     }
 }

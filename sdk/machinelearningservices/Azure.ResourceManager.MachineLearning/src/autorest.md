@@ -84,8 +84,27 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions/{version}: MachineLearningEnvironmentVersion
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}: MachineLearningModelContainer
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions/{version}: MachineLearningModelVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}: MachineLearningRegistryCodeContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}: MachineLearningRegistryCodeVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/components/{componentName}: MachineLearninRegistryComponentContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/components/{componentName}/versions/{version}: MachineLearninRegistryComponentVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}: MachineLearningRegistryDataContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}: MachineLearningRegistryDataVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}: MachineLearningRegistryEnvironmentContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}/versions/{version}: MachineLearningRegistryEnvironmentVersion
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/models/{modelName}: MachineLearningRegistryModelContainer
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/models/{modelName}/versions/{version}: MachineLearningRegistryModelVersion
+
+prepend-rp-prefix:
+  - Feature
+  - LabelingJob
+  - Registry
 
 rename-mapping:
+  FeaturesetContainer: MachineLearningFeatureSetContainer
+  FeaturesetVersion: MachineLearningFeatureSetVersion
+  FeaturestoreEntityContainer: MachineLearningFeatureStoreEntityContainer
+  FeaturestoreEntityVersion: MachineLearningFeaturestoreEntityVersion
   ComputeInstanceProperties.setupScripts: SetupScriptsSettings
   Workspace: MachineLearningWorkspace
   ComputeResource: MachineLearningCompute

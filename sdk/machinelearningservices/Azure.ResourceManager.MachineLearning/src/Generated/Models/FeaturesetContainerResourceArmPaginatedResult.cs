@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of FeaturesetContainerResourceArmPaginatedResult. </summary>
         internal FeaturesetContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<FeaturesetContainerData>();
+            Value = new ChangeTrackingList<MachineLearningFeatureSetContainerData>();
         }
 
         /// <summary> Initializes a new instance of FeaturesetContainerResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturesetContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturesetContainer. </param>
-        internal FeaturesetContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<FeaturesetContainerData> value)
+        internal FeaturesetContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of FeaturesetContainer objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type FeaturesetContainer. </summary>
-        public IReadOnlyList<FeaturesetContainerData> Value { get; }
+        public IReadOnlyList<MachineLearningFeatureSetContainerData> Value { get; }
     }
 }

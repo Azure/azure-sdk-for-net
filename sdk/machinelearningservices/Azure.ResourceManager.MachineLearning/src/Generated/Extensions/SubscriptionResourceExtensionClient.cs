@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.MachineLearning
         private VirtualMachineSizesRestOperations _virtualMachineSizesRestClient;
         private ClientDiagnostics _quotasClientDiagnostics;
         private QuotasRestOperations _quotasRestClient;
-        private ClientDiagnostics _registryClientDiagnostics;
-        private RegistriesRestOperations _registryRestClient;
+        private ClientDiagnostics _machineLearningRegistryRegistriesClientDiagnostics;
+        private RegistriesRestOperations _machineLearningRegistryRegistriesRestClient;
         private ClientDiagnostics _machineLearningWorkspaceWorkspacesClientDiagnostics;
         private WorkspacesRestOperations _machineLearningWorkspaceWorkspacesRestClient;
 
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.MachineLearning
         private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private QuotasRestOperations QuotasRestClient => _quotasRestClient ??= new QuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics RegistryClientDiagnostics => _registryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", RegistryResource.ResourceType.Namespace, Diagnostics);
-        private RegistriesRestOperations RegistryRestClient => _registryRestClient ??= new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RegistryResource.ResourceType));
+        private ClientDiagnostics MachineLearningRegistryRegistriesClientDiagnostics => _machineLearningRegistryRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryResource.ResourceType.Namespace, Diagnostics);
+        private RegistriesRestOperations MachineLearningRegistryRegistriesRestClient => _machineLearningRegistryRegistriesRestClient ??= new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MachineLearningRegistryResource.ResourceType));
         private ClientDiagnostics MachineLearningWorkspaceWorkspacesClientDiagnostics => _machineLearningWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningWorkspaceResource.ResourceType.Namespace, Diagnostics);
         private WorkspacesRestOperations MachineLearningWorkspaceWorkspacesRestClient => _machineLearningWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MachineLearningWorkspaceResource.ResourceType));
 
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RegistryResource> GetRegistriesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningRegistryResource> GetMachineLearningRegistriesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RegistryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RegistryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegistryResource(Client, RegistryData.DeserializeRegistryData(e)), RegistryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRegistries", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningRegistryRegistriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningRegistryRegistriesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryResource(Client, MachineLearningRegistryData.DeserializeMachineLearningRegistryData(e)), MachineLearningRegistryRegistriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningRegistries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RegistryResource> GetRegistries(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningRegistryResource> GetMachineLearningRegistries(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RegistryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RegistryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegistryResource(Client, RegistryData.DeserializeRegistryData(e)), RegistryClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRegistries", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningRegistryRegistriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningRegistryRegistriesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryResource(Client, MachineLearningRegistryData.DeserializeMachineLearningRegistryData(e)), MachineLearningRegistryRegistriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMachineLearningRegistries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -526,11 +526,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningDatastores().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FeaturesetContainerResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of FeaturesetContainerResources and their operations over a FeaturesetContainerResource. </returns>
-        public virtual FeaturesetContainerCollection GetFeaturesetContainers()
+        /// <summary> Gets a collection of MachineLearningFeatureSetContainerResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningFeatureSetContainerResources and their operations over a MachineLearningFeatureSetContainerResource. </returns>
+        public virtual MachineLearningFeatureSetContainerCollection GetMachineLearningFeatureSetContainers()
         {
-            return GetCachedClient(Client => new FeaturesetContainerCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningFeatureSetContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -551,9 +551,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FeaturesetContainerResource>> GetFeaturesetContainerAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningFeatureSetContainerResource>> GetMachineLearningFeatureSetContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetFeaturesetContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningFeatureSetContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -574,39 +574,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FeaturesetContainerResource> GetFeaturesetContainer(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningFeatureSetContainerResource> GetMachineLearningFeatureSetContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetFeaturesetContainers().Get(name, cancellationToken);
+            return GetMachineLearningFeatureSetContainers().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FeaturestoreEntityContainerResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of FeaturestoreEntityContainerResources and their operations over a FeaturestoreEntityContainerResource. </returns>
-        public virtual FeaturestoreEntityContainerCollection GetFeaturestoreEntityContainers()
+        /// <summary> Gets a collection of MachineLearningFeatureStoreEntityContainerResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningFeatureStoreEntityContainerResources and their operations over a MachineLearningFeatureStoreEntityContainerResource. </returns>
+        public virtual MachineLearningFeatureStoreEntityContainerCollection GetMachineLearningFeatureStoreEntityContainers()
         {
-            return GetCachedClient(Client => new FeaturestoreEntityContainerCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get container.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityContainers_GetEntity</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FeaturestoreEntityContainerResource>> GetFeaturestoreEntityContainerAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetFeaturestoreEntityContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new MachineLearningFeatureStoreEntityContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -627,9 +604,32 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FeaturestoreEntityContainerResource> GetFeaturestoreEntityContainer(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningFeatureStoreEntityContainerResource>> GetMachineLearningFeatureStoreEntityContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetFeaturestoreEntityContainers().Get(name, cancellationToken);
+            return await GetMachineLearningFeatureStoreEntityContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get container.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FeaturestoreEntityContainers_GetEntity</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningFeatureStoreEntityContainerResource> GetMachineLearningFeatureStoreEntityContainer(string name, CancellationToken cancellationToken = default)
+        {
+            return GetMachineLearningFeatureStoreEntityContainers().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of MachineLearningJobResources in the MachineLearningWorkspace. </summary>
@@ -685,11 +685,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningJobs().Get(id, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LabelingJobResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of LabelingJobResources and their operations over a LabelingJobResource. </returns>
-        public virtual LabelingJobCollection GetLabelingJobs()
+        /// <summary> Gets a collection of MachineLearningLabelingJobResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningLabelingJobResources and their operations over a MachineLearningLabelingJobResource. </returns>
+        public virtual MachineLearningLabelingJobCollection GetMachineLearningLabelingJobs()
         {
-            return GetCachedClient(Client => new LabelingJobCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningLabelingJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -712,9 +712,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LabelingJobResource>> GetLabelingJobAsync(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningLabelingJobResource>> GetMachineLearningLabelingJobAsync(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
-            return await GetLabelingJobs().GetAsync(id, includeJobInstructions, includeLabelCategories, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningLabelingJobs().GetAsync(id, includeJobInstructions, includeLabelCategories, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -737,9 +737,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LabelingJobResource> GetLabelingJob(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningLabelingJobResource> GetMachineLearningLabelingJob(string id, bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
-            return GetLabelingJobs().Get(id, includeJobInstructions, includeLabelCategories, cancellationToken);
+            return GetMachineLearningLabelingJobs().Get(id, includeJobInstructions, includeLabelCategories, cancellationToken);
         }
 
         /// <summary> Gets a collection of MachineLearningOnlineEndpointResources in the MachineLearningWorkspace. </summary>

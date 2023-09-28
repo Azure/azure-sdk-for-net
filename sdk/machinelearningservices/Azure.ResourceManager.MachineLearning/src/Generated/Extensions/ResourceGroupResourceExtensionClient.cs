@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.MachineLearning
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of RegistryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RegistryResources and their operations over a RegistryResource. </returns>
-        public virtual RegistryCollection GetRegistries()
+        /// <summary> Gets a collection of MachineLearningRegistryResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MachineLearningRegistryResources and their operations over a MachineLearningRegistryResource. </returns>
+        public virtual MachineLearningRegistryCollection GetMachineLearningRegistries()
         {
-            return GetCachedClient(Client => new RegistryCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningRegistryCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of MachineLearningWorkspaceResources in the ResourceGroupResource. </summary>

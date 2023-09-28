@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of FeatureResourceArmPaginatedResult. </summary>
         internal FeatureResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<FeatureData>();
+            Value = new ChangeTrackingList<MachineLearningFeatureData>();
         }
 
         /// <summary> Initializes a new instance of FeatureResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of Feature objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Feature. </param>
-        internal FeatureResourceArmPaginatedResult(string nextLink, IReadOnlyList<FeatureData> value)
+        internal FeatureResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of Feature objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type Feature. </summary>
-        public IReadOnlyList<FeatureData> Value { get; }
+        public IReadOnlyList<MachineLearningFeatureData> Value { get; }
     }
 }

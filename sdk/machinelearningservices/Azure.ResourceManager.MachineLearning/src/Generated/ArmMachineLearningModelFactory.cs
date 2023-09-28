@@ -724,16 +724,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningDatastoreProperties(description, properties, tags, credentials, datastoreType, intellectualProperty, isDefault);
         }
 
-        /// <summary> Initializes a new instance of FeaturesetContainerData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetContainerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.FeaturesetContainerData"/> instance for mocking. </returns>
-        public static FeaturesetContainerData FeaturesetContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturesetContainerProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureSetContainerData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetContainerData MachineLearningFeatureSetContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturesetContainerProperties properties = null)
         {
-            return new FeaturesetContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningFeatureSetContainerData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of FeaturesetContainerProperties. </summary>
@@ -753,28 +753,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FeaturesetContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FeatureData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.FeatureData"/> instance for mocking. </returns>
-        public static FeatureData FeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeatureProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureData MachineLearningFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeatureProperties properties = null)
         {
-            return new FeatureData(id, name, resourceType, systemData, properties);
+            return new MachineLearningFeatureData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of FeaturesetVersionData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureSetVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.FeaturesetVersionData"/> instance for mocking. </returns>
-        public static FeaturesetVersionData FeaturesetVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturesetVersionProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureSetVersionData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureSetVersionData MachineLearningFeatureSetVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturesetVersionProperties properties = null)
         {
-            return new FeaturesetVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningFeatureSetVersionData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of FeaturesetVersionProperties. </summary>
@@ -817,16 +817,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FeaturesetJob(createdOn, displayName, duration, experimentId, featureWindow, jobId, status, tags, featurestoreJobType);
         }
 
-        /// <summary> Initializes a new instance of FeaturestoreEntityContainerData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeatureStoreEntityContainerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.FeaturestoreEntityContainerData"/> instance for mocking. </returns>
-        public static FeaturestoreEntityContainerData FeaturestoreEntityContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturestoreEntityContainerProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeatureStoreEntityContainerData"/> instance for mocking. </returns>
+        public static MachineLearningFeatureStoreEntityContainerData MachineLearningFeatureStoreEntityContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturestoreEntityContainerProperties properties = null)
         {
-            return new FeaturestoreEntityContainerData(id, name, resourceType, systemData, properties);
+            return new MachineLearningFeatureStoreEntityContainerData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of FeaturestoreEntityContainerProperties. </summary>
@@ -846,16 +846,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FeaturestoreEntityContainerProperties(description, properties, tags, isArchived, latestVersion, nextVersion, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FeaturestoreEntityVersionData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeaturestoreEntityVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.FeaturestoreEntityVersionData"/> instance for mocking. </returns>
-        public static FeaturestoreEntityVersionData FeaturestoreEntityVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturestoreEntityVersionProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningFeaturestoreEntityVersionData"/> instance for mocking. </returns>
+        public static MachineLearningFeaturestoreEntityVersionData MachineLearningFeaturestoreEntityVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FeaturestoreEntityVersionProperties properties = null)
         {
-            return new FeaturestoreEntityVersionData(id, name, resourceType, systemData, properties);
+            return new MachineLearningFeaturestoreEntityVersionData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of FeaturestoreEntityVersionProperties. </summary>
@@ -949,16 +949,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningJobService(endpoint, errorMessage, jobServiceType, nodes, port, properties, status);
         }
 
-        /// <summary> Initializes a new instance of LabelingJobData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningLabelingJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="MachineLearning.LabelingJobData"/> instance for mocking. </returns>
-        public static LabelingJobData LabelingJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LabelingJobProperties properties = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningLabelingJobData"/> instance for mocking. </returns>
+        public static MachineLearningLabelingJobData MachineLearningLabelingJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LabelingJobProperties properties = null)
         {
-            return new LabelingJobData(id, name, resourceType, systemData, properties);
+            return new MachineLearningLabelingJobData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of LabelingJobProperties. </summary>
@@ -1239,7 +1239,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningScheduleProperties(description, properties, tags, action, displayName, isEnabled, provisioningState, trigger);
         }
 
-        /// <summary> Initializes a new instance of RegistryData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningRegistryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1259,14 +1259,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Possible values: "Enabled" or "Disabled"
         /// </param>
         /// <param name="regionDetails"> Details of each region the registry is in. </param>
-        /// <returns> A new <see cref="MachineLearning.RegistryData"/> instance for mocking. </returns>
-        public static RegistryData RegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, Uri discoveryUri = null, string intellectualPropertyPublisher = null, string managedResourceId = null, Uri mlFlowRegistryUri = null, IEnumerable<RegistryPrivateEndpointConnection> privateEndpointConnections = null, string publicNetworkAccess = null, IEnumerable<RegistryRegionArmDetails> regionDetails = null)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningRegistryData"/> instance for mocking. </returns>
+        public static MachineLearningRegistryData MachineLearningRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, MachineLearningSku sku = null, Uri discoveryUri = null, string intellectualPropertyPublisher = null, string managedResourceId = null, Uri mlFlowRegistryUri = null, IEnumerable<RegistryPrivateEndpointConnection> privateEndpointConnections = null, string publicNetworkAccess = null, IEnumerable<RegistryRegionArmDetails> regionDetails = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<RegistryPrivateEndpointConnection>();
             regionDetails ??= new List<RegistryRegionArmDetails>();
 
-            return new RegistryData(id, name, resourceType, systemData, tags, location, identity, kind, sku, discoveryUri, intellectualPropertyPublisher, managedResourceId != null ? new ArmResourceId(managedResourceId) : null, mlFlowRegistryUri, privateEndpointConnections?.ToList(), publicNetworkAccess, regionDetails?.ToList());
+            return new MachineLearningRegistryData(id, name, resourceType, systemData, tags, location, identity, kind, sku, discoveryUri, intellectualPropertyPublisher, managedResourceId != null ? new ArmResourceId(managedResourceId) : null, mlFlowRegistryUri, privateEndpointConnections?.ToList(), publicNetworkAccess, regionDetails?.ToList());
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointResource. </summary>

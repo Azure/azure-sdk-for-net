@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<FeaturestoreEntityContainerData>> value = default;
+            Optional<IReadOnlyList<MachineLearningFeatureStoreEntityContainerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<FeaturestoreEntityContainerData> array = new List<FeaturestoreEntityContainerData>();
+                    List<MachineLearningFeatureStoreEntityContainerData> array = new List<MachineLearningFeatureStoreEntityContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FeaturestoreEntityContainerData.DeserializeFeaturestoreEntityContainerData(item));
+                        array.Add(MachineLearningFeatureStoreEntityContainerData.DeserializeMachineLearningFeatureStoreEntityContainerData(item));
                     }
                     value = array;
                     continue;

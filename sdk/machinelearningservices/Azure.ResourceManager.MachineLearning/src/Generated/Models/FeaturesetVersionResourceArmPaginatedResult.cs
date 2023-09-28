@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of FeaturesetVersionResourceArmPaginatedResult. </summary>
         internal FeaturesetVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<FeaturesetVersionData>();
+            Value = new ChangeTrackingList<MachineLearningFeatureSetVersionData>();
         }
 
         /// <summary> Initializes a new instance of FeaturesetVersionResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturesetVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturesetVersion. </param>
-        internal FeaturesetVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<FeaturesetVersionData> value)
+        internal FeaturesetVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of FeaturesetVersion objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type FeaturesetVersion. </summary>
-        public IReadOnlyList<FeaturesetVersionData> Value { get; }
+        public IReadOnlyList<MachineLearningFeatureSetVersionData> Value { get; }
     }
 }

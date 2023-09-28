@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<LabelingJobData>> value = default;
+            Optional<IReadOnlyList<MachineLearningLabelingJobData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<LabelingJobData> array = new List<LabelingJobData>();
+                    List<MachineLearningLabelingJobData> array = new List<MachineLearningLabelingJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabelingJobData.DeserializeLabelingJobData(item));
+                        array.Add(MachineLearningLabelingJobData.DeserializeMachineLearningLabelingJobData(item));
                     }
                     value = array;
                     continue;

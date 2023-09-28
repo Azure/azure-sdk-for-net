@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of RegistryTrackedResourceArmPaginatedResult. </summary>
         internal RegistryTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<RegistryData>();
+            Value = new ChangeTrackingList<MachineLearningRegistryData>();
         }
 
         /// <summary> Initializes a new instance of RegistryTrackedResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of Registry objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Registry. </param>
-        internal RegistryTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<RegistryData> value)
+        internal RegistryTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningRegistryData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of Registry objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type Registry. </summary>
-        public IReadOnlyList<RegistryData> Value { get; }
+        public IReadOnlyList<MachineLearningRegistryData> Value { get; }
     }
 }

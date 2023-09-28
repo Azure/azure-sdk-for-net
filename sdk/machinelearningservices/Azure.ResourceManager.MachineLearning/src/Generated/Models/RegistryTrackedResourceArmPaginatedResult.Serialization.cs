@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<RegistryData>> value = default;
+            Optional<IReadOnlyList<MachineLearningRegistryData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<RegistryData> array = new List<RegistryData>();
+                    List<MachineLearningRegistryData> array = new List<MachineLearningRegistryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegistryData.DeserializeRegistryData(item));
+                        array.Add(MachineLearningRegistryData.DeserializeMachineLearningRegistryData(item));
                     }
                     value = array;
                     continue;

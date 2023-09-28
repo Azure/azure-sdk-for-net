@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<FeaturesetVersionData>> value = default;
+            Optional<IReadOnlyList<MachineLearningFeatureSetVersionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<FeaturesetVersionData> array = new List<FeaturesetVersionData>();
+                    List<MachineLearningFeatureSetVersionData> array = new List<MachineLearningFeatureSetVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FeaturesetVersionData.DeserializeFeaturesetVersionData(item));
+                        array.Add(MachineLearningFeatureSetVersionData.DeserializeMachineLearningFeatureSetVersionData(item));
                     }
                     value = array;
                     continue;

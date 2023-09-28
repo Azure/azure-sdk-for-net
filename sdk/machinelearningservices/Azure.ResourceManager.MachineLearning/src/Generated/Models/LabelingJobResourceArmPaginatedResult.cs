@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of LabelingJobResourceArmPaginatedResult. </summary>
         internal LabelingJobResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<LabelingJobData>();
+            Value = new ChangeTrackingList<MachineLearningLabelingJobData>();
         }
 
         /// <summary> Initializes a new instance of LabelingJobResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of LabelingJob objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type LabelingJob. </param>
-        internal LabelingJobResourceArmPaginatedResult(string nextLink, IReadOnlyList<LabelingJobData> value)
+        internal LabelingJobResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningLabelingJobData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of LabelingJob objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type LabelingJob. </summary>
-        public IReadOnlyList<LabelingJobData> Value { get; }
+        public IReadOnlyList<MachineLearningLabelingJobData> Value { get; }
     }
 }
