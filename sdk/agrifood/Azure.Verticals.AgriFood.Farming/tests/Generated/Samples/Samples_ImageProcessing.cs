@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_ImageProcessing
+    public partial class Samples_ImageProcessing
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -118,10 +117,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
             });
             Operation<BinaryData> operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
@@ -143,10 +142,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
             });
             Operation<BinaryData> operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
@@ -168,10 +167,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
                 name = "<name>",
                 description = "<description>",
                 properties = new
@@ -213,10 +212,10 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new List<object>()
-{
+                shapefileColumnNames = new object[]
+            {
 "<shapefileColumnNames>"
-},
+            },
                 name = "<name>",
                 description = "<description>",
                 properties = new
