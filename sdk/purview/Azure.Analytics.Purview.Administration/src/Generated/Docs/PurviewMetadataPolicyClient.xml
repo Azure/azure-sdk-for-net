@@ -29,25 +29,25 @@ RequestContent content = RequestContent.Create(new
     properties = new
     {
         description = "<description>",
-        decisionRules = new List<object>()
+        decisionRules = new object[]
         {
             new
             {
                 effect = "Deny",
-                dnfCondition = new List<object>()
+                dnfCondition = new object[]
                 {
-                    new List<object>()
+                    new object[]
                     {
                         new
                         {
                             attributeName = "<attributeName>",
                             attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new List<object>()
+                            attributeValueIncludedIn = new object[]
                             {
                                 "<attributeValueIncludedIn>"
                             },
                             attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new List<object>()
+                            attributeValueExcludedIn = new object[]
                             {
                                 "<attributeValueExcludedIn>"
                             },
@@ -56,15 +56,15 @@ RequestContent content = RequestContent.Create(new
                 },
             }
         },
-        attributeRules = new List<object>()
+        attributeRules = new object[]
         {
             new
             {
                 id = "<id>",
                 name = "<name>",
-                dnfCondition = new List<object>()
+                dnfCondition = new object[]
                 {
-                    new List<object>()
+                    new object[]
                     {
                         null
                     }
@@ -133,25 +133,25 @@ RequestContent content = RequestContent.Create(new
     properties = new
     {
         description = "<description>",
-        decisionRules = new List<object>()
+        decisionRules = new object[]
         {
             new
             {
                 effect = "Deny",
-                dnfCondition = new List<object>()
+                dnfCondition = new object[]
                 {
-                    new List<object>()
+                    new object[]
                     {
                         new
                         {
                             attributeName = "<attributeName>",
                             attributeValueIncludes = "<attributeValueIncludes>",
-                            attributeValueIncludedIn = new List<object>()
+                            attributeValueIncludedIn = new object[]
                             {
                                 "<attributeValueIncludedIn>"
                             },
                             attributeValueExcludes = "<attributeValueExcludes>",
-                            attributeValueExcludedIn = new List<object>()
+                            attributeValueExcludedIn = new object[]
                             {
                                 "<attributeValueExcludedIn>"
                             },
@@ -160,15 +160,15 @@ RequestContent content = RequestContent.Create(new
                 },
             }
         },
-        attributeRules = new List<object>()
+        attributeRules = new object[]
         {
             new
             {
                 id = "<id>",
                 name = "<name>",
-                dnfCondition = new List<object>()
+                dnfCondition = new object[]
                 {
-                    new List<object>()
+                    new object[]
                     {
                         null
                     }
@@ -311,8 +311,6 @@ PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "
 
 await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetadataPoliciesAsync with all parameters and parse the result.
@@ -323,8 +321,6 @@ PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "
 
 await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code></example>
     </member>
@@ -338,8 +334,6 @@ PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "
 
 foreach (BinaryData item in client.GetMetadataPolicies(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetadataPolicies with all parameters and parse the result.
@@ -350,8 +344,6 @@ PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "
 
 foreach (BinaryData item in client.GetMetadataPolicies(null))
 {
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
 }
 ]]></code></example>
     </member>

@@ -42,13 +42,13 @@ namespace Azure.AI.OpenAI
         /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
         internal virtual async Task<Operation<BatchImageGenerationOperationResponse>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = imageGenerationOptions.ToRequestContent();
+            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
@@ -57,13 +57,13 @@ namespace Azure.AI.OpenAI
         /// <param name="imageGenerationOptions"> Represents the request data used to generate images. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageGenerationOptions"/> is null. </exception>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)']/*" />
         internal virtual Operation<BatchImageGenerationOperationResponse> BeginAzureBatchImageGeneration(WaitUntil waitUntil, ImageGenerationOptions imageGenerationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions.ToRequestContent(), context);
+            using RequestContent content = imageGenerationOptions.ToRequestContent();
+            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
@@ -89,7 +89,6 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGenerationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual async Task<Operation<BinaryData>> BeginAzureBatchImageGenerationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -130,7 +129,6 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/OpenAIClient.xml" path="doc/members/member[@name='BeginAzureBatchImageGeneration(WaitUntil,RequestContent,RequestContext)']/*" />
         internal virtual Operation<BinaryData> BeginAzureBatchImageGeneration(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
