@@ -16,15 +16,30 @@ namespace Azure.Messaging.EventHubs.Tests
     public class CheckpointPositionTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
+        ///   constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void DefaultsAreSet()
+        {
+            var checkpoint = new CheckpointPosition();
+
+            Assert.That(checkpoint.SequenceNumber, Is.EqualTo(long.MinValue), "The default sequence number should be long.MinValue.");
+            Assert.That(checkpoint.ReplicationSegment, Is.EqualTo(null), "The default replication segment should be null.");
+            Assert.That(checkpoint.Offset, Is.EqualTo(null), "The default offset should be null.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
         ///   equality.
         /// </summary>
         ///
         [Test]
-        public void TheSameOffsetAreEqual()
+        public void TheSamePositionAreEqual()
         {
-            var first = EventPosition.FromOffset(12);
-            var second = EventPosition.FromOffset(12);
+            var first = new CheckpointPosition(121, "1", 141);
+            var second = new CheckpointPosition(121, "1", 141);
 
             Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
@@ -33,15 +48,15 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
         ///   equality.
         /// </summary>
         ///
         [Test]
-        public void DifferentOffsetsAreNotEqual()
+        public void DifferentPositionsAreNotEqual()
         {
-            var first = EventPosition.FromOffset(12);
-            var second = EventPosition.FromOffset(34);
+            var first = new CheckpointPosition(10, "1", 141);
+            var second = new CheckpointPosition(121, "4", 400);
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -50,160 +65,76 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
-        public void TheSameEnqueueTimesAreEqual()
-        {
-            var first = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
-            var second = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
-
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
-        public void DifferentEnqueueTimesAreNotEqual()
-        {
-            var first = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
-            var second = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2012-03-04T08:39:00Z"));
-
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
-        public void TheSameSequenceNumbersAreEqual()
-        {
-            var first = EventPosition.FromSequenceNumber(12);
-            var second = EventPosition.FromSequenceNumber(12);
-
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
-        public void DifferentSequenceNumbersAreNotEqual()
-        {
-            var first = EventPosition.FromSequenceNumber(234234);
-            var second = EventPosition.FromSequenceNumber(234234234);
-
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void TheSameInclusiveFlagsAreEqual(bool isInclusive)
-        {
-            var first = EventPosition.FromSequenceNumber(234234, isInclusive);
-            var second = EventPosition.FromSequenceNumber(234234, isInclusive);
-
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
-        public void DifferentInclusiveFlagsAreNotEqual()
-        {
-            var first = EventPosition.FromSequenceNumber(234234, true);
-            var second = EventPosition.FromSequenceNumber(234234, false);
-
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
-        public void DifferentMembersAreNotEqual()
-        {
-            var first = EventPosition.FromSequenceNumber(234234);
-            var second = EventPosition.FromOffset(12);
-
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition.GetHashCode "/>
+        ///   Verifies functionality of the <see cref="CheckpointPosition.GetHashCode "/>
         ///   method.
         /// </summary>
         ///
         [Test]
         public void GetHashCodeReturnsDifferentValuesForDifferentMembers()
         {
-            var first = EventPosition.FromOffset(12);
-            var second = EventPosition.FromSequenceNumber(123);
+            var first = new CheckpointPosition(10, "1", 141);
+            var second = new CheckpointPosition(121, "4", 400);
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition.ToString "/>
+        ///   Verifies functionality of the <see cref="CheckpointPosition.FromEvent(EventData) "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void FromEventSetsProperties()
+        {
+            var offset = 123;
+            var sequence = 4566;
+            var replicationSegment = "11";
+            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: offset, replicationSegment: replicationSegment);
+
+            var checkpoint = CheckpointPosition.FromEvent(eventData);
+
+            Assert.That(checkpoint.SequenceNumber, Is.EqualTo(sequence), "Sequence number should have been populated from the event.");
+            Assert.That(checkpoint.ReplicationSegment, Is.EqualTo(replicationSegment), "Replication segment should have been populated from the event.");
+            Assert.That(checkpoint.Offset, Is.EqualTo(offset), "Offset should have been populated from the event.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition.ToString "/>
         ///   method.
         /// </summary>
         ///
         [Test]
         public void ToStringReflectsTheState()
         {
-            var inclusive = true;
-            var offset = 123;
-            var sequence = 778;
-            var enqueued = DateTimeOffset.Now.AddHours(1);
+            var offset = 400;
+            var sequence = 121;
+            var replicationSegment = "1";
 
-            Assert.That(EventPosition.Earliest.ToString(), Contains.Substring(nameof(EventPosition.Earliest)), "Earliest should be represented.");
-            Assert.That(EventPosition.Latest.ToString(), Contains.Substring(nameof(EventPosition.Latest)), "Latest should be represented.");
-            Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{offset}]"), "The offset should be represented.");
-            Assert.That(EventPosition.FromSequenceNumber(sequence).ToString(), Contains.Substring($"[{sequence}]"), "The sequence should be represented.");
-            Assert.That(EventPosition.FromEnqueuedTime(enqueued).ToString(), Contains.Substring($"[{enqueued}]"), "The enqueued time should be represented.");
-            Assert.That(EventPosition.FromOffset(offset, inclusive).ToString(), Contains.Substring($"[{inclusive}]"), "The inclusive flag should be represented for the offset.");
-            Assert.That(EventPosition.FromSequenceNumber(sequence, inclusive).ToString(), Contains.Substring($"[{inclusive}]"), "The inclusive flag should be represented for the sequence number.");
+            var checkpoint = new CheckpointPosition(sequence, replicationSegment, offset);
+
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{offset}]"), "The offset should be represented.");
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{sequence}]"), "The sequence should be represented.");
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{replicationSegment}]"), "The enqueued time should be represented.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition.ToString "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToStringReflectsTheStateFromEventData()
+        {
+            var offset = 400;
+            var sequence = 121;
+            var replicationSegment = "1";
+            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: offset, replicationSegment: replicationSegment);
+
+            var checkpoint = CheckpointPosition.FromEvent(eventData);
+
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{offset}]"), "The offset should be represented.");
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{sequence}]"), "The sequence should be represented.");
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{replicationSegment}]"), "The enqueued time should be represented.");
         }
     }
 }
