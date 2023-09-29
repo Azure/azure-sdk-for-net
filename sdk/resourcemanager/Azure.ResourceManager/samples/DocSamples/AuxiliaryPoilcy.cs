@@ -1,4 +1,7 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Tests.Samples
@@ -7,7 +10,7 @@ namespace Azure.ResourceManager.Tests.Samples
     internal class AuxiliaryPoilcy : HttpPipelineSynchronousPolicy
     {
         private static string AUTHORIZATION_AUXILIARY_HEADER = "x-ms-authorization-auxiliary";
-        string _token;
+        private string _token;
 
         internal AuxiliaryPoilcy(string token)
         {

@@ -44,4 +44,4 @@ ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 ```
 
 ## Next stepts
-Take a look at the [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/Sample2_ManagingResourceGroups.md) samples.
+Take a look at the [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample2_ManagingResourceGroups.md) samples.

@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
@@ -7,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests.Samples
 {
-    class Sample3_CreatingAVirtualNetwork
+    public class Sample3_CreatingAVirtualNetwork
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
