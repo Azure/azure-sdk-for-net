@@ -68,24 +68,23 @@ namespace Azure.Communication.JobRouter
         #region private constructors
 
         private JobRouterAdministrationClient(ConnectionString connectionString, JobRouterClientOptions options)
-            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+            : this(new Uri(connectionString.GetRequired("endpoint"), UriKind.Absolute), options.BuildHttpPipeline(connectionString), options)
         {
         }
 
         private JobRouterAdministrationClient(string endpoint, TokenCredential tokenCredential, JobRouterClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+            : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(tokenCredential), options)
         {
         }
 
         private JobRouterAdministrationClient(string endpoint, AzureKeyCredential keyCredential, JobRouterClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+            : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(keyCredential), options)
         {
         }
 
-        private JobRouterAdministrationClient(string endpoint, HttpPipeline httpPipeline, JobRouterClientOptions options)
+        private JobRouterAdministrationClient(Uri endpoint, HttpPipeline httpPipeline, JobRouterClientOptions options)
         {
-            _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new JobRouterAdministrationRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RestClient = new JobRouterAdministrationRestClient(endpoint, options, httpPipeline);
         }
 
         /// <summary>Initializes a new instance of <see cref="JobRouterAdministrationClient"/> for mocking.</summary>

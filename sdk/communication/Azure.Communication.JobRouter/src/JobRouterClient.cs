@@ -68,24 +68,24 @@ using Azure.Core.Pipeline;
         #region private constructors
 
         private JobRouterClient(ConnectionString connectionString, JobRouterClientOptions options)
-            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+            : this(new Uri(connectionString.GetRequired("endpoint"), UriKind.Absolute), options.BuildHttpPipeline(connectionString), options)
         {
         }
 
         private JobRouterClient(string endpoint, TokenCredential tokenCredential, JobRouterClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+            : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(tokenCredential), options)
         {
         }
 
         private JobRouterClient(string endpoint, AzureKeyCredential keyCredential, JobRouterClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+            : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(keyCredential), options)
         {
         }
 
-        private JobRouterClient(string endpoint, HttpPipeline httpPipeline, JobRouterClientOptions options)
+        private JobRouterClient(Uri endpoint, HttpPipeline httpPipeline, JobRouterClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new JobRouterRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            RestClient = new JobRouterRestClient(endpoint, options, httpPipeline);
         }
 
         /// <summary>Initializes a new instance of <see cref="JobRouterClient"/> for mocking.</summary>

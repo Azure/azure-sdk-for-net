@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of JobRouterAdministrationRestClient. </summary>
         /// <param name="endpoint"> The Uri to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public JobRouterAdministrationRestClient(Uri endpoint) : this(endpoint, new AzureCommunicationJobRouterClientOptions())
+        public JobRouterAdministrationRestClient(Uri endpoint) : this(endpoint, new JobRouterClientOptions())
         {
         }
 
@@ -45,10 +45,10 @@ namespace Azure.Communication.JobRouter
         /// <param name="endpoint"> The Uri to use. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public JobRouterAdministrationRestClient(Uri endpoint, AzureCommunicationJobRouterClientOptions options)
+        public JobRouterAdministrationRestClient(Uri endpoint, JobRouterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new AzureCommunicationJobRouterClientOptions();
+            options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());

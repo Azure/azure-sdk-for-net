@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.JobRouter
 {
@@ -11,6 +13,22 @@ namespace Azure.Communication.JobRouter
     [CodeGenSuppress("CreateGetDistributionPoliciesNextPageRequest", typeof(string), typeof(int), typeof(RequestContext))]
     internal partial class JobRouterAdministrationRestClient
     {
+        /// <summary> Initializes a new instance of JobRouterAdministrationRestClient. </summary>
+        /// <param name="endpoint"> The Uri to use. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal JobRouterAdministrationRestClient(Uri endpoint, JobRouterClientOptions options, HttpPipeline pipeline)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new JobRouterClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = pipeline;
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
 #pragma warning disable CA1801 // Review unused parameters
         // Temporary work around before fix: https://github.com/Azure/autorest.csharp/issues/2323
         internal HttpMessage CreateGetExceptionPoliciesNextPageRequest(string nextLink, int maxpagesize, RequestContext context)
