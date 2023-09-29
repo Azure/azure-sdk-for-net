@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We handle the null condition and call ToString() instead.")]
-        private void GetNamesFromStackFrame(System.Diagnostics.StackFrame stackFrame, out string methodFullName, out string assemblyName)
+        private static void GetNamesFromStackFrame(System.Diagnostics.StackFrame stackFrame, out string methodFullName, out string assemblyName)
         {
             var methodInfo = stackFrame.GetMethod();
 
