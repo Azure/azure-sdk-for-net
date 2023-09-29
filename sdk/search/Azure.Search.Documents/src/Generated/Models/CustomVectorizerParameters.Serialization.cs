@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<IDictionary<string, string>> httpHeaders = default;
             Optional<string> httpMethod = default;
             Optional<TimeSpan> timeout = default;
@@ -86,7 +86,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("uri"u8))
                 {
-                    uri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpHeaders"u8))

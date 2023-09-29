@@ -8,24 +8,24 @@
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when a text value that needs to be vectorized is provided. </summary>
-    public partial class VectorizableTextQuery : SearchQueryVector
+    public partial class VectorizableTextQuery : VectorQuery
     {
         /// <summary> Initializes a new instance of VectorizableTextQuery. </summary>
         public VectorizableTextQuery()
         {
-            Kind = "text";
+            Kind = VectorQueryKind.Text;
         }
 
         /// <summary> Initializes a new instance of VectorizableTextQuery. </summary>
-        /// <param name="kind"> The name of the kind of vector query being performed. </param>
+        /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
-        internal VectorizableTextQuery(string kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, string text) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
+        internal VectorizableTextQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, string text) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
         {
             Text = text;
-            Kind = kind ?? "text";
+            Kind = kind;
         }
 
         /// <summary> The text to be vectorized to perform a vector search query. </summary>

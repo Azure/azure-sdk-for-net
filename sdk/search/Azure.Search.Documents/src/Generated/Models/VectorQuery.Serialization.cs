@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class SearchQueryVector : IUtf8JsonSerializable
+    public partial class VectorQuery : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchQueryVector DeserializeSearchQueryVector(JsonElement element)
+        internal static VectorQuery DeserializeVectorQuery(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -46,10 +46,10 @@ namespace Azure.Search.Documents.Models
                 switch (discriminator.GetString())
                 {
                     case "text": return VectorizableTextQuery.DeserializeVectorizableTextQuery(element);
-                    case "vector": return RawVector.DeserializeRawVector(element);
+                    case "vector": return RawVectorQuery.DeserializeRawVectorQuery(element);
                 }
             }
-            return UnknownSearchQueryVector.DeserializeUnknownSearchQueryVector(element);
+            return UnknownVectorQuery.DeserializeUnknownVectorQuery(element);
         }
     }
 }

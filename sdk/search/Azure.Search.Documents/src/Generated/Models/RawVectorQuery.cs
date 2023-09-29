@@ -11,28 +11,25 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
-    public partial class RawVector : SearchQueryVector
+    public partial class RawVectorQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of RawVector. </summary>
-        public RawVector()
+        /// <summary> Initializes a new instance of RawVectorQuery. </summary>
+        public RawVectorQuery()
         {
             Vector = new ChangeTrackingList<float>();
-            Kind = "vector";
+            Kind = VectorQueryKind.Vector;
         }
 
-        /// <summary> Initializes a new instance of RawVector. </summary>
-        /// <param name="kind"> The name of the kind of vector query being performed. </param>
+        /// <summary> Initializes a new instance of RawVectorQuery. </summary>
+        /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="vector"> The vector representation of a search query. </param>
-        internal RawVector(string kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, IList<float> vector) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
+        internal RawVectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, IReadOnlyList<float> vector) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
         {
             Vector = vector;
-            Kind = kind ?? "vector";
+            Kind = kind;
         }
-
-        /// <summary> The vector representation of a search query. </summary>
-        public IList<float> Vector { get; }
     }
 }

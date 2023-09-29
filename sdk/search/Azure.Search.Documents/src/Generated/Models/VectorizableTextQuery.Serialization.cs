@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Models
                 writer.WriteStringValue(Text);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             Optional<string> text = default;
-            string kind = default;
+            VectorQueryKind kind = default;
             Optional<int> k = default;
             Optional<string> fields = default;
             Optional<bool> exhaustive = default;
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new VectorQueryKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("k"u8))

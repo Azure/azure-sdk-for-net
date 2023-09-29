@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal AzureOpenAIEmbeddingSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string resourceUri, string deploymentId, string apiKey, SearchIndexerDataIdentity authIdentity) : base(oDataType, name, description, context, inputs, outputs)
+        internal AzureOpenAIEmbeddingSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, Uri resourceUri, string deploymentId, string apiKey, SearchIndexerDataIdentity authIdentity) : base(oDataType, name, description, context, inputs, outputs)
         {
             ResourceUri = resourceUri;
             DeploymentId = deploymentId;
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The resource uri for your Azure Open AI resource. </summary>
-        public string ResourceUri { get; set; }
+        public Uri ResourceUri { get; set; }
         /// <summary> ID of your Azure Open AI model deployment on the designated resource. </summary>
         public string DeploymentId { get; set; }
         /// <summary> API key for the designated Azure Open AI resource. </summary>

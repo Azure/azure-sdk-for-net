@@ -84,25 +84,10 @@ namespace Azure.Search.Documents.Tests
                     Profiles =
                     {
                         new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
-                        {
-                            Vectorizer = "openai"
-                        }
                     },
                     Algorithms =
                     {
                         new HnswVectorSearchAlgorithmConfiguration( "my-hsnw-vector-config")
-                    },
-                    Vectorizers =
-                    {
-                        new AzureOpenAIVectorizer("openai")
-                        {
-                            AzureOpenAIParameters  = new AzureOpenAIParameters()
-                            {
-                                ResourceUri = "Endpoint",
-                                ApiKey = "key",
-                                DeploymentId = "gpt-4-32k",
-                            }
-                        }
                     }
                 },
                 SemanticSettings = new()

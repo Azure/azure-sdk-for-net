@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DeploymentId))
             {
@@ -51,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> resourceUri = default;
+            Optional<Uri> resourceUri = default;
             Optional<string> deploymentId = default;
             Optional<string> apiKey = default;
             Optional<SearchIndexerDataIdentity> authIdentity = default;
@@ -59,7 +60,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("resourceUri"u8))
                 {
-                    resourceUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deploymentId"u8))

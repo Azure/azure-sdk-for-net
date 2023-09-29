@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Contains the parameters specific to using an Azure Open AI service for vectorization at query time. </summary>
@@ -24,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal AzureOpenAIParameters(string resourceUri, string deploymentId, string apiKey, SearchIndexerDataIdentity authIdentity)
+        internal AzureOpenAIParameters(Uri resourceUri, string deploymentId, string apiKey, SearchIndexerDataIdentity authIdentity)
         {
             ResourceUri = resourceUri;
             DeploymentId = deploymentId;
@@ -33,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The resource uri for your Azure Open AI resource. </summary>
-        public string ResourceUri { get; set; }
+        public Uri ResourceUri { get; set; }
         /// <summary> ID of your Azure Open AI model deployment on the designated resource. </summary>
         public string DeploymentId { get; set; }
         /// <summary> API key for the designated Azure Open AI resource. </summary>

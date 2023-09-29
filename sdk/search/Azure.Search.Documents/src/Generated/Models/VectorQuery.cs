@@ -9,22 +9,22 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// The query parameters for vector and hybrid search queries.
-    /// Please note <see cref="SearchQueryVector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="RawVector"/>.
+    /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="RawVectorQuery"/>.
     /// </summary>
-    public abstract partial class SearchQueryVector
+    public abstract partial class VectorQuery
     {
-        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
-        protected SearchQueryVector()
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        protected VectorQuery()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchQueryVector. </summary>
-        /// <param name="kind"> The name of the kind of vector query being performed. </param>
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
-        internal SearchQueryVector(string kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive)
+        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive)
         {
             Kind = kind;
             KNearestNeighborsCount = kNearestNeighborsCount;
@@ -32,8 +32,8 @@ namespace Azure.Search.Documents.Models
             Exhaustive = exhaustive;
         }
 
-        /// <summary> The name of the kind of vector query being performed. </summary>
-        internal string Kind { get; set; }
+        /// <summary> The kind of vector query being performed. </summary>
+        internal VectorQueryKind Kind { get; set; }
         /// <summary> Number of nearest neighbors to return as top hits. </summary>
         public int? KNearestNeighborsCount { get; set; }
         /// <summary> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </summary>

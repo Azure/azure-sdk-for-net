@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                       VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vectors = { new RawVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
@@ -222,6 +222,10 @@ namespace Azure.Search.Documents.Tests
 
             Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
         }
+
+        // TODO: Add tests for updating an index to modify the vectorizer within a profile.
+        // TODO: Add a test for duplicate profile names, which should throw an error.
+        // TODO: Add a test for updating the profile name of a vector field, which should throw an error.
 
         [Test]
         public async Task CreateIndexUsingFieldBuilder()

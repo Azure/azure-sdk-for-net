@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                     });
 
                 int count = 0;
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                         Filter = "Category eq 'Luxury'"
                     });
 
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Tests.Samples
                         "Top hotels in town",
                         new SearchOptions
                         {
-                            Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+                            VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
                         });
 
                 int count = 0;
@@ -173,7 +173,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
                         SemanticConfigurationName = "my-semantic-config",
@@ -242,9 +242,9 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vectors = {
-                            new RawVector() { Value = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
-                            new RawVector() { Value = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
+                        VectorQueries = {
+                            new RawVectorQuery() { Vector = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+                            new RawVectorQuery() { Vector = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
                         },
                     });
 
@@ -287,8 +287,8 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
                     new SearchOptions
                     {
-                        Vectors = { new RawVector() {
-                            Value = vectorizedResult,
+                        VectorQueries = { new RawVectorQuery() {
+                            Vector = vectorizedResult,
                             KNearestNeighborsCount = 3,
                             Fields = { "DescriptionVector", "CategoryVector" } } }
                     });
@@ -362,7 +362,7 @@ namespace Azure.Search.Documents.Tests.Samples
                         {
                             AzureOpenAIParameters  = new AzureOpenAIParameters()
                             {
-                                ResourceUri = "Endpoint",
+                                ResourceUri = new Uri("Endpoint"),
                                 ApiKey = "key",
                                 DeploymentId = "gpt-4-32k",
                             }

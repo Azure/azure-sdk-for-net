@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of CustomVectorizerParameters. </summary>
-        /// <param name="uri"> The url for the Web API. </param>
+        /// <param name="uri"> The uri for the Web API. </param>
         /// <param name="httpHeaders"> The headers required to make the http request. </param>
         /// <param name="httpMethod"> The method for the http request. </param>
         /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal CustomVectorizerParameters(string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, string authResourceId, SearchIndexerDataIdentity authIdentity)
+        internal CustomVectorizerParameters(Uri uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, string authResourceId, SearchIndexerDataIdentity authIdentity)
         {
             Uri = uri;
             HttpHeaders = httpHeaders;
@@ -41,8 +41,8 @@ namespace Azure.Search.Documents.Indexes.Models
             AuthIdentity = authIdentity;
         }
 
-        /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
+        /// <summary> The uri for the Web API. </summary>
+        public Uri Uri { get; set; }
         /// <summary> The headers required to make the http request. </summary>
         public IDictionary<string, string> HttpHeaders { get; }
         /// <summary> The method for the http request. </summary>
