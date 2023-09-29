@@ -330,7 +330,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task GetCheckpointLogsStartAndComplete()
         {
-            var clientIdentifier = Guid.NewGuid().ToString();
             var blobList = new List<BlobItem>
             {
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{Guid.NewGuid().ToString()}",
@@ -340,7 +339,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.ClientIdentifier, clientIdentifier },
                                                {BlobMetadataKey.Offset, "0"}
                                            })
             };
@@ -354,7 +352,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
 
             mockLog.Verify(m => m.GetCheckpointStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition));
-            mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, clientIdentifier));
+            mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, null));
         }
 
         /// <summary>
