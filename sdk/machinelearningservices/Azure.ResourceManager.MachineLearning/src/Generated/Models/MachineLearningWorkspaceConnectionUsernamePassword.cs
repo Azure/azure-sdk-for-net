@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionUsernamePassword. </summary>
-        /// <param name="username"></param>
         /// <param name="password"></param>
-        internal MachineLearningWorkspaceConnectionUsernamePassword(string username, string password)
+        /// <param name="username"></param>
+        internal MachineLearningWorkspaceConnectionUsernamePassword(string password, string username)
         {
-            Username = username;
             Password = password;
+            Username = username;
         }
 
-        /// <summary> Gets or sets the username. </summary>
-        public string Username { get; set; }
         /// <summary> Gets or sets the password. </summary>
         public string Password { get; set; }
+        /// <summary> Gets or sets the username. </summary>
+        public string Username { get; set; }
     }
 }
