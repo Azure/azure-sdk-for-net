@@ -26,6 +26,7 @@ namespace Azure.Core.Pipeline
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
         // The transport's private HttpClient has been made internal because it is used by tests.
+        // TODO: move these tests into System.Rest
         internal HttpClient Client { get; }
 
         /// <summary>

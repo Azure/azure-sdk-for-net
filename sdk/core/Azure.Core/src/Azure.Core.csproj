@@ -15,6 +15,8 @@
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
 
+    <!-- net5.0 is out of support -->
+    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
