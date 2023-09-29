@@ -2,15 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -19,7 +16,6 @@ namespace Azure.Storage.Files.DataLake
     /// </summary>
     public class DataLakeAppendFileClient : DataLakeFileClient
     {
-        //TODO possible need to check that DataLakeFileClientOptions.ServiceVersion >= 2020-02-10.
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
@@ -38,7 +34,7 @@ namespace Azure.Storage.Files.DataLake
         /// file.
         /// </param>
         public DataLakeAppendFileClient(Uri fileUri)
-            : this(fileUri, (HttpPipelinePolicy)null, null, null)
+            : this(fileUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential: null)
         {
         }
 
@@ -56,7 +52,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeAppendFileClient(Uri fileUri, DataLakeClientOptions options)
-            : this(fileUri, (HttpPipelinePolicy)null, options, null)
+            : this(fileUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
         {
         }
 
@@ -195,8 +191,11 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
-        public DataLakeAppendFileClient(Uri fileUri, AzureSasCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy<DataLakeUriBuilder>(fileUri), options, null)
+        public DataLakeAppendFileClient
+            (Uri fileUri,
+            AzureSasCredential credential,
+            DataLakeClientOptions options)
+            : this(fileUri, credential.AsPolicy<DataLakeUriBuilder>(fileUri), options, credential)
         {
         }
 
@@ -211,8 +210,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
-        public DataLakeAppendFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
+        public DataLakeAppendFileClient(
+            Uri fileUri,
+            TokenCredential credential)
+            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, credential)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -233,8 +234,11 @@ namespace Azure.Storage.Files.DataLake
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public DataLakeAppendFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(options), options, null)
+        public DataLakeAppendFileClient(
+            Uri fileUri,
+            TokenCredential credential,
+            DataLakeClientOptions options)
+            : this(fileUri, credential.AsPolicy(options), options, credential)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -264,7 +268,75 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
-            : base(fileUri, authentication, options, storageSharedKeyCredential)
+            : base(
+                  fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeAppendFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            AzureSasCredential sasCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  sasCredential: sasCredential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeAppendFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Token credential.
+        /// </param>
+        internal DataLakeAppendFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            TokenCredential tokenCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  tokenCredential: tokenCredential)
         {
         }
 
