@@ -137,7 +137,7 @@
 #/<NotInRepo>/          @ilayrn @orhasban @zoharHenMicrosoft @sagivf @Aviv-Yaniv
 
 # ServiceLabel: %Azure Stack %Service Attention
-/sdk/azurestack*                                                   @sijuman @sarathys @bganapa @rakku-ms
+/sdk/azurestack*/                                                   @sijuman @sarathys @bganapa @rakku-ms
 
 # ServiceLabel: %Azure.Spring - Cosmos %Service Attention
 #/<NotInRepo>/                                                     @kushagraThapar
@@ -223,7 +223,7 @@
 #/<NotInRepo>/                                                     @robch
 
 # ServiceLabel: %Cognitive - LUIS %Service Attention
-/sdk/cognitiveservices/Language.LUIS*                              @cahann @kayousef
+/sdk/cognitiveservices/Language.LUIS*/                              @cahann @kayousef
 
 # ServiceLabel: %Cognitive - Content Moderator %Service Attention
 #/<NotInRepo>/                                                     @swiftarrow11
@@ -238,7 +238,7 @@
 #/<NotInRepo>/                                                     @olduroja
 
 # ServiceLabel: %Cognitive - Bing %Service Attention
-/sdk/cognitiveservices/Search.Bing*                                @jaggerbodas-ms @arwong
+/sdk/cognitiveservices/Search.Bing*/                                @jaggerbodas-ms @arwong
 
 # ServiceLabel: %Cognitive - Mgmt %Service Attention
 /sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices/ @yangyuan
@@ -488,7 +488,7 @@
 #/<NotInRepo>/          @ethanann-ms @vighatke
 
 # PRLabel: %Iot
-/sdk/iot*                                                          @ethanann-ms @vighatke
+/sdk/iot*/                                                          @ethanann-ms @vighatke
 
 # PRLabel: %IotHub
 # ServiceLabel: %IotHub %Service Attention
@@ -591,7 +591,7 @@
 /sdk/mixedreality/                                                 @crtreasu @rgarcia @JoshLove-msft
 
 # ServiceLabel: %Network %Service Attention
-/sdk/network*                                                      @aznetsuppgithub
+/sdk/network*/                                                      @aznetsuppgithub
 
 # ServiceLabel: %Network - Application Gateway %Service Attention
 #/<NotInRepo>/                                                     @appgwsuppgithub
@@ -627,7 +627,7 @@
 #/<NotInRepo>/                                                     @netwatchsuppgithub
 
 # ServiceLabel: %Network - DNS %Service Attention
-/sdk/dns*                                                          @dnssuppgithub
+/sdk/dns*/                                                          @dnssuppgithub
 
 # ServiceLabel: %Network - Network Virtual Appliance %Service Attention
 #/<NotInRepo>/                                                     @nvasuppgithub
@@ -753,7 +753,7 @@
 #/<NotInRepo>/                                                     @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*                                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
+/sdk/storage*/                                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
 
 # PRLabel: %Storage
 /sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
