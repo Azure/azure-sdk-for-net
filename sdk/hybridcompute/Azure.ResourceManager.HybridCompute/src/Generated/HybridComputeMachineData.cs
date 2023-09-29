@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
         public string ParentClusterResourceId { get; set; }
         /// <summary> Specifies whether any MS SQL instance is discovered on the machine. </summary>
-        public string MssqlDiscovered { get; set; }
+        public string MsSqlDiscovered { get; set; }
         /// <summary> Detected properties from the machine. </summary>
         public IReadOnlyDictionary<string, string> DetectedProperties { get; }
     }
