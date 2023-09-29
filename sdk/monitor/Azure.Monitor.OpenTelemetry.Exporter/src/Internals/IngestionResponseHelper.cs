@@ -45,6 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
+        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
         internal class ResponseObject
         {
             [JsonPropertyName("itemsReceived")]
@@ -57,6 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             public List<ErrorObject>? Errors { get; set; }
         }
 
+        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
         internal class ErrorObject
         {
             [JsonPropertyName("index")]
