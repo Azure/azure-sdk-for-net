@@ -669,7 +669,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_08_06)]
+        [PlaybackOnly("This feature is not enabled in prod")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_08_06)]
         public async Task AppendAsync_FastPath()
         {
             DataLakeServiceClient service = GetServiceClient_OAuth();
