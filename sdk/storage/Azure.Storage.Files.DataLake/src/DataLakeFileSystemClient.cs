@@ -587,6 +587,20 @@ namespace Azure.Storage.Files.DataLake
                 ClientConfiguration);
 
         /// <summary>
+        /// Create a new <see cref="DataLakeAppendFileClient"/> object by appending
+        /// <paramref name="fileName"/> to the end of <see cref="Uri"/>.  The
+        /// new <see cref="DataLakeFileClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakeFileClient"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the directory.</param>
+        /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
+        public virtual DataLakeAppendFileClient GetAppendFileClient(string fileName)
+            => new DataLakeAppendFileClient(
+                Uri,
+                fileName,
+                ClientConfiguration);
+
+        /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
         private void SetNameFieldsIfNull()

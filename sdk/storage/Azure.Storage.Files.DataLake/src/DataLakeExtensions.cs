@@ -990,6 +990,19 @@ namespace Azure.Storage.Files.DataLake
             return new Blobs.Models.CustomerProvidedKey(dataLakeCustomerProvidedKey.Value.EncryptionKey);
         }
 
+        internal static ConcurrentAppendResult ToConcurrentAppendResult(this ResponseWithHeaders<PathConcurrentAppendHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new ConcurrentAppendResult
+            {
+                CommittedBlockCount = response.Headers.CommittedBlockCount.GetValueOrDefault()
+            };
+        }
+
         #region ValidateConditionsNotPresent
         internal static void ValidateConditionsNotPresent(
             this RequestConditions requestConditions,

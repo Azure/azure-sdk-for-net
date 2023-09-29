@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="resource"> The value must be "filesystem" for all filesystem operations. The default value is "filesystem". </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-01-05". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-05-05". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="resource"/> or <paramref name="version"/> is null. </exception>
         public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string resource, string version)
         {
