@@ -29,7 +29,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
-        // Internal for testing
+        // The transport's private HttpClient has been made internal because it is used by tests.
         internal HttpClient Client { get; }
 
         /// <summary>
@@ -423,6 +423,7 @@ namespace Azure.Core.Pipeline
             {
                 Client.Dispose();
             }
+
             GC.SuppressFinalize(this);
         }
 

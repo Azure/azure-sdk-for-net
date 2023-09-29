@@ -17,7 +17,6 @@ namespace Azure.Core.Pipeline
         private sealed class HttpClientTransportResponse : Response
         {
             private readonly HttpResponseMessage _responseMessage;
-
             private readonly HttpContent _responseContent;
 
 #pragma warning disable CA2213 // Content stream is intentionally not disposed

@@ -106,7 +106,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
+            internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
                 var method = ToHttpClientMethod(Method);
                 var uri = Uri.ToUri();
@@ -170,21 +170,7 @@ namespace Azure.Core.Pipeline
                 _ => throw new InvalidOperationException($"Unexpected type for header {headerName}: {value?.GetType()}")
             };
 
-            public override void Dispose()
-            {
-                _headers.Dispose();
-                var content = Content;
-                if (content != null)
-                {
-                    Content = null;
-                    content.Dispose();
-                }
-            }
-
-            public override string ToString() => BuildRequestMessage(default).ToString();
-
             private static readonly HttpMethod s_patch = new HttpMethod("PATCH");
-
             private static HttpMethod ToHttpClientMethod(RequestMethod requestMethod)
             {
                 var method = requestMethod.Method;
@@ -228,6 +214,19 @@ namespace Azure.Core.Pipeline
                 return new HttpMethod(method);
             }
 
+            public override void Dispose()
+            {
+                _headers.Dispose();
+                var content = Content;
+                if (content != null)
+                {
+                    Content = null;
+                    content.Dispose();
+                }
+            }
+
+            public override string ToString() => BuildRequestMessage(default).ToString();
+
             private readonly struct IgnoreCaseString : IEquatable<IgnoreCaseString>
             {
                 private readonly string _value;
@@ -261,20 +260,18 @@ namespace Azure.Core.Pipeline
                     _cancellationToken = cancellationToken;
                 }
 
-                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context) => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
+                    => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
 
-                protected override bool TryComputeLength(out long length) => _pipelineContent.TryComputeLength(out length);
+                protected override bool TryComputeLength(out long length)
+                    => _pipelineContent.TryComputeLength(out length);
 
 #if NET5_0_OR_GREATER
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                {
-                    await _pipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-                }
+                    => await _pipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
                 protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                {
-                    _pipelineContent.WriteTo(stream, cancellationToken);
-                }
+                    => _pipelineContent.WriteTo(stream, cancellationToken);
 #endif
             }
         }
