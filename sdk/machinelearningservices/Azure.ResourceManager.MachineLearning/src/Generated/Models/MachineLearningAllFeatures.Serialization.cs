@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AllFeatures : IUtf8JsonSerializable
+    public partial class MachineLearningAllFeatures : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static AllFeatures DeserializeAllFeatures(JsonElement element)
+        internal static MachineLearningAllFeatures DeserializeMachineLearningAllFeatures(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AllFeatures(filterType);
+            return new MachineLearningAllFeatures(filterType);
         }
     }
 }

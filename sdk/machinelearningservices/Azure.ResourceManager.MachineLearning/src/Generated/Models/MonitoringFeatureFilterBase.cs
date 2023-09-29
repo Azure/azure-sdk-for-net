@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// The MonitoringFeatureFilterBase.
     /// Please note <see cref="MonitoringFeatureFilterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AllFeatures"/>, <see cref="FeatureSubset"/> and <see cref="TopNFeaturesByAttribution"/>.
+    /// The available derived classes include <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/> and <see cref="TopNFeaturesByAttribution"/>.
     /// </summary>
     public abstract partial class MonitoringFeatureFilterBase
     {

@@ -72,7 +72,6 @@ override-operation-name:
 no-property-type-replacement:
 - ResourceId
 - VirtualMachineImage
-- AllFeatures
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}: MachineLearningCodeContainer
@@ -103,6 +102,7 @@ prepend-rp-prefix:
   - Registry
   - Webhook
   - WebhookType
+  - AllFeatures
 
 rename-mapping:
   FeaturesetContainer: MachineLearningFeatureSetContainer
@@ -496,8 +496,8 @@ rename-mapping:
   EncryptionProperty.storageAccountResourceId: -|arm-id
   MLAssistConfiguration: MachineLearningAssistConfiguration
   MLAssistConfigurationEnabled: MachineLearningAssistEnabledConfiguration
-  MlflowAutologger: MachineLearningflowAutologger
-  MLFlowAutologgerState: MachineLearningflowAutologgerState
+  MlflowAutologger: MachineLearningFlowAutoLogger
+  MLFlowAutologgerState: MachineLearningFlowAutoLoggerState
   MultiSelect: LabelCategoryMultiSelect
   PackageRequest: ModelPackageContent
   PackageResponse: ModelPackageResult
@@ -515,6 +515,8 @@ rename-mapping:
   RuleType: OutboundRuleType
   StatusMessage: JobStatusMessage
   StatusMessageLevel: JobStatusMessageLevel
+  ImageType.azureml: AzureML
+  ProtectionLevel: IntellectualProtectionLevel
 
 directive:
   - from: swagger-document

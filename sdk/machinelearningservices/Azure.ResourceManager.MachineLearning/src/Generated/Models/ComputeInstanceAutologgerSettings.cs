@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of ComputeInstanceAutologgerSettings. </summary>
         /// <param name="mlflowAutologger"> Indicates whether mlflow autologger is enabled for notebooks. </param>
-        internal ComputeInstanceAutologgerSettings(MachineLearningflowAutologger? mlflowAutologger)
+        internal ComputeInstanceAutologgerSettings(MachineLearningFlowAutoLogger? mlflowAutologger)
         {
             MlflowAutologger = mlflowAutologger;
         }
 
         /// <summary> Indicates whether mlflow autologger is enabled for notebooks. </summary>
-        public MachineLearningflowAutologger? MlflowAutologger { get; set; }
+        public MachineLearningFlowAutoLogger? MlflowAutologger { get; set; }
     }
 }

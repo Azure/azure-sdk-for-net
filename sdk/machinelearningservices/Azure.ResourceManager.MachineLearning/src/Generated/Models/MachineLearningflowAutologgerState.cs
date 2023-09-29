@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine the state of mlflow autologger. </summary>
+    /// <summary>
+    /// Enum to determine the state of mlflow autologger.
+    /// Serialized Name: MLFlowAutologgerState
+    /// </summary>
     public readonly partial struct MachineLearningflowAutologgerState : IEquatable<MachineLearningflowAutologgerState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: MLFlowAutologgerState.Enabled
+        /// </summary>
         public static MachineLearningflowAutologgerState Enabled { get; } = new MachineLearningflowAutologgerState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: MLFlowAutologgerState.Disabled
+        /// </summary>
         public static MachineLearningflowAutologgerState Disabled { get; } = new MachineLearningflowAutologgerState(DisabledValue);
         /// <summary> Determines if two <see cref="MachineLearningflowAutologgerState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningflowAutologgerState left, MachineLearningflowAutologgerState right) => left.Equals(right);

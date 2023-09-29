@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         private const string DockerValue = "docker";
-        private const string AzuremlValue = "azureml";
+        private const string AzureMLValue = "azureml";
 
         /// <summary> docker. </summary>
         public static ImageType Docker { get; } = new ImageType(DockerValue);
         /// <summary> azureml. </summary>
-        public static ImageType Azureml { get; } = new ImageType(AzuremlValue);
+        public static ImageType AzureML { get; } = new ImageType(AzureMLValue);
         /// <summary> Determines if two <see cref="ImageType"/> values are the same. </summary>
         public static bool operator ==(ImageType left, ImageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageType"/> values are not the same. </summary>

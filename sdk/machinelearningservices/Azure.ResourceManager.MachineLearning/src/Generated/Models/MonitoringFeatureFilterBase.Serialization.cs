@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AllFeatures": return AllFeatures.DeserializeAllFeatures(element);
+                    case "AllFeatures": return MachineLearningAllFeatures.DeserializeMachineLearningAllFeatures(element);
                     case "FeatureSubset": return FeatureSubset.DeserializeFeatureSubset(element);
                     case "TopNByAttribution": return TopNFeaturesByAttribution.DeserializeTopNFeaturesByAttribution(element);
                 }

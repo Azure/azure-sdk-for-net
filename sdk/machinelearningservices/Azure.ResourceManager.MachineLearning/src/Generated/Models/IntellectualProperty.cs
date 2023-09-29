@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of IntellectualProperty. </summary>
         /// <param name="protectionLevel"> Protection level of the Intellectual Property. </param>
         /// <param name="publisher"> [Required] Publisher of the Intellectual Property. Must be the same as Registry publisher name. </param>
-        internal IntellectualProperty(ProtectionLevel? protectionLevel, string publisher)
+        internal IntellectualProperty(IntellectualProtectionLevel? protectionLevel, string publisher)
         {
             ProtectionLevel = protectionLevel;
             Publisher = publisher;
         }
 
         /// <summary> Protection level of the Intellectual Property. </summary>
-        public ProtectionLevel? ProtectionLevel { get; set; }
+        public IntellectualProtectionLevel? ProtectionLevel { get; set; }
         /// <summary> [Required] Publisher of the Intellectual Property. Must be the same as Registry publisher name. </summary>
         public string Publisher { get; set; }
     }

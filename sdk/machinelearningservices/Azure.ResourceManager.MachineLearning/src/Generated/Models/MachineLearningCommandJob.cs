@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
         internal AutologgerSettings AutologgerSettings { get; set; }
         /// <summary> [Required] Indicates whether mlflow autologger is enabled. </summary>
-        public MachineLearningflowAutologgerState? MlflowAutologger
+        public MachineLearningFlowAutoLoggerState? MlflowAutologger
         {
-            get => AutologgerSettings is null ? default(MachineLearningflowAutologgerState?) : AutologgerSettings.MlflowAutologger;
+            get => AutologgerSettings is null ? default(MachineLearningFlowAutoLoggerState?) : AutologgerSettings.MlflowAutologger;
             set
             {
                 AutologgerSettings = value.HasValue ? new AutologgerSettings(value.Value) : null;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Specifies settings for autologger. </summary>
         internal ComputeInstanceAutologgerSettings AutologgerSettings { get; set; }
         /// <summary> Indicates whether mlflow autologger is enabled for notebooks. </summary>
-        public MachineLearningflowAutologger? MlflowAutologger
+        public MachineLearningFlowAutoLogger? MlflowAutologger
         {
             get => AutologgerSettings is null ? default : AutologgerSettings.MlflowAutologger;
             set

@@ -737,7 +737,7 @@ Limits =
                         VmSize = "STANDARD_NC6",
                         SubnetId = new ResourceIdentifier("test-subnet-resource-id"),
                         ApplicationSharingPolicy = MachineLearningApplicationSharingPolicy.Personal,
-                        MlflowAutologger = MachineLearningflowAutologger.Enabled,
+                        MlflowAutologger = MachineLearningFlowAutoLogger.Enabled,
                         SshSettings = new MachineLearningComputeInstanceSshSettings()
                         {
                             SshPublicAccess = MachineLearningSshPublicAccess.Disabled,

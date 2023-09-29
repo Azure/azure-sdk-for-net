@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The AllFeatures. </summary>
-    public partial class AllFeatures : MonitoringFeatureFilterBase
+    /// <summary> The MachineLearningAllFeatures. </summary>
+    public partial class MachineLearningAllFeatures : MonitoringFeatureFilterBase
     {
-        /// <summary> Initializes a new instance of AllFeatures. </summary>
-        public AllFeatures()
+        /// <summary> Initializes a new instance of MachineLearningAllFeatures. </summary>
+        public MachineLearningAllFeatures()
         {
             FilterType = MonitoringFeatureFilterType.AllFeatures;
         }
 
-        /// <summary> Initializes a new instance of AllFeatures. </summary>
+        /// <summary> Initializes a new instance of MachineLearningAllFeatures. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
-        internal AllFeatures(MonitoringFeatureFilterType filterType) : base(filterType)
+        internal MachineLearningAllFeatures(MonitoringFeatureFilterType filterType) : base(filterType)
         {
             FilterType = filterType;
         }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningflowAutologgerState mlflowAutologger = default;
+            MachineLearningFlowAutoLoggerState mlflowAutologger = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mlflowAutologger"u8))
                 {
-                    mlflowAutologger = new MachineLearningflowAutologgerState(property.Value.GetString());
+                    mlflowAutologger = new MachineLearningFlowAutoLoggerState(property.Value.GetString());
                     continue;
                 }
             }

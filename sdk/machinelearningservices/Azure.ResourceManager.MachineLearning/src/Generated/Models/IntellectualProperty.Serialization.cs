@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ProtectionLevel> protectionLevel = default;
+            Optional<IntellectualProtectionLevel> protectionLevel = default;
             string publisher = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    protectionLevel = new ProtectionLevel(property.Value.GetString());
+                    protectionLevel = new IntellectualProtectionLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publisher"u8))

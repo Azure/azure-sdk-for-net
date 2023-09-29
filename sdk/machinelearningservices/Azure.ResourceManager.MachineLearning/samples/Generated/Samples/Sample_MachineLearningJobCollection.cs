@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             string id = "string";
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
-                MlflowAutologger = MachineLearningflowAutologgerState.Disabled,
+                MlflowAutologger = MachineLearningFlowAutoLoggerState.Disabled,
                 CodeId = new ResourceIdentifier("string"),
                 Distribution = new TensorFlowDistributionConfiguration()
                 {
@@ -770,7 +770,7 @@ Properties =
             string id = "string";
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
-                MlflowAutologger = MachineLearningflowAutologgerState.Disabled,
+                MlflowAutologger = MachineLearningFlowAutoLoggerState.Disabled,
                 CodeId = new ResourceIdentifier("string"),
                 Distribution = new TensorFlowDistributionConfiguration()
                 {
@@ -987,7 +987,7 @@ Properties =
             string id = "string";
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
-                MlflowAutologger = MachineLearningflowAutologgerState.Disabled,
+                MlflowAutologger = MachineLearningFlowAutoLoggerState.Disabled,
                 CodeId = new ResourceIdentifier("string"),
                 Distribution = new TensorFlowDistributionConfiguration()
                 {
