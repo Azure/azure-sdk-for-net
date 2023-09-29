@@ -36,9 +36,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     }
     public static partial class EventTriggerMetrics
     {
-        public static string Platform { get { throw null; } set { } }
-        public static string ProductVersion { get { throw null; } set { } }
-        public static string RunTime { get { throw null; } set { } }
+        public static string MetricsHeader;
+        public static string ProductName;
     }
     public enum EventType
     {
