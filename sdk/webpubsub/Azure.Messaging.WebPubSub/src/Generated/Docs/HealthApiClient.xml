@@ -8,6 +8,7 @@ This sample shows how to call GetServiceStatusAsync.
 HealthApiClient client = new HealthApiClient("<Endpoint>");
 
 Response response = await client.GetServiceStatusAsync();
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call GetServiceStatusAsync with all request content.
@@ -15,6 +16,7 @@ This sample shows how to call GetServiceStatusAsync with all request content.
 HealthApiClient client = new HealthApiClient("<Endpoint>");
 
 Response response = await client.GetServiceStatusAsync();
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -25,6 +27,7 @@ This sample shows how to call GetServiceStatus.
 HealthApiClient client = new HealthApiClient("<Endpoint>");
 
 Response response = client.GetServiceStatus();
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call GetServiceStatus with all request content.
@@ -32,6 +35,7 @@ This sample shows how to call GetServiceStatus with all request content.
 HealthApiClient client = new HealthApiClient("<Endpoint>");
 
 Response response = client.GetServiceStatus();
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>

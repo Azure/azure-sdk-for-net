@@ -562,47 +562,24 @@
 #/<NotInRepo>/                                                     @kpiteira
 
 # ServiceLabel: %Monitor %Service Attention
-/sdk/monitor/                                                      @SameergMS @dadunl
+#/<NotInRepo>/                                                     @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
+
+# PRLabel: %Monitor
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
-
-# PRLabel: %Monitor - Ingestion
 /sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
-
-# PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
 /sdk/applicationinsights/Microsoft.Azure.App*/                     @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
-# ServiceLabel: %Monitor - Autoscale %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# ServiceLabel: %Monitor - ActivityLogs %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# PRLabel: %Monitor - Exporter
-# ServiceLabel: %Monitor - Exporter %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
-
 # PRLabel: %Monitor - Distro
 # ServiceLabel: %Monitor - Distro %Service Attention
 /sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
-# ServiceLabel: %Monitor - Metrics %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# ServiceLabel: %Monitor - Diagnostic Settings %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# ServiceLabel: %Monitor - Alerts %Service Attention
-#/<NotInRepo>/                                                     @AzmonAlerts
-
-# ServiceLabel: %Monitor - ActionGroups %Service Attention
-#/<NotInRepo>/                                                     @AzmonActionG
-
-# ServiceLabel: %Monitor - LogAnalytics %Service Attention
-#/<NotInRepo>/                                                     @AzmonLogA
+# PRLabel: %Monitor - Exporter
+# ServiceLabel: %Monitor - Exporter %Service Attention
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # ServiceLabel: %MySQL %Service Attention
 /sdk/mysql/Microsoft.Azure.Management.MySQL/                       @ajlam @ambhatna @kummanish
@@ -678,7 +655,6 @@
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
 
-# PRLabel: %Monitor - Operational Insights
 # ServiceLabel: Monitor - Operational Insights %Service Attention
 /sdk/operationalinsights/Microsoft.Azure.Ope*/                     @omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 

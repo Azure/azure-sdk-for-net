@@ -225,12 +225,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="hash"> If specified, return CodeVersion assets with specified content hash value, regardless of name. </param>
+        /// <param name="hashVersion"> Hash algorithm version when listing by hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningCodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningCodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string hash = null, string hashVersion = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningCodeVersionCodeVersionsClientDiagnostics, Pipeline, "MachineLearningCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -250,12 +252,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="hash"> If specified, return CodeVersion assets with specified content hash value, regardless of name. </param>
+        /// <param name="hashVersion"> Hash algorithm version when listing by hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningCodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningCodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string hash = null, string hashVersion = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningCodeVersionCodeVersionsClientDiagnostics, Pipeline, "MachineLearningCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

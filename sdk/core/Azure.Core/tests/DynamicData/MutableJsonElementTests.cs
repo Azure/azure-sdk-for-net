@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -546,6 +547,36 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("foo").Set(true);
             Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").TryGetDateTimeOffset(out d));
             Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetDateTimeOffset());
+        }
+
+        [Test]
+        public void StaticMethodsAreSameAsExpected()
+        {
+            var expectedMethods = new List<string> { "GetString", "GetFormatExceptionText", "SerializeToJsonElement", "ParseFromBytes", "GetReaderForElement", "GetFirstSegment", "GetLastSegment", "CopyTo" };
+            var actualMethods = Type.GetType("Azure.Core.Json.MutableJsonElement, Azure.Core").GetMethods(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+            var message = $"There are {expectedMethods.Count} static methods expected in MutableJsonElement. If adding a new static method, ensure it is compatible with trimming or is annotated correctly.";
+
+            foreach (var method in actualMethods)
+            {
+                var isExpected = expectedMethods.Contains(method.Name);
+                Assert.IsTrue(isExpected, message);
+            }
+        }
+
+        [Test]
+        public void NestedTypesAreSameAsExpected()
+        {
+            var expectedNestedTypes = new List<string> { "MutableJsonElementConverter", "ArrayEnumerator", "ObjectEnumerator" };
+            var actualNestedTypes = Type.GetType("Azure.Core.Json.MutableJsonElement, Azure.Core").GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+            var message = $"There are {expectedNestedTypes.Count} nested types expected in MutableJsonElement. If adding a new nested type, ensure it is compatible with trimming or is annotated correctly.";
+
+            foreach (var nestedType in actualNestedTypes)
+            {
+                var isExpected = expectedNestedTypes.Contains(nestedType.Name);
+                Assert.IsTrue(isExpected, message);
+            }
         }
 
         #region Helpers
