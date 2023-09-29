@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Azure.Storage.DataMovement

@@ -731,6 +731,61 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        public async Task ReadJobPlanFileAsync()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            // Act
+            JobPlanHeader header;
+            using (Stream stream = await transferCheckpointer.ReadJobPlanFileAsync(transferId, offset: 0, length: 0))
+            {
+                header = JobPlanHeader.Deserialize(stream);
+            }
+
+            // Assert
+            Assert.IsNotNull(header);
+            Assert.AreEqual(DataMovementConstants.JobPlanFile.SchemaVersion, header.Version);
+            Assert.AreEqual(transferId, header.TransferId);
+            Assert.AreEqual(CheckpointerTesting.DefaultWebSourcePath, header.ParentSourcePath);
+            Assert.AreEqual(CheckpointerTesting.DefaultWebDestinationPath, header.ParentDestinationPath);
+        }
+
+        [Test]
+        public async Task ReadJobPlanFileAsync_Partial()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            // Act
+            string actualTransferId;
+            int length = DataMovementConstants.GuidSizeInBytes;
+            using (Stream stream = await transferCheckpointer.ReadJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.TransferIdIndex,
+                length))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+                byte[] transferIdBytes = reader.ReadBytes(length);
+                actualTransferId = new Guid(transferIdBytes).ToString();
+            }
+
+            DataTransferStatus actualJobStatus = await transferCheckpointer.GetJobStatus(transferId);
+
+            // Assert
+            Assert.AreEqual(transferId, actualTransferId);
+            Assert.AreEqual(actualJobStatus, new DataTransferStatus());
+        }
+
+        [Test]
         public async Task ReadableStreamAsync()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();

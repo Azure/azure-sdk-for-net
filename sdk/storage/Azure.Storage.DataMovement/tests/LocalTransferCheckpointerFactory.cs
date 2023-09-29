@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement.Tests
                 DateTimeOffset.UtcNow,
                 JobPlanOperation.ServiceToService,
                 false, /* enumerationComplete */
-                JobPlanStatus.Queued,
+                new DataTransferStatus(),
                 _testSourcePath,
                 _testDestinationPath);
 

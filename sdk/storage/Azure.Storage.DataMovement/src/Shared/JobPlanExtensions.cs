@@ -284,5 +284,54 @@ namespace Azure.Storage.DataMovement
             }
             return value;
         }
+
+        internal static JobPlanStatus ToJobPlanStatus(this DataTransferStatus transferStatus)
+        {
+            if (transferStatus == default)
+            {
+                return JobPlanStatus.None;
+            }
+
+            JobPlanStatus jobPlanStatus = (JobPlanStatus)Enum.Parse(typeof(JobPlanStatus), transferStatus.State.ToString());
+            if (transferStatus.HasFailedItems)
+            {
+                jobPlanStatus |= JobPlanStatus.HasFailed;
+            }
+            if (transferStatus.HasSkippedItems)
+            {
+                jobPlanStatus |= JobPlanStatus.HasSkipped;
+            }
+
+            return jobPlanStatus;
+        }
+
+        internal static DataTransferStatus ToDataTransferStatus(this JobPlanStatus jobPlanStatus)
+        {
+            bool hasFailed = jobPlanStatus.HasFlag(JobPlanStatus.HasFailed);
+            bool hasSkipped = jobPlanStatus.HasFlag(JobPlanStatus.HasSkipped);
+            DataTransferState state = (DataTransferState)Enum.Parse(typeof(DataTransferState), jobPlanStatus.ToString());
+
+            return new DataTransferStatusInternal(state, hasFailed, hasSkipped);
+        }
+
+        internal static void WriteVariableLengthFieldInfo(
+            BinaryWriter writer,
+            byte[] bytes,
+            ref int currentVariableLengthIndex)
+        {
+            // Write the offset, -1 if size is 0
+            if (bytes.Length > 0)
+            {
+                writer.Write(currentVariableLengthIndex);
+                currentVariableLengthIndex += bytes.Length;
+            }
+            else
+            {
+                writer.Write(-1);
+            }
+
+            // Write the length
+            writer.Write(bytes.Length);
+        }
     }
 }

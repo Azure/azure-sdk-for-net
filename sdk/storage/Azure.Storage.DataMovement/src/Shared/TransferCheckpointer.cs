@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -69,6 +70,26 @@ namespace Azure.Storage.DataMovement
         /// <returns>The number of chunks in the job part.</returns>
         public abstract Task<int> CurrentJobPartCountAsync(
             string transferId,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Reads the specified part of the job plan file and returns it in a Stream.
+        /// </summary>
+        /// <param name="transferId">The transfer ID.</param>
+        /// <param name="offset">The offset to start reading the job plan file at.</param>
+        /// <param name="length">
+        /// The maximum number of bytes to read.
+        /// Specify 0 (zero) to create a stream over teh whole file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be canceled.
+        /// </param>
+        /// <returns>A Stream of the requested part of the Job Plan File.</returns>
+        public abstract Task<Stream> ReadJobPlanFileAsync(
+            string transferId,
+            int offset,
+            int length,
             CancellationToken cancellationToken = default);
 
         /// <summary>
