@@ -144,16 +144,6 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override void Send(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
-    public partial class MessagePipelineTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
-    {
-        public MessagePipelineTransport() { }
-        public MessagePipelineTransport(System.Net.Http.HttpClient client) { }
-        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
-        public virtual void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
-    }
     public abstract partial class PipelineEnumerator
     {
         protected PipelineEnumerator() { }
@@ -176,6 +166,16 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract TMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);
         public abstract void Send(TMessage message);
         public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
+    }
+    public partial class RestPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
+    {
+        public RestPipelineTransport() { }
+        public RestPipelineTransport(System.Net.Http.HttpClient client) { }
+        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
+        public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Experimental
