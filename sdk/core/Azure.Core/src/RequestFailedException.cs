@@ -262,7 +262,7 @@ namespace Azure
 
 #if NET6_0_OR_GREATER
                 error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content, ResponseErrorSourceGenerationContext.Default.ErrorResponse)?.Error;
-                error ?? = System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content, ResponseErrorSourceGenerationContext.Default.ResponseError);
+                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content, ResponseErrorSourceGenerationContext.Default.ResponseError);
 #else
                 error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
                 error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);

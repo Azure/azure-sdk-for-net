@@ -18,8 +18,7 @@ namespace Azure
     [TypeReferenceType(true, new string[] { nameof(Target), nameof(Details) })]
     public sealed class ResponseError
     {
-        // This field needs to be internal rather than private so that it can be used by the System.Text.Json source generator
-        internal readonly JsonElement _element;
+        private readonly JsonElement _element;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ResponseError"/>.
@@ -86,7 +85,7 @@ namespace Azure
                 return Read(element);
             }
 
-            internal static ResponseError? Read(JsonElement element)
+            private static ResponseError? Read(JsonElement element)
             {
                 if (element.ValueKind == JsonValueKind.Null)
                 {
