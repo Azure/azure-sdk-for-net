@@ -46,18 +46,17 @@ namespace Azure.Core.Pipeline
         }
 
         public override void Process(HttpMessage message)
-        {
-            ProcessInternal(message, false).EnsureCompleted();
-        }
+            => ProcessSyncOrAsync(message, async: false).EnsureCompleted();
 
         public override async ValueTask ProcessAsync(HttpMessage message)
-        {
-            await ProcessInternal(message, true).ConfigureAwait(false);
-        }
+            => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
-        private async ValueTask ProcessInternal(HttpMessage message, bool async)
+        public override Request CreateRequest()
+            => new HttpWebRequestTransportRequest();
+
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
         {
-            HttpWebRequest request = CreateRequest(message.Request);
+            HttpWebRequest request = CreateWebRequest(message.Request);
 
             ServicePointHelpers.SetLimits(request.ServicePoint);
 
@@ -118,7 +117,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private HttpWebRequest CreateRequest(Request messageRequest)
+        private HttpWebRequest CreateWebRequest(Request messageRequest)
         {
             HttpWebRequest request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
 
@@ -253,11 +252,6 @@ namespace Azure.Core.Pipeline
                 request.AllowWriteStreamBuffering = false;
             }
             return request;
-        }
-
-        public override Request CreateRequest()
-        {
-            return new HttpWebRequestTransportRequest();
         }
 
         private static void ApplyOptionsToRequest(HttpWebRequest request, HttpPipelineTransportOptions options)
