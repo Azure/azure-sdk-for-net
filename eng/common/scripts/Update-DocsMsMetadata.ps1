@@ -32,14 +32,6 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 The docker image id in format of '$containerRegistry/$imageName:$tag'
 e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
 
-.PARAMETER TenantId
-The aad tenant id/object id.
-
-.PARAMETER ClientId
-The add client id/application id.
-
-.PARAMETER ClientSecret
-The client secret of add app.
 #>
 
 param(
@@ -59,16 +51,7 @@ param(
   [string]$DocValidationImageId,
 
   [Parameter(Mandatory = $false)]
-  [string]$PackageSourceOverride,
-
-  [Parameter(Mandatory = $false)]
-  [string]$TenantId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ClientId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ClientSecret
+  [string]$PackageSourceOverride
 )
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
