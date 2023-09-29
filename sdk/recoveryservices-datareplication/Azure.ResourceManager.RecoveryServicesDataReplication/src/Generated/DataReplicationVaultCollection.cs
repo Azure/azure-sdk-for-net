@@ -326,6 +326,80 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vault_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataReplicationVaultResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataReplicationVaultVaultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationVaultResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationVaultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Vault_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vault name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        public virtual NullableResponse<DataReplicationVaultResource> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataReplicationVaultVaultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationVaultResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationVaultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataReplicationVaultResource> IEnumerable<DataReplicationVaultResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

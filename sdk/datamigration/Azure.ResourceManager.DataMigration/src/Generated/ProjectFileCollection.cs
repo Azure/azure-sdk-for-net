@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Files_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileName"> Name of the File. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProjectFileResource>> GetIfExistsAsync(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _projectFileFilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectFileResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectFileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Files_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileName"> Name of the File. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        public virtual NullableResponse<ProjectFileResource> GetIfExists(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _projectFileFilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectFileResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectFileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ProjectFileResource> IEnumerable<ProjectFileResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

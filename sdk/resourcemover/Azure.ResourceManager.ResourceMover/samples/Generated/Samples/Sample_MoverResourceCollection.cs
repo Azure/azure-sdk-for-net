@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_MoveResourcesList()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveResources_List.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_List.json
             // this example is just showing the usage of "MoveResources_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_MoveResourcesCreate()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveResources_Create.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Create.json
             // this example is just showing the usage of "MoveResources_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             {
                 Properties = new MoverResourceProperties(new ResourceIdentifier("/subscriptions/subid/resourceGroups/eastusRG/providers/Microsoft.Compute/virtualMachines/eastusvm1"))
                 {
-                    ResourceSettings = new VirtualMachineResourceSettings("westusvm1")
+                    ResourceSettings = new VirtualMachineResourceSettings()
                     {
                         UserManagedIdentities =
 {
@@ -94,6 +94,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/eastusRG/providers/M
                         TargetAvailabilityZone = MoverTargetAvailabilityZone.Two,
                         TargetVmSize = null,
                         TargetAvailabilitySetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/eastusRG/providers/Microsoft.Compute/availabilitySets/avset1"),
+                        TargetResourceName = "westusvm1",
                     },
                     DependsOnOverrides =
 {
@@ -120,7 +121,7 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MoveResourcesGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveResources_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Get.json
             // this example is just showing the usage of "MoveResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +156,7 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_MoveResourcesGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/examples/MoveResources_Get.json
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Get.json
             // this example is just showing the usage of "MoveResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,6 +180,49 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
             bool result = await collection.ExistsAsync(moverResourceName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // MoveResources_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_MoveResourcesGet()
+        {
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveResources_Get.json
+            // this example is just showing the usage of "MoveResources_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MoverResourceSetResource created on azure
+            // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string moverResourceSetName = "movecollection1";
+            ResourceIdentifier moverResourceSetResourceId = MoverResourceSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, moverResourceSetName);
+            MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
+
+            // get the collection of this MoverResource
+            MoverResourceCollection collection = moverResourceSet.GetMoverResources();
+
+            // invoke the operation
+            string moverResourceName = "moveresourcename1";
+            NullableResponse<MoverResource> response = await collection.GetIfExistsAsync(moverResourceName);
+            MoverResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MoverResourceData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

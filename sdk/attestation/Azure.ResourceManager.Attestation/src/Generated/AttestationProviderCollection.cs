@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Attestation
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerName"> Name of the attestation provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AttestationProviderResource>> GetIfExistsAsync(string providerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+
+            using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _attestationProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AttestationProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerName"> Name of the attestation provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
+        public virtual NullableResponse<AttestationProviderResource> GetIfExists(string providerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+
+            using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _attestationProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, providerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AttestationProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new AttestationProviderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AttestationProviderResource> IEnumerable<AttestationProviderResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

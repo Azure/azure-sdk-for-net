@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HybridIdentityMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HybridIdentityMetadataResource>> GetIfExistsAsync(string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridIdentityMetadataResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HybridIdentityMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HybridIdentityMetadata_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
+        public virtual NullableResponse<HybridIdentityMetadataResource> GetIfExists(string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hybridIdentityMetadataResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HybridIdentityMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<HybridIdentityMetadataResource> IEnumerable<HybridIdentityMetadataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

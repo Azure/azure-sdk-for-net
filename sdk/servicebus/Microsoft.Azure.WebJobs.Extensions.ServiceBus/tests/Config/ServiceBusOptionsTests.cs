@@ -153,7 +153,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 PrefetchCount = 123,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(123),
                 SessionIdleTimeout = TimeSpan.FromSeconds(123),
-                MaxConcurrentSessions = 123
+                MaxConcurrentSessions = 123,
+                MaxConcurrentCallsPerSession = 5
             };
 
             ServiceBusSessionProcessorOptions processorOptions = sbOptions.ToSessionProcessorOptions(true, false);
@@ -162,6 +163,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
             Assert.AreEqual(sbOptions.SessionIdleTimeout, processorOptions.SessionIdleTimeout);
             Assert.AreEqual(sbOptions.MaxConcurrentSessions, processorOptions.MaxConcurrentSessions);
+            Assert.AreEqual(sbOptions.MaxConcurrentCallsPerSession, processorOptions.MaxConcurrentCallsPerSession);
         }
 
         [Test]
@@ -174,7 +176,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 PrefetchCount = 123,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(123),
                 SessionIdleTimeout = TimeSpan.FromSeconds(123),
-                MaxConcurrentSessions = 123
+                MaxConcurrentSessions = 123,
+                MaxConcurrentCallsPerSession = 5
             };
 
             ServiceBusSessionProcessorOptions processorOptions = sbOptions.ToSessionProcessorOptions(true, true);
@@ -183,6 +186,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
             Assert.AreEqual(sbOptions.SessionIdleTimeout, processorOptions.SessionIdleTimeout);
             Assert.AreEqual(1, processorOptions.MaxConcurrentSessions);
+            Assert.AreEqual(1, processorOptions.MaxConcurrentCallsPerSession);
         }
     }
 }

@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Name of the SAP monitor resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SapMonitorResource>> GetIfExistsAsync(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sapMonitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SapMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new SapMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>monitors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Name of the SAP monitor resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        public virtual NullableResponse<SapMonitorResource> GetIfExists(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using var scope = _sapMonitormonitorsClientDiagnostics.CreateScope("SapMonitorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sapMonitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SapMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new SapMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SapMonitorResource> IEnumerable<SapMonitorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

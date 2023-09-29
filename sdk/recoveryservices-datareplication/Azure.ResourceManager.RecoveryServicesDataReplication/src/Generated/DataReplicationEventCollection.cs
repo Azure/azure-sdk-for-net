@@ -245,6 +245,80 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventName"> The event name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataReplicationEventResource>> GetIfExistsAsync(string eventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+
+            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataReplicationEventEventRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationEventResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationEventResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/events/{eventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Event_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventName"> The event name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
+        public virtual NullableResponse<DataReplicationEventResource> GetIfExists(string eventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+
+            using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataReplicationEventEventRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, eventName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataReplicationEventResource>(response.GetRawResponse());
+                return Response.FromValue(new DataReplicationEventResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataReplicationEventResource> IEnumerable<DataReplicationEventResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
