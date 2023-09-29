@@ -21,8 +21,9 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class HttpWebRequestTransport : HttpPipelineTransport
     {
+        internal static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
+
         private readonly Action<HttpWebRequest> _configureRequest;
-        public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
         private readonly IWebProxy? _environmentProxy;
 
         /// <summary>
