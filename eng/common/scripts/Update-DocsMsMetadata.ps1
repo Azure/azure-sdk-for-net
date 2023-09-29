@@ -105,28 +105,10 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
   }
 
-  # Get the first code owners of the package.
-  Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
-  $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath
-  if (!$author) {
-    $author = "ramya-rao-a"
-    $msauthor = "ramyar"
-  }
-  else {
-    $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
-  }
-  # Default value
-  if (!$msauthor) {
-    $msauthor = $author
-  }
-  Write-Host "The author of package: $author"
-  Write-Host "The ms author of package: $msauthor"
   $header = @"
 ---
 title: $foundTitle
 keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
-author: $author
-ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
 ms.devlang: $Language
