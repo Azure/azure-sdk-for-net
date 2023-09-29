@@ -34,7 +34,7 @@ $testPassed = 0
 if ($actualWarningCount -ne $expectedWarningCount)
 {
     $testPassed = 1
-    Write-Host "Actual warning count:", actualWarningCount, "is not as expected. Expected warning count is:", $expectedWarningCount
+    Write-Host "Actual warning count:", $actualWarningCount, "is not as expected. Expected warning count is:", $expectedWarningCount
 }
 
 Exit $testPassed
