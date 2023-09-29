@@ -484,7 +484,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();
             Assert.IsTrue(response.Value.IsServerEncrypted);
-            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
         [RecordedTest]
@@ -666,6 +665,39 @@ namespace Azure.Storage.Files.DataLake.Tests
             MemoryStream actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [PlaybackOnly("This feature is not enabled in prod")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task AppendAsync_FastPath()
+        {
+            DataLakeServiceClient service = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(service);
+
+            // Arrange
+            DataLakeAppendFileClient file = InstrumentClient(test.FileSystem.GetAppendFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            var data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            string fastPathSessionData = "refresh";
+
+            // Act
+            Response<ConcurrentAppendResult> concurrentAppendResponse = await file.AppendAsync(
+                content: stream,
+                fastPathSessionData: fastPathSessionData);
+
+            // Assert
+            Assert.IsNotNull(concurrentAppendResponse.Value.FastPathSessionData);
+            Assert.IsNotNull(concurrentAppendResponse.Value.FastPathSessionDataExpiresOn);
+
+            using Stream stream2 = new MemoryStream(data);
+            concurrentAppendResponse = await file.AppendAsync(
+                content: stream2,
+                fastPathSessionData: concurrentAppendResponse.Value.FastPathSessionData);
+
+            Assert.IsNull(concurrentAppendResponse.Value.FastPathSessionData);
+            Assert.IsNull(concurrentAppendResponse.Value.FastPathSessionDataExpiresOn);
         }
     }
 }

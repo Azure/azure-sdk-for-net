@@ -13,8 +13,8 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeAppendFileClient(System.Uri fileUri, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
         public DataLakeAppendFileClient(System.Uri fileUri, Azure.Storage.StorageSharedKeyCredential credential) { }
         public DataLakeAppendFileClient(System.Uri fileUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
-        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.ConcurrentAppendResult> Append(System.IO.Stream content, bool createIfNotExists = false, byte[] contentHash = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.ConcurrentAppendResult>> AppendAsync(System.IO.Stream content, bool createIfNotExists = false, byte[] contentHash = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.ConcurrentAppendResult> Append(System.IO.Stream content, bool createIfNotExists = false, byte[] contentHash = null, System.IProgress<long> progressHandler = null, string fastPathSessionData = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.ConcurrentAppendResult>> AppendAsync(System.IO.Stream content, bool createIfNotExists = false, byte[] contentHash = null, System.IProgress<long> progressHandler = null, string fastPathSessionData = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> Create(Azure.Storage.Files.DataLake.Models.DataLakePathCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> CreateAsync(Azure.Storage.Files.DataLake.Models.DataLakePathCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> CreateIfNotExists(Azure.Storage.Files.DataLake.Models.DataLakePathCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -573,6 +573,8 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public ConcurrentAppendResult() { }
         public long CommittedBlockCount { get { throw null; } }
+        public string FastPathSessionData { get { throw null; } }
+        public System.DateTimeOffset? FastPathSessionDataExpiresOn { get { throw null; } }
     }
     public enum CopyStatus
     {
