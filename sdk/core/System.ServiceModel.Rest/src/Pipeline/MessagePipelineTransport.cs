@@ -55,26 +55,42 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
 
     public override void Process(PipelineMessage message)
     {
-        // Intentionally blocking here
-        // TODO: Sync over async?
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        ProcessAsync(message).AsTask().GetAwaiter().GetResult();
+
+#if NET6_0_OR_GREATER
+
+        ProcessSyncOrAsync(message, isAsync: false).GetAwaiter().GetResult();
+
+#else
+
+        // We do sync-over-async on netstandard2.0 target.
+        // This can cause deadlocks in applications when the threadpool gets saturated.
+        // The resolution is for a customer to upgrade to a net6.0+ target,
+        // where we are able to provide a code path that calls HttpClient native sync APIs.
+
+        ProcessSyncOrAsync(message, isAsync: true).AsTask().GetAwaiter().GetResult();
+
+#endif
+
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message)
+        => await ProcessSyncOrAsync(message, isAsync: true).ConfigureAwait(false);
+
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool isAsync)
     {
         // TODO: optimize?
 
-        using HttpRequestMessage netRequest = new(message.Request.Method, message.Request.Uri);
+        using HttpRequestMessage httpRequest = new(message.Request.Method, message.Request.Uri);
 
         if (message.Request.Content != null)
         {
             // TODO: CancellationToken
-            netRequest.Content = new HttpContentAdapter(message.Request.Content, CancellationToken.None);
+            httpRequest.Content = new HttpContentAdapter(message.Request.Content, CancellationToken.None);
         }
 
-        message.Request.SetTransportHeaders(netRequest);
+        message.Request.SetTransportHeaders(httpRequest);
 
         try
         {
@@ -82,12 +98,23 @@ public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDis
             Stream? contentStream = null;
 
             // TODO: we'll need to call message.ClearResponse() when we add retries.
-
-            // TODO: Why does Azure.Core use HttpCompletionOption.ResponseHeadersRead?
-            responseMessage = await _httpClient.SendAsync(netRequest).ConfigureAwait(false);
+            if (isAsync)
+            {
+                // TODO: Why does Azure.Core use HttpCompletionOption.ResponseHeadersRead?
+                responseMessage = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
+            }
+            else // sync call
+            {
+#if NET6_0_OR_GREATER
+                responseMessage = _httpClient.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+#else
+                responseMessage = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
+#endif
+            }
 
             if (responseMessage.Content != null)
             {
+                // TODO: sync/async
                 contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
 
