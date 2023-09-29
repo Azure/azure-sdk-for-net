@@ -62,7 +62,7 @@ ManagedServiceIdentityClient managedServiceIdentityClient = new ManagedServiceId
 ```C# Snippet:Construct_Client
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
-As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the default subscription and start managing your resources.
+As you can see, now authentication is handled by Azure.Identity, and just a single client is needed, from which you can get the default subscription and start managing your resources.
 
 ### Create a Resource Group
 
@@ -206,7 +206,7 @@ ArmOperation<VirtualNetworkResource> virtualNetworkOperation = await virtualNetw
 VirtualNetworkResource virtualNetwork = virtualNetworkOperation.Value;
 ```
 
-In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets collection using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
+In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnet collection using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
 
 ### Create a Network Interface
 
@@ -392,7 +392,7 @@ string subscription = "SUBSCRIPTION_ID";
 ClientSecretCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
 ArmClient client = new ArmClient(credential, subscription);
 ```
-As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the default subscription and start managing your resources.
+As you can see, now authentication is handled by Azure.Identity, and just a single client is needed, from which you can get the default subscription and start managing your resources.
 
 ### Create a Security Group
 
