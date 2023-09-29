@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceInfoSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteSlotInstanceResource>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+
+            using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteSlotInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceInfoSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual NullableResponse<SiteSlotInstanceResource> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
+
+            using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteSlotInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SiteSlotInstanceResource> IEnumerable<SiteSlotInstanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

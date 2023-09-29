@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
-                if (ex.InnerException?.Source != "System.Net.Http")
+                if (ex.InnerException?.Source != "System.Net.Http" && ex.InnerException?.Source != "System")
                 {
                     message?.Dispose();
                     throw;
@@ -70,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
-                if (ex.InnerException?.Source != "System.Net.Http")
+                if (ex.InnerException?.Source != "System.Net.Http" && ex.InnerException?.Source != "System")
                 {
                     message?.Dispose();
                     throw;

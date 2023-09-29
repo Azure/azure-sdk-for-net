@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// The provider specific settings.
         /// Please note <see cref="SiteRecoveryEventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AEventDetails"/>, <see cref="HyperVReplica2012EventDetails"/>, <see cref="HyperVReplica2012R2EventDetails"/>, <see cref="HyperVReplicaAzureEventDetails"/>, <see cref="HyperVReplicaBaseEventDetails"/>, <see cref="InMageAzureV2EventDetails"/>, <see cref="InMageRcmEventDetails"/>, <see cref="InMageRcmFailbackEventDetails"/> and <see cref="VMwareCbtEventDetails"/>.
+        /// The available derived classes include <see cref="Models.A2AEventDetails"/>, <see cref="Models.HyperVReplica2012EventDetails"/>, <see cref="Models.HyperVReplica2012R2EventDetails"/>, <see cref="Models.HyperVReplicaAzureEventDetails"/>, <see cref="Models.HyperVReplicaBaseEventDetails"/>, <see cref="Models.InMageAzureV2EventDetails"/>, <see cref="Models.InMageRcmEventDetails"/>, <see cref="Models.InMageRcmFailbackEventDetails"/> and <see cref="Models.VMwareCbtEventDetails"/>.
         /// </param>
         /// <param name="eventSpecificDetails">
         /// The event specific settings.
         /// Please note <see cref="SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SiteRecoveryJobStatusEventDetails"/>.
+        /// The available derived classes include <see cref="Models.SiteRecoveryJobStatusEventDetails"/>.
         /// </param>
         /// <param name="healthErrors"> The list of errors / warnings capturing details associated with the issue(s). </param>
         /// <returns> A new <see cref="Models.SiteRecoveryEventProperties"/> instance for mocking. </returns>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// Fabric specific settings.
         /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
+        /// The available derived classes include <see cref="Models.SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="Models.HyperVSiteDetails"/>, <see cref="Models.InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="Models.VMwareDetails"/> and <see cref="Models.VMwareV2FabricSpecificDetails"/>.
         /// </param>
         /// <param name="healthErrorDetails"> Fabric health error details. </param>
         /// <param name="health"> Health of fabric. </param>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricSpecificSettings">
         /// The fabric specific settings.
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
+        /// The available derived classes include <see cref="Models.A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryNetworkMappingProperties"/> instance for mocking. </returns>
         public static SiteRecoveryNetworkMappingProperties SiteRecoveryNetworkMappingProperties(string state = null, string primaryNetworkFriendlyName = null, ResourceIdentifier primaryNetworkId = null, string primaryFabricFriendlyName = null, string recoveryNetworkFriendlyName = null, ResourceIdentifier recoveryNetworkId = null, ResourceIdentifier recoveryFabricArmId = null, string recoveryFabricFriendlyName = null, NetworkMappingFabricSpecificSettings fabricSpecificSettings = null)
@@ -349,6 +349,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static SiteRecoveryMigrationItemData SiteRecoveryMigrationItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryMigrationItemProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryMigrationItemData(id, name, resourceType, systemData, properties, location);
+        }
+
+        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
+        /// <param name="machineName"> The on-premise virtual machine name. </param>
+        /// <param name="policyId"> The ARM Id of policy governing this item. </param>
+        /// <param name="policyFriendlyName"> The name of policy governing this item. </param>
+        /// <param name="recoveryServicesProviderId"> The recovery services provider ARM Id. </param>
+        /// <param name="replicationStatus"> The replication status. </param>
+        /// <param name="migrationState"> The migration status. </param>
+        /// <param name="migrationStateDescription"> The migration state description. </param>
+        /// <param name="lastTestMigrationOn"> The last test migration time. </param>
+        /// <param name="lastTestMigrationStatus"> The status of the last test migration. </param>
+        /// <param name="lastMigrationOn"> The last migration time. </param>
+        /// <param name="lastMigrationStatus"> The status of the last migration. </param>
+        /// <param name="testMigrateState"> The test migrate state. </param>
+        /// <param name="testMigrateStateDescription"> The test migrate state description. </param>
+        /// <param name="health"> The consolidated health. </param>
+        /// <param name="healthErrors"> The list of health errors. </param>
+        /// <param name="allowedOperations"> The allowed operations on the migration item based on the current migration state of the item. </param>
+        /// <param name="currentJob"> The current job details. </param>
+        /// <param name="criticalJobHistory"> The critical past job details. </param>
+        /// <param name="eventCorrelationId"> The correlation Id for events associated with this migration item. </param>
+        /// <param name="providerSpecificDetails">
+        /// The migration provider custom settings.
+        /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.VMwareCbtMigrationDetails"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryMigrationItemProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryMigrationItemProperties SiteRecoveryMigrationItemProperties(string machineName = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, SiteRecoveryMigrationState? migrationState = null, string migrationStateDescription = null, DateTimeOffset? lastTestMigrationOn = null, string lastTestMigrationStatus = null, DateTimeOffset? lastMigrationOn = null, string lastMigrationStatus = null, TestMigrationState? testMigrateState = null, string testMigrateStateDescription = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, IEnumerable<MigrationItemOperation> allowedOperations = null, CurrentJobDetails currentJob = null, IEnumerable<CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, MigrationProviderSpecificSettings providerSpecificDetails = null)
+        {
+            healthErrors ??= new List<SiteRecoveryHealthError>();
+            allowedOperations ??= new List<MigrationItemOperation>();
+            criticalJobHistory ??= new List<CriticalJobHistoryDetails>();
+
+            return new SiteRecoveryMigrationItemProperties(machineName, policyId, policyFriendlyName, recoveryServicesProviderId, replicationStatus, migrationState, migrationStateDescription, lastTestMigrationOn, lastTestMigrationStatus, lastMigrationOn, lastMigrationStatus, testMigrateState, testMigrateStateDescription, health, healthErrors?.ToList(), allowedOperations?.ToList(), currentJob, criticalJobHistory?.ToList(), eventCorrelationId, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
@@ -417,7 +452,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// The Replication provider custom settings.
         /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVmDetails"/> and <see cref="VmmVmDetails"/>.
+        /// The available derived classes include <see cref="Models.HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="Models.VMwareVmDetails"/> and <see cref="Models.VmmVmDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryProtectableItemProperties"/> instance for mocking. </returns>
         public static SiteRecoveryProtectableItemProperties SiteRecoveryProtectableItemProperties(string friendlyName = null, string protectionStatus = null, ResourceIdentifier replicationProtectedItemId = null, ResourceIdentifier recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, SiteRecoveryReplicationProviderSettings customDetails = null)
@@ -439,6 +474,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static ReplicationProtectedItemData ReplicationProtectedItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationProtectedItemProperties properties = null, AzureLocation? location = null)
         {
             return new ReplicationProtectedItemData(id, name, resourceType, systemData, properties, location);
+        }
+
+        /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
+        /// <param name="friendlyName"> The name. </param>
+        /// <param name="protectedItemType"> The type of protected item type. </param>
+        /// <param name="protectableItemId"> The protected item ARM Id. </param>
+        /// <param name="recoveryServicesProviderId"> The recovery provider ARM Id. </param>
+        /// <param name="primaryFabricFriendlyName"> The friendly name of the primary fabric. </param>
+        /// <param name="primaryFabricProvider"> The fabric provider of the primary fabric. </param>
+        /// <param name="recoveryFabricFriendlyName"> The friendly name of recovery fabric. </param>
+        /// <param name="recoveryFabricId"> The Arm Id of recovery fabric. </param>
+        /// <param name="primaryProtectionContainerFriendlyName"> The name of primary protection container friendly name. </param>
+        /// <param name="recoveryProtectionContainerFriendlyName"> The name of recovery container friendly name. </param>
+        /// <param name="protectionState"> The protection status. </param>
+        /// <param name="protectionStateDescription"> The protection state description. </param>
+        /// <param name="activeLocation"> The Current active location of the PE. </param>
+        /// <param name="testFailoverState"> The Test failover state. </param>
+        /// <param name="testFailoverStateDescription"> The Test failover state description. </param>
+        /// <param name="switchProviderState"> The switch provider state. </param>
+        /// <param name="switchProviderStateDescription"> The switch provider state description. </param>
+        /// <param name="allowedOperations"> The allowed operations on the Replication protected item. </param>
+        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
+        /// <param name="failoverHealth"> The consolidated failover health for the VM. </param>
+        /// <param name="healthErrors"> List of health errors. </param>
+        /// <param name="policyId"> The ID of Policy governing this PE. </param>
+        /// <param name="policyFriendlyName"> The name of Policy governing this PE. </param>
+        /// <param name="lastSuccessfulFailoverOn"> The Last successful failover time. </param>
+        /// <param name="lastSuccessfulTestFailoverOn"> The Last successful test failover time. </param>
+        /// <param name="currentScenario"> The current scenario. </param>
+        /// <param name="failoverRecoveryPointId"> The recovery point ARM Id to which the Vm was failed over. </param>
+        /// <param name="providerSpecificDetails">
+        /// The Replication provider custom settings.
+        /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.A2AReplicationDetails"/>, <see cref="Models.A2ACrossClusterMigrationReplicationDetails"/>, <see cref="Models.HyperVReplicaReplicationDetails"/>, <see cref="Models.HyperVReplicaBlueReplicationDetails"/>, <see cref="Models.HyperVReplicaAzureReplicationDetails"/>, <see cref="Models.HyperVReplicaBaseReplicationDetails"/>, <see cref="Models.InMageReplicationDetails"/>, <see cref="Models.InMageAzureV2ReplicationDetails"/>, <see cref="Models.InMageRcmReplicationDetails"/> and <see cref="Models.InMageRcmFailbackReplicationDetails"/>.
+        /// </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        /// <param name="eventCorrelationId"> The correlation Id for events associated with this protected item. </param>
+        /// <returns> A new <see cref="Models.ReplicationProtectedItemProperties"/> instance for mocking. </returns>
+        public static ReplicationProtectedItemProperties ReplicationProtectedItemProperties(string friendlyName = null, string protectedItemType = null, ResourceIdentifier protectableItemId = null, string recoveryServicesProviderId = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, string switchProviderState = null, string switchProviderStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, string failoverHealth = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, ResourceIdentifier failoverRecoveryPointId = null, ReplicationProviderSpecificSettings providerSpecificDetails = null, ResourceIdentifier recoveryContainerId = null, Guid? eventCorrelationId = null)
+        {
+            allowedOperations ??= new List<string>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
+
+            return new ReplicationProtectedItemProperties(friendlyName, protectedItemType, protectableItemId, recoveryServicesProviderId, primaryFabricFriendlyName, primaryFabricProvider, recoveryFabricFriendlyName, recoveryFabricId, primaryProtectionContainerFriendlyName, recoveryProtectionContainerFriendlyName, protectionState, protectionStateDescription, activeLocation, testFailoverState, testFailoverStateDescription, switchProviderState, switchProviderStateDescription, allowedOperations?.ToList(), replicationHealth, failoverHealth, healthErrors?.ToList(), policyId, policyFriendlyName, lastSuccessfulFailoverOn, lastSuccessfulTestFailoverOn, currentScenario, failoverRecoveryPointId, providerSpecificDetails, recoveryContainerId, eventCorrelationId);
         }
 
         /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
@@ -470,7 +549,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// The provider specific details for the recovery point.
         /// Please note <see cref="ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ARecoveryPointDetails"/>, <see cref="InMageAzureV2RecoveryPointDetails"/> and <see cref="InMageRcmRecoveryPointDetails"/>.
+        /// The available derived classes include <see cref="Models.A2ARecoveryPointDetails"/>, <see cref="Models.InMageAzureV2RecoveryPointDetails"/> and <see cref="Models.InMageRcmRecoveryPointDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryPointProperties"/> instance for mocking. </returns>
         public static SiteRecoveryPointProperties SiteRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, string recoveryPointType = null, ProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
@@ -538,7 +617,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// Provider specific provider details.
         /// Please note <see cref="ProtectionContainerMappingProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AProtectionContainerMappingDetails"/>, <see cref="InMageRcmProtectionContainerMappingDetails"/> and <see cref="VMwareCbtProtectionContainerMappingDetails"/>.
+        /// The available derived classes include <see cref="Models.A2AProtectionContainerMappingDetails"/>, <see cref="Models.InMageRcmProtectionContainerMappingDetails"/> and <see cref="Models.VMwareCbtProtectionContainerMappingDetails"/>.
         /// </param>
         /// <param name="health"> Health of pairing. </param>
         /// <param name="healthErrorDetails"> Health error. </param>
@@ -709,8 +788,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetInstanceType"> The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class. </param>
         /// <param name="customDetails">
         /// The custom job details like test failover job details.
-        /// Please note <see cref="SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
+        /// Please note <see cref="Models.SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AsrJobDetails"/>, <see cref="Models.ExportJobDetails"/>, <see cref="Models.FailoverJobDetails"/>, <see cref="Models.SwitchProtectionJobDetails"/> and <see cref="Models.TestFailoverJobDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobProperties"/> instance for mocking. </returns>
         public static SiteRecoveryJobProperties SiteRecoveryJobProperties(string activityId = null, string scenarioName = null, string friendlyName = null, string state = null, string stateDescription = null, IEnumerable<AsrTask> tasks = null, IEnumerable<SiteRecoveryJobErrorDetails> errors = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, SiteRecoveryJobDetails customDetails = null)
@@ -735,12 +814,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// The custom task details based on the task type.
         /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
+        /// The available derived classes include <see cref="Models.AutomationRunbookTaskDetails"/>, <see cref="Models.ConsistencyCheckTaskDetails"/>, <see cref="Models.FabricReplicationGroupTaskDetails"/>, <see cref="Models.SiteRecoveryJobTaskDetails"/>, <see cref="Models.ManualActionTaskDetails"/>, <see cref="Models.ScriptActionTaskDetails"/>, <see cref="Models.SiteRecoveryVmTaskDetails"/> and <see cref="Models.VmNicUpdatesTaskDetails"/>.
         /// </param>
         /// <param name="groupTaskCustomDetails">
         /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
-        /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
+        /// Please note <see cref="Models.SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.InlineWorkflowTaskDetails"/>, <see cref="Models.RecoveryPlanGroupTaskDetails"/> and <see cref="Models.RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </param>
         /// <param name="errors"> The task error details. </param>
         /// <returns> A new <see cref="Models.AsrTask"/> instance for mocking. </returns>
@@ -828,7 +907,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
+        /// The available derived classes include <see cref="Models.A2APolicyDetails"/>, <see cref="Models.HyperVReplicaPolicyDetails"/>, <see cref="Models.HyperVReplicaBluePolicyDetails"/>, <see cref="Models.HyperVReplicaAzurePolicyDetails"/>, <see cref="Models.HyperVReplicaBasePolicyDetails"/>, <see cref="Models.InMagePolicyDetails"/>, <see cref="Models.InMageAzureV2PolicyDetails"/>, <see cref="Models.InMageBasePolicyDetails"/>, <see cref="Models.InMageRcmPolicyDetails"/>, <see cref="Models.InMageRcmFailbackPolicyDetails"/> and <see cref="Models.VMwareCbtPolicyDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryPolicyProperties"/> instance for mocking. </returns>
         public static SiteRecoveryPolicyProperties SiteRecoveryPolicyProperties(string friendlyName = null, PolicyProviderSpecificDetails providerSpecificDetails = null)
@@ -858,7 +937,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
         /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
+        /// The available derived classes include <see cref="Models.A2AReplicationIntentDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ReplicationProtectionIntentProperties"/> instance for mocking. </returns>
         public static ReplicationProtectionIntentProperties ReplicationProtectionIntentProperties(string friendlyName = null, ResourceIdentifier jobId = null, string jobState = null, bool? isActive = null, string createdOn = null, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = null)
@@ -898,7 +977,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// The provider id and provider specific details.
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RecoveryPlanA2ADetails"/>.
+        /// The available derived classes include <see cref="Models.RecoveryPlanA2ADetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryRecoveryPlanProperties"/> instance for mocking. </returns>
         public static SiteRecoveryRecoveryPlanProperties SiteRecoveryRecoveryPlanProperties(string friendlyName = null, ResourceIdentifier primaryFabricId = null, string primaryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string recoveryFabricFriendlyName = null, string failoverDeploymentModel = null, IEnumerable<string> replicationProviders = null, IEnumerable<string> allowedOperations = null, DateTimeOffset? lastPlannedFailoverOn = null, DateTimeOffset? lastUnplannedFailoverOn = null, DateTimeOffset? lastTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, string currentScenarioStatus = null, string currentScenarioStatusDescription = null, IEnumerable<SiteRecoveryPlanGroup> groups = null, IEnumerable<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = null)

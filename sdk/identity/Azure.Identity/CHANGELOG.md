@@ -1,5 +1,17 @@
 # Release History
 
+## 1.11.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- `ManagedIdentityCredential` will now correctly retry when the instance metadata endpoint returns a 410 response. [#28568](https://github.com/Azure/azure-sdk-for-net/issues/28568)
+
+### Other Changes
+- Updated Microsoft.Identity.Client dependency to version 4.56.0
+
 ## 1.10.1 (2023-09-12)
 
 ### Bugs Fixed

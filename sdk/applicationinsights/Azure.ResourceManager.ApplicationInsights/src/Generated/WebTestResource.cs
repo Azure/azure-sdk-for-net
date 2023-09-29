@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="webTestTags"> Updated tag information to associate with the web test resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestTags"/> is null. </exception>
-        public virtual async Task<Response<WebTestResource>> UpdateAsync(TagsResource webTestTags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebTestResource>> UpdateAsync(ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(webTestTags, nameof(webTestTags));
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="webTestTags"> Updated tag information to associate with the web test resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestTags"/> is null. </exception>
-        public virtual Response<WebTestResource> Update(TagsResource webTestTags, CancellationToken cancellationToken = default)
+        public virtual Response<WebTestResource> Update(ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(webTestTags, nameof(webTestTags));
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

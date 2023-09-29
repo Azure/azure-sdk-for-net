@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             return new HardwareSecurityModulesPrivateEndpointConnectionData(id, name, resourceType, systemData, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.HardwareSecurityModulesPrivateLinkResource"/> instance for mocking. </returns>
-        public static HardwareSecurityModulesPrivateLinkResource HardwareSecurityModulesPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.HardwareSecurityModulesPrivateLinkData"/> instance for mocking. </returns>
+        public static HardwareSecurityModulesPrivateLinkData HardwareSecurityModulesPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new HardwareSecurityModulesPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new HardwareSecurityModulesPrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of DedicatedHsmData. </summary>

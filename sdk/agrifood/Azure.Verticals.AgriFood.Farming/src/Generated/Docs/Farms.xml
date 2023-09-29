@@ -241,6 +241,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<farmId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
@@ -249,6 +250,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<farmId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -260,6 +262,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<farmId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
@@ -268,6 +271,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<farmId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -281,7 +285,7 @@ Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-
 await foreach (BinaryData item in client.GetFarmsAsync(null, null, null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetFarmsAsync with all parameters and parse the result.
@@ -289,33 +293,21 @@ This sample shows how to call GetFarmsAsync with all parameters and parse the re
 TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetFarmsAsync(new List<string>()
-{
-    "<farmIds>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetFarmsAsync(new string[] { "<farmIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("partyId").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("eTag").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("source").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
 ]]></code></example>
     </member>
@@ -329,7 +321,7 @@ Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-
 foreach (BinaryData item in client.GetFarms(null, null, null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetFarms with all parameters and parse the result.
@@ -337,33 +329,21 @@ This sample shows how to call GetFarms with all parameters and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetFarms(new List<string>()
-{
-    "<farmIds>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetFarms(new string[] { "<farmIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("partyId").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("eTag").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("source").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
 ]]></code></example>
     </member>
@@ -377,7 +357,7 @@ Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-
 await foreach (BinaryData item in client.GetFarmsByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetFarmsByPartyIdAsync with all parameters and parse the result.
@@ -385,33 +365,21 @@ This sample shows how to call GetFarmsByPartyIdAsync with all parameters and par
 TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetFarmsByPartyIdAsync("<partyId>", new List<string>()
-{
-    "<ids>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetFarmsByPartyIdAsync("<partyId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("partyId").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("eTag").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("source").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
 ]]></code></example>
     </member>
@@ -425,7 +393,7 @@ Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-
 foreach (BinaryData item in client.GetFarmsByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetFarmsByPartyId with all parameters and parse the result.
@@ -433,33 +401,21 @@ This sample shows how to call GetFarmsByPartyId with all parameters and parse th
 TokenCredential credential = new DefaultAzureCredential();
 Farms client = new FarmBeatsClient(credential).GetFarmsClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetFarmsByPartyId("<partyId>", new List<string>()
-{
-    "<ids>"
-}, new List<string>()
-{
-    "<names>"
-}, new List<string>()
-{
-    "<propertyFilters>"
-}, new List<string>()
-{
-    "<statuses>"
-}, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetFarmsByPartyId("<partyId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("partyId").ToString());
-    Console.WriteLine(result[0].GetProperty("id").ToString());
-    Console.WriteLine(result[0].GetProperty("eTag").ToString());
-    Console.WriteLine(result[0].GetProperty("status").ToString());
-    Console.WriteLine(result[0].GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result[0].GetProperty("source").ToString());
-    Console.WriteLine(result[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("description").ToString());
-    Console.WriteLine(result[0].GetProperty("createdBy").ToString());
-    Console.WriteLine(result[0].GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result[0].GetProperty("properties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
 ]]></code></example>
     </member>
