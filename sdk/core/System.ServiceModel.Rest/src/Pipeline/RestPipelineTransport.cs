@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public class MessagePipelineTransport : PipelineTransport<PipelineMessage>, IDisposable
+public class RestPipelineTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
     private readonly HttpClient _httpClient;
 
     private bool _disposed;
 
-    public MessagePipelineTransport() : this(CreateDefaultClient())
+    public RestPipelineTransport() : this(CreateDefaultClient())
     {
     }
 
-    public MessagePipelineTransport(HttpClient client)
+    public RestPipelineTransport(HttpClient client)
     {
         _httpClient = client;
     }

@@ -94,7 +94,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         else
         {
             // Add default transport.
-            pipeline[index++] = new MessagePipelineTransport();
+            pipeline[index++] = new RestPipelineTransport();
         }
 
         return new MessagePipeline(pipeline);

@@ -54,6 +54,10 @@ namespace Azure.Core.Pipeline
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO: we could look at removing CreateMessage at the top level because we _have_ to preserve
+        // the public API on this type to CreateRequest, and do we really need both?
+        // But, it seems good to have something that takes RequestOptions and ResponseClassifier (i.e.
+        // a "response options" type) and creates a message with them both all at once.
         public override HttpMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
             => throw new System.NotImplementedException();
     }

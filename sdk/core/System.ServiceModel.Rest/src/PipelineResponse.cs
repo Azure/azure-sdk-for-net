@@ -8,6 +8,7 @@ namespace System.ServiceModel.Rest.Core;
 
 public class PipelineResponse : IDisposable
 {
+    // TODO: pull this out of the base class, as it brings in an HTTP dependency.
     private readonly HttpResponseMessage? _netResponse;
     private readonly Stream? _contentStream;
 
