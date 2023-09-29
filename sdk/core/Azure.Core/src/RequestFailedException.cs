@@ -261,20 +261,8 @@ namespace Azure
                 // Try the ErrorResponse format and fallback to the ResponseError format.
 
 #if NET6_0_OR_GREATER
-                var deserializedErrorResponse = System.Text.Json.JsonSerializer.Deserialize(content, typeof(ErrorResponse), ResponseErrorSourceGenerationContext.Default);
-                if (deserializedErrorResponse != null)
-                {
-                    var errorResponse = (ErrorResponse)deserializedErrorResponse;
-                    error = errorResponse?.Error;
-                }
-                if (error == null)
-                {
-                    var deserializedResponseError = System.Text.Json.JsonSerializer.Deserialize(content, typeof(ResponseError), ResponseErrorSourceGenerationContext.Default);
-                    if (deserializedResponseError != null)
-                    {
-                        error = (ResponseError)deserializedResponseError;
-                    }
-                }
+                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content, ResponseErrorSourceGenerationContext.Default.ErrorResponse)?.Error;
+                error ?? = System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content, ResponseErrorSourceGenerationContext.Default.ResponseError);
 #else
                 error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
                 error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
