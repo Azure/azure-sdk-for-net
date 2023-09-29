@@ -361,7 +361,7 @@ namespace Azure.Communication.Rooms.Test
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
 
             // Act
-            var createdRoom = await roomsClient.CreateRoomAsync(createRoomOptions: null);
+            var createdRoom = await roomsClient.CreateRoomAsync(options: null);
 
             // Assert
             Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
@@ -979,7 +979,7 @@ namespace Azure.Communication.Rooms.Test
         {
             // Arrange
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(createRoomOptions: null);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
             List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
             {
                 new RoomParticipant(new CommunicationUserIdentifier("invalid_mri"))
@@ -1262,7 +1262,7 @@ namespace Azure.Communication.Rooms.Test
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(createRoomOptions: null);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
             var participant1 = await communicationIdentityClient.CreateUserAsync();
             List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
             {
@@ -1301,7 +1301,7 @@ namespace Azure.Communication.Rooms.Test
         {
             // Arrange
             var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(createRoomOptions: null);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
             var createdRoomId = createRoomResponse.Value.Id;
 
             // Act

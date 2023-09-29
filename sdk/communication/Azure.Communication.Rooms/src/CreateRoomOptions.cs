@@ -21,6 +21,6 @@ namespace Azure.Communication.Rooms
         public bool? PstnDialOutEnabled { get; set; }
 
         /// <summary> A collection of participants. </summary>
-        public IEnumerable<RoomParticipant> Participants { get; set; }
+        public IList<RoomParticipant> Participants { get; set; }
     }
 }
