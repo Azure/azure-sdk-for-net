@@ -4,10 +4,10 @@
 ## 1.1.0-beta.1 (2023-09-19)
 
 ### Features Added
-- Added Support for PSTN DialOut Capability in Azure Communication Services Rooms
+- Added Support for PSTN Dial-Out Feature in Azure Communication Services Rooms
 
 ### Added
-- Added new overloads for CreateRoom (CreateRoomAsync) and UpdateRooms (UpdateRoomsAsync) with options : RoomCreateOptions and RoomUpdateOptions. 
+- Added new overloads for CreateRoom (CreateRoomAsync) and UpdateRooms (UpdateRoomsAsync) with options : CreateRoomOptions and UpdateRoomOptions. 
 
 ## 1.0.0 (2023-06-12)
 General Availability version of the Azure Communication Services Rooms .NET SDK.
