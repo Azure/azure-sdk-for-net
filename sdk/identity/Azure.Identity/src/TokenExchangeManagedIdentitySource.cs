@@ -51,7 +51,6 @@ namespace Azure.Identity
 
         private class TokenFileCache
         {
-            private readonly object _lock = new object();
             private static SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
             private readonly string _tokenFilePath;
             private string _tokenFileContents;
