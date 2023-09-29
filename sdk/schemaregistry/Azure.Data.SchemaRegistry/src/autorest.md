@@ -20,7 +20,8 @@ directive:
     $.produces = [
         "application/json; serialization=Avro",
         "application/json; serialization=json",
-        "application/octet-stream"
+        "text/plain; charset=utf-8",
+        "text/vnd.ms.protobuf"
     ]
 ```
 
@@ -34,7 +35,8 @@ directive:
     $.produces = [
         "application/json; serialization=Avro",
         "application/json; serialization=Json",
-        "application/octet-stream"]
+        "text/plain; charset=utf-8",
+        "text/vnd.ms.protobuf"]
 ```
 
 ### Add Content-Type header to GetById operation
@@ -53,7 +55,8 @@ directive:
       "enum": [
         "application/json; serialization=Avro",
         "application/json; serialization=json",
-        "text/plain; charset=utf-8"
+        "text/plain; charset=utf-8",
+        "text/vnd.ms.protobuf"
       ],
       "x-ms-enum": {
         "name": "ContentType",
@@ -86,7 +89,8 @@ directive:
     $["Content-Type"]["enum"] = [
         "application/json; serialization=Avro",
         "application/json; serialization=json",
-        "text/plain; charset=utf-8"
+        "text/plain; charset=utf-8",
+        "text/vnd.ms.protobuf"
        ];
     $["Content-Type"]["x-ms-enum"] = {
       "name": "ContentType",
@@ -102,7 +106,8 @@ directive:
     $["Content-Type"]["enum"] = [
         "application/json; serialization=Avro",
         "application/json; serialization=json",
-        "text/plain; charset=utf-8"
+        "text/plain; charset=utf-8",
+        "text/vnd.ms.protobuf"
        ];
     $["Content-Type"]["x-ms-enum"] = {
       "name": "ContentType",
