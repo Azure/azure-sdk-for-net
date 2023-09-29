@@ -158,7 +158,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (stackFrame == null)
             {
-                methodName = "";
+                methodName = "UnknownMethod";
                 methodOffset = System.Diagnostics.StackFrame.OFFSET_UNKNOWN;
             }
             else
