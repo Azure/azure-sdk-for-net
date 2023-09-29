@@ -223,7 +223,7 @@
 #/<NotInRepo>/                                                     @robch
 
 # ServiceLabel: %Cognitive - LUIS %Service Attention
-/sdk/cognitiveservices/Language.LUIS*/                              @cahann @kayousef
+/sdk/cognitiveservices/Language.LUIS*/                              @JimSuplizio
 
 # ServiceLabel: %Cognitive - Content Moderator %Service Attention
 #/<NotInRepo>/                                                     @swiftarrow11
