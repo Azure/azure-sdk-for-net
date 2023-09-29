@@ -23,7 +23,7 @@ In order to test for multi-tenant, you will need to setup a service principal fo
 internal class AuxiliaryPoilcy : HttpPipelineSynchronousPolicy
 {
     private static string AUTHORIZATION_AUXILIARY_HEADER = "x-ms-authorization-auxiliary";
-    string _token;
+    private string _token;
 
     internal AuxiliaryPoilcy(string token)
     {
