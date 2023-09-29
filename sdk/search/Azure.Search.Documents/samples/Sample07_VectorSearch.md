@@ -60,7 +60,7 @@ SearchIndex searchIndex = new(indexName)
             {
                 AzureOpenAIParameters  = new AzureOpenAIParameters()
                 {
-                    ResourceUri = "Endpoint",
+                    ResourceUri = new Uri("Endpoint"),
                     ApiKey = "key",
                     DeploymentId = "gpt-4-32k",
                 }
@@ -171,7 +171,7 @@ IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDe
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
     new SearchOptions
     {
-        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
     });
 
 int count = 0;
@@ -195,7 +195,7 @@ IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDe
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
     new SearchOptions
     {
-        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
         Filter = "Category eq 'Luxury'"
     });
 
@@ -223,7 +223,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
         "Top hotels in town",
         new SearchOptions
         {
-            Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+            VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
         });
 
 int count = 0;
@@ -276,7 +276,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
     new SearchOptions
     {
-        Vectors = { new RawVector() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
         QueryType = SearchQueryType.Semantic,
         QueryLanguage = QueryLanguage.EnUs,
         SemanticConfigurationName = "my-semantic-config",
@@ -327,9 +327,9 @@ IReadOnlyList<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVect
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
     new SearchOptions
     {
-        Vectors = {
-            new RawVector() { Value = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
-            new RawVector() { Value = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
+        VectorQueries = {
+            new RawVectorQuery() { Vector = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+            new RawVectorQuery() { Vector = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
         },
     });
 
@@ -354,8 +354,8 @@ IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDe
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
     new SearchOptions
     {
-        Vectors = { new RawVector() {
-            Value = vectorizedResult,
+        VectorQueries = { new RawVectorQuery() {
+            Vector = vectorizedResult,
             KNearestNeighborsCount = 3,
             Fields = { "DescriptionVector", "CategoryVector" } } }
     });

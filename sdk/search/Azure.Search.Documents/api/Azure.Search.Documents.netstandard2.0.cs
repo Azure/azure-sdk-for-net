@@ -76,7 +76,7 @@ namespace Azure.Search.Documents
     }
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
-        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2023_07_01_Preview) { }
+        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2023_10_01_Preview) { }
         public Azure.Search.Documents.SearchAudience? Audience { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
@@ -85,6 +85,7 @@ namespace Azure.Search.Documents
             V2020_06_30 = 1,
             V2021_04_30_Preview = 2,
             V2023_07_01_Preview = 3,
+            V2023_10_01_Preview = 4,
         }
     }
     public static partial class SearchFilter
@@ -175,7 +176,7 @@ namespace Azure.Search.Documents
         public int? Size { get { throw null; } set { } }
         public int? Skip { get { throw null; } set { } }
         public Azure.Search.Documents.Models.VectorFilterMode? VectorFilterMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchQueryVector> Vectors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.VectorQuery> VectorQueries { get { throw null; } }
     }
     public partial class SuggestOptions
     {
@@ -409,7 +410,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ApiKey { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity AuthIdentity { get { throw null; } set { } }
         public string DeploymentId { get { throw null; } set { } }
-        public string ResourceUri { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } set { } }
     }
     public partial class AzureOpenAIParameters
     {
@@ -417,7 +418,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ApiKey { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity AuthIdentity { get { throw null; } set { } }
         public string DeploymentId { get { throw null; } set { } }
-        public string ResourceUri { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } set { } }
     }
     public partial class AzureOpenAIVectorizer : Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer
     {
@@ -669,7 +670,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public System.Collections.Generic.IDictionary<string, string> HttpHeaders { get { throw null; } }
         public string HttpMethod { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class DataChangeDetectionPolicy
     {
@@ -2333,7 +2334,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal SearchIndexStatistics() { }
         public long DocumentCount { get { throw null; } }
         public long StorageSize { get { throw null; } }
-        public long? VectorIndexSize { get { throw null; } }
+        public long VectorIndexSize { get { throw null; } }
     }
     public partial class SearchResourceCounter
     {
@@ -3339,10 +3340,10 @@ namespace Azure.Search.Documents.Models
         public T? From { get { throw null; } }
         public T? To { get { throw null; } }
     }
-    public partial class RawVector : Azure.Search.Documents.Models.SearchQueryVector
+    public partial class RawVectorQuery : Azure.Search.Documents.Models.VectorQuery
     {
-        public RawVector() { }
-        public System.Collections.Generic.IList<float> Vector { get { throw null; } }
+        public RawVectorQuery() { }
+        public System.Collections.Generic.IReadOnlyList<float> Vector { get { throw null; } set { } }
     }
     public partial class ResetDocumentOptions
     {
@@ -3437,8 +3438,9 @@ namespace Azure.Search.Documents.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerStatus SearchIndexerStatus(Azure.Search.Documents.Indexes.Models.IndexerStatus status, Azure.Search.Documents.Indexes.Models.IndexerExecutionResult lastResult, System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.IndexerExecutionResult> executionHistory, Azure.Search.Documents.Indexes.Models.SearchIndexerLimits limits) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerWarning SearchIndexerWarning(string key, string message, string name, string details, string documentationLink) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount, long storageSize) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount = (long)0, long storageSize = (long)0, long? vectorIndexSize = default(long?)) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount = (long)0, long storageSize = (long)0, long vectorIndexSize = (long)0) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchResourceCounter SearchResourceCounter(long usage, long? quota) { throw null; }
         public static Azure.Search.Documents.Models.SearchResultsPage<T> SearchResultsPage<T>(Azure.Search.Documents.Models.SearchResults<T> results) { throw null; }
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse) { throw null; }
@@ -3463,14 +3465,6 @@ namespace Azure.Search.Documents.Models
         Simple = 0,
         Full = 1,
         Semantic = 2,
-    }
-    public abstract partial class SearchQueryVector
-    {
-        protected SearchQueryVector() { }
-        public bool? Exhaustive { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Fields { get { throw null; } }
-        public int? KNearestNeighborsCount { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<float> Value { get { throw null; } set { } }
     }
     public partial class SearchResultsPage<T> : Azure.Page<Azure.Search.Documents.Models.SearchResult<T>>
     {
@@ -3625,10 +3619,35 @@ namespace Azure.Search.Documents.Models
         public static bool operator !=(Azure.Search.Documents.Models.VectorFilterMode left, Azure.Search.Documents.Models.VectorFilterMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VectorizableTextQuery : Azure.Search.Documents.Models.SearchQueryVector
+    public partial class VectorizableTextQuery : Azure.Search.Documents.Models.VectorQuery
     {
         public VectorizableTextQuery() { }
         public string Text { get { throw null; } set { } }
+    }
+    public abstract partial class VectorQuery
+    {
+        protected VectorQuery() { }
+        public bool? Exhaustive { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Fields { get { throw null; } }
+        public int? KNearestNeighborsCount { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VectorQueryKind : System.IEquatable<Azure.Search.Documents.Models.VectorQueryKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VectorQueryKind(string value) { throw null; }
+        public static Azure.Search.Documents.Models.VectorQueryKind Text { get { throw null; } }
+        public static Azure.Search.Documents.Models.VectorQueryKind Vector { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Models.VectorQueryKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Models.VectorQueryKind left, Azure.Search.Documents.Models.VectorQueryKind right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Models.VectorQueryKind (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Models.VectorQueryKind left, Azure.Search.Documents.Models.VectorQueryKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
