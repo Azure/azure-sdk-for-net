@@ -1,4 +1,7 @@
-﻿#region Snippet:Managing_Resource_Groups_Namespaces
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#region Snippet:Managing_Resource_Groups_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -10,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests.Samples
 {
-    class Sample2_ManagingResourceGroups
+    public class Sample2_ManagingResourceGroups
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]

@@ -98,3 +98,6 @@ You can verify that your virtual network now has 2 subnets by doing the followin
 VirtualNetwork myVNet = await resourceGroup.GetVirtualNetworks().GetAsync(vnetName);
 Console.WriteLine(myVNet.Data.Subnets.Count);
 ```
+
+## Next stepts
+Take a look at the [Authenticate across tenants](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample4_MultiTenant.md) samples.

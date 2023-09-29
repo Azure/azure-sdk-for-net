@@ -1,4 +1,7 @@
-﻿#region Snippet:Hello_World_Async_Namespaces
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#region Snippet:Hello_World_Async_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -8,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests.Samples
 {
-    class Sample1_HelloWorldAsync
+    public class Sample1_HelloWorldAsync
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]

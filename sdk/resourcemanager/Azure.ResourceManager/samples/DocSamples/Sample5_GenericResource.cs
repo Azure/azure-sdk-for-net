@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Update_GenericResource
             ArmClient client = new ArmClient(new DefaultAzureCredential());
- 
+
             var subnetName = "samplesubnet";
             var addressSpaces = new Dictionary<string, object>()
             {
