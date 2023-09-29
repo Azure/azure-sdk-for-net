@@ -39,7 +39,7 @@ public class PipelineResponse : IDisposable
         get
         {
             EnsureValid(nameof(ReasonPhrase));
-            return _netResponse!.ReasonPhrase;
+            return _netResponse!.ReasonPhrase!;
         }
     }
 
