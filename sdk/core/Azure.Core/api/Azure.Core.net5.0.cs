@@ -956,7 +956,7 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
-        public void Dispose() { }
+        public override void Dispose() { }
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
@@ -1011,12 +1011,12 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
-    public abstract partial class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<Azure.Core.HttpMessage>
+    public abstract partial class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.RestPipelineTransport
     {
         protected HttpPipelineTransport() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override Azure.Core.HttpMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
         public abstract Azure.Core.Request CreateRequest();
+        public virtual void Process(Azure.Core.HttpMessage message) { }
+        public virtual System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
     public partial class HttpPipelineTransportOptions
     {
