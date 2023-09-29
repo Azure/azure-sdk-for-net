@@ -4,8 +4,7 @@
 		<Version>1.0.0-beta.1</Version>
 		<Nullable>enable</Nullable>
 
-		<!-- TODO: Remove netcoreapp2.1 once we understand how to handle NU1605 warning as error -->
-		<TargetFrameworks>netstandard2.0;netcoreapp2.1;net6.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
 		
 		<!-- TODO: Remove warning suppression -->
 		<NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0014;CS1591;NETSDK1138</NoWarn>
@@ -18,17 +17,8 @@
 		<PackageReference Include="System.Text.Encodings.Web" />
 	</ItemGroup>
 
-	<!-- TODO: Remove this when we remove netcoreapp2.1 target -->
-	<!-- Keep System.Diagnostics.DiagnosticSource 4.6.0 for netcoreapp2.1 support. -->
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
-		<PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared" />
-		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared" />
-		<Compile Include="..\..\..\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared" />
 		<Compile Include="..\..\..\core\Azure.Core\src\Shared\TrimmingAttribute.cs" LinkBase="Shared" />
 	</ItemGroup>
-
 </Project>

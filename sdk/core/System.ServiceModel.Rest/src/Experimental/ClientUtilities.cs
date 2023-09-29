@@ -49,7 +49,7 @@ namespace System.ServiceModel.Rest.Experimental
             throw CreateOperationCanceledException(innerException, cancellationToken);
 
         private static Exception CreateOperationCanceledException(Exception? innerException, CancellationToken cancellationToken, string? message = null) =>
-#if NETCOREAPP2_1_OR_GREATER
+#if NET6_0_OR_GREATER
             new TaskCanceledException(message ?? s_cancellationMessage, innerException, cancellationToken); // TCE for compatibility with other handlers that use TaskCompletionSource.TrySetCanceled()
 #else
             new TaskCanceledException(message ?? s_cancellationMessage, innerException);
