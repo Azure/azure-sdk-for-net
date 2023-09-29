@@ -801,13 +801,15 @@ namespace Azure.Storage.Files.DataLake
         {
             return CreateInternal(
                 resourceType: resourceType,
+                blobType: null,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.AccessOptions?.Permissions,
-                umask: options?.AccessOptions?.Umask,
-                owner: options?.AccessOptions?.Owner,
-                group: options?.AccessOptions?.Group,
-                accessControlList: options?.AccessOptions?.AccessControlList,
+                accessOptions:
+                    (Permissions: options?.AccessOptions?.Permissions,
+                    Umask: options?.AccessOptions?.Umask,
+                    Owner: options?.AccessOptions?.Owner,
+                    Group: options?.AccessOptions?.Group,
+                    AccessControlList: options?.AccessOptions?.AccessControlList),
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
@@ -851,13 +853,15 @@ namespace Azure.Storage.Files.DataLake
         {
             return await CreateInternal(
                 resourceType: resourceType,
+                blobType: null,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.AccessOptions?.Permissions,
-                umask: options?.AccessOptions?.Umask,
-                owner: options?.AccessOptions?.Owner,
-                group: options?.AccessOptions?.Group,
-                accessControlList: options?.AccessOptions?.AccessControlList,
+                accessOptions:
+                    (Permissions: options?.AccessOptions?.Permissions,
+                    Umask: options?.AccessOptions?.Umask,
+                    Owner: options?.AccessOptions?.Owner,
+                    Group: options?.AccessOptions?.Group,
+                    AccessControlList: options?.AccessOptions?.AccessControlList),
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
@@ -932,13 +936,15 @@ namespace Azure.Storage.Files.DataLake
         {
             return CreateInternal(
                 resourceType: resourceType,
+                blobType: null,
                 httpHeaders: httpHeaders,
                 metadata: metadata,
-                permissions: permissions,
-                umask: umask,
-                owner: null,
-                group: null,
-                accessControlList: null,
+                accessOptions:
+                    (Permissions: permissions,
+                    Umask: umask,
+                    Owner: null,
+                    Group: null,
+                    AccessControlList: null),
                 leaseId: null,
                 leaseDuration: null,
                 timeToExpire: null,
@@ -1013,13 +1019,15 @@ namespace Azure.Storage.Files.DataLake
         {
             return await CreateInternal(
                 resourceType: resourceType,
+                blobType: null,
                 httpHeaders: httpHeaders,
                 metadata: metadata,
-                permissions: permissions,
-                umask: umask,
-                owner: null,
-                group: null,
-                accessControlList: null,
+                accessOptions:
+                    (Permissions: permissions,
+                    Umask: umask,
+                    Owner: null,
+                    Group: null,
+                    AccessControlList: null),
                 leaseId: null,
                 leaseDuration: null,
                 timeToExpire: null,
@@ -1032,13 +1040,16 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, DataLakeRequestConditions, bool, CancellationToken)"/>
+        /// The CreateInternal"/>
         /// operation creates a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
         /// <param name="resourceType">
         /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="blobType">
+        /// Blob type.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -1047,29 +1058,8 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="metadata">
         /// Optional custom metadata to set for this file or directory.
         /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="owner">
-        /// The owner of the file or directory.
-        /// </param>
-        /// <param name="group">
-        /// Optional.  The owning group of the file or directory.
-        /// </param>
-        /// <param name="accessControlList">
-        /// The POSIX access control list for the file or directory.
+        /// <param name="accessOptions">
+        /// Access options.
         /// </param>
         /// <param name="leaseId">
         /// Proposed LeaseId.
@@ -1109,13 +1099,14 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal virtual async Task<Response<PathInfo>> CreateInternal(
             PathResourceType resourceType,
+            BlobType? blobType,
             PathHttpHeaders httpHeaders,
             Metadata metadata,
-            string permissions,
-            string umask,
-            string owner,
-            string group,
-            IList<PathAccessControlItem> accessControlList,
+            (string Permissions,
+            string Umask,
+            string Owner,
+            string Group,
+            IList<PathAccessControlItem> AccessControlList) accessOptions,
             string leaseId,
             TimeSpan? leaseDuration,
             TimeSpan? timeToExpire,
@@ -1133,8 +1124,8 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
                     $"{nameof(metadata)}: {metadata}\n" +
-                    $"{nameof(permissions)}: {permissions}\n" +
-                    $"{nameof(umask)}: {umask}\n");
+                    $"{nameof(accessOptions.Permissions)}: {accessOptions.Permissions}\n" +
+                    $"{nameof(accessOptions.Umask)}: {accessOptions.Umask}\n");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
 
@@ -1197,6 +1188,7 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = await PathRestClient.CreateAsync(
                             resource: resourceType,
+                            blobType: blobType,
                             cacheControl: httpHeaders?.CacheControl,
                             contentEncoding: httpHeaders?.ContentEncoding,
                             contentLanguage: httpHeaders?.ContentLanguage,
@@ -1204,8 +1196,8 @@ namespace Azure.Storage.Files.DataLake
                             contentType: httpHeaders?.ContentType,
                             leaseId: conditions?.LeaseId,
                             properties: BuildMetadataString(metadata),
-                            permissions: permissions,
-                            umask: umask,
+                            permissions: accessOptions.Permissions,
+                            umask: accessOptions.Umask,
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1213,9 +1205,9 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            owner: owner,
-                            group: group,
-                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                            owner: accessOptions.Owner,
+                            group: accessOptions.Group,
+                            acl: PathAccessControlExtensions.ToAccessControlListString(accessOptions.AccessControlList),
                             proposedLeaseId: leaseId,
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
@@ -1228,6 +1220,7 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = PathRestClient.Create(
                             resource: resourceType,
+                            blobType: blobType,
                             cacheControl: httpHeaders?.CacheControl,
                             contentEncoding: httpHeaders?.ContentEncoding,
                             contentLanguage: httpHeaders?.ContentLanguage,
@@ -1235,8 +1228,8 @@ namespace Azure.Storage.Files.DataLake
                             contentType: httpHeaders?.ContentType,
                             leaseId: conditions?.LeaseId,
                             properties: BuildMetadataString(metadata),
-                            permissions: permissions,
-                            umask: umask,
+                            permissions: accessOptions.Permissions,
+                            umask: accessOptions.Umask,
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -1244,9 +1237,9 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            owner: owner,
-                            group: group,
-                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                            owner: accessOptions.Owner,
+                            group: accessOptions.Group,
+                            acl: PathAccessControlExtensions.ToAccessControlListString(accessOptions.AccessControlList),
                             proposedLeaseId: leaseId,
                             leaseDuration: serviceLeaseDuration,
                             expiryOptions: pathExpiryOptions,
@@ -1305,13 +1298,15 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
             => CreateIfNotExistsInternal(
                     resourceType: resourceType,
+                    blobType: null,
                     httpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
-                    permissions: options?.AccessOptions?.Permissions,
-                    umask: options?.AccessOptions?.Umask,
-                    owner: options?.AccessOptions?.Owner,
-                    group: options?.AccessOptions?.Group,
-                    accessControlList: options?.AccessOptions?.AccessControlList,
+                    accessOptions:
+                        (Permissions: options?.AccessOptions?.Permissions,
+                        Umask: options?.AccessOptions?.Umask,
+                        Owner: options?.AccessOptions?.Owner,
+                        Group: options?.AccessOptions?.Group,
+                        AccessControlList: options?.AccessOptions?.AccessControlList),
                     leaseId: options?.LeaseId,
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
@@ -1351,13 +1346,15 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
             => await CreateIfNotExistsInternal(
                 resourceType: resourceType,
+                blobType: null,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.AccessOptions?.Permissions,
-                umask: options?.AccessOptions?.Umask,
-                owner: options?.AccessOptions?.Owner,
-                group: options?.AccessOptions?.Group,
-                accessControlList: options?.AccessOptions?.AccessControlList,
+                accessOptions:
+                    (Permissions: options?.AccessOptions?.Permissions,
+                    Umask: options?.AccessOptions?.Umask,
+                    Owner: options?.AccessOptions?.Owner,
+                    Group: options?.AccessOptions?.Group,
+                    AccessControlList: options?.AccessOptions?.AccessControlList),
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
@@ -1422,13 +1419,15 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken)
             => CreateIfNotExistsInternal(
                     resourceType: resourceType,
+                    blobType: null,
                     httpHeaders: httpHeaders,
                     metadata: metadata,
-                    permissions: permissions,
-                    umask: umask,
-                    owner: null,
-                    group: null,
-                    accessControlList: null,
+                    accessOptions:
+                        (Permissions: permissions,
+                        Umask: umask,
+                        Owner: null,
+                        Group: null,
+                        AccessControlList: null),
                     leaseId: null,
                     leaseDuration: null,
                     timeToExpire: null,
@@ -1493,13 +1492,15 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken)
             => await CreateIfNotExistsInternal(
                 resourceType: resourceType,
+                blobType: null,
                 httpHeaders: httpHeaders,
                 metadata: metadata,
-                permissions: permissions,
-                umask: umask,
-                owner: null,
-                group: null,
-                accessControlList: null,
+                accessOptions:
+                    (Permissions: permissions,
+                    Umask: umask,
+                    Owner: null,
+                    Group: null,
+                    AccessControlList: null),
                 leaseId: null,
                 leaseDuration: null,
                 timeToExpire: null,
@@ -1510,13 +1511,16 @@ namespace Azure.Storage.Files.DataLake
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
         /// <param name="resourceType">
         /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="blobType">
+        /// Blob type.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the
@@ -1525,29 +1529,8 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="metadata">
         /// Optional custom metadata to set for this file or directory.
         /// </param>
-        /// <param name="permissions">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
-        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
-        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
-        /// octal notation (e.g. 0766) are supported.
-        /// </param>
-        /// <param name="umask">
-        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
-        /// When creating a file or directory and the parent folder does not have a default ACL,
-        /// the umask restricts the permissions of the file or directory to be created. The resulting
-        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
-        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
-        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
-        /// in 4-digit octal notation (e.g. 0766).
-        /// </param>
-        /// <param name="owner">
-        /// The owner of the file or directory.
-        /// </param>
-        /// <param name="group">
-        /// Optional.  The owning group of the file or directory.
-        /// </param>
-        /// <param name="accessControlList">
-        /// The POSIX access control list for the file or directory.
+        /// <param name="accessOptions">
+        /// Access options.
         /// </param>
         /// <param name="leaseId">
         /// Proposed LeaseId.
@@ -1581,15 +1564,16 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> CreateIfNotExistsInternal(
+        internal async Task<Response<PathInfo>> CreateIfNotExistsInternal(
             PathResourceType resourceType,
+            BlobType? blobType,
             PathHttpHeaders httpHeaders,
             Metadata metadata,
-            string permissions,
-            string umask,
-            string owner,
-            string group,
-            IList<PathAccessControlItem> accessControlList,
+            (string Permissions,
+            string Umask,
+            string Owner,
+            string Group,
+            IList<PathAccessControlItem> AccessControlList) accessOptions,
             string leaseId,
             TimeSpan? leaseDuration,
             TimeSpan? timeToExpire,
@@ -1604,13 +1588,10 @@ namespace Azure.Storage.Files.DataLake
                 DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 response = await CreateInternal(
                     resourceType: resourceType,
+                    blobType: blobType,
                     httpHeaders: httpHeaders,
                     metadata: metadata,
-                    permissions: permissions,
-                    umask: umask,
-                    owner: owner,
-                    group: group,
-                    accessControlList: accessControlList,
+                    accessOptions: accessOptions,
                     leaseId: leaseId,
                     leaseDuration: leaseDuration,
                     timeToExpire: timeToExpire,
