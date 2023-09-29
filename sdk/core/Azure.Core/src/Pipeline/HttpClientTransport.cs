@@ -410,7 +410,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Disposes the underlying <see cref="HttpClient"/>.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             if (this != Shared)
             {

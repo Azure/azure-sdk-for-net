@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
-using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
+using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// Represents an HTTP pipeline transport used to send HTTP requests and receive responses.
     /// </summary>
-    public abstract class HttpPipelineTransport : PipelineTransport<HttpMessage>
+    public abstract class HttpPipelineTransport : RestPipelineTransport
     {
         /// <summary>
         /// Creates a new transport specific instance of <see cref="Request"/>. This should not be called directly, <see cref="HttpPipeline.CreateRequest"/> or
@@ -49,16 +48,15 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="classifier"></param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        // TODO: we could look at removing CreateMessage at the top level because we _have_ to preserve
-        // the public API on this type to CreateRequest, and do we really need both?
-        // But, it seems good to have something that takes RequestOptions and ResponseClassifier (i.e.
-        // a "response options" type) and creates a message with them both all at once.
-        public override HttpMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
-            => throw new System.NotImplementedException();
+        /// <param name="message"></param>
+        public virtual void Process(HttpMessage message)
+            => Process((PipelineMessage)message);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public virtual async ValueTask ProcessAsync(HttpMessage message)
+            => await ProcessAsync((PipelineMessage)message).ConfigureAwait(false);
     }
 }
