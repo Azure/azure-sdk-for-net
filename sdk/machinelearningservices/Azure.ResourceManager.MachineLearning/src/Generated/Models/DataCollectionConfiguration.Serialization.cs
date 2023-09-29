@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DataCollection : IUtf8JsonSerializable
+    public partial class DataCollectionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static DataCollection DeserializeDataCollection(JsonElement element)
+        internal static DataCollectionConfiguration DeserializeDataCollectionConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new DataCollection(clientId.Value, Optional.ToNullable(dataCollectionMode), dataId.Value, Optional.ToNullable(samplingRate));
+            return new DataCollectionConfiguration(clientId.Value, Optional.ToNullable(dataCollectionMode), dataId.Value, Optional.ToNullable(samplingRate));
         }
     }
 }

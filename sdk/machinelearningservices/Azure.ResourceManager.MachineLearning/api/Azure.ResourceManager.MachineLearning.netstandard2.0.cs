@@ -2528,9 +2528,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public System.Collections.Generic.IList<System.Collections.Generic.IDictionary<string, string>> StoredProcedureParams { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
     }
-    public partial class DataCollection
+    public partial class DataCollectionConfiguration
     {
-        public DataCollection() { }
+        public DataCollectionConfiguration() { }
         public string ClientId { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.DataCollectionMode? DataCollectionMode { get { throw null; } set { } }
         public string DataId { get { throw null; } set { } }
@@ -2556,8 +2556,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     }
     public partial class DataCollector
     {
-        public DataCollector(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.DataCollection> collections) { }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.DataCollection> Collections { get { throw null; } }
+        public DataCollector(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.DataCollectionConfiguration> collections) { }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.DataCollectionConfiguration> Collections { get { throw null; } }
         public System.Collections.Generic.IList<string> RequestLoggingCaptureHeaders { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.RollingRateType? RollingRate { get { throw null; } set { } }
     }

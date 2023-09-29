@@ -483,7 +483,7 @@ rename-mapping:
   BaseEnvironmentId: BaseEnvironmentType
   BaseEnvironmentId.resourceId: -|arm-id
   BlobReferenceForConsumptionDto.storageAccountArmId: -|arm-id
-  Collection: DataCollection
+  Collection: DataCollectionConfiguration
   Docker: DockerSetting
   Endpoint: ContainerEndpoint
   Protocol: ContainerCommunicationProtocol

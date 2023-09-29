@@ -7,20 +7,20 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DataCollection. </summary>
-    public partial class DataCollection
+    /// <summary> The DataCollectionConfiguration. </summary>
+    public partial class DataCollectionConfiguration
     {
-        /// <summary> Initializes a new instance of DataCollection. </summary>
-        public DataCollection()
+        /// <summary> Initializes a new instance of DataCollectionConfiguration. </summary>
+        public DataCollectionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollection. </summary>
+        /// <summary> Initializes a new instance of DataCollectionConfiguration. </summary>
         /// <param name="clientId"> The msi client id used to collect logging to blob storage. If it's null,backend will pick a registered endpoint identity to auth. </param>
         /// <param name="dataCollectionMode"> Enable or disable data collection. </param>
         /// <param name="dataId"> The data asset arm resource id. Client side will ensure data asset is pointing to the blob storage, and backend will collect data to the blob storage. </param>
         /// <param name="samplingRate"> The sampling rate for collection. Sampling rate 1.0 means we collect 100% of data by default. </param>
-        internal DataCollection(string clientId, DataCollectionMode? dataCollectionMode, string dataId, double? samplingRate)
+        internal DataCollectionConfiguration(string clientId, DataCollectionMode? dataCollectionMode, string dataId, double? samplingRate)
         {
             ClientId = clientId;
             DataCollectionMode = dataCollectionMode;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collections"/> is null. </exception>
-        public DataCollector(IDictionary<string, DataCollection> collections)
+        public DataCollector(IDictionary<string, DataCollectionConfiguration> collections)
         {
             Argument.AssertNotNull(collections, nameof(collections));
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it's day, all data will be collected in blob path /yyyy/MM/dd/.
         /// The other benefit of rolling path is that model monitoring ui is able to select a time range of data very quickly.
         /// </param>
-        internal DataCollector(IDictionary<string, DataCollection> collections, RequestLogging requestLogging, RollingRateType? rollingRate)
+        internal DataCollector(IDictionary<string, DataCollectionConfiguration> collections, RequestLogging requestLogging, RollingRateType? rollingRate)
         {
             Collections = collections;
             RequestLogging = requestLogging;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] The collection configuration. Each collection has it own configuration to collect model data and the name of collection can be arbitrary string.
         /// Model data collector can be used for either payload logging or custom logging or both of them. Collection request and response are reserved for payload logging, others are for custom logging.
         /// </summary>
-        public IDictionary<string, DataCollection> Collections { get; }
+        public IDictionary<string, DataCollectionConfiguration> Collections { get; }
         /// <summary> The request logging configuration for mdc, it includes advanced logging settings for all collections. It's optional. </summary>
         internal RequestLogging RequestLogging { get; set; }
         /// <summary> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </summary>
