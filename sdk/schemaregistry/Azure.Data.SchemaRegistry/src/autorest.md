@@ -10,6 +10,34 @@ generation1-convenience-client: true
 
 ## Swagger workarounds
 
+### Update producers arrays - get version
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths["/$schemaGroups/{groupName}/schemas/{schemaName}/versions/{schemaVersion}"].get
+  transform: >
+    $.produces = [
+        "application/json; serialization=Avro",
+        "application/json; serialization=json",
+        "application/octet-stream"
+    ]
+```
+
+### Update producers arrays - get id
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths["/$schemaGroups/$schemas/{id}"].get
+  transform: >
+    $.produces = [
+        "application/json; serialization=Avro",
+        "application/json; serialization=Json",
+        "application/octet-stream"
+    ]
+```
+
 ### Add Content-Type header to GetById operation
 
 ``` yaml
