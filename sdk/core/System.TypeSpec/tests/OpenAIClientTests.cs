@@ -24,17 +24,17 @@ public partial class OpenAIClientTests
     [Fact]
     public void Options()
     {
-        RequestOptions.DefaultLoggingPolicy = new ConsoleLoggingPolicy(isLoggingEnabled: true);
+        PipelineOptions.DefaultLoggingPolicy = new ConsoleLoggingPolicy(isLoggingEnabled: true);
         // RequestOptions.DefaultRetryPolicy = new RetryPolicy(maxRetries: 3);
 
-        var options = new OpenAIClientOptions();
+        var options = new OpenAIOptions();
         options.RetryPolicy = new CustomRetryPolicy();
         options.LoggingPolicy = new ConsoleLoggingPolicy(isLoggingEnabled: true);
 
         var credential = new KeyCredential(Environment.GetEnvironmentVariable("OPENAI_KEY"));
         var client = new OpenAIClient(credential, options);
 
-        var callOptions = new OpenAIClientOptions();
+        var callOptions = new OpenAIOptions();
         //options.LoggingPolicy = new LoggingPolicy(isLoggingEnabled: false);
 
         Completions result = client.GetCompletions("tell me something about life.", callOptions);
@@ -45,7 +45,7 @@ public partial class OpenAIClientTests
     [Fact]
     public void Pipeline()
     {
-        MessagePipeline pipeline = MessagePipeline.Create(new MessagePipelineTransport(), new RequestOptions());
+        MessagePipeline pipeline = MessagePipeline.Create(OpenAIOptions.Default);
         PipelineMessage message = pipeline.CreateMessage("GET", new Uri("http://www.google.com"));
         pipeline.Send(message);
         Assert.True(message.Response.Status < 299);

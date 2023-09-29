@@ -10,15 +10,14 @@ namespace OpenAI;
 
 public class OpenAIClient
 {
-    private readonly MessagePipeline _pipeline;
     private readonly KeyCredential _credential;
-    private readonly OpenAIClientOptions _options;
+    private readonly OpenAIOptions _options;
 
-    public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
+    public OpenAIClient(KeyCredential credential, OpenAIOptions options = default)
     {
-        _options = options ?? new OpenAIClientOptions();
         _credential = credential;
-        _pipeline = MessagePipeline.Create(new MessagePipelineTransport(), _options);
+        _options = options ?? OpenAIOptions.Default;
+        _options.GetPipeline();
     }
 
     public Result GetCompletions(string prompt, RequestOptions options)
@@ -34,7 +33,8 @@ public class OpenAIClient
 
         PipelineMessage message = CreateGetCompletions(BinaryData.FromObjectAsJson(body), options);
 
-        _pipeline.Send(message);
+        var pipeline = _options.GetPipeline();
+        pipeline.Send(message);
         if (message.Response.Status > 299) {
             if (message.Response != null) throw new RequestErrorException(message.Response);
             else throw new Exception("response null");
@@ -47,11 +47,14 @@ public class OpenAIClient
         var value = Completions.Deserialize(result.GetRawResponse().Content);
         return new Result<Completions>(value, result.GetRawResponse());
     }
+    public CancellationToken? CancellationToken { get; set; }
 
     protected PipelineMessage CreateGetCompletions(BinaryData body, RequestOptions options)
     {
-        PipelineMessage message = _pipeline.CreateMessage("POST", new Uri("https://api.openai.com/v1/completions"));
-        message.CancellationToken = options.CancellationToken??CancellationToken.None;
+        var pipeline = _options.GetPipeline();
+        PipelineMessage message = pipeline.CreateMessage("POST", new Uri("https://api.openai.com/v1/completions"));
+        message.CancellationToken = System.Threading.CancellationToken.None;
+        if (options.CancellationToken != default) message.CancellationToken = options.CancellationToken;
         message.Request.SetHeaderValue("Content-Type", "application/json");
         message.Request.SetHeaderValue("Authorization", $"Bearer {_credential.Key}");
         message.Request.SetContent(body);

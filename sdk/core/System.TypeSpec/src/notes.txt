@@ -1,27 +1,30 @@
 Architecture:
 
-Allow efficient custom policies per request, i..e pipleline in options
-Allow UTF8 implementations
-Enable HTTP/2, maybe 3
-Freeze options
-Can we make some policies be read-only, i.e. prevent them from mutating the message
+Pri 1: Freeze options
+Pri 1: Enable HTTP/2, maybe 3
+Pri 1: Allow efficient custom policies per request, i..e pipleline in options
+Pri 1 (blocked on debranding pipeline): Change IPipelinePolicy to class, but this means all existing policies need to inherit from it.
 
-Change IPipelinePolicy to class, but this means all existing policies need to inherit from it.
+Pri 2: Solve buffering problem
+Pri 2: Can we support custom pipelines?
+Pri 2: Allow UTF8 implementations
+Pri 2: Verify that LROs can be added
+Pri 2: Verify that pageables can be added
+Pri 2: Allow System.IO.Pipelines
 
-Solve buffering problem
-Make options configurable
-Add expando properties to messages
+Pri 3: Can we make some policies be read-only, i.e. prevent them from mutating the message
 
-Make policies public
-Measure perfromance and allocation
-Verify that LROs can be added
-Verify that pageables can be added
-Allow rotating client and process-wide cancellation tokens
-Model serialization
+Features:
 
-Can we support custom pipelines?
-Allow System.IO.Pipelines
-What about:
+Pri 1: Allow rotating client and process-wide cancellation tokens
+Pri 1: Model serialization
+
+Pri 1: Make policies public
+Pri 2: Make options configurable
+Pri 2: Add expando properties to messages
+Pri 2: Measure perfromance and allocation
+
+Investigate Need:
 - ETag, conditions, etc.
 - dynamic
 - response classifier

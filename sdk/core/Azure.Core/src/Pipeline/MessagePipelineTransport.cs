@@ -21,7 +21,12 @@ public class MessagePipelineTransport
     /// <summary>
     /// TBD.
     /// </summary>
-    public MessagePipelineTransport()
+    public static MessagePipelineTransport Default { get; } = new MessagePipelineTransport();
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    private MessagePipelineTransport()
         => _transport = new HttpClientTransport();
 
     /// <summary>

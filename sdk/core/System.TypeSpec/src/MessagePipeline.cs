@@ -13,22 +13,6 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 {
     private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
     private readonly PipelineTransport<PipelineMessage> _transport;
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="transport"></param>
-    /// <param name="policies"></param>
-    public MessagePipeline(
-        PipelineTransport<PipelineMessage> transport,
-        ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies
-    )
-    {
-        _transport = transport;
-        var larger = new IPipelinePolicy<PipelineMessage>[policies.Length + 1];
-        policies.Span.CopyTo(larger);
-        larger[policies.Length] = transport;
-        _policies = larger;
-    }
 
     private MessagePipeline(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
     {
@@ -39,36 +23,15 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     /// <summary>
     /// TBD.
     /// </summary>
-    /// <param name="defaultTransport">TDODO: this should be removed</param>
     /// <param name="options">User settings and policies</param>
-    /// <param name="clientPerTryPolicies">client implementation policies</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public static MessagePipeline Create(
-        PipelineTransport<PipelineMessage> defaultTransport, // TODO: this parameter should be removed
-        RequestOptions options,
-        params IPipelinePolicy<PipelineMessage>[] clientPerTryPolicies)
-        => Create(defaultTransport, options, clientPerTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage>>.Empty);
-
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="defaultTransport">TDODO: this should be removed</param>
-    /// <param name="options">User settings and policies</param>
-    /// <param name="clientPerTryPolicies">client implementation policies</param>
-    /// <param name="clientPerCallPolicies">client implementation policies</param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public static MessagePipeline Create(
-        PipelineTransport<PipelineMessage> defaultTransport, // TODO: this parameter should be removed
-        RequestOptions options,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> clientPerTryPolicies,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> clientPerCallPolicies)
+        PipelineOptions options)
     {
-        int pipelineLength = clientPerCallPolicies.Length + clientPerTryPolicies.Length;
-
-        if (options.PerTryPolicies != null) pipelineLength += options.PerTryPolicies.Length;
-        if (options.PerCallPolicies != null) pipelineLength += options.PerCallPolicies.Length;
+        int pipelineLength = 0;
+        pipelineLength += options.PerTryPolicies.Length;
+        pipelineLength += options.PerCallPolicies.Length;
         pipelineLength += options.RetryPolicy==null?0:1;
         pipelineLength += options.LoggingPolicy == null ? 0 : 1;
         pipelineLength++; // for transport
@@ -76,39 +39,17 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
         int index = 0;
 
-        clientPerCallPolicies.CopyTo(pipeline.AsSpan(index));
-        index += clientPerCallPolicies.Length;
+        options.PerCallPolicies.Span.CopyTo(pipeline.AsSpan());
+        index += options.PerCallPolicies.Length;
 
-        if (options.PerCallPolicies != null)
-        {
-            options.PerCallPolicies.CopyTo(pipeline.AsSpan());
-            index += options.PerCallPolicies.Length;
-        }
-        if (options.RetryPolicy != null)
-        {
-            pipeline[index++] = options.RetryPolicy;
-        }
-        if (options.PerTryPolicies != null)
-        {
-            options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
-            index += options.PerTryPolicies.Length;
-        }
+        if (options.RetryPolicy != null) pipeline[index++] = options.RetryPolicy;
 
-        clientPerTryPolicies.CopyTo(pipeline.AsSpan(index));
-        index += clientPerCallPolicies.Length;
+        options.PerTryPolicies.Span.CopyTo(pipeline.AsSpan(index));
+        index += options.PerTryPolicies.Length;
 
-        if (options.LoggingPolicy != null)
-        {
-            pipeline[index++] = options.LoggingPolicy;
-        }
-        if (options.Transport != null)
-        {
-            pipeline[index++] = options.Transport;
-        }
-        else
-        {
-            pipeline[index++] = defaultTransport;
-        }
+        if (options.LoggingPolicy != null) pipeline[index++] = options.LoggingPolicy;
+
+        pipeline[index++] = options.Transport;
         return new MessagePipeline(pipeline);
     }
 
