@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -255,8 +255,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
