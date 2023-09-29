@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Reflection;
-using System.Runtime.InteropServices;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
-using System.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
