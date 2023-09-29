@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: SchemaRegistryClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/70e53bf07d4f67000743c05d281930f2713a988e/specification/schemaregistry/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c364b64a6b412ffd7507dea71ae53251d35748c1/specification/schemaregistry/data-plane/readme.md
 generation1-convenience-client: true
 ```
 
