@@ -280,26 +280,6 @@ namespace Azure.Core.Pipeline
 
         }
 
-        private static bool RemoveHeader(HttpHeaders headers, HttpContent? content, string name)
-        {
-            // .Remove throws on invalid header name so use TryGet here to check
-#if NET6_0_OR_GREATER
-            if (headers.NonValidated.Contains(name) && headers.Remove(name))
-            {
-                return true;
-            }
-
-            return content is not null && content.Headers.NonValidated.Contains(name) && content.Headers.Remove(name);
-#else
-            if (headers.TryGetValues(name, out _) && headers.Remove(name))
-            {
-                return true;
-            }
-
-            return content?.Headers.TryGetValues(name, out _) == true && content.Headers.Remove(name);
-#endif
-        }
-
         private static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Contains throws on invalid header name so use TryGet here
