@@ -71,7 +71,7 @@ namespace Azure.Core.Pipeline
         public override void Process(HttpMessage message)
         {
 #if NET5_0_OR_GREATER
-            ProcessAsync(message, false).EnsureCompleted();
+            ProcessSyncOrAsync(message, async: false).EnsureCompleted();
 #else
             // Intentionally blocking here
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
@@ -81,10 +81,10 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        public override ValueTask ProcessAsync(HttpMessage message) => ProcessAsync(message, true);
+        public override ValueTask ProcessAsync(HttpMessage message) => ProcessSyncOrAsync(message, async: true);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
-        private async ValueTask ProcessAsync(HttpMessage message, bool async)
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
 #pragma warning restore CA1801
         {
             using HttpRequestMessage httpRequest = BuildRequestMessage(message);
@@ -207,7 +207,7 @@ namespace Azure.Core.Pipeline
             return pipelineRequest.BuildRequestMessage(message.CancellationToken);
         }
 
-        internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
+        private static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
         {
 #if NET6_0_OR_GREATER
             if (headers.NonValidated.TryGetValues(name, out HeaderStringValues values) ||
@@ -227,7 +227,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        internal static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+        private static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
 #if NET6_0_OR_GREATER
             if (headers.NonValidated.TryGetValues(name, out HeaderStringValues headerStringValues) ||
@@ -248,7 +248,7 @@ namespace Azure.Core.Pipeline
 
         }
 
-        internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
+        private static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent? content)
         {
 #if NET6_0_OR_GREATER
             foreach (var (key, value) in headers.NonValidated)
@@ -280,7 +280,7 @@ namespace Azure.Core.Pipeline
 
         }
 
-        internal static bool RemoveHeader(HttpHeaders headers, HttpContent? content, string name)
+        private static bool RemoveHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Remove throws on invalid header name so use TryGet here to check
 #if NET6_0_OR_GREATER
@@ -300,7 +300,7 @@ namespace Azure.Core.Pipeline
 #endif
         }
 
-        internal static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
+        private static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
         {
             // .Contains throws on invalid header name so use TryGet here
 #if NET6_0_OR_GREATER
@@ -414,19 +414,6 @@ namespace Azure.Core.Pipeline
         }
 #endif
 
-        /// <summary>
-        /// Disposes the underlying <see cref="HttpClient"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            if (this != Shared)
-            {
-                Client.Dispose();
-            }
-
-            GC.SuppressFinalize(this);
-        }
-
         private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
         {
 #if NET5_0_OR_GREATER
@@ -439,5 +426,18 @@ namespace Azure.Core.Pipeline
         private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
             "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
             "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
+
+        /// <summary>
+        /// Disposes the underlying <see cref="HttpClient"/>.
+        /// </summary>
+        public void Dispose()
+        {
+            if (this != Shared)
+            {
+                Client.Dispose();
+            }
+
+            GC.SuppressFinalize(this);
+        }
     }
 }
