@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement
 {
     internal partial class CheckpointerExtensions
     {
-        internal static async Task<DataTransferStatus> GetJobStatus(
+        internal static async Task<DataTransferStatus> GetJobStatusAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement
             string transferId,
             CancellationToken cancellationToken)
         {
-            DataTransferStatus jobStatus = await checkpointer.GetJobStatus(transferId, cancellationToken).ConfigureAwait(false);
+            DataTransferStatus jobStatus = await checkpointer.GetJobStatusAsync(transferId, cancellationToken).ConfigureAwait(false);
 
             // Transfers marked as fully completed are not resumable
             return jobStatus.State != DataTransferState.Completed || jobStatus.HasFailedItems || jobStatus.HasSkippedItems;

@@ -778,7 +778,7 @@ namespace Azure.Storage.DataMovement.Tests
                 actualTransferId = new Guid(transferIdBytes).ToString();
             }
 
-            DataTransferStatus actualJobStatus = await transferCheckpointer.GetJobStatus(transferId);
+            DataTransferStatus actualJobStatus = await transferCheckpointer.GetJobStatusAsync(transferId);
 
             // Assert
             Assert.AreEqual(transferId, actualTransferId);

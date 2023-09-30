@@ -802,36 +802,15 @@ namespace Azure.Storage.DataMovement
         private async Task SetDataTransfers()
         {
             _dataTransfers.Clear();
+
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
-                int jobPartCount = await _checkpointer.CurrentJobPartCountAsync(
-                            transferId: transferId,
-                            cancellationToken: _cancellationToken).ConfigureAwait(false);
-
-                JobPartPlanHeader header;
-                using (Stream stream = await _checkpointer.ReadableStreamAsync(
-                            transferId: transferId,
-                            partNumber: 0,
-                            offset: 0,
-                            readSize: 0,
-                            cancellationToken: _cancellationToken).ConfigureAwait(false))
-                {
-                    // Convert stream to job plan header
-                    header = JobPartPlanHeader.Deserialize(stream);
-                }
-
-                // Verify the contents of the header
-                // Check transfer id
-                if (!header.TransferId.Equals(transferId))
-                {
-                    throw Errors.MismatchTransferId(transferId, header.TransferId);
-                }
-
+                DataTransferStatus jobStatus = await _checkpointer.GetJobStatusAsync(transferId).ConfigureAwait(false);
                 _dataTransfers.Add(transferId, new DataTransfer(
                     id: transferId,
                     transferManager: this,
-                    status: header.AtomicJobStatus));
+                    status: jobStatus));
             }
         }
 
