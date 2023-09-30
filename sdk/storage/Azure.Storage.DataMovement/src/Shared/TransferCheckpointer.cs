@@ -115,6 +115,26 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Writes to the job plan file at the given offset.
+        /// </summary>
+        /// <param name="transferId">The transfer ID.</param>
+        /// <param name="fileOffset">The offset into the job plan file to start writing at.</param>
+        /// <param name="buffer">The data to write.</param>
+        /// <param name="bufferOffset">The offset into the given buffer to start reading from.</param>
+        /// <param name="length">The length of data to read from the buffer and write to the job plan file.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be canceled.
+        /// </param>
+        public abstract Task WriteToJobPlanFileAsync(
+            string transferId,
+            int fileOffset,
+            byte[] buffer,
+            int bufferOffset,
+            int length,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Writes to the memory mapped file to store the checkpointing information.
         ///
         /// Creates the file for the respective ID if it does not currently exist.

@@ -845,6 +845,72 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        public async Task WriteToJobPlanFileAsync()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            // Act
+            // Change enumerationComplete (test with extra byte)
+            byte[] enumerationCompleteBytes = { 0x00, Convert.ToByte(true) };
+            await transferCheckpointer.WriteToJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.EnumerationCompleteIndex,
+                enumerationCompleteBytes,
+                bufferOffset: 1,
+                length: DataMovementConstants.OneByte);
+
+            // Change Job Status
+            JobPlanStatus jobPlanStatus = JobPlanStatus.Completed | JobPlanStatus.HasSkipped;
+            byte[] jobPlanStatusBytes = BitConverter.GetBytes((int)jobPlanStatus);
+            await transferCheckpointer.WriteToJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.JobStatusIndex,
+                jobPlanStatusBytes,
+                bufferOffset: 0,
+                length: DataMovementConstants.IntSizeInBytes);
+
+            // Assert
+            int start = DataMovementConstants.JobPlanFile.EnumerationCompleteIndex;
+            int readLength = DataMovementConstants.JobPlanFile.ParentSourcePathOffsetIndex - start;
+            using (Stream stream = await transferCheckpointer.ReadJobPlanFileAsync(
+                transferId,
+                offset: start,
+                length: readLength))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+                bool enumerationComplete = Convert.ToBoolean(reader.ReadByte());
+                Assert.IsTrue(enumerationComplete);
+
+                JobPlanStatus actualJobPlanStatus = (JobPlanStatus)reader.ReadInt32();
+                Assert.AreEqual(jobPlanStatus, actualJobPlanStatus);
+            }
+        }
+
+        [Test]
+        public void WriteToJobPlanFileAsync_Error()
+        {
+            // Arrange
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            string transferId = GetNewTransferId();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            // Act / Assert
+            byte[] bytes = { 0x00 };
+            Assert.CatchAsync<ArgumentException>(
+                async () => await transferCheckpointer.WriteToJobPlanFileAsync(
+                    transferId: Guid.NewGuid().ToString(),
+                    fileOffset: 0,
+                    buffer: bytes,
+                    bufferOffset: 0,
+                    length: 1));
+            }
+
+        [Test]
         public async Task SetJobTransferStatusAsync()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();

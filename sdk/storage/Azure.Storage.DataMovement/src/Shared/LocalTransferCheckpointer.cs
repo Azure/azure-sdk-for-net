@@ -204,6 +204,37 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
+        public override async Task WriteToJobPlanFileAsync(
+            string transferId,
+            int fileOffset,
+            byte[] buffer,
+            int bufferOffset,
+            int length,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
+            {
+                // Lock MMF
+                await jobPlanFile.WriteLock.WaitAsync().ConfigureAwait(false);
+
+                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath, FileMode.Open))
+                using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(fileOffset, length, MemoryMappedFileAccess.Write))
+                {
+                    accessor.WriteArray(0, buffer, bufferOffset, length);
+                    accessor.Flush();
+                }
+
+                // Release MMF
+                jobPlanFile.WriteLock.Release();
+            }
+            else
+            {
+                throw Errors.MissingTransferIdCheckpointer(transferId);
+            }
+        }
+
+        /// <inheritdoc/>
         public override async Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
