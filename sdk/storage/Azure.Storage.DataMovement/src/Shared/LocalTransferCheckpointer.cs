@@ -160,7 +160,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        public override async Task<Stream> ReadableStreamAsync(
+        public override async Task<Stream> ReadJobPartPlanFileAsync(
             string transferId,
             int partNumber,
             long offset,

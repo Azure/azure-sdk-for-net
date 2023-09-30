@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        public abstract Task<Stream> ReadableStreamAsync(
+        public abstract Task<Stream> ReadJobPartPlanFileAsync(
             string transferId,
             int partNumber,
             long offset,

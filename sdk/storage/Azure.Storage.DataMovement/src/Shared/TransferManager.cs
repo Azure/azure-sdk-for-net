@@ -550,7 +550,7 @@ namespace Azure.Storage.DataMovement
 
                     if (resumeJob)
                     {
-                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                        using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
@@ -590,7 +590,7 @@ namespace Azure.Storage.DataMovement
 
                     if (resumeJob)
                     {
-                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                        using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
@@ -623,7 +623,7 @@ namespace Azure.Storage.DataMovement
 
                     if (resumeJob)
                     {
-                        using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                        using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
@@ -675,7 +675,7 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
-                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
@@ -722,7 +722,7 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
-                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
@@ -762,7 +762,7 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
                         for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
                         {
-                            using (Stream stream = await _checkpointer.ReadableStreamAsync(
+                            using (Stream stream = await _checkpointer.ReadJobPartPlanFileAsync(
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,

@@ -101,7 +101,7 @@ namespace Azure.Storage.DataMovement
 
             string sourceResourceId;
             string destinationResourceId;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
@@ -172,7 +172,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             string value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
@@ -201,7 +201,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             string value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
@@ -228,7 +228,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             byte value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
