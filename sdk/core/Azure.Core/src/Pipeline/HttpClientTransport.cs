@@ -27,30 +27,29 @@ namespace Azure.Core.Pipeline
 
         // The transport's private HttpClient has been made internal because it is used by tests.
         // TODO: move these tests into System.Rest
-        internal HttpClient Client { get; }
+        //internal HttpClient Client { get; }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
-        public HttpClientTransport() : this(CreateDefaultClient())
-        { }
+        public HttpClientTransport() : base(CreateDefaultClient())
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="messageHandler">The instance of <see cref="HttpMessageHandler"/> to use.</param>
-        public HttpClientTransport(HttpMessageHandler messageHandler)
+        public HttpClientTransport(HttpMessageHandler messageHandler) : base(new HttpClient(messageHandler))
         {
-            Client = new HttpClient(messageHandler) ?? throw new ArgumentNullException(nameof(messageHandler));
         }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
-        public HttpClientTransport(HttpClient client)
+        public HttpClientTransport(HttpClient client) : base(client)
         {
-            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         /// <summary>
@@ -197,15 +196,6 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static HttpRequestMessage BuildRequestMessage(HttpMessage message)
-        {
-            if (!(message.Request is HttpClientTransportRequest pipelineRequest))
-            {
-                throw new InvalidOperationException("the request is not compatible with the transport");
-            }
-            return pipelineRequest.BuildRequestMessage(message.CancellationToken);
-        }
-
 #if NETCOREAPP
         private static SocketsHttpHandler ApplyOptionsToHandler(SocketsHttpHandler httpHandler, HttpPipelineTransportOptions? options)
         {
@@ -260,15 +250,6 @@ namespace Azure.Core.Pipeline
             return httpHandler;
         }
 #endif
-
-        private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
-        {
-#if NET5_0_OR_GREATER
-            httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
-#else
-            httpRequest.Properties[name] = value;
-#endif
-        }
 
         private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
             "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",

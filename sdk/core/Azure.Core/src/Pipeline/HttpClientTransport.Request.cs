@@ -108,17 +108,18 @@ namespace Azure.Core.Pipeline
 
             internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
-                var method = ToHttpClientMethod(Method);
-                var uri = Uri.ToUri();
-                var currentRequest = new HttpRequestMessage(method, uri);
-                var currentContent = Content != null ? new PipelineContentAdapter(Content, cancellation) : null;
+                HttpMethod method = ToHttpClientMethod(Method);
+                Uri uri = Uri.ToUri();
+                HttpRequestMessage currentRequest = new HttpRequestMessage(method, uri);
+                PipelineContentAdapter? currentContent = Content != null ? new PipelineContentAdapter(Content, cancellation) : null;
                 currentRequest.Content = currentContent;
 #if NETFRAMEWORK
                 currentRequest.Headers.ExpectContinue = false;
 #endif
                 for (int i = 0; i < _headers.Count; i++)
                 {
-                    _headers.GetAt(i, out var headerName, out var value);
+                    _headers.GetAt(i, out IgnoreCaseString headerName, out object value);
+
                     switch (value)
                     {
                         case string stringValue:
@@ -135,6 +136,7 @@ namespace Azure.Core.Pipeline
                                 }
                             }
                             break;
+
                         case List<string> listValue:
                             if (!currentRequest.Headers.TryAddWithoutValidation(headerName, listValue))
                             {

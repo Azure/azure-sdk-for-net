@@ -4,14 +4,18 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.ServiceModel.Rest.Experimental;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public class RestPipelineTransport : PipelineTransport<PipelineMessage>, IDisposable
+public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
     private readonly HttpClient _httpClient;
+
+    // TODO: remove this when refactor is complete.
+    public HttpClient Client => _httpClient;
 
     private bool _disposed;
 
@@ -21,6 +25,8 @@ public class RestPipelineTransport : PipelineTransport<PipelineMessage>, IDispos
 
     public RestPipelineTransport(HttpClient client)
     {
+        ClientUtilities.AssertNotNull(client, nameof(client));
+
         _httpClient = client;
     }
 
@@ -30,6 +36,7 @@ public class RestPipelineTransport : PipelineTransport<PipelineMessage>, IDispos
         //   - SSL settings?
         //   - Proxy settings?
         //   - Cookies?
+        //   - MaxConnectionsPerServer?  PooledConnectionLifetime?
 
         HttpClientHandler handler = new HttpClientHandler()
         {
@@ -45,7 +52,7 @@ public class RestPipelineTransport : PipelineTransport<PipelineMessage>, IDispos
 
     public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
-        PipelineRequest request = new PipelineRequest();
+        PipelineRequest request = new RestPipelineTransportRequest();
         PipelineMessage message = new PipelineMessage(request, classifier);
 
         // TODO: use options
@@ -127,6 +134,25 @@ public class RestPipelineTransport : PipelineTransport<PipelineMessage>, IDispos
         {
             throw new RequestErrorException(e.Message, e);
         }
+    }
+
+	// TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e
+    private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
+    {
+        if (!(message.Request is HttpClientTransportRequest pipelineRequest))
+        {
+            throw new InvalidOperationException("the request is not compatible with the transport");
+        }
+        return pipelineRequest.BuildRequestMessage(message.CancellationToken);
+    }
+
+    private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
+    {
+#if NET5_0_OR_GREATER
+        httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
+#else
+            httpRequest.Properties[name] = value;
+#endif
     }
 
     #region IDisposable
