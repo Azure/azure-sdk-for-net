@@ -96,6 +96,7 @@ namespace Microsoft.Extensions.Azure
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
             var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
             var tokenFilePath = configuration["tokenFilePath"];
+            var retry = configuration.GetSection("retry");
             IEnumerable<string> additionallyAllowedTenantsList = null;
             if (!string.IsNullOrWhiteSpace(additionallyAllowedTenants))
             {
@@ -112,39 +113,49 @@ namespace Microsoft.Extensions.Azure
                     throw new ArgumentException("Cannot specify both 'clientId' and 'managedIdentityResourceId'");
                 }
 
+                var options = CreateCredentialOptions<TokenCredentialOptions>(retry);
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
-                    return new ManagedIdentityCredential(new ResourceIdentifier(resourceId));
+                    return new ManagedIdentityCredential(new ResourceIdentifier(resourceId), options);
                 }
 
-                return new ManagedIdentityCredential(clientId);
+                return new ManagedIdentityCredential(clientId, options);
             }
 
             if (string.Equals(credentialType, "workloadidentity", StringComparison.OrdinalIgnoreCase))
             {
                 // The WorkloadIdentityCredentialOptions object initialization populates its instance members
-                // from the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_FEDERATED_TOKEN_FILE
-                var workloadIdentityOptions = new WorkloadIdentityCredentialOptions();
+                // from the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_FEDERATED_TOKEN_FILE,
+                // and AZURE_ADDITIONALLY_ALLOWED_TENANTS
+                var options = CreateCredentialOptions<WorkloadIdentityCredentialOptions>(retry);
                 if (!string.IsNullOrWhiteSpace(tenantId))
                 {
-                    workloadIdentityOptions.TenantId = tenantId;
+                    options.TenantId = tenantId;
                 }
 
                 if (!string.IsNullOrWhiteSpace(clientId))
                 {
-                    workloadIdentityOptions.ClientId = clientId;
+                    options.ClientId = clientId;
                 }
 
                 if (!string.IsNullOrWhiteSpace(tokenFilePath))
                 {
-                    workloadIdentityOptions.TokenFilePath = tokenFilePath;
+                    options.TokenFilePath = tokenFilePath;
                 }
 
-                if (!string.IsNullOrWhiteSpace(workloadIdentityOptions.TenantId) &&
-                    !string.IsNullOrWhiteSpace(workloadIdentityOptions.ClientId) &&
-                    !string.IsNullOrWhiteSpace(workloadIdentityOptions.TokenFilePath))
+                if (additionallyAllowedTenantsList != null)
                 {
-                    return new WorkloadIdentityCredential(workloadIdentityOptions);
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        options.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(options.TenantId) &&
+                    !string.IsNullOrWhiteSpace(options.ClientId) &&
+                    !string.IsNullOrWhiteSpace(options.TokenFilePath))
+                {
+                    return new WorkloadIdentityCredential(options);
                 }
 
                 throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via environment variables or the configuration.");
@@ -154,7 +165,7 @@ namespace Microsoft.Extensions.Azure
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(clientSecret))
             {
-                var options = new ClientSecretCredentialOptions();
+                var options = CreateCredentialOptions<ClientSecretCredentialOptions>(retry);
                 if (additionallyAllowedTenantsList != null)
                 {
                     foreach (string tenant in additionallyAllowedTenantsList)
@@ -190,7 +201,7 @@ namespace Microsoft.Extensions.Azure
                     throw new InvalidOperationException($"Unable to find a certificate with thumbprint '{certificate}'");
                 }
 
-                var options = new ClientCertificateCredentialOptions();
+                var options = CreateCredentialOptions<ClientCertificateCredentialOptions>(retry);
 
                 if (additionallyAllowedTenantsList != null)
                 {
@@ -213,7 +224,7 @@ namespace Microsoft.Extensions.Azure
                 || !string.IsNullOrWhiteSpace(clientId)
                 || !string.IsNullOrWhiteSpace(resourceId))
             {
-                var options = new DefaultAzureCredentialOptions();
+                var options = CreateCredentialOptions<DefaultAzureCredentialOptions>(retry);
                 if (additionallyAllowedTenantsList != null)
                 {
                     foreach (string tenant in additionallyAllowedTenantsList)
@@ -484,6 +495,15 @@ namespace Microsoft.Extensions.Azure
         private static IOrderedEnumerable<ConstructorInfo> GetApplicableParameterConstructors(Type type)
         {
             return type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).OrderByDescending(c => c.GetParameters().Length);
+        }
+
+        private static T CreateCredentialOptions<T>(IConfigurationSection retryConfig)
+            where T : TokenCredentialOptions, new()
+        {
+            var options = new T();
+            retryConfig.Bind(options.Retry);
+
+            return options;
         }
     }
 }
