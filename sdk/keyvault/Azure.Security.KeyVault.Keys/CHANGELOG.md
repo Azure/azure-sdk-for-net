@@ -5,14 +5,18 @@
 ### Features Added
 
 - Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
+- Added `KeyProperties.HsmPlatform` to get the underlying HSM platform.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 - When a Key Vault is moved to another tenant, the client is reauthenticated.
+- `KeyRotationPolicyAction` performs case-insensitive comparisons since Key Vault and Managed HSM return different cases for "rotate".
 
 ### Other Changes
+
+- The default service version is now "7.5-preview.1".
 
 ## 4.5.0 (2023-03-14)
 
