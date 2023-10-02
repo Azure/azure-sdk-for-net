@@ -108,14 +108,18 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
                 // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
                 // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
 #pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
-                responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+
+                // TODO: To make it real we need to pass HttpCompletionOption.ResponseHeadersRead and buffer the content
+                responseMessage = Client.Send(httpRequest, /* HttpCompletionOption.ResponseHeadersRead, */ message.CancellationToken);
 #pragma warning restore CA1416
             }
             else
 #endif
             {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+                // TODO: To make it real we need to pass HttpCompletionOption.ResponseHeadersRead and buffer the content
+                responseMessage = await Client.SendAsync(httpRequest, /* HttpCompletionOption.ResponseHeadersRead, */ message.CancellationToken)
+
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                     .ConfigureAwait(false);
             }
