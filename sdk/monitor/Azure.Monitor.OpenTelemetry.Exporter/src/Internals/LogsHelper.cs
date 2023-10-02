@@ -5,10 +5,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -170,35 +168,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return problemId;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We handle the null condition and call ToString() instead.")]
-        private static void GetMethodInfo(System.Diagnostics.StackFrame? stackFrame, out string methodName, out int methodOffset)
-        {
-            if (stackFrame == null)
-            {
-                methodName = "UnknownMethod";
-                methodOffset = System.Diagnostics.StackFrame.OFFSET_UNKNOWN;
-            }
-            else
-            {
-                MethodBase? methodBase = stackFrame.GetMethod();
-
-                if (methodBase == null)
-                {
-                    // In an AOT scenario GetMethod() will return null.
-                    // Instead, call ToString() which gives a string like this:
-                    // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
-                    methodName = stackFrame.ToString();
-                    methodOffset = System.Diagnostics.StackFrame.OFFSET_UNKNOWN;
-                }
-                else
-                {
-                    methodName = (methodBase.DeclaringType?.FullName ?? "Global") + "." + methodBase.Name;
-                    methodOffset = stackFrame.GetILOffset();
-                }
-            }
         }
 
         /// <summary>
