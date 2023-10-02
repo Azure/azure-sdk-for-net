@@ -17,7 +17,6 @@ namespace CoreWCF.AzureQueueStorage.Tests.Helpers
 #if DEBUG
                 .ConfigureLogging((logging) =>
                 {
-                    //logging.AddProvider(new NunitLoggerProvider(outputHelper, nameof(CreateWebHostBuilder)));
                     logging.AddFilter("Default", LogLevel.Debug);
                     logging.AddFilter("Microsoft", LogLevel.Debug);
                     logging.SetMinimumLevel(LogLevel.Debug);

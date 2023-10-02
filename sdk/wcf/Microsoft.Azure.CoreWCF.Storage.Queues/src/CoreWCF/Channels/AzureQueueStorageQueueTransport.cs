@@ -35,9 +35,14 @@ namespace Azure.Storage.CoreWCF.Channels
                 throw new ArgumentException("Connection string and Uri Endpoint both cannot be empty.");
             }
 
+            string extractedQueueName = AzureQueueStorageChannelHelpers.ExtractAndValidateQueueName(
+                serviceDispatcher.BaseAddress,
+                azureQueueStorageTransportBindingElement,
+                azureQueueStorageTransportBindingElement.QueueName);
+
             if (string.IsNullOrEmpty(azureQueueStorageTransportBindingElement.QueueName))
             {
-                azureQueueStorageTransportBindingElement.QueueName = AzureQueueStorageChannelHelpers.ExtractQueueName(serviceDispatcher.BaseAddress, azureQueueStorageTransportBindingElement);
+                azureQueueStorageTransportBindingElement.QueueName = extractedQueueName;
             }
 
             QueueClientOptions queueClientOptions = new QueueClientOptions();

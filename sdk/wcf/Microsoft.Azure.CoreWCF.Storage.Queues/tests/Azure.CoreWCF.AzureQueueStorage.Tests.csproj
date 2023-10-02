@@ -47,6 +47,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="..\..\..\storage\Azure.Storage.Common\tests\Shared\TestConfigurations.xml" />
+    <None Remove="..\..\..\storage\Azure.Storage.Common\tests\Shared\TestConfigurationsTemplate.xml" />
   </ItemGroup>
 
 </Project>

@@ -9,16 +9,18 @@
     <Version>1.0.0-beta.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CoreWCF\Configuration\**" />
+    <EmbeddedResource Remove="CoreWCF\Configuration\**" />
+    <None Remove="CoreWCF\Configuration\**" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Queues" />
     <PackageReference Include="Microsoft.Extensions.Http" VersionOverride="6.0.0" />
     <PackageReference Include="System.IO.Pipelines" VersionOverride="6.0.3" />
     <PackageReference Include="CoreWCF.Queue" VersionOverride="1.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CoreWCF\Configuration\" />
   </ItemGroup>
 
   <ItemGroup>
