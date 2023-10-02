@@ -127,7 +127,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             DataTransferStatus status = new DataTransferStatus(state, hasFailedItems, hasSkippedItems);
             IList<DataTransfer> result = await manager.GetTransfersAsync(status).ToListAsync();
-            var a = storedTransfers.Where(d => d.TransferStatus == status).ToList();
 
             // Assert
             AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status).ToList(), result);
