@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Test.Shared;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.DataMovement.Tests;
@@ -16,7 +17,12 @@ using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
-    public class StartTransferUploadTests : DataMovementShareTestBase
+    public class StartTransferUploadTests : StorageTestBase<TEnvironment>
+        where TServiceClient : class
+        where TContainerClient : class
+        where TResourceClient : class
+        where TClientOptions : ClientOptions
+        where TEnvironment : StorageTestEnvironment, new ()
     {
         public StartTransferUploadTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
