@@ -34,6 +34,9 @@ public class RestRequest : PipelineRequest, IDisposable
     public override void SetContent(RequestBody content)
         => _content = content;
 
+    public override RequestBody? GetContent()
+        => _content;
+
     // TODO: do we still need this?
     public override void SetHeaderValue(string name, string value)
     {

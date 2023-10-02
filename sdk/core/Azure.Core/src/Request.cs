@@ -43,7 +43,7 @@ namespace Azure.Core
             {
                 try
                 {
-                    return SystemToAzureMethod(base.Method);
+                    return SystemToAzureMethod(base.GetMethod());
                 }
                 catch (InvalidOperationException)
                 {
@@ -54,9 +54,9 @@ namespace Azure.Core
             set { base.SetMethod(AzureToSystemMethod(value)); }
         }
 
-        private static RequestMethod SystemToAzureMethod(HttpMethod verb)
+        private static RequestMethod SystemToAzureMethod(string verb)
         {
-            return verb.Method switch
+            return verb switch
             {
                 "GET" => RequestMethod.Get,
                 "POST" => RequestMethod.Post,
@@ -64,7 +64,7 @@ namespace Azure.Core
                 "HEAD" => RequestMethod.Head,
                 "DELETE" => RequestMethod.Delete,
                 "PATCH" => RequestMethod.Patch,
-                _ => new RequestMethod(verb.Method),
+                _ => new RequestMethod(verb),
             };
         }
 
@@ -92,8 +92,10 @@ namespace Azure.Core
 
         public virtual RequestContent? Content
         {
-            get => (RequestContent?)base.Content;
-            set => base.Content = value;
+            get => (RequestContent?)base.GetContent();
+
+            // TODO: handle set to null
+            set => base.SetContent(value!);
         }
 
         /// <summary>

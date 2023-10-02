@@ -19,9 +19,10 @@ public abstract class PipelineRequest
 
     public abstract Uri GetUri();
 
+    // TODO: RequestBody or BinaryData?  What are the considerations?
     public abstract void SetContent(RequestBody content);
 
-    //public abstract BinaryData GetContent();
+    public abstract RequestBody? GetContent();
 
     public abstract void SetHeaderValue(string name, string value);
 }

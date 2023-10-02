@@ -20,6 +20,9 @@ namespace Azure.Core.Pipeline
         /// <returns></returns>
         public abstract Request CreateRequest();
 
+        internal HttpPipelineTransport() : base() { }
+        internal HttpPipelineTransport(HttpClient client) : base(client) { }
+
         /// <summary>
         /// Creates the default <see cref="HttpPipelineTransport"/> based on the current environment and configuration.
         /// </summary>

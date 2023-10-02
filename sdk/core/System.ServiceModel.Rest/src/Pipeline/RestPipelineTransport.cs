@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Rest.Experimental;
 using System.Threading;
