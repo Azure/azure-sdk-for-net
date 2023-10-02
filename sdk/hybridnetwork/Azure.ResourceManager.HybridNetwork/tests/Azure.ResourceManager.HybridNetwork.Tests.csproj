@@ -1,5 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.HybridNetwork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Scenario\TestAssets\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
