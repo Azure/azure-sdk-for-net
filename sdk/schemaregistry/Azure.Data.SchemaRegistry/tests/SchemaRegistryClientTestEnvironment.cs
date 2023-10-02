@@ -15,10 +15,12 @@ namespace Azure.Data.SchemaRegistry.Tests
         public string SchemaRegistryEndpointAvro2022 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_AVRO_2022");
         public string SchemaRegistryEndpointJson2022 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_JSON_2022");
         public string SchemaRegistryEndpointCustom2022 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_CUSTOM_2022");
+        public string SchemaRegistryEndpointProtobuf2022 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_PROTOBUF_2022");
 
         public string SchemaRegistryEndpointAvro2021 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_AVRO_2021");
         public string SchemaRegistryEndpointJson2021 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_JSON_2021");
         public string SchemaRegistryEndpointCustom2021 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_CUSTOM_2021");
+        public string SchemaRegistryEndpointProtobuf2021 => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT_PROTOBUF_2021");
 
         public string SchemaRegistryGroup => GetRecordedVariable("SCHEMAREGISTRY_GROUP");
     }

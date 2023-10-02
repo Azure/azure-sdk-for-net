@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests
@@ -12,20 +13,75 @@ namespace Azure.Data.SchemaRegistry.Tests
         {
             Assert.AreEqual("Avro", SchemaFormat.Avro.ToString());
         }
+
         [Test]
         public void VerifyJsonFormat()
         {
             Assert.AreEqual("JSON", SchemaFormat.Json.ToString());
         }
+
         [Test]
         public void VerifyCustomFormat()
         {
             Assert.AreEqual("Custom", SchemaFormat.Custom.ToString());
         }
-        //[Test]
-        //public void VerifyProtobugFormat()
-        //{
-        //    Assert.AreEqual("Protobuf", SchemaFormat.Protobuf.ToString());
-        //}
+
+        [Test]
+        public void VerifyProtobufFormat()
+        {
+            Assert.AreEqual("Protobuf", SchemaFormat.Protobuf.ToString());
+        }
+
+        [Test]
+        public void VerifyAvroToContentType()
+        {
+            Assert.AreEqual(ContentType.Avro, SchemaFormat.Avro.ToContentType());
+        }
+
+        [Test]
+        public void VerifyJsonToContentType()
+        {
+            Assert.AreEqual(ContentType.Json, SchemaFormat.Json.ToContentType());
+        }
+
+        [Test]
+        public void VerifyCustomToContentType()
+        {
+            Assert.AreEqual(ContentType.Custom, SchemaFormat.Custom.ToContentType());
+        }
+
+        [Test]
+        public void VerifyProtobufToContentType()
+        {
+            Assert.AreEqual(ContentType.Protobuf, SchemaFormat.Protobuf.ToContentType());
+        }
+
+        [Test]
+        public void VerifyAvroFromContentType()
+        {
+            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=Avro");
+            Assert.AreEqual(fromContentType, SchemaFormat.Avro);
+        }
+
+        [Test]
+        public void VerifyJsonFromContentType()
+        {
+            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=json");
+            Assert.AreEqual(fromContentType, SchemaFormat.Json);
+        }
+
+        [Test]
+        public void VerifyCustomFromContentType()
+        {
+            var fromContentType = SchemaFormat.FromContentType("text/plain; charset=utf-8");
+            Assert.AreEqual(fromContentType, SchemaFormat.Custom);
+        }
+
+        [Test]
+        public void VerifyProtobufFromContentType()
+        {
+            var fromContentType = SchemaFormat.FromContentType("text/vnd.ms.protobuf");
+            Assert.AreEqual(fromContentType, SchemaFormat.Protobuf);
+        }
     }
 }
