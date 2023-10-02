@@ -20,7 +20,10 @@ namespace Azure.Core.Pipeline
         /// <returns></returns>
         public abstract Request CreateRequest();
 
-        internal HttpPipelineTransport() : base() { }
+        /// <summary>
+        /// TBD
+        /// </summary>
+        public HttpPipelineTransport() : base() { }
         internal HttpPipelineTransport(HttpClient client) : base(client) { }
 
         /// <summary>

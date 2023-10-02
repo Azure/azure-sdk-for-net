@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, keyPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeader(header, out var key));
+            Assert.True(transport.SingleRequest.TryGetHeaderInternal(header, out var key));
             Assert.AreEqual(keyValue, key);
         }
 
@@ -37,7 +37,7 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, keyPolicy);
 
-            Assert.True(transport.SingleRequest.TryGetHeader(header, out var key));
+            Assert.True(transport.SingleRequest.TryGetHeaderInternal(header, out var key));
             Assert.AreEqual($"{prefix} {keyValue}", key);
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.True(transport.Requests[0].TryGetHeader(header, out var key));
+            Assert.True(transport.Requests[0].TryGetHeaderInternal(header, out var key));
             Assert.AreEqual(keyValue, key);
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            Assert.True(transport.Requests[0].TryGetHeader(header, out var key));
+            Assert.True(transport.Requests[0].TryGetHeaderInternal(header, out var key));
             Assert.AreEqual($"{prefix} {keyValue}", key);
         }
     }
