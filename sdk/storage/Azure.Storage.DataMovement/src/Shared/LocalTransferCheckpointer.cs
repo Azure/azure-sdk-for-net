@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
@@ -10,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.DataMovement
 {
@@ -140,7 +142,8 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            Stream copiedStream = new MemoryStream(length);
+            int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
+            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
@@ -171,7 +174,8 @@ namespace Azure.Storage.DataMovement
             {
                 if (jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile))
                 {
-                    Stream copiedStream = new MemoryStream(length);
+                    int maxArraySize = length > 0 ? length : DataMovementConstants.DefaultArrayPoolArraySize;
+                    Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, maxArraySize);
 
                     // MMF lock
                     await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);

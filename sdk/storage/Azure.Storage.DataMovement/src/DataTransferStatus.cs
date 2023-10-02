@@ -117,21 +117,27 @@ namespace Azure.Storage.DataMovement
                 HasSkippedItems.Equals(other.HasSkippedItems);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="left">The left hand side.</param>
+        /// <param name="right">The right hand side.</param>
+        /// <returns>True, if the two values are equal; otherwise false.</returns>
         public static bool operator ==(DataTransferStatus left, DataTransferStatus right)
         {
-            if (left is null)
+            if (left is null != right is null)
             {
-                if (right is null)
-                {
-                    return true;
-                }
                 return false;
             }
-            return left.Equals(right);
+            return left?.Equals(right) ?? true;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="left">The left hand side.</param>
+        /// <param name="right">The right hand side.</param>
+        /// <returns>True, if the two values are not equal; otherwise false.</returns>
         public static bool operator !=(DataTransferStatus left, DataTransferStatus right) => !(left == right);
 
         /// <inheritdoc/>

@@ -301,6 +301,16 @@ namespace Azure.Storage.DataMovement
             return new DataTransferStatusInternal(state, hasFailed, hasSkipped);
         }
 
+        /// <summary>
+        /// Writes the length and offset field for the given byte array
+        /// and increments currentVariableLengthIndex accordingly.
+        /// </summary>
+        /// <param name="writer">The writer to write to.</param>
+        /// <param name="bytes">The data to write info about.</param>
+        /// <param name="currentVariableLengthIndex">
+        /// A reference to the current index of the variable length fields
+        /// that will be used to set the offset and then incremented.
+        /// </param>
         internal static void WriteVariableLengthFieldInfo(
             BinaryWriter writer,
             byte[] bytes,
