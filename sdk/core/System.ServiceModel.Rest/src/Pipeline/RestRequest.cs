@@ -37,11 +37,8 @@ public class RestRequest : PipelineRequest, IDisposable
     public override RequestBody? GetContent()
         => _content;
 
-    // TODO: do we still need this?
     public override void SetHeaderValue(string name, string value)
-    {
-        throw new NotImplementedException();
-    }
+        => SetHeader(name, value);
 
     public override void SetMethod(string method)
         => _method = new HttpMethod(method);
