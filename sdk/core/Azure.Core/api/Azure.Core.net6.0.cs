@@ -511,23 +511,16 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
+    public abstract partial class Request : System.ServiceModel.Rest.Core.Pipeline.RestRequest
     {
         protected Request() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
         public Azure.Core.RequestHeaders Headers { get { throw null; } }
-        public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
-        public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
-        protected internal abstract void AddHeader(string name, string value);
-        protected internal abstract bool ContainsHeader(string name);
-        public abstract void Dispose();
+        public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
-        protected internal abstract bool RemoveHeader(string name);
-        protected internal virtual void SetHeader(string name, string value) { }
         public override void SetHeaderValue(string name, string value) { }
-        protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
-        protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class RequestContent : System.ServiceModel.Rest.Core.RequestBody
     {
@@ -1014,7 +1007,7 @@ namespace Azure.Core.Pipeline
     }
     public abstract partial class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.RestPipelineTransport
     {
-        protected HttpPipelineTransport() { }
+        public HttpPipelineTransport() { }
         public abstract Azure.Core.Request CreateRequest();
         public virtual void Process(Azure.Core.HttpMessage message) { }
         public virtual System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }

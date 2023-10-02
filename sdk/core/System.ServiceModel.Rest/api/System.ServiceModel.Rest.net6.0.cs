@@ -74,13 +74,16 @@ namespace System.ServiceModel.Rest.Core
         PerRetry = 1,
         BeforeTransport = 2,
     }
-    public partial class PipelineRequest
+    public abstract partial class PipelineRequest
     {
-        public PipelineRequest() { }
-        public virtual System.ServiceModel.Rest.Core.RequestBody? Content { get { throw null; } set { } }
-        public virtual System.Net.Http.HttpMethod Method { get { throw null; } set { } }
-        public virtual System.Uri Uri { get { throw null; } set { } }
-        public virtual void SetHeaderValue(string name, string value) { }
+        protected PipelineRequest() { }
+        public abstract System.ServiceModel.Rest.Core.RequestBody? GetContent();
+        public abstract string GetMethod();
+        public abstract System.Uri GetUri();
+        public abstract void SetContent(System.ServiceModel.Rest.Core.RequestBody content);
+        public abstract void SetHeaderValue(string name, string value);
+        public abstract void SetMethod(string method);
+        public abstract System.Uri SetUri(System.Uri uri);
     }
     public partial class PipelineResponse : System.IDisposable
     {
@@ -171,21 +174,59 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     {
         public RestPipelineTransport() { }
         public RestPipelineTransport(System.Net.Http.HttpClient client) { }
+        public System.Net.Http.HttpClient Client { get { throw null; } }
         public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
+    public partial class RestRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
+    {
+        public RestRequest() { }
+        protected virtual void AddHeader(string name, string value) { }
+        protected virtual bool ContainsHeader(string name) { throw null; }
+        public virtual void Dispose() { }
+        public override System.ServiceModel.Rest.Core.RequestBody? GetContent() { throw null; }
+        protected virtual System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
+        public override string GetMethod() { throw null; }
+        public override System.Uri GetUri() { throw null; }
+        protected virtual bool RemoveHeader(string name) { throw null; }
+        public override void SetContent(System.ServiceModel.Rest.Core.RequestBody content) { }
+        protected virtual void SetHeader(string name, string value) { }
+        public override void SetHeaderValue(string name, string value) { }
+        public virtual void SetMethod(System.Net.Http.HttpMethod method) { }
+        public override void SetMethod(string method) { }
+        public override System.Uri SetUri(System.Uri uri) { throw null; }
+        public override string ToString() { throw null; }
+        protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
+        protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
 }
 namespace System.ServiceModel.Rest.Experimental
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public int Count { get { throw null; } }
+        public bool IsEmpty { get { throw null; } }
+        public void Dispose() { }
+        public void GetAt(int index, out TKey key, out TValue value) { throw null; }
+        public void Set(TKey key, TValue value) { }
+        public bool TryAdd(TKey key, TValue value, out TValue? existingValue) { throw null; }
+        public bool TryGetValue(TKey key, out TValue value) { throw null; }
+        public bool TryRemove(TKey key) { throw null; }
+    }
     public partial class ClientUtilities
     {
         public ClientUtilities() { }
         public static void AssertInRange<T>(T value, T minimum, T maximum, string name) where T : notnull, System.IComparable<T> { }
         public static void AssertNotNullOrEmpty(string value, string name) { }
         public static void AssertNotNull<T>(T value, string name) { }
+        public static System.Exception CreateOperationCanceledException(System.Exception? innerException, System.Threading.CancellationToken cancellationToken, string? message = null) { throw null; }
+        public static bool ShouldWrapInOperationCanceledException(System.Exception exception, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
     }
 }
