@@ -230,7 +230,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
@@ -356,7 +356,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 0,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header1, stream);
@@ -366,7 +366,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 1,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header2, stream);
@@ -376,7 +376,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 2,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header3, stream);
@@ -386,7 +386,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 3,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header4, stream);
@@ -438,7 +438,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 1,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
@@ -817,7 +817,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 // Assert
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
@@ -841,7 +841,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes));
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes));
         }
 
         [Test]
@@ -947,7 +947,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }
@@ -1029,7 +1029,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 0,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header1, stream);
             }
@@ -1038,7 +1038,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 1,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header2, stream);
             }
@@ -1047,7 +1047,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 2,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header3, stream);
             }
@@ -1056,7 +1056,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: 3,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header4, stream);
             }
@@ -1120,7 +1120,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transferId,
                 partNumber: partNumber,
                 offset: 0,
-                readSize: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                length: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
             {
                 await CheckpointerTesting.AssertJobPlanHeaderAsync(header, stream);
             }

@@ -93,12 +93,12 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Creates a stream to the stored memory stored checkpointing information.
+        /// Reads the specified part of the job part plan file and returns it in a Stream.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="offset">The offset of the current transfer.</param>
-        /// <param name="readSize">
+        /// <param name="offset">The offset to start reading the job part plan file at.</param>
+        /// <param name="length">
         /// The size of how many bytes to read.
         /// Specify 0 (zero) to create a stream that ends approximately at the end of the file.
         /// </param>
@@ -110,8 +110,8 @@ namespace Azure.Storage.DataMovement
         public abstract Task<Stream> ReadJobPartPlanFileAsync(
             string transferId,
             int partNumber,
-            long offset,
-            long readSize,
+            int offset,
+            int length,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -132,27 +132,6 @@ namespace Azure.Storage.DataMovement
             byte[] buffer,
             int bufferOffset,
             int length,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Writes to the memory mapped file to store the checkpointing information.
-        ///
-        /// Creates the file for the respective ID if it does not currently exist.
-        /// </summary>
-        /// <param name="transferId">The transfer ID.</param>
-        /// <param name="partNumber">The job part number.</param>
-        /// <param name="offset">The offset of the current transfer.</param>
-        /// <param name="buffer">The buffer to write data from to the checkpoint.</param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        /// <returns></returns>
-        public abstract Task WriteToCheckpointAsync(
-            string transferId,
-            int partNumber,
-            long offset,
-            byte[] buffer,
             CancellationToken cancellationToken = default);
 
         /// <summary>

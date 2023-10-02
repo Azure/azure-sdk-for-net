@@ -554,7 +554,7 @@ namespace Azure.Storage.DataMovement
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
-                            readSize: 0,
+                            length: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             streamToUriJob.AppendJobPart(
@@ -594,7 +594,7 @@ namespace Azure.Storage.DataMovement
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
-                            readSize: 0,
+                            length: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             serviceToServiceJob.AppendJobPart(
@@ -627,7 +627,7 @@ namespace Azure.Storage.DataMovement
                             transferId: dataTransfer.Id,
                             partNumber: 0,
                             offset: 0,
-                            readSize: 0,
+                            length: 0,
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             uriToStreamJob.AppendJobPart(
@@ -679,7 +679,7 @@ namespace Azure.Storage.DataMovement
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
-                                readSize: 0,
+                                length: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 streamToUriJob.AppendJobPart(
@@ -726,7 +726,7 @@ namespace Azure.Storage.DataMovement
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
-                                readSize: 0,
+                                length: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 serviceToServiceJob.AppendJobPart(
@@ -766,7 +766,7 @@ namespace Azure.Storage.DataMovement
                                 transferId: dataTransfer.Id,
                                 partNumber: currentJobPart,
                                 offset: 0,
-                                readSize: 0,
+                                length: 0,
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 uriToStreamJob.AppendJobPart(

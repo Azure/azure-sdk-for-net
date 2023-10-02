@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: readLength,
+                length: readLength,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: streamReadLength,
+                length: streamReadLength,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
@@ -205,7 +205,7 @@ namespace Azure.Storage.DataMovement
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: streamReadLength,
+                length: streamReadLength,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: DataMovementConstants.OneByte,
+                length: DataMovementConstants.OneByte,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
