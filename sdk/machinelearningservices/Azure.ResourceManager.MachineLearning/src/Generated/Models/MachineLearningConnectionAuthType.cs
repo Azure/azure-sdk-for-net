@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UsernamePasswordValue = "UsernamePassword";
         private const string NoneValue = "None";
         private const string SasValue = "SAS";
+        private const string ServicePrincipalValue = "ServicePrincipal";
+        private const string AccessKeyValue = "AccessKey";
+        private const string ApiKeyValue = "ApiKey";
+        private const string CustomKeysValue = "CustomKeys";
 
         /// <summary> PAT. </summary>
         public static MachineLearningConnectionAuthType Pat { get; } = new MachineLearningConnectionAuthType(PatValue);
@@ -38,6 +42,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionAuthType None { get; } = new MachineLearningConnectionAuthType(NoneValue);
         /// <summary> SAS. </summary>
         public static MachineLearningConnectionAuthType Sas { get; } = new MachineLearningConnectionAuthType(SasValue);
+        /// <summary> ServicePrincipal. </summary>
+        public static MachineLearningConnectionAuthType ServicePrincipal { get; } = new MachineLearningConnectionAuthType(ServicePrincipalValue);
+        /// <summary> AccessKey. </summary>
+        public static MachineLearningConnectionAuthType AccessKey { get; } = new MachineLearningConnectionAuthType(AccessKeyValue);
+        /// <summary> ApiKey. </summary>
+        public static MachineLearningConnectionAuthType ApiKey { get; } = new MachineLearningConnectionAuthType(ApiKeyValue);
+        /// <summary> CustomKeys. </summary>
+        public static MachineLearningConnectionAuthType CustomKeys { get; } = new MachineLearningConnectionAuthType(CustomKeysValue);
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionAuthType left, MachineLearningConnectionAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are not the same. </summary>

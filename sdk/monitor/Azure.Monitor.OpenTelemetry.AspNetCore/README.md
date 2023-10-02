@@ -16,7 +16,7 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK and rel
 
 * Traces
   * [ASP.NET Core Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/) provides automatic tracing for incoming HTTP requests to ASP.NET Core applications.
-  * [HTTP Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient) and [System.Net.HttpWebRequest](https://docs.microsoft.com/dotnet/api/system.net.httpwebrequest).
+  * [HTTP Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient).
   * [SQL Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages.
 
 * Metrics
@@ -103,48 +103,6 @@ With this configuration, the Azure Monitor Distro will use the credentials of th
 Note that the `Credential` property is optional. If it is not set, Azure Monitor Distro will use the Instrumentation Key from the Connection String to send data to Azure Monitor.
 
 ### Advanced configuration
-
-The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient). However, you can customize the instrumentation included or use additional instrumentation on your own using the OpenTelemetry API. Here are some examples of how to customize the instrumentation:
-
-#### Customizing AspNetCoreInstrumentationOptions
-
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<AspNetCoreInstrumentationOptions>(options =>
-{
-    options.RecordException = true;
-    options.Filter = (httpContext) =>
-    {
-        // only collect telemetry about HTTP GET requests
-        return HttpMethods.IsGet(httpContext.Request.Method);
-    };
-});
-```
-
-#### Customizing HttpClientInstrumentationOptions
-
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
-{
-    options.RecordException = true;
-    options.FilterHttpRequestMessage = (httpRequestMessage) =>
-    {
-        // only collect telemetry about HTTP GET requests
-        return HttpMethods.IsGet(httpRequestMessage.Method.Method);
-    };
-});
-```
-
-#### Customizing SqlClientInstrumentationOptions
-
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
-{
-    options.SetDbStatementForStoredProcedure = false;
-});
-```
 
 #### Customizing Sampling Percentage
 

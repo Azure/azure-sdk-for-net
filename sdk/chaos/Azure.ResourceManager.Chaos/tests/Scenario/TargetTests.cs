@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Chaos.Tests
     public class TargetTests : ChaosManagementTestBase
     {
         public TargetTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 

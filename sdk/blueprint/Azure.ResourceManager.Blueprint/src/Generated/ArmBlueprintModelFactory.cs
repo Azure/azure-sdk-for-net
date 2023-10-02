@@ -155,18 +155,18 @@ namespace Azure.ResourceManager.Blueprint.Models
             return new AssignmentOperationData(id, name, resourceType, systemData, blueprintVersion, assignmentState, timeCreated, timeStarted, timeFinished, deployments?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AssignmentJobCreatedResource. </summary>
+        /// <summary> Initializes a new instance of AssignmentJobCreatedResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Additional properties in a dictionary. </param>
-        /// <returns> A new <see cref="Models.AssignmentJobCreatedResource"/> instance for mocking. </returns>
-        public static AssignmentJobCreatedResource AssignmentJobCreatedResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> properties = null)
+        /// <returns> A new <see cref="Models.AssignmentJobCreatedResult"/> instance for mocking. </returns>
+        public static AssignmentJobCreatedResult AssignmentJobCreatedResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> properties = null)
         {
             properties ??= new Dictionary<string, string>();
 
-            return new AssignmentJobCreatedResource(id, name, resourceType, systemData, properties);
+            return new AssignmentJobCreatedResult(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of TemplateArtifact. </summary>

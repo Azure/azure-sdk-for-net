@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<SoftwareUpdateConfigurationCollectionItem> GetAllAsync(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<SoftwareUpdateConfigurationCollectionItem> GetAll(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -323,6 +324,82 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _softwareUpdateConfigurationRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SoftwareUpdateConfigurationResource>> GetIfExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
+
+            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _softwareUpdateConfigurationRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SoftwareUpdateConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
+        public virtual NullableResponse<SoftwareUpdateConfigurationResource> GetIfExists(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
+
+            using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _softwareUpdateConfigurationRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SoftwareUpdateConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

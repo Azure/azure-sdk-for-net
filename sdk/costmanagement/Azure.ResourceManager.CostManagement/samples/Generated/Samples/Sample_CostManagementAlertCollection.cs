@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -314,6 +315,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // SingleResourceGroupAlerts
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_SingleResourceGroupAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleResourceGroupAlert.json
+            // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
+
+            // invoke the operation
+            string alertId = "22222222-2222-2222-2222-222222222222";
+            NullableResponse<CostManagementAlertResource> response = await collection.GetIfExistsAsync(alertId);
+            CostManagementAlertResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // SingleSubscriptionAlerts
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -372,6 +413,46 @@ namespace Azure.ResourceManager.CostManagement.Samples
             bool result = await collection.ExistsAsync(alertId);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // SingleSubscriptionAlerts
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_SingleSubscriptionAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
+            // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
+
+            // invoke the operation
+            string alertId = "22222222-2222-2222-2222-222222222222";
+            NullableResponse<CostManagementAlertResource> response = await collection.GetIfExistsAsync(alertId);
+            CostManagementAlertResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

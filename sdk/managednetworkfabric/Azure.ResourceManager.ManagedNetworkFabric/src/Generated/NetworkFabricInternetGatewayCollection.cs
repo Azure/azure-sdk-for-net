@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricInternetGatewayInternetGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricInternetGatewayInternetGatewaysRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricInternetGatewayInternetGatewaysRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricInternetGatewayInternetGatewaysRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,6 +234,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 var response = _networkFabricInternetGatewayInternetGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, internetGatewayName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricInternetGatewayResource>> GetIfExistsAsync(string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            using var scope = _networkFabricInternetGatewayInternetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricInternetGatewayInternetGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, internetGatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternetGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternetGatewayResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricInternetGatewayResource> GetIfExists(string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+
+            using var scope = _networkFabricInternetGatewayInternetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricInternetGatewayInternetGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, internetGatewayName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricInternetGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricInternetGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

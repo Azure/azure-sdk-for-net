@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<MongoDBCollectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBCollectionMongoDBResourcesRestClient.CreateListMongoDBCollectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<MongoDBCollectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBCollectionMongoDBResourcesRestClient.CreateListMongoDBCollectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoDBCollection</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionName"> Cosmos DB collection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MongoDBCollectionResource>> GetIfExistsAsync(string collectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+
+            using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoDBCollectionResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoDBResources_GetMongoDBCollection</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionName"> Cosmos DB collection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        public virtual NullableResponse<MongoDBCollectionResource> GetIfExists(string collectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+
+            using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MongoDBCollectionResource>(response.GetRawResponse());
+                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

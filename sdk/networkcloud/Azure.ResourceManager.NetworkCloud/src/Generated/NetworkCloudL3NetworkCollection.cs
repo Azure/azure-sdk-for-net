@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var response = _networkCloudL3NetworkL3NetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l3Networks/{l3NetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3Networks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="l3NetworkName"> The name of the L3 network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudL3NetworkResource>> GetIfExistsAsync(string l3NetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(l3NetworkName, nameof(l3NetworkName));
+
+            using var scope = _networkCloudL3NetworkL3NetworksClientDiagnostics.CreateScope("NetworkCloudL3NetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudL3NetworkL3NetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudL3NetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudL3NetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l3Networks/{l3NetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3Networks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="l3NetworkName"> The name of the L3 network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudL3NetworkResource> GetIfExists(string l3NetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(l3NetworkName, nameof(l3NetworkName));
+
+            using var scope = _networkCloudL3NetworkL3NetworksClientDiagnostics.CreateScope("NetworkCloudL3NetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudL3NetworkL3NetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudL3NetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudL3NetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

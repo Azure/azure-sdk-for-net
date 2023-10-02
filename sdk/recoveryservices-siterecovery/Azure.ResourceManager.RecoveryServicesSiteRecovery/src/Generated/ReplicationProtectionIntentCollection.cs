@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicationProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, skipToken, takeToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectionIntentResource(Client, ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(e)), _replicationProtectionIntentClientDiagnostics, Pipeline, "ReplicationProtectionIntentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -325,6 +326,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 var response = _replicationProtectionIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionIntents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="intentObjectName"> Replication protection intent name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ReplicationProtectionIntentResource>> GetIfExistsAsync(string intentObjectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+
+            using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _replicationProtectionIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ReplicationProtectionIntentResource>(response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionIntents_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="intentObjectName"> Replication protection intent name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="intentObjectName"/> is null. </exception>
+        public virtual NullableResponse<ReplicationProtectionIntentResource> GetIfExists(string intentObjectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+
+            using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _replicationProtectionIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, intentObjectName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ReplicationProtectionIntentResource>(response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectionIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

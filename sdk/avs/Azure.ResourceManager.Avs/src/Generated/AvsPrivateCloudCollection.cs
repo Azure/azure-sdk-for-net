@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudPrivateCloudsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudPrivateCloudsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudPrivateCloudsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudPrivateCloudsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _avsPrivateCloudPrivateCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateCloudName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AvsPrivateCloudResource>> GetIfExistsAsync(string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateCloudName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsPrivateCloudResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
+        public virtual NullableResponse<AvsPrivateCloudResource> GetIfExists(string privateCloudName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _avsPrivateCloudPrivateCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateCloudName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsPrivateCloudResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

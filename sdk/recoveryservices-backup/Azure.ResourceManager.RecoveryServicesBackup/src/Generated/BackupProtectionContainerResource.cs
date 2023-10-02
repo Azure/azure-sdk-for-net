@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupProtectionContainerProtectionContainersRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(new BackupProtectionContainerOperationSource(Client), _backupProtectionContainerProtectionContainersClientDiagnostics, Pipeline, _backupProtectionContainerProtectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,7 +353,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupProtectionContainerProtectionContainersRestClient.Register(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(Response.FromValue(new BackupProtectionContainerResource(Client, response), response.GetRawResponse()));
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(new BackupProtectionContainerOperationSource(Client), _backupProtectionContainerProtectionContainersClientDiagnostics, Pipeline, _backupProtectionContainerProtectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -448,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupWorkloadItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupWorkloadItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -473,7 +474,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupWorkloadItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupWorkloadItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

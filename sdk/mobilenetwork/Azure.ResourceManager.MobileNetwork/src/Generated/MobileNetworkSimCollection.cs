@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimSimsRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimSimsRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimResource(Client, MobileNetworkSimData.DeserializeMobileNetworkSimData(e)), _mobileNetworkSimSimsClientDiagnostics, Pipeline, "MobileNetworkSimCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimResource(Client, MobileNetworkSimData.DeserializeMobileNetworkSimData(e)), _mobileNetworkSimSimsClientDiagnostics, Pipeline, "MobileNetworkSimCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimSimsRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimSimsRestClient.CreateListByGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimResource(Client, MobileNetworkSimData.DeserializeMobileNetworkSimData(e)), _mobileNetworkSimSimsClientDiagnostics, Pipeline, "MobileNetworkSimCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimResource(Client, MobileNetworkSimData.DeserializeMobileNetworkSimData(e)), _mobileNetworkSimSimsClientDiagnostics, Pipeline, "MobileNetworkSimCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _mobileNetworkSimSimsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sims_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simName"> The name of the SIM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileNetworkSimResource>> GetIfExistsAsync(string simName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+
+            using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkSimSimsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sims_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simName"> The name of the SIM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
+        public virtual NullableResponse<MobileNetworkSimResource> GetIfExists(string simName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+
+            using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkSimSimsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

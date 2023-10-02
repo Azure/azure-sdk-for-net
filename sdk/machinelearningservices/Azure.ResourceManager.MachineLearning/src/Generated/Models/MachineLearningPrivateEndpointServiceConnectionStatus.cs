@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The private endpoint connection status. </summary>
+    /// <summary> Connection status of the service consumer with the service provider. </summary>
     public readonly partial struct MachineLearningPrivateEndpointServiceConnectionStatus : IEquatable<MachineLearningPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
+        private const string PendingValue = "Pending";
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
         private const string TimeoutValue = "Timeout";
 
-        /// <summary> Pending. </summary>
-        public static MachineLearningPrivateEndpointServiceConnectionStatus Pending { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(PendingValue);
         /// <summary> Approved. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Approved { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(ApprovedValue);
+        /// <summary> Pending. </summary>
+        public static MachineLearningPrivateEndpointServiceConnectionStatus Pending { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(PendingValue);
         /// <summary> Rejected. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Rejected { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>

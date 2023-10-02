@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAlertAlertsRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceAlertAlertsRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAlertAlertsRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceAlertAlertsRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -224,6 +225,72 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, alertId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ServiceAlertResource>> GetIfExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceAlertAlertsRestClient.GetByIdAsync(Id.SubscriptionId, alertId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_GetById</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ServiceAlertResource> GetIfExists(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, alertId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

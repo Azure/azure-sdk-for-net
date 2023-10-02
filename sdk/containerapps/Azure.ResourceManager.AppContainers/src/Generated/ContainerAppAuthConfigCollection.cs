@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppAuthConfigResource(Client, ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(e)), _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics, Pipeline, "ContainerAppAuthConfigCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.AppContainers
             {
                 var response = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsAuthConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppAuthConfigResource>> GetIfExistsAsync(string authConfigName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+
+            using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppAuthConfigContainerAppsAuthConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppAuthConfigResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsAuthConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppAuthConfigResource> GetIfExists(string authConfigName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
+
+            using var scope = _containerAppAuthConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("ContainerAppAuthConfigCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppAuthConfigResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppAuthConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

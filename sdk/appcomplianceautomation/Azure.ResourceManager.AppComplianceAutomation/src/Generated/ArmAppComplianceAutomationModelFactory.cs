@@ -156,22 +156,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="policyId"> The policy id mapping to this assessment. </param>
         /// <param name="resourceList"> List of resource assessments. </param>
         /// <returns> A new <see cref="Models.Assessment"/> instance for mocking. </returns>
-        public static Assessment Assessment(string name = null, AssessmentSeverity? severity = null, string description = null, string remediation = null, IsPass? isPass = null, string policyId = null, IEnumerable<AssessmentResource> resourceList = null)
+        public static Assessment Assessment(string name = null, AssessmentSeverity? severity = null, string description = null, string remediation = null, IsPass? isPass = null, string policyId = null, IEnumerable<AssessmentResourceContent> resourceList = null)
         {
-            resourceList ??= new List<AssessmentResource>();
+            resourceList ??= new List<AssessmentResourceContent>();
 
             return new Assessment(name, severity, description, remediation, isPass, policyId, resourceList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AssessmentResource. </summary>
+        /// <summary> Initializes a new instance of AssessmentResourceContent. </summary>
         /// <param name="resourceId"> The Id of the resource. </param>
         /// <param name="resourceStatus"> Resource status. </param>
         /// <param name="reason"> The reason for the N/A resource. </param>
         /// <param name="statusChangeDate"> The status change date for the resource. For unavailable date, set it as N/A. </param>
-        /// <returns> A new <see cref="Models.AssessmentResource"/> instance for mocking. </returns>
-        public static AssessmentResource AssessmentResource(string resourceId = null, ResourceStatus? resourceStatus = null, string reason = null, string statusChangeDate = null)
+        /// <returns> A new <see cref="Models.AssessmentResourceContent"/> instance for mocking. </returns>
+        public static AssessmentResourceContent AssessmentResourceContent(string resourceId = null, ResourceStatus? resourceStatus = null, string reason = null, string statusChangeDate = null)
         {
-            return new AssessmentResource(resourceId, resourceStatus, reason, statusChangeDate);
+            return new AssessmentResourceContent(resourceId, resourceStatus, reason, statusChangeDate);
         }
 
         /// <summary> Initializes a new instance of DownloadResponse. </summary>
