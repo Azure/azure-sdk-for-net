@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Rest.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -60,9 +61,10 @@ namespace Azure.Core.Pipeline
         internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
         { }
 
+        // TODO: do we still need this?  Does it make sense?
         /// <inheritdoc />
         public sealed override Request CreateRequest()
-            => new HttpClientTransportRequest();
+            => new RestRequestAdapter(new RestRequest());
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)

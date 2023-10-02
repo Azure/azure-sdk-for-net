@@ -520,6 +520,8 @@ namespace Azure.Core
         public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
         public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
+        public override string GetMethod() { throw null; }
+        public override System.Uri GetUri() { throw null; }
         public override void SetHeaderValue(string name, string value) { }
     }
     public abstract partial class RequestContent : System.ServiceModel.Rest.Core.RequestBody
