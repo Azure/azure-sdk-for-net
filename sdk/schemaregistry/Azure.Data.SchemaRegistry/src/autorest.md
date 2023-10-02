@@ -11,6 +11,7 @@ generation1-convenience-client: true
 ## Swagger workarounds
 
 ### Update producers arrays - get version
+Because of some limitations of swagger and Autorest, Autorest cannot properly deduce that we would like to have an object return type to put on this method if we have a mix of "text/..." and "application/..." outputs in the produces array. Because of this we need to have "application/octet-stream" as a kind of stand-in for the the text outputs (Custom: "text/plain; charset=utf-8" and Protobuf: "text/vnd.ms.protobuf"). We have to determine what the output is on the client side based on the content-type.
 
 ``` yaml
 directive:
@@ -25,6 +26,7 @@ directive:
 ```
 
 ### Update producers arrays - get id
+We need to use "application/octet-stream" here for the same reason as above.
 
 ``` yaml
 directive:

@@ -15,9 +15,11 @@ namespace Azure.Data.SchemaRegistry
         private const string AvroValue = "Avro";
         private const string JsonValue = "JSON";
         private const string CustomValue = "Custom";
+        private const string ProtobufValue = "Protobuf";
 
         private const string AvroContentType = "Avro";
         private const string JsonContentType = "Json";
+        private const string ProtobufContentType = "vnd.ms.protobuf";
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -34,6 +36,9 @@ namespace Azure.Data.SchemaRegistry
 
         /// <summary> Custom Serialization schema type. </summary>
         public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
+
+        /// <summary> Protobuf Serialization schema type. </summary>
+        public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
 
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
@@ -62,6 +67,8 @@ namespace Azure.Data.SchemaRegistry
                     return ContentType.Avro;
                 case JsonValue:
                     return ContentType.Json;
+                case ProtobufValue:
+                    return ContentType.Protobuf;
                 default:
                     return ContentType.Custom;
             }
@@ -70,6 +77,7 @@ namespace Azure.Data.SchemaRegistry
         internal static SchemaFormat FromContentType(string contentTypeValue)
         {
             var contentEquals = contentTypeValue.Split('=');
+            var contentParen = contentTypeValue.Split('/');
             switch (contentEquals[1])
             {
                 case AvroContentType:
@@ -77,8 +85,13 @@ namespace Azure.Data.SchemaRegistry
                 case JsonContentType:
                     return SchemaFormat.Json;
                 default:
-                    return SchemaFormat.Custom;
+                    break;
             }
+            return contentParen[1] switch
+            {
+                ProtobufContentType => SchemaFormat.Protobuf,
+                _ => SchemaFormat.Custom,
+            };
         }
     }
 }

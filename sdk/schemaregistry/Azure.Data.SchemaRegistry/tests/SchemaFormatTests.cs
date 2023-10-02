@@ -22,5 +22,10 @@ namespace Azure.Data.SchemaRegistry.Tests
         {
             Assert.AreEqual("Custom", SchemaFormat.Custom.ToString());
         }
+        //[Test]
+        //public void VerifyProtobugFormat()
+        //{
+        //    Assert.AreEqual("Protobuf", SchemaFormat.Protobuf.ToString());
+        //}
     }
 }
