@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -110,7 +110,6 @@ namespace Azure.Search.Documents.Tests
                         VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
-                        QueryLanguage = QueryLanguage.EnUs,
                         SemanticConfigurationName = "my-semantic-config",
                         QueryCaption = QueryCaptionType.Extractive,
                         QueryAnswer = QueryAnswerType.Extractive,

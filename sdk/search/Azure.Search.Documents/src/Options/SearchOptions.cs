@@ -178,14 +178,6 @@ namespace Azure.Search.Documents
         [CodeGenMember("SemanticConfiguration")]
         public string SemanticConfigurationName { get; set; }
 
-        /// <summary> A value that specifies the language of the search query. </summary>
-        [CodeGenMember("QueryLanguage")]
-        public QueryLanguage? QueryLanguage { get; set; }
-
-        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
-        [CodeGenMember("Speller")]
-        public QuerySpellerType? QuerySpeller { get; set; }
-
         /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
         public QueryAnswerType? QueryAnswer { get; set; }
 
@@ -353,8 +345,6 @@ namespace Azure.Search.Documents
             destination.QueryAnswerThreshold = source.QueryAnswerThreshold;
             destination.QueryCaption = source.QueryCaption;
             destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
-            destination.QueryLanguage = source.QueryLanguage;
-            destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;

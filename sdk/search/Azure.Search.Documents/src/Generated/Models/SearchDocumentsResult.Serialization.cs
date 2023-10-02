@@ -25,10 +25,10 @@ namespace Azure.Search.Documents.Models
             Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
             Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
-            Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
-            Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
+            Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
+            Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -99,6 +99,21 @@ namespace Azure.Search.Documents.Models
                     searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
                     continue;
                 }
+                if (property.NameEquals("value"u8))
+                {
+                    List<SearchResult> array = new List<SearchResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SearchResult.DeserializeSearchResult(item));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("@odata.nextLink"u8))
+                {
+                    odataNextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("@search.semanticPartialResponseReason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,23 +132,8 @@ namespace Azure.Search.Documents.Models
                     searchSemanticPartialResponseType = new SemanticPartialResponseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"u8))
-                {
-                    List<SearchResult> array = new List<SearchResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
-                    }
-                    value = array;
-                    continue;
-                }
-                if (property.NameEquals("@odata.nextLink"u8))
-                {
-                    odataNextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType), value, odataNextLink.Value);
+            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, value, odataNextLink.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType));
         }
     }
 }

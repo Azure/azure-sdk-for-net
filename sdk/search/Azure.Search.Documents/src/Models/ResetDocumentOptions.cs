@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
+    /// <summary> </summary>
     [CodeGenModel("DocumentKeysOrIds")]
     public partial class ResetDocumentOptions
     {

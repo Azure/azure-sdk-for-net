@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    /// <summary> </summary>
     public partial class SearchIndexerCache
     {
         /// <summary> The connection string to the storage account where the cache data will be persisted. </summary>

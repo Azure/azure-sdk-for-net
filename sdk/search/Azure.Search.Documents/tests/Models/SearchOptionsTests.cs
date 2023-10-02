@@ -28,25 +28,6 @@ namespace Azure.Search.Documents.Tests.Models
         }
 
         [Test]
-        public void QueryLanguageOption()
-        {
-            SearchOptions searchOptions = new();
-
-            Assert.IsNull(searchOptions.QueryLanguage);
-
-            // We can set `QueryLanguage` to one of the known values, using either a string or a pre-defined value.
-            searchOptions.QueryLanguage = "en-us";
-            Assert.AreEqual(QueryLanguage.EnUs, searchOptions.QueryLanguage);
-
-            searchOptions.QueryLanguage = QueryLanguage.EnUs;
-            Assert.AreEqual(QueryLanguage.EnUs, searchOptions.QueryLanguage);
-
-            // We can also set `QueryLanguage` to a value unknown to the SDK.
-            searchOptions.QueryLanguage = "unknown";
-            Assert.AreEqual("unknown", searchOptions.QueryLanguage.ToString());
-        }
-
-        [Test]
         public void QueryAnswerOptionWithNoCountAndThreshold()
         {
             SearchOptions searchOptions = new();
@@ -269,7 +250,6 @@ namespace Azure.Search.Documents.Tests.Models
             SearchOptions semanticSearchOptions = new()
             {
                 QueryType = SearchQueryType.Semantic,
-                QueryLanguage = QueryLanguage.EnUs,
                 QueryAnswer = QueryAnswerType.Extractive,
                 QueryAnswerCount = 5,
                 QueryAnswerThreshold = 0.8,

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> This skill is deprecated. Use the V3.EntityRecognitionSkill instead. </summary>
+    /// <summary> Text analytics entity recognition. </summary>
     public partial class EntityRecognitionSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of EntityRecognitionSkill. </summary>

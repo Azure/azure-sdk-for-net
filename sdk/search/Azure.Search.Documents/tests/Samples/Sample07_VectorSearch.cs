@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Tests.Samples
     public partial class VectorSearch : SearchTestBase
     {
         public VectorSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_07_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, SearchClientOptions.ServiceVersion.V2023_11_01, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -175,7 +175,6 @@ namespace Azure.Search.Documents.Tests.Samples
                     {
                         VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         QueryType = SearchQueryType.Semantic,
-                        QueryLanguage = QueryLanguage.EnUs,
                         SemanticConfigurationName = "my-semantic-config",
                         QueryCaption = QueryCaptionType.Extractive,
                         QueryAnswer = QueryAnswerType.Extractive,
@@ -348,26 +347,11 @@ namespace Azure.Search.Documents.Tests.Samples
                     Profiles =
                     {
                         new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
-                        {
-                            Vectorizer = "openai"
-                        }
                     },
                     Algorithms =
                     {
                         new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
                     },
-                    Vectorizers =
-                    {
-                        new AzureOpenAIVectorizer("openai")
-                        {
-                            AzureOpenAIParameters  = new AzureOpenAIParameters()
-                            {
-                                ResourceUri = new Uri("Endpoint"),
-                                ApiKey = "key",
-                                DeploymentId = "gpt-4-32k",
-                            }
-                        }
-                    }
                 },
             };
             #endregion

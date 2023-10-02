@@ -3,6 +3,7 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    /// <summary> </summary>
     public abstract partial class SearchIndexerDataIdentity
     {
     }

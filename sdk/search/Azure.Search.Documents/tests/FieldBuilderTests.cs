@@ -328,15 +328,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
-        public void NormalizerSetOnlyOnPropertiesWithNormalizerAttribute(Type modelType)
-        {
-            var fields = new FieldMap(BuildForType(modelType));
-            fields.OnlyTrueFor(
-                field => field.NormalizerName == LexicalNormalizerName.Lowercase,
-                nameof(ReflectableModel.TextWithNormalizer));
-        }
-
-        [TestCaseSource(nameof(TestModelTypeTestData))]
         public void SynonymMapsSetOnlyOnPropertiesWithSynonymMapsAttribute(Type modelType)
         {
             var fields = new FieldMap(BuildForType(modelType));
