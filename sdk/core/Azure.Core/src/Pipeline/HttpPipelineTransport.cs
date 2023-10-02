@@ -13,10 +13,6 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public abstract class HttpPipelineTransport : RestPipelineTransport
     {
-        internal HttpPipelineTransport(HttpClient client) : base(client)
-        {
-        }
-
         /// <summary>
         /// Creates a new transport specific instance of <see cref="Request"/>. This should not be called directly, <see cref="HttpPipeline.CreateRequest"/> or
         /// <see cref="HttpPipeline.CreateMessage()"/> should be used instead.

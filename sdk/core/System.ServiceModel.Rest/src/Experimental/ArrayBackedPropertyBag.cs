@@ -271,7 +271,7 @@ namespace System.ServiceModel.Rest.Experimental
             return -1;
         }
 
-        internal void Dispose()
+        public void Dispose()
         {
 #if DEBUG
             if (_disposed)

@@ -3,17 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection.PortableExecutable;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.ServiceModel.Rest.Experimental;
-using System.Threading;
-using System.Threading.Tasks;
+using System.ServiceModel.Rest.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {

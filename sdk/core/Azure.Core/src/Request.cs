@@ -13,7 +13,7 @@ namespace Azure.Core
     /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Request : RestRequest, IDisposable
+    public abstract class Request : RestRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private RequestUriBuilder? _uri;
@@ -101,6 +101,19 @@ namespace Azure.Core
         /// </summary>
         public abstract string ClientRequestId { get; set; }
 
+        internal void AddHeaderInternal(string name, string value)
+            => AddHeader(name, value);
+        internal bool ContainsHeaderInternal(string name)
+            => ContainsHeader(name);
+        internal bool RemoveHeaderInternal(string name)
+            => RemoveHeader(name);
+        internal void SetHeaderInternal(string name, string value)
+            => SetHeader(name, value);
+        internal bool TryGetHeaderInternal(string name, out string? value)
+            => TryGetHeader(name, out value);
+        internal bool TryGetHeaderValuesInternal(string name, out IEnumerable<string>? values)
+            => TryGetHeaderValues(name, out values);
+
         /// <summary>
         /// TBD.
         /// </summary>
@@ -119,10 +132,5 @@ namespace Azure.Core
         /// Gets the response HTTP headers.
         /// </summary>
         public RequestHeaders Headers => new(this);
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Request"/> instance.
-        /// </summary>
-        public abstract void Dispose();
     }
 }

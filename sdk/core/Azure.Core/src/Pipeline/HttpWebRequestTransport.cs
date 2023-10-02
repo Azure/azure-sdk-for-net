@@ -9,6 +9,8 @@ using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Rest;
+using System.ServiceModel.Rest.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -289,17 +291,17 @@ namespace Azure.Core.Pipeline
             private string? _clientRequestId;
             private readonly DictionaryHeaders _headers = new();
 
-            protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+            protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 
-            protected internal override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
+            protected override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
 
-            protected internal override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
+            protected override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
 
-            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
 
-            protected internal override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
+            protected override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
 
-            protected internal override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
+            protected override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
 
