@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -10,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.ServiceModel.Rest.Experimental;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -156,7 +154,10 @@ public class RestRequest : PipelineRequest, IDisposable
 
     internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
     {
-        HttpRequestMessage currentRequest = new HttpRequestMessage(_method!, _uri!);
+        // TODO: can we do better perf-wise?
+        string method = GetMethod();
+        Uri uri = GetUri();
+        HttpRequestMessage currentRequest = new HttpRequestMessage(new HttpMethod(method), uri);
 
         PipelineContentAdapter? currentContent = _content != null ? new PipelineContentAdapter(_content, cancellation) : null;
         currentRequest.Content = currentContent;

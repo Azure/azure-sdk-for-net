@@ -35,6 +35,13 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        public override Uri GetUri()
+            => Uri.ToUri();
+
+        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
         public virtual RequestMethod Method
@@ -53,6 +60,13 @@ namespace Azure.Core
             }
             set { base.SetMethod(AzureToSystemMethod(value)); }
         }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        public override string GetMethod()
+            => Method.ToString();
 
         private static RequestMethod SystemToAzureMethod(string verb)
         {

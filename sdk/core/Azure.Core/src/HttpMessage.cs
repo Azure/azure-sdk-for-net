@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Experimental;
@@ -53,13 +54,48 @@ namespace Azure.Core
             {
                 if (_response == null)
                 {
+                    // TODO: this is a stinky hack for a quick fix - it would be good to have the Azure.Core
+                    if (base.Response != null)
+                    {
+                        _response = new PipelineResponseAdapter(base.Response);
+                    }
+                    else
+                    {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+                        throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                    }
                 }
                 return _response;
             }
-            set => base.Response = _response = value;
+            set => _response = new PipelineResponseAdapter(base.Response);
+        }
+
+        private class PipelineResponseAdapter : Response
+        {
+            private PipelineResponse _response;
+            public PipelineResponseAdapter(PipelineResponse response)
+            {
+                _response = response;
+            }
+
+            public override string ClientRequestId
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
+
+            protected internal override bool ContainsHeader(string name)
+                => throw new NotImplementedException();
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
+                => throw new NotImplementedException();
+
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+                => _response.TryGetHeaderValue(name, out value);
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+                => throw new NotImplementedException();
         }
 
         /// <summary>
