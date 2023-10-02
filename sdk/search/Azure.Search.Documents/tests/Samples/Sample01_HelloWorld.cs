@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_11_01)]
     public partial class HelloWorld : SearchTestBase
     {
         public HelloWorld(bool async, SearchClientOptions.ServiceVersion serviceVersion)

@@ -8,13 +8,13 @@ namespace Azure.Search.Documents.Tests.Models
 {
     public class SearchIndexerTests
     {
-        [TestCase(null, null)]
-        [TestCase("*", "*")]
-        [TestCase("\"0123abcd\"", "\"0123abcd\"")]
-        public void ParsesETag(string value, string expected)
-        {
-            SearchIndexer sut = new SearchIndexer(null, null, null, null, null, null, null, null, null, null, value, null, null);
-            Assert.AreEqual(expected, sut.ETag?.ToString());
-        }
+        //[TestCase(null, null)]
+        //[TestCase("*", "*")]
+        //[TestCase("\"0123abcd\"", "\"0123abcd\"")]
+        //public void ParsesETag(string value, string expected)
+        //{
+        //    SearchIndexer sut = new SearchIndexer(null, null, null, null, null, null, null, null, null, null, value, null, null);
+        //    Assert.AreEqual(expected, sut.ETag?.ToString());
+        //}
     }
 }

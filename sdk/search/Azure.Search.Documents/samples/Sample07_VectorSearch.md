@@ -46,26 +46,11 @@ SearchIndex searchIndex = new(indexName)
         Profiles =
         {
             new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
-            {
-                Vectorizer = "openai"
-            }
         },
         Algorithms =
         {
             new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
         },
-        Vectorizers =
-        {
-            new AzureOpenAIVectorizer("openai")
-            {
-                AzureOpenAIParameters  = new AzureOpenAIParameters()
-                {
-                    ResourceUri = new Uri("Endpoint"),
-                    ApiKey = "key",
-                    DeploymentId = "gpt-4-32k",
-                }
-            }
-        }
     },
 };
 ```
@@ -278,7 +263,6 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     {
         VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
         QueryType = SearchQueryType.Semantic,
-        QueryLanguage = QueryLanguage.EnUs,
         SemanticConfigurationName = "my-semantic-config",
         QueryCaption = QueryCaptionType.Extractive,
         QueryAnswer = QueryAnswerType.Extractive,
