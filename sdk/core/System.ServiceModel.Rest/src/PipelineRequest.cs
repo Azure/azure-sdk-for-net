@@ -12,10 +12,16 @@ public abstract class PipelineRequest
     // TODO: generator constraint requires us to make this settable, revisit later?
     public abstract void SetMethod(string method);
 
+    public abstract string GetMethod();
+
     // TODO: generator constraint requires us to make this settable, revisit later?
     public abstract Uri SetUri(Uri uri);
 
-    public abstract void SetContent(BinaryData content);
+    public abstract Uri GetUri();
+
+    public abstract void SetContent(RequestBody content);
+
+    //public abstract BinaryData GetContent();
 
     public abstract void SetHeaderValue(string name, string value);
 }

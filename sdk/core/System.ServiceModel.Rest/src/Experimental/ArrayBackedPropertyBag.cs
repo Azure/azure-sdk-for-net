@@ -72,13 +72,13 @@ namespace System.ServiceModel.Rest.Experimental
             };
         }
 
-        public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
+        public bool TryGetValue(TKey key, /*[MaybeNullWhen(false)]*/ out TValue value)
         {
             CheckDisposed();
             var index = GetIndex(key);
             if (index < 0)
             {
-                value = default;
+                value = default!;
                 return false;
             }
 

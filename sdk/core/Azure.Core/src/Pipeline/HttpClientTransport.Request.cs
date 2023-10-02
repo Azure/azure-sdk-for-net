@@ -50,66 +50,7 @@ namespace Azure.Core.Pipeline
                         throw new InvalidOperationException("Why?");
                     }
 
-                    yield return new HttpHeader(name, value);
-                }
-            }
-
-            internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
-            {
-                HttpMethod method = ToHttpClientMethod(Method);
-                Uri uri = Uri.ToUri();
-                HttpRequestMessage currentRequest = new HttpRequestMessage(method, uri);
-                PipelineContentAdapter? currentContent = Content != null ? new PipelineContentAdapter(Content, cancellation) : null;
-                currentRequest.Content = currentContent;
-#if NETFRAMEWORK
-                currentRequest.Headers.ExpectContinue = false;
-#endif
-                for (int i = 0; i < _headers.Count; i++)
-                {
-                    _headers.GetAt(i, out IgnoreCaseString headerName, out object value);
-
-                    switch (value)
-                    {
-                        case string stringValue:
-                            // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-                            if (headerName == HttpHeader.Names.Authorization && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
-                            {
-                                currentRequest.Headers.Authorization = authHeader;
-                            }
-                            else if (!currentRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
-                            {
-                                if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, stringValue))
-                                {
-                                    throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
-                                }
-                            }
-                            break;
-
-                        case List<string> listValue:
-                            if (!currentRequest.Headers.TryAddWithoutValidation(headerName, listValue))
-                            {
-                                if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, listValue))
-                                {
-                                    throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
-                                }
-                            }
-                            break;
-                    }
-                }
-
-                AddPropertiesForBlazor(currentRequest);
-
-                return currentRequest;
-            }
-
-            private static void AddPropertiesForBlazor(HttpRequestMessage currentRequest)
-            {
-                // Disable response caching and enable streaming in Blazor apps
-                // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
-                {
-                    SetPropertiesOrOptions(currentRequest, "WebAssemblyFetchOptions", new Dictionary<string, object> { { "cache", "no-store" } });
-                    SetPropertiesOrOptions(currentRequest, "WebAssemblyEnableStreamingResponse", true);
+                    yield return new HttpHeader(name, value!);
                 }
             }
 
@@ -155,45 +96,6 @@ namespace Azure.Core.Pipeline
                 }
 
                 return new HttpMethod(method);
-            }
-
-            public override void Dispose()
-            {
-                _headers.Dispose();
-                var content = Content;
-                if (content != null)
-                {
-                    Content = null;
-                    content.Dispose();
-                }
-            }
-
-            public override string ToString() => BuildRequestMessage(default).ToString();
-
-            private sealed class PipelineContentAdapter : HttpContent
-            {
-                private readonly RequestContent _pipelineContent;
-                private readonly CancellationToken _cancellationToken;
-
-                public PipelineContentAdapter(RequestContent pipelineContent, CancellationToken cancellationToken)
-                {
-                    _pipelineContent = pipelineContent;
-                    _cancellationToken = cancellationToken;
-                }
-
-                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-                    => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
-
-                protected override bool TryComputeLength(out long length)
-                    => _pipelineContent.TryComputeLength(out length);
-
-#if NET5_0_OR_GREATER
-                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                    => await _pipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-
-                protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                    => _pipelineContent.WriteTo(stream, cancellationToken);
-#endif
             }
         }
     }

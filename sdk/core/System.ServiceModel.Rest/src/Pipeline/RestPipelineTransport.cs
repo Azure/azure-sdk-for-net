@@ -66,7 +66,7 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
 
 #if NET6_0_OR_GREATER
 
-        ProcessSyncOrAsync(message, isAsync: false).GetAwaiter().GetResult();
+        ProcessSyncOrAsync(message, async: false).GetAwaiter().GetResult();
 
 #else
 
@@ -75,7 +75,7 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
         // The resolution is for a customer to upgrade to a net6.0+ target,
         // where we are able to provide a code path that calls HttpClient native sync APIs.
 
-        ProcessSyncOrAsync(message, isAsync: true).AsTask().GetAwaiter().GetResult();
+        ProcessSyncOrAsync(message, async: true).AsTask().GetAwaiter().GetResult();
 
 #endif
 
@@ -83,57 +83,84 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message)
-        => await ProcessSyncOrAsync(message, isAsync: true).ConfigureAwait(false);
+        => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool isAsync)
+#pragma warning disable CA1801 // async parameter unused on netstandard
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
+#pragma warning restore CA1801
     {
-        // TODO: optimize?
+        using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 
-        using HttpRequestMessage httpRequest = new(message.Request.Method, message.Request.Uri);
+        // TODO: Azure.Core-specific
+        //SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
 
-        if (message.Request.Content != null)
-        {
-            // TODO: CancellationToken
-            httpRequest.Content = new HttpContentAdapter(message.Request.Content, CancellationToken.None);
-        }
+        HttpResponseMessage responseMessage;
+        Stream? contentStream = null;
 
-        message.Request.SetTransportHeaders(httpRequest);
+        // TODO: enable with retries
+        //message.ClearResponse();
 
         try
         {
-            HttpResponseMessage responseMessage;
-            Stream? contentStream = null;
-
-            // TODO: we'll need to call message.ClearResponse() when we add retries.
-            if (isAsync)
+#if NET5_0_OR_GREATER
+            if (!async)
             {
-                // TODO: Why does Azure.Core use HttpCompletionOption.ResponseHeadersRead?
-                responseMessage = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
+                // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
+                // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
+                // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
+#pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
+                responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+#pragma warning restore CA1416
             }
-            else // sync call
-            {
-#if NET6_0_OR_GREATER
-                responseMessage = _httpClient.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
-#else
-                responseMessage = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
+            else
 #endif
+            {
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    .ConfigureAwait(false);
             }
 
             if (responseMessage.Content != null)
             {
-                // TODO: sync/async
-                contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#if NET5_0_OR_GREATER
+                if (async)
+                {
+                    contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
+                }
+#else
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#endif
             }
-
-            message.Response = new PipelineResponse(responseMessage, contentStream);
         }
-
-        // TODO: CancellationToken: catch(OperationCanceledException e) { ... }
-
+        // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
+        catch (OperationCanceledException e) when (ClientUtilities.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
+        {
+            throw ClientUtilities.CreateOperationCanceledException(e, message.CancellationToken);
+        }
         catch (HttpRequestException e)
         {
             throw new RequestErrorException(e.Message, e);
         }
+
+        // TODO: allow Azure.Core to decorate the response. e.g. with ClientRequestId
+        message.Response = new PipelineResponse(/*message.Request.ClientRequestId,*/ responseMessage, contentStream);
+    }
+
+    // TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e
+    private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
+    {
+        if (!(message.Request is RestRequest pipelineRequest))
+        {
+            throw new InvalidOperationException("the request is not compatible with the transport");
+        }
+        return pipelineRequest.BuildRequestMessage(message.CancellationToken);
     }
 
     #region IDisposable
@@ -155,22 +182,4 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
     }
 
     #endregion
-
-    private sealed class HttpContentAdapter : HttpContent
-    {
-        private readonly RequestBody _content;
-        private readonly CancellationToken _cancellationToken;
-
-        public HttpContentAdapter(RequestBody content, CancellationToken cancellationToken)
-        {
-            _content = content;
-            _cancellationToken = cancellationToken;
-        }
-
-        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-            => await _content.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
-
-        protected override bool TryComputeLength(out long length)
-            => _content.TryComputeLength(out length);
-    }
 }

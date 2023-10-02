@@ -64,84 +64,13 @@ namespace Azure.Core.Pipeline
         public sealed override Request CreateRequest()
             => new HttpClientTransportRequest();
 
-        // TODO: don't override the HttpMessage one?  Or should we?
-        // think about it...
         /// <inheritdoc />
         public override void Process(HttpMessage message)
-        {
-#if NET5_0_OR_GREATER
-            ProcessSyncOrAsync(message, async: false).EnsureCompleted();
-#else
-            // Intentionally blocking here
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            ProcessAsync(message).AsTask().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-#endif
-        }
+            => base.Process(message);
 
         /// <inheritdoc />
-        public override ValueTask ProcessAsync(HttpMessage message) => ProcessSyncOrAsync(message, async: true);
-
-#pragma warning disable CA1801 // async parameter unused on netstandard
-        private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
-#pragma warning restore CA1801
-        {
-            using HttpRequestMessage httpRequest = BuildRequestMessage(message);
-            SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
-            HttpResponseMessage responseMessage;
-            Stream? contentStream = null;
-            message.ClearResponse();
-            try
-            {
-#if NET5_0_OR_GREATER
-                if (!async)
-                {
-                    // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
-                    // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
-                    // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
-#pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
-                    responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
-#pragma warning restore CA1416
-                }
-                else
-#endif
-                {
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                        .ConfigureAwait(false);
-                }
-
-                if (responseMessage.Content != null)
-                {
-#if NET5_0_OR_GREATER
-                    if (async)
-                    {
-                        contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
-                    }
-#else
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-#endif
-                }
-            }
-            // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
-            catch (OperationCanceledException e) when (CancellationHelper.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
-            {
-                throw CancellationHelper.CreateOperationCanceledException(e, message.CancellationToken);
-            }
-            catch (HttpRequestException e)
-            {
-                throw new RequestFailedException(e.Message, e);
-            }
-
-            message.Response = new HttpClientTransportResponse(message.Request.ClientRequestId, responseMessage, contentStream);
-        }
+        public override ValueTask ProcessAsync(HttpMessage message)
+            => base.ProcessAsync(message);
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
         {
@@ -255,25 +184,6 @@ namespace Azure.Core.Pipeline
         private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
             "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
             "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
-
-        // TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e
-        private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
-        {
-            if (!(message.Request is HttpClientTransportRequest pipelineRequest))
-            {
-                throw new InvalidOperationException("the request is not compatible with the transport");
-            }
-            return pipelineRequest.BuildRequestMessage(message.CancellationToken);
-        }
-
-        private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
-        {
-#if NET5_0_OR_GREATER
-            httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
-#else
-            httpRequest.Properties[name] = value;
-#endif
-        }
 
         /// <summary>
         /// Disposes the underlying <see cref="HttpClient"/>.

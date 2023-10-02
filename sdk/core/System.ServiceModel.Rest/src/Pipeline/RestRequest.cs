@@ -3,19 +3,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.ServiceModel.Rest.Experimental;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
 // This adds the Http dependency, and some implementation
 
-public class RestRequest : PipelineRequest
+public class RestRequest : PipelineRequest, IDisposable
 {
     private HttpMethod? _method;
     private Uri? _uri;
+    private RequestBody? _content;
 
     private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 
@@ -24,11 +31,10 @@ public class RestRequest : PipelineRequest
         _headers = new ArrayBackedPropertyBag<IgnoreCaseString, object>();
     }
 
-    public override void SetContent(BinaryData content)
-    {
-        throw new NotImplementedException();
-    }
+    public override void SetContent(RequestBody content)
+        => _content = content;
 
+    // TODO: do we still need this?
     public override void SetHeaderValue(string name, string value)
     {
         throw new NotImplementedException();
@@ -40,8 +46,14 @@ public class RestRequest : PipelineRequest
     public virtual void SetMethod(HttpMethod method)
         => _method = method;
 
+    // TODO: work out the details of when method is set, e.g. constructor/mutability
+    public override string GetMethod() => _method!.ToString();
+
     public override Uri SetUri(Uri uri)
         => _uri = uri;
+
+    // TODO: work out the details of when Uri is set, e.g. constructor/mutability
+    public override Uri GetUri() => _uri!;
 
     #region Header implementation
 
@@ -139,4 +151,117 @@ public class RestRequest : PipelineRequest
         public static implicit operator string(IgnoreCaseString ics) => ics._value;
     }
     #endregion
+
+    #region Construction for transport
+
+    internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
+    {
+        HttpRequestMessage currentRequest = new HttpRequestMessage(_method!, _uri!);
+
+        PipelineContentAdapter? currentContent = _content != null ? new PipelineContentAdapter(_content, cancellation) : null;
+        currentRequest.Content = currentContent;
+#if NETFRAMEWORK
+        currentRequest.Headers.ExpectContinue = false;
+#endif
+
+        for (int i = 0; i < _headers.Count; i++)
+        {
+            _headers.GetAt(i, out IgnoreCaseString headerName, out object value);
+
+            switch (value)
+            {
+                case string stringValue:
+                    // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
+
+                    // TODO: use a constant declaration
+                    if (headerName == "Authorization" && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                    {
+                        currentRequest.Headers.Authorization = authHeader;
+                    }
+                    else if (!currentRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
+                    {
+                        if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, stringValue))
+                        {
+                            throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
+                        }
+                    }
+                    break;
+
+                case List<string> listValue:
+                    if (!currentRequest.Headers.TryAddWithoutValidation(headerName, listValue))
+                    {
+                        if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, listValue))
+                        {
+                            throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
+                        }
+                    }
+                    break;
+            }
+        }
+
+        AddPropertiesForBlazor(currentRequest);
+
+        return currentRequest;
+    }
+
+    private static void AddPropertiesForBlazor(HttpRequestMessage currentRequest)
+    {
+        // Disable response caching and enable streaming in Blazor apps
+        // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+        {
+            SetPropertiesOrOptions(currentRequest, "WebAssemblyFetchOptions", new Dictionary<string, object> { { "cache", "no-store" } });
+            SetPropertiesOrOptions(currentRequest, "WebAssemblyEnableStreamingResponse", true);
+        }
+    }
+
+    private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
+    {
+#if NET5_0_OR_GREATER
+        httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
+#else
+            httpRequest.Properties[name] = value;
+#endif
+    }
+
+    private sealed class PipelineContentAdapter : HttpContent
+    {
+        private readonly RequestBody _pipelineContent;
+        private readonly CancellationToken _cancellationToken;
+
+        public PipelineContentAdapter(RequestBody pipelineContent, CancellationToken cancellationToken)
+        {
+            _pipelineContent = pipelineContent;
+            _cancellationToken = cancellationToken;
+        }
+
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
+            => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
+
+        protected override bool TryComputeLength(out long length)
+            => _pipelineContent.TryComputeLength(out length);
+
+#if NET5_0_OR_GREATER
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+            => await _pipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+
+        protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+            => _pipelineContent.WriteTo(stream, cancellationToken);
+#endif
+    }
+
+    #endregion
+
+    public virtual void Dispose()
+    {
+        _headers.Dispose();
+        var content = _content;
+        if (content != null)
+        {
+            _content = null;
+            content.Dispose();
+        }
+    }
+
+    public override string ToString() => BuildRequestMessage(default).ToString();
 }
