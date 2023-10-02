@@ -15,6 +15,8 @@
 
 ### Other Changes
 
+- The default service version is now "7.5-preview.1".
+
 ## 4.5.1 (2023-03-31)
 
 ### Bugs Fixed
