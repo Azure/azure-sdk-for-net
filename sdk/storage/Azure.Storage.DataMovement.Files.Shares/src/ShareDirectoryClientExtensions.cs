@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.Shares
             string localDirectoryPath,
             ShareDirectoryClientTransferOptions options = default)
         {
-            StorageResource localDirectory = s_localFilesProvider.Value.FromPath(localDirectoryPath);
+            StorageResource localDirectory = s_localFilesProvider.Value.FromDirectory(localDirectoryPath);
             StorageResource shareDirectory = s_shareFilesProvider.Value.FromClient(client, options?.ShareDirectoryOptions);
 
             return await s_defaultTransferManager.Value.StartTransferAsync(
@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.Shares
             string localDirectoryPath,
             ShareDirectoryClientTransferOptions options = default)
         {
-            StorageResource localDirectory = s_localFilesProvider.Value.FromPath(localDirectoryPath);
+            StorageResource localDirectory = s_localFilesProvider.Value.FromDirectory(localDirectoryPath);
             StorageResource shareDirectory = s_shareFilesProvider.Value.FromClient(client, options?.ShareDirectoryOptions);
 
             return await s_defaultTransferManager.Value.StartTransferAsync(
