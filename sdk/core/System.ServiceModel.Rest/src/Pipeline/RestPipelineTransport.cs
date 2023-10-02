@@ -52,7 +52,7 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
 
     public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
-        PipelineRequest request = new RestPipelineTransportRequest();
+        PipelineRequest request = new RestRequest();
         PipelineMessage message = new PipelineMessage(request, classifier);
 
         // TODO: use options
@@ -134,25 +134,6 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
         {
             throw new RequestErrorException(e.Message, e);
         }
-    }
-
-	// TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e
-    private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
-    {
-        if (!(message.Request is HttpClientTransportRequest pipelineRequest))
-        {
-            throw new InvalidOperationException("the request is not compatible with the transport");
-        }
-        return pipelineRequest.BuildRequestMessage(message.CancellationToken);
-    }
-
-    private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
-    {
-#if NET5_0_OR_GREATER
-        httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
-#else
-            httpRequest.Properties[name] = value;
-#endif
     }
 
     #region IDisposable

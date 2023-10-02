@@ -5,7 +5,7 @@ namespace System.ServiceModel.Rest.Core;
 
 // TODO: Note WIP - starting to make this abstract and move implementation into RestPipelineTransport.Request
 // What are the implications of this being abstract for Azure.Core's Request?
-// What are the implications for HttpMessage needing a Request not a PipelineRequest?  
+// What are the implications for HttpMessage needing a Request not a PipelineRequest?
 // Multiple inheritance here, will need a pattern to address that.
 public abstract class PipelineRequest
 {

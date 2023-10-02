@@ -8,8 +8,10 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.ServiceModel.Rest.Experimental;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,12 +25,10 @@ namespace Azure.Core.Pipeline
         private sealed class HttpClientTransportRequest : Request
         {
             private string? _clientRequestId;
-            private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 
             public HttpClientTransportRequest()
             {
                 Method = RequestMethod.Get;
-                _headers = new ArrayBackedPropertyBag<IgnoreCaseString, object>();
             }
 
             public override string ClientRequestId
@@ -41,68 +41,16 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            protected internal override void SetHeader(string name, string value)
-            {
-                _headers.Set(new IgnoreCaseString(name), value);
-            }
-
-            protected internal override void AddHeader(string name, string value)
-            {
-                if (_headers.TryAdd(new IgnoreCaseString(name), value, out var existingValue))
-                {
-                    return;
-                }
-
-                switch (existingValue)
-                {
-                    case string stringValue:
-                        _headers.Set(new IgnoreCaseString(name), new List<string> { stringValue, value });
-                        break;
-                    case List<string> listValue:
-                        listValue.Add(value);
-                        break;
-                }
-            }
-
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-            {
-                if (_headers.TryGetValue(new IgnoreCaseString(name), out var headerValue))
-                {
-                    value = GetHttpHeaderValue(name, headerValue);
-                    return true;
-                }
-
-                value = default;
-                return false;
-            }
-
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-            {
-                if (_headers.TryGetValue(new IgnoreCaseString(name), out var value))
-                {
-                    values = value switch
-                    {
-                        string headerValue => new[] { headerValue },
-                        List<string> headerValues => headerValues,
-                        _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value.GetType()}")
-                    };
-                    return true;
-                }
-
-                values = default;
-                return false;
-            }
-
-            protected internal override bool ContainsHeader(string name) => _headers.TryGetValue(new IgnoreCaseString(name), out _);
-
-            protected internal override bool RemoveHeader(string name) => _headers.TryRemove(new IgnoreCaseString(name));
-
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                for (int i = 0; i < _headers.Count; i++)
+                foreach (var name in GetHeaderNames())
                 {
-                    _headers.GetAt(i, out var headerName, out var headerValue);
-                    yield return new HttpHeader(headerName, GetHttpHeaderValue(headerName, headerValue));
+                    if (!TryGetHeader(name, out string? value))
+                    {
+                        throw new InvalidOperationException("Why?");
+                    }
+
+                    yield return new HttpHeader(name, value);
                 }
             }
 
@@ -165,13 +113,6 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private static string GetHttpHeaderValue(string headerName, object value) => value switch
-            {
-                string headerValue => headerValue,
-                List<string> headerValues => string.Join(",", headerValues),
-                _ => throw new InvalidOperationException($"Unexpected type for header {headerName}: {value?.GetType()}")
-            };
-
             private static readonly HttpMethod s_patch = new HttpMethod("PATCH");
             private static HttpMethod ToHttpClientMethod(RequestMethod requestMethod)
             {
@@ -228,28 +169,6 @@ namespace Azure.Core.Pipeline
             }
 
             public override string ToString() => BuildRequestMessage(default).ToString();
-
-            private readonly struct IgnoreCaseString : IEquatable<IgnoreCaseString>
-            {
-                private readonly string _value;
-
-                public IgnoreCaseString(string value)
-                {
-                    _value = value;
-                }
-
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public bool Equals(IgnoreCaseString other) => string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
-                public override bool Equals(object? obj) => obj is IgnoreCaseString other && Equals(other);
-                public override int GetHashCode() => _value.GetHashCode();
-
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static bool operator ==(IgnoreCaseString left, IgnoreCaseString right) => left.Equals(right);
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static bool operator !=(IgnoreCaseString left, IgnoreCaseString right) => !left.Equals(right);
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static implicit operator string(IgnoreCaseString ics) => ics._value;
-            }
 
             private sealed class PipelineContentAdapter : HttpContent
             {

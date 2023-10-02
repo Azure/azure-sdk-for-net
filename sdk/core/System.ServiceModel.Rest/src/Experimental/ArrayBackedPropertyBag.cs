@@ -7,14 +7,14 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace Azure.Core
+namespace System.ServiceModel.Rest.Experimental
 {
     /// <summary>
     /// A property bag which is optimized for storage of a small number of items.
     /// If the item count is less than 2, there are no allocations. Any additional items are stored in an array which will grow as needed.
     /// MUST be passed by ref only.
     /// </summary>
-    internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquatable<TKey>
+    public struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquatable<TKey>
     {
         private Kvp _first;
         private Kvp _second;

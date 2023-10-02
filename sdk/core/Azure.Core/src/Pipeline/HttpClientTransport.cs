@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Rest.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -254,6 +255,25 @@ namespace Azure.Core.Pipeline
         private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
             "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
             "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
+
+        // TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e
+        private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
+        {
+            if (!(message.Request is HttpClientTransportRequest pipelineRequest))
+            {
+                throw new InvalidOperationException("the request is not compatible with the transport");
+            }
+            return pipelineRequest.BuildRequestMessage(message.CancellationToken);
+        }
+
+        private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
+        {
+#if NET5_0_OR_GREATER
+            httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
+#else
+            httpRequest.Properties[name] = value;
+#endif
+        }
 
         /// <summary>
         /// Disposes the underlying <see cref="HttpClient"/>.
