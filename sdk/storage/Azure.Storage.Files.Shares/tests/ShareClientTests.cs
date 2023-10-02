@@ -500,7 +500,6 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
-
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
         [TestCase(null)]
