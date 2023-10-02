@@ -14,10 +14,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// </summary>
         public StackFrame(System.Diagnostics.StackFrame stackFrame, int frameId)
         {
-            GetNamesFromStackFrame(stackFrame, out string methodFullName, out string assemblyName);
+            string fullName, assemblyName;
+
+            var methodInfo = stackFrame.GetMethodWithoutWarning();
+            if (methodInfo == null)
+            {
+                // In an AOT scenario GetMethod() will return null. Note this can happen even in non AOT scenarios.
+                // Instead, call ToString() which gives a string like this:
+                // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
+                fullName = stackFrame.ToString();
+                assemblyName = "unknown";
+            }
+            else
+            {
+                assemblyName = methodInfo.Module.Assembly.FullName ?? "unknown";
+                if (methodInfo.DeclaringType != null)
+                {
+                    fullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name;
+                }
+                else
+                {
+                    fullName = methodInfo.Name;
+                }
+            }
 
             // Setters
-            this.Method = methodFullName.Truncate(SchemaConstants.StackFrame_Method_MaxLength);
+            this.Method = fullName.Truncate(SchemaConstants.StackFrame_Method_MaxLength);
             this.Level = frameId;
             this.Assembly = assemblyName.Truncate(SchemaConstants.StackFrame_Assembly_MaxLength);
             this.FileName = stackFrame.GetFileName()?.Truncate(SchemaConstants.StackFrame_FileName_MaxLength);
@@ -33,33 +55,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// Gets the stack frame length for only the strings in the stack frame.
         /// </summary>
         internal int GetStackFrameLength() => (this.Method?.Length ?? 0) + (this.Assembly?.Length ?? 0) + (this.FileName?.Length ?? 0);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "We handle the null condition and call ToString() instead.")]
-        private static void GetNamesFromStackFrame(System.Diagnostics.StackFrame stackFrame, out string methodFullName, out string assemblyName)
-        {
-            var methodInfo = stackFrame.GetMethod();
-
-            if (methodInfo == null)
-            {
-                // In an AOT scenario GetMethod() will return null. Note this can happen even in non AOT scenarios.
-                // Instead, call ToString() which gives a string like this:
-                // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
-                methodFullName = stackFrame.ToString();
-                assemblyName = "unknown";
-            }
-            else
-            {
-                assemblyName = methodInfo.Module.Assembly.FullName ?? "unknown";
-                if (methodInfo.DeclaringType != null)
-                {
-                    methodFullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name;
-                }
-                else
-                {
-                    methodFullName = methodInfo.Name;
-                }
-            }
-        }
     }
 }
