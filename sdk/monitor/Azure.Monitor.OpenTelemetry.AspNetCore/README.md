@@ -20,8 +20,7 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
   * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages.
 
 * Metrics
-  * **ASP.NET Core Instrumentation**: Provides automatic collection of common ASP.NET Core metrics.
-  * **HTTP Client Instrumentation**: Provides automatic collection of HTTP client metrics.
+  * Provides automatic collection of Application Insights Standard metrics.
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
 
