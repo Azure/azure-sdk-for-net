@@ -3,7 +3,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Models.Transcription
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The result for each word of the phrase

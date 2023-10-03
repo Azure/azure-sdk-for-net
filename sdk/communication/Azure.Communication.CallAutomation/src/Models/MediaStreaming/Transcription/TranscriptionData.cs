@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Models.Transcription
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Streaming Transcription.
     /// </summary>
-    public class TranscriptionData : TranscriptionPackageBase
+    public class TranscriptionData : MediaBase
     {
         internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<WordData> words, string participantRawID, string resultStatus)
         {

@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Streaming audio.
     /// </summary>
-    internal class MediaStreamingAudioDataInternal
+    internal class AudioDataInternal
     {
         /// <summary>
         /// The audio data in base64 string.

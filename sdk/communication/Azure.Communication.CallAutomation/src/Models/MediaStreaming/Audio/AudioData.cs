@@ -8,9 +8,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Streaming audio.
     /// </summary>
-    public class MediaStreamingAudioData : MediaStreamingPackageBase
+    public class AudioData : MediaBase
     {
-        internal MediaStreamingAudioData(string data, DateTime timestamp, string participantId, bool silent)
+        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
         {
             Data = data;
             Timestamp = timestamp;
