@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -16,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Administration.Samples
 {
-    public partial class Samples_PurviewMetadataPolicyClient
+    public class Samples_PurviewMetadataPolicyClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateMetadataPolicy_ShortVersion()
+        public void Example_UpdateMetadataPolicy()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +36,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateMetadataPolicy_ShortVersion_Async()
+        public async Task Example_UpdateMetadataPolicy_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -64,25 +65,25 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 properties = new
                 {
                     description = "<description>",
-                    decisionRules = new object[]
-            {
+                    decisionRules = new List<object>()
+{
 new
 {
 effect = "Deny",
-dnfCondition = new object[]
+dnfCondition = new List<object>()
 {
-new object[]
+new List<object>()
 {
 new
 {
 attributeName = "<attributeName>",
 attributeValueIncludes = "<attributeValueIncludes>",
-attributeValueIncludedIn = new object[]
+attributeValueIncludedIn = new List<object>()
 {
 "<attributeValueIncludedIn>"
 },
 attributeValueExcludes = "<attributeValueExcludes>",
-attributeValueExcludedIn = new object[]
+attributeValueExcludedIn = new List<object>()
 {
 "<attributeValueExcludedIn>"
 },
@@ -90,22 +91,22 @@ attributeValueExcludedIn = new object[]
 }
 },
 }
-            },
-                    attributeRules = new object[]
-            {
+},
+                    attributeRules = new List<object>()
+{
 new
 {
 id = "<id>",
 name = "<name>",
-dnfCondition = new object[]
+dnfCondition = new List<object>()
 {
-new object[]
+new List<object>()
 {
 null
 }
 },
 }
-            },
+},
                     collection = new
                     {
                         referenceName = "<referenceName>",
@@ -156,25 +157,25 @@ null
                 properties = new
                 {
                     description = "<description>",
-                    decisionRules = new object[]
-            {
+                    decisionRules = new List<object>()
+{
 new
 {
 effect = "Deny",
-dnfCondition = new object[]
+dnfCondition = new List<object>()
 {
-new object[]
+new List<object>()
 {
 new
 {
 attributeName = "<attributeName>",
 attributeValueIncludes = "<attributeValueIncludes>",
-attributeValueIncludedIn = new object[]
+attributeValueIncludedIn = new List<object>()
 {
 "<attributeValueIncludedIn>"
 },
 attributeValueExcludes = "<attributeValueExcludes>",
-attributeValueExcludedIn = new object[]
+attributeValueExcludedIn = new List<object>()
 {
 "<attributeValueExcludedIn>"
 },
@@ -182,22 +183,22 @@ attributeValueExcludedIn = new object[]
 }
 },
 }
-            },
-                    attributeRules = new object[]
-            {
+},
+                    attributeRules = new List<object>()
+{
 new
 {
 id = "<id>",
 name = "<name>",
-dnfCondition = new object[]
+dnfCondition = new List<object>()
 {
-new object[]
+new List<object>()
 {
 null
 }
 },
 }
-            },
+},
                     collection = new
                     {
                         referenceName = "<referenceName>",
@@ -234,7 +235,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataPolicy_ShortVersion()
+        public void Example_GetMetadataPolicy()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -248,7 +249,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicy_ShortVersion_Async()
+        public async Task Example_GetMetadataPolicy_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -332,7 +333,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataPolicies_ShortVersion()
+        public void Example_GetMetadataPolicies()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -340,12 +341,14 @@ null
 
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicies_ShortVersion_Async()
+        public async Task Example_GetMetadataPolicies_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -353,6 +356,8 @@ null
 
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -366,6 +371,8 @@ null
 
             foreach (BinaryData item in client.GetMetadataPolicies(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
 
@@ -379,6 +386,8 @@ null
 
             await foreach (BinaryData item in client.GetMetadataPoliciesAsync(null))
             {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
             }
         }
     }

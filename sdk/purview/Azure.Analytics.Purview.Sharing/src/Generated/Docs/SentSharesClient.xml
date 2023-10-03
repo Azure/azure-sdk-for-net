@@ -13,6 +13,7 @@ Response response = await client.GetSentShareAsync("<sentShareId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSentShareAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -40,6 +41,7 @@ Response response = client.GetSentShare("<sentShareId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSentShare with all parameters and parse the result.
 <code><![CDATA[
@@ -67,6 +69,7 @@ Response response = await client.GetSentShareInvitationAsync("<sentShareId>", "<
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSentShareInvitationAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -94,6 +97,7 @@ Response response = client.GetSentShareInvitation("<sentShareId>", "<sentShareIn
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSentShareInvitation with all parameters and parse the result.
 <code><![CDATA[
@@ -130,6 +134,7 @@ Response response = await client.CreateSentShareInvitationAsync("<sentShareId>",
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateSentShareInvitationAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -177,6 +182,7 @@ Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShar
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateSentShareInvitation with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -215,6 +221,7 @@ Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareI
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call NotifyUserSentShareInvitationAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -242,6 +249,7 @@ Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sent
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call NotifyUserSentShareInvitation with all parameters and parse the result.
 <code><![CDATA[
@@ -268,7 +276,8 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 await foreach (BinaryData item in client.GetAllSentSharesAsync("<referenceName>", null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllSentSharesAsync with all parameters and parse the result.
@@ -280,9 +289,9 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 await foreach (BinaryData item in client.GetAllSentSharesAsync("<referenceName>", "<filter>", "<orderby>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("type").ToString());
 }
 ]]></code></example>
     </member>
@@ -297,7 +306,8 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 foreach (BinaryData item in client.GetAllSentShares("<referenceName>", null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllSentShares with all parameters and parse the result.
@@ -309,9 +319,9 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 foreach (BinaryData item in client.GetAllSentShares("<referenceName>", "<filter>", "<orderby>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("shareKind").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result[0].GetProperty("shareKind").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("type").ToString());
 }
 ]]></code></example>
     </member>
@@ -326,7 +336,8 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 await foreach (BinaryData item in client.GetAllSentShareInvitationsAsync("<sentShareId>", null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllSentShareInvitationsAsync with all parameters and parse the result.
@@ -338,9 +349,9 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 await foreach (BinaryData item in client.GetAllSentShareInvitationsAsync("<sentShareId>", "<filter>", "<orderby>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("type").ToString());
 }
 ]]></code></example>
     </member>
@@ -355,7 +366,8 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 foreach (BinaryData item in client.GetAllSentShareInvitations("<sentShareId>", null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetAllSentShareInvitations with all parameters and parse the result.
@@ -367,9 +379,9 @@ SentSharesClient client = new SentSharesClient(endpoint, credential);
 foreach (BinaryData item in client.GetAllSentShareInvitations("<sentShareId>", "<filter>", "<orderby>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result[0].GetProperty("invitationKind").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("type").ToString());
 }
 ]]></code></example>
     </member>
@@ -389,7 +401,7 @@ RequestContent content = RequestContent.Create(new
         {
             properties = new
             {
-                paths = new object[]
+                paths = new List<object>()
                 {
                     new
                     {
@@ -409,6 +421,7 @@ BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrReplaceSentShareAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -424,7 +437,7 @@ RequestContent content = RequestContent.Create(new
         {
             properties = new
             {
-                paths = new object[]
+                paths = new List<object>()
                 {
                     new
                     {
@@ -471,7 +484,7 @@ RequestContent content = RequestContent.Create(new
         {
             properties = new
             {
-                paths = new object[]
+                paths = new List<object>()
                 {
                     new
                     {
@@ -491,6 +504,7 @@ BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrReplaceSentShare with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -506,7 +520,7 @@ RequestContent content = RequestContent.Create(new
         {
             properties = new
             {
-                paths = new object[]
+                paths = new List<object>()
                 {
                     new
                     {

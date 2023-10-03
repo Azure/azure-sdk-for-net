@@ -81,11 +81,11 @@ RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
-        excludeUriPrefixes = new object[]
+        excludeUriPrefixes = new List<object>()
         {
             "<excludeUriPrefixes>"
         },
-        includeUriPrefixes = new object[]
+        includeUriPrefixes = new List<object>()
         {
             "<includeUriPrefixes>"
         },
@@ -124,11 +124,11 @@ RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
-        excludeUriPrefixes = new object[]
+        excludeUriPrefixes = new List<object>()
         {
             "<excludeUriPrefixes>"
         },
-        includeUriPrefixes = new object[]
+        includeUriPrefixes = new List<object>()
         {
             "<includeUriPrefixes>"
         },
@@ -159,6 +159,7 @@ Response response = await client.CreateOrUpdateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all request content and parse the result.
 <code><![CDATA[
@@ -178,15 +179,15 @@ RequestContent content = RequestContent.Create(new
                 scanRulesetType = "Custom",
                 resourceNameFilter = new
                 {
-                    excludePrefixes = new object[]
+                    excludePrefixes = new List<object>()
                     {
                         "<excludePrefixes>"
                     },
-                    includePrefixes = new object[]
+                    includePrefixes = new List<object>()
                     {
                         "<includePrefixes>"
                     },
-                    resources = new object[]
+                    resources = new List<object>()
                     {
                         "<resources>"
                     },
@@ -266,6 +267,7 @@ Response response = client.CreateOrUpdate(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all request content and parse the result.
 <code><![CDATA[
@@ -285,15 +287,15 @@ RequestContent content = RequestContent.Create(new
                 scanRulesetType = "Custom",
                 resourceNameFilter = new
                 {
-                    excludePrefixes = new object[]
+                    excludePrefixes = new List<object>()
                     {
                         "<excludePrefixes>"
                     },
-                    includePrefixes = new object[]
+                    includePrefixes = new List<object>()
                     {
                         "<includePrefixes>"
                     },
-                    resources = new object[]
+                    resources = new List<object>()
                     {
                         "<resources>"
                     },
@@ -369,6 +371,7 @@ Response response = await client.GetPropertiesAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPropertiesAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -421,6 +424,7 @@ Response response = client.GetProperties(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetProperties with all parameters and parse the result.
 <code><![CDATA[
@@ -473,6 +477,7 @@ Response response = await client.DeleteAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -525,6 +530,7 @@ Response response = client.Delete(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call Delete with all parameters and parse the result.
 <code><![CDATA[
@@ -827,23 +833,23 @@ RequestContent content = RequestContent.Create(new
                 {
                     key = new object(),
                 },
-                minutes = new object[]
+                minutes = new List<object>()
                 {
                     1234
                 },
-                hours = new object[]
+                hours = new List<object>()
                 {
                     1234
                 },
-                weekDays = new object[]
+                weekDays = new List<object>()
                 {
                     "Sunday"
                 },
-                monthDays = new object[]
+                monthDays = new List<object>()
                 {
                     1234
                 },
-                monthlyOccurrences = new object[]
+                monthlyOccurrences = new List<object>()
                 {
                     new
                     {
@@ -925,23 +931,23 @@ RequestContent content = RequestContent.Create(new
                 {
                     key = new object(),
                 },
-                minutes = new object[]
+                minutes = new List<object>()
                 {
                     1234
                 },
-                hours = new object[]
+                hours = new List<object>()
                 {
                     1234
                 },
-                weekDays = new object[]
+                weekDays = new List<object>()
                 {
                     "Sunday"
                 },
-                monthDays = new object[]
+                monthDays = new List<object>()
                 {
                     1234
                 },
-                monthlyOccurrences = new object[]
+                monthlyOccurrences = new List<object>()
                 {
                     new
                     {
@@ -1088,7 +1094,7 @@ PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "
 await foreach (BinaryData item in client.GetRunsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetRunsAsync with all parameters and parse the result.
@@ -1100,31 +1106,31 @@ PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "
 await foreach (BinaryData item in client.GetRunsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("resourceId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
-    Console.WriteLine(result.GetProperty("assetsClassified").ToString());
-    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("startTime").ToString());
-    Console.WriteLine(result.GetProperty("queuedTime").ToString());
-    Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
-    Console.WriteLine(result.GetProperty("endTime").ToString());
-    Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
-    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result.GetProperty("scanLevelType").ToString());
-    Console.WriteLine(result.GetProperty("errorMessage").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("runType").ToString());
-    Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+    Console.WriteLine(result[0].GetProperty("parentId").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("resourceId").ToString());
+    Console.WriteLine(result[0].GetProperty("status").ToString());
+    Console.WriteLine(result[0].GetProperty("assetsDiscovered").ToString());
+    Console.WriteLine(result[0].GetProperty("assetsClassified").ToString());
+    Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+    Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+    Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+    Console.WriteLine(result[0].GetProperty("startTime").ToString());
+    Console.WriteLine(result[0].GetProperty("queuedTime").ToString());
+    Console.WriteLine(result[0].GetProperty("pipelineStartTime").ToString());
+    Console.WriteLine(result[0].GetProperty("endTime").ToString());
+    Console.WriteLine(result[0].GetProperty("scanRulesetVersion").ToString());
+    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result[0].GetProperty("scanLevelType").ToString());
+    Console.WriteLine(result[0].GetProperty("errorMessage").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result[0].GetProperty("runType").ToString());
+    Console.WriteLine(result[0].GetProperty("dataSourceType").ToString());
 }
 ]]></code></example>
     </member>
@@ -1139,7 +1145,7 @@ PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "
 foreach (BinaryData item in client.GetRuns(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetRuns with all parameters and parse the result.
@@ -1151,31 +1157,31 @@ PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "
 foreach (BinaryData item in client.GetRuns(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("resourceId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
-    Console.WriteLine(result.GetProperty("assetsClassified").ToString());
-    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-    Console.WriteLine(result.GetProperty("startTime").ToString());
-    Console.WriteLine(result.GetProperty("queuedTime").ToString());
-    Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
-    Console.WriteLine(result.GetProperty("endTime").ToString());
-    Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
-    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-    Console.WriteLine(result.GetProperty("scanLevelType").ToString());
-    Console.WriteLine(result.GetProperty("errorMessage").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-    Console.WriteLine(result.GetProperty("runType").ToString());
-    Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+    Console.WriteLine(result[0].GetProperty("parentId").ToString());
+    Console.WriteLine(result[0].GetProperty("id").ToString());
+    Console.WriteLine(result[0].GetProperty("resourceId").ToString());
+    Console.WriteLine(result[0].GetProperty("status").ToString());
+    Console.WriteLine(result[0].GetProperty("assetsDiscovered").ToString());
+    Console.WriteLine(result[0].GetProperty("assetsClassified").ToString());
+    Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+    Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+    Console.WriteLine(result[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+    Console.WriteLine(result[0].GetProperty("startTime").ToString());
+    Console.WriteLine(result[0].GetProperty("queuedTime").ToString());
+    Console.WriteLine(result[0].GetProperty("pipelineStartTime").ToString());
+    Console.WriteLine(result[0].GetProperty("endTime").ToString());
+    Console.WriteLine(result[0].GetProperty("scanRulesetVersion").ToString());
+    Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result[0].GetProperty("scanLevelType").ToString());
+    Console.WriteLine(result[0].GetProperty("errorMessage").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result[0].GetProperty("runType").ToString());
+    Console.WriteLine(result[0].GetProperty("dataSourceType").ToString());
 }
 ]]></code></example>
     </member>

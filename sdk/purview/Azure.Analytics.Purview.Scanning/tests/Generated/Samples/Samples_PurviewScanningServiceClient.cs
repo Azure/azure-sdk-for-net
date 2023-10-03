@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -16,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public partial class Samples_PurviewScanningServiceClient
+    public class Samples_PurviewScanningServiceClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetKeyVaultReference_ShortVersion()
+        public void Example_GetKeyVaultReference()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -34,7 +35,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetKeyVaultReference_ShortVersion_Async()
+        public async Task Example_GetKeyVaultReference_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -82,7 +83,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateKeyVaultReference_ShortVersion()
+        public void Example_CreateOrUpdateKeyVaultReference()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -97,7 +98,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateKeyVaultReference_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateKeyVaultReference_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -162,7 +163,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteKeyVaultReference_ShortVersion()
+        public void Example_DeleteKeyVaultReference()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -176,7 +177,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteKeyVaultReference_ShortVersion_Async()
+        public async Task Example_DeleteKeyVaultReference_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -224,7 +225,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScanRuleset_ShortVersion()
+        public void Example_GetScanRuleset()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -234,11 +235,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScanRuleset_ShortVersion_Async()
+        public async Task Example_GetScanRuleset_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -248,6 +250,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -290,7 +293,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateScanRuleset_ShortVersion()
+        public void Example_CreateOrUpdateScanRuleset()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -301,11 +304,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateScanRuleset_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateScanRuleset_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -316,6 +320,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -331,14 +336,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 properties = new
                 {
                     description = "<description>",
-                    excludedSystemClassifications = new object[]
-            {
+                    excludedSystemClassifications = new List<object>()
+{
 "<excludedSystemClassifications>"
-            },
-                    includedCustomClassificationRuleNames = new object[]
-            {
+},
+                    includedCustomClassificationRuleNames = new List<object>()
+{
 "<includedCustomClassificationRuleNames>"
-            },
+},
                 },
                 kind = "AzureSubscription",
                 scanRulesetType = "Custom",
@@ -367,14 +372,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 properties = new
                 {
                     description = "<description>",
-                    excludedSystemClassifications = new object[]
-            {
+                    excludedSystemClassifications = new List<object>()
+{
 "<excludedSystemClassifications>"
-            },
-                    includedCustomClassificationRuleNames = new object[]
-            {
+},
+                    includedCustomClassificationRuleNames = new List<object>()
+{
 "<includedCustomClassificationRuleNames>"
-            },
+},
                 },
                 kind = "AzureSubscription",
                 scanRulesetType = "Custom",
@@ -392,7 +397,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteScanRuleset_ShortVersion()
+        public void Example_DeleteScanRuleset()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -402,11 +407,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteScanRuleset_ShortVersion_Async()
+        public async Task Example_DeleteScanRuleset_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -416,6 +422,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -458,7 +465,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesetsForDataSource_ShortVersion()
+        public void Example_GetSystemRulesetsForDataSource()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -468,11 +475,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesetsForDataSource_ShortVersion_Async()
+        public async Task Example_GetSystemRulesetsForDataSource_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -482,6 +490,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -524,7 +533,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesetsForVersion_ShortVersion()
+        public void Example_GetSystemRulesetsForVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -534,11 +543,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesetsForVersion_ShortVersion_Async()
+        public async Task Example_GetSystemRulesetsForVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -548,6 +558,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -590,7 +601,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLatestSystemRulesets_ShortVersion()
+        public void Example_GetLatestSystemRulesets()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -600,11 +611,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLatestSystemRulesets_ShortVersion_Async()
+        public async Task Example_GetLatestSystemRulesets_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -614,6 +626,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -656,7 +669,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetKeyVaultReferences_ShortVersion()
+        public void Example_GetKeyVaultReferences()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -665,13 +678,13 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetKeyVaultReferences(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetKeyVaultReferences_ShortVersion_Async()
+        public async Task Example_GetKeyVaultReferences_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -680,7 +693,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetKeyVaultReferencesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -695,10 +708,10 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetKeyVaultReferences(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("baseUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
@@ -713,16 +726,16 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetKeyVaultReferencesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
-                Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("baseUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("properties").GetProperty("description").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetClassificationRules_ShortVersion()
+        public void Example_GetClassificationRules()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -731,13 +744,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetClassificationRules(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetClassificationRules_ShortVersion_Async()
+        public async Task Example_GetClassificationRules_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -746,7 +760,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetClassificationRulesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -761,9 +776,9 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetClassificationRules(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
@@ -778,15 +793,15 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetClassificationRulesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDataSources_ShortVersion()
+        public void Example_GetDataSources()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -795,13 +810,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetDataSources(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDataSources_ShortVersion_Async()
+        public async Task Example_GetDataSources_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -810,7 +826,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetDataSourcesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -825,37 +842,37 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetDataSources(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
@@ -870,43 +887,43 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetDataSourcesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("scans")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("scans")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScanRulesets_ShortVersion()
+        public void Example_GetScanRulesets()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -915,13 +932,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetScanRulesets(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScanRulesets_ShortVersion_Async()
+        public async Task Example_GetScanRulesets_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -930,7 +948,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -945,12 +964,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetScanRulesets(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
@@ -965,18 +984,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesets_ShortVersion()
+        public void Example_GetSystemRulesets()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -985,13 +1004,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetSystemRulesets(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesets_ShortVersion_Async()
+        public async Task Example_GetSystemRulesets_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1000,7 +1020,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -1015,12 +1036,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetSystemRulesets(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
@@ -1035,18 +1056,18 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSystemRulesetsVersions_ShortVersion()
+        public void Example_GetSystemRulesetsVersions()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1055,13 +1076,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetSystemRulesetsVersions(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSystemRulesetsVersions_ShortVersion_Async()
+        public async Task Example_GetSystemRulesetsVersions_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1070,7 +1092,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync(null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].ToString());
             }
         }
 
@@ -1085,12 +1108,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetSystemRulesetsVersions("None", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
 
@@ -1105,12 +1128,12 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync("None", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("version").ToString());
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("kind").ToString());
+                Console.WriteLine(result[0].GetProperty("scanRulesetType").ToString());
+                Console.WriteLine(result[0].GetProperty("status").ToString());
+                Console.WriteLine(result[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("name").ToString());
             }
         }
     }
