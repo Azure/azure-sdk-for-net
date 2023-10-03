@@ -5,7 +5,10 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation.Models.Transcription
 {
-    internal class Word
+    /// <summary>
+    /// The result for each word of the phrase
+    /// </summary>
+    public class WordData
     {
         /// <summary>
         /// Text in the phrase.

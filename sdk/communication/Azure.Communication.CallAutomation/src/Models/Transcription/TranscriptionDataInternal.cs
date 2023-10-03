@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// The result for each word of the phrase
         /// </summary>
         [JsonPropertyName("words")]
-        public IEnumerable<Word> Words { get; set; }
+        public IEnumerable<WordData> Words { get; set; }
 
         /// <summary>
         /// The identified speaker based on participant raw ID
