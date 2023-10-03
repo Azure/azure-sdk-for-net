@@ -88,16 +88,15 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.BinaryData Content { get; }
+        public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual bool IsError { get { throw null; } set { } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
-        protected abstract bool ContainsHeader(string name);
         public abstract void Dispose();
-        protected abstract bool TryGetHeader(string name, out string? value);
+        public abstract System.Collections.Generic.IEnumerable<string> GetHeaderNames();
+        public abstract bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value);
         public abstract bool TryGetHeaderValue(string name, out string? value);
-        protected abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class RequestBody : System.IDisposable
     {
@@ -170,17 +169,14 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {
         public HttpPipelineResponse(System.Net.Http.HttpResponseMessage? httpResponse, System.IO.Stream? contentStream) { }
-        public override System.BinaryData Content { get { throw null; } }
         public override System.IO.Stream? ContentStream { get { throw null; } set { } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
-        protected override bool ContainsHeader(string name) { throw null; }
         public override void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        protected System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
-        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        public override System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
+        public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
-        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
     public partial interface IPipelinePolicy<TMessage>
     {

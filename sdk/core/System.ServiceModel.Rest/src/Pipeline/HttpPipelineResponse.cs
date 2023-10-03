@@ -51,15 +51,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override bool TryGetHeaderValue(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         => TryGetHeader(_httpResponse.Headers, _httpContent, name, out values);
 
-    //protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-    //=> TryGetHeader(_httpResponse.Headers, _httpContent, name, out value);
-
-    //protected override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-    //    => TryGetHeader(_httpResponse.Headers, _httpContent, name, out values);
-
-    //protected override bool ContainsHeader(string name)
-    //    => ContainsHeader(_httpResponse.Headers, _httpContent, name);
-
     public override IEnumerable<string> GetHeaderNames()
     {
         foreach (var header in _httpResponse.Headers)

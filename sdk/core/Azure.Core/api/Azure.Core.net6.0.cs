@@ -236,14 +236,20 @@ namespace Azure
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineResponse
+    public abstract partial class Response : System.ServiceModel.Rest.Core.PipelineResponse
     {
-        public Response() : base (default(System.Net.Http.HttpResponseMessage), default(System.IO.Stream)) { }
+        protected Response() { }
         public abstract string ClientRequestId { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
+        public override System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
         public override string ToString() { throw null; }
+        protected internal abstract bool TryGetHeader(string name, out string? value);
+        public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value) { throw null; }
+        public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
+        protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public sealed partial class ResponseError
     {
