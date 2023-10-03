@@ -51,7 +51,8 @@ public abstract class PipelineResponse : IDisposable
     public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value);
     public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out IEnumerable<string>? value);
 
-    public abstract IEnumerable<string> GetHeaderNames();
+    // TODO: do we want this to be public?
+    public abstract IEnumerable<KeyValuePair<string, string>> GetHeaders();
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered

@@ -44,28 +44,23 @@ namespace Azure.Core.Pipeline
                 _response.Dispose();
             }
 
-            public override IEnumerable<string> GetHeaderNames()
-                => _response.GetHeaderNames();
-
             public override bool TryGetHeaderValue(string name, out string? value)
                 => _response.TryGetHeaderValue(name, out value);
 
             public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
                 => _response.TryGetHeaderValue(name, out value);
 
+            public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+                => _response.GetHeaders();
+
             protected internal override bool ContainsHeader(string name)
                 => _response.TryGetHeaderValue(name, out string? _);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                foreach (string name in GetHeaderNames())
+                foreach (KeyValuePair<string, string> header in GetHeaders())
                 {
-                    if (!TryGetHeader(name, out string? value))
-                    {
-                        throw new InvalidOperationException("Why?");
-                    }
-
-                    yield return new HttpHeader(name, value!);
+                    yield return new HttpHeader(header.Key, header.Value);
                 }
             }
 

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel.Rest.Core;
@@ -46,14 +47,8 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        // TODO: this is circular and a little bit evil.  Come back and make it better.
-        public override IEnumerable<string> GetHeaderNames()
-        {
-            foreach (HttpHeader header in EnumerateHeaders())
-            {
-                yield return header.Name;
-            }
-        }
+        public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+            => throw new NotImplementedException();
 
         /// <summary>
         /// TBD.

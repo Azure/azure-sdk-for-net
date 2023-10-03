@@ -100,7 +100,7 @@ namespace Azure
                 throw new NotImplementedException();
             }
 
-            public override IEnumerable<string> GetHeaderNames()
+            public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
             {
                 throw new NotImplementedException();
             }

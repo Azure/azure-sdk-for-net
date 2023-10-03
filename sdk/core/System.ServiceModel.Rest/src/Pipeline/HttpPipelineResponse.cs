@@ -51,14 +51,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override bool TryGetHeaderValue(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         => TryGetHeader(_httpResponse.Headers, _httpContent, name, out values);
 
-    public override IEnumerable<string> GetHeaderNames()
-    {
-        foreach (var header in _httpResponse.Headers)
-        {
-            yield return header.Key;
-        }
-    }
-
     private static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
     {
 #if NET6_0_OR_GREATER
@@ -96,6 +88,41 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
                 return headers.TryGetValues(name, out values) ||
                        content != null &&
                        content.Headers.TryGetValues(name, out values);
+#endif
+
+    }
+
+    public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+        => GetHeaders(_httpResponse.Headers, _httpContent);
+
+    internal static IEnumerable<KeyValuePair<string, string>> GetHeaders(HttpHeaders headers, HttpContent? content)
+    {
+#if NET6_0_OR_GREATER
+        foreach (var (key, value) in headers.NonValidated)
+        {
+            yield return new KeyValuePair<string, string>(key, JoinHeaderValues(value));
+        }
+
+        if (content is not null)
+        {
+            foreach (var (key, value) in content.Headers.NonValidated)
+            {
+                yield return new KeyValuePair<string, string>(key, JoinHeaderValues(value));
+            }
+        }
+#else
+            foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
+            {
+                yield return new KeyValuePair<string, string>(header.Key, JoinHeaderValues(header.Value));
+            }
+
+            if (content != null)
+            {
+                foreach (KeyValuePair<string, IEnumerable<string>> header in content.Headers)
+                {
+                    yield return new KeyValuePair<string, string>(header.Key, JoinHeaderValues(header.Value));
+                }
+            }
 #endif
 
     }
@@ -143,20 +170,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
                 return string.Join(",", values);
             }
 #endif
-    private static bool ContainsHeader(HttpHeaders headers, HttpContent? content, string name)
-    {
-        // .Contains throws on invalid header name so use TryGet here
-#if NET6_0_OR_GREATER
-        return headers.NonValidated.Contains(name) || content is not null && content.Headers.NonValidated.Contains(name);
-#else
-                if (headers.TryGetValues(name, out _))
-                {
-                    return true;
-                }
-
-                return content?.Headers.TryGetValues(name, out _) == true;
-#endif
-    }
 
     #region IDisposable
 

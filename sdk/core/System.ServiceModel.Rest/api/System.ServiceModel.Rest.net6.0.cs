@@ -94,7 +94,7 @@ namespace System.ServiceModel.Rest.Core
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        public abstract System.Collections.Generic.IEnumerable<string> GetHeaderNames();
+        public abstract System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders();
         public abstract bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value);
         public abstract bool TryGetHeaderValue(string name, out string? value);
     }
@@ -176,7 +176,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override int Status { get { throw null; } }
         public override void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public override System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
+        public override System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders() { throw null; }
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }

@@ -244,7 +244,7 @@ namespace Azure
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
-        public override System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
+        public override System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders() { throw null; }
         public override string ToString() { throw null; }
         protected internal abstract bool TryGetHeader(string name, out string? value);
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value) { throw null; }
