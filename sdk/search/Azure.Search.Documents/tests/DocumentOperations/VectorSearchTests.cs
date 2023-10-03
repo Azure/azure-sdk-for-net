@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -186,15 +186,19 @@ namespace Azure.Search.Documents.Tests
             {
                 IsSearchable = true,
                 VectorSearchDimensions = 1536,
-                VectorSearchProfile = "profile"
+                VectorSearchProfile = "my-vector-profile"
             };
             createdIndex.Fields.Add(vectorField);
 
             createdIndex.VectorSearch = new()
             {
+                Profiles =
+                    {
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
                 Algorithms =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new HnswVectorSearchAlgorithmConfiguration("my-hsnw-vector-config")
                     }
             };
 
@@ -226,6 +230,7 @@ namespace Azure.Search.Documents.Tests
         // TODO: Add tests for updating an index to modify the vectorizer within a profile.
         // TODO: Add a test for duplicate profile names, which should throw an error.
         // TODO: Add a test for updating the profile name of a vector field, which should throw an error.
+        // TODO: Add tests for VectorizableTextQuery
 
         [Test]
         public async Task CreateIndexUsingFieldBuilder()
@@ -241,11 +246,15 @@ namespace Azure.Search.Documents.Tests
                 Fields = new FieldBuilder().Build(typeof(Model)),
                 VectorSearch = new()
                 {
+                    Profiles =
+                    {
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
                     Algorithms =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new HnswVectorSearchAlgorithmConfiguration("my-hsnw-vector-config")
                     }
-                }
+                },
             };
 
             SearchIndexClient indexClient = resources.GetIndexClient();

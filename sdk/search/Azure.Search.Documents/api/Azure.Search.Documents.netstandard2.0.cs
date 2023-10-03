@@ -84,8 +84,7 @@ namespace Azure.Search.Documents
         {
             V2020_06_30 = 1,
             V2021_04_30_Preview = 2,
-            V2023_07_01_Preview = 3,
-            V2023_10_01_Preview = 4,
+            V2023_10_01_Preview = 3,
         }
     }
     public static partial class SearchFilter
