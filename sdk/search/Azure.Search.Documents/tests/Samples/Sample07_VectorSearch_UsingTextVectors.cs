@@ -329,16 +329,16 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
 #if !SNIPPET
             searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
 #endif
-#if !SNIPPET
-            Hotel[] hotelDocuments = VectorSearchCommons.GetHotelDocuments();
-#else
             Hotel[] hotelDocuments = GetHotelDocuments();
-#endif
-
             await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments));
             #endregion
 
             return searchClient;
+        }
+
+        public static Hotel[] GetHotelDocuments()
+        {
+            return VectorSearchCommons.GetHotelDocuments();
         }
     }
 }

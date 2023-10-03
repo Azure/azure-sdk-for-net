@@ -9,61 +9,61 @@ Let's consider the example of a `Hotel`. First, we need to create an index for s
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search_Index
-    string vectorSearchProfile = "my-vector-profile";
-    string vectorSearchHnswConfig = "my-hsnw-vector-config";
-    int modelDimensions = 1536;
+string vectorSearchProfile = "my-vector-profile";
+string vectorSearchHnswConfig = "my-hsnw-vector-config";
+int modelDimensions = 1536;
 
-    string indexName = "Hotel";
-    SearchIndex searchIndex = new(indexName)
+string indexName = "Hotel";
+SearchIndex searchIndex = new(indexName)
+{
+    Fields =
     {
-        Fields =
+        new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
+        new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
+        new SearchableField("Description") { IsFilterable = true },
+        new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
         {
-            new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-            new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
-            new SearchableField("Description") { IsFilterable = true },
-            new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-            {
-                IsSearchable = true,
-                VectorSearchDimensions = modelDimensions,
-                VectorSearchProfile = vectorSearchProfile
-            },
-            new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-            new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-            {
-                IsSearchable = true,
-                VectorSearchDimensions = modelDimensions,
-                VectorSearchProfile = vectorSearchProfile
-            },
+            IsSearchable = true,
+            VectorSearchDimensions = modelDimensions,
+            VectorSearchProfile = vectorSearchProfile
         },
-        VectorSearch = new()
+        new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
         {
-            Profiles =
-            {
-                new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
-            },
-            Algorithms =
-            {
-                new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
-            }
+            IsSearchable = true,
+            VectorSearchDimensions = modelDimensions,
+            VectorSearchProfile = vectorSearchProfile
         },
-        SemanticSettings = new()
+    },
+    VectorSearch = new()
+    {
+        Profiles =
         {
-            Configurations =
+            new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+        },
+        Algorithms =
         {
-               new SemanticConfiguration("my-semantic-config", new()
-               {
-                   TitleField = new(){ FieldName = "HotelName" },
-                   ContentFields =
-                   {
-                       new() { FieldName = "Description" }
-                   },
-                   KeywordFields =
-                   {
-                       new() { FieldName = "Category" }
-                   }
-               })
-            }
+            new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
         }
+    },
+    SemanticSettings = new()
+    {
+        Configurations =
+    {
+           new SemanticConfiguration("my-semantic-config", new()
+           {
+               TitleField = new(){ FieldName = "HotelName" },
+               ContentFields =
+               {
+                   new() { FieldName = "Description" }
+               },
+               KeywordFields =
+               {
+                   new() { FieldName = "Category" }
+               }
+           })
+        }
+    }
 };
 ```
 
