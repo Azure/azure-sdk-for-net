@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 LocationData = new LocationData("Redmond"),
-                VmId = "b7a098cc-b0b8-46e8-a205-62f301a62a8f",
+                VmId = Guid.Parse("b7a098cc-b0b8-46e8-a205-62f301a62a8f"),
                 ClientPublicKey = "string",
                 PrivateLinkScopeResourceId = "/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName",
                 ParentClusterResourceId = "{AzureStackHCIResourceId}",
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2022-05-10-preview/examples/Machines_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2022-12-27/examples/Machines_Get.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
