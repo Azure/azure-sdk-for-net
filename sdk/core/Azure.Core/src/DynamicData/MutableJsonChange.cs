@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+
+#nullable enable
 
 namespace Azure.Core.Json
 {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Logic
         public virtual AsyncPageable<IntegrationAccountBatchConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountBatchConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IntegrationAccountBatchConfigurationResource(Client, IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e)), _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IntegrationAccountBatchConfigurationResource(Client, IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e)), _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Logic
         public virtual Pageable<IntegrationAccountBatchConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountBatchConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IntegrationAccountBatchConfigurationResource(Client, IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e)), _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new IntegrationAccountBatchConfigurationResource(Client, IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(e)), _integrationAccountBatchConfigurationClientDiagnostics, Pipeline, "IntegrationAccountBatchConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -312,6 +313,80 @@ namespace Azure.ResourceManager.Logic
             {
                 var response = _integrationAccountBatchConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, batchConfigurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/batchConfigurations/{batchConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountBatchConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="batchConfigurationName"> The batch configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IntegrationAccountBatchConfigurationResource>> GetIfExistsAsync(string batchConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
+
+            using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _integrationAccountBatchConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, batchConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountBatchConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/batchConfigurations/{batchConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountBatchConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="batchConfigurationName"> The batch configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
+        public virtual NullableResponse<IntegrationAccountBatchConfigurationResource> GetIfExists(string batchConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
+
+            using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _integrationAccountBatchConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, batchConfigurationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountBatchConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountBatchConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryProtectionContainerResource(Client, SiteRecoveryProtectionContainerData.DeserializeSiteRecoveryProtectionContainerData(e)), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "SiteRecoveryProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryProtectionContainerResource(Client, SiteRecoveryProtectionContainerData.DeserializeSiteRecoveryProtectionContainerData(e)), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "SiteRecoveryProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryProtectionContainerResource(Client, SiteRecoveryProtectionContainerData.DeserializeSiteRecoveryProtectionContainerData(e)), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "SiteRecoveryProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryProtectionContainerResource(Client, SiteRecoveryProtectionContainerData.DeserializeSiteRecoveryProtectionContainerData(e)), _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "SiteRecoveryProtectionContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 var response = _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="protectionContainerName"> Protection container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryProtectionContainerResource>> GetIfExistsAsync(string protectionContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+
+            using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryProtectionContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryProtectionContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="protectionContainerName"> Protection container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
+        public virtual NullableResponse<SiteRecoveryProtectionContainerResource> GetIfExists(string protectionContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+
+            using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryProtectionContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPExtendedCommunityIPExtendedCommunitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPExtendedCommunityIPExtendedCommunitiesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPExtendedCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPExtendedCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPExtendedCommunityIPExtendedCommunitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPExtendedCommunityIPExtendedCommunitiesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPExtendedCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPExtendedCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 var response = _networkFabricIPExtendedCommunityIPExtendedCommunitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipExtendedCommunityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricIPExtendedCommunityResource>> GetIfExistsAsync(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+
+            using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricIPExtendedCommunityIPExtendedCommunitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipExtendedCommunityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricIPExtendedCommunityResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricIPExtendedCommunityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpExtendedCommunities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipExtendedCommunityName"> Name of the IP Extended Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricIPExtendedCommunityResource> GetIfExists(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+
+            using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricIPExtendedCommunityIPExtendedCommunitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipExtendedCommunityName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricIPExtendedCommunityResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricIPExtendedCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

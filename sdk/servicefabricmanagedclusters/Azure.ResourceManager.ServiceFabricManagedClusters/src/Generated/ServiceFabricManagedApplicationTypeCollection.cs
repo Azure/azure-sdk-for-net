@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeResource(Client, ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e)), _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeResource(Client, ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e)), _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeResource(Client, ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e)), _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeResource(Client, ServiceFabricManagedApplicationTypeData.DeserializeServiceFabricManagedApplicationTypeData(e)), _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 var response = _serviceFabricManagedApplicationTypeApplicationTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationTypeName"> The name of the application type name resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ServiceFabricManagedApplicationTypeResource>> GetIfExistsAsync(string applicationTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+
+            using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceFabricManagedApplicationTypeApplicationTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceFabricManagedApplicationTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationTypeName"> The name of the application type name resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
+        public virtual NullableResponse<ServiceFabricManagedApplicationTypeResource> GetIfExists(string applicationTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
+
+            using var scope = _serviceFabricManagedApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceFabricManagedApplicationTypeApplicationTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceFabricManagedApplicationTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

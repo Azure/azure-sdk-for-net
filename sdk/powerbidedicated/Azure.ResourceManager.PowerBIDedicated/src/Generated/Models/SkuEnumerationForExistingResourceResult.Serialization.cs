@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SkuDetailsForExistingResource>> value = default;
+            Optional<IReadOnlyList<SkuDetails>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    List<SkuDetailsForExistingResource> array = new List<SkuDetailsForExistingResource>();
+                    List<SkuDetails> array = new List<SkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDetailsForExistingResource.DeserializeSkuDetailsForExistingResource(item));
+                        array.Add(SkuDetails.DeserializeSkuDetails(item));
                     }
                     value = array;
                     continue;

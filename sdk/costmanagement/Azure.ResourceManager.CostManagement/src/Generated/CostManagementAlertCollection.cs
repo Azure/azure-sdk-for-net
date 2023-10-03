@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), _costManagementAlertAlertsClientDiagnostics, Pipeline, "CostManagementAlertCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -216,6 +217,78 @@ namespace Azure.ResourceManager.CostManagement
             {
                 var response = _costManagementAlertAlertsRestClient.Get(Id, alertId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        public virtual async Task<NullableResponse<CostManagementAlertResource>> GetIfExistsAsync(string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(alertId, nameof(alertId));
+
+            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _costManagementAlertAlertsRestClient.GetAsync(Id, alertId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CostManagementAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        public virtual NullableResponse<CostManagementAlertResource> GetIfExists(string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(alertId, nameof(alertId));
+
+            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _costManagementAlertAlertsRestClient.Get(Id, alertId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CostManagementAlertResource>(response.GetRawResponse());
+                return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

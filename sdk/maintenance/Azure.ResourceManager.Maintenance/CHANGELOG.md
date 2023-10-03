@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.4 (2023-09-15)
+
+- Fix the string format of `StartOn` and `ExpireOn` in `MaintenanceConfigurationData` serialization.
+
+## 1.2.0-beta.3 (2023-09-05)
+
+### Bugs Fixed
+
+- Fix the missing `MaintenanceConfigurationData.InstallPatches` serialization issue.
 
 ## 1.2.0-beta.2 (2023-07-24)
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
@@ -73,6 +74,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// The default value is 5 minutes. This does not apply for functions that receive a batch of messages.
+        /// To specify an infinite duration, use <see cref="Timeout.InfiniteTimeSpan"/> or <value>-00:00:00.0010000</value>
+        /// if specifying via host.json.
         /// </summary>
         public TimeSpan MaxAutoLockRenewalDuration
         {
@@ -80,7 +83,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
             set
             {
-                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                if (value != Timeout.InfiniteTimeSpan)
+                {
+                    Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                }
+
                 _maxAutoRenewDuration = value;
             }
         }
@@ -106,7 +113,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by a function.
-        /// The default value is 8. This does not apply for functions that receive a batch of messages.
+        /// The default value is 8. This applies only to functions that set <see cref="ServiceBusTriggerAttribute.IsSessionsEnabled"/>
+        /// to <c>true</c>. This does not apply for functions that receive a batch of messages.
         /// When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/> is true, this value will be ignored,
         /// and concurrency will be increased/decreased dynamically.
         /// </summary>
@@ -120,9 +128,32 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 _maxConcurrentSessions = value;
             }
         }
-        // TODO the default value in Track 1 was the default value from the Track 1 SDK, which was 2000.
-        // Verify that we are okay to diverge here.
         private int _maxConcurrentSessions = 8;
+
+        /// <summary>
+        /// Gets or sets the maximum number of concurrent calls to the function per session.
+        /// Thus the total number of concurrent calls will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
+        /// The default value is 1. This applies only to functions that set <see cref="ServiceBusTriggerAttribute.IsSessionsEnabled"/>
+        /// to <c>true</c>. This does not apply for functions that receive a batch of messages.
+        /// When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/> is true, this value will be ignored,
+        /// and concurrency will be increased/decreased dynamically.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the message handler for each session that is being processed.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
+        public int MaxConcurrentCallsPerSession
+        {
+            get => _maxConcurrentCallsPerSessions;
+
+            set
+            {
+                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCallsPerSession));
+                _maxConcurrentCallsPerSessions = value;
+            }
+        }
+        private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
         /// Gets or sets an optional error handler that will be invoked if an exception occurs while attempting to process
@@ -224,6 +255,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
+                { nameof(MaxConcurrentCallsPerSession), MaxConcurrentCallsPerSession },
                 { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
                 { nameof(MinMessageBatchSize), MinMessageBatchSize },
                 { nameof(MaxBatchWaitTime), MaxBatchWaitTime },
@@ -299,10 +331,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 // when DC is enabled, session concurrency starts at 1 and will be dynamically adjusted over time
                 // by UpdateConcurrency.
                 processorOptions.MaxConcurrentSessions = 1;
+
+                // Currently dynamic concurrency does not scale the number of concurrent calls per session.
+                processorOptions.MaxConcurrentCallsPerSession = 1;
             }
             else
             {
                 processorOptions.MaxConcurrentSessions = MaxConcurrentSessions;
+                processorOptions.MaxConcurrentCallsPerSession = MaxConcurrentCallsPerSession;
             }
 
             return processorOptions;

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "ScalingPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "ScalingPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "ScalingPlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "ScalingPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -321,6 +322,80 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _scalingPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScalingPlanResource>> GetIfExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+
+            using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scalingPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScalingPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
+        public virtual NullableResponse<ScalingPlanResource> GetIfExists(string scalingPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+
+            using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scalingPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScalingPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

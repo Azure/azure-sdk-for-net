@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<bool> immediatePurgeDataOn30Days = default;
             Optional<string> workspaceResourceId = default;
             Optional<DateTimeOffset> laMigrationDate = default;
-            Optional<IReadOnlyList<PrivateLinkScopedResource>> privateLinkScopedResources = default;
+            Optional<IReadOnlyList<PrivateLinkScopedResourceContent>> privateLinkScopedResources = default;
             Optional<PublicNetworkAccessType> publicNetworkAccessForIngestion = default;
             Optional<PublicNetworkAccessType> publicNetworkAccessForQuery = default;
             Optional<IngestionMode> ingestionMode = default;
@@ -364,10 +364,10 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            List<PrivateLinkScopedResource> array = new List<PrivateLinkScopedResource>();
+                            List<PrivateLinkScopedResourceContent> array = new List<PrivateLinkScopedResourceContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkScopedResource.DeserializePrivateLinkScopedResource(item));
+                                array.Add(PrivateLinkScopedResourceContent.DeserializePrivateLinkScopedResourceContent(item));
                             }
                             privateLinkScopedResources = array;
                             continue;

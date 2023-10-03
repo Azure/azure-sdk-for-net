@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningComponentVersionCollection
     {
-        // List Component Version.
+        // List Workspace Component Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListComponentVersion()
+        public async Task GetAll_ListWorkspaceComponentVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/ComponentVersion/list.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ComponentVersion/list.json
             // this example is just showing the usage of "ComponentVersions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get Component Version.
+        // Get Workspace Component Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetComponentVersion()
+        public async Task Get_GetWorkspaceComponentVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/ComponentVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ComponentVersion/get.json
             // this example is just showing the usage of "ComponentVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Component Version.
+        // Get Workspace Component Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetComponentVersion()
+        public async Task Exists_GetWorkspaceComponentVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/ComponentVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ComponentVersion/get.json
             // this example is just showing the usage of "ComponentVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,12 +127,56 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CreateOrUpdate Component Version.
+        // Get Workspace Component Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateComponentVersion()
+        public async Task GetIfExists_GetWorkspaceComponentVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/ComponentVersion/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ComponentVersion/get.json
+            // this example is just showing the usage of "ComponentVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningComponentContainerResource created on azure
+            // for more information of creating MachineLearningComponentContainerResource, please refer to the document of MachineLearningComponentContainerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string name = "string";
+            ResourceIdentifier machineLearningComponentContainerResourceId = MachineLearningComponentContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningComponentContainerResource machineLearningComponentContainer = client.GetMachineLearningComponentContainerResource(machineLearningComponentContainerResourceId);
+
+            // get the collection of this MachineLearningComponentVersionResource
+            MachineLearningComponentVersionCollection collection = machineLearningComponentContainer.GetMachineLearningComponentVersions();
+
+            // invoke the operation
+            string version = "string";
+            NullableResponse<MachineLearningComponentVersionResource> response = await collection.GetIfExistsAsync(version);
+            MachineLearningComponentVersionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MachineLearningComponentVersionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // CreateOrUpdate Workspace Component Version.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateOrUpdateWorkspaceComponentVersion()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ComponentVersion/createOrUpdate.json
             // this example is just showing the usage of "ComponentVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

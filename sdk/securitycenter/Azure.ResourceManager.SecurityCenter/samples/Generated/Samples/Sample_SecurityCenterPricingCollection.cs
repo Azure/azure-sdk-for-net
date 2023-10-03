@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_GetPricingsOnSubscription()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-03-01/examples/Pricings/ListPricings_example.json
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/ListPricings_example.json
             // this example is just showing the usage of "Pricings_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,12 +54,424 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get pricings on subscription
+        // Get pricings on subscription - CloudPosture plan
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetPricingsOnSubscription()
+        public async Task Get_GetPricingsOnSubscriptionCloudPosturePlan()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-03-01/examples/Pricings/GetPricingByName_example.json
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameCloudPosture_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "CloudPosture";
+            SecurityCenterPricingResource result = await collection.GetAsync(pricingName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCenterPricingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get pricings on subscription - CloudPosture plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetPricingsOnSubscriptionCloudPosturePlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameCloudPosture_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "CloudPosture";
+            bool result = await collection.ExistsAsync(pricingName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get pricings on subscription - CloudPosture plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetPricingsOnSubscriptionCloudPosturePlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameCloudPosture_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "CloudPosture";
+            NullableResponse<SecurityCenterPricingResource> response = await collection.GetIfExistsAsync(pricingName);
+            SecurityCenterPricingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityCenterPricingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // Get pricings on subscription - Containers plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetPricingsOnSubscriptionContainersPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameContainers_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "Containers";
+            SecurityCenterPricingResource result = await collection.GetAsync(pricingName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCenterPricingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get pricings on subscription - Containers plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetPricingsOnSubscriptionContainersPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameContainers_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "Containers";
+            bool result = await collection.ExistsAsync(pricingName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get pricings on subscription - Containers plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetPricingsOnSubscriptionContainersPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameContainers_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "Containers";
+            NullableResponse<SecurityCenterPricingResource> response = await collection.GetIfExistsAsync(pricingName);
+            SecurityCenterPricingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityCenterPricingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // Get pricings on subscription - Dns plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetPricingsOnSubscriptionDnsPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameDns_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "Dns";
+            SecurityCenterPricingResource result = await collection.GetAsync(pricingName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCenterPricingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get pricings on subscription - Dns plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetPricingsOnSubscriptionDnsPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameDns_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "Dns";
+            bool result = await collection.ExistsAsync(pricingName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get pricings on subscription - Dns plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetPricingsOnSubscriptionDnsPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameDns_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "Dns";
+            NullableResponse<SecurityCenterPricingResource> response = await collection.GetIfExistsAsync(pricingName);
+            SecurityCenterPricingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityCenterPricingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // Get pricings on subscription - StorageAccounts plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetPricingsOnSubscriptionStorageAccountsPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameStorageAccounts_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "StorageAccounts";
+            SecurityCenterPricingResource result = await collection.GetAsync(pricingName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCenterPricingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get pricings on subscription - StorageAccounts plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetPricingsOnSubscriptionStorageAccountsPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameStorageAccounts_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "StorageAccounts";
+            bool result = await collection.ExistsAsync(pricingName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get pricings on subscription - StorageAccounts plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetPricingsOnSubscriptionStorageAccountsPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameStorageAccounts_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "StorageAccounts";
+            NullableResponse<SecurityCenterPricingResource> response = await collection.GetIfExistsAsync(pricingName);
+            SecurityCenterPricingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityCenterPricingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // Get pricings on subscription - VirtualMachines plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetPricingsOnSubscriptionVirtualMachinesPlan()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameVirtualMachines_example.json
             // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,12 +499,12 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get pricings on subscription
+        // Get pricings on subscription - VirtualMachines plan
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetPricingsOnSubscription()
+        public async Task Exists_GetPricingsOnSubscriptionVirtualMachinesPlan()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-03-01/examples/Pricings/GetPricingByName_example.json
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameVirtualMachines_example.json
             // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,13 +528,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update pricing on subscription
+        // Get pricings on subscription - VirtualMachines plan
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdatePricingOnSubscription()
+        public async Task GetIfExists_GetPricingsOnSubscriptionVirtualMachinesPlan()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-03-01/examples/Pricings/PutPricingByName_example.json
-            // this example is just showing the usage of "Pricings_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameVirtualMachines_example.json
+            // this example is just showing the usage of "Pricings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -140,10 +552,88 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // invoke the operation
             string pricingName = "VirtualMachines";
+            NullableResponse<SecurityCenterPricingResource> response = await collection.GetIfExistsAsync(pricingName);
+            SecurityCenterPricingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityCenterPricingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // Update pricing on subscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_UpdatePricingOnSubscription()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/PutPricingByName_example.json
+            // this example is just showing the usage of "Pricings_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "CloudPosture";
             SecurityCenterPricingData data = new SecurityCenterPricingData()
             {
                 PricingTier = SecurityCenterPricingTier.Standard,
-                SubPlan = "P2",
+            };
+            ArmOperation<SecurityCenterPricingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, pricingName, data);
+            SecurityCenterPricingResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCenterPricingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Update pricing on subscription - partial success
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_UpdatePricingOnSubscriptionPartialSuccess()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/PutPricingByNamePartialSuccess_example.json
+            // this example is just showing the usage of "Pricings_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCenterPricingResource
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
+
+            // invoke the operation
+            string pricingName = "CloudPosture";
+            SecurityCenterPricingData data = new SecurityCenterPricingData()
+            {
+                PricingTier = SecurityCenterPricingTier.Standard,
             };
             ArmOperation<SecurityCenterPricingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, pricingName, data);
             SecurityCenterPricingResource result = lro.Value;

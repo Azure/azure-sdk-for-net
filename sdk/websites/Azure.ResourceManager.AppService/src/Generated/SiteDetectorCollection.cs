@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,6 +245,86 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDetectorDiagnosticsRestClient.GetSiteDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponse</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteDetectorDiagnosticsRestClient.GetSiteDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteDetectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteDetectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponse</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual NullableResponse<SiteDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteDetectorDiagnosticsRestClient.GetSiteDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteDetectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

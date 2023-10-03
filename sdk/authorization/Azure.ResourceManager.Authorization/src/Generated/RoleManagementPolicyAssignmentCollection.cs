@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -304,6 +305,80 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _roleManagementPolicyAssignmentRestClient.Get(Id, roleManagementPolicyAssignmentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoleManagementPolicyAssignmentResource>> GetIfExistsAsync(string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyAssignmentName, nameof(roleManagementPolicyAssignmentName));
+
+            using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _roleManagementPolicyAssignmentRestClient.GetAsync(Id, roleManagementPolicyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleManagementPolicyAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        public virtual NullableResponse<RoleManagementPolicyAssignmentResource> GetIfExists(string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyAssignmentName, nameof(roleManagementPolicyAssignmentName));
+
+            using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _roleManagementPolicyAssignmentRestClient.Get(Id, roleManagementPolicyAssignmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleManagementPolicyAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

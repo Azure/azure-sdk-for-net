@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public virtual AsyncPageable<AgFoodPlatformPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public virtual Pageable<AgFoodPlatformPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -312,6 +313,80 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 var response = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AgFoodPlatformPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using var scope = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AgFoodPlatformPrivateEndpointConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AgFoodPlatformPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual NullableResponse<AgFoodPlatformPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using var scope = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AgFoodPlatformPrivateEndpointConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AgFoodPlatformPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

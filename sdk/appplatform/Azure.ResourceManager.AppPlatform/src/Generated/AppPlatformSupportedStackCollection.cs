@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual AsyncPageable<AppPlatformSupportedStackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Pageable<AppPlatformSupportedStackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedStackBuildServiceRestClient.CreateListSupportedStacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AppPlatformSupportedStackResource(Client, AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(e)), _appPlatformSupportedStackBuildServiceClientDiagnostics, Pipeline, "AppPlatformSupportedStackCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -230,6 +231,80 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 var response = _appPlatformSupportedStackBuildServiceRestClient.GetSupportedStack(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, stackName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedStacks/{stackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedStack</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="stackName"> The name of the stack resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformSupportedStackResource>> GetIfExistsAsync(string stackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
+
+            using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformSupportedStackBuildServiceRestClient.GetSupportedStackAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, stackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformSupportedStackResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformSupportedStackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedStacks/{stackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedStack</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="stackName"> The name of the stack resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformSupportedStackResource> GetIfExists(string stackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
+
+            using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformSupportedStackBuildServiceRestClient.GetSupportedStack(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, stackName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformSupportedStackResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformSupportedStackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

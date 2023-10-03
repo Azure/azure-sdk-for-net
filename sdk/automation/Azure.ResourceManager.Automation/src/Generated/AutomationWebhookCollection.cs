@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWebhookWebhookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWebhookResource(Client, AutomationWebhookData.DeserializeAutomationWebhookData(e)), _automationWebhookWebhookClientDiagnostics, Pipeline, "AutomationWebhookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,6 +318,80 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _automationWebhookWebhookRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Webhook_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="webhookName"> The webhook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationWebhookResource>> GetIfExistsAsync(string webhookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+
+            using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationWebhookWebhookRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationWebhookResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationWebhookResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Webhook_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="webhookName"> The webhook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        public virtual NullableResponse<AutomationWebhookResource> GetIfExists(string webhookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+
+            using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationWebhookCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationWebhookWebhookRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, webhookName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationWebhookResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationWebhookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

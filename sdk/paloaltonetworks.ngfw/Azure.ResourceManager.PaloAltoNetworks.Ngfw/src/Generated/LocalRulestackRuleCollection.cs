@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackRuleResource(Client, LocalRulestackRuleData.DeserializeLocalRulestackRuleData(e)), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, "LocalRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 var response = _localRulestackRuleLocalRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, priority, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual async Task<NullableResponse<LocalRulestackRuleResource>> GetIfExistsAsync(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _localRulestackRuleLocalRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, priority, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LocalRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="priority"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        public virtual NullableResponse<LocalRulestackRuleResource> GetIfExists(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            using var scope = _localRulestackRuleLocalRulesClientDiagnostics.CreateScope("LocalRulestackRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _localRulestackRuleLocalRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, priority, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LocalRulestackRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new LocalRulestackRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

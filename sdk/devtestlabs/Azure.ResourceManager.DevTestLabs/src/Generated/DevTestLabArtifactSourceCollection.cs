@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactSourceResource(Client, DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e)), _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactSourceResource(Client, DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e)), _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArtifactSourceArtifactSourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactSourceResource(Client, DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e)), _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactSourceResource(Client, DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(e)), _devTestLabArtifactSourceArtifactSourcesClientDiagnostics, Pipeline, "DevTestLabArtifactSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -326,6 +327,82 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 var response = _devTestLabArtifactSourceArtifactSourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactSources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the artifact source. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevTestLabArtifactSourceResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabArtifactSourceArtifactSourcesClientDiagnostics.CreateScope("DevTestLabArtifactSourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devTestLabArtifactSourceArtifactSourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabArtifactSourceResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactSources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the artifact source. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DevTestLabArtifactSourceResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabArtifactSourceArtifactSourcesClientDiagnostics.CreateScope("DevTestLabArtifactSourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devTestLabArtifactSourceArtifactSourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabArtifactSourceResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,13 +20,13 @@ namespace Azure.Data.AppConfiguration
 
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
-            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.Content, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream), response);
+            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.Content), response);
         }
 
         private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
@@ -50,30 +49,6 @@ namespace Azure.Data.AppConfiguration
             catch (FormatException)
             {
                 throw new InvalidOperationException("Specified Secret value isn't a valid base64 string");
-            }
-        }
-
-        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            if (!string.IsNullOrEmpty(selector.KeyFilter))
-            {
-                builder.AppendQuery(KeyQueryFilter, selector.KeyFilter);
-            }
-
-            if (!string.IsNullOrEmpty(selector.LabelFilter))
-            {
-                builder.AppendQuery(LabelQueryFilter, selector.LabelFilter);
-            }
-
-            if (selector.Fields != SettingFields.All)
-            {
-                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
-                builder.AppendQuery(FieldsQueryFilter, filter);
-            }
-
-            if (!string.IsNullOrEmpty(pageLink))
-            {
-                builder.AppendQuery("after", pageLink, escapeValue: false);
             }
         }
 

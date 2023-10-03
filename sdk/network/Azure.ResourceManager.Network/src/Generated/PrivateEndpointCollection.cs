@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), _privateEndpointClientDiagnostics, Pipeline, "PrivateEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -319,6 +320,82 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _privateEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PrivateEndpointResource>> GetIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _privateEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        public virtual NullableResponse<PrivateEndpointResource> GetIfExists(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
+            using var scope = _privateEndpointClientDiagnostics.CreateScope("PrivateEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _privateEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -422,6 +423,88 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagementGroupResource>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managementGroupRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagementGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual NullableResponse<ManagementGroupResource> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagementGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

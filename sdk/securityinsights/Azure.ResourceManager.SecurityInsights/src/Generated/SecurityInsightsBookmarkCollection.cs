@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 var response = _securityInsightsBookmarkBookmarksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bookmarks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bookmarkId"> Bookmark ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityInsightsBookmarkResource>> GetIfExistsAsync(string bookmarkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
+
+            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsBookmarkBookmarksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsBookmarkResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bookmarks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bookmarkId"> Bookmark ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
+        public virtual NullableResponse<SecurityInsightsBookmarkResource> GetIfExists(string bookmarkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
+
+            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsBookmarkBookmarksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bookmarkId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsBookmarkResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

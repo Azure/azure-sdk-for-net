@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,6 +318,80 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _automationSourceControlSourceControlRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControl_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlName"> The name of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationSourceControlResource>> GetIfExistsAsync(string sourceControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+
+            using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationSourceControlSourceControlRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationSourceControlResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationSourceControlResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControl_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlName"> The name of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        public virtual NullableResponse<AutomationSourceControlResource> GetIfExists(string sourceControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+
+            using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationSourceControlSourceControlRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationSourceControlResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

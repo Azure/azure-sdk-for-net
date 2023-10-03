@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -216,6 +217,72 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerJobVersionJobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SqlServerJobVersionResource>> GetIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerJobVersionJobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobVersion"> The version of the job to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SqlServerJobVersionResource> GetIfExists(int jobVersion, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerJobVersionJobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerJobVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

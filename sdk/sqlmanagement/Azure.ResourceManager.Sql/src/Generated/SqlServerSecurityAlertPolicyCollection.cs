@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerSecurityAlertPolicyResource(Client, SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(e)), _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerSecurityAlertPolicyResource(Client, SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(e)), _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerSecurityAlertPolicyResource(Client, SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(e)), _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerSecurityAlertPolicyResource(Client, SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(e)), _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, "SqlServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,6 +296,72 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SqlServerSecurityAlertPolicyResource>> GetIfExistsAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("SqlServerSecurityAlertPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerSecurityAlertPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SqlServerSecurityAlertPolicyResource> GetIfExists(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("SqlServerSecurityAlertPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerSecurityAlertPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
