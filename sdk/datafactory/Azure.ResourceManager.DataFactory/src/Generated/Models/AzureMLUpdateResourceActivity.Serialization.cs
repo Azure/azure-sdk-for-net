@@ -72,7 +72,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("trainedModelName"u8);
             JsonSerializer.Serialize(writer, TrainedModelName);
             writer.WritePropertyName("trainedModelLinkedServiceName"u8);
-            JsonSerializer.Serialize(writer, TrainedModelLinkedServiceName); writer.WritePropertyName("trainedModelFilePath"u8);
+            JsonSerializer.Serialize(writer, TrainedModelLinkedServiceName);
+            writer.WritePropertyName("trainedModelFilePath"u8);
             JsonSerializer.Serialize(writer, TrainedModelFilePath);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

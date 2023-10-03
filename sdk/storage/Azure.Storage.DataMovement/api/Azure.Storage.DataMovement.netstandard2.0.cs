@@ -95,7 +95,8 @@ namespace Azure.Storage.DataMovement
         public LocalFilesStorageResourceProvider() { }
         protected internal override string TypeId { get { throw null; } }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromPath(string path) { throw null; }
+        public Azure.Storage.DataMovement.StorageResourceContainer FromDirectory(string directoryPath) { throw null; }
+        public Azure.Storage.DataMovement.StorageResourceItem FromFile(string filePath) { throw null; }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class ProgressHandlerOptions
@@ -178,8 +179,8 @@ namespace Azure.Storage.DataMovement
     public partial class StorageResourceWriteToOffsetOptions
     {
         public StorageResourceWriteToOffsetOptions() { }
-        public string BlockId { get { throw null; } }
-        public long? Position { get { throw null; } }
+        public string BlockId { get { throw null; } set { } }
+        public long? Position { get { throw null; } set { } }
     }
     public partial class TransferCheckpointStoreOptions
     {

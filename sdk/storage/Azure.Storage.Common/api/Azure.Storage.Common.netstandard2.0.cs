@@ -168,7 +168,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2023-08-03";
+        public const string DefaultSasVersion = "2023-11-03";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

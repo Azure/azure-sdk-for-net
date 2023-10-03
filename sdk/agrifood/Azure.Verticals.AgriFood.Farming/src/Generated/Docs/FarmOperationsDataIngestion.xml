@@ -117,7 +117,7 @@ RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     authProviderId = "<authProviderId>",
-    operations = new List<object>()
+    operations = new object[]
     {
         "<operations>"
     },
@@ -185,7 +185,7 @@ RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     authProviderId = "<authProviderId>",
-    operations = new List<object>()
+    operations = new object[]
     {
         "<operations>"
     },

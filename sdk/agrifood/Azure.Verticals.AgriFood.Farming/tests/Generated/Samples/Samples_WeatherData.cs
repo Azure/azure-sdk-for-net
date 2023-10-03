@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_WeatherData
+    public partial class Samples_WeatherData
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWeatherData()
+        public void Example_GetWeatherData_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
@@ -45,7 +44,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeatherData_Async()
+        public async Task Example_GetWeatherData_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
@@ -76,14 +75,14 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
             RequestContent content = RequestContent.Create(new
             {
-                locations = new List<object>()
-{
+                locations = new object[]
+            {
 new
 {
 type = "LatLong",
 value = "<value>",
 }
-},
+            },
                 providerAppId = "<providerAppId>",
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",
@@ -173,14 +172,14 @@ value = "<value>",
 
             RequestContent content = RequestContent.Create(new
             {
-                locations = new List<object>()
-{
+                locations = new object[]
+            {
 new
 {
 type = "LatLong",
 value = "<value>",
 }
-},
+            },
                 providerAppId = "<providerAppId>",
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",

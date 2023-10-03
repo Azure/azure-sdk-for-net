@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -17,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Catalog.Samples
 {
-    public class Samples_PurviewCatalogClient
+    public partial class Samples_PurviewCatalogClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Search()
+        public void Example_Search_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +35,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_Async()
+        public async Task Example_Search_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -63,21 +62,21 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 offset = 1234,
                 limit = 1234,
                 filter = new object(),
-                facets = new List<object>()
-{
+                facets = new object[]
+            {
 new
 {
 count = 1234,
 facet = "<facet>",
 sort = new object(),
 }
-},
+            },
                 taxonomySetting = new
                 {
-                    assetTypes = new List<object>()
-{
+                    assetTypes = new object[]
+            {
 "<assetTypes>"
-},
+            },
                 },
             });
             Response response = client.Search(content);
@@ -136,21 +135,21 @@ sort = new object(),
                 offset = 1234,
                 limit = 1234,
                 filter = new object(),
-                facets = new List<object>()
-{
+                facets = new object[]
+            {
 new
 {
 count = 1234,
 facet = "<facet>",
 sort = new object(),
 }
-},
+            },
                 taxonomySetting = new
                 {
-                    assetTypes = new List<object>()
-{
+                    assetTypes = new object[]
+            {
 "<assetTypes>"
-},
+            },
                 },
             });
             Response response = await client.SearchAsync(content);
@@ -197,7 +196,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Suggest()
+        public void Example_Suggest_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -212,7 +211,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Suggest_Async()
+        public async Task Example_Suggest_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -299,7 +298,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Browse()
+        public void Example_Browse_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -314,7 +313,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Browse_Async()
+        public async Task Example_Browse_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -391,7 +390,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AutoComplete()
+        public void Example_AutoComplete_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -406,7 +405,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AutoComplete_Async()
+        public async Task Example_AutoComplete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
