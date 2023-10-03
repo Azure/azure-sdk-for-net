@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
+// Introduces the dependency on System.Net.Http;
+
 public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
     private readonly HttpClient _httpClient;
@@ -90,8 +92,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
     {
         using HttpRequestMessage httpRequest = BuildRequestMessage(message);
 
-        // TODO: Azure.Core-specific
-        //SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
+        OnSendingRequest(message);
 
         HttpResponseMessage responseMessage;
         Stream? contentStream = null;
@@ -154,10 +155,16 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
 
         // TODO: allow Azure.Core to decorate the response. e.g. with ClientRequestId
         //message.Response = new HttpPipelineResponse(/*message.Request.ClientRequestId,*/ responseMessage, contentStream);
-        SetResponse(message, responseMessage, contentStream);
+        OnReceivedResponse(message, responseMessage, contentStream);
     }
 
-    protected virtual void SetResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
+    protected virtual void OnSendingRequest(PipelineMessage message)
+    {
+        // TODO: Azure.Core-specific
+        //SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
+    }
+
+    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
         => message.Response = new HttpPipelineResponse(httpResponse, contentStream);
 
     // TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e

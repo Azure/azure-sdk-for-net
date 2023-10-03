@@ -75,7 +75,18 @@ namespace Azure.Core.Pipeline
             => base.ProcessAsync(message);
 
         /// <inheritdoc />
-        protected override void SetResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
+        protected override void OnSendingRequest(PipelineMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
+            }
+
+            httpMessage.ClearResponse();
+        }
+
+        /// <inheritdoc />
+        protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
         {
             if (message is not HttpMessage httpMessage)
             {
