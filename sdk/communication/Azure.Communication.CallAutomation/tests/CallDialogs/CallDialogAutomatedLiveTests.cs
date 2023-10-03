@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using Azure.Communication.PhoneNumbers;
 using Azure.Core.TestFramework;

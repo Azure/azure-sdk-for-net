@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Metadata package for Media Streaming.
     /// </summary>
-    public class MediaStreamingMetadata : MediaStreamingPackageBase
+    public class AudioMetadata : MediaBase
     {
         /// <summary>
         /// Subscription Id.

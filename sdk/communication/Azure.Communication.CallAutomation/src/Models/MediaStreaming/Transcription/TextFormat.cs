@@ -4,9 +4,13 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Transcription Package.
+    /// The format of transcription text
     /// </summary>
-    public abstract class TranscriptionPackageBase
+    public enum TextFormat
     {
+        /// <summary>
+        ///  Formatted recognize text with punctuations
+        /// </summary>
+        Display
     }
 }

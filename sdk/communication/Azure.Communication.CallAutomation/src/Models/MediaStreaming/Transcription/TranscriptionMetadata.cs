@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Transcription package for Transcription Streaming.
     /// </summary>
-    public class TranscriptionMetadata : TranscriptionPackageBase
+    public class TranscriptionMetadata : MediaBase
     {
         /// <summary>
         /// Transcription Subscription Id.
