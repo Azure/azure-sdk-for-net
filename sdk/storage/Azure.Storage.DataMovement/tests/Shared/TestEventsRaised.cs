@@ -20,17 +20,17 @@ namespace Azure.Storage.DataMovement.Tests
     /// an Assert.Failure in the middle of an event.
     ///
     /// Also if there's multiple failures then we will catch all of them.
-    /// (Which would mainly occur during <see cref="DataTransferErrorMode.ContinueOnFailure"/>
+    /// Which would mainly occur during <see cref="DataTransferErrorMode.ContinueOnFailure"/>
     /// </summary>
     internal class TestEventsRaised : IDisposable
     {
-        private static readonly DataTransferStatus InProgressStatus = new DataTransferStatus(DataTransferState.InProgress, false, false);
-        private static readonly DataTransferStatus InProgressFailedStatus = new DataTransferStatus(DataTransferState.InProgress, true, false);
-        private static readonly DataTransferStatus InProgressSkippedStatus = new DataTransferStatus(DataTransferState.InProgress, false, true);
-        private static readonly DataTransferStatus StoppingFailedStatus = new DataTransferStatus(DataTransferState.Stopping, true, false);
-        private static readonly DataTransferStatus SuccessfulCompletedStatus = new DataTransferStatus(DataTransferState.Completed, false, false);
-        private static readonly DataTransferStatus SkippedCompletedStatus = new DataTransferStatus(DataTransferState.Completed, false, true);
-        private static readonly DataTransferStatus FailedCompletedStatus = new DataTransferStatus(DataTransferState.Completed, true, false);
+        private static readonly DataTransferStatus InProgressStatus = new DataTransferStatusInternal(DataTransferState.InProgress, false, false);
+        private static readonly DataTransferStatus InProgressFailedStatus = new DataTransferStatusInternal(DataTransferState.InProgress, true, false);
+        private static readonly DataTransferStatus InProgressSkippedStatus = new DataTransferStatusInternal(DataTransferState.InProgress, false, true);
+        private static readonly DataTransferStatus StoppingFailedStatus = new DataTransferStatusInternal(DataTransferState.Stopping, true, false);
+        private static readonly DataTransferStatus SuccessfulCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, false, false);
+        private static readonly DataTransferStatus SkippedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, false, true);
+        private static readonly DataTransferStatus FailedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, true, false);
 
         public List<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
@@ -320,7 +320,7 @@ namespace Azure.Storage.DataMovement.Tests
             AssertTransferStatusCollection(
                 new DataTransferStatus[] {
                     InProgressStatus,
-                    new DataTransferStatus(DataTransferState.Paused, false, false) },
+                    new DataTransferStatusInternal(DataTransferState.Paused, false, false) },
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
         }
 
