@@ -182,7 +182,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             // even after the response is disposed but only if it's a
             // buffered memory stream otherwise we can leave a network
             // connection hanging open
-            if (_contentStream is not BufferedResponseContentStream)
+            if (_contentStream is not MemoryStream)
             {
                 var contentStream = _contentStream;
                 contentStream?.Dispose();
