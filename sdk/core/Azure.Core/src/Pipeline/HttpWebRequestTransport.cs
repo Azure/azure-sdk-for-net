@@ -368,22 +368,22 @@ namespace Azure.Core.Pipeline
                 DisposeStreamIfNotBuffered(ref _originalContentStream);
                 DisposeStreamIfNotBuffered(ref _contentStream);
 
-                base.Dispose();
+                //base.Dispose();
             }
 
-            protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
             {
                 value = _webResponse.Headers.Get(name);
                 return value != null;
             }
 
-            protected override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
             {
                 values = _webResponse.Headers.GetValues(name);
                 return values != null;
             }
 
-            protected override bool ContainsHeader(string name)
+            protected internal override bool ContainsHeader(string name)
             {
                 return _webResponse.Headers.Get(name) != null;
             }

@@ -107,7 +107,7 @@ namespace Azure.Core.TestFramework
         {
             IsDisposed = true;
 
-            base.Dispose();
+            //base.Dispose();
         }
 
         /// <summary>

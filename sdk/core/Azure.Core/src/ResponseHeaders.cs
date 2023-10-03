@@ -145,7 +145,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool TryGetValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
-            return _response.TryGetHeaderValuesInternal(name, out values);
+            return _response.TryGetHeaderValues(name, out values);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool Contains(string name)
         {
-            return _response.ContainsHeaderInternal(name);
+            return _response.ContainsHeader(name);
         }
     }
 }

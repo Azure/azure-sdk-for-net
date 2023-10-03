@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Net.Http;
-using System.ServiceModel.Rest.Core.Pipeline;
+using System.ServiceModel.Rest.Core;
 using Azure.Core;
 
 namespace Azure
@@ -14,26 +12,13 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : HttpPipelineResponse
+    public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
         public abstract string ClientRequestId { get; set; }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        public Response() : base(null, null)
-        {
-            // TODO: this shouldn't be called, but is required for back-compat.
-        }
-
-        internal Response(HttpResponseMessage httpResponse, Stream? contentStream)
-            : base(httpResponse, contentStream)
-        {
-        }
 
         /// <summary>
         /// Get the HTTP response headers.
@@ -44,26 +29,65 @@ namespace Azure
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
-        ///// <summary>
-        ///// TBD.
-        ///// </summary>
-        ///// <param name="name"></param>
-        ///// <param name="value"></param>
-        ///// <returns></returns>
-        //public override bool TryGetHeaderValue(string name, out string? value)
-        //    => TryGetHeader(name, out value);
-
-        internal bool TryGetHeaderValuesInternal(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-            => TryGetHeaderValues(name, out values);
-
-        internal bool ContainsHeaderInternal(string name)
-            => ContainsHeader(name);
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected internal abstract bool ContainsHeader(string name);
 
         /// <summary>
         /// Returns an iterator for enumerating <see cref="HttpHeader"/> in the response.
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        // TODO: this is circular and a little bit evil.  Come back and make it better.
+        public override IEnumerable<string> GetHeaderNames()
+        {
+            foreach (HttpHeader header in EnumerateHeaders())
+            {
+                yield return header.Name;
+            }
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool TryGetHeaderValue(string name, out string? value)
+            => TryGetHeader(name, out value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected internal abstract bool TryGetHeader(string name, out string? value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
+            => TryGetHeaderValues(name, out value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string>? values);
 
         /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
@@ -98,5 +122,11 @@ namespace Azure
                 stream = null;
             }
         }
+
+        //public override void Dispose()
+        //{
+        //    // TODO: correct this
+        //    base.Dispose();
+        //}
     }
 }
