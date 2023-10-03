@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Options of live transcription. </summary>
-    public partial class TranscriptionOptions
+    public class TranscriptionOptions
     {
         /// <summary> Initializes a new instance of TranscriptionOptions. </summary>
         /// <param name="transportUri"> Transport URL for live transcription. </param>
@@ -24,14 +24,14 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(transportUri, nameof(transportUri));
             Argument.AssertNotNull(locale, nameof(locale));
 
-            TransportUrl = transportUri;
+            TransportUri = transportUri;
             TranscriptionTransport = transportType;
             Locale = locale;
             StartTranscription = startTranscription;
         }
 
         /// <summary> Transport URL for live transcription. </summary>
-        public Uri TransportUrl { get; }
+        public Uri TransportUri { get; }
         /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
         public TranscriptionTransport TranscriptionTransport { get; }
         /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>

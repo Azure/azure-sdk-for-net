@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Streaming audio.
+    /// Streaming Audio.
     /// </summary>
     internal class AudioDataInternal
     {

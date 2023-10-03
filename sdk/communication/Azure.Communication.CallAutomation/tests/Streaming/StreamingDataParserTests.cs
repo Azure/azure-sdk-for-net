@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 {
-    internal class MediaStreamingParserTests
+    internal class StreamingDataParserTests
     {
         #region Audio
 
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "}"
                 + "}";
 
-            AudioMetadata streamingMetadata = (AudioMetadata)MediaParser.Parse(metadataJson);
+            AudioMetadata streamingMetadata = (AudioMetadata)StreamingDataParser.Parse(metadataJson);
             ValidateAudioMetadata(streamingMetadata);
         }
 
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "}"
                 + "}";
 
-            AudioData streamingAudio = (AudioData)MediaParser.Parse(audioJson);
+            AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(audioJson);
             ValidateAudioData(streamingAudio);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "}"
                 + "}";
 
-            AudioData streamingAudio = (AudioData)MediaParser.Parse(audioJson);
+            AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(audioJson);
             ValidateAudioDataNoParticipant(streamingAudio);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
-            AudioData streamingAudio = (AudioData)MediaParser.Parse(binaryData);
+            AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(binaryData);
             ValidateAudioData(streamingAudio);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             jsonData["audioData"]["silent"] = false;
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
-            AudioData parsedPackage = (AudioData)MediaParser.Parse(receivedBytes);
+            AudioData parsedPackage = (AudioData)StreamingDataParser.Parse(receivedBytes);
 
             Assert.NotNull(parsedPackage);
             ValidateAudioData(parsedPackage);
@@ -143,7 +143,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 "}" +
             "}";
 
-            TranscriptionMetadata streamingMetadata = (TranscriptionMetadata)MediaParser.Parse(metadataJson);
+            TranscriptionMetadata streamingMetadata = (TranscriptionMetadata)StreamingDataParser.Parse(metadataJson);
             ValidateTranscriptionMetadata(streamingMetadata);
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 "}" +
             "}";
 
-            TranscriptionData transcription = (TranscriptionData)MediaParser.Parse(transcriptionJson);
+            TranscriptionData transcription = (TranscriptionData)StreamingDataParser.Parse(transcriptionJson);
             ValidateTranscriptionData(transcription);
         }
 
@@ -214,7 +214,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
-            TranscriptionData transcription = (TranscriptionData)MediaParser.Parse(binaryData);
+            TranscriptionData transcription = (TranscriptionData)StreamingDataParser.Parse(binaryData);
             ValidateTranscriptionData(transcription);
         }
 
@@ -252,7 +252,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             jsonData["transcriptionData"]["resultStatus"] = "final";
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
-            TranscriptionData parsedPackage = (TranscriptionData)MediaParser.Parse(receivedBytes);
+            TranscriptionData parsedPackage = (TranscriptionData)StreamingDataParser.Parse(receivedBytes);
 
             Assert.NotNull(parsedPackage);
             ValidateTranscriptionData(parsedPackage);
