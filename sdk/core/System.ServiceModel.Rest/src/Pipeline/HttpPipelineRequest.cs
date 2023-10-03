@@ -18,7 +18,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public class HttpPipelineRequest : PipelineRequest, IDisposable
 {
-    private HttpMethod? _method;
+    private HttpMethod _method;
     private Uri? _uri;
     private RequestBody? _content;
 
@@ -26,6 +26,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     public HttpPipelineRequest()
     {
+        _method = HttpMethod.Get;
         _headers = new ArrayBackedPropertyBag<IgnoreCaseString, object>();
     }
 
