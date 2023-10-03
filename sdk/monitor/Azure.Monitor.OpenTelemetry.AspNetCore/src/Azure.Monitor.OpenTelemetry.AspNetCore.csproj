@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
-    <PackageReference Include="OpenTelemetry.ResourceDetectors.Azure" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" VersionOverride="[2.1.1,6.0)" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" VersionOverride="[2.1.1,6.0)" />
