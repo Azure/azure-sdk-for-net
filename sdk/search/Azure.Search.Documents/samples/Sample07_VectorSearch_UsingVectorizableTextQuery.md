@@ -55,8 +55,8 @@ SearchIndex searchIndex = new(indexName)
             {
                 AzureOpenAIParameters  = new AzureOpenAIParameters()
                 {
-                    ResourceUri = new Uri(Environment.GetEnvironmentVariable("OpenAIEndpoint")),
-                    ApiKey = Environment.GetEnvironmentVariable("OpenAIKey"),
+                    ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                    ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                     DeploymentId = modelName,
                 }
             }

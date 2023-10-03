@@ -7,6 +7,7 @@ using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.samples.VectorSearch
 {
@@ -18,6 +19,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
+        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
         public async Task SingleVectorSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -61,6 +63,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
+        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
         public async Task SingleVectorSearchWithFilter()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -105,6 +108,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
+        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
         public async Task SimpleHybridSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -149,6 +153,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
+        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
         public async Task MultiVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -196,6 +201,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
+        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
         public async Task MultiFieldVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -240,6 +246,16 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
 
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
+            string openAIEndpoint = TestEnvironment.OpenAIEndpoint;
+            string openAIKey = TestEnvironment.OpenAIKey;
+            if (string.IsNullOrEmpty(openAIEndpoint) || string.IsNullOrEmpty(openAIKey))
+            {
+                Assert.Ignore("OpenAI was not deployed");
+            }
+
+            Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", openAIEndpoint);
+            Environment.SetEnvironmentVariable("OPENAI_KEY", openAIKey);
+
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingTextVectors
             string vectorSearchProfile = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
@@ -290,8 +306,8 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
                         {
                             AzureOpenAIParameters  = new AzureOpenAIParameters()
                             {
-                                ResourceUri = new Uri(Environment.GetEnvironmentVariable("OpenAIEndpoint")),
-                                ApiKey = Environment.GetEnvironmentVariable("OpenAIKey"),
+                                ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                                ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                                 DeploymentId = modelName,
                             }
                         }
