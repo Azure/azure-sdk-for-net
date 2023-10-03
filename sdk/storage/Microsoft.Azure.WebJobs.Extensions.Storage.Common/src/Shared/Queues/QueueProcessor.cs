@@ -128,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <returns></returns>
         protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
         {
-            string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", QueuesOptions.MaxDequeueCount, poisonQueue.Name);
+            string msg = string.Format(CultureInfo.InvariantCulture, "Message Id '{0}' has reached MaxDequeueCount of {1}. Moving message to queue '{2}'.", message.MessageId, QueuesOptions.MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);
 
             await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.Body, cancellationToken).ConfigureAwait(false);
