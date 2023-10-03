@@ -283,6 +283,11 @@ namespace Azure.Storage.DataMovement
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
+            catch (InvalidOperationException ex)
+            when (ex.Message.Contains("Cannot overwrite file.") && _createMode == StorageResourceCreationPreference.SkipIfExists)
+            {
+                await InvokeSkippedArg().ConfigureAwait(false);
+            }
             catch (Exception ex)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
