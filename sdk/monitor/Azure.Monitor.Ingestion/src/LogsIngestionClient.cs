@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +15,32 @@ namespace Azure.Monitor.Ingestion
 {
     /// <summary> The IngestionUsingDataCollectionRules service client. </summary>
     [CodeGenClient("IngestionUsingDataCollectionRulesClient")]
+    [CodeGenSuppress("LogsIngestionClient", typeof(Uri), typeof(TokenCredential), typeof(LogsIngestionClientOptions))]
     public partial class LogsIngestionClient
     {
         /// <summary> Initializes a new instance of LogsIngestionClient for mocking. </summary>
         protected LogsIngestionClient()
         {
+        }
+
+        /// <summary> Initializes a new instance of LogsIngestionClient. </summary>
+        /// <param name="endpoint"> The Data Collection Endpoint for the Data Collection Rule, for example https://dce-name.eastus-2.ingest.monitor.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LogsIngestionClient(Uri endpoint, TokenCredential credential, LogsIngestionClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new LogsIngestionClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? IngestionAudience.AzurePublicCloud : options.Audience)}";
+            var scopes = new List<string> { authorizationScope };
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, scopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         // The size we use to determine whether to upload as a single PUT BLOB

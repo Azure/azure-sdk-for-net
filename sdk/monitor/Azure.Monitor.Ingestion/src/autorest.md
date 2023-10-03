@@ -33,3 +33,10 @@ directive:
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
   transform: $["description"] = "If content is already gzipped, put \"gzip\". Default behavior is to gzip all input";
 ```
+### Suppress LogsingestionClient constructor that takes in Options
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.LogsIngestionClient.properties
+  transform: $["x-ms-client-flatten"] = true;
+```
