@@ -6,21 +6,19 @@ Cognitive Search doesn't host vectorization models. This presents a challenge in
 
 Please refer the [documentation](https://learn.microsoft.com/azure/search/vector-search-overview) to learn more about Vector Search.
 
-This sample will show you how to index a vector field and perform vector search using .NET SDK.
+Here's the list of samples that will show you how to index the vector fields and perform vector search using .NET SDK.
 
-Here's the list of samples that will show you how to index for vector fields and perform vector search using .NET SDK.
-
-* [Vector Search Using RAW Vector Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md)
-     * [Single Vector Search](LINK)
-     * [Single Vector Search With Filter](LINK)
-     * [Hybrid Search](LINK)
-     * [Multi-vector Search](LINK)
-     * [Multi-field Vector Search](LINK)
-* [Vector Search Using Vectorizable Text Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md)
-     * [Single Vector Search](LINK)
-     * [Single Vector Search With Filter](LINK)
-     * [Hybrid Search](LINK)
-     * [Multi-vector Search](LINK)
-     * [Multi-field Vector Search](LINK)
+* [Vector Search Using RAW Vector Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md#vector-search-using-raw-vector-query)
+     * [Single Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md#single-vector-search)
+     * [Single Vector Search With Filter](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md#single-vector-search-with-filter)
+     * [Hybrid Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md#hybrid-search)
+     * [Multi-vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md#multi-vector-search)
+     * [Multi-field Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingRawVectorQuery.md#multi-field-vector-search)
+* [Vector Search Using Vectorizable Text Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md#vector-search-using-vectorizable-text-query)
+     * [Single Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md#single-vector-search)
+     * [Single Vector Search With Filter](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md#single-vector-search-with-filter)
+     * [Hybrid Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md#hybrid-search)
+     * [Multi-vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md#multi-vector-search)
+     * [Multi-field Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizableTextQuery.md#multi-field-vector-search)
 * [Vector Semantic Hybrid Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingSemanticHybridQuery.md)
 * [Vector Search Using Field Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingFieldBuilder.md)

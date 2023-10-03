@@ -160,7 +160,7 @@ Let's query the index and make sure everything works as implemented. You can als
 
 ### Vector Semantic Hybrid Query
 
-In a vector semantic hybrid query, the `VectorQueries` collection contains the vectors representing the query input. The `Fields` property specifies which vector fields to search within. The `KNearestNeighborsCount` property dictates the number of nearest neighbors to return as top hits. With the semantic configuration now incorporated, we can proceed to execute a semantic hybrid query.
+In a vector semantic hybrid query, the `VectorQueries` collection contains the vectors representing the query input. The `Fields` property specifies which vector fields to search within. The `KNearestNeighborsCount` property dictates the number of nearest neighbors to return as top hits. With the semantic configuration added, we can proceed to execute a semantic hybrid query.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
