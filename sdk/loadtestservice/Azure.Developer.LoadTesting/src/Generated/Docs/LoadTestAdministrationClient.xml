@@ -290,7 +290,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.DeleteTestAsync("<testId>");
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestAsync with all parameters.
@@ -300,7 +299,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.DeleteTestAsync("<testId>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -313,7 +311,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.DeleteTest("<testId>");
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTest with all parameters.
@@ -323,7 +320,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.DeleteTest("<testId>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -497,6 +493,8 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code></example>
     </member>
+    <member name="UploadTestFileAsync(string,string,RequestContent,string,RequestContext)" />
+    <member name="UploadTestFile(string,string,RequestContent,string,RequestContext)" />
     <member name="GetTestFileAsync(string,string,RequestContext)">
       <example>
 This sample shows how to call GetTestFileAsync and parse the result.
@@ -566,7 +564,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestFileAsync with all parameters.
@@ -576,7 +573,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -589,7 +585,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.DeleteTestFile("<testId>", "<fileName>");
-
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestFile with all parameters.
@@ -599,7 +594,6 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.DeleteTestFile("<testId>", "<fileName>");
-
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -969,6 +963,8 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code></example>
     </member>
+    <member name="GetTestsAsync(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)" />
+    <member name="GetTests(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)" />
     <member name="GetTestFilesAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetTestFilesAsync and parse the result.
@@ -980,7 +976,7 @@ LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint,
 await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetTestFilesAsync with all parameters and parse the result.
@@ -992,12 +988,12 @@ LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint,
 await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("fileName").ToString());
-    Console.WriteLine(result.GetProperty("fileType").ToString());
-    Console.WriteLine(result.GetProperty("expireDateTime").ToString());
-    Console.WriteLine(result.GetProperty("validationStatus").ToString());
-    Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result[0].GetProperty("url").ToString());
+    Console.WriteLine(result[0].GetProperty("fileName").ToString());
+    Console.WriteLine(result[0].GetProperty("fileType").ToString());
+    Console.WriteLine(result[0].GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result[0].GetProperty("validationStatus").ToString());
+    Console.WriteLine(result[0].GetProperty("validationFailureDetails").ToString());
 }
 ]]></code></example>
     </member>
@@ -1012,7 +1008,7 @@ LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint,
 foreach (BinaryData item in client.GetTestFiles("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
+    Console.WriteLine(result[0].ToString());
 }
 ]]></code>
 This sample shows how to call GetTestFiles with all parameters and parse the result.
@@ -1024,12 +1020,12 @@ LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint,
 foreach (BinaryData item in client.GetTestFiles("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("url").ToString());
-    Console.WriteLine(result.GetProperty("fileName").ToString());
-    Console.WriteLine(result.GetProperty("fileType").ToString());
-    Console.WriteLine(result.GetProperty("expireDateTime").ToString());
-    Console.WriteLine(result.GetProperty("validationStatus").ToString());
-    Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
+    Console.WriteLine(result[0].GetProperty("url").ToString());
+    Console.WriteLine(result[0].GetProperty("fileName").ToString());
+    Console.WriteLine(result[0].GetProperty("fileType").ToString());
+    Console.WriteLine(result[0].GetProperty("expireDateTime").ToString());
+    Console.WriteLine(result[0].GetProperty("validationStatus").ToString());
+    Console.WriteLine(result[0].GetProperty("validationFailureDetails").ToString());
 }
 ]]></code></example>
     </member>
