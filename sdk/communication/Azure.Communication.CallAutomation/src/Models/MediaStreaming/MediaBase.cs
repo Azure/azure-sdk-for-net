@@ -6,7 +6,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Media Streaming Package.
     /// </summary>
-    public abstract class MediaStreamingPackageBase
+    public abstract class MediaBase
     {
     }
 }

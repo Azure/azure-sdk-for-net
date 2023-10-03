@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Models.Transcription
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Streaming Transcription.
