@@ -59,9 +59,5 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public virtual bool IsError { get; set; }
 
-    //protected abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
-    //protected abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
-    //protected abstract bool ContainsHeader(string name);
-
     public abstract void Dispose();
 }
