@@ -6,9 +6,9 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Streaming audio.
+    /// Streaming Audio.
     /// </summary>
-    public class AudioData : MediaBase
+    public class AudioData : StreamingData
     {
         internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
         {

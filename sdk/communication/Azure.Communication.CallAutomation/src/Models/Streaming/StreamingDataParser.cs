@@ -8,17 +8,17 @@ using System.Text.Json;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Parser for different packages, such as Audio data or Transcription, received as
-    /// part of Media Streaming
+    /// A generic parser for different packages, such as Media(Audio) or Transcription, received as
+    /// part of streaming over websocket
     /// </summary>
-    public static class MediaParser
+    public static class StreamingDataParser
     {
         /// <summary>
         /// Parsing a MediaStreaming package from BinaryData.
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        public static MediaBase Parse(BinaryData json)
+        public static StreamingData Parse(BinaryData json)
         {
             return Parse(json.ToString());
         }
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="receivedBytes">a UTF8 byte array.</param>
         /// <returns></returns>
-        public static MediaBase Parse(byte[] receivedBytes)
+        public static StreamingData Parse(byte[] receivedBytes)
         {
             return Parse(Encoding.UTF8.GetString(receivedBytes));
         }
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="stringJson"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static MediaBase Parse(string stringJson)
+        public static StreamingData Parse(string stringJson)
         {
             JsonElement package = JsonDocument.Parse(stringJson).RootElement;
 
