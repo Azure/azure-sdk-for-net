@@ -85,16 +85,16 @@ namespace Azure.Core
                 set => throw new NotImplementedException();
             }
 
-            protected internal override bool ContainsHeader(string name)
+            protected override bool ContainsHeader(string name)
                 => throw new NotImplementedException();
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
                 => throw new NotImplementedException();
 
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            protected override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
                 => _response.TryGetHeaderValue(name, out value);
 
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+            protected override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
                 => throw new NotImplementedException();
         }
 

@@ -109,9 +109,6 @@ namespace Azure.Core
             values.Add(value);
         }
 
-#if HAS_INTERNALS_VISIBLE_CORE
-        internal
-#endif
         protected override bool ContainsHeader(string name) =>
             _headers.ContainsKey(name);
 
@@ -121,9 +118,6 @@ namespace Azure.Core
         protected override IEnumerable<HttpHeader> EnumerateHeaders() =>
             _headers.Select(header => new HttpHeader(header.Key, JoinHeaderValues(header.Value)));
 
-#if HAS_INTERNALS_VISIBLE_CORE
-        internal
-#endif
         protected override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out List<string> headers))
@@ -135,9 +129,6 @@ namespace Azure.Core
             return false;
         }
 
-#if HAS_INTERNALS_VISIBLE_CORE
-        internal
-#endif
         protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
             bool found = _headers.TryGetValue(name, out List<string> headers);

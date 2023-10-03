@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
 using System.ServiceModel.Rest.Core.Pipeline;
@@ -20,6 +21,14 @@ namespace Azure
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
         public abstract string ClientRequestId { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        public Response() : base(null,null)
+        {
+            // TODO: this shouldn't be called, but is required for back-compat.
+        }
 
         internal Response(HttpResponseMessage httpResponse, Stream? contentStream)
             : base(httpResponse, contentStream)
@@ -43,6 +52,12 @@ namespace Azure
         ///// <returns></returns>
         //public override bool TryGetHeaderValue(string name, out string? value)
         //    => TryGetHeader(name, out value);
+
+        internal bool TryGetHeaderValuesInternal(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+            => TryGetHeaderValues(name, out values);
+
+        internal bool ContainsHeaderInternal(string name)
+            => ContainsHeader(name);
 
         /// <summary>
         /// Returns an iterator for enumerating <see cref="HttpHeader"/> in the response.
