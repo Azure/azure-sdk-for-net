@@ -422,8 +422,9 @@ namespace Azure.Search.Documents.Tests
                 },
                 new[]
                 {
-                    new OutputFieldMappingEntry("score") { TargetName = "Sentiment" },
-                })
+                    new OutputFieldMappingEntry("confidenceScores") { TargetName = "Sentiment" },
+                },
+                 SentimentSkill.SkillVersion.V3)
             {
                 Context = "/document/reviews_text/pages/*",
                 DefaultLanguageCode = SentimentSkillLanguage.En,

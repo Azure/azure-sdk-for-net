@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task SingleVectorSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task SingleVectorSearchWithFilter()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task SimpleHybridSearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -153,7 +153,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task MultiVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -201,7 +201,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
         }
 
         [Test]
-        [PlaybackOnly("Running it in the playback mode, so that pipelines won't need to create OpenAI resources.")]
+        [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task MultiFieldVectorQuerySearch()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
