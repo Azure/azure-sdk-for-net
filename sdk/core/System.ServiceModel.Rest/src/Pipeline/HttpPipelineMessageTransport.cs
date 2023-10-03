@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.IO;
 using System.Net.Http;
 using System.ServiceModel.Rest.Experimental;
@@ -131,38 +132,10 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
                 if (async)
                 {
                     contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
-                    //Stream responseContent = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
-                    //if (responseContent is MemoryStream stream)
-                    //{
-                    //    // Make a copy to test a hypothesis
-                    //    MemoryStream buffer = new MemoryStream();
-                    //    await stream.CopyToAsync(buffer).ConfigureAwait(false);
-
-                    //    // TODO: this goes away when we add the buffering policy.
-                    //    contentStream = new BufferedResponseContentStream(buffer);
-                    //}
-                    //else
-                    //{
-                    //    contentStream = responseContent;
-                    //}
                 }
                 else
                 {
                     contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
-                    //Stream responseContent = responseMessage.Content.ReadAsStream(message.CancellationToken);
-                    //if (responseContent is MemoryStream stream)
-                    //{
-                    //    // Make a copy to test a hypothesis
-                    //    MemoryStream buffer = new MemoryStream();
-                    //    stream.CopyTo(buffer);
-
-                    //    // TODO: this goes away when we add the buffering policy.
-                    //    contentStream = new BufferedResponseContentStream(buffer);
-                    //}
-                    //else
-                    //{
-                    //    contentStream = responseContent;
-                    //}
                 }
 #else
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
@@ -184,6 +157,22 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         // TODO: allow Azure.Core to decorate the response. e.g. with ClientRequestId
         //message.Response = new HttpPipelineResponse(/*message.Request.ClientRequestId,*/ responseMessage, contentStream);
         OnReceivedResponse(message, responseMessage, contentStream);
+
+        // TODO: this is a quick and dirty buffer response
+        Stream? responseContentStream = message.Response.ContentStream;
+        if (responseContentStream is null) { return; }
+        Stream bufferedStream = new MemoryStream();
+        if (async)
+        {
+            await CopyToAsync(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None)).ConfigureAwait(false);
+        }
+        else
+        {
+            CopyTo(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None));
+        }
+        responseContentStream.Dispose();
+        bufferedStream.Position = 0;
+        message.Response.ContentStream = bufferedStream;
     }
 
     protected virtual void OnSendingRequest(PipelineMessage message)
@@ -203,6 +192,51 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             throw new InvalidOperationException("the request is not compatible with the transport");
         }
         return pipelineRequest.BuildRequestMessage(message.CancellationToken);
+    }
+
+    // Same value as Stream.CopyTo uses by default
+    private const int DefaultCopyBufferSize = 81920;
+
+    private async Task CopyToAsync(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
+    {
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+        try
+        {
+            while (true)
+            {
+                //cancellationTokenSource.CancelAfter(_networkTimeout);
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
+                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
+                if (bytesRead == 0) break;
+                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
+            }
+        }
+        finally
+        {
+            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+
+    private void CopyTo(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
+    {
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+        try
+        {
+            int read;
+            while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                //cancellationTokenSource.CancelAfter(_networkTimeout);
+                destination.Write(buffer, 0, read);
+            }
+        }
+        finally
+        {
+            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
     }
 
     #region IDisposable
