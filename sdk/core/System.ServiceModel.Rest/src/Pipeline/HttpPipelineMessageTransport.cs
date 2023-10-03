@@ -130,11 +130,37 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
 #if NET5_0_OR_GREATER
                 if (async)
                 {
-                    contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
+                    Stream responseContent = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
+                    if (responseContent is MemoryStream stream)
+                    {
+                        // Make a copy to test a hypothesis
+                        MemoryStream buffer = new MemoryStream();
+                        await stream.CopyToAsync(buffer).ConfigureAwait(false);
+
+                        // TODO: this goes away when we add the buffering policy.
+                        contentStream = new BufferedResponseContentStream(buffer);
+                    }
+                    else
+                    {
+                        contentStream = responseContent;
+                    }
                 }
                 else
                 {
-                    contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
+                    Stream responseContent = responseMessage.Content.ReadAsStream(message.CancellationToken);
+                    if (responseContent is MemoryStream stream)
+                    {
+                        // Make a copy to test a hypothesis
+                        MemoryStream buffer = new MemoryStream();
+                        stream.CopyTo(buffer);
+
+                        // TODO: this goes away when we add the buffering policy.
+                        contentStream = new BufferedResponseContentStream(buffer);
+                    }
+                    else
+                    {
+                        contentStream = responseContent;
+                    }
                 }
 #else
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.

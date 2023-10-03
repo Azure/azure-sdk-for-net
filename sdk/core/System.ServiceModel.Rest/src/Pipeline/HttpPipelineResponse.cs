@@ -12,10 +12,10 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
-
-    // TODO: understand better why this is handled separately
     private readonly HttpContent _httpContent;
 
+    // TODO: Using our custom thing for now to see what breaks.
+    // Ideally, this gets refactored when we add the buffering policy
     private Stream? _contentStream;
 
     private bool _disposed;
@@ -36,8 +36,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
         get => _contentStream;
         set
         {
-            // TODO: grok this - why?
-
             // Make sure we don't dispose the content if the stream was replaced
             _httpResponse.Content = null;
 
@@ -177,11 +175,19 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     {
         if (disposing && !_disposed)
         {
-            var netResponse = _httpResponse;
-            netResponse?.Dispose();
+            var httpResponse = _httpResponse;
+            httpResponse?.Dispose();
 
-            var contentStream = _contentStream;
-            contentStream?.Dispose();
+            // We want to keep the ContentStream readable
+            // even after the response is disposed but only if it's a
+            // buffered memory stream otherwise we can leave a network
+            // connection hanging open
+            if (_contentStream is not BufferedResponseContentStream)
+            {
+                var contentStream = _contentStream;
+                contentStream?.Dispose();
+                _contentStream = null;
+            }
 
             _disposed = true;
         }
