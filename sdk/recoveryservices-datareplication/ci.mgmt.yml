@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/recoveryservicesdatareplication/ci.mgmt.yml
-    - sdk/recoveryservicesdatareplication/Azure.ResourceManager.RecoveryServicesDataReplication/
+    - sdk/recoveryservices-datareplication/ci.mgmt.yml
+    - sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: recoveryservicesdatareplication
+    ServiceDirectory: recoveryservices-datareplication
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.RecoveryServicesDataReplication

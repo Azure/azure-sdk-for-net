@@ -43,11 +43,14 @@ namespace Azure.Communication.CallAutomation
         public static TranscriptionPackageBase Parse(string stringJson)
         {
             JsonElement package = JsonDocument.Parse(stringJson).RootElement;
-            if (package.GetProperty("kind").ToString() == "TranscriptionMetadata")
+
+            string kind = package.GetProperty("kind").ToString();
+
+            if (kind == "TranscriptionMetadata")
             {
                 return JsonSerializer.Deserialize<TranscriptionMetadata>(package.GetProperty("transcriptionMetadata").ToString());
             }
-            else if (package.GetProperty("kind").ToString() == "TranscriptionData")
+            else if (kind == "TranscriptionData")
             {
                 TranscriptionDataInternal transcriptionDataInternal = JsonSerializer.Deserialize<TranscriptionDataInternal>(
                     package.GetProperty("transcriptionData").ToString()

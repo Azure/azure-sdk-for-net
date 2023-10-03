@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningEnvironmentVersionResource
     {
-        // Delete Environment Version.
+        // Delete Workspace Environment Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteEnvironmentVersion()
+        public async Task Delete_DeleteWorkspaceEnvironmentVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/EnvironmentVersion/delete.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/EnvironmentVersion/delete.json
             // this example is just showing the usage of "EnvironmentVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get Environment Version.
+        // Get Workspace Environment Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetEnvironmentVersion()
+        public async Task Get_GetWorkspaceEnvironmentVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/EnvironmentVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/EnvironmentVersion/get.json
             // this example is just showing the usage of "EnvironmentVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateOrUpdate Environment Version.
+        // CreateOrUpdate Workspace Environment Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateOrUpdateEnvironmentVersion()
+        public async Task Update_CreateOrUpdateWorkspaceEnvironmentVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/EnvironmentVersion/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/EnvironmentVersion/createOrUpdate.json
             // this example is just showing the usage of "EnvironmentVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
