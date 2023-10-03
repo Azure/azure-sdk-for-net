@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 - Removed package references to the beta versions of `OpenTelemetry.Instrumentation.AspNetCore`, `OpenTelemetry.Instrumentation.Http`, and `OpenTelemetry.Instrumentation.SqlClient`.
+  Instead, these packages are now internally vendored within the distro.
   Due to this change, users will no longer be able to access the public APIs of these beta packages.
   Manually adding package references to these instrumentation libraries in an application will cause the internal vendored instrumentation from the distro to be ignored.
   If users choose to add these references, they must ensure to update their configuration subsequently. This includes incorporating the necessary instrumentation using either TracerProviderBuilder or MeterProviderBuilder.
