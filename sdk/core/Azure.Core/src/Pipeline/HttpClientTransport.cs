@@ -74,6 +74,18 @@ namespace Azure.Core.Pipeline
         public override ValueTask ProcessAsync(HttpMessage message)
             => base.ProcessAsync(message);
 
+        /// <inheritdoc />
+        protected override void SetResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
+            }
+
+            string clientRequestId = httpMessage.Request.ClientRequestId;
+            message.Response = new HttpClientTransportResponse(clientRequestId, httpResponse, contentStream);
+        }
+
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
         {
             var httpMessageHandler = CreateDefaultHandler(options);

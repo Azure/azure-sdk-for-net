@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using System.Net.Http;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
@@ -11,7 +12,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents an HTTP pipeline transport used to send HTTP requests and receive responses.
     /// </summary>
-    public abstract class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineMessageTransport
+    public abstract class HttpPipelineTransport : HttpPipelineMessageTransport
     {
         /// <summary>
         /// Creates a new transport specific instance of <see cref="Request"/>. This should not be called directly, <see cref="HttpPipeline.CreateRequest"/> or
