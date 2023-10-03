@@ -42,17 +42,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
-        /// <item>SQL Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.sqlclient"/>.</item>
-        /// </list>
-        ///
-        /// <para>The following instrumentations are added for metrics:</para>
-        /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
+        /// <item>ASP.NET Core.</item>
+        /// <item>HTTP Client.</item>
+        /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
@@ -75,17 +69,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
-        /// <item>SQL Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.sqlclient"/>.</item>
-        /// </list>
-        ///
-        /// <para>The following instrumentations are added for metrics:</para>
-        /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
+        /// <item>ASP.NET Core.</item>
+        /// <item>HTTP Client.</item>
+        /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
