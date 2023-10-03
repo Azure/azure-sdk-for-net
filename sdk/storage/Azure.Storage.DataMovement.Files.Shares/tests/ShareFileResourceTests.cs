@@ -188,8 +188,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
             mock.Verify(b => b.UploadRangeAsync(
-                It.IsAny<HttpRange>(),
-                It.IsAny<Stream>(),
+                new HttpRange(0, length),
+                stream,
                 It.IsAny<ShareFileUploadRangeOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -224,7 +224,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 .Callback<HttpRange, Stream, ShareFileUploadRangeOptions, CancellationToken>(
                 async (range, uploadedstream, options, token) =>
                 {
-                    fileContentStream.Position = 5;
+                    fileContentStream.Position = position;
                     await uploadedstream.CopyToAsync(fileContentStream).ConfigureAwait(false);
                     fileContentStream.Position = 0;
                 })
@@ -248,9 +248,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             byte[] dataAt5 = new byte[data.Length + position];
-            Array.Copy(data, 0, dataAt5, 5, length);
+            Array.Copy(data, 0, dataAt5, position, length);
             Assert.That(dataAt5, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
-            mock.Verify(b => b.UploadRangeAsync(It.IsAny<HttpRange>(), It.IsAny<Stream>(), It.IsAny<ShareFileUploadRangeOptions>(), It.IsAny<CancellationToken>()),
+            mock.Verify(b => b.UploadRangeAsync(
+                new HttpRange(position, length),
+                stream,
+                It.IsAny<ShareFileUploadRangeOptions>(),
+                It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.VerifyNoOtherCalls();
         }

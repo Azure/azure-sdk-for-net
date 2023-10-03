@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Storage.Test.Shared;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Tests;
 using SharesClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
@@ -24,6 +25,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             => $"test-file-{clientBuilder.Recording.Random.NewGuid()}";
         public static string GetNewNonAsciiFileName(this SharesClientBuilder clientBuilder)
             => $"test-ƒ¡£€‽%3A-{clientBuilder.Recording.Random.NewGuid()}";
+
+        /// <summary>
+        /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
+        /// setup to generate <see cref="BlobServiceClient"/>s.
+        /// </summary>
+        /// <param name="tenants"><see cref="TenantConfigurationBuilder"/> powering this client builder.</param>
+        /// <param name="serviceVersion">Service version for clients to target.</param>
+        public static SharesClientBuilder GetNewShareClientBuilder(TenantConfigurationBuilder tenants, ShareClientOptions.ServiceVersion serviceVersion)
+            => new SharesClientBuilder(
+                ServiceEndpoint.File,
+                tenants,
+                (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
+                (uri, sharedKeyCredential, clientOptions) => new ShareServiceClient(uri, sharedKeyCredential, clientOptions),
+                (uri, tokenCredential, clientOptions) => new ShareServiceClient(uri, tokenCredential, clientOptions),
+                (uri, azureSasCredential, clientOptions) => new ShareServiceClient(uri, azureSasCredential, clientOptions),
+                () => new ShareClientOptions(serviceVersion));
 
         public static async Task<DisposingShare> GetTestShareAsync(
             this SharesClientBuilder clientBuilder,
