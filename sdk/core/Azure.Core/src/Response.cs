@@ -14,7 +14,7 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : RestResponse
+    public abstract class Response : HttpPipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
@@ -25,7 +25,7 @@ namespace Azure
         /// <summary>
         /// TBD.
         /// </summary>
-        public Response() : base(null,null)
+        public Response() : base(null, null)
         {
             // TODO: this shouldn't be called, but is required for back-compat.
         }

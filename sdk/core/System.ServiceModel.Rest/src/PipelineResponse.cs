@@ -18,11 +18,11 @@ public abstract class PipelineResponse : IDisposable
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    public bool IsError { get; set; }
+    public virtual bool IsError { get; set; }
 
     protected abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
     protected abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
     protected abstract bool ContainsHeader(string name);
+
     public abstract void Dispose();
-    //protected abstract bool ContainsHeaderValues(string name);
 }

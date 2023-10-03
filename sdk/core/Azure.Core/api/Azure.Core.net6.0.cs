@@ -236,18 +236,14 @@ namespace Azure
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.ServiceModel.Rest.Core.PipelineResponse
+    public abstract partial class Response : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineResponse
     {
-        protected Response() { }
+        public Response() : base (default(System.Net.Http.HttpResponseMessage), default(System.IO.Stream)) { }
         public abstract string ClientRequestId { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
-        protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         public override string ToString() { throw null; }
-        protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
-        public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
-        protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
     public sealed partial class ResponseError
     {
@@ -511,7 +507,7 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.ServiceModel.Rest.Core.Pipeline.RestRequest
+    public abstract partial class Request : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineRequest
     {
         protected Request() { }
         public abstract string ClientRequestId { get; set; }
@@ -1007,7 +1003,7 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
-    public abstract partial class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.RestPipelineTransport
+    public abstract partial class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineMessageTransport
     {
         public HttpPipelineTransport() { }
         public abstract Azure.Core.Request CreateRequest();

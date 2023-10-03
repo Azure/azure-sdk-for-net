@@ -15,10 +15,10 @@ namespace Azure.Core.Pipeline
     {
         private sealed class RestRequestAdapter : Request
         {
-            private RestRequest _request;
+            private HttpPipelineRequest _request;
             private string? _clientRequestId;
 
-            public RestRequestAdapter(RestRequest request)
+            public RestRequestAdapter(HttpPipelineRequest request)
             {
                 _request = request;
             }

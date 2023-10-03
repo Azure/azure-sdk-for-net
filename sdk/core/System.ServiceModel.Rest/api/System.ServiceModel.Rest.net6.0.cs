@@ -85,17 +85,19 @@ namespace System.ServiceModel.Rest.Core
         public abstract void SetMethod(string method);
         public abstract System.Uri SetUri(System.Uri uri);
     }
-    public partial class PipelineResponse : System.IDisposable
+    public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public virtual System.BinaryData Content { get { throw null; } }
-        public virtual System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public abstract System.BinaryData Content { get; }
+        public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual bool IsError { get { throw null; } set { } }
-        public virtual string ReasonPhrase { get { throw null; } }
-        public virtual int Status { get { throw null; } }
-        public virtual void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        public virtual bool TryGetHeaderValue(string name, out string? value) { throw null; }
+        public abstract string ReasonPhrase { get; }
+        public abstract int Status { get; }
+        protected abstract bool ContainsHeader(string name);
+        public abstract void Dispose();
+        protected abstract bool TryGetHeader(string name, out string? value);
+        public abstract bool TryGetHeaderValue(string name, out string? value);
+        protected abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public abstract partial class RequestBody : System.IDisposable
     {
@@ -133,6 +135,53 @@ namespace System.ServiceModel.Rest.Core
 }
 namespace System.ServiceModel.Rest.Core.Pipeline
 {
+    public partial class HttpPipelineMessageTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
+    {
+        public HttpPipelineMessageTransport() { }
+        public HttpPipelineMessageTransport(System.Net.Http.HttpClient client) { }
+        public System.Net.Http.HttpClient Client { get { throw null; } }
+        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
+        public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
+    }
+    public partial class HttpPipelineRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
+    {
+        public HttpPipelineRequest() { }
+        protected virtual void AddHeader(string name, string value) { }
+        protected virtual bool ContainsHeader(string name) { throw null; }
+        public virtual void Dispose() { }
+        public override System.ServiceModel.Rest.Core.RequestBody? GetContent() { throw null; }
+        protected System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
+        public override string GetMethod() { throw null; }
+        public override System.Uri GetUri() { throw null; }
+        protected virtual bool RemoveHeader(string name) { throw null; }
+        public override void SetContent(System.ServiceModel.Rest.Core.RequestBody content) { }
+        protected virtual void SetHeader(string name, string value) { }
+        public override void SetHeaderValue(string name, string value) { }
+        public virtual void SetMethod(System.Net.Http.HttpMethod method) { }
+        public override void SetMethod(string method) { }
+        public override System.Uri SetUri(System.Uri uri) { throw null; }
+        public override string ToString() { throw null; }
+        protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
+        protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
+    public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
+    {
+        public HttpPipelineResponse(System.Net.Http.HttpResponseMessage? httpResponse, System.IO.Stream? contentStream) { }
+        public override System.BinaryData Content { get { throw null; } }
+        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public override string ReasonPhrase { get { throw null; } }
+        public override int Status { get { throw null; } }
+        protected override bool ContainsHeader(string name) { throw null; }
+        public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
+        protected override bool TryGetHeader(string name, out string? value) { throw null; }
+        public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
+        protected override bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+    }
     public partial interface IPipelinePolicy<TMessage>
     {
         void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline);
@@ -169,38 +218,6 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract TMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);
         public abstract void Send(TMessage message);
         public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
-    }
-    public partial class RestPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
-    {
-        public RestPipelineTransport() { }
-        public RestPipelineTransport(System.Net.Http.HttpClient client) { }
-        public System.Net.Http.HttpClient Client { get { throw null; } }
-        public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
-        public virtual void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
-    }
-    public partial class RestRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
-    {
-        public RestRequest() { }
-        protected virtual void AddHeader(string name, string value) { }
-        protected virtual bool ContainsHeader(string name) { throw null; }
-        public virtual void Dispose() { }
-        public override System.ServiceModel.Rest.Core.RequestBody? GetContent() { throw null; }
-        protected virtual System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
-        public override string GetMethod() { throw null; }
-        public override System.Uri GetUri() { throw null; }
-        protected virtual bool RemoveHeader(string name) { throw null; }
-        public override void SetContent(System.ServiceModel.Rest.Core.RequestBody content) { }
-        protected virtual void SetHeader(string name, string value) { }
-        public override void SetHeaderValue(string name, string value) { }
-        public virtual void SetMethod(System.Net.Http.HttpMethod method) { }
-        public override void SetMethod(string method) { }
-        public override System.Uri SetUri(System.Uri uri) { throw null; }
-        public override string ToString() { throw null; }
-        protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
-        protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Experimental

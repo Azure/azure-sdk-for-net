@@ -64,7 +64,7 @@ namespace Azure.Core.Pipeline
         // TODO: do we still need this?  Does it make sense?
         /// <inheritdoc />
         public sealed override Request CreateRequest()
-            => new RestRequestAdapter(new RestRequest());
+            => new RestRequestAdapter(new HttpPipelineRequest());
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
