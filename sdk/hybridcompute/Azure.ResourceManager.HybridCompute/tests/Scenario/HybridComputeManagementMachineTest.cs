@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         [TestCase]
         [RecordedTest]
         public async Task CanDeleteMachine(){
-            await deleteMachine(machineName);
+            await deleteMachine();
         }
     }
 }
