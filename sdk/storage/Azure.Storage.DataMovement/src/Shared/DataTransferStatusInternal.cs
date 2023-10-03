@@ -5,6 +5,9 @@ namespace Azure.Storage.DataMovement
 {
     internal class DataTransferStatusInternal : DataTransferStatus
     {
+        public DataTransferStatusInternal() : base()
+        { }
+
         public DataTransferStatusInternal(
             DataTransferState state,
             bool hasFailedItems,
