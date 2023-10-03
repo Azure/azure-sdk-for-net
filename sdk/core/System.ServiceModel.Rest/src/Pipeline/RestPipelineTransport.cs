@@ -153,7 +153,7 @@ public partial class RestPipelineTransport : PipelineTransport<PipelineMessage>,
         }
 
         // TODO: allow Azure.Core to decorate the response. e.g. with ClientRequestId
-        message.Response = new PipelineResponse(/*message.Request.ClientRequestId,*/ responseMessage, contentStream);
+        message.Response = new RestResponse(/*message.Request.ClientRequestId,*/ responseMessage, contentStream);
     }
 
     // TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e

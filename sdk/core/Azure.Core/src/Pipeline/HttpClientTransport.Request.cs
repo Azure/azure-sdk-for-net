@@ -35,7 +35,7 @@ namespace Azure.Core.Pipeline
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                foreach (var name in GetHeaderNames())
+                foreach (string name in GetHeaderNames())
                 {
                     if (!TryGetHeader(name, out string? value))
                     {

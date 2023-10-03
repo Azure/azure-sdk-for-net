@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.ServiceModel.Rest.Core;
+using System.Net.Http;
+using System.ServiceModel.Rest.Core.Pipeline;
 using Azure.Core;
 
 namespace Azure
@@ -13,13 +13,18 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : PipelineResponse
+    public abstract class Response : RestResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
         public abstract string ClientRequestId { get; set; }
+
+        internal Response(HttpResponseMessage httpResponse, Stream? contentStream)
+            : base(httpResponse, contentStream)
+        {
+        }
 
         /// <summary>
         /// Get the HTTP response headers.
@@ -30,37 +35,14 @@ namespace Azure
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
-        /// <summary>
-        /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="value">The reference to populate with value.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public override bool TryGetHeaderValue(string name, out string? value)
-            => TryGetHeader(name, out value);
-
-        /// <summary>
-        /// Returns header values if the header is stored in the collection.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="values">The reference to populate with values.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
-
-        /// <summary>
-        /// Returns <c>true</c> if the header is stored in the collection.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool ContainsHeader(string name);
+        ///// <summary>
+        ///// TBD.
+        ///// </summary>
+        ///// <param name="name"></param>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //public override bool TryGetHeaderValue(string name, out string? value)
+        //    => TryGetHeader(name, out value);
 
         /// <summary>
         /// Returns an iterator for enumerating <see cref="HttpHeader"/> in the response.

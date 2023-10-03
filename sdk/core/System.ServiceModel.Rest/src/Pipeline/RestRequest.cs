@@ -78,7 +78,7 @@ public class RestRequest : PipelineRequest, IDisposable
         }
     }
 
-    protected virtual IEnumerable<string> GetHeaderNames()
+    protected IEnumerable<string> GetHeaderNames()
     {
         for (int i = 0; i < _headers.Count; i++)
         {
