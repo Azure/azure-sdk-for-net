@@ -10,9 +10,9 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
     /// <summary>
     /// Streaming Transcription.
     /// </summary>
-    internal class TranscriptionData : TranscriptionPackageBase
+    public class TranscriptionData : TranscriptionPackageBase
     {
-        internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<Word> words, string participantRawID, string resultStatus)
+        internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<WordData> words, string participantRawID, string resultStatus)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// <summary>
         /// The result for each word of the phrase
         /// </summary>
-        public IEnumerable<Word> Words { get; set; }
+        public IEnumerable<WordData> Words { get; set; }
 
         /// <summary>
         /// The identified speaker based on participant raw ID

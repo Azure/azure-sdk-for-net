@@ -159,7 +159,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             Assert.AreEqual(1, transcription.Offset);
 
             // validate individual words
-            IList<Word> words = transcription.Words.ToList();
+            IList<WordData> words = transcription.Words.ToList();
             Assert.AreEqual(2, words.Count);
             Assert.AreEqual("Hello", words[0].Text);
             Assert.AreEqual(1, words[0].Offset);
