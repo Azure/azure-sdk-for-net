@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridCompute
             DnsFqdn = dnsFqdn;
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
             ParentClusterResourceId = parentClusterResourceId;
-            MssqlDiscovered = MssqlDiscovered;
+            MssqlDiscovered = mssqlDiscovered;
             DetectedProperties = detectedProperties;
         }
 
