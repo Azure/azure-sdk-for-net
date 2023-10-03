@@ -1541,4 +1541,23 @@ namespace Azure.Communication.CallAutomation
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
         public string Text { get { throw null; } set { } }
     }
+    public partial class TranscriptionData : Azure.Communication.CallAutomation.TranscriptionPackageBase
+    {
+        internal TranscriptionData() { }
+        public double Confidence { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.Models.Transcription.TextFormat Format { get { throw null; } set { } }
+        public ulong Offset { get { throw null; } set { } }
+        public Azure.Communication.CommunicationUserIdentifier Participant { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.Models.Transcription.ResultStatus ResultStatus { get { throw null; } set { } }
+        public string Text { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.Models.Transcription.WordData> Words { get { throw null; } set { } }
+    }
+    public partial class WordData
+    {
+        public WordData() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("offset")]
+        public ulong Offset { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
+        public string Text { get { throw null; } set { } }
+    }
 }
