@@ -8,7 +8,14 @@ namespace System.ServiceModel.Rest.Core;
 
 public abstract class PipelineResponse : IDisposable
 {
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
     public abstract int Status { get; }
+
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
     public abstract string ReasonPhrase { get; }
 
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
@@ -46,6 +53,9 @@ public abstract class PipelineResponse : IDisposable
         }
     }
 
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
     public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value);

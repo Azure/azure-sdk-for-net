@@ -175,12 +175,22 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         message.Response.ContentStream = bufferedStream;
     }
 
+    /// <summary>
+    /// TBD. Needed for inheritdoc.
+    /// </summary>
+    /// <param name="message"></param>
     protected virtual void OnSendingRequest(PipelineMessage message)
     {
         // TODO: Azure.Core-specific
         //SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
     }
 
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="httpResponse"></param>
+    /// <param name="contentStream"></param>
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
         => message.Response = new HttpPipelineResponse(httpResponse, contentStream);
 
