@@ -33,13 +33,21 @@ namespace Azure.Core.Pipeline
             }
             catch (TaskCanceledException e)
             {
-                string exceptionMessage = e.Message +
-                    $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
+                // TODO: come back and clean this up.
+                if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
+                {
+                    string exceptionMessage = e.Message +
+                        $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
 #if NETCOREAPP2_1_OR_GREATER
-                throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
+                    throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
 #else
-                throw new TaskCanceledException(exceptionMessage, e.InnerException);
+                    throw new TaskCanceledException(exceptionMessage, e.InnerException);
 #endif
+                }
+                else
+                {
+                    throw e;
+                }
             }
         }
 
@@ -54,13 +62,21 @@ namespace Azure.Core.Pipeline
             }
             catch (TaskCanceledException e)
             {
-                string exceptionMessage = e.Message +
-                    $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
+                // TODO: come back and clean this up.
+                if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
+                {
+                    string exceptionMessage = e.Message +
+                        $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
 #if NETCOREAPP2_1_OR_GREATER
-                throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
+                    throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
 #else
-                throw new TaskCanceledException(exceptionMessage, e.InnerException);
+                    throw new TaskCanceledException(exceptionMessage, e.InnerException);
 #endif
+                }
+                else
+                {
+                    throw e;
+                }
             }
         }
 
