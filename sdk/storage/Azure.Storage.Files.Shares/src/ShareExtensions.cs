@@ -223,6 +223,7 @@ namespace Azure.Storage.Files.Shares
                 parentId: handleItem.ParentId,
                 sessionId: handleItem.SessionId,
                 clientIp: handleItem.ClientIp,
+                clientName: handleItem.ClientName,
                 openedOn: handleItem.OpenTime,
                 lastReconnectedOn: handleItem.LastReconnectTime,
                 accessRights: handleItem.AccessRightList.ToShareFileHandleAccessRight());

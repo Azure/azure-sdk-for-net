@@ -223,6 +223,7 @@ namespace Azure.Storage.Files.Shares.Models
             string fileId,
             string sessionId,
             string clientIp,
+            string clientName,
             string parentId = default,
             DateTimeOffset? openedOn = default,
             DateTimeOffset? lastReconnectedOn = default,
@@ -234,6 +235,7 @@ namespace Azure.Storage.Files.Shares.Models
                 parentId,
                 sessionId,
                 clientIp,
+                clientName,
                 openedOn,
                 lastReconnectedOn,
                 accessRights);
@@ -248,6 +250,7 @@ namespace Azure.Storage.Files.Shares.Models
             string fileId,
             string sessionId,
             string clientIp,
+            string clientName,
             string parentId = default,
             DateTimeOffset? openedOn = default,
             DateTimeOffset? lastReconnectedOn = default)
@@ -258,6 +261,7 @@ namespace Azure.Storage.Files.Shares.Models
                 parentId,
                 sessionId,
                 clientIp,
+                clientName,
                 openedOn,
                 lastReconnectedOn,
                 null);
