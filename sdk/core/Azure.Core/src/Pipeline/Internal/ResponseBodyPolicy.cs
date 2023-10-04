@@ -153,7 +153,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        protected override bool BufferReponse(PipelineMessage message)
+        protected override bool BufferResponse(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
             {

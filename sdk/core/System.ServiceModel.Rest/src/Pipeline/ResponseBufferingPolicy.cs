@@ -78,7 +78,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
             return;
         }
 
-        if (BufferReponse(message))
+        if (BufferResponse(message))
         {
             // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
             // register callback to dispose the stream on cancellation.
@@ -126,7 +126,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         return false;
     }
 
-    protected virtual bool BufferReponse(PipelineMessage message) => _bufferResponse;
+    protected virtual bool BufferResponse(PipelineMessage message) => _bufferResponse;
 
     protected virtual void SetReadTimeoutStream(PipelineMessage message, Stream responseContentStream, TimeSpan networkTimeout)
     {
