@@ -78,14 +78,17 @@ namespace Azure.Data.SchemaRegistry
         {
             var contentEquals = contentTypeValue.Split('=');
             var contentParen = contentTypeValue.Split('/');
-            switch (contentEquals[1])
+            if (contentEquals.Length > 1)
             {
-                case AvroContentType:
-                    return SchemaFormat.Avro;
-                case JsonContentType:
-                    return SchemaFormat.Json;
-                default:
-                    break;
+                switch (contentEquals[1])
+                {
+                    case AvroContentType:
+                        return SchemaFormat.Avro;
+                    case JsonContentType:
+                        return SchemaFormat.Json;
+                    default:
+                        break;
+                }
             }
             return contentParen[1] switch
             {

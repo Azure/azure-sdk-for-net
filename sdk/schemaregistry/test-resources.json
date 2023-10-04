@@ -309,16 +309,16 @@
         "schemaType": "custom"
       }
     },
-    {
-      "type": "Microsoft.EventHub/namespaces/schemagroups",
-      "apiVersion": "[variables('apiVersion')]",
-      "name": "[format('{0}/{1}', variables('baseNameProtobuf'), variables('schemaRegistryGroup'))]",
-      "location": "[parameters('location')]",
-      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameProtobuf'))]" ],
-      "properties": {
-        "schemaType": "protobuf"
-      }
-    },
+    //{
+    //  "type": "Microsoft.EventHub/namespaces/schemagroups",
+    //  "apiVersion": "[variables('apiVersion')]",
+    //  "name": "[format('{0}/{1}', variables('baseNameProtobuf'), variables('schemaRegistryGroup'))]",
+    //  "location": "[parameters('location')]",
+    //  "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameProtobuf'))]" ],
+    //  "properties": {
+    //    "schemaType": "protobuf"
+    //  }
+    //},
     {
       "type": "Microsoft.EventHub/namespaces/schemagroups",
       "apiVersion": "[variables('apiVersion')]",
@@ -349,16 +349,16 @@
         "schemaType": "custom"
       }
     },
-    {
-      "type": "Microsoft.EventHub/namespaces/schemagroups",
-      "apiVersion": "[variables('apiVersion')]",
-      "name": "[format('{0}/{1}', variables('baseNameProtobuf2021'), variables('schemaRegistryGroup'))]",
-      "location": "[parameters('location')]",
-      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameProtobuf2021'))]" ],
-      "properties": {
-        "schemaType": "protobuf"
-      }
-    },
+    //{
+    //  "type": "Microsoft.EventHub/namespaces/schemagroups",
+    //  "apiVersion": "[variables('apiVersion')]",
+    //  "name": "[format('{0}/{1}', variables('baseNameProtobuf2021'), variables('schemaRegistryGroup'))]",
+    //  "location": "[parameters('location')]",
+    //  "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameProtobuf2021'))]" ],
+    //  "properties": {
+    //    "schemaType": "protobuf"
+    //  }
+    //},
     {
       "type": "Microsoft.EventHub/namespaces/schemagroups",
       "apiVersion": "[variables('apiVersion')]",
@@ -389,16 +389,16 @@
         "schemaType": "custom"
       }
     },
-    {
-      "type": "Microsoft.EventHub/namespaces/schemagroups",
-      "apiVersion": "[variables('apiVersion')]",
-      "name": "[format('{0}/{1}', variables('baseNameProtobuf2022'), variables('schemaRegistryGroup'))]",
-      "location": "[parameters('location')]",
-      "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameProtobuf2022'))]" ],
-      "properties": {
-        "schemaType": "protobuf"
-      }
-    },
+    //{
+    //  "type": "Microsoft.EventHub/namespaces/schemagroups",
+    //  "apiVersion": "[variables('apiVersion')]",
+    //  "name": "[format('{0}/{1}', variables('baseNameProtobuf2022'), variables('schemaRegistryGroup'))]",
+    //  "location": "[parameters('location')]",
+    //  "dependsOn": [ "[resourceId('Microsoft.EventHub/namespaces', variables('baseNameProtobuf2022'))]" ],
+    //  "properties": {
+    //    "schemaType": "protobuf"
+    //  }
+    //},
     {
       "type": "Microsoft.EventHub/namespaces/eventhubs",
       "apiVersion": "2021-11-01",
