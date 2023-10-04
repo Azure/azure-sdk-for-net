@@ -88,7 +88,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => ResponseInternal != null;
+        public new bool HasResponse => _response != null || base.HasResponse;
 
         internal void ClearResponse() => ResponseInternal = null;
 

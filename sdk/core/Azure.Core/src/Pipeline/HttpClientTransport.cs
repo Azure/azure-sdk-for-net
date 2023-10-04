@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
@@ -68,11 +69,43 @@ namespace Azure.Core.Pipeline
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
-            => base.Process(message);
+        {
+            try
+            {
+                base.Process(message);
+            }
+            catch (RequestErrorException e)
+            {
+                if (message.HasResponse)
+                {
+                    throw new RequestFailedException(message.Response, e.InnerException);
+                }
+                else
+                {
+                    throw new RequestFailedException(e.Message, e.InnerException);
+                }
+            }
+        }
 
         /// <inheritdoc />
-        public override ValueTask ProcessAsync(HttpMessage message)
-            => base.ProcessAsync(message);
+        public override async ValueTask ProcessAsync(HttpMessage message)
+        {
+            try
+            {
+                await base.ProcessAsync(message).ConfigureAwait(false);
+            }
+            catch (RequestErrorException e)
+            {
+                if (message.HasResponse)
+                {
+                    throw new RequestFailedException(message.Response, e.InnerException);
+                }
+                else
+                {
+                    throw new RequestFailedException(e.Message, e.InnerException);
+                }
+            }
+        }
 
         /// <inheritdoc />
         protected override void OnSendingRequest(PipelineMessage message)

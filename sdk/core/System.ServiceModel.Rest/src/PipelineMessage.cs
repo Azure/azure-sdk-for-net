@@ -38,6 +38,8 @@ public class PipelineMessage : IDisposable
         set => _response = value;
     }
 
+    public bool HasResponse => _response is not null;
+
     public virtual ResponseErrorClassifier ResponseClassifier { get; set; }
 
     #region IDisposable
