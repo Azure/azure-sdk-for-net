@@ -170,7 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
                 try
                 {
-                    instrumentationAssembly = Assembly.Load(packageActionPair.Key + ".dll");
+                    instrumentationAssembly = Assembly.Load(packageActionPair.Key);
                     AzureMonitorAspNetCoreEventSource.Log.FoundInstrumentationPackageReference(packageActionPair.Key);
                 }
                 catch
