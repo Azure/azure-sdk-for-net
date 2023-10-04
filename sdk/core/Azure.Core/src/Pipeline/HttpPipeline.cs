@@ -123,6 +123,16 @@ namespace Azure.Core.Pipeline
 
             HttpMessage message = new HttpMessage(CreateRequest(), classifier);
 
+            if (options is not null)
+            {
+                // TODO: is it better to set once or hold an options in the message?
+                // holding an options in the message would let us set it on the base class
+                // if we need to call it in the System.ServiceModel.Rest pipeline.
+                // but, should message hold options?  That seems inside-out if options
+                // holds a pipeline.  Must think!
+                message.BufferResponse = options.BufferResponse;
+            }
+
             if (options is RequestContext context)
             {
                 message.ApplyRequestContext(context, (ResponseClassifier?)classifier);

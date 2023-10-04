@@ -23,6 +23,7 @@ namespace System.ServiceModel.Rest
     public partial class RequestOptions
     {
         public RequestOptions() { }
+        public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
         public static System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultLoggingPolicy { get { throw null; } set { } }
@@ -223,6 +224,14 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract TMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);
         public abstract void Send(TMessage message);
         public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
+    }
+    public partial class ResponseBufferingPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
+    {
+        public ResponseBufferingPolicy(System.TimeSpan networkTimeout, bool bufferResponse) { }
+        protected virtual bool BufferReponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
+        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
+        protected virtual bool TryGetNetworkTimeoutOverride(System.ServiceModel.Rest.Core.PipelineMessage message, out System.TimeSpan timeout) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Internal

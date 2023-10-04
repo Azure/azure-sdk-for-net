@@ -110,9 +110,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
                 // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
                 // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
 #pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
-
-                // TODO: To make it real we need to pass HttpCompletionOption.ResponseHeadersRead and buffer the content
-                responseMessage = Client.Send(httpRequest, /* HttpCompletionOption.ResponseHeadersRead, */ message.CancellationToken);
+                responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
 #pragma warning restore CA1416
             }
             else
@@ -120,10 +118,8 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 // TODO: To make it real we need to pass HttpCompletionOption.ResponseHeadersRead and buffer the content
-                responseMessage = await Client.SendAsync(httpRequest, /* HttpCompletionOption.ResponseHeadersRead, */ message.CancellationToken)
-
+                responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    .ConfigureAwait(false);
             }
 
             if (responseMessage.Content != null)
@@ -139,7 +135,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
                 }
 #else
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 #endif
             }
@@ -158,21 +154,21 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         //message.Response = new HttpPipelineResponse(/*message.Request.ClientRequestId,*/ responseMessage, contentStream);
         OnReceivedResponse(message, responseMessage, contentStream);
 
-        // TODO: this is a quick and dirty buffer response
-        Stream? responseContentStream = message.Response.ContentStream;
-        if (responseContentStream is null) { return; }
-        Stream bufferedStream = new MemoryStream();
-        if (async)
-        {
-            await CopyToAsync(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None)).ConfigureAwait(false);
-        }
-        else
-        {
-            CopyTo(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None));
-        }
-        responseContentStream.Dispose();
-        bufferedStream.Position = 0;
-        message.Response.ContentStream = bufferedStream;
+        //// TODO: this is a quick and dirty buffer response
+        //Stream? responseContentStream = message.Response.ContentStream;
+        //if (responseContentStream is null) { return; }
+        //Stream bufferedStream = new MemoryStream();
+        //if (async)
+        //{
+        //    await CopyToAsync(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None)).ConfigureAwait(false);
+        //}
+        //else
+        //{
+        //    CopyTo(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None));
+        //}
+        //responseContentStream.Dispose();
+        //bufferedStream.Position = 0;
+        //message.Response.ContentStream = bufferedStream;
     }
 
     /// <summary>
