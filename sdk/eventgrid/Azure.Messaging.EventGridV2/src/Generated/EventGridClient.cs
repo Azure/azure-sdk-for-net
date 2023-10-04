@@ -17,8 +17,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> Azure Messaging EventGrid Client. </summary>
     public partial class EventGridClient
     {
-        private const string AuthorizationHeader = "SharedAccessKey";
+        private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
+        private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -45,6 +48,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Initializes a new instance of EventGridClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EventGridClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EventGridClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of EventGridClient. </summary>
+        /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
@@ -55,13 +66,31 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, "Authorization", AuthorizationHeader) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of EventGridClient. </summary>
+        /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EventGridClient(Uri endpoint, TokenCredential credential, EventGridClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new EventGridClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary>
-        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -77,7 +106,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> PublishCloudEventAsync(string topicName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> PublishCloudEventAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));
@@ -97,7 +127,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -113,7 +143,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response PublishCloudEvent(string topicName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvent(string,RequestContent,RequestContext)']/*" />
+        public virtual Response PublishCloudEvent(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));
@@ -133,7 +164,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -149,6 +180,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> PublishCloudEventsAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -169,7 +201,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -185,6 +217,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvents(string,RequestContent,RequestContext)']/*" />
         public virtual Response PublishCloudEvents(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -223,7 +256,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReceiveCloudEventsAsync(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReceiveCloudEventsAsync(string,string,int?,TimeSpan?,RequestContext)']/*" />
+        public virtual async Task<Response> ReceiveCloudEventsAsync(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -261,7 +295,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReceiveCloudEvents(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReceiveCloudEvents(string,string,int?,TimeSpan?,RequestContext)']/*" />
+        public virtual Response ReceiveCloudEvents(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -298,6 +333,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AcknowledgeCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -336,6 +372,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response AcknowledgeCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -374,6 +411,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ReleaseCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -412,6 +450,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response ReleaseCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -450,6 +489,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RejectCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -488,6 +528,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response RejectCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -544,7 +585,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return message;
         }
 
-        internal HttpMessage CreateReceiveCloudEventsRequest(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context)
+        internal HttpMessage CreateReceiveCloudEventsRequest(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -563,7 +604,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
             if (maxWaitTime != null)
             {
-                uri.AppendQuery("maxWaitTime", maxWaitTime.Value, true);
+                uri.AppendQuery("maxWaitTime", maxWaitTime.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -585,7 +626,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json; charset=utf-8");
+            request.Headers.Add("content-type", "application/json");
             request.Content = content;
             return message;
         }
@@ -605,7 +646,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json; charset=utf-8");
+            request.Headers.Add("content-type", "application/json");
             request.Content = content;
             return message;
         }
@@ -625,7 +666,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json; charset=utf-8");
+            request.Headers.Add("content-type", "application/json");
             request.Content = content;
             return message;
         }

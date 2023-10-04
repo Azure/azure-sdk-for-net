@@ -102,8 +102,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                int? maxWait = maxWaitTime.HasValue ? Convert.ToInt32(maxWaitTime.Value.TotalSeconds) : null;
-                Response response = ReceiveCloudEvents(topicName, eventSubscriptionName, maxEvents, maxWait, context);
+                Response response = ReceiveCloudEvents(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
                 return Response.FromValue(ReceiveResult.FromResponse(response), response);
             }
             catch (Exception e)
@@ -132,9 +131,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             try
             {
                 RequestContext context = FromCancellationToken(cancellationToken);
-                int? maxWait = maxWaitTime.HasValue ? Convert.ToInt32(maxWaitTime.Value.TotalSeconds) : null;
 
-                Response response = await ReceiveCloudEventsAsync(topicName, eventSubscriptionName, maxEvents, maxWait, context)
+                Response response = await ReceiveCloudEventsAsync(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context)
                     .ConfigureAwait(false);
                 return Response.FromValue(ReceiveResult.FromResponse(response), response);
             }
