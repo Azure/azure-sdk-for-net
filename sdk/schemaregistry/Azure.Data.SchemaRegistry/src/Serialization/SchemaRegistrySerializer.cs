@@ -121,6 +121,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// will be set to "application/json+schemaId" if serializing with JSON, "avro/binary" if serializing with Avro, and "text/plain+schemaId"
         /// otherwise, where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
+        /// <param name="message"></param>
         /// <param name="data">The data to serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to hold the serialized data.</typeparam>
@@ -137,16 +138,18 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
         ///   the exception.
         /// </exception>
-        public TMessage Serialize<TMessage, TData>(
+        public void Serialize<TMessage, TData>(
+            TMessage message,
             TData data,
             CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
-            => (TMessage)SerializeInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
+            => SerializeInternalAsync(message, data, typeof(TData), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Serializes the message data and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" if serializing with JSON, "avro/binary" if serializing with Avro, and "text/plain+schemaId"
         /// otherwise, where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
+        /// <param name="message"></param>
         /// <param name="data">The data to serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to hold the serialized data.</typeparam>
@@ -163,16 +166,18 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
         ///   the exception.
         /// </exception>
-        public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
+        public async ValueTask SerializeAsync<TMessage, TData>(
+            TMessage message,
             TData data,
             CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
-            => (TMessage)await SerializeInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
+            => await SerializeInternalAsync(message, data, typeof(TData), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Serializes the message data and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" if serializing with JSON, "avro/binary" if serializing with Avro, and "text/plain+schemaId"
         /// otherwise, where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
+        /// <param name="messageContent"></param>
         /// <param name="data">The data to serialize into the message.</param>
         /// <param name="dataType">The type of the data being serialized. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
@@ -192,28 +197,26 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
         ///   the exception.
         /// </exception>
-        public MessageContent Serialize(
+        public void Serialize<TMessage>(
+            TMessage messageContent,
             object data,
             Type dataType = default,
             Type messageType = default,
-            CancellationToken cancellationToken = default)
-            => SerializeInternalAsync(data, dataType, messageType, false, cancellationToken).EnsureCompleted();
+            CancellationToken cancellationToken = default) where TMessage : MessageContent
+            => SerializeInternalAsync(messageContent, data, dataType, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Serializes the message data and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
         /// will be set to "application/json+schemaId" if serializing with JSON, "avro/binary" if serializing with Avro, and "text/plain+schemaId"
         /// otherwise, where schemaId is the Id of the schema that was generated from the type.
         /// </summary>
+        /// <param name="messageContent"></param>
         /// <param name="data">The data to serialize into the message.</param>
         /// <param name="dataType">The type of the data being serialized. If left blank, the type will be determined at runtime by
         /// calling <see cref="Object.GetType"/>.</param>
-        /// <param name="messageType">The type of message to hold the serialized data. Must extend from <see cref="MessageContent"/>, and
-        /// have a parameterless constructor.
-        /// If left blank, the serialized data will be set in a <see cref="MessageContent"/> instance.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <c>groupName</c> was not specified when constructing the <see cref="SchemaRegistrySerializer"/>.
-        ///   It can also occur if the <paramref name="messageType"/> does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="RequestFailedException">
         ///   An error occurred while attempting to communicate with the Schema Registry service. This can occur if the schema generated from the type
@@ -223,17 +226,17 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   The data did not adhere to the specified schema, or the schema itself was invalid. The inner exception will hold more detailed information about
         ///   the exception.
         /// </exception>
-        public async ValueTask<MessageContent> SerializeAsync(
+        public async ValueTask SerializeAsync<TMessage>(
+            TMessage messageContent,
             object data,
             Type dataType = default,
-            Type messageType = default,
-            CancellationToken cancellationToken = default)
-            => await SerializeInternalAsync(data, dataType, messageType, true, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default) where TMessage : MessageContent
+            => await SerializeInternalAsync(messageContent, data, dataType, true, cancellationToken).ConfigureAwait(false);
 
-        internal async ValueTask<MessageContent> SerializeInternalAsync(
+        internal async ValueTask SerializeInternalAsync(
+            MessageContent message,
             object data,
             Type dataType,
-            Type messageType,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -244,22 +247,11 @@ namespace Azure.Data.SchemaRegistry.Serialization
                     "The group name can be omitted if only deserializing.");
             }
 
-            messageType ??= typeof(MessageContent);
-            if (messageType.GetConstructor(Type.EmptyTypes) == null)
-            {
-                throw new InvalidOperationException(
-                    $"The type {messageType} must have a public parameterless constructor in order to use it as the 'MessageContent' type to serialize to.");
-            }
-
-            var message = (MessageContent)Activator.CreateInstance(messageType);
-
             (string retrievedSchemaId, BinaryData bd) = async
                 ? await SerializeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
                 : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
 
             message.Data = bd;
-            message.ContentType = $"{_mimeType}+{retrievedSchemaId}";
-            return message;
         }
 
         private async ValueTask<(string SchemaId, BinaryData Data)> SerializeInternalAsync(

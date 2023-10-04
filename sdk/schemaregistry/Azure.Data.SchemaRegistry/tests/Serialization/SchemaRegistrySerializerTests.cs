@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
+using Azure.Messaging;
 using Moq;
 using NUnit.Framework;
 using TestSchema;
@@ -40,7 +41,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                             SchemaRegistryModelFactory.SchemaProperties(SchemaFormat.Json, "SchemaId"), new MockResponse(200))));
 
             var serializer = new SchemaRegistrySerializer(mockClient.Object, "groupName", new SampleJsonGenerator());
-            var content = await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }).ConfigureAwait(false);
+            var content = new MessageContent();
+            await serializer.SerializeAsync(content, new Employee { Age = 42, Name = "Caketown" }).ConfigureAwait(false);
             Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
         }
 
@@ -64,7 +66,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var options = new SchemaRegistrySerializerOptions { Format = SchemaFormat.Custom, Serializer = new FakeSerializer() };
 
             var serializer = new SchemaRegistrySerializer(mockClient.Object, "groupName", new SampleCustomGenerator(), options);
-            var content = await serializer.SerializeAsync(new Employee { Age = 25, Name = "Name" }).ConfigureAwait(false);
+            var content = new MessageContent();
+            await serializer.SerializeAsync(content,new Employee { Age = 25, Name = "Name" }).ConfigureAwait(false);
             Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
 
             // Test that the correct mime type was used
@@ -95,7 +98,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var sampleGeneratorAvro = new SampleCustomGenerator();
             sampleGeneratorAvro.SchemaToUse = s_avroschema;
             var serializer = new SchemaRegistrySerializer(mockClient.Object, "groupName", sampleGeneratorAvro, options);
-            var content = await serializer.SerializeAsync(new Employee { Age = 25, Name = "Name" }).ConfigureAwait(false);
+            var content = new MessageContent();
+            await serializer.SerializeAsync(content, new Employee { Age = 25, Name = "Name" }).ConfigureAwait(false);
             Assert.AreEqual("SchemaId", content.ContentType.ToString().Split('+')[1]);
 
             // Test that the correct mime type was used

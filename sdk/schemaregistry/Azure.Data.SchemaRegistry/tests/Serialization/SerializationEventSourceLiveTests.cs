@@ -56,7 +56,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, _schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
             await client.RegisterSchemaAsync(groupName, (typeof(EmployeeV2)).Name, _schemaV2, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
-            EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
+            EventData eventData = new();
+            await serializer.SerializeAsync(eventData, employee);
 
             Assert.IsFalse(eventData.IsReadOnly);
             string[] contentType = eventData.ContentType.Split('+');
@@ -78,7 +79,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             Assert.AreEqual(42, deserialized.Age);
 
             // Use different schema so we can see the cache updated
-            eventData = await serializer.SerializeAsync<EventData, EmployeeV2>(new EmployeeV2 { Age = 42, Name = "Caketown", City = "Redmond" });
+            eventData = new EventData();
+            await serializer.SerializeAsync(eventData, new EmployeeV2 { Age = 42, Name = "Caketown", City = "Redmond" });
 
             Assert.IsFalse(eventData.IsReadOnly);
             eventData.ContentType.Split('+');

@@ -53,7 +53,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
-            EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
+            EventData eventData = new();
+            await serializer.SerializeAsync(eventData, employee);
 
 #if SNIPPET
             // The schema Id will be included as a parameter of the content type
@@ -111,7 +112,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
-            EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
+            EventData eventData = new();
+            await serializer.SerializeAsync(eventData, employee);
 
 #if SNIPPET
             // The schema Id will be included as a parameter of the content type
@@ -147,7 +149,8 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             #region Snippet:SchemaRegistryJsonSerializeDeserializeMessageContent
             // The serializer serializes into JSON by default
             var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
-            MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
+            MessageContent content = new();
+            await serializer.SerializeAsync(content, employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
             #endregion
