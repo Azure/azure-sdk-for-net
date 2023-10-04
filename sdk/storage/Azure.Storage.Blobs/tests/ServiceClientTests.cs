@@ -179,7 +179,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_DefaultAudience()
         {
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.PublicAudience);
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.DefaultAudience);
 
             BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint));
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.GetBlobServiceAccountAudience(uriBuilder.AccountName));
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.CreateBlobServiceAccountAudience(uriBuilder.AccountName));
 
             BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
