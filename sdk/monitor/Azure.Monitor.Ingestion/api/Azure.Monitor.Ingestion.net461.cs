@@ -1,22 +1,22 @@
 namespace Azure.Monitor.Ingestion
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IngestionAudience : System.IEquatable<Azure.Monitor.Ingestion.IngestionAudience>
+    public readonly partial struct LogsIngestionAudience : System.IEquatable<Azure.Monitor.Ingestion.LogsIngestionAudience>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public IngestionAudience(string value) { throw null; }
-        public static Azure.Monitor.Ingestion.IngestionAudience AzureChina { get { throw null; } }
-        public static Azure.Monitor.Ingestion.IngestionAudience AzureGovernment { get { throw null; } }
-        public static Azure.Monitor.Ingestion.IngestionAudience AzurePublicCloud { get { throw null; } }
-        public bool Equals(Azure.Monitor.Ingestion.IngestionAudience other) { throw null; }
+        public LogsIngestionAudience(string value) { throw null; }
+        public static Azure.Monitor.Ingestion.LogsIngestionAudience AzureChina { get { throw null; } }
+        public static Azure.Monitor.Ingestion.LogsIngestionAudience AzureGovernment { get { throw null; } }
+        public static Azure.Monitor.Ingestion.LogsIngestionAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Monitor.Ingestion.LogsIngestionAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Monitor.Ingestion.IngestionAudience left, Azure.Monitor.Ingestion.IngestionAudience right) { throw null; }
-        public static implicit operator Azure.Monitor.Ingestion.IngestionAudience (string value) { throw null; }
-        public static bool operator !=(Azure.Monitor.Ingestion.IngestionAudience left, Azure.Monitor.Ingestion.IngestionAudience right) { throw null; }
+        public static bool operator ==(Azure.Monitor.Ingestion.LogsIngestionAudience left, Azure.Monitor.Ingestion.LogsIngestionAudience right) { throw null; }
+        public static implicit operator Azure.Monitor.Ingestion.LogsIngestionAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Ingestion.LogsIngestionAudience left, Azure.Monitor.Ingestion.LogsIngestionAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LogsIngestionClient
@@ -33,7 +33,7 @@ namespace Azure.Monitor.Ingestion
     public partial class LogsIngestionClientOptions : Azure.Core.ClientOptions
     {
         public LogsIngestionClientOptions(Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion version = Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion.V2023_01_01) { }
-        public Azure.Monitor.Ingestion.IngestionAudience? Audience { get { throw null; } set { } }
+        public Azure.Monitor.Ingestion.LogsIngestionAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2023_01_01 = 1,
