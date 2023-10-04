@@ -26,7 +26,20 @@ namespace Azure.Core.Pipeline
             // TODO: this is super inefficient so we come back to this
             AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
 
-            await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
+            try
+            {
+                await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
+            }
+            catch (TaskCanceledException e)
+            {
+                string exceptionMessage = e.Message +
+                    $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
+#if NETCOREAPP2_1_OR_GREATER
+                throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
+#else
+                throw new TaskCanceledException(exceptionMessage, e.InnerException);
+#endif
+            }
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -34,7 +47,20 @@ namespace Azure.Core.Pipeline
             // TODO: this is super inefficient so we come back to this
             AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
 
-            _policy.Process(message, executor);
+            try
+            {
+                _policy.Process(message, executor);
+            }
+            catch (TaskCanceledException e)
+            {
+                string exceptionMessage = e.Message +
+                    $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
+#if NETCOREAPP2_1_OR_GREATER
+                throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
+#else
+                throw new TaskCanceledException(exceptionMessage, e.InnerException);
+#endif
+            }
         }
 
         /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="originalToken"/> or <paramref name="timeoutToken"/>.</summary>

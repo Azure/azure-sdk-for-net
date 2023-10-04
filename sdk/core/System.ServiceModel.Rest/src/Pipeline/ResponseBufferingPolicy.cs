@@ -187,8 +187,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
             throw ClientUtilities.CreateOperationCanceledException(
                 inner,
                 timeoutToken,
-                $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
-                $"Network timeout can be adjusted in {nameof(RequestOptions)}.{nameof(RequestOptions.RetryPolicy)}");//.{nameof(RetryOptions.NetworkTimeout)}.");
+                $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");
         }
     }
 }
