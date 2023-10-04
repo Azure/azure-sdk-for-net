@@ -33,13 +33,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             {
                 Test = string.Empty,
                 Message = "Testing request without payload throws an error",
-                ExceptionMessage = "Invalid Payload detected."
+                ExceptionMessage = "Invalid Json Payload"
             }.ToArray;
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.RequestWithXmlBody,
                 Message = "Testing request with XML payload throws an error",
-                ExceptionMessage = "Invalid Payload detected."
+                ExceptionMessage = "Invalid Json Payload: Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
             }.ToArray;
 #endregion
 

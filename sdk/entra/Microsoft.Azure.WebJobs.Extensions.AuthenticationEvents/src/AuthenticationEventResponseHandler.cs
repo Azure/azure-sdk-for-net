@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Host.Bindings;
 using System;
 using System.Buffers;
 using System.Globalization;
@@ -13,6 +10,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Host.Bindings;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -171,7 +172,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             return responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableResponse<>) ||
                    responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableCloudEventResponse<>) ?
-                     (AuthenticationEventResponse)JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
+                     (AuthenticationEventResponse)System.Text.Json.JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
                      null;
         }
 
@@ -223,9 +224,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         internal static AuthenticationEventJsonElement GetJsonObjectFromString(string result)
         {
-            return !Helpers.IsJson(result)
-                ? throw new InvalidCastException(AuthenticationEventResource.Ex_Invalid_Return)
-                : new AuthenticationEventJsonElement(result);
+            try
+            {
+                if (!Helpers.IsJson(result))
+                {
+                    throw new ResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
+                }
+            }
+            catch (JsonReaderException ex)
+            {
+                throw new ResponseValidationException($"{AuthenticationEventResource.Ex_Invalid_Return}: {ex.Message}", ex.InnerException);
+            }
+
+            return new AuthenticationEventJsonElement(result);
         }
 
         internal static AuthenticationEventResponse GetAuthEventFromJObject(AuthenticationEventJsonElement result, AuthenticationEventResponse response)

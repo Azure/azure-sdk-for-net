@@ -170,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Payload detected..
+        ///   Looks up a localized string similar to Invalid Json Payload.
         /// </summary>
         internal static string Ex_Invalid_Payload {
             get {
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actions can not contain null items.
+        ///   Looks up a localized string similar to Actions can not contain null items..
         /// </summary>
         internal static string Ex_Null_Action_Items {
             get {

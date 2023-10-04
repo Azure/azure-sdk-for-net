@@ -118,16 +118,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
 
             // try parsing input to json object
-            try
-            {
-                var jsonObj = JToken.Parse(input);
+            var jsonObj = JToken.Parse(input);
 
-                return jsonObj != null;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return jsonObj != null;
         }
 
         internal static AuthenticationEventAction GetEventActionForActionType(string actionType)

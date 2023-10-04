@@ -16,6 +16,7 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
+using Newtonsoft.Json;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
 using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
 
@@ -231,9 +232,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <exception cref="Exception">IF the event cannot be determined or if the object model event differs from the requested event on the incoming payload.</exception>
         internal static AuthenticationEventMetadata GetEventAndValidateSchema(string body)
         {
-            if (!Helpers.IsJson(body))
+            try
             {
-                throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_Payload);
+                if (!Helpers.IsJson(body))
+                {
+                    throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_Payload);
+                }
+            }
+            catch (JsonReaderException ex)
+            {
+                throw new RequestValidationException($"{AuthenticationEventResource.Ex_Invalid_Payload}: {ex.Message}", ex.InnerException);
             }
 
             return AuthenticationEventMetadataLoader.GetEventMetadata(body);

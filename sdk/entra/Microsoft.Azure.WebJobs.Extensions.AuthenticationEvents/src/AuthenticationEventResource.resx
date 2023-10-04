@@ -154,7 +154,7 @@
     <value>Cannot find json path set value</value>
   </data>
   <data name="Ex_Invalid_Payload" xml:space="preserve">
-    <value>Invalid Payload detected.</value>
+    <value>Invalid Json Payload</value>
   </data>
   <data name="Ex_Invalid_Response" xml:space="preserve">
     <value>Response validation failed, see inner exceptions.</value>
