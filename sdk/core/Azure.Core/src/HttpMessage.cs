@@ -48,6 +48,12 @@ namespace Azure.Core
         /// </summary>
         public new Response Response
         {
+            get => ResponseInternal!;
+            set => ResponseInternal = value;
+        }
+
+        private Response? ResponseInternal
+        {
             get
             {
                 if (_response == null)
@@ -76,19 +82,15 @@ namespace Azure.Core
                 return _response;
             }
 
-            set => base.Response = _response = value;
+            set => base.Response = _response = value!;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null || base.Response != null;
+        public bool HasResponse => ResponseInternal != null;
 
-        internal void ClearResponse() {
-            // TODO:
-            //base.Response = null;
-            _response = null;
-        }
+        internal void ClearResponse() => ResponseInternal = null;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
@@ -209,12 +211,12 @@ namespace Azure.Core
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (_response?.ContentStream)
+            switch (ResponseInternal?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    ResponseInternal.ContentStream = new ResponseShouldNotBeUsedStream(ResponseInternal.ContentStream);
                     return stream;
                 default:
                     return null;
@@ -232,8 +234,8 @@ namespace Azure.Core
             Response? response = _response;
             if (response != null)
             {
-                _response = null;
                 response.Dispose();
+                _response = null;
             }
 
             base.Dispose();
