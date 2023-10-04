@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -16,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.AccessControl.Samples
 {
-    public partial class Samples_RoleAssignmentsClient
+    public class Samples_RoleAssignmentsClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CheckPrincipalAccess_ShortVersion()
+        public void Example_CheckPrincipalAccess()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -32,14 +33,14 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
-                actions = new object[]
-            {
+                actions = new List<object>()
+{
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-            },
+},
                 scope = "<scope>",
             });
             Response response = client.CheckPrincipalAccess(content, new ContentType("application/json"));
@@ -50,7 +51,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CheckPrincipalAccess_ShortVersion_Async()
+        public async Task Example_CheckPrincipalAccess_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -62,14 +63,14 @@ isDataAction = true,
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 },
-                actions = new object[]
-            {
+                actions = new List<object>()
+{
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-            },
+},
                 scope = "<scope>",
             });
             Response response = await client.CheckPrincipalAccessAsync(content, new ContentType("application/json"));
@@ -91,19 +92,19 @@ isDataAction = true,
                 subject = new
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                    groupIds = new object[]
-            {
+                    groupIds = new List<object>()
+{
 "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
-            },
+},
                 },
-                actions = new object[]
-            {
+                actions = new List<object>()
+{
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-            },
+},
                 scope = "<scope>",
             });
             Response response = client.CheckPrincipalAccess(content, new ContentType("application/json"));
@@ -131,19 +132,19 @@ isDataAction = true,
                 subject = new
                 {
                     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-                    groupIds = new object[]
-            {
+                    groupIds = new List<object>()
+{
 "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
-            },
+},
                 },
-                actions = new object[]
-            {
+                actions = new List<object>()
+{
 new
 {
 id = "<id>",
 isDataAction = true,
 }
-            },
+},
                 scope = "<scope>",
             });
             Response response = await client.CheckPrincipalAccessAsync(content, new ContentType("application/json"));
@@ -160,7 +161,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignments_ShortVersion()
+        public void Example_GetRoleAssignments()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -174,7 +175,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignments_ShortVersion_Async()
+        public async Task Example_GetRoleAssignments_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -226,7 +227,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateRoleAssignment_ShortVersion()
+        public void Example_CreateRoleAssignment()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -246,7 +247,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateRoleAssignment_ShortVersion_Async()
+        public async Task Example_CreateRoleAssignment_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -316,7 +317,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignmentById_ShortVersion()
+        public void Example_GetRoleAssignmentById()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -330,7 +331,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignmentById_ShortVersion_Async()
+        public async Task Example_GetRoleAssignmentById_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -380,27 +381,25 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteRoleAssignmentById_ShortVersion()
+        public void Example_DeleteRoleAssignmentById()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteRoleAssignmentById_ShortVersion_Async()
+        public async Task Example_DeleteRoleAssignmentById_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -413,7 +412,6 @@ isDataAction = true,
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", scope: "<scope>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -426,7 +424,6 @@ isDataAction = true,
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
             Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", scope: "<scope>");
-
             Console.WriteLine(response.Status);
         }
     }
