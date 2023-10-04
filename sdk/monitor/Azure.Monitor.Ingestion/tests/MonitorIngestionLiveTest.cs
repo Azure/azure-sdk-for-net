@@ -49,7 +49,7 @@ namespace Azure.Monitor.Ingestion.Tests
                 options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             }
             var clientOptions = InstrumentClientOptions(options);
-            // Set audience for testing including soveriegn support clouds
+            // Set audience for testing including sovereign cloud support
             clientOptions.Audience = TestEnvironment.GetAudience();
 
             return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, clientOptions));
