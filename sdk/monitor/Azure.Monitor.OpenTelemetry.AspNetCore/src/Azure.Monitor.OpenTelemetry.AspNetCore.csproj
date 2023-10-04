@@ -12,14 +12,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
     <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" VersionOverride="[2.1.1,6.0)" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" VersionOverride="[2.1.1,6.0)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" />
   </ItemGroup>
 
   <!-- Shared source from Exporter -->

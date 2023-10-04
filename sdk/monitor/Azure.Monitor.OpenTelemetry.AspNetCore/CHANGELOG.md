@@ -21,6 +21,7 @@
   This ensures that `Azure.Monitor.OpenTelemetry.AspNetCore` has native support for ASP.NET Core, HTTP Client, and SQL instrumentation without needing external beta package references.
 - Vendored the code of the `OpenTelemetry.ResourceDetectors.Azure` resource detector from the OpenTelemetry .NET Contrib repository and made its public API internal.
 - Removed reference to the `OpenTelemetry.ResourceDetectors.Azure` resource detector package.
+- Replaced the project reference for `Azure.Monitor.OpenTelemetry.Exporter` with a 1.0.0 package reference.
 
 ## 1.0.0-beta.7 (2023-09-20)
 
