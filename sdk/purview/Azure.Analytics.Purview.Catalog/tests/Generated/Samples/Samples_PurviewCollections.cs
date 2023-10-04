@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
@@ -16,11 +17,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Catalog.Samples
 {
-    public partial class Samples_PurviewCollections
+    internal class Samples_PurviewCollections
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEntity_ShortVersion()
+        public void Example_CreateOrUpdateEntity()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +36,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntity_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateEntity_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -64,14 +65,14 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     {
                         key = new object(),
                     },
-                    classifications = new object[]
-            {
+                    classifications = new List<object>()
+{
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new object[]
+validityPeriods = new List<object>()
 {
 new
 {
@@ -92,7 +93,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
                     createTime = 123.45F,
                     createdBy = "<createdBy>",
                     customAttributes = new
@@ -102,12 +103,12 @@ lastModifiedTS = "<lastModifiedTS>",
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new object[]
-            {
+                    labels = new List<object>()
+{
 "<labels>"
-            },
-                    meanings = new object[]
-            {
+},
+                    meanings = new List<object>()
+{
 new
 {
 confidence = 1234,
@@ -121,7 +122,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-            },
+},
                     provenanceType = 123.45F,
                     proxy = true,
                     relationshipAttributes = new
@@ -139,14 +140,14 @@ termGuid = "<termGuid>",
                     },
                     contacts = new
                     {
-                        key = new object[]
-            {
+                        key = new List<object>()
+{
 new
 {
 id = "<id>",
 info = "<info>",
 }
-            },
+},
                     },
                     attributes = new
                     {
@@ -155,7 +156,9 @@ info = "<info>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                referredEntities = new { },
+                referredEntities = new
+                {
+                },
             });
             Response response = client.CreateOrUpdateEntity("<collection>", content);
 
@@ -241,14 +244,14 @@ info = "<info>",
                     {
                         key = new object(),
                     },
-                    classifications = new object[]
-            {
+                    classifications = new List<object>()
+{
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new object[]
+validityPeriods = new List<object>()
 {
 new
 {
@@ -269,7 +272,7 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
+},
                     createTime = 123.45F,
                     createdBy = "<createdBy>",
                     customAttributes = new
@@ -279,12 +282,12 @@ lastModifiedTS = "<lastModifiedTS>",
                     guid = "<guid>",
                     homeId = "<homeId>",
                     isIncomplete = true,
-                    labels = new object[]
-            {
+                    labels = new List<object>()
+{
 "<labels>"
-            },
-                    meanings = new object[]
-            {
+},
+                    meanings = new List<object>()
+{
 new
 {
 confidence = 1234,
@@ -298,7 +301,7 @@ status = "DISCOVERED",
 steward = "<steward>",
 termGuid = "<termGuid>",
 }
-            },
+},
                     provenanceType = 123.45F,
                     proxy = true,
                     relationshipAttributes = new
@@ -316,14 +319,14 @@ termGuid = "<termGuid>",
                     },
                     contacts = new
                     {
-                        key = new object[]
-            {
+                        key = new List<object>()
+{
 new
 {
 id = "<id>",
 info = "<info>",
 }
-            },
+},
                     },
                     attributes = new
                     {
@@ -332,7 +335,9 @@ info = "<info>",
                     typeName = "<typeName>",
                     lastModifiedTS = "<lastModifiedTS>",
                 },
-                referredEntities = new { },
+                referredEntities = new
+                {
+                },
             });
             Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
 
@@ -404,7 +409,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEntityInBulk_ShortVersion()
+        public void Example_CreateOrUpdateEntityInBulk()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -419,7 +424,7 @@ info = "<info>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEntityInBulk_ShortVersion_Async()
+        public async Task Example_CreateOrUpdateEntityInBulk_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -442,22 +447,22 @@ info = "<info>",
 
             RequestContent content = RequestContent.Create(new
             {
-                entities = new object[]
-            {
+                entities = new List<object>()
+{
 new
 {
 businessAttributes = new
 {
 key = new object(),
 },
-classifications = new object[]
+classifications = new List<object>()
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new object[]
+validityPeriods = new List<object>()
 {
 new
 {
@@ -488,11 +493,11 @@ key = "<customAttributes>",
 guid = "<guid>",
 homeId = "<homeId>",
 isIncomplete = true,
-labels = new object[]
+labels = new List<object>()
 {
 "<labels>"
 },
-meanings = new object[]
+meanings = new List<object>()
 {
 new
 {
@@ -525,7 +530,7 @@ key = new object(),
 },
 contacts = new
 {
-key = new object[]
+key = new List<object>()
 {
 new
 {
@@ -541,8 +546,10 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                referredEntities = new { },
+},
+                referredEntities = new
+                {
+                },
             });
             Response response = client.CreateOrUpdateEntityInBulk("<collection>", content);
 
@@ -622,22 +629,22 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new
             {
-                entities = new object[]
-            {
+                entities = new List<object>()
+{
 new
 {
 businessAttributes = new
 {
 key = new object(),
 },
-classifications = new object[]
+classifications = new List<object>()
 {
 new
 {
 entityGuid = "<entityGuid>",
 entityStatus = "ACTIVE",
 removePropagationsOnEntityDelete = true,
-validityPeriods = new object[]
+validityPeriods = new List<object>()
 {
 new
 {
@@ -668,11 +675,11 @@ key = "<customAttributes>",
 guid = "<guid>",
 homeId = "<homeId>",
 isIncomplete = true,
-labels = new object[]
+labels = new List<object>()
 {
 "<labels>"
 },
-meanings = new object[]
+meanings = new List<object>()
 {
 new
 {
@@ -705,7 +712,7 @@ key = new object(),
 },
 contacts = new
 {
-key = new object[]
+key = new List<object>()
 {
 new
 {
@@ -721,8 +728,10 @@ key = new object(),
 typeName = "<typeName>",
 lastModifiedTS = "<lastModifiedTS>",
 }
-            },
-                referredEntities = new { },
+},
+                referredEntities = new
+                {
+                },
             });
             Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
 
@@ -794,7 +803,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MoveEntitiesToCollection_ShortVersion()
+        public void Example_MoveEntitiesToCollection()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -809,7 +818,7 @@ lastModifiedTS = "<lastModifiedTS>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MoveEntitiesToCollection_ShortVersion_Async()
+        public async Task Example_MoveEntitiesToCollection_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -832,10 +841,10 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new
             {
-                entityGuids = new object[]
-            {
+                entityGuids = new List<object>()
+{
 "<entityGuids>"
-            },
+},
             });
             Response response = client.MoveEntitiesToCollection("<collection>", content);
 
@@ -915,10 +924,10 @@ lastModifiedTS = "<lastModifiedTS>",
 
             RequestContent content = RequestContent.Create(new
             {
-                entityGuids = new object[]
-            {
+                entityGuids = new List<object>()
+{
 "<entityGuids>"
-            },
+},
             });
             Response response = await client.MoveEntitiesToCollectionAsync("<collection>", content);
 
