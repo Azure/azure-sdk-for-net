@@ -198,14 +198,14 @@ An example of this is available in our demo project [here](https://github.com/Az
 
 **Missing Request Telemetry**
 
-If an app has a reference to the `OpenTelemetry.Instrumentation.AspNetCore` package, it could be missing request telemetry. To resolve this issue:
+If an app has a reference to the [OpenTelemetry.Instrumentation.AspNetCore](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore) package, it could be missing request telemetry. To resolve this issue:
 
 * Either remove the reference to the `OpenTelemetry.Instrumentation.AspNetCore` package (or)
 * Add `AddAspNetCoreInstrumentation` to the OpenTelemetry TracerProvider configuration as per the [OpenTelemetry documentation](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.AspNetCore).
 
 **Few or all Dependency Telemetries are missing**
 
-If an app references the `OpenTelemetry.Instrumentation.Http` or `OpenTelemetry.Instrumentation.SqlClient` packages, it might be missing dependency telemetry. To resolve:
+If an app references the [OpenTelemetry.Instrumentation.Http](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http) or [OpenTelemetry.Instrumentation.SqlClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) packages, it might be missing dependency telemetry. To resolve:
 
 * Remove the respective package references (or)
 * Add `AddHttpClientInstrumentation` or `AddSqlClientInstrumentation` to the TracerProvider configuration. Detailed guidance can be found in the OpenTelemetry documentation for [HTTP](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.Http) and [SQL Client](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.SqlClient).
