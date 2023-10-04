@@ -83,9 +83,13 @@ namespace Azure.Core
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null;
+        public bool HasResponse => _response != null || base.Response != null;
 
-        internal void ClearResponse() => _response = null;
+        internal void ClearResponse() {
+            // TODO:
+            //base.Response = null;
+            _response = null;
+        }
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
