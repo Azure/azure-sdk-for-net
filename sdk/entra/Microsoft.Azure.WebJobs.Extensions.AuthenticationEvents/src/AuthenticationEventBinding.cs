@@ -236,12 +236,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 if (!Helpers.IsJson(body))
                 {
-                    throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_Payload);
+                    throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_JsonPayload);
                 }
             }
             catch (JsonReaderException ex)
             {
-                throw new RequestValidationException($"{AuthenticationEventResource.Ex_Invalid_Payload}: {ex.Message}", ex.InnerException);
+                throw new RequestValidationException($"{AuthenticationEventResource.Ex_Invalid_JsonPayload}: {ex.Message}", ex.InnerException);
             }
 
             return AuthenticationEventMetadataLoader.GetEventMetadata(body);

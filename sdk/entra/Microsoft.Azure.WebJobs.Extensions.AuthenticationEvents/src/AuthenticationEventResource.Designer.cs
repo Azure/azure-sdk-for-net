@@ -172,9 +172,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         /// <summary>
         ///   Looks up a localized string similar to Invalid Json Payload.
         /// </summary>
-        internal static string Ex_Invalid_Payload {
+        internal static string Ex_Invalid_JsonPayload {
             get {
-                return ResourceManager.GetString("Ex_Invalid_Payload", resourceCulture);
+                return ResourceManager.GetString("Ex_Invalid_JsonPayload", resourceCulture);
             }
         }
         
