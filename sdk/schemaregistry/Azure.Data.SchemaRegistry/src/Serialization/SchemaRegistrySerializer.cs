@@ -252,6 +252,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
 
             message.Data = bd;
+            message.ContentType = $"{_mimeType}+{retrievedSchemaId}";
         }
 
         private async ValueTask<(string SchemaId, BinaryData Data)> SerializeInternalAsync(
