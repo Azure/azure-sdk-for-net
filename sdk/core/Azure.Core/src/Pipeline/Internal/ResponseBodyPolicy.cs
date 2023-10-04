@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
@@ -144,6 +145,11 @@ namespace Azure.Core.Pipeline
             }
 
             return httpMessage.BufferResponse;
+        }
+
+        protected override void SetReadTimeoutStream(PipelineMessage message, Stream responseContentStream, TimeSpan networkTimeout)
+        {
+            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
         }
     }
 }

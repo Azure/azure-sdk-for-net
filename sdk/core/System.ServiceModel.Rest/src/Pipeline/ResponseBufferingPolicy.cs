@@ -116,7 +116,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         }
         else if (networkTimeout != Timeout.InfiniteTimeSpan)
         {
-            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
+            SetReadTimeoutStream(message, responseContentStream, networkTimeout);
         }
     }
 
@@ -127,6 +127,11 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
     }
 
     protected virtual bool BufferReponse(PipelineMessage message) => _bufferResponse;
+
+    protected virtual void SetReadTimeoutStream(PipelineMessage message, Stream responseContentStream, TimeSpan networkTimeout)
+    {
+        message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
+    }
 
     private async Task CopyToAsync(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
     {
