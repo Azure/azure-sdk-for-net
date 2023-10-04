@@ -19,23 +19,23 @@ namespace Azure.Monitor.Ingestion.Tests
 
         public string TableName => GetRecordedVariable("INGESTION_TABLE_NAME");
 
-        public IngestionAudience GetAudience()
+        public LogsIngestionAudience GetAudience()
         {
             Uri authorityHost = new(AuthorityHostUrl);
 
             if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
             {
-                return IngestionAudience.AzurePublicCloud;
+                return LogsIngestionAudience.AzurePublicCloud;
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureChina)
             {
-                return IngestionAudience.AzureChina;
+                return LogsIngestionAudience.AzureChina;
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
-                return IngestionAudience.AzureGovernment;
+                return LogsIngestionAudience.AzureGovernment;
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

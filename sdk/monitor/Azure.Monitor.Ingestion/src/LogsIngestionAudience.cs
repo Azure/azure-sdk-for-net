@@ -8,17 +8,17 @@ using Azure.Core;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary> Cloud audiences available for Ingestion. </summary>
-    public readonly partial struct IngestionAudience : IEquatable<IngestionAudience>
+    public readonly partial struct LogsIngestionAudience : IEquatable<LogsIngestionAudience>
     {
         private readonly string _value;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IngestionAudience"/> object.
+        /// Initializes a new instance of the <see cref="LogsIngestionAudience"/> object.
         /// </summary>
         /// <param name="value">The Azure Active Directory audience to use when forming authorization scopes. For the language service, this value corresponds to a URL that identifies the Azure cloud where the resource is located. For more information: <see href="https://learn.microsoft.com/azure/azure-government/documentation-government-cognitiveservices" />.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         /// <remarks>Use one of the constant members over creating a custom value, unless you have special needs for doing so.</remarks>
-        public IngestionAudience(string value)
+        public LogsIngestionAudience(string value)
         {
             Argument.AssertNotNullOrEmpty(value, nameof(value));
             _value = value;
@@ -29,26 +29,26 @@ namespace Azure.Monitor.Ingestion
         private const string AzurePublicCloudValue = "https://monitor.azure.com//.default";
 
         /// <summary> Azure China. </summary>
-        public static IngestionAudience AzureChina { get; } = new IngestionAudience(AzureChinaValue);
+        public static LogsIngestionAudience AzureChina { get; } = new LogsIngestionAudience(AzureChinaValue);
 
         /// <summary> Azure Government. </summary>
-        public static IngestionAudience AzureGovernment { get; } = new IngestionAudience(AzureGovernmentValue);
+        public static LogsIngestionAudience AzureGovernment { get; } = new LogsIngestionAudience(AzureGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
-        public static IngestionAudience AzurePublicCloud { get; } = new IngestionAudience(AzurePublicCloudValue);
+        public static LogsIngestionAudience AzurePublicCloud { get; } = new LogsIngestionAudience(AzurePublicCloudValue);
 
-        /// <summary> Determines if two <see cref="IngestionAudience"/> values are the same. </summary>
-        public static bool operator ==(IngestionAudience left, IngestionAudience right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="IngestionAudience"/> values are not the same. </summary>
-        public static bool operator !=(IngestionAudience left, IngestionAudience right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IngestionAudience"/>. </summary>
-        public static implicit operator IngestionAudience(string value) => new IngestionAudience(value);
+        /// <summary> Determines if two <see cref="LogsIngestionAudience"/> values are the same. </summary>
+        public static bool operator ==(LogsIngestionAudience left, LogsIngestionAudience right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LogsIngestionAudience"/> values are not the same. </summary>
+        public static bool operator !=(LogsIngestionAudience left, LogsIngestionAudience right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="LogsIngestionAudience"/>. </summary>
+        public static implicit operator LogsIngestionAudience(string value) => new LogsIngestionAudience(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IngestionAudience other && Equals(other);
+        public override bool Equals(object obj) => obj is LogsIngestionAudience other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(IngestionAudience other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LogsIngestionAudience other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
