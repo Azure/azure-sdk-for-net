@@ -3,7 +3,7 @@
 
 using System.Buffers;
 using System.IO;
-using System.ServiceModel.Rest.Experimental;
+using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -4,7 +4,7 @@
 using System.Buffers;
 using System.IO;
 using System.Net.Http;
-using System.ServiceModel.Rest.Experimental;
+using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 

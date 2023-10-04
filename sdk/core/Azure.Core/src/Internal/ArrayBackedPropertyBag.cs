@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Buffers;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace System.ServiceModel.Rest.Internal
+namespace Azure.Core
 {
-    // TODO: this is coped from Azure.Core - we should make sure the type is implemented
-    // in only one place.
-
     /// <summary>
     /// A property bag which is optimized for storage of a small number of items.
     /// If the item count is less than 2, there are no allocations. Any additional items are stored in an array which will grow as needed.
@@ -73,13 +72,13 @@ namespace System.ServiceModel.Rest.Internal
             };
         }
 
-        public bool TryGetValue(TKey key, /*[MaybeNullWhen(false)]*/ out TValue value)
+        public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
         {
             CheckDisposed();
             var index = GetIndex(key);
             if (index < 0)
             {
-                value = default!;
+                value = default;
                 return false;
             }
 
@@ -272,7 +271,7 @@ namespace System.ServiceModel.Rest.Internal
             return -1;
         }
 
-        public void Dispose()
+        internal void Dispose()
         {
 #if DEBUG
             if (_disposed)

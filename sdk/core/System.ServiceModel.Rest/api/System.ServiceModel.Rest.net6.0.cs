@@ -185,6 +185,12 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline);
         System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline);
     }
+    public partial class KeyCredentialPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
+    {
+        public KeyCredentialPolicy(System.ServiceModel.Rest.KeyCredential credential, string name, string? prefix = null) { }
+        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
+    }
     public partial class MessagePipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage>
     {
         public MessagePipeline(System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage> transport, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>> policies) { }
@@ -218,22 +224,8 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
     }
 }
-namespace System.ServiceModel.Rest.Experimental
+namespace System.ServiceModel.Rest.Internal
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct
-    {
-        private object _dummy;
-        private int _dummyPrimitive;
-        public int Count { get { throw null; } }
-        public bool IsEmpty { get { throw null; } }
-        public void Dispose() { }
-        public void GetAt(int index, out TKey key, out TValue value) { throw null; }
-        public void Set(TKey key, TValue value) { }
-        public bool TryAdd(TKey key, TValue value, out TValue? existingValue) { throw null; }
-        public bool TryGetValue(TKey key, out TValue value) { throw null; }
-        public bool TryRemove(TKey key) { throw null; }
-    }
     public partial class ClientUtilities
     {
         public ClientUtilities() { }
@@ -244,9 +236,109 @@ namespace System.ServiceModel.Rest.Experimental
         public static bool ShouldWrapInOperationCanceledException(System.Exception exception, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static void ThrowIfCancellationRequested(System.Threading.CancellationToken cancellationToken) { }
     }
-}
-namespace System.ServiceModel.Rest.Experimental.Core
-{
+    public partial interface IUtf8JsonWriteable
+    {
+        void Write(System.Text.Json.Utf8JsonWriter writer);
+    }
+    public static partial class ModelSerializationExtensions
+    {
+        public static byte[]? GetBytesFromBase64(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        public static char GetChar(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.DateTimeOffset GetDateTimeOffset(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        public static object? GetObject(this in System.Text.Json.JsonElement element) { throw null; }
+        public static string GetRequiredString(this in System.Text.Json.JsonElement element) { throw null; }
+        public static System.TimeSpan GetTimeSpan(this in System.Text.Json.JsonElement element, string format) { throw null; }
+        [System.Diagnostics.ConditionalAttribute("DEBUG")]
+        public static void ThrowNonNullablePropertyIsNull(this System.Text.Json.JsonProperty property) { }
+        public static void WriteBase64StringValue(this System.Text.Json.Utf8JsonWriter writer, byte[] value, string format) { }
+        public static void WriteNonEmptyArray(this System.Text.Json.Utf8JsonWriter writer, string name, System.Collections.Generic.IReadOnlyList<string> values) { }
+        public static void WriteNumberValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
+        public static void WriteObjectValue(this System.Text.Json.Utf8JsonWriter writer, object value) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, char value) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTime value, string format) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
+        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.TimeSpan value, string format) { }
+    }
+    public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
+    {
+        public OptionalDictionary() { }
+        public OptionalDictionary(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optionalDictionary) { }
+        public OptionalDictionary(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optionalDictionary) { }
+        public int Count { get { throw null; } }
+        public bool IsReadOnly { get { throw null; } }
+        public bool IsUndefined { get { throw null; } }
+        public TValue this[TKey key] { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<TKey> Keys { get { throw null; } }
+        System.Collections.Generic.IEnumerable<TKey> System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Keys { get { throw null; } }
+        System.Collections.Generic.IEnumerable<TValue> System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Values { get { throw null; } }
+        public System.Collections.Generic.ICollection<TValue> Values { get { throw null; } }
+        public void Add(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { }
+        public void Add(TKey key, TValue value) { }
+        public void Clear() { }
+        public bool Contains(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { throw null; }
+        public bool ContainsKey(TKey key) { throw null; }
+        public void CopyTo(System.Collections.Generic.KeyValuePair<TKey, TValue>[] array, int arrayIndex) { }
+        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
+        public bool Remove(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { throw null; }
+        public bool Remove(TKey key) { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetValue(TKey key, out TValue value) { throw null; }
+    }
+    public partial class OptionalList<T> : System.Collections.Generic.ICollection<T>, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T>, System.Collections.IEnumerable
+    {
+        public OptionalList() { }
+        public OptionalList(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IList<T>> optionalList) { }
+        public OptionalList(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optionalList) { }
+        public int Count { get { throw null; } }
+        public bool IsReadOnly { get { throw null; } }
+        public bool IsUndefined { get { throw null; } }
+        public T this[int index] { get { throw null; } set { } }
+        public void Add(T item) { }
+        public void Clear() { }
+        public bool Contains(T item) { throw null; }
+        public void CopyTo(T[] array, int arrayIndex) { }
+        public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        public int IndexOf(T item) { throw null; }
+        public void Insert(int index, T item) { }
+        public bool Remove(T item) { throw null; }
+        public void RemoveAt(int index) { }
+        public void Reset() { }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public static partial class OptionalProperty
+    {
+        public static bool IsCollectionDefined<T>(System.Collections.Generic.IEnumerable<T> collection) { throw null; }
+        public static bool IsCollectionDefined<TKey, TValue>(System.Collections.Generic.IDictionary<TKey, TValue> collection) { throw null; }
+        public static bool IsCollectionDefined<TKey, TValue>(System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> collection) { throw null; }
+        public static bool IsDefined(object value) { throw null; }
+        public static bool IsDefined(string value) { throw null; }
+        public static bool IsDefined(System.Text.Json.JsonElement value) { throw null; }
+        public static bool IsDefined<T>(T? value) where T : struct { throw null; }
+        public static System.Collections.Generic.IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optional) { throw null; }
+        public static System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optional) { throw null; }
+        public static System.Collections.Generic.IList<T> ToList<T>(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IList<T>> optional) { throw null; }
+        public static System.Collections.Generic.IReadOnlyList<T> ToList<T>(System.ServiceModel.Rest.Internal.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optional) { throw null; }
+        public static T? ToNullable<T>(System.ServiceModel.Rest.Internal.OptionalProperty<T?> optional) where T : struct { throw null; }
+        public static T? ToNullable<T>(System.ServiceModel.Rest.Internal.OptionalProperty<T> optional) where T : struct { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OptionalProperty<T>
+    {
+        private readonly T _Value_k__BackingField;
+        private readonly int _dummyPrimitive;
+        public OptionalProperty(T value) { throw null; }
+        public bool HasValue { get { throw null; } }
+        public T Value { get { throw null; } }
+        public static implicit operator T (System.ServiceModel.Rest.Internal.OptionalProperty<T> optional) { throw null; }
+        public static implicit operator System.ServiceModel.Rest.Internal.OptionalProperty<T> (T value) { throw null; }
+    }
+    public static partial class PipelineProtocolExtensions
+    {
+        public static System.ServiceModel.Rest.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
+        public static System.ServiceModel.Rest.Core.PipelineResponse ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Core.PipelineResponse> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class RequestUri
     {
         public RequestUri() { }
@@ -291,121 +383,6 @@ namespace System.ServiceModel.Rest.Experimental.Core
         public virtual void Reset(System.Uri value) { }
         public override string ToString() { throw null; }
         public virtual System.Uri ToUri() { throw null; }
-    }
-}
-namespace System.ServiceModel.Rest.Experimental.Core.Pipeline
-{
-    public partial class KeyCredentialPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
-    {
-        public KeyCredentialPolicy(System.ServiceModel.Rest.KeyCredential credential, string name, string? prefix = null) { }
-        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
-        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
-    }
-    public static partial class PipelineProtocolExtensions
-    {
-        public static System.ServiceModel.Rest.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.TelemetrySource clientDiagnostics, System.ServiceModel.Rest.RequestOptions? requestContext) { throw null; }
-        public static System.ServiceModel.Rest.Core.PipelineResponse ProcessMessage(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ServiceModel.Rest.Core.PipelineResponse> ProcessMessageAsync(this System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage> pipeline, System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.RequestOptions? requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-}
-namespace System.ServiceModel.Rest.Experimental.Core.Serialization
-{
-    public partial interface IUtf8JsonWriteable
-    {
-        void Write(System.Text.Json.Utf8JsonWriter writer);
-    }
-    public static partial class ModelSerializationExtensions
-    {
-        public static byte[]? GetBytesFromBase64(this in System.Text.Json.JsonElement element, string format) { throw null; }
-        public static char GetChar(this in System.Text.Json.JsonElement element) { throw null; }
-        public static System.DateTimeOffset GetDateTimeOffset(this in System.Text.Json.JsonElement element, string format) { throw null; }
-        public static object? GetObject(this in System.Text.Json.JsonElement element) { throw null; }
-        public static string GetRequiredString(this in System.Text.Json.JsonElement element) { throw null; }
-        public static System.TimeSpan GetTimeSpan(this in System.Text.Json.JsonElement element, string format) { throw null; }
-        [System.Diagnostics.ConditionalAttribute("DEBUG")]
-        public static void ThrowNonNullablePropertyIsNull(this System.Text.Json.JsonProperty property) { }
-        public static void WriteBase64StringValue(this System.Text.Json.Utf8JsonWriter writer, byte[] value, string format) { }
-        public static void WriteNonEmptyArray(this System.Text.Json.Utf8JsonWriter writer, string name, System.Collections.Generic.IReadOnlyList<string> values) { }
-        public static void WriteNumberValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
-        public static void WriteObjectValue(this System.Text.Json.Utf8JsonWriter writer, object value) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, char value) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTime value, string format) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
-        public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.TimeSpan value, string format) { }
-    }
-    public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
-    {
-        public OptionalDictionary() { }
-        public OptionalDictionary(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optionalDictionary) { }
-        public OptionalDictionary(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optionalDictionary) { }
-        public int Count { get { throw null; } }
-        public bool IsReadOnly { get { throw null; } }
-        public bool IsUndefined { get { throw null; } }
-        public TValue this[TKey key] { get { throw null; } set { } }
-        public System.Collections.Generic.ICollection<TKey> Keys { get { throw null; } }
-        System.Collections.Generic.IEnumerable<TKey> System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Keys { get { throw null; } }
-        System.Collections.Generic.IEnumerable<TValue> System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.Values { get { throw null; } }
-        public System.Collections.Generic.ICollection<TValue> Values { get { throw null; } }
-        public void Add(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { }
-        public void Add(TKey key, TValue value) { }
-        public void Clear() { }
-        public bool Contains(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { throw null; }
-        public bool ContainsKey(TKey key) { throw null; }
-        public void CopyTo(System.Collections.Generic.KeyValuePair<TKey, TValue>[] array, int arrayIndex) { }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
-        public bool Remove(System.Collections.Generic.KeyValuePair<TKey, TValue> item) { throw null; }
-        public bool Remove(TKey key) { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(TKey key, out TValue value) { throw null; }
-    }
-    public partial class OptionalList<T> : System.Collections.Generic.ICollection<T>, System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IList<T>, System.Collections.Generic.IReadOnlyCollection<T>, System.Collections.Generic.IReadOnlyList<T>, System.Collections.IEnumerable
-    {
-        public OptionalList() { }
-        public OptionalList(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optionalList) { }
-        public OptionalList(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optionalList) { }
-        public int Count { get { throw null; } }
-        public bool IsReadOnly { get { throw null; } }
-        public bool IsUndefined { get { throw null; } }
-        public T this[int index] { get { throw null; } set { } }
-        public void Add(T item) { }
-        public void Clear() { }
-        public bool Contains(T item) { throw null; }
-        public void CopyTo(T[] array, int arrayIndex) { }
-        public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
-        public int IndexOf(T item) { throw null; }
-        public void Insert(int index, T item) { }
-        public bool Remove(T item) { throw null; }
-        public void RemoveAt(int index) { }
-        public void Reset() { }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public static partial class OptionalProperty
-    {
-        public static bool IsCollectionDefined<T>(System.Collections.Generic.IEnumerable<T> collection) { throw null; }
-        public static bool IsCollectionDefined<TKey, TValue>(System.Collections.Generic.IDictionary<TKey, TValue> collection) { throw null; }
-        public static bool IsCollectionDefined<TKey, TValue>(System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> collection) { throw null; }
-        public static bool IsDefined(object value) { throw null; }
-        public static bool IsDefined(string value) { throw null; }
-        public static bool IsDefined(System.Text.Json.JsonElement value) { throw null; }
-        public static bool IsDefined<T>(T? value) where T : struct { throw null; }
-        public static System.Collections.Generic.IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IDictionary<TKey, TValue>> optional) { throw null; }
-        public static System.Collections.Generic.IReadOnlyDictionary<TKey, TValue> ToDictionary<TKey, TValue>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>> optional) { throw null; }
-        public static System.Collections.Generic.IList<T> ToList<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IList<T>> optional) { throw null; }
-        public static System.Collections.Generic.IReadOnlyList<T> ToList<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<System.Collections.Generic.IReadOnlyList<T>> optional) { throw null; }
-        public static T? ToNullable<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T?> optional) where T : struct { throw null; }
-        public static T? ToNullable<T>(System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T> optional) where T : struct { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OptionalProperty<T>
-    {
-        private readonly T _Value_k__BackingField;
-        private readonly int _dummyPrimitive;
-        public OptionalProperty(T value) { throw null; }
-        public bool HasValue { get { throw null; } }
-        public T Value { get { throw null; } }
-        public static implicit operator T (System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T> optional) { throw null; }
-        public static implicit operator System.ServiceModel.Rest.Experimental.Core.Serialization.OptionalProperty<T> (T value) { throw null; }
     }
     public partial class Utf8JsonRequestBody : System.ServiceModel.Rest.Core.RequestBody
     {

@@ -4,7 +4,6 @@
 #nullable enable
 
 using Azure.Core;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;

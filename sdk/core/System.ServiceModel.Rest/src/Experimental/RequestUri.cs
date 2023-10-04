@@ -4,13 +4,12 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using System.ServiceModel.Rest.Experimental.Core.Serialization;
 using System.Collections.Generic;
 
 // TODO: Linq is bad for performance
 using System.Linq;
 
-namespace System.ServiceModel.Rest.Experimental.Core;
+namespace System.ServiceModel.Rest.Internal;
 
 public class RequestUri
 {

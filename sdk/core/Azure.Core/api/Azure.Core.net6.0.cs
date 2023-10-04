@@ -590,7 +590,7 @@ namespace Azure.Core
         public static Azure.Core.RequestMethod Parse(string method) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestUriBuilder : System.ServiceModel.Rest.Experimental.Core.RequestUri
+    public partial class RequestUriBuilder : System.ServiceModel.Rest.Internal.RequestUri
     {
         public RequestUriBuilder() { }
     }

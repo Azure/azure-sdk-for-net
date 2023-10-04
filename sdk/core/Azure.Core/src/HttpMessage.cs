@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Experimental;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core

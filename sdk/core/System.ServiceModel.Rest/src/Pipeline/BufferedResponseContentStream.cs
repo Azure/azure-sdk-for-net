@@ -8,6 +8,7 @@ using System.Text;
 
 namespace System.ServiceModel.Rest.Core.Pipeline
 {
+    // TODO: use for buffering policy?
     //internal class BufferedResponseContentStream : Stream
     //{
     //    private readonly MemoryStream _stream;

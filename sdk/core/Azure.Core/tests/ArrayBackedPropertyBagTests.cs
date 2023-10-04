@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ServiceModel.Rest.Experimental;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
