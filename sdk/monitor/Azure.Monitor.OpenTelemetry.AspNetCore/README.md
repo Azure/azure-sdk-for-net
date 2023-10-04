@@ -210,13 +210,6 @@ If an app references the `OpenTelemetry.Instrumentation.Http` or `OpenTelemetry.
 * Remove the respective package references (or)
 * Add `AddHttpClientInstrumentation` or `AddSqlClientInstrumentation` to the TracerProvider configuration. Detailed guidance can be found in the OpenTelemetry documentation for [HTTP](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.Http) and [SQL Client](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.SqlClient).
 
-**Missing Application Insights Standard Metrics**
-
-If an app references `OpenTelemetry.Instrumentation.AspNetCore`, `OpenTelemetry.Instrumentation.Http`, and `OpenTelemetry.Instrumentation.SqlClient` without the appropriate configuration, standard metrics might be missing. Solutions include:
-
-* Removing all these package references (or)
-* Adding configurations such as `AddAspNetCoreInstrumentation`, `AddHttpClientInstrumentation`, and so on to the OpenTelemetry TracerProvider.
-
 **Note:** If all telemetries are missing or if the above troubleshooting steps do not help, please collect [self-diagnostics logs](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry/README.md#troubleshooting).
 
 ## Next steps
