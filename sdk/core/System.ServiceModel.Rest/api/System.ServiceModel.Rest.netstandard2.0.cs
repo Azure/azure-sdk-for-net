@@ -83,7 +83,7 @@ namespace System.ServiceModel.Rest.Core
         public abstract void SetContent(System.ServiceModel.Rest.Core.RequestBody content);
         public abstract void SetHeaderValue(string name, string value);
         public abstract void SetMethod(string method);
-        public abstract System.Uri SetUri(System.Uri uri);
+        public abstract void SetUri(System.Uri uri);
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
@@ -163,7 +163,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override void SetHeaderValue(string name, string value) { }
         public virtual void SetMethod(System.Net.Http.HttpMethod method) { }
         public override void SetMethod(string method) { }
-        public override System.Uri SetUri(System.Uri uri) { throw null; }
+        public override void SetUri(System.Uri uri) { }
         public override string ToString() { throw null; }
         protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
         protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }

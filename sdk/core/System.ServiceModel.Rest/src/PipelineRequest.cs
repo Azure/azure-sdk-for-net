@@ -15,7 +15,7 @@ public abstract class PipelineRequest
     public abstract string GetMethod();
 
     // TODO: generator constraint requires us to make this settable, revisit later?
-    public abstract Uri SetUri(Uri uri);
+    public abstract void SetUri(Uri uri);
 
     public abstract Uri GetUri();
 

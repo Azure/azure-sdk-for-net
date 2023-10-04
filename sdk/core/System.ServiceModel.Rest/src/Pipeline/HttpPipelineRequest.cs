@@ -48,7 +48,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     // TODO: work out the details of when method is set, e.g. constructor/mutability
     public override string GetMethod() => _method!.ToString();
 
-    public override Uri SetUri(Uri uri)
+    public override void SetUri(Uri uri)
         => _uri = uri;
 
     // TODO: work out the details of when Uri is set, e.g. constructor/mutability
