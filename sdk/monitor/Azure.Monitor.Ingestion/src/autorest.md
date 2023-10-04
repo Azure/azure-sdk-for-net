@@ -33,4 +33,3 @@ directive:
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
   transform: $["description"] = "If content is already gzipped, put \"gzip\". Default behavior is to gzip all input";
 ```
-
