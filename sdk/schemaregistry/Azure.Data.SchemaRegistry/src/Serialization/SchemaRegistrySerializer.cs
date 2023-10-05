@@ -141,7 +141,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         public void Serialize<TMessage, TData>(
             TMessage message,
             TData data,
-            CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
+            CancellationToken cancellationToken = default) where TMessage : MessageContent
             => SerializeInternalAsync(message, data, typeof(TData), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         public async ValueTask SerializeAsync<TMessage, TData>(
             TMessage message,
             TData data,
-            CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
+            CancellationToken cancellationToken = default) where TMessage : MessageContent
             => await SerializeInternalAsync(message, data, typeof(TData), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>

@@ -45,7 +45,8 @@ In order to serialize an `EventData` instance with JSON information, you can do 
 var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
-EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
+EventData eventData = new();
+await serializer.SerializeAsync(eventData, employee);
 
 // The schema Id will be included as a parameter of the content type
 Console.WriteLine(eventData.ContentType);
@@ -90,7 +91,8 @@ You can also use generic methods to serialize and deserialize the data. This may
 var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
-EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
+EventData eventData = new();
+await serializer.SerializeAsync(eventData, employee);
 
 // The schema Id will be included as a parameter of the content type
 Console.WriteLine(eventData.ContentType);
@@ -114,7 +116,8 @@ It is also possible to serialize and deserialize using `MessageContent`. Use thi
 ```C# Snippet:SchemaRegistryJsonSerializeDeserializeMessageContent
 // The serializer serializes into JSON by default
 var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
-MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
+MessageContent content = new();
+await serializer.SerializeAsync(content, employee);
 
 Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 ```
