@@ -30,29 +30,42 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         _headers = new ArrayBackedPropertyBag<IgnoreCaseString, object>();
     }
 
-    public override void SetContent(RequestBody content)
-        => _content = content;
+    public override Uri Uri
+    {
+        get
+        {
+            if (_uri is null)
+            {
+                throw new InvalidOperationException("'Uri' must be initialized before use.");
+            }
 
-    public override RequestBody? GetContent()
-        => _content;
+            return _uri;
+        }
+
+        set => _uri = value;
+    }
+
+    public override RequestBody? Content
+    {
+        get => _content;
+        set => _content = value;
+    }
 
     public override void SetHeaderValue(string name, string value)
         => SetHeader(name, value);
 
+    // TODO: we can improve perf on this setter by using static instead of a new
     public override void SetMethod(string method)
         => _method = new HttpMethod(method);
 
     public virtual void SetMethod(HttpMethod method)
         => _method = method;
 
-    // TODO: work out the details of when method is set, e.g. constructor/mutability
-    public override string GetMethod() => _method!.ToString();
-
-    public override void SetUri(Uri uri)
-        => _uri = uri;
-
-    // TODO: work out the details of when Uri is set, e.g. constructor/mutability
-    public override Uri GetUri() => _uri!;
+    public virtual bool TryGetMethod(out HttpMethod method)
+    {
+        method = _method;
+        return true;
+    }
 
     #region Header implementation
 
@@ -155,14 +168,11 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
     {
-        // TODO: can we do better perf-wise?
-        string method = GetMethod();
-        Uri uri = GetUri();
-        HttpRequestMessage currentRequest = new HttpRequestMessage(new HttpMethod(method), uri);
+        HttpRequestMessage currentRequest = new HttpRequestMessage(_method, Uri);
 
         PipelineContentAdapter? currentContent = _content != null ? new PipelineContentAdapter(_content, cancellation) : null;
         currentRequest.Content = currentContent;
-// TODO: does it make sense to keep the NETFRAMEWORK TFM without a corresponding build target?
+        // TODO: does it make sense to keep the NETFRAMEWORK TFM without a corresponding build target?
 #if NETFRAMEWORK || NETSTANDARD
         currentRequest.Headers.ExpectContinue = false;
 #endif
@@ -223,7 +233,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 #if NET5_0_OR_GREATER
         httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
 #else
-            httpRequest.Properties[name] = value;
+        httpRequest.Properties[name] = value;
 #endif
     }
 

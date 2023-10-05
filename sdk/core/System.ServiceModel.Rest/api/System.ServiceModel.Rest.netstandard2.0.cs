@@ -79,13 +79,10 @@ namespace System.ServiceModel.Rest.Core
     public abstract partial class PipelineRequest
     {
         protected PipelineRequest() { }
-        public abstract System.ServiceModel.Rest.Core.RequestBody? GetContent();
-        public abstract string GetMethod();
-        public abstract System.Uri GetUri();
-        public abstract void SetContent(System.ServiceModel.Rest.Core.RequestBody content);
+        public abstract System.ServiceModel.Rest.Core.RequestBody? Content { get; set; }
+        public abstract System.Uri Uri { get; set; }
         public abstract void SetHeaderValue(string name, string value);
         public abstract void SetMethod(string method);
-        public abstract void SetUri(System.Uri uri);
     }
     public abstract partial class PipelineResponse : System.IDisposable
     {
@@ -152,23 +149,21 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     public partial class HttpPipelineRequest : System.ServiceModel.Rest.Core.PipelineRequest, System.IDisposable
     {
         public HttpPipelineRequest() { }
+        public override System.ServiceModel.Rest.Core.RequestBody? Content { get { throw null; } set { } }
+        public override System.Uri Uri { get { throw null; } set { } }
         protected virtual void AddHeader(string name, string value) { }
         protected virtual bool ContainsHeader(string name) { throw null; }
         public virtual void Dispose() { }
-        public override System.ServiceModel.Rest.Core.RequestBody? GetContent() { throw null; }
         protected System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
-        public override string GetMethod() { throw null; }
-        public override System.Uri GetUri() { throw null; }
         protected virtual bool RemoveHeader(string name) { throw null; }
-        public override void SetContent(System.ServiceModel.Rest.Core.RequestBody content) { }
         protected virtual void SetHeader(string name, string value) { }
         public override void SetHeaderValue(string name, string value) { }
         public virtual void SetMethod(System.Net.Http.HttpMethod method) { }
         public override void SetMethod(string method) { }
-        public override void SetUri(System.Uri uri) { }
         public override string ToString() { throw null; }
         protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
         protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
+        public virtual bool TryGetMethod(out System.Net.Http.HttpMethod method) { throw null; }
     }
     public partial class HttpPipelineResponse : System.ServiceModel.Rest.Core.PipelineResponse, System.IDisposable
     {

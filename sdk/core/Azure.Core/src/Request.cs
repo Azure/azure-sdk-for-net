@@ -21,7 +21,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
         /// </summary>
-        public virtual RequestUriBuilder Uri
+        public new virtual RequestUriBuilder Uri
         {
             get
             {
@@ -35,13 +35,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        public override Uri GetUri()
-            => Uri.ToUri();
-
-        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
         public virtual RequestMethod Method
@@ -50,7 +43,8 @@ namespace Azure.Core
             {
                 try
                 {
-                    return SystemToAzureMethod(base.GetMethod());
+                    TryGetMethod(out HttpMethod method);
+                    return SystemToAzureMethod(method.Method);
                 }
                 catch (InvalidOperationException)
                 {
@@ -60,13 +54,6 @@ namespace Azure.Core
             }
             set { base.SetMethod(AzureToSystemMethod(value)); }
         }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <returns></returns>
-        public override string GetMethod()
-            => Method.ToString();
 
         private static RequestMethod SystemToAzureMethod(string verb)
         {
@@ -104,12 +91,10 @@ namespace Azure.Core
         /// Gets or sets the request content.
         /// </summary>
 
-        public virtual RequestContent? Content
+        public new virtual RequestContent? Content
         {
-            get => (RequestContent?)base.GetContent();
-
-            // TODO: handle set to null
-            set => base.SetContent(value!);
+            get => (RequestContent?)base.Content;
+            set => base.Content = value;
         }
 
         /// <summary>
