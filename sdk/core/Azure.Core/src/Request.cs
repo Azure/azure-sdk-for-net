@@ -16,7 +16,8 @@ namespace Azure.Core
     public abstract class Request : HttpPipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        private RequestUriBuilder? _uri;
+        private RequestUriBuilder? _uriBuilder;
+        //private Uri? _uri;
 
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
@@ -25,14 +26,29 @@ namespace Azure.Core
         {
             get
             {
-                return _uri ??= new RequestUriBuilder();
+                if (_uriBuilder == null)
+                {
+                    _uriBuilder = new RequestUriBuilder();
+
+                    // Get a reference to the uri that the buider will be
+                    // modifying with each call to its APIs
+                    base.Uri = _uriBuilder.ToUri();
+                }
+                return _uriBuilder;
             }
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
-                _uri = value;
+
+                _uriBuilder = value;
+
+                // Get a reference to the uri that the buider will be
+                // modifying with each call to its APIs
+                base.Uri = _uriBuilder.ToUri();
             }
         }
+
+        //protected override Uri GetUri() => _uri;
 
         /// <summary>
         /// Gets or sets the request HTTP method.

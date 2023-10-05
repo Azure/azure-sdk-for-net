@@ -45,6 +45,8 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set => _uri = value;
     }
 
+    //protected internal override Uri GetUri() => Uri;
+
     public override RequestBody? Content
     {
         get => _content;

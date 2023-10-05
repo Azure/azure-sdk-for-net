@@ -13,6 +13,13 @@ namespace System.ServiceModel.Rest.Internal;
 
 public class RequestUri
 {
+    //public RequestUri() { }
+
+    //protected RequestUri(Uri uri)
+    //{
+    //    _uri = uri;
+    //}
+
     #region RequestUriBuilder
 
     private const char QuerySeparator = '?';

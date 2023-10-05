@@ -11,6 +11,16 @@ namespace Azure.Core
     /// </summary>
     public class RequestUriBuilder : RequestUri
     {
+        ///// <summary>
+        ///// TBD.
+        ///// </summary>
+        //public RequestUriBuilder() : base() { }
+
+        ///// <summary>
+        ///// TBD.
+        ///// </summary>
+        ///// <param name="uri"></param>
+        //protected RequestUriBuilder(Uri uri) : base(uri) { }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
