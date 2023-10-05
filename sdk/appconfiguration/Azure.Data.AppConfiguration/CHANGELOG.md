@@ -11,16 +11,6 @@
 - Fixed `GetConfigurationSettings(SettingSelector)` not setting `ContentType` and `LastModified` properties [(#38524)](https://github.com/Azure/azure-sdk-for-net/issues/38524).
 - `FeatureFlagConfigurationSetting`  will now allow custom attributes under the `conditions` element in the setting value.  Previously, only `client_filters` was recognized and other data would be discarded.
 
-### Other Changes
-
-- `CompositionType` has been renamed to `SnapshotComposition`.
-- `ConfigurationSettingsSnapshot` has been renamed to `ConfigurationSnapshot`.
-- `SnapshotStatus` has been renamed to `ConfigurationSnapshotStatus`.
-- `SnapshotSettingFilter` has been renamed to `ConfigurationSettingsFilter`.
-- In `ConfigurationSnapshot`, `Size` has been renamed to `SizeInBytes`.
-- The `name` parameter in the following methods has been changed to `snapshotName`: `CreateSnapshot`, `GetSnapshot`, `RecoverSnapshot`, and `ArchiveSnapshot`. This change aligns with the naming convention used in the `GetConfigurationSettingsForSnapshot` method.
-- For the `ArchiveSnapshot` and `RecoverSnapshot` methods, parameters have been updated from `ConfigurationSnapshot snapshot` and `bool onlyIfUnchanged` to `string name` and `MatchConditions matchConditions`.
-
 ## 1.2.1 (2023-09-13)
 
 ### Bugs Fixed
