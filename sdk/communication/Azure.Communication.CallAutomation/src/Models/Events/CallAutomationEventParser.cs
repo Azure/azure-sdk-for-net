@@ -134,6 +134,10 @@ namespace Azure.Communication.CallAutomation
                     return SendDtmfTonesCompleted.Deserialize(eventData);
                 case nameof(SendDtmfTonesFailed):
                     return SendDtmfTonesFailed.Deserialize(eventData);
+                case nameof(CancelAddParticipantSucceeded):
+                    return CancelAddParticipantSucceeded.Deserialize(eventData);
+                case nameof(CancelAddParticipantFailed):
+                    return CancelAddParticipantFailed.Deserialize(eventData);
                 default:
                     return null;
             }

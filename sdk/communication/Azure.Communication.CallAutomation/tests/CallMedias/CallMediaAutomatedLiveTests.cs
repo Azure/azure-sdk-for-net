@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
         }
 
-        //[Ignore(reason: "Send Dtmf response change not deployed on nextpma yet")]
         [RecordedTest]
         public async Task continuousDtmfDetectionAndSendDtmfTest()
         {

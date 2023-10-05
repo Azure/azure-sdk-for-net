@@ -16,22 +16,28 @@ namespace Azure.Communication.CallAutomation
         private string _callConnectionId;
         private string _operationContext;
 
-        internal AddParticipantResult(CallParticipant participant, string operationContext)
+        internal AddParticipantResult(CallParticipant participant, string operationContext, string invitationId)
         {
             Participant = participant;
             OperationContext = operationContext;
+            InvitationId = invitationId;
         }
 
         internal AddParticipantResult(AddParticipantResponseInternal internalObj)
         {
             Participant = new CallParticipant(internalObj.Participant);
             OperationContext = internalObj.OperationContext;
+            InvitationId = internalObj.InvitationId;
         }
 
         /// <summary>Gets the participant.</summary>
         public CallParticipant Participant { get; }
+
         /// <summary>The operation context provided by client.</summary>
         public string OperationContext { get; }
+
+        /// <summary> Invitation ID used to add a participant. </summary>
+        public string InvitationId { get; }
 
         internal void SetEventProcessor(CallAutomationEventProcessor evHandler, string callConnectionId, string operationContext)
         {
@@ -93,7 +99,7 @@ namespace Azure.Communication.CallAutomation
                     result = new AddParticipantEventResult(true, (AddParticipantSucceeded)returnedEvent, null, ((AddParticipantSucceeded)returnedEvent).Participant);
                     break;
                 case AddParticipantFailed:
-                    result = new AddParticipantEventResult(false, null, (AddParticipantFailed)returnedEvent,((AddParticipantFailed)returnedEvent).Participant);
+                    result = new AddParticipantEventResult(false, null, (AddParticipantFailed)returnedEvent, ((AddParticipantFailed)returnedEvent).Participant);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

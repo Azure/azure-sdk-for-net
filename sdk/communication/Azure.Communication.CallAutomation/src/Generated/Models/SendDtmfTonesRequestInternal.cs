@@ -35,5 +35,7 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
+        /// <summary> The callback URI to override the main callback URI. </summary>
+        public string OverrideCallbackUri { get; set; }
     }
 }

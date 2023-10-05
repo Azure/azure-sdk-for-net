@@ -32,6 +32,12 @@ namespace Azure.Communication.CallAutomation
         /// The minimum value is 1 second.
         /// The maximum value is 180 seconds.
         /// </summary>
+
         public int? InvitationTimeoutInSeconds { get; set; }
+
+        /// <summary>
+        /// The callback URI to override the main callback URI.
+        /// </summary>
+        public string OverrideCallbackUri { get; set; }
     }
 }

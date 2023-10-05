@@ -274,9 +274,12 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.Target));
-
-            request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+            TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.Target))
+            {
+                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee),
+                OverrideCallbackUri = options.OverrideCallbackUri
+            };
 
             return request;
         }
@@ -376,10 +379,9 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
                 SourceDisplayName = options.ParticipantToAdd.SourceDisplayName,
-                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
+                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds
             };
-
-            request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
 
             return request;
         }
@@ -523,9 +525,11 @@ namespace Azure.Communication.CallAutomation
                 // validate RequestInitiator is not null or empty
                 Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
-
-                request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
+                {
+                    OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                    OverrideCallbackUri = options.OverrideCallbackUri
+                };
 
                 var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -571,9 +575,11 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
-
-                options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
+                {
+                    OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                    OverrideCallbackUri = options.OverrideCallbackUri,
+                };
 
                 var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
 
@@ -664,8 +670,101 @@ namespace Azure.Communication.CallAutomation
                     CallConnectionId,
                     request,
                     cancellationToken).ConfigureAwait(false);
-
                 return Response.FromValue(new MuteParticipantResult(response.Value), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+    /// <summary>
+    /// Cancel add participant operation.
+    /// </summary>
+    /// <param name="invitationId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public virtual Task<Response<CancelAddParticipantResult>> CancelAddParticipantAsync(string invitationId, CancellationToken cancellationToken = default)
+        {
+            return CancelAddParticipantAsync(new CancelAddParticipantOptions(invitationId), cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancel add participant operation.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async virtual Task<Response<CancelAddParticipantResult>> CancelAddParticipantAsync(CancelAddParticipantOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipant)}");
+            scope.Start();
+
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                var request = new CancelAddParticipantRequestInternal(options.InvitationId)
+                {
+                    OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                    OverrideCallbackUri = options.OverrideCallbackUri
+                };
+                var response = await RestClient.CancelAddParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                var result = new CancelAddParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel add participant operation.
+        /// </summary>
+        /// <param name="invitationId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CancelAddParticipantResult> CancelAddParticipant(string invitationId, CancellationToken cancellationToken = default)
+        {
+            return CancelAddParticipant(new CancelAddParticipantOptions(invitationId), cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancel add participant operation.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CancelAddParticipantResult> CancelAddParticipant(CancelAddParticipantOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAddParticipant)}");
+            scope.Start();
+
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                var request = new CancelAddParticipantRequestInternal(options.InvitationId)
+                {
+                    OperationContext = options.OperationContext,
+                    OverrideCallbackUri = options.OverrideCallbackUri
+                };
+                var response = RestClient.CancelAddParticipant(CallConnectionId, request, cancellationToken);
+                var result = new CancelAddParticipantResult(response);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception ex)
             {
