@@ -3,6 +3,7 @@
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Call Automation Dialog APIs to support IVR services such as Power Virtual Agents.
 
 ### Breaking Changes
 

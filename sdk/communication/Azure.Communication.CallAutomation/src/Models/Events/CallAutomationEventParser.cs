@@ -138,6 +138,24 @@ namespace Azure.Communication.CallAutomation
                     return CancelAddParticipantSucceeded.Deserialize(eventData);
                 case nameof(CancelAddParticipantFailed):
                     return CancelAddParticipantFailed.Deserialize(eventData);
+                #region Dialog
+                case nameof(DialogCompleted):
+                    return DialogCompleted.Deserialize(eventData);
+                case nameof(DialogFailed):
+                    return DialogFailed.Deserialize(eventData);
+                case nameof(DialogConsent):
+                    return DialogConsent.Deserialize(eventData);
+                case nameof(DialogStarted):
+                    return DialogStarted.Deserialize(eventData);
+                case nameof(DialogHangup):
+                    return DialogHangup.Deserialize(eventData);
+                case nameof(DialogTransfer):
+                    return DialogTransfer.Deserialize(eventData);
+                case nameof(DialogSensitivityUpdate):
+                    return DialogSensitivityUpdate.Deserialize(eventData);
+                case nameof(DialogLanguageChange):
+                    return DialogLanguageChange.Deserialize(eventData);
+                #endregion
                 default:
                     return null;
             }

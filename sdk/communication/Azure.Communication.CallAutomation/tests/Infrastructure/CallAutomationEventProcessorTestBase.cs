@@ -46,6 +46,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                     "\"operationContext\": \"someOperationContext\"," +
                                     "\"invitationId\": \"invitationId\"" +
                                     "}";
+                                    
+        protected const string DialogPayload = "{\"dialogId\":\"dialogId\",\"dialogInputType\":\"powerVirtualAgent\"}";
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
         {
@@ -82,7 +84,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallConnection CreateMoakCallConnection(string? callConnectionId = default)
         {
-            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null);
+            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null, null);
 
             return callconn;
         }

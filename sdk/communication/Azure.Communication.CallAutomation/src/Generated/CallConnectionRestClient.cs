@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-10-15")
+        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-22-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -330,7 +330,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Get participants from a call. </summary>
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -357,7 +357,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Get participants from a call. </summary>
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
@@ -822,7 +822,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Get participants from a call. </summary>
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -854,7 +854,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Get participants from a call. </summary>
+        /// <summary> Get participants from a call. Recording and transcription bots are omitted from this list. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

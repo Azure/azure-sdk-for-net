@@ -176,6 +176,14 @@ namespace Azure.Communication.CallAutomation
             return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
+        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <param name="recording"></param>
+        /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
+        public static UserConsent UserConsent(int? recording = null)
+        {
+            return new UserConsent(recording);
+        }
+
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
