@@ -52,6 +52,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         pipelineLength += options.RetryPolicy is null ? 0 : 1;
         pipelineLength += options.LoggingPolicy is null ? 0 : 1;
 
+        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         IPipelinePolicy<PipelineMessage>[] pipeline
@@ -86,6 +87,11 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         {
             pipeline[index++] = options.LoggingPolicy;
         }
+
+        // TODO: add NetworkTimeout to RetryOptions
+        // TODO: would it make sense for this to live on options instead?
+        ResponseBufferingPolicy bufferingPolicy = new(TimeSpan.FromSeconds(100), options.BufferResponse);
+        pipeline[index++] = bufferingPolicy;
 
         if (options.Transport != null)
         {
