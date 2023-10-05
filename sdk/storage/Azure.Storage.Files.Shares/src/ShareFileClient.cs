@@ -422,7 +422,10 @@ namespace Azure.Storage.Files.Shares
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
+                clientOptions: options)
+            {
+                Audience = options.Audience ?? ShareAudience.PublicAudience,
+            };
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -497,6 +500,36 @@ namespace Azure.Storage.Files.Shares
                 _path = builder.DirectoryOrFilePath;
             }
         }
+
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Get a <see cref="ShareFileClient"/>'s <see cref="HttpAuthorization"/>
+        /// for passing the authorization when performing service to service copy
+        /// where OAuth is necessary to authenticate the source.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client which to generate the
+        /// authorization header off of.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        protected static async Task<(HttpAuthorization Authorization, ShareAudience Audience)> GetCopyAuthorizationHeaderAsync(
+            ShareFileClient client,
+            CancellationToken cancellationToken = default)
+        {
+            if (client.ClientConfiguration.TokenCredential != default)
+            {
+                return (
+                    await client.ClientConfiguration.TokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false),
+                    client.ClientConfiguration.Audience
+                );
+            }
+            return default;
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         #region Create
         /// <summary>

@@ -412,7 +412,10 @@ namespace Azure.Storage.Files.Shares
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
+                clientOptions: options)
+            {
+                Audience = options.Audience ?? ShareAudience.PublicAudience,
+            };
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
