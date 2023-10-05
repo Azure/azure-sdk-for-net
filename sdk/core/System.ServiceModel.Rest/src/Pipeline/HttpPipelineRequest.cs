@@ -162,7 +162,8 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
         PipelineContentAdapter? currentContent = _content != null ? new PipelineContentAdapter(_content, cancellation) : null;
         currentRequest.Content = currentContent;
-#if NETFRAMEWORK
+// TODO: does it make sense to keep the NETFRAMEWORK TFM without a corresponding build target?
+#if NETFRAMEWORK || NETSTANDARD
         currentRequest.Headers.ExpectContinue = false;
 #endif
 
