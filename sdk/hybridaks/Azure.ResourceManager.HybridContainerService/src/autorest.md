@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: HybridContainerService
 namespace: Azure.ResourceManager.HybridContainerService
@@ -13,6 +12,12 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/844b06b77ca841a151a6
 # tag: package-preview-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - HybridContainerService_ListOrchestrators
+  - HybridContainerService_ListVMSkus
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -27,7 +32,7 @@ format-by-name-rules:
 rename-mapping:
   ProvisionedClustersResponse: ProvisionedCluster
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

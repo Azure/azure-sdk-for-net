@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machine scale set network profile&apos;s network configurations. </summary>
+    /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
     public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
@@ -63,5 +63,9 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableIPForwarding { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
         public ComputeDeleteOption? DeleteOption { get; set; }
+        /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
+        public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+        /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
+        public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }

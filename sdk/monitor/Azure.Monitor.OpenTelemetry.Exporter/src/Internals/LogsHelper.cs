@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using Microsoft.Extensions.Logging;
@@ -18,7 +18,7 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class LogsHelper
+    internal static class LogsHelper
     {
         private const int Version = 2;
         private static readonly ConcurrentDictionary<int, string> s_depthCache = new ConcurrentDictionary<int, string>();
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertLogRecord", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToConvertLogRecord(instrumentationKey, ex);
                 }
             }
 
@@ -66,9 +66,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
-            if (logRecord.StateValues != null)
+            if (logRecord.Attributes != null)
             {
-                ExtractProperties(ref message, properties, logRecord.StateValues);
+                ExtractProperties(ref message, properties, logRecord.Attributes);
             }
 
             WriteScopeInformation(logRecord, properties);
@@ -140,9 +140,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (exceptionStackFrame != null)
             {
-                MethodBase? methodBase = exceptionStackFrame.GetMethod();
+                MethodBase? methodBase = exceptionStackFrame.GetMethodWithoutWarning();
 
-                if (methodBase != null)
+                if (methodBase == null)
+                {
+                    // In an AOT scenario GetMethod() will return null.
+                    // Instead, call ToString() which gives a string like this:
+                    // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
+                    methodName = exceptionStackFrame.ToString();
+                    methodOffset = System.Diagnostics.StackFrame.OFFSET_UNKNOWN;
+                }
+                else
                 {
                     methodName = (methodBase.DeclaringType?.FullName ?? "Global") + "." + methodBase.Name;
                     methodOffset = exceptionStackFrame.GetILOffset();

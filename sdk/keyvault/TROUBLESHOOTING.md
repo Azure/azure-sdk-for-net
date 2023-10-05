@@ -24,8 +24,12 @@ for help diagnosing various problems across all our Azure SDKs for .NET.
   * [HTTP 403 Errors](#http-403-errors)
     * [Operation Not Permitted](#operation-not-permitted)
     * [Access Denied to First Party Service](#access-denied-to-first-party-service)
+  * [Other Authentication Errors](#other-authentication-issues)
+    * [Multi-tenant Authentication Issues](#multi-tenant-authentication-issues)
+    * [Incorrect Challenge Resource](#incorrect-challenge-resource)
 * [Other Service Errors](#other-service-errors)
   * [HTTP 429: Too Many Request](#http-429-too-many-requests)
+* [Support](#support)
 
 ## Troubleshooting Authentication Issues
 
@@ -63,10 +67,10 @@ Automatic tenant discovery support has been added when referencing package `Azur
 
 Package | Minimum Version
 --- | ---
-`Azure.Security.KeyVault.Administration` | 4.1.0-beta.2
-`Azure.Security.KeyVault.Certificates` | 4.3.0-beta.2
-`Azure.Security.KeyVault.Keys` | 4.3.0-beta.2
-`Azure.Security.KeyVault.Secrets` | 4.3.0-beta.2
+`Azure.Security.KeyVault.Administration` | 4.1.0
+`Azure.Security.KeyVault.Certificates` | 4.3.0
+`Azure.Security.KeyVault.Keys` | 4.3.0
+`Azure.Security.KeyVault.Secrets` | 4.3.0
 
 Upgrading to the package versions should resolve any "Invalid Issuer" errors as long as the application or user is a
 member of the resource's tenant.
@@ -129,6 +133,39 @@ The error `message` may also contain the tenant ID (`tid`) and application ID (`
 2. You are authenticated against a Microsoft Account (MSA) in Visual Studio or another credential provider. See
    [above](#operation-not-permitted) for troubleshooting steps.
 
+### Other Authentication Errors
+
+See our [Azure.Identity troubleshooting guide] for general guidance on authentication errors.
+
+#### Multi-tenant Authentication Issues
+
+If an `AuthenticationFailedException` is thrown with a message similar to:
+
+> The current credential is not configured to acquire tokens for tenant
+
+See our [troubleshooting guide for multi-tenant authentication issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md#troubleshoot-multi-tenant-authentication-issues).
+Read our [release notes](https://aka.ms/azsdk/blog/multi-tenant-guidance) for more information about this change.
+
+#### Incorrect Challenge Resource
+
+If an `InvalidOperationException` is thrown with a message similar to:
+
+> The challenge resource 'myvault.vault.azure.net' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information.
+
+Check that the resources is expected - that you're not receiving a challenge from an unknown host which may indicate an incorrect request URI.
+If it is correct but you are using a mock service or non-transparent proxy for testing, set the `DisableChallengeResourceVerification` to `true` in your client options:
+
+```C#
+SecretClientOptions options = new SecretClientOptions()
+{
+   DisableChallengeResourceVerification = true
+};
+
+SecretClient client = new SecretClient(vaultUri, credential, options);
+```
+
+Read our [release notes](https://aka.ms/azsdk/blog/vault-uri) for more information about this change.
+
 ## Other Service Errors
 
 To troubleshoot additional HTTP service errors not described below,
@@ -159,4 +196,10 @@ Possible solutions include:
 See our [Azure Key Vault throttling guide](https://learn.microsoft.com/azure/key-vault/general/overview-throttling)
 for more information.
 
+## Support
+
+For additional support, please search our [existing issues](https://github.com/Azure/azure-sdk-for-net/issues) or [open a new issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
+You may also find existing answers on community sites like [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-keyvault+.net).
+
+[Azure.Identity troubleshooting guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential

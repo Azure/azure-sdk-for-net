@@ -191,7 +191,7 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
                 AuthenticationResult result = await Client
-                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, async, cancellationToken)
+                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
 
                 _record = new AuthenticationRecord(result, _clientId);
@@ -214,7 +214,7 @@ namespace Azure.Identity
                     var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
                     try
                     {
-                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, async, cancellationToken)
+                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                             .ConfigureAwait(false);
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }

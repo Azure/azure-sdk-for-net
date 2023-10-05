@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    /// <summary> Value for the specified parameter. Can be either &apos;value&apos; or &apos;reference&apos; but not both. </summary>
+    /// <summary> Value for the specified parameter. Can be either 'value' or 'reference' but not both. </summary>
     public partial class ParameterValue
     {
         /// <summary> Initializes a new instance of ParameterValue. </summary>

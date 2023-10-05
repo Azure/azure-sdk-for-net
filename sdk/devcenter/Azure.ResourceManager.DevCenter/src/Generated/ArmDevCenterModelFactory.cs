@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="networkConnectionId"> The resource ID of the NetworkConnection you want to attach. </param>
-        /// <param name="networkConnectionLocation"> The geo-location where the NetworkConnection resource specified in &apos;networkConnectionResourceId&apos; property lives. </param>
+        /// <param name="networkConnectionLocation"> The geo-location where the NetworkConnection resource specified in 'networkConnectionResourceId' property lives. </param>
         /// <param name="healthCheckStatus"> Health check status values. </param>
         /// <param name="domainJoinType"> AAD Join type of the network. This is populated based on the referenced Network Connection. </param>
         /// <returns> A new <see cref="DevCenter.AttachedNetworkConnectionData"/> instance for mocking. </returns>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </param>
+        /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </param>
         /// <param name="status"> Defines whether this Environment Type can be used in this Project. </param>
         /// <param name="roles"> The role definition assigned to the environment creator on backing resources. </param>
         /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of DevCenterEnvironmentRole. </summary>
-        /// <param name="roleName"> The common name of the Role Assignment. This is a descriptive name such as &apos;AcrPush&apos;. </param>
+        /// <param name="roleName"> The common name of the Role Assignment. This is a descriptive name such as 'AcrPush'. </param>
         /// <param name="description"> This is a description of the Role Assignment. </param>
         /// <returns> A new <see cref="Models.DevCenterEnvironmentRole"/> instance for mocking. </returns>
         public static DevCenterEnvironmentRole DevCenterEnvironmentRole(string roleName = null, string description = null)

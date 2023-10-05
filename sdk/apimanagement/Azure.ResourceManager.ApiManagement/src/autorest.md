@@ -5,13 +5,15 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
 require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/apimanagement/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -56,7 +58,7 @@ format-by-name-rules:
   'PrivateIPAddresses': 'ip-address'
   'PublicIPAddresses': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -267,6 +269,7 @@ rename-mapping:
   HostnameConfiguration.keyVaultId: keyVaultSecretUri
   ParameterContract.required: IsRequired
   SchemaType: ApiSchemaType
+  ApiRevisionContract.privateUrl: privateUrlString
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

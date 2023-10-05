@@ -19,8 +19,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The abstract recognize result. </summary>
         public RecognizeResult RecognizeResult { get; }
 
-        private static string SPEECH_DTMF_ERROR = "Speech or Dtmf Recognition return two results!";
-
         /// <summary>
         /// The recognition type.
         /// </summary>
@@ -75,21 +73,6 @@ namespace Azure.Communication.CallAutomation
             else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech)
             {
                 RecognizeResult = internalEvent.SpeechResult;
-            }
-            else if (internalEvent.RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
-            {
-                if (internalEvent.SpeechResult != null)
-                {
-                    RecognizeResult = internalEvent.SpeechResult;
-                }
-                else if (internalEvent.DtmfResult != null)
-                {
-                    RecognizeResult = internalEvent.DtmfResult;
-                }
-                else
-                {
-                    throw new Exception(SPEECH_DTMF_ERROR);
-                }
             }
         }
 

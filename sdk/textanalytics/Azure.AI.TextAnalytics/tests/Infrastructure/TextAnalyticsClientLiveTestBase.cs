@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
     TextAnalyticsClientOptions.ServiceVersion.V3_0,
     TextAnalyticsClientOptions.ServiceVersion.V3_1,
     TextAnalyticsClientOptions.ServiceVersion.V2022_05_01,
-    TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+    TextAnalyticsClientOptions.ServiceVersion.V2023_04_01)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
         private const int MaxRetriesCount = 12;

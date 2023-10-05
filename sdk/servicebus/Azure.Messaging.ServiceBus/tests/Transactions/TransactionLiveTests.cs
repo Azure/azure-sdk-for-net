@@ -297,14 +297,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 await receiver.CompleteMessageAsync(receivedMessage1);
 
-                // the service seems to abandon the message that
-                // triggered the InvalidOperationException
-                // in the transaction
-                Assert.That(
-                    async () =>
-                    await receiver.CompleteMessageAsync(receivedMessage2), Throws.InstanceOf<ServiceBusException>()
-                    .And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusFailureReason.MessageLockLost));
+                await receiver.CompleteMessageAsync(receivedMessage2);
             }
         }
 

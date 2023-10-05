@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void NullFunctionKeyThrowsException(string functionKey)
         {
-            Assert.Throws<ArgumentNullException>(() => new FunctionRuleCredential(functionKey));
+            Assert.Throws<ArgumentNullException>(() => new FunctionRouterRuleCredential(functionKey));
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void EmptyFunctionKeyThrowsException(string functionKey)
         {
-            Assert.Throws<ArgumentException>(() => new FunctionRuleCredential(functionKey));
+            Assert.Throws<ArgumentException>(() => new FunctionRouterRuleCredential(functionKey));
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             Assert.DoesNotThrow(() =>
             {
-                var funcCredential = new FunctionRuleCredential("functionKey");
+                var funcCredential = new FunctionRouterRuleCredential("functionKey");
                 Assert.AreEqual("functionKey", funcCredential.FunctionKey);
             });
         }
@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void EmptyAppKeyAndClientIdThrowsException(string appKey, string clientId)
         {
-            Assert.Throws<ArgumentException>(() => new FunctionRuleCredential(appKey, clientId));
+            Assert.Throws<ArgumentException>(() => new FunctionRouterRuleCredential(appKey, clientId));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Parallelizable(ParallelScope.All)]
         public void NullAppKeyAndClientIdThrowsException(string appKey, string clientId)
         {
-            Assert.Throws<ArgumentNullException>(() => new FunctionRuleCredential(appKey, clientId));
+            Assert.Throws<ArgumentNullException>(() => new FunctionRouterRuleCredential(appKey, clientId));
         }
     }
 }

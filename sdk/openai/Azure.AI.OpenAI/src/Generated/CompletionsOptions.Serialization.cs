@@ -12,7 +12,6 @@ namespace Azure.AI.OpenAI
 {
     public partial class CompletionsOptions : IUtf8JsonSerializable
     {
-
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()
         {

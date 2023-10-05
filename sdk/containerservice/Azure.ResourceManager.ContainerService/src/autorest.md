@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ContainerService
 namespace: Azure.ResourceManager.ContainerService
@@ -111,7 +110,7 @@ format-by-name-rules:
   'PrincipalId': 'uuid'
   'IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

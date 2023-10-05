@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerPipelineReference pipeline = default;
             string type = default;
             Optional<string> description = default;
-            Optional<FactoryTriggerRuntimeState> runtimeState = default;
+            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
-            IList<FactoryPipelineReference> dependsOn = default;
+            IList<DataFactoryPipelineReference> dependsOn = default;
             string runDimension = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new DataFactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"u8))
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("dependsOn"u8))
                         {
-                            List<FactoryPipelineReference> array = new List<FactoryPipelineReference>();
+                            List<DataFactoryPipelineReference> array = new List<DataFactoryPipelineReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FactoryPipelineReference.DeserializeFactoryPipelineReference(item));
+                                array.Add(DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(item));
                             }
                             dependsOn = array;
                             continue;

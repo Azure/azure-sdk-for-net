@@ -5,56 +5,13 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     public partial class ChatCompletions
     {
-        internal static ChatCompletions DeserializeChatCompletions(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string id = default;
-            int created = default;
-            IReadOnlyList<ChatChoice> choices = default;
-            CompletionsUsage usage = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("created"u8))
-                {
-                    created = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("choices"u8))
-                {
-                    List<ChatChoice> array = new List<ChatChoice>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ChatChoice.DeserializeChatChoice(item));
-                    }
-                    choices = array;
-                    continue;
-                }
-                if (property.NameEquals("usage"u8))
-                {
-                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
-                    continue;
-                }
-            }
-            return new ChatCompletions(id, created, choices, usage);
-        }
-
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatCompletions FromResponse(Response response)

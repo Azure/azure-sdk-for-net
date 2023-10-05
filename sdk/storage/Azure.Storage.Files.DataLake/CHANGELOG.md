@@ -1,6 +1,21 @@
 # Release History
 
-## 12.15.0-beta.1 (Unreleased)
+## 12.17.0-beta.1 (Unreleased)
+- Added support for service version 2023-11-03.
+- Added support for DataLakeClientOptions.Audience
+
+## 12.16.0 (2023-09-12)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-08-08)
+- Added support for service version 2023-05-03 and 2023-08-03.
+- Added support for paginated directory delete when using AAD authentication.  Note that this feature only applies to HNS storage accounts.
+
+## 12.15.0 (2023-07-11)
+- Includes all features from 12.15.0-beta.1.
+- Fixed bug where DatalakePathClient.Rename was using the filesystem name parameter for the destination path and vice versa.
+
+## 12.15.0-beta.1 (2023-05-30)
 - Added support for service version 2023-01-03.
 - Added Owner, Group, and Permissions properties to PathProperties.
 - Added EncryptionContext property to DataLakeFileUploadOptions.

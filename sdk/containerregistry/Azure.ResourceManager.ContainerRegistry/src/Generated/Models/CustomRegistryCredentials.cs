@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of CustomRegistryCredentials. </summary>
         /// <param name="userName"> The username for logging into the custom registry. </param>
         /// <param name="password">
-        /// The password for logging into the custom registry. The password is a secret 
+        /// The password for logging into the custom registry. The password is a secret
         /// object that allows multiple ways of providing the value for it.
         /// </param>
         /// <param name="identity">
         /// Indicates the managed identity assigned to the custom credential. If a user-assigned identity
         /// this value is the Client ID. If a system-assigned identity, the value will be `system`. In
         /// the case of a system-assigned identity, the Client ID will be determined by the runner. This
-        /// identity may be used to authenticate to key vault to retrieve credentials or it may be the only 
+        /// identity may be used to authenticate to key vault to retrieve credentials or it may be the only
         /// source of authentication used for accessing the registry.
         /// </param>
         internal CustomRegistryCredentials(ContainerRegistrySecretObject userName, ContainerRegistrySecretObject password, string identity)
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The username for logging into the custom registry. </summary>
         public ContainerRegistrySecretObject UserName { get; set; }
         /// <summary>
-        /// The password for logging into the custom registry. The password is a secret 
+        /// The password for logging into the custom registry. The password is a secret
         /// object that allows multiple ways of providing the value for it.
         /// </summary>
         public ContainerRegistrySecretObject Password { get; set; }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Indicates the managed identity assigned to the custom credential. If a user-assigned identity
         /// this value is the Client ID. If a system-assigned identity, the value will be `system`. In
         /// the case of a system-assigned identity, the Client ID will be determined by the runner. This
-        /// identity may be used to authenticate to key vault to retrieve credentials or it may be the only 
+        /// identity may be used to authenticate to key vault to retrieve credentials or it may be the only
         /// source of authentication used for accessing the registry.
         /// </summary>
         public string Identity { get; set; }

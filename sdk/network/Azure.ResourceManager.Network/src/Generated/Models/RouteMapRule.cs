@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The unique name for the rule. </param>
         /// <param name="matchCriteria"> List of matching criterion which will be applied to traffic. </param>
         /// <param name="actions"> List of actions which will be applied on a match. </param>
-        /// <param name="nextStepIfMatched"> Next step after rule is evaluated. Current supported behaviors are &apos;Continue&apos;(to next rule) and &apos;Terminate&apos;. </param>
+        /// <param name="nextStepIfMatched"> Next step after rule is evaluated. Current supported behaviors are 'Continue'(to next rule) and 'Terminate'. </param>
         internal RouteMapRule(string name, IList<RouteCriterion> matchCriteria, IList<RouteMapAction> actions, RouteMapNextStepBehavior? nextStepIfMatched)
         {
             Name = name;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public IList<RouteCriterion> MatchCriteria { get; }
         /// <summary> List of actions which will be applied on a match. </summary>
         public IList<RouteMapAction> Actions { get; }
-        /// <summary> Next step after rule is evaluated. Current supported behaviors are &apos;Continue&apos;(to next rule) and &apos;Terminate&apos;. </summary>
+        /// <summary> Next step after rule is evaluated. Current supported behaviors are 'Continue'(to next rule) and 'Terminate'. </summary>
         public RouteMapNextStepBehavior? NextStepIfMatched { get; set; }
     }
 }

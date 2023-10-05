@@ -218,7 +218,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             if (req.Method == HttpMethod.Options || req.Method == HttpMethod.Get)
             {
-                requestHosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).ToList();
+                requestHosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin)
+                    .SelectMany(x => x.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries))
+                    .ToList();
                 return true;
             }
             requestHosts = null;

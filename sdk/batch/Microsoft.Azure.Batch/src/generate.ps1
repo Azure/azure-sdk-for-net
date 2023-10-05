@@ -1,1 +1,2 @@
+#Start-AutoRestCodeGeneration -ResourceProvider "batch/data-plane" -AutoRestVersion "v2" -SpecsRepoFork "Azure" -SpecsRepoBranch "jingjlii-batch-Microsoft.Batch-2023-05-01.17.0"
 Start-AutoRestCodeGeneration -ResourceProvider "batch/data-plane" -AutoRestVersion "latest"

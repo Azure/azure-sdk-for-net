@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="unit"> The units used for the metric. </param>
         /// <param name="currentValue"> The current value of the metric. </param>
         /// <param name="limit"> The quota limit for the metric. </param>
-        /// <param name="nextResetOn"> The time that the metric&apos;s value will reset. </param>
+        /// <param name="nextResetOn"> The time that the metric's value will reset. </param>
         /// <param name="quotaPeriod"> The quota period that determines the length of time between value resets. </param>
         internal OperationalInsightsUsageMetric(OperationalInsightsMetricName name, string unit, double? currentValue, double? limit, DateTimeOffset? nextResetOn, string quotaPeriod)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public double? CurrentValue { get; }
         /// <summary> The quota limit for the metric. </summary>
         public double? Limit { get; }
-        /// <summary> The time that the metric&apos;s value will reset. </summary>
+        /// <summary> The time that the metric's value will reset. </summary>
         public DateTimeOffset? NextResetOn { get; }
         /// <summary> The quota period that determines the length of time between value resets. </summary>
         public string QuotaPeriod { get; }

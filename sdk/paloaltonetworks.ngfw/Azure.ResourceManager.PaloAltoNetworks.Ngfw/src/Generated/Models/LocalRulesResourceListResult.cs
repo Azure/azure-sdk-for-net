@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of LocalRulesResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LocalRulesResourceListResult(IEnumerable<LocalRulesResourceData> value)
+        internal LocalRulesResourceListResult(IEnumerable<LocalRulestackRuleData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of LocalRulesResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal LocalRulesResourceListResult(IReadOnlyList<LocalRulesResourceData> value, string nextLink)
+        internal LocalRulesResourceListResult(IReadOnlyList<LocalRulestackRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<LocalRulesResourceData> Value { get; }
+        public IReadOnlyList<LocalRulestackRuleData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

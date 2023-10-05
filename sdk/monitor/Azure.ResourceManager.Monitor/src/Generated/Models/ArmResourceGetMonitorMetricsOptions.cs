@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
         }
 
-        /// <summary> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </summary>
+        /// <summary> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </summary>
         public string Timespan { get; set; }
         /// <summary> The interval (i.e. timegrain) of the query. </summary>
         public TimeSpan? Interval { get; set; }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Orderby { get; set; }
         /// <summary> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </summary>
         public string Filter { get; set; }
-        /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation&apos;s description for details. </summary>
+        /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </summary>
         public MonitorResultType? ResultType { get; set; }
         /// <summary> Metric namespace where the metrics you want reside. </summary>
         public string Metricnamespace { get; set; }

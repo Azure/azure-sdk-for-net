@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set will be evaluated as &apos;true&apos;, will the event trigger the defined actions. </summary>
+    /// <summary> A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set will be evaluated as 'true', will the event trigger the defined actions. </summary>
     public partial class SecurityAutomationRuleSet
     {
         /// <summary> Initializes a new instance of SecurityAutomationRuleSet. </summary>

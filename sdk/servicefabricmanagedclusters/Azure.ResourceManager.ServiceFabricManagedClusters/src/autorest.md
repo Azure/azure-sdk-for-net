@@ -5,17 +5,22 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-require: https://github.com/Azure/azure-rest-api-specs/blob/53b1affe357b3bfbb53721d0a2002382a046d3b0/specification/servicefabricmanagedclusters/resource-manager/readme.md
-tag: package-2022-01
+require:  https://github.com/Azure/azure-rest-api-specs/blob/da459cd725e11aa72e7fbc3b65d523b6e2b6453b/specification/servicefabricmanagedclusters/resource-manager/readme.md
+# tag: package-2023-03-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
@@ -29,7 +34,15 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+models-to-treat-empty-string-as-null:
+  - ManagedClusterSubnet
+  - NodeTypeFrontendConfiguration
+  - ServiceFabricManagedClusterData
+  - ServiceFabricManagedClusterVersion
+  - ServiceFabricManagedNodeTypeData
+  - VmManagedIdentity
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -60,6 +73,7 @@ override-operation-name:
   managedUnsupportedVMSizes_Get: GetManagedUnsupportedVmSize
   managedUnsupportedVMSizes_List: GetManagedUnsupportedVmSizes
   ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
+  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
 
 rename-mapping:
   ApplicationResource: ServiceFabricManagedApplication
@@ -146,6 +160,12 @@ rename-mapping:
   ServicePlacementPolicy: ManagedServicePlacementPolicy
   ManagedVMSize: ServiceFabricManagedUnsupportedVmSize
   AddRemoveIncrementalNamedPartitionScalingMechanism: NamedPartitionAddOrRemoveScalingMechanism
+  NodeType.properties.enableNodePublicIP: IsNodePublicIPEnabled
+  NodeType.properties.secureBootEnabled: IsSecureBootEnabled
+  EvictionPolicyType: SpotNodeVmEvictionPolicyType
+  ResourceAzStatus.resourceType: -|resource-type
+  SecurityType: ServiceFabricManagedClusterSecurityType
+  UpdateType: ServiceFabricManagedClusterUpdateType
 
 directive:
   - remove-operation: OperationStatus_Get

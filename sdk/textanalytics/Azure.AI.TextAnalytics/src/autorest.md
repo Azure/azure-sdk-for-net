@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/72664c83300dfaf6782e22822a5aae0b0df92735/specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/analyzetext.json
+- https://github.com/Azure/azure-rest-api-specs/blob/53240ebc58b3c4e99de723194032064db1d97e63/specification/cognitiveservices/data-plane/Language/stable/2023-04-01/analyzetext.json
 generation1-convenience-client: true
 ```
 
@@ -74,21 +74,4 @@ directive:
   transform: >
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
-```
-
-### Remove BooleanResolution
-
-BooleanResolution is not supported in Text Analytics.
-
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions
-  transform: >
-    delete $["BooleanResolution"]
-- from: swagger-document
-  where: $.definitions.BaseResolution.properties.resolutionKind.enum
-  transform: >
-    $.splice($.indexOf("BooleanResolution"), 1);
-    return $;
 ```

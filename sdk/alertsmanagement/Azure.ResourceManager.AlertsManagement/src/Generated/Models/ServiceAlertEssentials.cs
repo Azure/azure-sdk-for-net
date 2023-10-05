@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="startOn"> Creation time(ISO-8601 format) of alert instance. </param>
         /// <param name="lastModifiedOn"> Last modification time(ISO-8601 format) of alert instance. </param>
         /// <param name="monitorConditionResolvedOn"> Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met. </param>
-        /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be &apos;system&apos;, otherwise name of the user. </param>
+        /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </param>
         /// <param name="actionStatus"> Action status. </param>
         /// <param name="description"> Alert description. </param>
         internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met. </summary>
         public DateTimeOffset? MonitorConditionResolvedOn { get; }
-        /// <summary> User who last modified the alert, in case of monitor service updates user would be &apos;system&apos;, otherwise name of the user. </summary>
+        /// <summary> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </summary>
         public string LastModifiedBy { get; }
         /// <summary> Action status. </summary>
         internal ServiceAlertActionStatus ActionStatus { get; set; }

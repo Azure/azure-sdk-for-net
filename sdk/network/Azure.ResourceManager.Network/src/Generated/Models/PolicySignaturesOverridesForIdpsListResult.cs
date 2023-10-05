@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsListResult. </summary>
-        /// <param name="value"> Describes a list consisting exactly one item describing the policy&apos;s signature override status. </param>
+        /// <param name="value"> Describes a list consisting exactly one item describing the policy's signature override status. </param>
         internal PolicySignaturesOverridesForIdpsListResult(IReadOnlyList<PolicySignaturesOverridesForIdpsData> value)
         {
             Value = value;
         }
 
-        /// <summary> Describes a list consisting exactly one item describing the policy&apos;s signature override status. </summary>
+        /// <summary> Describes a list consisting exactly one item describing the policy's signature override status. </summary>
         public IReadOnlyList<PolicySignaturesOverridesForIdpsData> Value { get; }
     }
 }

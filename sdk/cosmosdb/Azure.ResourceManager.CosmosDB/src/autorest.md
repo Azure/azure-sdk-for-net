@@ -6,18 +6,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/c1bf995dbab472761ba4da53ed33c7b621ff8bd9/specification/cosmos-db/resource-manager/readme.md
-tag: package-preview-2022-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/44e83346defd3d4ca99efade8b1ee90c67d9f249/specification/cosmos-db/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
+  lenient-model-deduplication: true
 # mgmt-debug:
 #   show-serialized-names: true
 
@@ -89,7 +87,7 @@ format-by-name-rules:
   'partitionId': 'uuid'
   'instanceId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -121,6 +119,7 @@ override-operation-name:
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
   RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
   RestorableSqlResources_List: GetAllRestorableSqlResourceData
+  MongoClusters_CheckNameAvailability: CheckMongoClusterNameAailability
 
 rename-mapping:
   MongoRoleDefinitionGetResults: MongoDBRoleDefinition
@@ -302,6 +301,11 @@ rename-mapping:
   PrivilegeResource.db: DBName
   MinimalTlsVersion: CosmosDBMinimalTlsVersion
   BackupResource: CassandraClusterBackupResource
+  CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
+  CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
+  CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
+  NodeGroupProperties.diskSizeGB: DiskSizeInGB
+  IpAddressOrRange: CosmosDBIPAddressOrRange
 
 prepend-rp-prefix:
 - UniqueKey
@@ -316,7 +320,6 @@ prepend-rp-prefix:
 - MetricAvailability
 - LocationProperties
 - LocationListResult
-- IPAddressOrRange
 - DataType
 - IndexingPolicy
 - ExcludedPath
@@ -336,6 +339,11 @@ prepend-rp-prefix:
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
+- FirewallRule
+- Status
+- ProvisioningState
+- Type
+- ConnectionString
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
@@ -378,6 +386,7 @@ directive:
     $.MetricDefinition.properties.resourceUri['x-ms-client-name'] = 'ResourceId';
     $.MetricDefinition.properties.resourceUri['x-ms-format'] = 'arm-id';
     $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
+    $.DatabaseAccountConnectionString.properties.type['x-ms-client-name'] = 'KeyType';
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put

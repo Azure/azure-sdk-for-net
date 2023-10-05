@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a Trigger 
+        /// Create a Trigger
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a Trigger 
+        /// Create a Trigger
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

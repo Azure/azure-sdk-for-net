@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: ProviderHub
 namespace: Azure.ResourceManager.ProviderHub
@@ -13,6 +12,9 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462
 tag: package-2020-11-20
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -64,6 +66,7 @@ rename-mapping:
   ResourceTypeRegistrationProperties.enableAsyncOperation: IsAsyncOperationEnabled
   ResourceTypeRegistrationProperties.enableThirdPartyS2S: IsThirdPartyS2SEnabled
   TemplateDeploymentOptions.preflightSupported: IsPreflightSupported
+  SkuLocationInfo.type: ExtendedLocationType
 
 prepend-rp-prefix:
   - ExtendedLocationOptions
@@ -77,7 +80,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

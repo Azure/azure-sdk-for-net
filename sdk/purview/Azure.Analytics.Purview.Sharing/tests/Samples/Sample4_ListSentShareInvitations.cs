@@ -22,14 +22,14 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://my-account-name.purview.azure.com/share";
+            var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var sentShareClient = new SentSharesClient(endPoint, credential);
 
-            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId").ToEnumerableAsync();
+            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId", null, null, new()).ToEnumerableAsync();
 #else
             var sentShareClient = GetSentSharesClient();
 
-            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("9393cfc1-7300-4159-aeff-277b2026846a").ToEnumerableAsync();
+            List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("fe11781e-9a7d-488d-bd22-cc2c95536e96", null, null, new()).ToEnumerableAsync();
 #endif
 
             #endregion

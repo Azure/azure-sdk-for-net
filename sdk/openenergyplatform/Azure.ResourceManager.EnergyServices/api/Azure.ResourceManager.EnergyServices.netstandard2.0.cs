@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.EnergyServices
         public virtual Azure.Pageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EnergyServices.EnergyServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EnergyServices.EnergyServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EnergyServices.EnergyServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.EnergyServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -60,6 +62,14 @@ namespace Azure.ResourceManager.EnergyServices
 }
 namespace Azure.ResourceManager.EnergyServices.Models
 {
+    public static partial class ArmEnergyServicesModelFactory
+    {
+        public static Azure.ResourceManager.EnergyServices.Models.DataPartition DataPartition(string name = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult DataPartitionsListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.Models.DataPartition> dataPartitionInfo = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.EnergyServiceData EnergyServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult EnergyServiceNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason? reason = default(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties EnergyServiceProperties(string dnsName = null, Azure.ResourceManager.EnergyServices.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.EnergyServices.Models.ProvisioningState?), string authAppId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.Models.DataPartitionName> dataPartitionNames = null) { throw null; }
+    }
     public partial class DataPartition
     {
         internal DataPartition() { }

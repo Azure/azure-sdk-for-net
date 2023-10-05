@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of BlobInventoryPolicySchema. </summary>
         /// <param name="isEnabled"> Policy is enabled if set to true. </param>
-        /// <param name="destination"> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level &apos;policy.rule.destination&apos;. </param>
+        /// <param name="destination"> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </param>
         /// <param name="ruleType"> The valid value is Inventory. </param>
         /// <param name="rules"> The storage account blob inventory policy rules. The rule is applied when it is enabled. </param>
         internal BlobInventoryPolicySchema(bool isEnabled, string destination, BlobInventoryRuleType ruleType, IList<BlobInventoryPolicyRule> rules)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Policy is enabled if set to true. </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level &apos;policy.rule.destination&apos;. </summary>
+        /// <summary> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </summary>
         public string Destination { get; }
         /// <summary> The valid value is Inventory. </summary>
         public BlobInventoryRuleType RuleType { get; set; }

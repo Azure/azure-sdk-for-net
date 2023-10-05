@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user&apos;s information on a Data Box Edge/Data Box Gateway device.
+        /// Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user&apos;s information on a Data Box Edge/Data Box Gateway device.
+        /// Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -221,14 +222,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;Type eq &lt;type&gt;&apos; to filter on user type property. </param>
+        /// <param name="filter"> Specify $filter='Type eq &lt;type&gt;' to filter on user type property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeUserResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeUserResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,14 +245,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;Type eq &lt;type&gt;&apos; to filter on user type property. </param>
+        /// <param name="filter"> Specify $filter='Type eq &lt;type&gt;' to filter on user type property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeUserResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeUserResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeUserUsersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeUserResource(Client, DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(e)), _dataBoxEdgeUserUsersClientDiagnostics, Pipeline, "DataBoxEdgeUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,6 +317,80 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 var response = _dataBoxEdgeUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The user name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataBoxEdgeUserResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _dataBoxEdgeUserUsersClientDiagnostics.CreateScope("DataBoxEdgeUserCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataBoxEdgeUserUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeUserResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeUserResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The user name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DataBoxEdgeUserResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _dataBoxEdgeUserUsersClientDiagnostics.CreateScope("DataBoxEdgeUserCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataBoxEdgeUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxEdgeUserResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxEdgeUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

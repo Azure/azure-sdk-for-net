@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For schedules like: &apos;recur every month on the 15th&apos; or &apos;recur every 3 months on the 20th&apos;. </summary>
+    /// <summary> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </summary>
     public partial class ContainerServiceMaintenanceAbsoluteMonthlySchedule
     {
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceAbsoluteMonthlySchedule. </summary>

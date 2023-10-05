@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Model class for event details of a A2A event. </summary>
-    public partial class A2AEventDetails : EventProviderSpecificDetails
+    public partial class A2AEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of A2AEventDetails. </summary>
         internal A2AEventDetails()
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricLocation"> The fabric location. </param>
         /// <param name="remoteFabricName"> Remote fabric arm name. </param>
         /// <param name="remoteFabricLocation"> Remote fabric location. </param>
-        internal A2AEventDetails(string instanceType, string protectedItemName, string fabricObjectId, string fabricName, string fabricLocation, string remoteFabricName, string remoteFabricLocation) : base(instanceType)
+        internal A2AEventDetails(string instanceType, string protectedItemName, ResourceIdentifier fabricObjectId, string fabricName, AzureLocation? fabricLocation, string remoteFabricName, AzureLocation? remoteFabricLocation) : base(instanceType)
         {
             ProtectedItemName = protectedItemName;
             FabricObjectId = fabricObjectId;
@@ -38,14 +40,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The protected item arm name. </summary>
         public string ProtectedItemName { get; }
         /// <summary> The azure vm arm id. </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary> Fabric arm name. </summary>
         public string FabricName { get; }
         /// <summary> The fabric location. </summary>
-        public string FabricLocation { get; }
+        public AzureLocation? FabricLocation { get; }
         /// <summary> Remote fabric arm name. </summary>
         public string RemoteFabricName { get; }
         /// <summary> Remote fabric location. </summary>
-        public string RemoteFabricLocation { get; }
+        public AzureLocation? RemoteFabricLocation { get; }
     }
 }

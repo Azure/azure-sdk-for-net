@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01";
+            _apiVersion = apiVersion ?? "2023-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Will update the status of policy&apos;s signature overrides for IDPS. </summary>
+        /// <summary> Will update the status of policy's signature overrides for IDPS. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Will update the status of policy&apos;s signature overrides for IDPS. </summary>
+        /// <summary> Will update the status of policy's signature overrides for IDPS. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Will override/create a new signature overrides for the policy&apos;s IDPS. </summary>
+        /// <summary> Will override/create a new signature overrides for the policy's IDPS. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Will override/create a new signature overrides for the policy&apos;s IDPS. </summary>
+        /// <summary> Will override/create a new signature overrides for the policy's IDPS. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>

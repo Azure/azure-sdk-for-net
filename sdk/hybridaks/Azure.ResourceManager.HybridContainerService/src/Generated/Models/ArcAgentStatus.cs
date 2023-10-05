@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ArcAgentStatus. </summary>
-        /// <param name="deploymentState"> Observed deployment state of the Arc Agents on the target cluster. Possible values include: &apos;pending&apos;, &apos;provisioning&apos;, &apos;provisioned&apos;, &apos;deleting&apos;, &apos;failed&apos;, &apos;upgrading&apos;. </param>
+        /// <param name="deploymentState"> Observed deployment state of the Arc Agents on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
         /// <param name="errorMessage"> Error messages while onboarding/upgrading/uninstalling the Arc agents. </param>
         /// <param name="onboardingPublicKey"> Onboarding public key for provisioning the Managed identity for the HybridAKS cluster. Will be used to create the hybridIdentityMetadata proxy resource and will not be persisted. </param>
         /// <param name="agentVersion"> Version of the Arc agents currently running on the Provisioned cluster resource. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             LastConnectivityOn = lastConnectivityOn;
         }
 
-        /// <summary> Observed deployment state of the Arc Agents on the target cluster. Possible values include: &apos;pending&apos;, &apos;provisioning&apos;, &apos;provisioned&apos;, &apos;deleting&apos;, &apos;failed&apos;, &apos;upgrading&apos;. </summary>
+        /// <summary> Observed deployment state of the Arc Agents on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioned', 'deleting', 'failed', 'upgrading'. </summary>
         public DeploymentState? DeploymentState { get; }
         /// <summary> Error messages while onboarding/upgrading/uninstalling the Arc agents. </summary>
         public string ErrorMessage { get; }

@@ -28,6 +28,33 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
+        /// An event that is raised when the message lock is lost. This event is only raised for the scope of the Process Message handler,
+        /// and only for the message that is delivered to the handler - it is not raised for any additional messages received via the ProcessorReceiveActions.
+        /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
+        /// <list type="numbered">
+        ///     <item>
+        ///         <description>When the message lock has expired based on the <see cref="ServiceBusReceivedMessage.LockedUntil"/> property</description>
+        ///     </item>
+        ///     <item>
+        ///         <description>When a non-transient exception occurs while attempting to renew the message lock.</description>
+        ///     </item>
+        /// </list>
+        /// </summary>
+        public event Func<MessageLockLostEventArgs, Task> MessageLockLostAsync;
+
+        internal CancellationTokenSource MessageLockLostCancellationSource { get; }
+
+        /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
+        /// renew the lock or the <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed.
+        /// </summary>
+        /// <remarks>The cancellation token is triggered by comparing <see cref="ServiceBusReceivedMessage.LockedUntil"/>
+        /// against <see cref="DateTimeOffset.UtcNow"/> and might be subjected to clock drift.</remarks>
+        internal CancellationToken MessageLockCancellationToken { get; }
+
+        internal Exception LockLostException { get; set; }
+
+        /// <summary>
         /// The path of the Service Bus entity that the message was received from.
         /// </summary>
         public string EntityPath => _receiver.EntityPath;
@@ -88,7 +115,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         internal ProcessMessageEventArgs(
             ServiceBusReceivedMessage message,
             ReceiverManager manager,
@@ -100,8 +126,13 @@ namespace Azure.Messaging.ServiceBus
             _receiver = manager?.Receiver;
             CancellationToken = cancellationToken;
 
+            MessageLockLostCancellationSource = new CancellationTokenSource();
+            MessageLockCancellationToken = MessageLockLostCancellationSource.Token;
+
+            MessageLockLostCancellationSource.CancelAfterLockExpired(Message);
+
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
-            _receiveActions = new ProcessorReceiveActions(message, manager, autoRenew);
+            _receiveActions = new ProcessorReceiveActions(this, manager, autoRenew);
         }
 
         /// <summary>
@@ -122,6 +153,13 @@ namespace Azure.Messaging.ServiceBus
         {
             Identifier = identifier;
         }
+
+        /// <summary>
+        /// Invokes the message lock lost event handler after a message lock is lost.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the lock lost event.</param>
+        protected internal virtual Task OnMessageLockLostAsync(MessageLockLostEventArgs args) => MessageLockLostAsync?.Invoke(args) ?? Task.CompletedTask;
 
         ///<inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task AbandonMessageAsync(
@@ -214,6 +252,12 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await _receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
+
+            // Currently only the trigger message supports cancellation token for LockedUntil.
+            if (message == Message)
+            {
+                MessageLockLostCancellationSource.CancelAfterLockExpired(Message);
+            }
         }
 
         /// <summary>
@@ -223,6 +267,22 @@ namespace Azure.Messaging.ServiceBus
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
 
-        internal async Task CancelMessageLockRenewalAsync() => await _receiveActions.CancelMessageLockRenewalAsync().ConfigureAwait(false);
+        internal async Task CancelMessageLockRenewalAsync()
+        {
+            try
+            {
+                await _receiveActions.CancelMessageLockRenewalAsync().ConfigureAwait(false);
+            }
+            finally
+            {
+                MessageLockLostCancellationSource.Dispose();
+            }
+        }
+
+        internal CancellationTokenRegistration RegisterMessageLockLostHandler() =>
+            MessageLockCancellationToken.Register(
+                () => OnMessageLockLostAsync(new MessageLockLostEventArgs(
+                    Message,
+                    LockLostException)));
     }
 }

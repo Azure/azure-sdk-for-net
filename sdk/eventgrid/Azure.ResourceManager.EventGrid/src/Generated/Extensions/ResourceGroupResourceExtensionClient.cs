@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,11 +53,11 @@ namespace Azure.ResourceManager.EventGrid
             return GetCachedClient(Client => new EventGridDomainCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
-        public virtual EventGridTopicCollection GetEventGridTopics()
+        /// <summary> Gets a collection of EventGridNamespaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EventGridNamespaceResources and their operations over a EventGridNamespaceResource. </returns>
+        public virtual EventGridNamespaceCollection GetEventGridNamespaces()
         {
-            return GetCachedClient(Client => new EventGridTopicCollection(Client, Id));
+            return GetCachedClient(Client => new EventGridNamespaceCollection(Client, Id));
         }
 
         /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
@@ -64,6 +65,13 @@ namespace Azure.ResourceManager.EventGrid
         public virtual PartnerConfigurationResource GetPartnerConfiguration()
         {
             return new PartnerConfigurationResource(Client, Id.AppendProviderResource("Microsoft.EventGrid", "partnerConfigurations", "default"));
+        }
+
+        /// <summary> Gets a collection of PartnerDestinationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PartnerDestinationResources and their operations over a PartnerDestinationResource. </returns>
+        public virtual PartnerDestinationCollection GetPartnerDestinations()
+        {
+            return GetCachedClient(Client => new PartnerDestinationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of PartnerNamespaceResources in the ResourceGroupResource. </summary>
@@ -94,6 +102,13 @@ namespace Azure.ResourceManager.EventGrid
             return GetCachedClient(Client => new SystemTopicCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of EventGridTopicResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EventGridTopicResources and their operations over a EventGridTopicResource. </returns>
+        public virtual EventGridTopicCollection GetEventGridTopics()
+        {
+            return GetCachedClient(Client => new EventGridTopicCollection(Client, Id));
+        }
+
         /// <summary>
         /// List event types for a topic.
         /// <list type="bullet">
@@ -115,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -139,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<EventTypeUnderTopic> GetEventTypes(string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListEventTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, providerNamespace, resourceTypeName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, EventGridTopicTopicsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

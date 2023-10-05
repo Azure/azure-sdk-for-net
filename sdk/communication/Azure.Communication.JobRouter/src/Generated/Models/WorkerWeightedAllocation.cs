@@ -12,33 +12,33 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Contains the weight percentage and label selectors to be applied if selected for weighted distributions. </summary>
+    /// <summary> Contains the weight percentage and worker selectors to be applied if selected for weighted distributions. </summary>
     public partial class WorkerWeightedAllocation
     {
         /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="labelSelectors"> A collection of label selectors that will be applied if this allocation is selected. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labelSelectors"/> is null. </exception>
-        public WorkerWeightedAllocation(double weight, IEnumerable<WorkerSelector> labelSelectors)
+        /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerSelectors"/> is null. </exception>
+        public WorkerWeightedAllocation(double weight, IEnumerable<RouterWorkerSelector> workerSelectors)
         {
-            Argument.AssertNotNull(labelSelectors, nameof(labelSelectors));
+            Argument.AssertNotNull(workerSelectors, nameof(workerSelectors));
 
             Weight = weight;
-            LabelSelectors = labelSelectors.ToList();
+            WorkerSelectors = workerSelectors.ToList();
         }
 
         /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="labelSelectors"> A collection of label selectors that will be applied if this allocation is selected. </param>
-        internal WorkerWeightedAllocation(double weight, IList<WorkerSelector> labelSelectors)
+        /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
+        internal WorkerWeightedAllocation(double weight, IList<RouterWorkerSelector> workerSelectors)
         {
             Weight = weight;
-            LabelSelectors = labelSelectors;
+            WorkerSelectors = workerSelectors;
         }
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>
         public double Weight { get; set; }
-        /// <summary> A collection of label selectors that will be applied if this allocation is selected. </summary>
-        public IList<WorkerSelector> LabelSelectors { get; }
+        /// <summary> A collection of worker selectors that will be applied if this allocation is selected. </summary>
+        public IList<RouterWorkerSelector> WorkerSelectors { get; }
     }
 }

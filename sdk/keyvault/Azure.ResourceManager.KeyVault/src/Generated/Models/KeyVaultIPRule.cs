@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class KeyVaultIPRule
     {
         /// <summary> Initializes a new instance of KeyVaultIPRule. </summary>
-        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as &apos;124.56.78.91&apos; (simple IP address) or &apos;124.56.78.0/24&apos; (all addresses that start with 124.56.78). </param>
+        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressRange"/> is null. </exception>
         public KeyVaultIPRule(string addressRange)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             AddressRange = addressRange;
         }
 
-        /// <summary> An IPv4 address range in CIDR notation, such as &apos;124.56.78.91&apos; (simple IP address) or &apos;124.56.78.0/24&apos; (all addresses that start with 124.56.78). </summary>
+        /// <summary> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </summary>
         public string AddressRange { get; set; }
     }
 }

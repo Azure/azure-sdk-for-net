@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
         /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
@@ -46,6 +46,8 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
         public string AzureCognitiveServicesEndpointUrl { get; set; }
         /// <summary> Used by customer to send custom context to targets. </summary>

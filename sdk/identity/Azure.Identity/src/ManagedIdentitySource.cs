@@ -49,11 +49,12 @@ namespace Azure.Identity
             Exception exception = null;
             try
             {
-                using JsonDocument json = async
-                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                    : JsonDocument.Parse(response.ContentStream);
                 if (response.Status == 200)
                 {
+                    using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+
                     return GetTokenFromResponse(json.RootElement);
                 }
             }
@@ -64,6 +65,17 @@ namespace Azure.Identity
             catch (Exception e)
             {
                 exception = e;
+            }
+
+            //This is a special case for Docker Desktop which responds with a 403 with a message that contains "A socket operation was attempted to an unreachable network"
+            // rather than just timing out, as expected.
+            if (response.Status == 403)
+            {
+                string message = response.Content.ToString();
+                if (message.Contains("A socket operation was attempted to an unreachable network"))
+                {
+                    throw new CredentialUnavailableException(UnexpectedResponse, new Exception(message));
+                }
             }
 
             throw new RequestFailedException(response, exception);
@@ -82,12 +94,19 @@ namespace Azure.Identity
             {
                 return null;
             }
-            response.ContentStream.Position = 0;
-            using JsonDocument json = async
-                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                : JsonDocument.Parse(response.ContentStream);
+            try
+            {
+                response.ContentStream.Position = 0;
+                using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
 
-            return GetMessageFromResponse(json.RootElement);
+                return GetMessageFromResponse(json.RootElement);
+            }
+            catch // parsing failed
+            {
+                return "Response was not in a valid json format.";
+            }
         }
 
         protected static string GetMessageFromResponse(in JsonElement root)
@@ -151,6 +170,7 @@ namespace Azure.Identity
                 return message.Response.Status switch
                 {
                     404 => true,
+                    410 => true,
                     502 => false,
                     _ => base.IsRetriableResponse(message)
                 };

@@ -16,12 +16,15 @@ namespace Azure.Storage.Shared
 
         public virtual StorageSharedKeyCredential SharedKeyCredential { get; private set; }
 
-        public virtual TokenCredential OAuthTokenCredential { get; private set; }
+        public virtual TokenCredential TokenCredential { get; private set; }
 
         public virtual AzureSasCredential SasCredential { get; private set; }
 
         public virtual ClientDiagnostics ClientDiagnostics { get; private set; }
 
+        /// <summary>
+        /// Create a <see cref="StorageClientConfiguration"/> with shared key authentication.
+        /// </summary>
         public StorageClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
@@ -31,6 +34,9 @@ namespace Azure.Storage.Shared
             SharedKeyCredential = sharedKeyCredential;
         }
 
+        /// <summary>
+        /// Create a <see cref="StorageClientConfiguration"/> with SAS authentication.
+        /// </summary>
         public StorageClientConfiguration(
             HttpPipeline pipeline,
             AzureSasCredential sasCredential,
@@ -40,15 +46,21 @@ namespace Azure.Storage.Shared
             SasCredential = sasCredential;
         }
 
+        /// <summary>
+        /// Create a <see cref="StorageClientConfiguration"/> with token authentication.
+        /// </summary>
         public StorageClientConfiguration(
             HttpPipeline pipeline,
             TokenCredential tokenCredential,
             ClientDiagnostics clientDiagnostics)
             : this(pipeline, clientDiagnostics)
         {
-            OAuthTokenCredential = tokenCredential;
+            TokenCredential = tokenCredential;
         }
 
+        /// <summary>
+        /// Only use for creating a deep copy of a <see cref="StorageClientConfiguration"/>.
+        /// </summary>
         internal StorageClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
@@ -59,10 +71,14 @@ namespace Azure.Storage.Shared
             Pipeline = pipeline;
             SharedKeyCredential = sharedKeyCredential;
             SasCredential = sasCredential;
-            OAuthTokenCredential = tokenCredential;
+            TokenCredential = tokenCredential;
             ClientDiagnostics = clientDiagnostics;
         }
 
+        /// <summary>
+        /// Create a <see cref="StorageClientConfiguration"/> without authentication,
+        /// or with SAS that was provided as part of the URL.
+        /// </summary>
         internal StorageClientConfiguration(
             HttpPipeline pipeline,
             ClientDiagnostics clientDiagnostics)

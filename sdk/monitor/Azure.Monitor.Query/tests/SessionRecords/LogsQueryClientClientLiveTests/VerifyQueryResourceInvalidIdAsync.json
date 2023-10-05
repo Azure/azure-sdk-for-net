@@ -1,9 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "DateTimeOffsetNow": "2023-05-19T15:40:47.0329412-07:00",
-    "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "WORKSPACE_PRIMARY_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-query16/providers/Microsoft.OperationalInsights/workspaces/query16-logs"
-  }
-}

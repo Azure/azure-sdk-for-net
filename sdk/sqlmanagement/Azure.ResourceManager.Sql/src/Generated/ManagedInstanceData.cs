@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="provisioningState"></param>
         /// <param name="managedInstanceCreateMode">
         /// Specifies the mode of database creation.
-        /// 
+        ///
         /// Default: Regular instance creation.
-        /// 
+        ///
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the managed instance. </param>
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="administratorLoginPassword"> The administrator login password (required for managed instance creation). </param>
         /// <param name="subnetId"> Subnet resource ID for the managed instance. </param>
         /// <param name="state"> The state of the managed instance. </param>
-        /// <param name="licenseType"> The license type. Possible values are &apos;LicenseIncluded&apos; (regular price inclusive of a new SQL license) and &apos;BasePrice&apos; (discounted AHB price for bringing your own SQL licenses). </param>
+        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
         /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
         /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
-        /// <param name="dnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
+        /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
         /// <param name="isPublicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
         /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
         /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.Sql
         /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
         /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
         /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// An example of valid timezone id is &quot;Pacific Standard Time&quot; or &quot;W. Europe Standard Time&quot;.
+        /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
         /// </param>
         /// <param name="instancePoolId"> The Id of the instance pool this managed server belongs to. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="servicePrincipal"> The managed instance&apos;s service principal. </param>
-        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="servicePrincipal"> The managed instance's service principal. </param>
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
             StorageSizeInGB = storageSizeInGB;
             Collation = collation;
             DnsZone = dnsZone;
-            DnsZonePartner = dnsZonePartner;
+            ManagedDnsZonePartner = managedDnsZonePartner;
             IsPublicDataEndpointEnabled = isPublicDataEndpointEnabled;
             SourceManagedInstanceId = sourceManagedInstanceId;
             RestorePointInTime = restorePointInTime;
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Sql
         public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Specifies the mode of database creation.
-        /// 
+        ///
         /// Default: Regular instance creation.
-        /// 
+        ///
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </summary>
         public ManagedServerCreateMode? ManagedInstanceCreateMode { get; set; }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> The state of the managed instance. </summary>
         public string State { get; }
-        /// <summary> The license type. Possible values are &apos;LicenseIncluded&apos; (regular price inclusive of a new SQL license) and &apos;BasePrice&apos; (discounted AHB price for bringing your own SQL licenses). </summary>
+        /// <summary> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </summary>
         public ManagedInstanceLicenseType? LicenseType { get; set; }
         /// <summary> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </summary>
         public int? VCores { get; set; }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The Dns Zone that the managed instance is in. </summary>
         public string DnsZone { get; }
         /// <summary> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </summary>
-        public string DnsZonePartner { get; set; }
+        public ResourceIdentifier ManagedDnsZonePartner { get; set; }
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         public bool? IsPublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql
         /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
         /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
         /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// An example of valid timezone id is &quot;Pacific Standard Time&quot; or &quot;W. Europe Standard Time&quot;.
+        /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
         /// </summary>
         public string TimezoneId { get; set; }
         /// <summary> The Id of the instance pool this managed server belongs to. </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> List of private endpoint connections on a managed instance. </summary>
         public IReadOnlyList<ManagedInstancePecProperty> PrivateEndpointConnections { get; }
-        /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
+        /// <summary> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </summary>
         public string MinimalTlsVersion { get; set; }
         /// <summary> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
         public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
         public Uri KeyId { get; set; }
         /// <summary> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </summary>
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
-        /// <summary> The managed instance&apos;s service principal. </summary>
+        /// <summary> The managed instance's service principal. </summary>
         public SqlServicePrincipal ServicePrincipal { get; set; }
     }
 }

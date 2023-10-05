@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "TumblingWindowTriggerDependencyReference": return TumblingWindowTriggerDependencyReference.DeserializeTumblingWindowTriggerDependencyReference(element);
                 }
             }
-            FactoryTriggerReference referenceTrigger = default;
+            DataFactoryTriggerReference referenceTrigger = default;
             string type = "TriggerDependencyReference";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("referenceTrigger"u8))
                 {
-                    referenceTrigger = FactoryTriggerReference.DeserializeFactoryTriggerReference(property.Value);
+                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

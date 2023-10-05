@@ -32,13 +32,15 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="organizationName"> Official name of the Partner. </param>
         /// <param name="partnerDisplayName"> Display name of the verified partner. </param>
         /// <param name="partnerTopicDetails"> Details of the partner topic scenario. </param>
+        /// <param name="partnerDestinationDetails"> Details of the partner destination scenario. </param>
         /// <param name="provisioningState"> Provisioning state of the verified partner. </param>
-        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, VerifiedPartnerProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, PartnerDetails partnerDestinationDetails, VerifiedPartnerProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             OrganizationName = organizationName;
             PartnerDisplayName = partnerDisplayName;
             PartnerTopicDetails = partnerTopicDetails;
+            PartnerDestinationDetails = partnerDestinationDetails;
             ProvisioningState = provisioningState;
         }
 
@@ -50,6 +52,8 @@ namespace Azure.ResourceManager.EventGrid
         public string PartnerDisplayName { get; set; }
         /// <summary> Details of the partner topic scenario. </summary>
         public PartnerDetails PartnerTopicDetails { get; set; }
+        /// <summary> Details of the partner destination scenario. </summary>
+        public PartnerDetails PartnerDestinationDetails { get; set; }
         /// <summary> Provisioning state of the verified partner. </summary>
         public VerifiedPartnerProvisioningState? ProvisioningState { get; set; }
     }

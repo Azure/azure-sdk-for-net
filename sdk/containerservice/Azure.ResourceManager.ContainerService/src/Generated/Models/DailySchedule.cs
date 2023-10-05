@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For schedules like: &apos;recur every day&apos; or &apos;recur every 3 days&apos;. </summary>
+    /// <summary> For schedules like: 'recur every day' or 'recur every 3 days'. </summary>
     internal partial class DailySchedule
     {
         /// <summary> Initializes a new instance of DailySchedule. </summary>

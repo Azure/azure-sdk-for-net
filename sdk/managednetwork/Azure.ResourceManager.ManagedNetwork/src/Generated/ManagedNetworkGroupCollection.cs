@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkGroupRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkGroupRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkGroupRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkGroupRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,6 +319,80 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 var response = _managedNetworkGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkGroups/{managedNetworkGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworkGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedNetworkGroupName"> The name of the Managed Network Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedNetworkGroupResource>> GetIfExistsAsync(string managedNetworkGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
+
+            using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedNetworkGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedNetworkGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkGroups/{managedNetworkGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedNetworkGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedNetworkGroupName"> The name of the Managed Network Group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
+        public virtual NullableResponse<ManagedNetworkGroupResource> GetIfExists(string managedNetworkGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
+
+            using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedNetworkGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedNetworkGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedNetworkGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

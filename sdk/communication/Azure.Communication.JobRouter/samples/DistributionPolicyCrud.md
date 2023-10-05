@@ -12,8 +12,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a distribution policy
@@ -24,7 +24,7 @@ string distributionPolicyId = "my-distribution-policy";
 Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(1),
+        offerExpiresAfter: TimeSpan.FromMinutes(1),
         mode: new LongestIdleMode())
     {
         Name = "My distribution policy"
@@ -53,6 +53,17 @@ Response<DistributionPolicy> updatedDistributionPolicy = routerAdministrationCli
     });
 
 Console.WriteLine($"Distribution policy successfully update with new distribution mode. Mode Type: {updatedDistributionPolicy.Value.Mode.Kind}");
+```
+
+## Remove from distribution policy
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp
+Response updatedDistributionPolicyWithoutName = routerAdministrationClient.UpdateDistributionPolicy(distributionPolicyId,
+    RequestContent.Create(new { Name = (string?)null }));
+
+Response<DistributionPolicy> queriedDistributionPolicyWithoutName = routerAdministrationClient.GetDistributionPolicy(distributionPolicyId);
+
+Console.WriteLine($"Distribution policy successfully updated: 'Name' has been removed. Status: Status: {string.IsNullOrWhiteSpace(queriedDistributionPolicyWithoutName.Value.Name)}");
 ```
 
 ## List distribution policies

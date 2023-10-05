@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     public partial class ManualReclassifyExceptionAction
     {
         /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
-        public ManualReclassifyExceptionAction() : this(null, null, null, Array.Empty<WorkerSelector>().ToList())
+        public ManualReclassifyExceptionAction() : this(null, null, null, Array.Empty<RouterWorkerSelector>().ToList())
         {
         }
     }

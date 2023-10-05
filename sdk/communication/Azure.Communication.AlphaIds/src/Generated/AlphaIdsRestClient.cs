@@ -53,7 +53,7 @@ namespace Azure.Communication.AlphaIds
             return message;
         }
 
-        /// <summary> Get the Alpha IDs configuration that&apos;s applied for the current resource. </summary>
+        /// <summary> Get the Alpha IDs configuration that's applied for the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<AlphaIdConfiguration>> GetConfigurationAsync(CancellationToken cancellationToken = default)
         {
@@ -73,7 +73,7 @@ namespace Azure.Communication.AlphaIds
             }
         }
 
-        /// <summary> Get the Alpha IDs configuration that&apos;s applied for the current resource. </summary>
+        /// <summary> Get the Alpha IDs configuration that's applied for the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<AlphaIdConfiguration> GetConfiguration(CancellationToken cancellationToken = default)
         {

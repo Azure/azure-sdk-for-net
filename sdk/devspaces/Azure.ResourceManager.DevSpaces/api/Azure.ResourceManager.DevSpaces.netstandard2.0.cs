@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.DevSpaces
         public virtual Azure.Pageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevSpaces.ControllerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevSpaces.ControllerResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DevSpaces.ControllerResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DevSpaces.ControllerResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevSpaces.ControllerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevSpaces.ControllerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DevSpaces.ControllerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevSpaces.ControllerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -62,6 +64,14 @@ namespace Azure.ResourceManager.DevSpaces
 }
 namespace Azure.ResourceManager.DevSpaces.Models
 {
+    public static partial class ArmDevSpacesModelFactory
+    {
+        public static Azure.ResourceManager.DevSpaces.Models.ContainerHostMapping ContainerHostMapping(string containerHostResourceId = null, string mappedControllerResourceId = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetails ControllerConnectionDetails(Azure.ResourceManager.DevSpaces.Models.OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetailsList ControllerConnectionDetailsList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetails> connectionDetailsList = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.ControllerData ControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DevSpaces.Models.DevSpacesSku sku = null, Azure.ResourceManager.DevSpaces.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DevSpaces.Models.ProvisioningState?), string hostSuffix = null, string dataPlaneFqdn = null, string targetContainerHostApiServerFqdn = null, string targetContainerHostResourceId = null, string targetContainerHostCredentialsBase64 = null) { throw null; }
+        public static Azure.ResourceManager.DevSpaces.Models.KubernetesConnectionDetails KubernetesConnectionDetails(string kubeConfig = null) { throw null; }
+    }
     public partial class ContainerHostMapping
     {
         public ContainerHostMapping() { }

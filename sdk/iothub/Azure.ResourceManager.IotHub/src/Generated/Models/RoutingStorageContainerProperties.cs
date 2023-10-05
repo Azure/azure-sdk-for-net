@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="fileNameFormat"> File name format for the blob. Default format is {iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}. All parameters are mandatory but can be reordered. </param>
         /// <param name="batchFrequencyInSeconds"> Time interval at which blobs are written to storage. Value should be between 60 and 720 seconds. Default value is 300 seconds. </param>
         /// <param name="maxChunkSizeInBytes"> Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB). </param>
-        /// <param name="encoding"> Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;. </param>
+        /// <param name="encoding"> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </param>
         internal RoutingStorageContainerProperties(Guid? id, string connectionString, string endpoint, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, string containerName, string fileNameFormat, int? batchFrequencyInSeconds, int? maxChunkSizeInBytes, RoutingStorageContainerPropertiesEncoding? encoding)
         {
             Id = id;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public int? BatchFrequencyInSeconds { get; set; }
         /// <summary> Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB). </summary>
         public int? MaxChunkSizeInBytes { get; set; }
-        /// <summary> Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;. </summary>
+        /// <summary> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </summary>
         public RoutingStorageContainerPropertiesEncoding? Encoding { get; set; }
     }
 }

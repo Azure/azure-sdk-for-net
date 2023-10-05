@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="kind"> The kind of event type used. </param>
         /// <param name="inlineEventTypes">
         /// A collection of inline event types for the resource. The inline event type keys are of type string which represents the name of the event.
-        /// An example of a valid inline event name is &quot;Contoso.OrderCreated&quot;.
+        /// An example of a valid inline event name is "Contoso.OrderCreated".
         /// The inline event type values are of type InlineEventProperties and will contain additional information for every inline event type.
         /// </param>
         internal PartnerTopicEventTypeInfo(EventDefinitionKind? kind, IDictionary<string, InlineEventProperties> inlineEventTypes)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public EventDefinitionKind? Kind { get; set; }
         /// <summary>
         /// A collection of inline event types for the resource. The inline event type keys are of type string which represents the name of the event.
-        /// An example of a valid inline event name is &quot;Contoso.OrderCreated&quot;.
+        /// An example of a valid inline event name is "Contoso.OrderCreated".
         /// The inline event type values are of type InlineEventProperties and will contain additional information for every inline event type.
         /// </summary>
         public IDictionary<string, InlineEventProperties> InlineEventTypes { get; }

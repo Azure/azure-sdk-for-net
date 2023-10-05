@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="transformationName"> The name of the transformation. </param>
         /// <param name="data"> The definition of the transformation that will be used to create a new transformation or replace the existing one under the streaming job. </param>
         /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current transformation. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new transformation to be created, but to prevent updating an existing transformation. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new transformation to be created, but to prevent updating an existing transformation. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="transformationName"> The name of the transformation. </param>
         /// <param name="data"> The definition of the transformation that will be used to create a new transformation or replace the existing one under the streaming job. </param>
         /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current transformation. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new transformation to be created, but to prevent updating an existing transformation. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new transformation to be created, but to prevent updating an existing transformation. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
@@ -272,6 +272,80 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 var response = _streamingJobTransformationTransformationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transformations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transformationName"> The name of the transformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamingJobTransformationResource>> GetIfExistsAsync(string transformationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
+
+            using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamingJobTransformationTransformationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobTransformationResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobTransformationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transformations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transformationName"> The name of the transformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
+        public virtual NullableResponse<StreamingJobTransformationResource> GetIfExists(string transformationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
+
+            using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamingJobTransformationTransformationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobTransformationResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobTransformationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

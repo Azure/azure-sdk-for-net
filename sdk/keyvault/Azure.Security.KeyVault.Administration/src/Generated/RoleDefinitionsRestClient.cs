@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RoleDefinitionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.4")
+        public RoleDefinitionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.5-preview.1")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Deletes a custom role definition. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Deletes a custom role definition. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
@@ -142,7 +142,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Creates or updates a custom role definition. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
         /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -184,7 +184,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Creates or updates a custom role definition. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
         /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
         /// <param name="parameters"> Parameters for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,7 +243,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Get the specified role definition. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
         /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
@@ -280,7 +280,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Get the specified role definition. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports &apos;/&apos;. </param>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
         /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>

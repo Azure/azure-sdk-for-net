@@ -17,8 +17,16 @@ namespace Azure.Security.KeyVault.Administration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storageResourceUri"u8);
             writer.WriteStringValue(StorageResourceUri);
-            writer.WritePropertyName("token"u8);
-            writer.WriteStringValue(Token);
+            if (Optional.IsDefined(Token))
+            {
+                writer.WritePropertyName("token"u8);
+                writer.WriteStringValue(Token);
+            }
+            if (Optional.IsDefined(UseManagedIdentity))
+            {
+                writer.WritePropertyName("useManagedIdentity"u8);
+                writer.WriteBooleanValue(UseManagedIdentity.Value);
+            }
             writer.WriteEndObject();
         }
     }

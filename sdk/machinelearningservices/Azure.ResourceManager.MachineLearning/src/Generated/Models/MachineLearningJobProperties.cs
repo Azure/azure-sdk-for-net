@@ -13,13 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// Base definition for a job.
     /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/> and <see cref="MachineLearningSweepJob"/>.
+    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="LabelingJobProperties"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/> and <see cref="MachineLearningSweepJob"/>.
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
         public MachineLearningJobProperties()
         {
+            SecretsConfiguration = new ChangeTrackingDictionary<string, SecretConfiguration>();
             Services = new ChangeTrackingDictionary<string, MachineLearningJobService>();
         }
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
@@ -39,12 +40,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
-        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status) : base(description, properties, tags)
+        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status) : base(description, properties, tags)
         {
             ComponentId = componentId;
             ComputeId = computeId;
@@ -53,6 +56,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Identity = identity;
             IsArchived = isArchived;
             JobType = jobType;
+            NotificationSetting = notificationSetting;
+            SecretsConfiguration = secretsConfiguration;
             Services = services;
             Status = status;
         }
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public ResourceIdentifier ComputeId { get; set; }
         /// <summary> Display name of job. </summary>
         public string DisplayName { get; set; }
-        /// <summary> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </summary>
+        /// <summary> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </summary>
         public string ExperimentName { get; set; }
         /// <summary>
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
@@ -76,6 +81,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public bool? IsArchived { get; set; }
         /// <summary> [Required] Specifies the type of job. </summary>
         internal JobType JobType { get; set; }
+        /// <summary> Notification setting for the job. </summary>
+        public NotificationSetting NotificationSetting { get; set; }
+        /// <summary> Configuration for secrets to be made available during runtime. </summary>
+        public IDictionary<string, SecretConfiguration> SecretsConfiguration { get; set; }
         /// <summary>
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.

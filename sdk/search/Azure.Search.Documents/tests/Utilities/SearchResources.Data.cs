@@ -42,8 +42,8 @@ namespace Azure.Search.Documents.Tests
                     new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
                     {
                         IsSearchable = true,
-                        Dimensions = 1536,
-                        VectorSearchConfiguration = "my-vector-config"
+                        VectorSearchDimensions = 1536,
+                        VectorSearchProfile = "my-vector-profile"
                     },
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
@@ -81,9 +81,13 @@ namespace Azure.Search.Documents.Tests
                 },
                 VectorSearch = new()
                 {
-                    AlgorithmConfigurations =
+                    Profiles =
                     {
-                        new VectorSearchAlgorithmConfiguration( "my-vector-config", "hnsw")
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                    Algorithms =
+                    {
+                        new HnswVectorSearchAlgorithmConfiguration( "my-hsnw-vector-config")
                     }
                 },
                 SemanticSettings = new()

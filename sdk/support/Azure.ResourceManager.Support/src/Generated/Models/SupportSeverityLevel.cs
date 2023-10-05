@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: &apos;Highest critical impact&apos;, also known as the &apos;Emergency - Severe impact&apos; level in the Azure portal is reserved only for our Premium customers. </summary>
+    /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </summary>
     public readonly partial struct SupportSeverityLevel : IEquatable<SupportSeverityLevel>
     {
         private readonly string _value;

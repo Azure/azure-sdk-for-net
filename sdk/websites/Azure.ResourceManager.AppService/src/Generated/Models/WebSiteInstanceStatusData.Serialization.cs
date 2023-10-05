@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("consoleUrl"u8);
                 writer.WriteStringValue(ConsoleUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(HealthCheckUri))
+            if (Optional.IsDefined(HealthCheckUrlString))
             {
                 writer.WritePropertyName("healthCheckUrl"u8);
-                writer.WriteStringValue(HealthCheckUri.AbsoluteUri);
+                writer.WriteStringValue(HealthCheckUrlString);
             }
             if (Optional.IsCollectionDefined(Containers))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             Optional<Uri> statusUrl = default;
             Optional<Uri> detectorUrl = default;
             Optional<Uri> consoleUrl = default;
-            Optional<Uri> healthCheckUrl = default;
+            Optional<string> healthCheckUrl = default;
             Optional<IDictionary<string, ContainerInfo>> containers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("statusUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("detectorUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("consoleUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -161,11 +161,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("healthCheckUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            healthCheckUrl = new Uri(property0.Value.GetString());
+                            healthCheckUrl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("containers"u8))

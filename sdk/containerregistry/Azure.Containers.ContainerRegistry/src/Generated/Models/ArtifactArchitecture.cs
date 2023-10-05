@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The artifact platform&apos;s architecture. </summary>
+    /// <summary> The artifact platform's architecture. </summary>
     public readonly partial struct ArtifactArchitecture : IEquatable<ArtifactArchitecture>
     {
         private readonly string _value;

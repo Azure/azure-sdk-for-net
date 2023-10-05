@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The catalog&apos;s properties for partial update. Properties not provided in the update request will not be changed. </summary>
+    /// <summary> The catalog's properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterCatalogPatch
     {
         /// <summary> Initializes a new instance of DevCenterCatalogPatch. </summary>

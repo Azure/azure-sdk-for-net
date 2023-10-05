@@ -10,30 +10,30 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes a label selector that will always be attached. </summary>
+    /// <summary> Describes a queue selector that will be attached to the job. </summary>
     public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
-        /// <param name="labelSelector"> Describes a condition that must be met against a set of labels for queue selection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labelSelector"/> is null. </exception>
-        public StaticQueueSelectorAttachment(QueueSelector labelSelector)
+        /// <param name="queueSelector"> Describes a condition that must be met against a set of labels for queue selection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueSelector"/> is null. </exception>
+        public StaticQueueSelectorAttachment(RouterQueueSelector queueSelector)
         {
-            Argument.AssertNotNull(labelSelector, nameof(labelSelector));
+            Argument.AssertNotNull(queueSelector, nameof(queueSelector));
 
-            LabelSelector = labelSelector;
+            QueueSelector = queueSelector;
             Kind = "static";
         }
 
         /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
-        /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
-        /// <param name="labelSelector"> Describes a condition that must be met against a set of labels for queue selection. </param>
-        internal StaticQueueSelectorAttachment(string kind, QueueSelector labelSelector) : base(kind)
+        /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
+        /// <param name="queueSelector"> Describes a condition that must be met against a set of labels for queue selection. </param>
+        internal StaticQueueSelectorAttachment(string kind, RouterQueueSelector queueSelector) : base(kind)
         {
-            LabelSelector = labelSelector;
+            QueueSelector = queueSelector;
             Kind = kind ?? "static";
         }
 
         /// <summary> Describes a condition that must be met against a set of labels for queue selection. </summary>
-        public QueueSelector LabelSelector { get; set; }
+        public RouterQueueSelector QueueSelector { get; set; }
     }
 }

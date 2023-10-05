@@ -5,14 +5,15 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: Maps
 namespace: Azure.ResourceManager.Maps
 require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/maps/resource-manager/readme.md
-tag: package-2021-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -30,6 +31,9 @@ prepend-rp-prefix:
   - Creator
   - CreatorProperties
   - KeyType
+  - LinkedResource
+  - SigningKey
+  - CorsRule
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -38,7 +42,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -60,6 +64,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  AccountSasContent: MapsAccountSasContent
 
 directive:
   - remove-operation: 'Maps_ListOperations'

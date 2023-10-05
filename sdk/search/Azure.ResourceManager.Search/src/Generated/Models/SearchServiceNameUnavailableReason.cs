@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The reason why the name is not available. &apos;Invalid&apos; indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). &apos;AlreadyExists&apos; indicates that the name is already in use and is therefore unavailable. </summary>
+    /// <summary> The reason why the name is not available. 'Invalid' indicates the name provided does not match the naming requirements (incorrect length, unsupported characters, etc.). 'AlreadyExists' indicates that the name is already in use and is therefore unavailable. </summary>
     public readonly partial struct SearchServiceNameUnavailableReason : IEquatable<SearchServiceNameUnavailableReason>
     {
         private readonly string _value;

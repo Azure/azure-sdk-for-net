@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,22 +17,19 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<SearchResourceCounter> aliasesCount = default;
+            SearchResourceCounter aliasesCount = default;
             SearchResourceCounter documentCount = default;
             SearchResourceCounter indexesCount = default;
             SearchResourceCounter indexersCount = default;
             SearchResourceCounter dataSourcesCount = default;
             SearchResourceCounter storageSize = default;
             SearchResourceCounter synonymMaps = default;
-            Optional<SearchResourceCounter> skillsetCount = default;
+            SearchResourceCounter skillsetCount = default;
+            SearchResourceCounter vectorIndexSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aliasesCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aliasesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
@@ -69,15 +65,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("skillsetCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     skillsetCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
+                if (property.NameEquals("vectorIndexSize"u8))
+                {
+                    vectorIndexSize = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    continue;
+                }
             }
-            return new SearchServiceCounters(aliasesCount.Value, documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount.Value);
+            return new SearchServiceCounters(aliasesCount, documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount, vectorIndexSize);
         }
     }
 }

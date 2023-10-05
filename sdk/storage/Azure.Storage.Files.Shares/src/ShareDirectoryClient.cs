@@ -228,7 +228,9 @@ namespace Azure.Storage.Files.Shares
                   directoryUri: directoryUri,
                   authentication: (HttpPipelinePolicy)null,
                   options: options,
-                  storageSharedKeyCredential: null)
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -257,7 +259,9 @@ namespace Azure.Storage.Files.Shares
                   directoryUri: directoryUri,
                   authentication: credential.AsPolicy(),
                   options: options,
-                  storageSharedKeyCredential: credential)
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -286,7 +290,13 @@ namespace Azure.Storage.Files.Shares
             Uri directoryUri,
             AzureSasCredential credential,
             ShareClientOptions options = default)
-            : this(directoryUri, credential.AsPolicy<ShareUriBuilder>(directoryUri), options, sasCredential:credential)
+            : this(
+                  directoryUri,
+                  credential.AsPolicy<ShareUriBuilder>(directoryUri),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
         }
 
@@ -315,9 +325,13 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options = default)
             : this(
                   directoryUri: directoryUri,
-                  authentication: credential.AsPolicy(options),
+                  authentication: credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? ShareAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
                   options: options ?? new ShareClientOptions(),
-                  storageSharedKeyCredential: null)
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -325,86 +339,6 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
         /// class.
-        /// </summary>
-        /// <param name="directoryUri">
-        /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the share, and the path of the
-        /// directory.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        internal ShareDirectoryClient(
-            Uri directoryUri,
-            HttpPipelinePolicy authentication,
-            ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
-        {
-            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
-            options ??= new ShareClientOptions();
-            _uri = directoryUri;
-            _clientConfiguration = new ShareClientConfiguration(
-                pipeline: options.Build(authentication),
-                sharedKeyCredential: storageSharedKeyCredential,
-                sasCredential: default,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
-            _directoryRestClient = BuildDirectoryRestClient(directoryUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="directoryUri">
-        /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the share, and the path of the
-        /// directory.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="sasCredential">
-        /// The shared access signature used to sign requests.
-        /// </param>
-        internal ShareDirectoryClient(
-            Uri directoryUri,
-            HttpPipelinePolicy authentication,
-            ShareClientOptions options,
-            AzureSasCredential sasCredential)
-        {
-            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
-            options ??= new ShareClientOptions();
-            _uri = directoryUri;
-            _clientConfiguration = new ShareClientConfiguration(
-                pipeline: options.Build(authentication),
-                sasCredential: sasCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
-            _directoryRestClient = BuildDirectoryRestClient(directoryUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareFileClient"/>
-        /// class.
-        ///
-        /// This will create an instance that uses the same diagnostics as another
-        /// client. This client will be used within another API call of the parent
-        /// client (namely Rename). This is in the case that the new child client
-        /// has different credentials than the parent client.
         /// </summary>
         /// <param name="directoryUri">
         /// A <see cref="Uri"/> referencing the directory that includes the
@@ -431,6 +365,53 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(),
                 sharedKeyCredential: default,
                 clientDiagnostics: diagnostics,
+                clientOptions: options);
+            _directoryRestClient = BuildDirectoryRestClient(directoryUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
+        internal ShareDirectoryClient(
+            Uri directoryUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
+            options ??= new ShareClientOptions();
+            _uri = directoryUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }

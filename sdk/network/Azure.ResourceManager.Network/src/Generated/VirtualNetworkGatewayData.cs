@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="autoScaleConfiguration"> Autoscale configuration for virutal network gateway. </param>
         /// <param name="ipConfigurations"> IP configurations for virtual network gateway. </param>
         /// <param name="gatewayType"> The type of this virtual network gateway. </param>
         /// <param name="vpnType"> The type of this virtual network gateway. </param>
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
         /// <param name="vpnClientConfiguration"> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </param>
         /// <param name="virtualNetworkGatewayPolicyGroups"> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </param>
-        /// <param name="bgpSettings"> Virtual network gateway&apos;s BGP speaker settings. </param>
+        /// <param name="bgpSettings"> Virtual network gateway's BGP speaker settings. </param>
         /// <param name="customRoutes"> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway resource. </param>
@@ -59,10 +60,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
         /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
         /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
-        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic) : base(id, name, resourceType, location, tags)
+        /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
+            AutoScaleConfiguration = autoScaleConfiguration;
             IPConfigurations = ipConfigurations;
             GatewayType = gatewayType;
             VpnType = vpnType;
@@ -86,12 +89,27 @@ namespace Azure.ResourceManager.Network
             EnableBgpRouteTranslationForNat = enableBgpRouteTranslationForNat;
             AllowVirtualWanTraffic = allowVirtualWanTraffic;
             AllowRemoteVnetTraffic = allowRemoteVnetTraffic;
+            AdminState = adminState;
         }
 
         /// <summary> The extended location of type local virtual network gateway. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
+        /// <summary> Autoscale configuration for virutal network gateway. </summary>
+        internal VirtualNetworkGatewayAutoScaleConfiguration AutoScaleConfiguration { get; set; }
+        /// <summary> The bounds of the autoscale configuration. </summary>
+        public VirtualNetworkGatewayAutoScaleBounds AutoScaleBounds
+        {
+            get => AutoScaleConfiguration is null ? default : AutoScaleConfiguration.Bounds;
+            set
+            {
+                if (AutoScaleConfiguration is null)
+                    AutoScaleConfiguration = new VirtualNetworkGatewayAutoScaleConfiguration();
+                AutoScaleConfiguration.Bounds = value;
+            }
+        }
+
         /// <summary> IP configurations for virtual network gateway. </summary>
         public IList<VirtualNetworkGatewayIPConfiguration> IPConfigurations { get; }
         /// <summary> The type of this virtual network gateway. </summary>
@@ -128,7 +146,7 @@ namespace Azure.ResourceManager.Network
         public VpnClientConfiguration VpnClientConfiguration { get; set; }
         /// <summary> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </summary>
         public IList<VirtualNetworkGatewayPolicyGroup> VirtualNetworkGatewayPolicyGroups { get; }
-        /// <summary> Virtual network gateway&apos;s BGP speaker settings. </summary>
+        /// <summary> Virtual network gateway's BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </summary>
         internal AddressSpace CustomRoutes { get; set; }
@@ -161,5 +179,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowVirtualWanTraffic { get; set; }
         /// <summary> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </summary>
         public bool? AllowRemoteVnetTraffic { get; set; }
+        /// <summary> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </summary>
+        public ExpressRouteGatewayAdminState? AdminState { get; set; }
     }
 }

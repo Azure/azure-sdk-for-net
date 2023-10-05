@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of SecretProperties. </summary>
-        /// <param name="value"> The value of the secret. NOTE: &apos;value&apos; will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
+        /// <param name="value"> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
         /// <param name="contentType"> The content type of the secret. </param>
         /// <param name="attributes"> The attributes of the secret. </param>
         /// <param name="secretUri"> The URI to retrieve the current version of the secret. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             SecretUriWithVersion = secretUriWithVersion;
         }
 
-        /// <summary> The value of the secret. NOTE: &apos;value&apos; will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </summary>
+        /// <summary> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </summary>
         public string Value { get; set; }
         /// <summary> The content type of the secret. </summary>
         public string ContentType { get; set; }

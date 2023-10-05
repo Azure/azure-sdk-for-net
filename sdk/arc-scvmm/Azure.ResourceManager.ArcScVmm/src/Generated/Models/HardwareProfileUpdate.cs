@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
         }
 
-        /// <summary> MemoryMB is the size of a virtual machine&apos;s memory, in MB. </summary>
+        /// <summary> MemoryMB is the size of a virtual machine's memory, in MB. </summary>
         public int? MemoryMB { get; set; }
         /// <summary> Gets or sets the number of vCPUs for the vm. </summary>
         public int? CpuCount { get; set; }

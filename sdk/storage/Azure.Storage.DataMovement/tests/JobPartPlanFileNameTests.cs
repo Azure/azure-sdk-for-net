@@ -5,14 +5,13 @@ using System;
 using NUnit.Framework;
 using Azure.Storage.Test;
 using System.IO;
-using Azure.Core.TestFramework;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     public class JobPartPlanFileNameTests
     {
-        private string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion;
+        private string schemaVersion = DataMovementConstants.JobPartPlanFile.SchemaVersion;
 
         public JobPartPlanFileNameTests()
         {
@@ -154,7 +153,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new JobPartPlanFileName("invalidJobId--001.steV01"),
-                e => e.Message.Contains("Invalid Job Part Plan File"));
+                e => e.Message.Contains("Invalid Checkpoint File"));
 
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--XY.steV01"),

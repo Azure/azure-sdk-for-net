@@ -1,14 +1,40 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix LRO in ProtectionContainers PUT operation
 
 ### Other Changes
+
+## 1.1.0 (2023-09-08)
+
+### Features Added
+
+- Added a new property DistributedNodesInfo in AzureWorkloadContainerExtendedInfo, AzureVmWorkloadSQLAvailabilityGroupProtectableItem, AzureVmWorkloadProtectedItem response.
+- The property lists the nodes part of the distributed item at that time, their registration state and their ARM vm Id
+- Upgraded API version to 2023-04-01
+
+### Breaking Changes
+
+- Renamed softDeleteRetentionPeriod to softDeleteRetentionPeriodInDays
+- Removed incorrect protectable item type and discriminator for HSR container protectable item
+- Added correct protectable item type and discriminator for HSR container protectable item
+
+## 1.1.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 Changed API version to 2023-02-01.
 

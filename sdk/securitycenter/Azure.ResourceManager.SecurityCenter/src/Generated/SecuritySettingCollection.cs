@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySettingSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySettingSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySettingSettingsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySettingSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySettingResource(Client, SecuritySettingData.DeserializeSecuritySettingData(e)), _securitySettingSettingsClientDiagnostics, Pipeline, "SecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -296,6 +297,72 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securitySettingSettingsRestClient.Get(Id.SubscriptionId, settingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> The name of the setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SecuritySettingResource>> GetIfExistsAsync(SecuritySettingName settingName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securitySettingSettingsRestClient.GetAsync(Id.SubscriptionId, settingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecuritySettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SecuritySettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> The name of the setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SecuritySettingResource> GetIfExists(SecuritySettingName settingName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securitySettingSettingsRestClient.Get(Id.SubscriptionId, settingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecuritySettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

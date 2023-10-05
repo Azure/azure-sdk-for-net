@@ -72,7 +72,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     continue;
                 }
             }
-            return new OncoPhenotypeInference(type, value, description, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), caseId);
+            return new OncoPhenotypeInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), caseId.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

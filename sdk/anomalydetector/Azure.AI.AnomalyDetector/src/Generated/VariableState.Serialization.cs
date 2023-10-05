@@ -100,7 +100,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new VariableState(variable, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp));
+            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

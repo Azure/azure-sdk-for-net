@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>> GetAsync(string adminRequestApprovalId, string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> GetIfExists(string adminRequestApprovalId, string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>> GetIfExistsAsync(string adminRequestApprovalId, string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> GetAsync(string requestApprovalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> GetIfExists(string requestApprovalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> GetIfExistsAsync(string requestApprovalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -104,6 +108,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.PrivateStoreResource> GetAll(string useCache = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.PrivateStoreResource> GetAllAsync(string useCache = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource>> GetAsync(System.Guid privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Marketplace.PrivateStoreResource> GetIfExists(System.Guid privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Marketplace.PrivateStoreResource>> GetIfExistsAsync(System.Guid privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -119,6 +125,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> GetAsync(System.Guid collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> GetIfExists(System.Guid collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> GetIfExistsAsync(System.Guid collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -126,6 +134,7 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreCollectionInfoData : Azure.ResourceManager.Models.ResourceData
     {
         public PrivateStoreCollectionInfoData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> AppliedRules { get { throw null; } }
         public System.DateTimeOffset? ApproveAllItemsModifiedOn { get { throw null; } }
         public bool? AreAllItemsApproved { get { throw null; } }
         public bool? AreAllSubscriptionsSelected { get { throw null; } set { } }
@@ -153,9 +162,15 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> DisableApproveAllItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext> GetPrivateStoreCollectionOffersByContexts(Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext> GetPrivateStoreCollectionOffersByContextsAsync(Azure.ResourceManager.Marketplace.Models.CollectionOffersByAllContextsPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> GetPrivateStoreOffer(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> GetPrivateStoreOfferAsync(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.PrivateStoreOfferCollection GetPrivateStoreOffers() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetCollectionRules(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetCollectionRulesAsync(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult> TransferOffers(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>> TransferOffersAsync(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -186,6 +201,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> GetAsync(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> GetIfExists(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> GetIfExistsAsync(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -269,6 +286,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryOffersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffers(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffersAsync(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryUserRules(Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryUserRulesAsync(Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -289,6 +308,41 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal AnyExistingOffersInTheCollectionsResult() { }
         public bool? Value { get { throw null; } }
     }
+    public static partial class ArmMarketplaceModelFactory
+    {
+        public static Azure.ResourceManager.Marketplace.Models.AnyExistingOffersInTheCollectionsResult AnyExistingOffersInTheCollectionsResult(bool? value = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.BulkCollectionsActionResult BulkCollectionsActionResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> succeeded = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> failed = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.CollectionOffersByContext CollectionOffersByContext(string context = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> value = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails CollectionsSubscriptionsMappingDetails(string collectionName = null, System.Collections.Generic.IEnumerable<string> subscriptions = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResult CollectionsToSubscriptionsMappingResult(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Marketplace.Models.CollectionsSubscriptionsMappingDetails> details = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData MarketplaceAdminApprovalRequestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string offerId = null, string displayName = null, string publisherId = null, Azure.ResourceManager.Marketplace.Models.MarketplaceAdminAction? adminAction = default(Azure.ResourceManager.Marketplace.Models.MarketplaceAdminAction?), System.Collections.Generic.IEnumerable<string> approvedPlans = null, string comment = null, string administrator = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails> plans = null, System.Collections.Generic.IEnumerable<System.Guid> collectionIds = null, System.Uri iconUri = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData MarketplaceApprovalRequestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string offerId = null, string offerDisplayName = null, string publisherId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails> plansDetails = null, bool? isClosed = default(bool?), long? messageCode = default(long?)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceSubscription MarketplaceSubscription(string id = null, string subscriptionId = null, string displayName = null, Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState? state = default(Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState?)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.NewPlanNotification NewPlanNotification(string offerId = null, string displayName = null, bool? isFuturePlansEnabled = default(bool?), long? messageCode = default(long?), System.Uri iconUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> plans = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult NewPlanNotificationListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.NewPlanNotification> newPlansNotifications = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.NotificationRecipient NotificationRecipient(System.Guid? principalId = default(System.Guid?), string emailAddress = null, string displayName = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails PlanNotificationDetails(string planId = null, string planDisplayName = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PlanRequesterDetails PlanRequesterDetails(string planId = null, string planDisplayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo> requesters = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo PlanRequesterInfo(string user = null, string date = null, string justification = null, string subscriptionId = null, string subscriptionName = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreBillingAccountsResult PrivateStoreBillingAccountsResult(System.Collections.Generic.IEnumerable<string> billingAccounts = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails PrivateStoreCollectionDetails(string collectionName = null, System.Guid? collectionId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? collectionId = default(System.Guid?), string collectionName = null, string claim = null, bool? areAllSubscriptionsSelected = default(bool?), bool? areAllItemsApproved = default(bool?), System.DateTimeOffset? approveAllItemsModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> subscriptionsList = null, bool? isEnabled = default(bool?), long? numberOfOffers = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> appliedRules = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.PrivateStoreData PrivateStoreData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Marketplace.Models.PrivateStoreAvailability? availability = default(Azure.ResourceManager.Marketplace.Models.PrivateStoreAvailability?), System.Guid? privateStoreId = default(System.Guid?), Azure.ETag? eTag = default(Azure.ETag?), string privateStoreName = null, System.Guid? tenantId = default(System.Guid?), bool? isGov = default(bool?), System.Collections.Generic.IEnumerable<System.Guid> collectionIds = null, System.Collections.Generic.IDictionary<string, string> branding = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.NotificationRecipient> recipients = null, bool? sendToAllMarketplaceAdmins = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState PrivateStoreNotificationsState(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.StopSellNotifications> stopSellNotifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.NewPlanNotification> newNotifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails> approvalRequests = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.PrivateStoreOfferData PrivateStoreOfferData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, Azure.ETag? eTag = default(Azure.ETag?), System.Guid? privateStoreId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = default(bool?), System.Collections.Generic.IDictionary<string, System.Uri> iconFileUris = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan> plans = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, Azure.ETag? eTag = default(Azure.ETag?), System.Guid? privateStoreId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, System.Uri> iconFileUris = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan> plans = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlan PrivateStorePlan(string skuId = null, string planId = null, string planDisplayName = null, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility? accessibility = default(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility?), string altStackReference = null, string stackType = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails PrivateStorePlanDetails(string planId = null, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus? status = default(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus?), System.BinaryData requestDate = null, string justification = null, string subscriptionId = null, string subscriptionName = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult QueryApprovalRequestResult(string uniqueOfferId = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails> plansDetails = null, Azure.ETag? eTag = default(Azure.ETag?), long? messageCode = default(long?)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails QueryApprovedPlansDetails(string planId = null, System.Collections.Generic.IEnumerable<string> subscriptionIds = null, bool? allSubscriptions = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult QueryApprovedPlansResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails> details = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails RequestApprovalsDetails(string offerId = null, string displayName = null, string publisherId = null, long? messageCode = default(long?), System.Uri iconUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> plans = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.StopSellNotifications StopSellNotifications(string offerId = null, string displayName = null, bool? isEntire = default(bool?), long? messageCode = default(long?), System.Uri iconUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> plans = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsList StopSellOffersPlansNotificationsList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult> stopSellNotifications = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult StopSellOffersPlansNotificationsResult(string offerId = null, string displayName = null, bool? isEntireInStopSell = default(bool?), long? messageCode = default(long?), System.Uri iconUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> plans = null, bool? hasPublicContext = default(bool?), System.Collections.Generic.IEnumerable<string> subscriptionsIds = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList SubscriptionsContextList(System.Collections.Generic.IEnumerable<string> subscriptionsIds = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.TransferOffersResult TransferOffersResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> succeeded = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> failed = null) { throw null; }
+    }
     public partial class BulkCollectionsActionContent
     {
         public BulkCollectionsActionContent() { }
@@ -300,6 +354,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal BulkCollectionsActionResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Failed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Succeeded { get { throw null; } }
+    }
+    public partial class CollectionOffersByAllContextsPayload
+    {
+        public CollectionOffersByAllContextsPayload() { }
+        public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+    }
+    public partial class CollectionOffersByContext
+    {
+        internal CollectionOffersByContext() { }
+        public string Context { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> Value { get { throw null; } }
     }
     public partial class CollectionsSubscriptionsMappingDetails
     {
@@ -339,6 +404,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static bool operator ==(Azure.ResourceManager.Marketplace.Models.MarketplaceAdminAction left, Azure.ResourceManager.Marketplace.Models.MarketplaceAdminAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Marketplace.Models.MarketplaceAdminAction (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Marketplace.Models.MarketplaceAdminAction left, Azure.ResourceManager.Marketplace.Models.MarketplaceAdminAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MarketplaceRule
+    {
+        public MarketplaceRule() { }
+        public Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType? RuleType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MarketplaceRuleType : System.IEquatable<Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MarketplaceRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType PrivateProducts { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType TermsAndCondition { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType left, Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType left, Azure.ResourceManager.Marketplace.Models.MarketplaceRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MarketplaceSubscription
@@ -592,6 +681,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         public System.Collections.Generic.IList<string> OfferIds { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
     }
+    public partial class QueryUserRulesContent
+    {
+        public QueryUserRulesContent() { }
+        public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+    }
     public partial class RequestApprovalsDetails
     {
         internal RequestApprovalsDetails() { }
@@ -601,6 +695,12 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
         public string PublisherId { get { throw null; } }
+    }
+    public partial class SetRulesContent
+    {
+        public SetRulesContent() { }
+        public string NextLink { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> Value { get { throw null; } }
     }
     public partial class StopSellNotifications
     {

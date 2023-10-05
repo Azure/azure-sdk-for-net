@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
-        /// <param name="multiSize"> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </param>
+        /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
         /// <param name="multiRoleCount"> Number of front-end instances. </param>
         /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
         /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
         public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
-        /// <summary> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </summary>
+        /// <summary> Front-end VM size, e.g. "Medium", "Large". </summary>
         public string MultiSize { get; set; }
         /// <summary> Number of front-end instances. </summary>
         public int? MultiRoleCount { get; }

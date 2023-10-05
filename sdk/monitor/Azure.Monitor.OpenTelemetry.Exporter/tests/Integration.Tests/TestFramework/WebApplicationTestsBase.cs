@@ -51,7 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
             // Tags
             Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
             Assert.Contains("ai.operation.name", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.location.ip", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);

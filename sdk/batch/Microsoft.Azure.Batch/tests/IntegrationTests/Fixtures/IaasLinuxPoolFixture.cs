@@ -21,9 +21,9 @@ namespace BatchClientIntegrationTests.Fixtures
             List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
 
             static bool ubuntuImageScanner(ImageInformation imageInfo) =>
-                imageInfo.ImageReference.Publisher == "canonical" &&
-                imageInfo.ImageReference.Offer == "ubuntuserver" &&
-                imageInfo.ImageReference.Sku.Contains("18.04");
+                imageInfo.ImageReference.Publisher == "openlogic" &&
+                imageInfo.ImageReference.Offer.Contains("centos") &&
+                imageInfo.ImageReference.Sku.Contains("7_9");
 
             ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 

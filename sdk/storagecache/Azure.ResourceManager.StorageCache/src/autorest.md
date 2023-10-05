@@ -5,16 +5,19 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: StorageCache
 namespace: Azure.ResourceManager.StorageCache
-require: https://github.com/Azure/azure-rest-api-specs/blob/10c740b7224771c889cfb92f128168f5a0568c26/specification/storagecache/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c157d49894462320db6603bb8e7b3077861b2d7/specification/storagecache/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 
 rename-mapping:
   Cache.properties.mountAddresses: -|ip-address
@@ -78,7 +81,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -100,6 +103,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  AmlFilesystem: AmlFileSystem
 
 override-operation-name:
   Caches_SpaceAllocation: UpdateSpaceAllocation

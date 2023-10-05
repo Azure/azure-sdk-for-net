@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
-        /// Uses Azure Event Grid&apos;s identity to acquire the authentication tokens being used during delivery / dead-lettering.
+        /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery / dead-lettering.
         /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
+        /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
         /// </summary>
         public EventSubscriptionDestination Destination { get; set; }
         /// <summary>
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> The retry policy for events. This can be used to configure maximum number of delivery attempts and time to live for events. </summary>
         public EventSubscriptionRetryPolicy RetryPolicy { get; set; }
         /// <summary>
-        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its&apos; destination is sent to the dead letter destination.
-        /// Uses Azure Event Grid&apos;s identity to acquire the authentication tokens being used during delivery / dead-lettering.
-        /// Please note <see cref="DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
+        /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery / dead-lettering.
+        /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </summary>
         public DeadLetterDestination DeadLetterDestination { get; set; }
         /// <summary>
-        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its&apos; destination is sent to the dead letter destination.
+        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (topic / domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </summary>
         public DeadLetterWithResourceIdentity DeadLetterWithResourceIdentity { get; set; }

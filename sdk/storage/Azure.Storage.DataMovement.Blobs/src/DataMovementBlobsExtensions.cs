@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Runtime.CompilerServices;
+
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -19,7 +21,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 copyId: blobProperties.CopyId,
                 copyProgress: blobProperties.CopyProgress,
                 copySource: blobProperties.CopySource,
-                copyStatus: blobProperties.CopyStatus.ToCopyStatus(),
                 contentLength: blobProperties.ContentLength,
                 contentType: blobProperties.ContentType,
                 eTag: blobProperties.ETag,
@@ -32,8 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 versionId: blobProperties.VersionId,
                 isLatestVersion: blobProperties.IsLatestVersion,
                 expiresOn: blobProperties.ExpiresOn,
-                lastAccessed: blobProperties.LastAccessed,
-                resourceType: blobProperties.BlobType.ToStorageResourceType());
+                lastAccessed: blobProperties.LastAccessed);
         }
 
         internal static StorageResourceProperties ToStorageResourceProperties(this BlobDownloadDetails blobProperties)
@@ -47,7 +47,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 copyId: blobProperties.CopyId,
                 copyProgress: blobProperties.CopyProgress,
                 copySource: blobProperties.CopySource,
-                copyStatus: blobProperties.CopyStatus.ToCopyStatus(),
                 contentLength: blobProperties.ContentLength,
                 contentType: blobProperties.ContentType,
                 eTag: blobProperties.ETag,
@@ -60,56 +59,17 @@ namespace Azure.Storage.DataMovement.Blobs
                 versionId: blobProperties.VersionId,
                 isLatestVersion: default,
                 expiresOn: default,
-                lastAccessed: blobProperties.LastAccessed,
-                resourceType: blobProperties.BlobType.ToStorageResourceType());
+                lastAccessed: blobProperties.LastAccessed);
         }
 
-        internal static ReadStreamStorageResourceResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
+        internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
         {
-            return new ReadStreamStorageResourceResult(
+            return new StorageResourceReadStreamResult(
                 content: result.Content,
                 contentRange: result.Details.ContentRange,
                 acceptRanges: result.Details.AcceptRanges,
                 rangeContentHash: result.Details.BlobContentHash,
                 properties: result.Details.ToStorageResourceProperties());
-        }
-
-        private static ServiceCopyStatus? ToCopyStatus(this CopyStatus copyStatus)
-        {
-            if (CopyStatus.Pending == copyStatus)
-            {
-                return ServiceCopyStatus.Pending;
-            }
-            else if (CopyStatus.Success == copyStatus)
-            {
-                return ServiceCopyStatus.Success;
-            }
-            else if (CopyStatus.Aborted == copyStatus)
-            {
-                return ServiceCopyStatus.Aborted;
-            }
-            else if (CopyStatus.Failed == copyStatus)
-            {
-                return ServiceCopyStatus.Failed;
-            }
-            return default;
-        }
-
-        private static StorageResourceType ToStorageResourceType(this BlobType blobType)
-        {
-            if (BlobType.Block == blobType)
-            {
-                return StorageResourceType.BlockBlob;
-            }
-            else if (BlobType.Page == blobType)
-            {
-                return StorageResourceType.PageBlob;
-            }
-            else if (BlobType.Append == blobType)
-            {
-                return StorageResourceType.AppendBlob;
-            }
-            return default;
         }
 
         /// <summary>
@@ -171,22 +131,23 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new AppendBlobStorageResourceOptions()
-            {
-                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
-            };
+            return new AppendBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
             this AppendBlobStorageResourceOptions options,
-            HttpRange range)
+            HttpRange range,
+            ETag? etag)
         {
-            return new BlobDownloadOptions()
+            var result = new BlobDownloadOptions()
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions, true),
                 TransferValidation = options?.DownloadTransferValidationOptions,
             };
+
+            result.Conditions.IfMatch ??= etag;
+            return result;
         }
 
         internal static AppendBlobCreateOptions ToCreateOptions(
@@ -223,37 +184,6 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
-            this AppendBlobStorageResourceOptions options,
-            bool overwrite,
-            HttpAuthorization sourceAuthorization)
-        {
-            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
-            // We need to omit them, but still apply them to other requests that do accept them.
-            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
-            // to see what headers are accepted.
-            return new BlobCopyFromUriOptions()
-            {
-                Metadata = options?.Metadata,
-                Tags = options?.Tags,
-                AccessTier = options?.AccessTier,
-                SourceConditions = new BlobRequestConditions()
-                {
-                    IfMatch = options?.SourceConditions?.IfMatch,
-                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.SourceConditions?.TagConditions,
-                },
-                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                ShouldSealDestination = options?.ShouldSealDestination,
-                RehydratePriority = options?.RehydratePriority,
-                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
-                SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
-            };
-        }
-
         internal static AppendBlobAppendBlockFromUriOptions ToAppendBlockFromUriOptions(
             this AppendBlobStorageResourceOptions options,
             bool overwrite,
@@ -281,20 +211,22 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new BlockBlobStorageResourceOptions()
-            {
-                CopyMethod = options != default ? options.CopyMethod : TransferCopyMethod.None,
-            };
+            return new BlockBlobStorageResourceOptions(options?.BlobOptions);
         }
 
-        internal static BlobDownloadOptions ToBlobDownloadOptions(this BlockBlobStorageResourceOptions options, HttpRange range)
+        internal static BlobDownloadOptions ToBlobDownloadOptions(
+            this BlockBlobStorageResourceOptions options,
+            HttpRange range,
+            ETag? etag)
         {
-            return new BlobDownloadOptions()
+            var result = new BlobDownloadOptions()
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions),
                 TransferValidation = options?.DownloadTransferValidationOptions,
             };
+            result.Conditions.IfMatch ??= etag;
+            return result;
         }
 
         internal static BlobUploadOptions ToBlobUploadOptions(this BlockBlobStorageResourceOptions options, bool overwrite, long initialSize)
@@ -333,36 +265,6 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
-            this BlockBlobStorageResourceOptions options,
-            bool overwrite,
-            HttpAuthorization sourceAuthorization)
-        {
-            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
-            // We need to omit them, but still apply them to other requests that do accept them.
-            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
-            // to see what headers are accepted.
-            return new BlobCopyFromUriOptions()
-            {
-                Metadata = options?.Metadata,
-                Tags = options?.Tags,
-                AccessTier = options?.AccessTier,
-                SourceConditions = new BlobRequestConditions()
-                {
-                    IfMatch = options?.SourceConditions?.IfMatch,
-                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.SourceConditions?.TagConditions,
-                },
-                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                RehydratePriority = options?.RehydratePriority,
-                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
-                SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
-            };
-        }
-
         internal static BlobSyncUploadFromUriOptions ToSyncUploadFromUriOptions(
             this BlockBlobStorageResourceOptions options,
             bool overwrite,
@@ -374,8 +276,8 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new BlobSyncUploadFromUriOptions()
             {
-                CopySourceBlobProperties = options?.CopySourceBlobProperties,
                 HttpHeaders = options?.HttpHeaders,
+                Metadata = options?.Metadata,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()
@@ -387,7 +289,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 },
                 DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
             };
         }
 
@@ -412,7 +313,7 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static CommitBlockListOptions ToCommitBlockOptions(this BlockBlobStorageResourceOptions options)
+        internal static CommitBlockListOptions ToCommitBlockOptions(this BlockBlobStorageResourceOptions options, bool overwrite)
         {
             // There's a lot of conditions that cannot be applied to a StageBlock Request.
             // We need to omit them, but still apply them to other requests that do accept them.
@@ -426,29 +327,29 @@ namespace Azure.Storage.DataMovement.Blobs
                 AccessTier = options?.AccessTier,
                 ImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
                 LegalHold = options?.LegalHold,
-                Conditions = CreateRequestConditions(options?.DestinationConditions, true)
+                Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
             };
         }
 
         internal static PageBlobStorageResourceOptions ToPageBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new PageBlobStorageResourceOptions()
-            {
-                CopyMethod = (TransferCopyMethod)(options?.CopyMethod),
-            };
+            return new PageBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
             this PageBlobStorageResourceOptions options,
-            HttpRange range)
+            HttpRange range,
+            ETag? etag)
         {
-            return new BlobDownloadOptions()
+            var result = new BlobDownloadOptions()
             {
                 Range = range,
                 Conditions = CreateRequestConditions(options?.SourceConditions, true),
                 TransferValidation = options?.DownloadTransferValidationOptions,
             };
+            result.Conditions.IfMatch ??= etag;
+            return result;
         }
 
         internal static PageBlobCreateOptions ToCreateOptions(
@@ -486,36 +387,6 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCopyFromUriOptions ToBlobCopyFromUriOptions(
-            this PageBlobStorageResourceOptions options,
-            bool overwrite,
-            HttpAuthorization sourceAuthorization)
-        {
-            // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
-            // We need to omit them, but still apply them to other requests that do accept them.
-            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob#request-headers
-            // to see what headers are accepted.
-            return new BlobCopyFromUriOptions()
-            {
-                Metadata = options?.Metadata,
-                Tags = options?.Tags,
-                AccessTier = options?.AccessTier,
-                SourceConditions = new BlobRequestConditions()
-                {
-                    IfMatch = options?.SourceConditions?.IfMatch,
-                    IfUnmodifiedSince = options?.SourceConditions?.IfUnmodifiedSince,
-                    IfModifiedSince = options?.SourceConditions?.IfModifiedSince,
-                    TagConditions = options?.SourceConditions?.TagConditions,
-                },
-                DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-                RehydratePriority = options?.RehydratePriority,
-                DestinationImmutabilityPolicy = options?.DestinationImmutabilityPolicy,
-                LegalHold = options?.LegalHold,
-                SourceAuthentication = sourceAuthorization,
-                CopySourceTagsMode = options?.CopySourceTagsMode,
-            };
-        }
-
         internal static PageBlobUploadPagesFromUriOptions ToUploadPagesFromUriOptions(
             this PageBlobStorageResourceOptions options,
             bool overwrite,
@@ -533,6 +404,181 @@ namespace Azure.Storage.DataMovement.Blobs
                 DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
             };
+        }
+
+        internal static async Task<BlockBlobStorageResourceOptions> GetBlockBlobResourceOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            BlockBlobStorageResourceOptions options = new(baseOptions);
+
+            // Get AccessTier
+            if (!isSource)
+            {
+                int startIndex = DataMovementConstants.JobPartPlanFile.DstBlobBlockBlobTierIndex;
+                JobPartPlanBlockBlobTier accessTier = (JobPartPlanBlockBlobTier)await checkpointer.GetByteValue(
+                    transferId,
+                    startIndex,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                options.AccessTier = accessTier.ToAccessTier();
+            }
+            return options;
+        }
+
+        internal static async Task<PageBlobStorageResourceOptions> GetPageBlobResourceOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            PageBlobStorageResourceOptions options = new(baseOptions);
+
+            if (!isSource)
+            {
+                // Get AccessTier
+                int startIndex = DataMovementConstants.JobPartPlanFile.DstBlobPageBlobTierIndex;
+                JobPartPlanPageBlobTier accessTier = (JobPartPlanPageBlobTier)await checkpointer.GetByteValue(
+                    transferId,
+                    startIndex,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                options.AccessTier = accessTier.ToAccessTier();
+            }
+            return options;
+        }
+
+        internal static async Task<BlobStorageResourceOptions> GetBlobResourceOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions();
+
+            // TODO: parse out the rest of the parameters from the Job Part Plan File
+
+            if (!isSource)
+            {
+                // Get Metadata
+                int metadataIndex = DataMovementConstants.JobPartPlanFile.DstBlobMetadataLengthIndex;
+                int metadataReadLength = DataMovementConstants.JobPartPlanFile.DstBlobTagsLengthIndex - metadataIndex;
+                string metadata = await checkpointer.GetHeaderUShortValue(
+                    transferId,
+                    metadataIndex,
+                    metadataReadLength,
+                    DataMovementConstants.JobPartPlanFile.MetadataStrNumBytes,
+                    cancellationToken).ConfigureAwait(false);
+                options.Metadata = metadata.ToDictionary(nameof(metadata));
+
+                // Get blob tags
+                int tagsIndex = DataMovementConstants.JobPartPlanFile.DstBlobTagsLengthIndex;
+                int tagsReadLength = DataMovementConstants.JobPartPlanFile.DstBlobIsSourceEncrypted - tagsIndex;
+                string tags = await checkpointer.GetHeaderLongValue(
+                    transferId,
+                    tagsIndex,
+                    tagsReadLength,
+                    DataMovementConstants.JobPartPlanFile.BlobTagsStrNumBytes,
+                    cancellationToken).ConfigureAwait(false);
+                options.Tags = tags.ToDictionary(nameof(tags));
+            }
+            return options;
+        }
+
+        internal static async Task<BlobStorageResourceContainerOptions> GetBlobContainerOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string directoryPrefix,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            BlobStorageResourceContainerOptions options = new()
+            {
+                BlobDirectoryPrefix = directoryPrefix,
+                BlobOptions = baseOptions,
+            };
+
+            return options;
+        }
+
+        private static AccessTier ToAccessTier(this JobPartPlanBlockBlobTier tier)
+        {
+            if (JobPartPlanBlockBlobTier.Archive == tier)
+            {
+                return AccessTier.Archive;
+            }
+            else if (JobPartPlanBlockBlobTier.Cool == tier)
+            {
+                return AccessTier.Cool;
+            }
+            else if (JobPartPlanBlockBlobTier.Cold == tier)
+            {
+                return AccessTier.Cold;
+            }
+            else // including JobPartPlanBlockBlobTier.Hot == tier
+            {
+                return AccessTier.Hot;
+            }
+        }
+
+        private static AccessTier ToAccessTier(this JobPartPlanPageBlobTier tier)
+        {
+            if (JobPartPlanPageBlobTier.P4 == tier)
+            {
+                return AccessTier.P4;
+            }
+            else if (JobPartPlanPageBlobTier.P6 == tier)
+            {
+                return AccessTier.P6;
+            }
+            else if (JobPartPlanPageBlobTier.P10 == tier)
+            {
+                return AccessTier.P10;
+            }
+            else if (JobPartPlanPageBlobTier.P15 == tier)
+            {
+                return AccessTier.P15;
+            }
+            else if (JobPartPlanPageBlobTier.P20 == tier)
+            {
+                return AccessTier.P20;
+            }
+            else if (JobPartPlanPageBlobTier.P30 == tier)
+            {
+                return AccessTier.P30;
+            }
+            else if (JobPartPlanPageBlobTier.P40 == tier)
+            {
+                return AccessTier.P40;
+            }
+            else if (JobPartPlanPageBlobTier.P50 == tier)
+            {
+                return AccessTier.P50;
+            }
+            else if (JobPartPlanPageBlobTier.P60 == tier)
+            {
+                return AccessTier.P60;
+            }
+            else if (JobPartPlanPageBlobTier.P70 == tier)
+            {
+                return AccessTier.P70;
+            }
+            else // including JobPartPlanPageBlobTier.P80 == tier
+            {
+                return AccessTier.P80;
+            }
         }
     }
 }

@@ -65,39 +65,58 @@ namespace Azure.ResourceManager.MobileNetwork
                 return new TenantResourceExtensionClient(client, scope);
             });
         }
-        #region AttachedDataNetworkResource
+        #region MobileAttachedDataNetworkResource
         /// <summary>
-        /// Gets an object representing an <see cref="AttachedDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttachedDataNetworkResource.CreateResourceIdentifier" /> to create an <see cref="AttachedDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileAttachedDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileAttachedDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileAttachedDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttachedDataNetworkResource" /> object. </returns>
-        public static AttachedDataNetworkResource GetAttachedDataNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileAttachedDataNetworkResource" /> object. </returns>
+        public static MobileAttachedDataNetworkResource GetMobileAttachedDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AttachedDataNetworkResource.ValidateResourceId(id);
-                return new AttachedDataNetworkResource(client, id);
+                MobileAttachedDataNetworkResource.ValidateResourceId(id);
+                return new MobileAttachedDataNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataNetworkResource
+        #region MobileDataNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataNetworkResource" /> object. </returns>
-        public static DataNetworkResource GetDataNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileDataNetworkResource" /> object. </returns>
+        public static MobileDataNetworkResource GetMobileDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataNetworkResource.ValidateResourceId(id);
-                return new DataNetworkResource(client, id);
+                MobileDataNetworkResource.ValidateResourceId(id);
+                return new MobileDataNetworkResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MobileNetworkDiagnosticsPackageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MobileNetworkDiagnosticsPackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkDiagnosticsPackageResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkDiagnosticsPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MobileNetworkDiagnosticsPackageResource" /> object. </returns>
+        public static MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MobileNetworkDiagnosticsPackageResource.ValidateResourceId(id);
+                return new MobileNetworkDiagnosticsPackageResource(client, id);
             }
             );
         }
@@ -122,6 +141,25 @@ namespace Azure.ResourceManager.MobileNetwork
         }
         #endregion
 
+        #region MobileNetworkPacketCaptureResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MobileNetworkPacketCaptureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkPacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkPacketCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MobileNetworkPacketCaptureResource" /> object. </returns>
+        public static MobileNetworkPacketCaptureResource GetMobileNetworkPacketCaptureResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MobileNetworkPacketCaptureResource.ValidateResourceId(id);
+                return new MobileNetworkPacketCaptureResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region PacketCoreControlPlaneResource
         /// <summary>
         /// Gets an object representing a <see cref="PacketCoreControlPlaneResource" /> along with the instance operations that can be performed on it but with no data.
@@ -141,20 +179,39 @@ namespace Azure.ResourceManager.MobileNetwork
         }
         #endregion
 
-        #region PacketCoreControlPlaneVersionResource
+        #region TenantPacketCoreControlPlaneVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PacketCoreControlPlaneVersionResource" /> object. </returns>
-        public static PacketCoreControlPlaneVersionResource GetPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPacketCoreControlPlaneVersionResource" /> object. </returns>
+        public static TenantPacketCoreControlPlaneVersionResource GetTenantPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PacketCoreControlPlaneVersionResource.ValidateResourceId(id);
-                return new PacketCoreControlPlaneVersionResource(client, id);
+                TenantPacketCoreControlPlaneVersionResource.ValidateResourceId(id);
+                return new TenantPacketCoreControlPlaneVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SubscriptionPacketCoreControlPlaneVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> object. </returns>
+        public static SubscriptionPacketCoreControlPlaneVersionResource GetSubscriptionPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SubscriptionPacketCoreControlPlaneVersionResource.ValidateResourceId(id);
+                return new SubscriptionPacketCoreControlPlaneVersionResource(client, id);
             }
             );
         }
@@ -179,115 +236,115 @@ namespace Azure.ResourceManager.MobileNetwork
         }
         #endregion
 
-        #region ServiceResource
+        #region MobileNetworkServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
-        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileNetworkServiceResource" /> object. </returns>
+        public static MobileNetworkServiceResource GetMobileNetworkServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceResource.ValidateResourceId(id);
-                return new ServiceResource(client, id);
+                MobileNetworkServiceResource.ValidateResourceId(id);
+                return new MobileNetworkServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SimResource
+        #region MobileNetworkSimResource
         /// <summary>
-        /// Gets an object representing a <see cref="SimResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SimResource.CreateResourceIdentifier" /> to create a <see cref="SimResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSimResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSimResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SimResource" /> object. </returns>
-        public static SimResource GetSimResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileNetworkSimResource" /> object. </returns>
+        public static MobileNetworkSimResource GetMobileNetworkSimResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SimResource.ValidateResourceId(id);
-                return new SimResource(client, id);
+                MobileNetworkSimResource.ValidateResourceId(id);
+                return new MobileNetworkSimResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SimGroupResource
+        #region MobileNetworkSimGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="SimGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SimGroupResource.CreateResourceIdentifier" /> to create a <see cref="SimGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSimGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSimGroupResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SimGroupResource" /> object. </returns>
-        public static SimGroupResource GetSimGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileNetworkSimGroupResource" /> object. </returns>
+        public static MobileNetworkSimGroupResource GetMobileNetworkSimGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SimGroupResource.ValidateResourceId(id);
-                return new SimGroupResource(client, id);
+                MobileNetworkSimGroupResource.ValidateResourceId(id);
+                return new MobileNetworkSimGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SimPolicyResource
+        #region MobileNetworkSimPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="SimPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SimPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSimPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SimPolicyResource" /> object. </returns>
-        public static SimPolicyResource GetSimPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileNetworkSimPolicyResource" /> object. </returns>
+        public static MobileNetworkSimPolicyResource GetMobileNetworkSimPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SimPolicyResource.ValidateResourceId(id);
-                return new SimPolicyResource(client, id);
+                MobileNetworkSimPolicyResource.ValidateResourceId(id);
+                return new MobileNetworkSimPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteResource
+        #region MobileNetworkSiteResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSiteResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResource" /> object. </returns>
-        public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileNetworkSiteResource" /> object. </returns>
+        public static MobileNetworkSiteResource GetMobileNetworkSiteResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteResource.ValidateResourceId(id);
-                return new SiteResource(client, id);
+                MobileNetworkSiteResource.ValidateResourceId(id);
+                return new MobileNetworkSiteResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SliceResource
+        #region MobileNetworkSliceResource
         /// <summary>
-        /// Gets an object representing a <see cref="SliceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SliceResource.CreateResourceIdentifier" /> to create a <see cref="SliceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MobileNetworkSliceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkSliceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSliceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SliceResource" /> object. </returns>
-        public static SliceResource GetSliceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MobileNetworkSliceResource" /> object. </returns>
+        public static MobileNetworkSliceResource GetMobileNetworkSliceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SliceResource.ValidateResourceId(id);
-                return new SliceResource(client, id);
+                MobileNetworkSliceResource.ValidateResourceId(id);
+                return new MobileNetworkSliceResource(client, id);
             }
             );
         }
@@ -405,12 +462,12 @@ namespace Azure.ResourceManager.MobileNetwork
             return resourceGroupResource.GetPacketCoreControlPlanes().Get(packetCoreControlPlaneName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SimGroupResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of MobileNetworkSimGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
-        public static SimGroupCollection GetSimGroups(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MobileNetworkSimGroupResources and their operations over a MobileNetworkSimGroupResource. </returns>
+        public static MobileNetworkSimGroupCollection GetMobileNetworkSimGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSimGroups();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMobileNetworkSimGroups();
         }
 
         /// <summary>
@@ -432,9 +489,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SimGroupResource>> GetSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MobileNetworkSimGroupResource>> GetMobileNetworkSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMobileNetworkSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -456,9 +513,65 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SimGroupResource> GetSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
+        public static Response<MobileNetworkSimGroupResource> GetMobileNetworkSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSimGroups().Get(simGroupName, cancellationToken);
+            return resourceGroupResource.GetMobileNetworkSimGroups().Get(simGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionPacketCoreControlPlaneVersionResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
+        public static SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersions();
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
         }
 
         /// <summary>
@@ -560,10 +673,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SimGroupResource> GetSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroupsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworkSimGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -581,42 +694,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SimGroupResource> GetSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroups(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworkSimGroups(cancellationToken);
         }
 
-        /// <summary> Gets a collection of PacketCoreControlPlaneVersionResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of TenantPacketCoreControlPlaneVersionResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PacketCoreControlPlaneVersionResources and their operations over a PacketCoreControlPlaneVersionResource. </returns>
-        public static PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions(this TenantResource tenantResource)
+        /// <returns> An object representing collection of TenantPacketCoreControlPlaneVersionResources and their operations over a TenantPacketCoreControlPlaneVersionResource. </returns>
+        public static TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersions();
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet core control plane version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="versionName"> The name of the packet core control plane version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<PacketCoreControlPlaneVersionResource>> GetPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return GetTenantResourceExtensionClient(tenantResource).GetTenantPacketCoreControlPlaneVersions();
         }
 
         /// <summary>
@@ -638,9 +727,33 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PacketCoreControlPlaneVersionResource> GetPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
+            return await tenantResource.GetTenantPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetTenantPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type defining how metric values are displayed. </param>
-        /// <param name="resourceUri"> The resource uri of the database. </param>
+        /// <param name="resourceUriString"> The resource uri of the database. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="metricAvailabilities"> The list of database metric availabilities for the metric. </param>
-        internal SqlMetricDefinition(SqlMetricName name, SqlMetricPrimaryAggregationType? primaryAggregationType, Uri resourceUri, SqlMetricDefinitionUnitType? unit, IReadOnlyList<SqlMetricAvailability> metricAvailabilities)
+        internal SqlMetricDefinition(SqlMetricName name, SqlMetricPrimaryAggregationType? primaryAggregationType, string resourceUriString, SqlMetricDefinitionUnitType? unit, IReadOnlyList<SqlMetricAvailability> metricAvailabilities)
         {
             Name = name;
             PrimaryAggregationType = primaryAggregationType;
-            ResourceUri = resourceUri;
+            ResourceUriString = resourceUriString;
             Unit = unit;
             MetricAvailabilities = metricAvailabilities;
         }
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The primary aggregation type defining how metric values are displayed. </summary>
         public SqlMetricPrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The resource uri of the database. </summary>
-        public Uri ResourceUri { get; }
+        public string ResourceUriString { get; }
         /// <summary> The unit of the metric. </summary>
         public SqlMetricDefinitionUnitType? Unit { get; }
         /// <summary> The list of database metric availabilities for the metric. </summary>

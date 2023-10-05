@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 var response = _relationshipLinkResourceFormatRelationshipLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipLinkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/relationshipLinks/{relationshipLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RelationshipLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relationshipLinkName"> The name of the relationship link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationshipLinkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RelationshipLinkResourceFormatResource>> GetIfExistsAsync(string relationshipLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relationshipLinkName, nameof(relationshipLinkName));
+
+            using var scope = _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics.CreateScope("RelationshipLinkResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _relationshipLinkResourceFormatRelationshipLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RelationshipLinkResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new RelationshipLinkResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/relationshipLinks/{relationshipLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RelationshipLinks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relationshipLinkName"> The name of the relationship link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationshipLinkName"/> is null. </exception>
+        public virtual NullableResponse<RelationshipLinkResourceFormatResource> GetIfExists(string relationshipLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relationshipLinkName, nameof(relationshipLinkName));
+
+            using var scope = _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics.CreateScope("RelationshipLinkResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _relationshipLinkResourceFormatRelationshipLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipLinkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RelationshipLinkResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new RelationshipLinkResourceFormatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2023-08-15)
+
+### Features Added
+- Updated to support ANF api-version 2022-09-01
+- Added `GetGetGroupIdListForLdapUser` to `NetAppVolumeResource` and `NetAppVolumeGroupVolume` to get a list of group Ids for a specific LDAP User
+- Added `ActualThroughputMibps` to `NetAppVolumeData` to show actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel
+- Added `OriginatingResourceId` to `NetAppVolumeData`, the Id of the snapshot or backup that the volume is restored from.
+- Added `Identity` to `NetAppAccountPatch` the identity of the resource
+- Added `IsSnapshotDirectoryVisible` to `NetAppVolumePatch`, if enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots
+- Added `AcrossT2Value` to `NetAppVolumeStorageToNetworkProximity`, standard AcrossT2 storage to network connectivity.
+- Added `AcrossT2Value`, `T1AndAcrossT2Value`, `T2AndAcrossT2Value`, `T1AndT2AndAcrossT2Value` to `RegionStorageToNetworkProximity` enum
+
+## 1.2.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.1.0 (2023-04-04)
 

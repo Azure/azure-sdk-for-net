@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="location"> The location. </param>
         /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
         /// <param name="serializedData"> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> Workbook schema version format, like &apos;Notebook/1.0&apos;, which should match the workbook in serializedData. </param>
+        /// <param name="version"> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </param>
         /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this workbook definition. </param>
         /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this workbook. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string DisplayName { get; set; }
         /// <summary> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </summary>
         public string SerializedData { get; set; }
-        /// <summary> Workbook schema version format, like &apos;Notebook/1.0&apos;, which should match the workbook in serializedData. </summary>
+        /// <summary> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </summary>
         public string Version { get; set; }
         /// <summary> Date and time in UTC of the last modification that was made to this workbook definition. </summary>
         public DateTimeOffset? ModifiedOn { get; }

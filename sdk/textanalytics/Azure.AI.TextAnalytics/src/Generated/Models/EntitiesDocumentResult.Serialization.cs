@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics.Value);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WriteEndObject();
         }
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            IList<EntityWithResolution> entities = default;
+            IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
@@ -55,10 +55,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("entities"u8))
                 {
-                    List<EntityWithResolution> array = new List<EntityWithResolution>();
+                    List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityWithResolution.DeserializeEntityWithResolution(item));
+                        array.Add(Entity.DeserializeEntity(item));
                     }
                     entities = array;
                     continue;

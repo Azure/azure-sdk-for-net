@@ -2,10 +2,13 @@
 
 This sample demonstrates how to export a project. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
+You can work with request and response content more easily by using our [Dynamic JSON](https://aka.ms/azsdk/net/dynamiccontent) feature. This is illustrated in the following sample.
+
 Start by importing the namespace for the `ConversationAuthoringClient` and related classes:
 
 ```C# Snippet:ConversationAuthoringClient_Namespaces
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations.Authoring;
 ```
 
@@ -29,12 +32,12 @@ string projectName = "project-to-export";
 Operation<BinaryData> exportOperation = client.ExportProject(WaitUntil.Completed, projectName);
 
 // Get the resultUrl from the response, which contains the exported project.
-using JsonDocument doc = JsonDocument.Parse(exportOperation.Value.ToStream());
-string resultUrl = doc.RootElement.GetProperty("resultUrl").GetString();
+dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+Uri resultUrl = result.resultUrl;
 
 // Use the client pipeline to create and send a request to download the raw URL.
 RequestUriBuilder builder = new RequestUriBuilder();
-builder.Reset(new Uri(resultUrl));
+builder.Reset(resultUrl);
 
 Request request = client.Pipeline.CreateRequest();
 request.Method = RequestMethod.Get;
@@ -54,12 +57,12 @@ string projectName = "project-to-export";
 Operation<BinaryData> exportOperation = await client.ExportProjectAsync(WaitUntil.Completed, projectName);
 
 // Get the resultUrl from the response, which contains the exported project.
-using JsonDocument doc = JsonDocument.Parse(exportOperation.Value.ToStream());
-string resultUrl = doc.RootElement.GetProperty("resultUrl").GetString();
+dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+Uri resultUrl = result.resultUrl;
 
 // Use the client pipeline to create and send a request to download the raw URL.
 RequestUriBuilder builder = new RequestUriBuilder();
-builder.Reset(new Uri(resultUrl));
+builder.Reset(resultUrl);
 
 Request request = client.Pipeline.CreateRequest();
 request.Method = RequestMethod.Get;

@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: PolicyInsights
 namespace: Azure.ResourceManager.PolicyInsights
@@ -13,6 +12,26 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec82409
 tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
+  - PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
+  - PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
+  - PolicyEvents_ListQueryResultsForPolicySetDefinition
+  - PolicyEvents_ListQueryResultsForPolicyDefinition
+  - PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment
+  - PolicyStates_ListQueryResultsForPolicySetDefinition
+  - PolicyStates_SummarizeForPolicySetDefinition
+  - PolicyStates_ListQueryResultsForPolicyDefinition
+  - PolicyStates_SummarizeForPolicyDefinition
+  - PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
+  - PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
+  - PolicyEvents_ListQueryResultsForResource
+  - PolicyStates_ListQueryResultsForResource
+  - PolicyStates_SummarizeForResource
+  - PolicyTrackedResources_ListQueryResultsForResource
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -69,7 +88,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'locations': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -141,6 +160,15 @@ rename-mapping:
   RemediationDeployment.resourceLocation: -|azure-location
   TrackedResourceModificationDetails.deploymentId: -|arm-id
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
+
+models-to-treat-empty-string-as-null:
+  - PolicyAssignmentSummary
+  - PolicyDetails
+  - PolicyEvent
+  - PolicyReference
+  - PolicyState
+  - PolicyMetadataData
+  - SlimPolicyMetadata
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.

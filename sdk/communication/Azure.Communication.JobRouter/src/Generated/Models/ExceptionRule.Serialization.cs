@@ -35,13 +35,13 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            JobExceptionTrigger trigger = default;
+            ExceptionTrigger trigger = default;
             IDictionary<string, ExceptionAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = JobExceptionTrigger.DeserializeJobExceptionTrigger(property.Value);
+                    trigger = ExceptionTrigger.DeserializeExceptionTrigger(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))

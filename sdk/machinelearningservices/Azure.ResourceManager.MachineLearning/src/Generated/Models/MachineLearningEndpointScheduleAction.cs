@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningEndpointScheduleAction. </summary>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.
-        /// &lt;see href=&quot;TBD&quot; /&gt;
+        /// &lt;see href="TBD" /&gt;
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointInvocationDefinition"/> is null. </exception>
         public MachineLearningEndpointScheduleAction(BinaryData endpointInvocationDefinition)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.
-        /// &lt;see href=&quot;TBD&quot; /&gt;
+        /// &lt;see href="TBD" /&gt;
         /// </param>
         internal MachineLearningEndpointScheduleAction(ScheduleActionType actionType, BinaryData endpointInvocationDefinition) : base(actionType)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// [Required] Defines Schedule action definition details.
-        /// &lt;see href=&quot;TBD&quot; /&gt;
+        /// &lt;see href="TBD" /&gt;
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

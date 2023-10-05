@@ -8,7 +8,6 @@ using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using KeyType = Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType;

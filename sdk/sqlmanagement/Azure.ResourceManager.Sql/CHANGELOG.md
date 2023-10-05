@@ -1,13 +1,8 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.4 (Unreleased)
 
 ### Features Added
-
-- Added support for `ManagedInstanceServerConfigurationOption`, `ManagedInstanceStartStopSchedule` and `ManagedLedgerDigestUpload` resources.
-- Added `filter` and `expand` parameters to `Get` and `Exists` methods of `RestorableDroppedDatabaseCollection` and `SqlDatabaseCollection`.
-- Added `filter` and `expand` parameters to `Get` methods of `RestorableDroppedDatabaseResource` and `SqlDatabaseResource`.
-- Added `RevalidateDatabaseEncryptionProtector` and `RevertDatabaseEncryptionProtector` methods to `SqlDatabaseResource`.
 
 ### Breaking Changes
 
@@ -15,6 +10,36 @@
 
 ### Other Changes
 
+## 1.3.0-beta.3 (2023-09-25)
+
+### Features Added
+
+- Unhide the `IsIPv6Enabled` parameter for server creation and updating.
+
+### Other Changes
+
+- Upgraded API version of Servers to `2023-02-01-preview`.
+
+## 1.3.0-beta.2 (2023-07-31)
+
+### Features Added
+
+- Supported Sql Elastic Pool creation and update with `PreferredEnclaveType`.
+
+## 1.3.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added support for `ManagedInstanceServerConfigurationOption`, `ManagedInstanceStartStopSchedule` and `ManagedLedgerDigestUpload` resources.
+- Added `filter` and `expand` parameters to `Get` and `Exists` methods of `RestorableDroppedDatabaseCollection` and `SqlDatabaseCollection`.
+- Added `filter` and `expand` parameters to `Get` methods of `RestorableDroppedDatabaseResource` and `SqlDatabaseResource`.
+- Added `RevalidateDatabaseEncryptionProtector` and `RevertDatabaseEncryptionProtector` methods to `SqlDatabaseResource`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 - Upgraded API version of Instance Failover Groups to `2022-05-01-preview`.
 - Upgraded API version of Transparent Data Encryptions to `2022-08-01-preview`.
 - Upgraded API version of Servers to `2022-08-01-preview`.

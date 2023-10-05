@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<AgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<string> automationAccountArmId = default;
+            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
+            Optional<ResourceIdentifier> automationAccountArmId = default;
             Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
             Optional<string> scheduleName = default;
             Optional<string> jobScheduleName = default;
@@ -32,12 +32,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentAutoUpdateStatus = new AgentAutoUpdateStatus(property.Value.GetString());
+                    agentAutoUpdateStatus = new SiteRecoveryAgentAutoUpdateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("automationAccountArmId"u8))
                 {
-                    automationAccountArmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    automationAccountArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("automationAccountAuthenticationType"u8))

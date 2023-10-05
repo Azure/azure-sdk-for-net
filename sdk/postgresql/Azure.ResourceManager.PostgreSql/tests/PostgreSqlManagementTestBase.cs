@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         : base(isAsync, mode)
         {
             CompareBodies = false;
+            IgnoreNetworkDependencyVersions();
         }
 
         protected PostgreSqlManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             CompareBodies = false;
+            IgnoreNetworkDependencyVersions();
         }
 
         [SetUp]
@@ -87,24 +89,10 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             };
             ResourceIdentifier subnetID;
             ResourceIdentifier vnetID;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                vnetID = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName);
-                subnetID = SubnetResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName, subnetName);
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkResource vnetResource = (await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, networkData)).Value;
-                    var subnetCollection = vnetResource.GetSubnets();
-                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
-                    vnetID = vnetResource.Data.Id;
-                    subnetID = vnetResource.Data.Subnets[0].Id;
-                }
-            };
-
-            //var subnet = (await vnet.GetSubnetAsync(subnetName)).Value;
+            VirtualNetworkResource vnetResource = (await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, networkData)).Value;
+            var subnetCollection = vnetResource.GetSubnets();
+            vnetID = vnetResource.Data.Id;
+            subnetID = vnetResource.Data.Subnets[0].Id;
 
             return (vnetID, subnetID);
         }

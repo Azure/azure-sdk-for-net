@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+### Other Changes
+## 1.1.0-beta.1 (2023-09-19)
 
 ### Features Added
+- Added Support for PSTN Dial-Out Feature in Azure Communication Services Rooms
 
-### Breaking Changes
+### Added
+- Added new overloads for CreateRoom (CreateRoomAsync) and UpdateRooms (UpdateRoomsAsync) with options : CreateRoomOptions and UpdateRoomOptions. 
 
-### Bugs Fixed
-
-### Other Changes
+## 1.0.0 (2023-06-12)
+General Availability version of the Azure Communication Services Rooms .NET SDK.
 
 ## 1.0.0-beta.2 (2023-05-17)
 

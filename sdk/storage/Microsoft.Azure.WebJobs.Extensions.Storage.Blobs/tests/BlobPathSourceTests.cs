@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             var pathA = BlobPathSource.Create(a);
             BlobPath pathB = null;
-            BlobPath.TryParse(b, false, out pathB);
+            BlobPath.TryParse(b, false, false, out pathB);
 
             IReadOnlyDictionary<string, object> bindingData = pathA.CreateBindingData(pathB);
 

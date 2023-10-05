@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> The scope for the virtual machine affinity or anti-affinity placement hint. It should always be &quot;Machine&quot; in the case of node affinity. </summary>
+    /// <summary> The scope for the virtual machine affinity or anti-affinity placement hint. It should always be "Machine" in the case of node affinity. </summary>
     public readonly partial struct VirtualMachinePlacementHintPodAffinityScope : IEquatable<VirtualMachinePlacementHintPodAffinityScope>
     {
         private readonly string _value;

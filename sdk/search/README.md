@@ -20,19 +20,6 @@ Functionality is exposed through several client libraries:
   top of [Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md) and the
   [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-- [Microsoft.Azure.Search](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.Search/) is the previous .NET
-  client library that makes it easy to develop applications using
-  Azure Cognitive Search.  The `Microsoft.Azure.Search` package includes the
-  following client libraries:
-  - [Microsoft.Azure.Search.Data](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.Search.Data/) enables
-    querying or updating documents in your indexes.
-  - [Microsoft.Azure.Search.Service](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.Search.Service/) manages
-    Azure Cognitive Search indexes, synonym maps, indexers, data sources, or
-    other service-level resources.
-  - [Microsoft.Azure.Search.Common](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.Search.Common/) contains
-    common types needed by the Microsoft.Azure.Search libraries.  It is only
-    meant to be used as a dependency.
-
 - [Microsoft.Azure.Management.Search](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.Management.Search/)
   supports managing Azure Cognitive Search services and API keys.
 

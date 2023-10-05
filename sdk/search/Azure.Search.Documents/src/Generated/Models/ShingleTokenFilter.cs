@@ -30,8 +30,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="minShingleSize"> The minimum shingle size. Default and minimum value is 2. Must be less than the value of maxShingleSize. </param>
         /// <param name="outputUnigrams"> A value indicating whether the output stream will contain the input tokens (unigrams) as well as shingles. Default is true. </param>
         /// <param name="outputUnigramsIfNoShingles"> A value indicating whether to output unigrams for those times when no shingles are available. This property takes precedence when outputUnigrams is set to false. Default is false. </param>
-        /// <param name="tokenSeparator"> The string to use when joining adjacent tokens to form a shingle. Default is a single space (&quot; &quot;). </param>
-        /// <param name="filterToken"> The string to insert for each position at which there is no token. Default is an underscore (&quot;_&quot;). </param>
+        /// <param name="tokenSeparator"> The string to use when joining adjacent tokens to form a shingle. Default is a single space (" "). </param>
+        /// <param name="filterToken"> The string to insert for each position at which there is no token. Default is an underscore ("_"). </param>
         internal ShingleTokenFilter(string oDataType, string name, int? maxShingleSize, int? minShingleSize, bool? outputUnigrams, bool? outputUnigramsIfNoShingles, string tokenSeparator, string filterToken) : base(oDataType, name)
         {
             MaxShingleSize = maxShingleSize;
@@ -51,9 +51,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? OutputUnigrams { get; set; }
         /// <summary> A value indicating whether to output unigrams for those times when no shingles are available. This property takes precedence when outputUnigrams is set to false. Default is false. </summary>
         public bool? OutputUnigramsIfNoShingles { get; set; }
-        /// <summary> The string to use when joining adjacent tokens to form a shingle. Default is a single space (&quot; &quot;). </summary>
+        /// <summary> The string to use when joining adjacent tokens to form a shingle. Default is a single space (" "). </summary>
         public string TokenSeparator { get; set; }
-        /// <summary> The string to insert for each position at which there is no token. Default is an underscore (&quot;_&quot;). </summary>
+        /// <summary> The string to insert for each position at which there is no token. Default is an underscore ("_"). </summary>
         public string FilterToken { get; set; }
     }
 }

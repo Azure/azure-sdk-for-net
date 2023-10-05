@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-09-08)
+
+### Features Added
+
+- Upgraded API version to 2023-04-01
+- Added SecureScore as part of VaultProperties
+- Added MultiUserAuthorization as part of vaultProperties
+- Added SoftDeleteSettings as part of vaultproperties
+- Added CrossSubscriptionRestoresettings
+
+### Bugs Fixed
+
+- Removed incorrect protectable item type and discriminator for HSR container protectable item
+- Added correct protectable item type and discriminator for HSR container protectable item
+
+## 1.1.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.0.0 (2023-02-20)
 

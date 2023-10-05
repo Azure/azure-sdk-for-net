@@ -10,9 +10,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <remarks>
-    /// See <see href="https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring"/> for more information about models you can pass to this client.
+    /// See <see href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring"/> for more information about models you can pass to this client.
     /// </remarks>
-    /// <seealso href="https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring"/>
+    /// <seealso href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring"/>
     [CodeGenClient("ConversationalAnalysisAuthoringClient")]
     public partial class ConversationAuthoringClient
     {
@@ -138,7 +138,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
+        /// https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/export
         ///
         /// Response Body:
         ///
@@ -176,10 +176,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, RequestContext context) =>
             await ExportProjectAsync(waitUntil, projectName, exportedProjectFormat, assetKind, stringIndexType, default, context).ConfigureAwait(false);
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 
         /// <summary> Triggers a job to export a project&apos;s data. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -242,7 +240,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// Additional information can be found in the service REST API documentation:
-        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
+        /// https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring/export
         ///
         /// Response Body:
         ///
@@ -280,9 +278,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, RequestContext context) =>
             ExportProject(waitUntil, projectName, exportedProjectFormat, assetKind, stringIndexType, default, context);
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
     }
 }

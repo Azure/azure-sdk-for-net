@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01";
+            _apiVersion = apiVersion ?? "2023-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves the details of a RouteMap. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves the details of a RouteMap. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        /// <summary> Creates a RouteMap if it doesn&apos;t exist else updates the existing one. </summary>
+        /// <summary> Creates a RouteMap if it doesn't exist else updates the existing one. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="data"> Parameters supplied to create or update a RouteMap. </param>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates a RouteMap if it doesn&apos;t exist else updates the existing one. </summary>
+        /// <summary> Creates a RouteMap if it doesn't exist else updates the existing one. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="data"> Parameters supplied to create or update a RouteMap. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a RouteMap. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes a RouteMap. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves the details of all RouteMaps. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group&apos;. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group'. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves the details of all RouteMaps. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group&apos;. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group'. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of all RouteMaps. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group&apos;. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group'. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves the details of all RouteMaps. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the RouteMap&apos;s resource group&apos;. </param>
+        /// <param name="resourceGroupName"> The resource group name of the RouteMap's resource group'. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub containing the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>

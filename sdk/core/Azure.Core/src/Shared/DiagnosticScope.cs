@@ -24,13 +24,28 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
+        [RequiresUnreferencedCode("The diagnosticSourceArgs are used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the type being passed in using DynamicDependency attributes.")]
+#if NETCOREAPP2_1
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
+#else
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, ActivitySource? activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
+#endif
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
+#if NETCOREAPP2_1
             _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
+#else
+            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == System.Diagnostics.ActivityKind.Internal) ? suppressNestedClientActivities : false;
+#endif
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
-            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+            bool hasListeners;
+#if NETCOREAPP2_1
+            hasListeners = ActivityExtensions.ActivitySourceHasListeners(activitySource);
+#else
+            hasListeners = activitySource?.HasListeners() ?? false;
+#endif
+            IsEnabled = source.IsEnabled() || hasListeners;
 
             if (_suppressNestedClientActivities)
             {
@@ -92,6 +107,11 @@ namespace Azure.Core.Pipeline
             started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
+        public void SetDisplayName(string displayName)
+        {
+            _activityAdapter?.SetDisplayName(displayName);
+        }
+
         public void SetStartTime(DateTime dateTime)
         {
             _activityAdapter?.SetStartTime(dateTime);
@@ -117,11 +137,15 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed.
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has public properties preserved on the inner method MarkFailed." +
+            "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when preserving all public properties. Since we do not use this property, and" +
+            "neither does Application Insights, we can suppress the warning coming from the inner method.")]
         public void Failed(Exception? exception = default)
         {
             _activityAdapter?.MarkFailed(exception);
         }
 
+#if NETCOREAPP2_1
         /// <summary>
         /// Kind describes the relationship between the Activity, its parents, and its children in a Trace.
         /// </summary>
@@ -153,6 +177,7 @@ namespace Azure.Core.Pipeline
             /// </summary>
             Consumer = 4,
         }
+#endif
 
         private class DiagnosticActivity : Activity
         {
@@ -167,22 +192,39 @@ namespace Azure.Core.Pipeline
 
         private class ActivityAdapter : IDisposable
         {
+#if NETCOREAPP2_1
             private readonly object? _activitySource;
+#else
+            private readonly ActivitySource? _activitySource;
+#endif
             private readonly DiagnosticSource _diagnosticSource;
             private readonly string _activityName;
+#if NETCOREAPP2_1
             private readonly ActivityKind _kind;
+#else
+            private readonly System.Diagnostics.ActivityKind _kind;
+#endif
             private readonly object? _diagnosticSourceArgs;
 
             private Activity? _currentActivity;
             private Activity? _sampleOutActivity;
 
+#if NETCOREAPP2_1
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
+#else
+            private ActivityTagsCollection? _tagCollection;
+#endif
             private DateTimeOffset _startTime;
             private List<Activity>? _links;
             private string? _traceparent;
             private string? _tracestate;
+            private string? _displayName;
 
+#if NETCOREAPP2_1
             public ActivityAdapter(object? activitySource, DiagnosticSource diagnosticSource, string activityName, ActivityKind kind, object? diagnosticSourceArgs)
+#else
+            public ActivityAdapter(ActivitySource? activitySource, DiagnosticSource diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
+#endif
             {
                 _activitySource = activitySource;
                 _diagnosticSource = diagnosticSource;
@@ -197,30 +239,48 @@ namespace Azure.Core.Pipeline
                 {
                     // Activity is not started yet, add the value to the collection
                     // that is going to be passed to StartActivity
+#if NETCOREAPP2_1
                     _tagCollection ??= ActivityExtensions.CreateTagsCollection() ?? new List<KeyValuePair<string, object>>();
                     _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
+#else
+                    _tagCollection ??= new ActivityTagsCollection();
+                    _tagCollection.Add(name, value!);
+#endif
                 }
                 else
                 {
+#if NETCOREAPP2_1
                     _currentActivity?.AddObjectTag(name, value);
+#else
+                    _currentActivity?.AddTag(name, value);
+#endif
                 }
             }
 
+#if NETCOREAPP2_1
             private IList? GetActivitySourceLinkCollection()
+#else
+            private List<ActivityLink>? GetActivitySourceLinkCollection()
+#endif
             {
                 if (_links == null)
                 {
                     return null;
                 }
 
+#if NETCOREAPP2_1
                 var linkCollection = ActivityExtensions.CreateLinkCollection();
                 if (linkCollection == null)
                 {
                     return null;
                 }
+#else
+                var linkCollection = new List<ActivityLink>();
+#endif
 
                 foreach (var activity in _links)
                 {
+#if NETCOREAPP2_1
                     ICollection<KeyValuePair<string,object>>? linkTagsCollection =  ActivityExtensions.CreateTagsCollection();
                     if (linkTagsCollection != null)
                     {
@@ -235,7 +295,21 @@ namespace Azure.Core.Pipeline
                     {
                         linkCollection.Add(link);
                     }
-                }
+#else
+                    ActivityTagsCollection linkTagsCollection = new();
+                    foreach (var tag in activity.Tags)
+                    {
+                        linkTagsCollection.Add(tag.Key, tag.Value!);
+                    }
+
+                    var contextWasParsed = ActivityContext.TryParse(activity.ParentId!, activity.TraceStateString, out var context);
+                    if (contextWasParsed)
+                    {
+                        var link = new ActivityLink(context, linkTagsCollection);
+                        linkCollection.Add(link);
+                    }
+#endif
+            }
 
                 return linkCollection;
             }
@@ -243,9 +317,14 @@ namespace Azure.Core.Pipeline
             public void AddLink(string traceparent, string? tracestate, IDictionary<string, string>? attributes)
             {
                 var linkedActivity = new Activity("LinkedActivity");
-                linkedActivity.SetW3CFormat();
                 linkedActivity.SetParentId(traceparent);
+#if NETCOREAPP2_1
+                linkedActivity.SetW3CFormat();
                 linkedActivity.SetTraceState(tracestate);
+#else
+                linkedActivity.SetIdFormat(ActivityIdFormat.W3C);
+                linkedActivity.TraceStateString = tracestate;
+#endif
 
                 if (attributes != null)
                 {
@@ -259,12 +338,18 @@ namespace Azure.Core.Pipeline
                 _links.Add(linkedActivity);
             }
 
+            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.PublicMethods, typeof(Activity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.PublicMethods, typeof(DiagnosticActivity))]
             public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
+#if NETCOREAPP2_1
                     if (!_currentActivity.GetIsAllDataRequested())
+#else
+                    if (!_currentActivity.IsAllDataRequested)
+#endif
                     {
                         _sampleOutActivity = _currentActivity;
                         _currentActivity = null;
@@ -304,7 +389,11 @@ namespace Azure.Core.Pipeline
                     {
                         Links = (IEnumerable<Activity>?)_links ?? Array.Empty<Activity>(),
                     };
+#if NETCOREAPP2_1
                     _currentActivity.SetW3CFormat();
+#else
+                    _currentActivity.SetIdFormat(ActivityIdFormat.W3C);
+#endif
 
                     if (_startTime != default)
                     {
@@ -315,7 +404,11 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
+#if NETCOREAPP2_1
                             _currentActivity.AddObjectTag(tag.Key, tag.Value);
+#else
+                            _currentActivity.AddTag(tag.Key, tag.Value);
+#endif
                         }
                     }
 
@@ -326,19 +419,52 @@ namespace Azure.Core.Pipeline
 
                     if (_tracestate != null)
                     {
+#if NETCOREAPP2_1
                         _currentActivity.SetTraceState(_tracestate);
+#else
+                        _currentActivity.TraceStateString = _tracestate;
+#endif
                     }
 
                     _currentActivity.Start();
                 }
 
-                _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+                WriteStartEvent();
+
+                if (_displayName != null)
+                {
+#if NETCOREAPP2_1
+                    _currentActivity?.SetDisplayName(_displayName);
+#else
+                    _currentActivity.DisplayName = _displayName;
+#endif
+                }
 
                 return _currentActivity;
             }
 
+            [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency on the ActivityAdapter.Start() method, or the responsibility is on the user of this struct since the struct constructor is marked with RequiresUnreferencedCode.")]
+            private void WriteStartEvent()
+            {
+                _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+            }
+
+            public void SetDisplayName(string displayName)
+            {
+                _displayName = displayName;
+                if (_currentActivity != null)
+                {
+#if NETCOREAPP2_1
+                    _currentActivity.SetDisplayName(_displayName);
+#else
+                    _currentActivity.DisplayName = _displayName;
+#endif
+                }
+            }
+
             private Activity? StartActivitySourceActivity()
             {
+#if NETCOREAPP2_1
                 return ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
                     _activityName,
@@ -348,6 +474,23 @@ namespace Azure.Core.Pipeline
                     links: GetActivitySourceLinkCollection(),
                     traceparent: _traceparent,
                     tracestate: _tracestate);
+#else
+                if (_activitySource == null)
+                {
+                    return null;
+                }
+                ActivityContext context;
+                if (_traceparent != null)
+                {
+                    context = ActivityContext.Parse(_traceparent, _tracestate);
+                }
+                else
+                {
+                    context = new ActivityContext();
+                }
+                var activity = _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
+                return activity;
+#endif
             }
 
             public void SetStartTime(DateTime startTime)
@@ -356,17 +499,23 @@ namespace Azure.Core.Pipeline
                 _currentActivity?.SetStartTime(startTime);
             }
 
-            public void MarkFailed(Exception? exception)
+            [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicallyAccessedMemberTypes.")]
+            public void MarkFailed<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T exception)
             {
                 if (exception != null)
                 {
                     _diagnosticSource?.Write(_activityName + ".Exception", exception);
                 }
 
+#if NETCOREAPP2_1
                 if (ActivityExtensions.SupportsActivitySource())
                 {
                     _currentActivity?.SetErrorStatus(exception?.ToString());
                 }
+#endif
+#if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
+                _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
+#endif
             }
 
             public void SetTraceContext(string traceparent, string? tracestate)
@@ -379,6 +528,7 @@ namespace Azure.Core.Pipeline
                 _tracestate = tracestate;
             }
 
+            [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The class constructor is marked with RequiresUnreferencedCode.")]
             public void Dispose()
             {
                 var activity = _currentActivity ?? _sampleOutActivity;
@@ -392,14 +542,19 @@ namespace Azure.Core.Pipeline
 
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
+#if NETCOREAPP2_1
                 if (!activity.TryDispose())
                 {
                     activity.Stop();
                 }
+#else
+                activity.Dispose();
+#endif
             }
         }
     }
 
+#if NETCOREAPP2_1
 #pragma warning disable SA1507 // File can not contain multiple types
     /// <summary>
     /// Until we can reference the 5.0 of System.Diagnostics.DiagnosticSource
@@ -435,6 +590,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string, object>? SetCustomPropertyMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
         private static MethodInfo? ParseActivityContextMethod;
+        private static Action<Activity, string>? SetDisplayNameMethod;
 
         public static object? GetCustomProperty(this Activity activity, string propertyName)
         {
@@ -564,6 +720,30 @@ namespace Azure.Core.Pipeline
                 }
             }
             return GetAllDataRequestedMethod(activity);
+        }
+
+        public static void SetDisplayName(this Activity activity, string displayName)
+        {
+            if (displayName != null)
+            {
+                if (SetDisplayNameMethod == null)
+                {
+                    var method = typeof(Activity).GetProperty("DisplayName")?.SetMethod;
+                    if (method == null)
+                    {
+                        SetDisplayNameMethod = (_, _) => { };
+                    }
+                    else
+                    {
+                        var displayNameParameter = Expression.Parameter(typeof(string));
+                        var convertedParameter = Expression.Convert(displayNameParameter, method.GetParameters()[0].ParameterType);
+                        SetDisplayNameMethod = Expression.Lambda<Action<Activity, string>>(
+                            Expression.Call(ActivityParameter, method, convertedParameter),
+                            ActivityParameter, displayNameParameter).Compile();
+                    }
+                }
+                SetDisplayNameMethod(activity, displayName);
+            }
         }
 
         public static void SetTraceState(this Activity activity, string? tracestate)
@@ -870,4 +1050,26 @@ namespace Azure.Core.Pipeline
                 "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
         }
     }
+#else
+#pragma warning disable SA1507 // File can not contain multiple types
+    /// <summary>
+    /// Until Activity Source is no longer considered experimental.
+    /// </summary>
+    internal static class ActivityExtensions
+    {
+        static ActivityExtensions()
+        {
+            ResetFeatureSwitch();
+        }
+
+        public static bool SupportsActivitySource { get; private set; }
+
+        public static void ResetFeatureSwitch()
+        {
+            SupportsActivitySource = AppContextSwitchHelper.GetConfigValue(
+                "Azure.Experimental.EnableActivitySource",
+                "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE");
+        }
+    }
+#endif
 }

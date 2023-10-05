@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </summary>
+        /// <summary> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </summary>
         public ResourceIdentifier DeploymentTargetId { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
         public EnvironmentTypeEnableStatus? Status { get; set; }

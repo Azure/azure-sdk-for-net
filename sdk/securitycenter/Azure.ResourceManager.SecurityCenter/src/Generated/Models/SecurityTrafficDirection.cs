@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The rule&apos;s direction. </summary>
+    /// <summary> The rule's direction. </summary>
     public readonly partial struct SecurityTrafficDirection : IEquatable<SecurityTrafficDirection>
     {
         private readonly string _value;

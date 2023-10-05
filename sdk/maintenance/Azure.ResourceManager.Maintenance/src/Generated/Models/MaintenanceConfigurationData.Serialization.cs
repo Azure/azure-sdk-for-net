@@ -16,6 +16,86 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsCollectionDefined(ExtensionProperties))
+            {
+                writer.WritePropertyName("extensionProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtensionProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(MaintenanceScope))
+            {
+                writer.WritePropertyName("maintenanceScope"u8);
+                writer.WriteStringValue(MaintenanceScope.Value.ToString());
+            }
+            if (Optional.IsDefined(Visibility))
+            {
+                writer.WritePropertyName("visibility"u8);
+                writer.WriteStringValue(Visibility.Value.ToString());
+            }
+            if (Optional.IsDefined(InstallPatches))
+            {
+                writer.WritePropertyName("installPatches"u8);
+                writer.WriteObjectValue(InstallPatches);
+            }
+            writer.WritePropertyName("maintenanceWindow"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                SerializeStartOn(writer);
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expirationDateTime"u8);
+                SerializeExpireOn(writer);
+            }
+            if (Optional.IsDefined(Duration))
+            {
+                writer.WritePropertyName("duration"u8);
+                writer.WriteStringValue(Duration.Value, "c");
+            }
+            if (Optional.IsDefined(TimeZone))
+            {
+                writer.WritePropertyName("timeZone"u8);
+                writer.WriteStringValue(TimeZone);
+            }
+            if (Optional.IsDefined(RecurEvery))
+            {
+                writer.WritePropertyName("recurEvery"u8);
+                writer.WriteStringValue(RecurEvery);
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
 
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
         {
@@ -33,6 +113,7 @@ namespace Azure.ResourceManager.Maintenance
             Optional<IDictionary<string, string>> extensionProperties = default;
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceConfigurationVisibility> visibility = default;
+            Optional<MaintenancePatchConfiguration> installPatches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<TimeSpan> duration = default;
@@ -129,6 +210,15 @@ namespace Azure.ResourceManager.Maintenance
                             visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("installPatches"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("maintenanceWindow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -182,7 +272,7 @@ namespace Azure.ResourceManager.Maintenance
                     continue;
                 }
             }
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
+            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
         }
     }
 }

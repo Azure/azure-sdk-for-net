@@ -23,6 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string CorelationId = "someCorelationId";
         protected const string SourceUser = "SOURCE_USER_ID";
         protected const string TargetUser = "TARGET_USER_ID";
+        protected const string TransfereeUser = "TRANSFEREE_USER_ID";
         protected const int defaultTestTimeout = 3;
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
@@ -40,6 +41,13 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string GetParticipantsPayload = "{\"values\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}]}";
 
         protected const string RemoveParticipantPayload = AddParticipantsPayload;
+
+        protected const string DialogPayload = "{\"dialogId\":\"dialogId\",\"dialogInputType\":\"powerVirtualAgent\"}";
+
+        protected const string CancelAddParticipantPayload = "{" +
+                                    "\"operationContext\": \"someOperationContext\"," +
+                                    "\"invitationId\": \"invitationId\"" +
+                                    "}";
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
         {
@@ -76,7 +84,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallConnection CreateMoakCallConnection(string? callConnectionId = default)
         {
-            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null);
+            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null, null);
 
             return callconn;
         }

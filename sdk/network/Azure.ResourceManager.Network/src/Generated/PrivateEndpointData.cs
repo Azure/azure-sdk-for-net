@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
         /// <param name="applicationSecurityGroups"> Application security groups in which the private endpoint IP configuration is included. </param>
-        /// <param name="ipConfigurations"> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service&apos;s endpoints. </param>
+        /// <param name="ipConfigurations"> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </param>
         /// <param name="customNetworkInterfaceName"> The custom name of the network interface attached to the private endpoint. </param>
         internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs, IList<ApplicationSecurityGroupData> applicationSecurityGroups, IList<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName) : base(id, name, resourceType, location, tags)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
         public IList<CustomDnsConfigProperties> CustomDnsConfigs { get; }
         /// <summary> Application security groups in which the private endpoint IP configuration is included. </summary>
         public IList<ApplicationSecurityGroupData> ApplicationSecurityGroups { get; }
-        /// <summary> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service&apos;s endpoints. </summary>
+        /// <summary> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </summary>
         public IList<PrivateEndpointIPConfiguration> IPConfigurations { get; }
         /// <summary> The custom name of the network interface attached to the private endpoint. </summary>
         public string CustomNetworkInterfaceName { get; set; }

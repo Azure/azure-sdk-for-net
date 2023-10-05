@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_EventSubscriptionsGetForCustomTopic()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopic()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForCustomTopic_AzureFunctionDestination
+        // EventSubscriptions_GetForCustomTopic
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForCustomTopicAzureFunctionDestination()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopic()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_AzureFunctionDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForCustomTopic_AzureFunctionDestination
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForCustomTopicAzureFunctionDestination()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_AzureFunctionDestination.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -115,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopicAzureFunctionDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_AzureFunctionDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_AzureFunctionDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +167,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -138,12 +178,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForCustomTopic_EventHubDestination
+        // EventSubscriptions_GetForCustomTopic_AzureFunctionDestination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForCustomTopicEventHubDestination()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopicAzureFunctionDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_EventHubDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_AzureFunctionDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +195,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForCustomTopic_EventHubDestination
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForCustomTopicEventHubDestination()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_EventHubDestination.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -175,7 +255,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopicEventHubDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_EventHubDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_EventHubDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +267,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -198,12 +278,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForCustomTopic_HybridConnectionDestination
+        // EventSubscriptions_GetForCustomTopic_EventHubDestination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForCustomTopicHybridConnectionDestination()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopicEventHubDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_HybridConnectionDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_EventHubDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,7 +295,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForCustomTopic_HybridConnectionDestination
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForCustomTopicHybridConnectionDestination()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_HybridConnectionDestination.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -235,7 +355,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopicHybridConnectionDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_HybridConnectionDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_HybridConnectionDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,7 +367,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -258,12 +378,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination
+        // EventSubscriptions_GetForCustomTopic_HybridConnectionDestination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForCustomTopicServiceBusQueueDestination()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopicHybridConnectionDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_HybridConnectionDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -275,7 +395,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForCustomTopicServiceBusQueueDestination()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -295,7 +455,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopicServiceBusQueueDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -307,7 +467,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -318,12 +478,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination
+        // EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForCustomTopicServiceBusTopicDestination()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopicServiceBusQueueDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_ServiceBusQueueDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +495,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForCustomTopicServiceBusTopicDestination()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -355,7 +555,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopicServiceBusTopicDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -367,7 +567,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -378,12 +578,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForCustomTopic_StorageQueueDestination
+        // EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForCustomTopicStorageQueueDestination()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopicServiceBusTopicDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_StorageQueueDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_ServiceBusTopicDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -395,7 +595,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForCustomTopic_StorageQueueDestination
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForCustomTopicStorageQueueDestination()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_StorageQueueDestination.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -415,7 +655,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopicStorageQueueDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_StorageQueueDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_StorageQueueDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -427,7 +667,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -438,12 +678,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForCustomTopic_WebhookDestination
+        // EventSubscriptions_GetForCustomTopic_StorageQueueDestination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForCustomTopicWebhookDestination()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopicStorageQueueDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_WebhookDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_StorageQueueDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -455,7 +695,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForCustomTopic_WebhookDestination
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForCustomTopicWebhookDestination()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_WebhookDestination.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -475,7 +755,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForCustomTopicWebhookDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForCustomTopic_WebhookDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_WebhookDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -487,7 +767,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -498,12 +778,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForResource
+        // EventSubscriptions_GetForCustomTopic_WebhookDestination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForResource()
+        public async Task GetIfExists_EventSubscriptionsGetForCustomTopicWebhookDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForResource.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForCustomTopic_WebhookDestination.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -515,7 +795,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventHub/namespaces/examplenamespace1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic2";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForResource
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForResource()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForResource.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventHub/namespaces/examplenamespace1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -535,7 +855,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForResource()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForResource.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForResource.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -547,7 +867,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventHub/namespaces/examplenamespace1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventHub/namespaces/examplenamespace1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -558,12 +878,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForResourceGroup
+        // EventSubscriptions_GetForResource
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForResourceGroup()
+        public async Task GetIfExists_EventSubscriptionsGetForResource()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForResourceGroup.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForResource.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -575,7 +895,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventHub/namespaces/examplenamespace1";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForResourceGroup
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForResourceGroup()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForResourceGroup.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -595,7 +955,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForResourceGroup()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForResourceGroup.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForResourceGroup.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -607,7 +967,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -618,12 +978,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventSubscriptions_GetForSubscription
+        // EventSubscriptions_GetForResourceGroup
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_EventSubscriptionsGetForSubscription()
+        public async Task GetIfExists_EventSubscriptionsGetForResourceGroup()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForSubscription.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForResourceGroup.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -635,7 +995,47 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription2";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // EventSubscriptions_GetForSubscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_EventSubscriptionsGetForSubscription()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForSubscription.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -655,7 +1055,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventSubscriptionsGetForSubscription()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_GetForSubscription.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForSubscription.json
             // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -667,7 +1067,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -678,12 +1078,52 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // EventSubscriptions_GetForSubscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_EventSubscriptionsGetForSubscription()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_GetForSubscription.json
+            // this example is just showing the usage of "EventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this EventSubscriptionResource
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription3";
+            NullableResponse<EventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            EventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // EventSubscriptions_CreateOrUpdateForCustomTopic
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopic()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -695,7 +1135,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -729,7 +1169,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopicAzureFunctionDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_AzureFunctionDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_AzureFunctionDestination.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -741,7 +1181,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -780,7 +1220,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopicEventHubDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_EventHubDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_EventHubDestination.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -792,7 +1232,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -831,7 +1271,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopicHybridConnectionDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_HybridConnectionDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_HybridConnectionDestination.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -843,7 +1283,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -882,7 +1322,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopicServiceBusQueueDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_ServiceBusQueueDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_ServiceBusQueueDestination.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -894,7 +1334,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -933,7 +1373,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopicServiceBusTopicDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_ServiceBusTopicDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_ServiceBusTopicDestination.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -945,7 +1385,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -984,7 +1424,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopicStorageQueueDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_StorageQueueDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_StorageQueueDestination.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -996,7 +1436,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -1008,6 +1448,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 {
                     ResourceId = new ResourceIdentifier("/subscriptions/d33c5f7a-02ea-40f4-bf52-07f17e84d6a8/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/contosostg"),
                     QueueName = "queue1",
+                    QueueMessageTimeToLiveInSeconds = 300,
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -1036,7 +1477,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForCustomTopicWebhookDestination()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_WebhookDestination.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForCustomTopic_WebhookDestination.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1048,7 +1489,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventGrid/topics/exampletopic1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -1056,9 +1497,9 @@ namespace Azure.ResourceManager.EventGrid.Samples
             string eventSubscriptionName = "examplesubscription1";
             EventGridSubscriptionData data = new EventGridSubscriptionData()
             {
-                Destination = new WebHookEventSubscriptionDestination()
+                Destination = new EventHubEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri("https://azurefunctionexample.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE"),
+                    ResourceId = new ResourceIdentifier("/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TestRG/providers/Microsoft.EventHub/namespaces/ContosoNamespace/eventhubs/EH1"),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -1082,7 +1523,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForResource()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForResource.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForResource.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1094,7 +1535,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg/providers/Microsoft.EventHub/namespaces/examplenamespace1";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg/providers/Microsoft.EventHub/namespaces/examplenamespace1";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -1128,7 +1569,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForResourceGroup()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForResourceGroup.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForResourceGroup.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1140,7 +1581,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/examplerg";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40/resourceGroups/examplerg";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -1174,7 +1615,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_EventSubscriptionsCreateOrUpdateForSubscription()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_CreateOrUpdateForSubscription.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_CreateOrUpdateForSubscription.json
             // this example is just showing the usage of "EventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1186,7 +1627,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string scope = "subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string scope = "subscriptions/8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -1218,7 +1659,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_EventSubscriptionsListGlobalBySubscription()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_ListGlobalBySubscription.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_ListGlobalBySubscription.json
             // this example is just showing the usage of "EventSubscriptions_ListGlobalBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1230,7 +1671,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}", subscriptionId));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
 
@@ -1252,7 +1693,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_EventSubscriptionsListGlobalByResourceGroup()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_ListGlobalByResourceGroup.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_ListGlobalByResourceGroup.json
             // this example is just showing the usage of "EventSubscriptions_ListGlobalByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1264,7 +1705,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}", subscriptionId, resourceGroupName));
             EventSubscriptionCollection collection = client.GetEventSubscriptions(scopeId);
@@ -1287,7 +1728,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_EventSubscriptionsListByResource()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_ListByResource.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_ListByResource.json
             // this example is just showing the usage of "EventSubscriptions_ListByResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1299,7 +1740,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string providerNamespace = "Microsoft.EventGrid";
             string resourceTypeName = "topics";
@@ -1325,7 +1766,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_EventSubscriptionsListByDomainTopic()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/EventSubscriptions_ListByDomainTopic.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/EventSubscriptions_ListByDomainTopic.json
             // this example is just showing the usage of "EventSubscriptions_ListByDomainTopic" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1337,7 +1778,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this EventSubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string domainName = "domain1";
             string topicName = "topic1";

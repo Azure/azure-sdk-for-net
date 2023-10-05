@@ -11,7 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of the workspace managed sql server&apos;s security alert policies. </summary>
+    /// <summary> A list of the workspace managed sql server's security alert policies. </summary>
     internal partial class SynapseServerSecurityAlertPolicyListResult
     {
         /// <summary> Initializes a new instance of SynapseServerSecurityAlertPolicyListResult. </summary>

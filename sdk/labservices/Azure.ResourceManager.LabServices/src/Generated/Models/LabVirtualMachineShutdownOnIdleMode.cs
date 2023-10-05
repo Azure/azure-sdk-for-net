@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Defines whether to shut down VM on idle and the criteria for idle detection. </summary>
     public enum LabVirtualMachineShutdownOnIdleMode
     {
-        /// <summary> The VM won&apos;t be shut down when it is idle. </summary>
+        /// <summary> The VM won't be shut down when it is idle. </summary>
         None,
         /// <summary> The VM will be considered as idle when there is no keyboard or mouse input. </summary>
         UserAbsence,
