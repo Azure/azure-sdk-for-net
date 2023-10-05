@@ -13,6 +13,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         protected virtual void Dispose(bool disposing) { }
         public override void Load() { }
     }
+    public partial class AzureKeyVaultConfigurationSource : Microsoft.Extensions.Configuration.IConfigurationSource
+    {
+        public AzureKeyVaultConfigurationSource(Azure.Security.KeyVault.Secrets.SecretClient client, Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions options) { }
+        public Microsoft.Extensions.Configuration.IConfigurationProvider Build(Microsoft.Extensions.Configuration.IConfigurationBuilder builder) { throw null; }
+    }
     public partial class KeyVaultSecretManager
     {
         public KeyVaultSecretManager() { }
