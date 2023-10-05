@@ -62,6 +62,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
+                    PauseOnStart = options.PauseOnStart,
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -119,6 +120,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
+                    PauseOnStart = options.PauseOnStart,
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())

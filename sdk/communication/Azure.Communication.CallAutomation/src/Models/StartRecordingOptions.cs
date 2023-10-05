@@ -46,6 +46,11 @@ namespace Azure.Communication.CallAutomation
         public RecordingFormat RecordingFormat { get; set; }
 
         /// <summary>
+        /// The pause on start option.
+        /// </summary>
+        public bool PauseOnStart { get; set; }
+
+        /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
         /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
         /// the audio channel to participant mapping will be automatically assigned based on the order in which participant
