@@ -25,29 +25,20 @@ namespace Azure.Core
         {
             get
             {
-                if (_uriBuilder == null)
-                {
-                    _uriBuilder = new RequestUriBuilder();
-
-                    // Get a reference to the uri that the buider will be
-                    // modifying with each call to its APIs
-                    base.Uri = _uriBuilder.ToUri();
-                }
-                return _uriBuilder;
+                return _uriBuilder ??= new RequestUriBuilder();
             }
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
-
                 _uriBuilder = value;
-
-                // Get a reference to the uri that the buider will be
-                // modifying with each call to its APIs
-                base.Uri = _uriBuilder.ToUri();
             }
         }
 
-        //protected override Uri GetUri() => _uri;
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override Uri GetUri() => Uri.ToUri();
 
         /// <summary>
         /// Gets or sets the request HTTP method.

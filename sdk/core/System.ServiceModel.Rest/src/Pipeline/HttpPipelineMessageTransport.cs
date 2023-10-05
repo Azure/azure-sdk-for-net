@@ -14,6 +14,10 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
     private readonly HttpClient _httpClient;
+
+    // TODO: remove this when refactor is complete.
+    public HttpClient Client => _httpClient;
+
     private bool _disposed;
 
     public HttpPipelineMessageTransport() : this(CreateDefaultClient())

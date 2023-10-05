@@ -15,6 +15,9 @@ public abstract class PipelineRequest
     // TODO: generator constraint requires us to make this settable, revisit later?
     public abstract Uri Uri { get; set; }
 
+    // TODO: this stinks, can we make it go away?  It needs a step back and more rework.
+    protected internal virtual Uri GetUri() => Uri;
+
     // TODO: Can we change this to BinaryData?
     public abstract RequestBody? Content { get; set; }
 

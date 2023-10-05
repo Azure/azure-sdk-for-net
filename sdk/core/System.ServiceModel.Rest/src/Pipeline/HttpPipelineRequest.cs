@@ -32,20 +32,9 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     public override Uri Uri
     {
-        get
-        {
-            if (_uri is null)
-            {
-                throw new InvalidOperationException("'Uri' must be initialized before use.");
-            }
-
-            return _uri;
-        }
-
+        get => _uri!;
         set => _uri = value;
     }
-
-    //protected internal override Uri GetUri() => Uri;
 
     public override RequestBody? Content
     {
@@ -170,7 +159,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
     {
-        HttpRequestMessage currentRequest = new HttpRequestMessage(_method, Uri);
+        HttpRequestMessage currentRequest = new HttpRequestMessage(_method, GetUri());
 
         PipelineContentAdapter? currentContent = _content != null ? new PipelineContentAdapter(_content, cancellation) : null;
         currentRequest.Content = currentContent;

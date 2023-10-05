@@ -30,13 +30,13 @@ namespace Azure.Core.Pipeline
 
         // The transport's private HttpClient has been made internal because it is used by tests.
         // TODO: move these tests into System.Rest?
-        private HttpClient _httpClient;
-        internal HttpClient Client { get => _httpClient; }
+        //private HttpClient _httpClient;
+        //internal HttpClient Client { get => _httpClient; }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
-        public HttpClientTransport() : this(CreateDefaultClient())
+        public HttpClientTransport() : base(CreateDefaultClient())
         {
         }
 
@@ -44,7 +44,7 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="messageHandler">The instance of <see cref="HttpMessageHandler"/> to use.</param>
-        public HttpClientTransport(HttpMessageHandler messageHandler) : this(new HttpClient(messageHandler))
+        public HttpClientTransport(HttpMessageHandler messageHandler) : base(new HttpClient(messageHandler))
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Core.Pipeline
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client) : base(client)
         {
-            _httpClient = client;
+            //_httpClient = client;
         }
 
         /// <summary>

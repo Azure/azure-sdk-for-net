@@ -81,6 +81,7 @@ namespace System.ServiceModel.Rest.Core
         protected PipelineRequest() { }
         public abstract System.ServiceModel.Rest.Core.RequestBody? Content { get; set; }
         public abstract System.Uri Uri { get; set; }
+        protected internal virtual System.Uri GetUri() { throw null; }
         public abstract void SetHeaderValue(string name, string value);
         public abstract void SetMethod(string method);
     }
@@ -137,6 +138,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     {
         public HttpPipelineMessageTransport() { }
         public HttpPipelineMessageTransport(System.Net.Http.HttpClient client) { }
+        public System.Net.Http.HttpClient Client { get { throw null; } }
         public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
