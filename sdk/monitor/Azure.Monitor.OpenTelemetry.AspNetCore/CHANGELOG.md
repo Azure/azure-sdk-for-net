@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.8 (2023-10-05)
 
 ### Breaking Changes
 
@@ -11,8 +9,6 @@
   Due to this change, users will no longer be able to access the public APIs of these beta packages.
   Manually adding package references to these instrumentation libraries in an application will cause the internal vendored instrumentation from the distro to be ignored.
   If users choose to add these references, they must ensure to update their configuration subsequently. This includes incorporating the necessary instrumentation using either TracerProviderBuilder or MeterProviderBuilder.
-
-### Bugs Fixed
 
 ### Other Changes
 
