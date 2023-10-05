@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Buffers;
 using System.IO;
 using System.Net.Http;
 using System.ServiceModel.Rest.Internal;
@@ -15,10 +14,6 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
     private readonly HttpClient _httpClient;
-
-    // TODO: remove this when refactor is complete.
-    public HttpClient Client => _httpClient;
-
     private bool _disposed;
 
     public HttpPipelineMessageTransport() : this(CreateDefaultClient())
@@ -110,15 +105,14 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
                 // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
                 // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
 #pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
-                responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+                responseMessage = _httpClient.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
 #pragma warning restore CA1416
             }
             else
 #endif
             {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                // TODO: To make it real we need to pass HttpCompletionOption.ResponseHeadersRead and buffer the content
-                responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
+                responseMessage = await _httpClient.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             }
 
@@ -150,25 +144,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             throw new RequestErrorException(e.Message, e);
         }
 
-        // TODO: allow Azure.Core to decorate the response. e.g. with ClientRequestId
-        //message.Response = new HttpPipelineResponse(/*message.Request.ClientRequestId,*/ responseMessage, contentStream);
         OnReceivedResponse(message, responseMessage, contentStream);
-
-        //// TODO: this is a quick and dirty buffer response
-        //Stream? responseContentStream = message.Response.ContentStream;
-        //if (responseContentStream is null) { return; }
-        //Stream bufferedStream = new MemoryStream();
-        //if (async)
-        //{
-        //    await CopyToAsync(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None)).ConfigureAwait(false);
-        //}
-        //else
-        //{
-        //    CopyTo(responseContentStream, bufferedStream, CancellationTokenSource.CreateLinkedTokenSource(CancellationToken.None));
-        //}
-        //responseContentStream.Dispose();
-        //bufferedStream.Position = 0;
-        //message.Response.ContentStream = bufferedStream;
     }
 
     /// <summary>
@@ -190,59 +166,13 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
         => message.Response = new HttpPipelineResponse(httpResponse, contentStream);
 
-    // TODO: Note WIP - pulled this over from HttpClientTransport, need to finish e2e
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
-        if (!(message.Request is HttpPipelineRequest pipelineRequest))
+        if (message.Request is not HttpPipelineRequest pipelineRequest)
         {
             throw new InvalidOperationException("the request is not compatible with the transport");
         }
         return pipelineRequest.BuildRequestMessage(message.CancellationToken);
-    }
-
-    // Same value as Stream.CopyTo uses by default
-    private const int DefaultCopyBufferSize = 81920;
-
-    private async Task CopyToAsync(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
-    {
-        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
-        try
-        {
-            while (true)
-            {
-                //cancellationTokenSource.CancelAfter(_networkTimeout);
-#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
-                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
-#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
-                if (bytesRead == 0) break;
-                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
-            }
-        }
-        finally
-        {
-            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
-            ArrayPool<byte>.Shared.Return(buffer);
-        }
-    }
-
-    private void CopyTo(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
-    {
-        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
-        try
-        {
-            int read;
-            while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
-            {
-                cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                //cancellationTokenSource.CancelAfter(_networkTimeout);
-                destination.Write(buffer, 0, read);
-            }
-        }
-        finally
-        {
-            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
-            ArrayPool<byte>.Shared.Return(buffer);
-        }
     }
 
     #region IDisposable
