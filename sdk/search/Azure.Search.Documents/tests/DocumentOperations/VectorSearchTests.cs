@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                       VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorQueries = { new RawVectorQuery { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
@@ -186,15 +186,19 @@ namespace Azure.Search.Documents.Tests
             {
                 IsSearchable = true,
                 VectorSearchDimensions = 1536,
-                VectorSearchConfiguration = "my-vector-config"
+                VectorSearchProfile = "my-vector-profile"
             };
             createdIndex.Fields.Add(vectorField);
 
             createdIndex.VectorSearch = new()
             {
-                AlgorithmConfigurations =
+                Profiles =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                Algorithms =
+                    {
+                        new HnswVectorSearchAlgorithmConfiguration("my-hsnw-vector-config")
                     }
             };
 
@@ -223,6 +227,11 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
         }
 
+        // TODO: Add tests for updating an index to modify the vectorizer within a profile.
+        // TODO: Add a test for duplicate profile names, which should throw an error.
+        // TODO: Add a test for updating the profile name of a vector field, which should throw an error.
+        // TODO: Add tests for VectorizableTextQuery
+
         [Test]
         public async Task CreateIndexUsingFieldBuilder()
         {
@@ -237,11 +246,15 @@ namespace Azure.Search.Documents.Tests
                 Fields = new FieldBuilder().Build(typeof(Model)),
                 VectorSearch = new()
                 {
-                    AlgorithmConfigurations =
+                    Profiles =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                    Algorithms =
+                    {
+                        new HnswVectorSearchAlgorithmConfiguration("my-hsnw-vector-config")
                     }
-                }
+                },
             };
 
             SearchIndexClient indexClient = resources.GetIndexClient();
@@ -263,7 +276,7 @@ namespace Azure.Search.Documents.Tests
             [SearchableField(AnalyzerName = "en.microsoft")]
             public string Description { get; set; }
 
-            [SearchableField(VectorSearchDimensions = "1536", VectorSearchConfiguration = "my-vector-config")]
+            [SearchableField(VectorSearchDimensions = "1536", VectorSearchProfile = "my-vector-profile")]
             public IReadOnlyList<float> DescriptionVector { get; set; }
         }
     }

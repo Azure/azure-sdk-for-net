@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             long documentCount = default;
             long storageSize = default;
-            Optional<long> vectorIndexSize = default;
+            long vectorIndexSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentCount"u8))
@@ -35,15 +34,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("vectorIndexSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vectorIndexSize = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new SearchIndexStatistics(documentCount, storageSize, Optional.ToNullable(vectorIndexSize));
+            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
         }
     }
 }

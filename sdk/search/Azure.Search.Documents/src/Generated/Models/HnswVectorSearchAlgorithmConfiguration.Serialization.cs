@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<HnswParameters> hnswParameters = default;
             string name = default;
-            string kind = default;
+            VectorSearchAlgorithmKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hnswParameters"u8))
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new VectorSearchAlgorithmKind(property.Value.GetString());
                     continue;
                 }
             }
