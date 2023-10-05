@@ -1701,8 +1701,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1728,8 +1728,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -1756,8 +1756,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -1832,8 +1832,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1863,8 +1863,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1971,9 +1971,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(setting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(setting.Key) });
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(setting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(snapshotFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter));
                 ValidateCompletedOperation(operation);
 
                 var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
@@ -1996,9 +1996,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 ConfigurationSetting createdSetting = await service.AddConfigurationSettingAsync(setting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(createdSetting.Key) });
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(createdSetting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(snapshotFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter));
                 ValidateCompletedOperation(operation);
 
                 setting.Value = "Updated_Value";

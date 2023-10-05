@@ -23,8 +23,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.AddConfigurationSetting(setting);
 
                 #region Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
-                var snapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
@@ -59,8 +59,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.AddConfigurationSetting(setting);
 
                 #region Snippet:AzConfigSample11_CreateSnapshot_AutomaticPollingLater
-                var snapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
@@ -97,8 +97,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 client.AddConfigurationSetting(setting);
 
                 #region Snippet:AzConfigSample11_CreateSnapshot_ManualPolling
-                var snapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
@@ -140,8 +140,8 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.AddConfigurationSetting(setting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(setting.Key) };
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(setting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var configSnapshotName = GenerateSnapshotName();
                 var operation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
@@ -177,8 +177,8 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.AddConfigurationSetting(setting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(setting.Key) };
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(setting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var configSnapshotName = GenerateSnapshotName();
 
@@ -219,8 +219,8 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.AddConfigurationSetting(setting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(setting.Key) };
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(setting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var configSnapshotName = GenerateSnapshotName();
 
@@ -321,8 +321,8 @@ namespace Azure.Data.AppConfiguration.Samples
                 var secondSetting = new ConfigurationSetting("second_key", "second_value");
                 client.AddConfigurationSetting(secondSetting);
 
-                var snapshotFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(firstSetting.Key), new ConfigurationSettingsFilter(secondSetting.Key) };
-                var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(firstSetting.Key), new ConfigurationSettingsFilter(secondSetting.Key) };
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = "some_snapshot";
 #if !SNIPPET
