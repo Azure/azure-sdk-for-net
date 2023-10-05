@@ -64,7 +64,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [SyncOnly]
         public async Task CreateAzureBlobIndexer()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this, populate: true);
