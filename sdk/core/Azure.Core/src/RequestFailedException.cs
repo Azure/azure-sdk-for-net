@@ -95,7 +95,22 @@ namespace Azure
 
             public override string ReasonPhrase => throw new NotImplementedException();
 
+            public override void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+            {
+                throw new NotImplementedException();
+            }
+
             public override bool TryGetHeaderValue(string name, out string? value) => throw new NotImplementedException();
+
+            public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.ServiceModel.Rest.Core;
 using Azure.Core;
@@ -31,12 +31,24 @@ namespace Azure
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
         /// <summary>
-        /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
+        /// TBD.
         /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="value">The reference to populate with value.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected internal abstract bool ContainsHeader(string name);
+
+        /// <summary>
+        /// Returns an iterator for enumerating <see cref="HttpHeader"/> in the response.
+        /// </summary>
+        /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
+        protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+            => throw new NotImplementedException();
 
         /// <summary>
         /// TBD.
@@ -48,25 +60,29 @@ namespace Azure
             => TryGetHeader(name, out value);
 
         /// <summary>
-        /// Returns header values if the header is stored in the collection.
+        /// TBD.
         /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="values">The reference to populate with values.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected internal abstract bool TryGetHeader(string name, out string? value);
 
         /// <summary>
-        /// Returns <c>true</c> if the header is stored in the collection.
+        /// TBD.
         /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool ContainsHeader(string name);
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
+            => TryGetHeaderValues(name, out value);
 
         /// <summary>
-        /// Returns an iterator for enumerating <see cref="HttpHeader"/> in the response.
+        /// TBD.
         /// </summary>
-        /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
-        protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+        /// <param name="name"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string>? values);
 
         /// <summary>
         /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
@@ -101,5 +117,11 @@ namespace Azure
                 stream = null;
             }
         }
+
+        //public override void Dispose()
+        //{
+        //    // TODO: correct this
+        //    base.Dispose();
+        //}
     }
 }

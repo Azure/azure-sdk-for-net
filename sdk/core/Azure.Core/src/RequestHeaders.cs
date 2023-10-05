@@ -43,7 +43,7 @@ namespace Azure.Core
         /// <param name="header">The header to add.</param>
         public void Add(HttpHeader header)
         {
-            _request.AddHeader(header.Name, header.Value);
+            _request.AddHeaderInternal(header.Name, header.Value);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         public void Add(string name, string value)
         {
-            _request.AddHeader(name, value);
+            _request.AddHeaderInternal(name, value);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool TryGetValue(string name, [NotNullWhen(true)] out string? value)
         {
-            return _request.TryGetHeader(name, out value);
+            return _request.TryGetHeaderInternal(name, out value);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool TryGetValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         {
-            return _request.TryGetHeaderValues(name, out values);
+            return _request.TryGetHeaderValuesInternal(name, out values);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool Contains(string name)
         {
-            return _request.ContainsHeader(name);
+            return _request.ContainsHeaderInternal(name);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         public void SetValue(string name, string value)
         {
-            _request.SetHeader(name, value);
+            _request.SetHeaderInternal(name, value);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the header existed, otherwise <c>false</c>.</returns>
         public bool Remove(string name)
         {
-            return _request.RemoveHeader(name);
+            return _request.RemoveHeaderInternal(name);
         }
     }
 }

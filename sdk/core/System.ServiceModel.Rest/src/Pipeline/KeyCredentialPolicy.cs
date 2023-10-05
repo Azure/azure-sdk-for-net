@@ -1,14 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Core.Pipeline;
+using System.ServiceModel.Rest.Internal;
 using System.Threading.Tasks;
 
-// TODO: Note this stays in experimental because we'd like to make it optional
-// rather than baking it into the pipeline.  How much auth can we do inline in
-// generated code?
-namespace System.ServiceModel.Rest.Experimental.Core.Pipeline;
+namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public class KeyCredentialPolicy : IPipelinePolicy<PipelineMessage>
 {
@@ -27,6 +23,7 @@ public class KeyCredentialPolicy : IPipelinePolicy<PipelineMessage>
     {
         ClientUtilities.AssertNotNull(credential, nameof(credential));
         ClientUtilities.AssertNotNullOrEmpty(name, nameof(name));
+
         _credential = credential;
         _name = name;
         _prefix = prefix;

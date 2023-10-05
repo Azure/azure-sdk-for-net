@@ -12,8 +12,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
     public MessagePipeline(
         PipelineTransport<PipelineMessage> transport,
-        ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies
-    )
+        ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
     {
         _transport = transport;
         var larger = new IPipelinePolicy<PipelineMessage>[policies.Length + 1];
@@ -29,24 +28,31 @@ public class MessagePipeline : Pipeline<PipelineMessage>
     }
 
     public static MessagePipeline Create(
-        PipelineTransport<PipelineMessage> defaultTransport, // TODO: this parameter should be removed
         RequestOptions options,
-        params IPipelinePolicy<PipelineMessage>[] clientPerTryPolicies)
-        => Create(defaultTransport, options, clientPerTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage>>.Empty);
+        params IPipelinePolicy<PipelineMessage>[] perTryPolicies)
+        => Create(options, perTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage>>.Empty);
 
     public static MessagePipeline Create(
-        PipelineTransport<PipelineMessage> defaultTransport, // TODO: this parameter should be removed
         RequestOptions options,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> clientPerTryPolicies,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> clientPerCallPolicies)
+        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> perCallPolicies,
+        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> perTryPolicies)
     {
-        int pipelineLength = clientPerCallPolicies.Length + clientPerTryPolicies.Length;
+        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
-        if (options.PerTryPolicies != null) pipelineLength += options.PerTryPolicies.Length;
-        if (options.PerCallPolicies != null) pipelineLength += options.PerCallPolicies.Length;
-        pipelineLength += options.RetryPolicy == null ? 0 : 1;
-        pipelineLength += options.LoggingPolicy == null ? 0 : 1;
+        if (options.PerTryPolicies != null)
+        {
+            pipelineLength += options.PerTryPolicies.Length;
+        }
 
+        if (options.PerCallPolicies != null)
+        {
+            pipelineLength += options.PerCallPolicies.Length;
+        }
+
+        pipelineLength += options.RetryPolicy is null ? 0 : 1;
+        pipelineLength += options.LoggingPolicy is null ? 0 : 1;
+
+        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         IPipelinePolicy<PipelineMessage>[] pipeline
@@ -54,8 +60,8 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
         int index = 0;
 
-        clientPerCallPolicies.CopyTo(pipeline.AsSpan(index));
-        index += clientPerCallPolicies.Length;
+        perCallPolicies.CopyTo(pipeline.AsSpan(index));
+        index += perCallPolicies.Length;
 
         if (options.PerCallPolicies != null)
         {
@@ -74,21 +80,29 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             index += options.PerTryPolicies.Length;
         }
 
-        clientPerTryPolicies.CopyTo(pipeline.AsSpan(index));
-        index += clientPerTryPolicies.Length;
+        perTryPolicies.CopyTo(pipeline.AsSpan(index));
+        index += perTryPolicies.Length;
 
         if (options.LoggingPolicy != null)
         {
             pipeline[index++] = options.LoggingPolicy;
         }
+
+        // TODO: add NetworkTimeout to RetryOptions
+        // TODO: would it make sense for this to live on options instead?
+        ResponseBufferingPolicy bufferingPolicy = new(TimeSpan.FromSeconds(100), options.BufferResponse);
+        pipeline[index++] = bufferingPolicy;
+
         if (options.Transport != null)
         {
             pipeline[index++] = options.Transport;
         }
         else
         {
-            pipeline[index++] = defaultTransport;
+            // Add default transport.
+            pipeline[index++] = new HttpPipelineMessageTransport();
         }
+
         return new MessagePipeline(pipeline);
     }
 
@@ -99,14 +113,18 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
     public override void Send(PipelineMessage message)
     {
-        var enumerator = new MessagePipelineExecutor(_policies, message);
+        PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         enumerator.ProcessNext();
+
+        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
     public override async ValueTask SendAsync(PipelineMessage message)
     {
-        var enumerator = new MessagePipelineExecutor(_policies, message);
+        PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
+
+        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
     internal class MessagePipelineExecutor : PipelineEnumerator

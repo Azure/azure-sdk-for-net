@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
-using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Experimental.Core;
+using System.ServiceModel.Rest.Core.Pipeline;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -15,10 +13,10 @@ namespace Azure.Core
     /// Represents an HTTP request. Use <see cref="HttpPipeline.CreateMessage()"/> or <see cref="HttpPipeline.CreateRequest"/> to create an instance.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Request : PipelineRequest, IDisposable
+    public abstract class Request : HttpPipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        private RequestUriBuilder? _uri;
+        private RequestUriBuilder? _uriBuilder;
 
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
@@ -27,25 +25,32 @@ namespace Azure.Core
         {
             get
             {
-                return _uri ??= new RequestUriBuilder();
+                return _uriBuilder ??= new RequestUriBuilder();
             }
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
-                _uri = value;
+                _uriBuilder = value;
             }
         }
 
         /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        protected override Uri GetUri() => Uri.ToUri();
+
+        /// <summary>
         /// Gets or sets the request HTTP method.
         /// </summary>
-        public new virtual RequestMethod Method
+        public virtual RequestMethod Method
         {
             get
             {
                 try
                 {
-                    return SystemToAzureMethod(base.Method);
+                    TryGetMethod(out HttpMethod method);
+                    return SystemToAzureMethod(method.Method);
                 }
                 catch (InvalidOperationException)
                 {
@@ -53,12 +58,12 @@ namespace Azure.Core
                     return new RequestMethod();
                 }
             }
-            set { base.Method = AzureToSystemMethod(value); }
+            set { base.SetMethod(AzureToSystemMethod(value)); }
         }
 
-        private static RequestMethod SystemToAzureMethod(HttpMethod verb)
+        private static RequestMethod SystemToAzureMethod(string verb)
         {
-            return verb.Method switch
+            return verb switch
             {
                 "GET" => RequestMethod.Get,
                 "POST" => RequestMethod.Post,
@@ -66,7 +71,7 @@ namespace Azure.Core
                 "HEAD" => RequestMethod.Head,
                 "DELETE" => RequestMethod.Delete,
                 "PATCH" => RequestMethod.Patch,
-                _ => new RequestMethod(verb.Method),
+                _ => new RequestMethod(verb),
             };
         }
 
@@ -103,46 +108,18 @@ namespace Azure.Core
         /// </summary>
         public abstract string ClientRequestId { get; set; }
 
-        /// <summary>
-        /// Adds a header value to the header collection.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="value">The header value.</param>
-        protected internal abstract void AddHeader(string name, string value);
-
-        /// <summary>
-        /// Returns header value if the header is stored in the collection. If the header has multiple values they are going to be joined with a comma.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="value">The reference to populate with value.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
-
-        /// <summary>
-        /// Returns header values if the header is stored in the collection.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="values">The reference to populate with values.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values);
-
-        /// <summary>
-        /// Returns <c>true</c> if the header is stored in the collection.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
-        protected internal abstract bool ContainsHeader(string name);
-
-        /// <summary>
-        /// Sets a header value the header collection.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        /// <param name="value">The header value.</param>
-        protected internal virtual void SetHeader(string name, string value)
-        {
-            RemoveHeader(name);
-            AddHeader(name, value);
-        }
+        internal void AddHeaderInternal(string name, string value)
+            => AddHeader(name, value);
+        internal bool ContainsHeaderInternal(string name)
+            => ContainsHeader(name);
+        internal bool RemoveHeaderInternal(string name)
+            => RemoveHeader(name);
+        internal void SetHeaderInternal(string name, string value)
+            => SetHeader(name, value);
+        internal bool TryGetHeaderInternal(string name, out string? value)
+            => TryGetHeader(name, out value);
+        internal bool TryGetHeaderValuesInternal(string name, out IEnumerable<string>? values)
+            => TryGetHeaderValues(name, out values);
 
         /// <summary>
         /// TBD.
@@ -151,12 +128,6 @@ namespace Azure.Core
         /// <param name="value"></param>
         public override void SetHeaderValue(string name, string value)
             => SetHeader(name, value);
-
-        /// <summary>
-        /// Removes the header from the collection.
-        /// </summary>
-        /// <param name="name">The header name.</param>
-        protected internal abstract bool RemoveHeader(string name);
 
         /// <summary>
         /// Returns an iterator enumerating <see cref="HttpHeader"/> in the request.
@@ -168,10 +139,5 @@ namespace Azure.Core
         /// Gets the response HTTP headers.
         /// </summary>
         public RequestHeaders Headers => new(this);
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Request"/> instance.
-        /// </summary>
-        public abstract void Dispose();
     }
 }

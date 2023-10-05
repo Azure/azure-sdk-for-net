@@ -1,51 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 
 namespace System.ServiceModel.Rest.Core;
 
-public class PipelineResponse : IDisposable
+public abstract class PipelineResponse : IDisposable
 {
-    private readonly HttpResponseMessage? _netResponse;
-    private readonly Stream? _contentStream;
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
+    public abstract int Status { get; }
 
-    private bool _disposed;
-
-    protected PipelineResponse() { }
-
-    internal PipelineResponse(HttpResponseMessage netResponse, Stream? contentStream)
-    {
-        _netResponse = netResponse ?? throw new ArgumentNullException(nameof(netResponse));
-
-        //_netContent = _netResponse.Content;
-
-        // TODO: Why does Azure.Core handle the System.Net response content separately?
-        _contentStream = contentStream;
-    }
-
-    public virtual int Status
-    {
-        get
-        {
-            EnsureValid(nameof(Status));
-            return (int)_netResponse!.StatusCode;
-        }
-    }
-
-    public virtual string ReasonPhrase
-    {
-        get
-        {
-            EnsureValid(nameof(ReasonPhrase));
-            return _netResponse!.ReasonPhrase;
-        }
-    }
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
+    public abstract string ReasonPhrase { get; }
 
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
 
+    /// <summary>
+    /// Gets the contents of HTTP response, if it is available.
+    /// </summary>
+    /// <remarks>
+    /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
+    /// </remarks>
     public virtual BinaryData Content
     {
         get
@@ -55,11 +36,11 @@ public class PipelineResponse : IDisposable
                 return s_EmptyBinaryData;
             }
 
-            // TODO: is this still a valid check for buffering?
-            if (ContentStream is not MemoryStream memoryContent)
-            {
+            // TODO: Keep this?
+            // Questions: what assumptions is this making and/or dependencies
+            // is it mandating?
+            MemoryStream? memoryContent = ContentStream as MemoryStream ??
                 throw new InvalidOperationException($"The response is not fully buffered.");
-            }
 
             if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
             {
@@ -72,20 +53,16 @@ public class PipelineResponse : IDisposable
         }
     }
 
-    public virtual Stream? ContentStream
-    {
-        get => _contentStream;
+    /// <summary>
+    /// TBD.  Needed for inheritdoc.
+    /// </summary>
+    public abstract Stream? ContentStream { get; set; }
 
-        // TODO: Buffer content
-        set => throw new NotSupportedException("Why?");
-    }
+    public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value);
+    public abstract bool TryGetHeaderValue(string name, [NotNullWhen(true)] out IEnumerable<string>? value);
 
-    public virtual bool TryGetHeaderValue(string name, [NotNullWhen(true)] out string? value)
-    {
-        // TODO: headers
-        value = default;
-        return false;
-    }
+    // TODO: do we want this to be public?
+    public abstract IEnumerable<KeyValuePair<string, string>> GetHeaders();
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
@@ -93,35 +70,5 @@ public class PipelineResponse : IDisposable
     /// </summary>
     public virtual bool IsError { get; set; }
 
-    private void EnsureValid(string name)
-    {
-        if (_netResponse is null)
-        {
-            throw new InvalidOperationException($"Must initialize response to retrieve '{name}'.");
-        }
-    }
-
-    #region IDisposable
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (disposing && !_disposed)
-        {
-            var netResponse = _netResponse;
-            netResponse?.Dispose();
-
-            var contentStream = _contentStream;
-            contentStream?.Dispose();
-
-            _disposed = true;
-        }
-    }
-
-    public virtual void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    #endregion
+    public abstract void Dispose();
 }

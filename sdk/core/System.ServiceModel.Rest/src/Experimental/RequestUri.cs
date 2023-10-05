@@ -4,13 +4,12 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using System.ServiceModel.Rest.Experimental.Core.Serialization;
 using System.Collections.Generic;
 
 // TODO: Linq is bad for performance
 using System.Linq;
 
-namespace System.ServiceModel.Rest.Experimental.Core;
+namespace System.ServiceModel.Rest.Internal;
 
 public class RequestUri
 {
@@ -159,7 +158,16 @@ public class RequestUri
     {
         if (_uri == null)
         {
-            _uri = new Uri(ToString());
+            // TODO: this is a bad pattern and we should fix this when we're working
+            // on making this type real
+            try
+            {
+                _uri = new Uri(ToString());
+            }
+            catch (UriFormatException)
+            {
+                _uri = new Uri("https://www.example.com");
+            }
         }
 
         return _uri;

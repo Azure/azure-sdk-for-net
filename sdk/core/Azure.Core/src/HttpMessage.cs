@@ -48,25 +48,49 @@ namespace Azure.Core
         /// </summary>
         public new Response Response
         {
+            get => ResponseInternal!;
+            set => ResponseInternal = value;
+        }
+
+        private Response? ResponseInternal
+        {
             get
             {
                 if (_response == null)
                 {
+                    if (base.Response is null)
+                    {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+                        throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                    }
+
+                    if (base.Response is not Response response)
+                    {
+                        throw new InvalidOperationException($"Invalid response type: '{base.Response.GetType()}'.");
+                    }
+
+                    return (Response)base.Response;
                 }
+
+                // TODO: refactor to remove redundancy
+                if (base.Response is not Response _)
+                {
+                    throw new InvalidOperationException($"Invalid response type: '{base.Response.GetType()}'.");
+                }
+
                 return _response;
             }
-            set => base.Response = _response = value;
+
+            set => base.Response = _response = value!;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null;
+        public new bool HasResponse => _response != null || base.HasResponse;
 
-        internal void ClearResponse() => _response = null;
+        internal void ClearResponse() => ResponseInternal = null;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
@@ -187,12 +211,12 @@ namespace Azure.Core
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (_response?.ContentStream)
+            switch (ResponseInternal?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    ResponseInternal.ContentStream = new ResponseShouldNotBeUsedStream(ResponseInternal.ContentStream);
                     return stream;
                 default:
                     return null;
@@ -210,8 +234,8 @@ namespace Azure.Core
             Response? response = _response;
             if (response != null)
             {
-                _response = null;
                 response.Dispose();
+                _response = null;
             }
 
             base.Dispose();

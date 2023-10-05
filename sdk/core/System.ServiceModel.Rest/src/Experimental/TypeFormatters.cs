@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace System.ServiceModel.Rest.Experimental.Core.Serialization;
+namespace System.ServiceModel.Rest.Internal;
 
 internal class TypeFormatters
 {

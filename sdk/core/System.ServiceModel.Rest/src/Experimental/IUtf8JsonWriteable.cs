@@ -3,10 +3,9 @@
 
 using System.Text.Json;
 
-namespace System.ServiceModel.Rest.Experimental.Core.Serialization
+namespace System.ServiceModel.Rest.Internal;
+
+public interface IUtf8JsonWriteable
 {
-    public interface IUtf8JsonWriteable
-    {
-        void Write(Utf8JsonWriter writer);
-    }
+    void Write(Utf8JsonWriter writer);
 }
