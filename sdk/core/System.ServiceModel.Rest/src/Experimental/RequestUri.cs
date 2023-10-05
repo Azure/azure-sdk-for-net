@@ -165,7 +165,16 @@ public class RequestUri
     {
         if (_uri == null)
         {
-            _uri = new Uri(ToString());
+            // TODO: this is a bad pattern and we should fix this when we're working
+            // on making this type real
+            try
+            {
+                _uri = new Uri(ToString());
+            }
+            catch (UriFormatException)
+            {
+                _uri = new Uri("https://www.example.com");
+            }
         }
 
         return _uri;

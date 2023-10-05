@@ -17,7 +17,6 @@ namespace Azure.Core
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private RequestUriBuilder? _uriBuilder;
-        //private Uri? _uri;
 
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
