@@ -896,7 +896,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 operationContext: "operationContext");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantCancelled");
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CancelAddParticipantSucceeded");
 
             if (parsedEvent is CancelAddParticipantSucceeded cancelAddParticipantSucceeded)
             {
@@ -904,6 +904,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("callConnectionId", cancelAddParticipantSucceeded.CallConnectionId);
                 Assert.AreEqual("correlationId", cancelAddParticipantSucceeded.CorrelationId);
                 Assert.AreEqual("serverCallId", cancelAddParticipantSucceeded.ServerCallId);
+                Assert.AreEqual("8:acs:12345", cancelAddParticipantSucceeded.Participant.RawId);
                 Assert.AreEqual("invitationId", cancelAddParticipantSucceeded.InvitationId);
             }
             else

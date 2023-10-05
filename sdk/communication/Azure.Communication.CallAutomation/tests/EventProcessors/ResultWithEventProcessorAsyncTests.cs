@@ -562,7 +562,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(202, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.AddParticipantCancelled(
+            SendAndProcessEvent(handler, CommunicationCallAutomationModelFactory.CancelAddParticipantSucceeded(
                 CallConnectionId,
                 ServerCallId,
                 CorelationId,
@@ -577,7 +577,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(true, returnedResult.IsSuccess);
             Assert.NotNull(returnedResult.SuccessResult);
             Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(AddParticipantCancelled), returnedResult.SuccessResult.GetType());
+            Assert.AreEqual(typeof(CancelAddParticipantSucceeded), returnedResult.SuccessResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
             Assert.AreEqual(invitationId, returnedResult.SuccessResult.InvitationId);
         }

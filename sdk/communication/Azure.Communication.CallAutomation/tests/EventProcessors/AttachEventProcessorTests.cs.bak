@@ -82,10 +82,9 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             // Add delegate for call connected event
             handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
-            var internalEvent = new CallTransferAcceptedInternal(CallConnectionId, ServerCallId, CorelationId, null, null, null, null);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
+            SendAndProcessEvent(handler, new CallTransferAccepted(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Assert if the delegate was never called
             Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);

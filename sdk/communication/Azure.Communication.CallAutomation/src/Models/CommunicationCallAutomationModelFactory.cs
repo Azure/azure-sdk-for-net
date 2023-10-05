@@ -162,7 +162,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of cancel add participant success event.
         /// </summary>
-        public static CancelAddParticipantSucceeded CancelAddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default, string invitationId = default)
+        public static CancelAddParticipantSucceeded CancelAddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, CommunicationIdentifier participant = default, string invitationId = default)
         {
             var internalObject = new CancelAddParticipantSucceededInternal(
                 callConnectionId,

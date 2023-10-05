@@ -277,7 +277,7 @@ namespace Azure.Communication.CallAutomation
             TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.Target))
             {
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                Transferee = CommunicationIdentifierSerializer.Serialize(options.Transferee),
+                Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
                 OverrideCallbackUri = options.OverrideCallbackUri
             };
 
