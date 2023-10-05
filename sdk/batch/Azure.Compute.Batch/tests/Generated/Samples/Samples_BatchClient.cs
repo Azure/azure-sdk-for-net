@@ -18,11 +18,11 @@ using NUnit.Framework;
 
 namespace Azure.Compute.Batch.Samples
 {
-    public partial class Samples_BatchClient
+    public class Samples_BatchClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetApplications_ShortVersion()
+        public void Example_GetApplications()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetApplications_ShortVersion_Async()
+        public async Task Example_GetApplications_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -50,7 +50,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetApplications_ShortVersion_Convenience()
+        public void Example_GetApplications_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetApplications_ShortVersion_Convenience_Async()
+        public async Task Example_GetApplications_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -128,7 +128,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetApplication_ShortVersion()
+        public void Example_GetApplication()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -144,7 +144,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetApplication_ShortVersion_Async()
+        public async Task Example_GetApplication_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -160,7 +160,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetApplication_ShortVersion_Convenience()
+        public void Example_GetApplication_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -171,7 +171,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetApplication_ShortVersion_Convenience_Async()
+        public async Task Example_GetApplication_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -236,7 +236,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPoolUsageMetrics_ShortVersion()
+        public void Example_GetPoolUsageMetrics()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -250,7 +250,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPoolUsageMetrics_ShortVersion_Async()
+        public async Task Example_GetPoolUsageMetrics_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -264,7 +264,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPoolUsageMetrics_ShortVersion_Convenience()
+        public void Example_GetPoolUsageMetrics_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -275,7 +275,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPoolUsageMetrics_ShortVersion_Convenience_Async()
+        public async Task Example_GetPoolUsageMetrics_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -346,7 +346,7 @@ namespace Azure.Compute.Batch.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreatePool_ShortVersion()
+        public void Example_CreatePool()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -358,13 +358,12 @@ namespace Azure.Compute.Batch.Samples
                 vmSize = "<vmSize>",
             });
             Response response = client.CreatePool(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreatePool_ShortVersion_Async()
+        public async Task Example_CreatePool_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -376,13 +375,12 @@ namespace Azure.Compute.Batch.Samples
                 vmSize = "<vmSize>",
             });
             Response response = await client.CreatePoolAsync(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreatePool_ShortVersion_Convenience()
+        public void Example_CreatePool_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -390,11 +388,12 @@ namespace Azure.Compute.Batch.Samples
 
             BatchPoolCreateOptions body = new BatchPoolCreateOptions("<id>", "<vmSize>");
             Response response = client.CreatePool(body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreatePool_ShortVersion_Convenience_Async()
+        public async Task Example_CreatePool_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -402,6 +401,7 @@ namespace Azure.Compute.Batch.Samples
 
             BatchPoolCreateOptions body = new BatchPoolCreateOptions("<id>", "<vmSize>");
             Response response = await client.CreatePoolAsync(body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -437,8 +437,8 @@ namespace Azure.Compute.Batch.Samples
                     {
                         enableAutomaticUpdates = true,
                     },
-                    dataDisks = new object[]
-            {
+                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -446,17 +446,17 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                     licenseType = "<licenseType>",
                     containerConfiguration = new
                     {
                         type = "dockerCompatible",
-                        containerImageNames = new object[]
-            {
+                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                        containerRegistries = new object[]
-            {
+},
+                        containerRegistries = new List<object>()
+{
 new
 {
 username = "<username>",
@@ -467,21 +467,21 @@ identityReference = new
 resourceId = "<resourceId>",
 },
 }
-            },
+},
                     },
                     diskEncryptionConfiguration = new
                     {
-                        targets = new object[]
-            {
+                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                     },
                     nodePlacementConfiguration = new
                     {
                         policy = "regional",
                     },
-                    extensions = new object[]
-            {
+                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -498,12 +498,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                     osDisk = new
                     {
                         ephemeralOSDiskSettings = new
@@ -525,8 +525,8 @@ provisionAfterExtensions = new object[]
                     dynamicVNetAssignmentScope = "none",
                     endpointConfiguration = new
                     {
-                        inboundNATPools = new object[]
-            {
+                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -534,29 +534,29 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                     },
                     publicIPAddressConfiguration = new
                     {
                         provision = "batchmanaged",
-                        ipAddressIds = new object[]
-            {
+                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                     },
                     enableAcceleratedNetworking = true,
                 },
@@ -569,8 +569,8 @@ sourcePortRanges = new object[]
                         imageName = "<imageName>",
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -580,15 +580,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     userIdentity = new
                     {
                         username = "<username>",
@@ -601,39 +601,39 @@ value = "<value>",
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                applicationLicenses = new object[]
-            {
+},
+                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
+},
                 taskSlotsPerNode = 1234,
                 taskSchedulingPolicy = new
                 {
                     nodeFillType = "spread",
                 },
-                userAccounts = new object[]
-            {
+                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -650,17 +650,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                mountConfiguration = new object[]
-            {
+},
+                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -695,11 +695,10 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                 targetNodeCommunicationMode = "default",
             });
             Response response = client.CreatePool(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -736,8 +735,8 @@ mountOptions = "<mountOptions>",
                     {
                         enableAutomaticUpdates = true,
                     },
-                    dataDisks = new object[]
-            {
+                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -745,17 +744,17 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                     licenseType = "<licenseType>",
                     containerConfiguration = new
                     {
                         type = "dockerCompatible",
-                        containerImageNames = new object[]
-            {
+                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                        containerRegistries = new object[]
-            {
+},
+                        containerRegistries = new List<object>()
+{
 new
 {
 username = "<username>",
@@ -766,21 +765,21 @@ identityReference = new
 resourceId = "<resourceId>",
 },
 }
-            },
+},
                     },
                     diskEncryptionConfiguration = new
                     {
-                        targets = new object[]
-            {
+                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                     },
                     nodePlacementConfiguration = new
                     {
                         policy = "regional",
                     },
-                    extensions = new object[]
-            {
+                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -797,12 +796,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                     osDisk = new
                     {
                         ephemeralOSDiskSettings = new
@@ -824,8 +823,8 @@ provisionAfterExtensions = new object[]
                     dynamicVNetAssignmentScope = "none",
                     endpointConfiguration = new
                     {
-                        inboundNATPools = new object[]
-            {
+                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -833,29 +832,29 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                     },
                     publicIPAddressConfiguration = new
                     {
                         provision = "batchmanaged",
-                        ipAddressIds = new object[]
-            {
+                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                     },
                     enableAcceleratedNetworking = true,
                 },
@@ -868,8 +867,8 @@ sourcePortRanges = new object[]
                         imageName = "<imageName>",
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -879,15 +878,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     userIdentity = new
                     {
                         username = "<username>",
@@ -900,39 +899,39 @@ value = "<value>",
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                applicationLicenses = new object[]
-            {
+},
+                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
+},
                 taskSlotsPerNode = 1234,
                 taskSchedulingPolicy = new
                 {
                     nodeFillType = "spread",
                 },
-                userAccounts = new object[]
-            {
+                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -949,17 +948,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                mountConfiguration = new object[]
-            {
+},
+                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -994,11 +993,10 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                 targetNodeCommunicationMode = "default",
             });
             Response response = await client.CreatePoolAsync(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -1017,7 +1015,7 @@ mountOptions = "<mountOptions>",
                 {
                     OsVersion = "<osVersion>",
                 },
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                 {
                     Publisher = "<publisher>",
                     Offer = "<offer>",
@@ -1026,56 +1024,74 @@ mountOptions = "<mountOptions>",
                     VirtualMachineImageId = "<virtualMachineImageId>",
                 }, "<nodeAgentSKUId>")
                 {
-                    WindowsConfiguration = new WindowsConfiguration
+                    WindowsConfiguration = new WindowsConfiguration()
                     {
                         EnableAutomaticUpdates = true,
                     },
-                    DataDisks = {new DataDisk(1234, 1234)
+                    DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                     LicenseType = "<licenseType>",
                     ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                     {
-                        ContainerImageNames = { "<containerImageNames>" },
-                        ContainerRegistries = {new ContainerRegistry
+                        ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                        ContainerRegistries =
+{
+new ContainerRegistry()
 {
 Username = "<username>",
 Password = "<password>",
 RegistryServer = "<registryServer>",
-IdentityReference = new BatchNodeIdentityReference
+IdentityReference = new BatchNodeIdentityReference()
 {
 ResourceId = "<resourceId>",
 },
-}},
+}
+},
                     },
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                     {
-                        Targets = { DiskEncryptionTarget.OsDisk },
+                        Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                     },
-                    NodePlacementConfiguration = new NodePlacementConfiguration
+                    NodePlacementConfiguration = new NodePlacementConfiguration()
                     {
                         Policy = NodePlacementPolicyType.Regional,
                     },
-                    Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                    Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                    OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                    OsDisk = new OSDisk()
                     {
-                        EphemeralOSDiskSettings = new DiffDiskSettings
+                        EphemeralOSDiskSettings = new DiffDiskSettings()
                         {
                             Placement = DiffDiskPlacement.CacheDisk,
                         },
@@ -1088,24 +1104,33 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                 AutoScaleFormula = "<autoScaleFormula>",
                 AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 EnableInterNodeCommunication = true,
-                NetworkConfiguration = new NetworkConfiguration
+                NetworkConfiguration = new NetworkConfiguration()
                 {
                     SubnetId = "<subnetId>",
                     DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                    EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                    PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                    PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                     {
                         IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                        IpAddressIds = { "<ipAddressIds>" },
+                        IpAddressIds =
+{
+"<ipAddressIds>"
+},
                     },
                     EnableAcceleratedNetworking = true,
                 },
@@ -1114,10 +1139,12 @@ SourcePortRanges = {"<sourcePortRanges>"},
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = default,
+                        Registry = null,
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -1125,16 +1152,20 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+IdentityReference = null,
+}
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    UserIdentity = new UserIdentity
+}
+},
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
@@ -1143,59 +1174,81 @@ Value = "<value>",
                     MaxTaskRetryCount = 1234,
                     WaitForSuccess = true,
                 },
-                CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                ApplicationLicenses = { "<applicationLicenses>" },
+}
+},
+                ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
                 TaskSlotsPerNode = 1234,
                 TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Spread),
-                UserAccounts = {new UserAccount("<name>", "<password>")
+                UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                Metadata = { new MetadataItem("<name>", "<value>") },
-                MountConfiguration = {new MountConfiguration
+}
+},
+                Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                 TargetNodeCommunicationMode = NodeCommunicationMode.Default,
             };
             Response response = client.CreatePool(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -1213,7 +1266,7 @@ MountOptions = "<mountOptions>",
                 {
                     OsVersion = "<osVersion>",
                 },
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                 {
                     Publisher = "<publisher>",
                     Offer = "<offer>",
@@ -1222,56 +1275,74 @@ MountOptions = "<mountOptions>",
                     VirtualMachineImageId = "<virtualMachineImageId>",
                 }, "<nodeAgentSKUId>")
                 {
-                    WindowsConfiguration = new WindowsConfiguration
+                    WindowsConfiguration = new WindowsConfiguration()
                     {
                         EnableAutomaticUpdates = true,
                     },
-                    DataDisks = {new DataDisk(1234, 1234)
+                    DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                     LicenseType = "<licenseType>",
                     ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                     {
-                        ContainerImageNames = { "<containerImageNames>" },
-                        ContainerRegistries = {new ContainerRegistry
+                        ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                        ContainerRegistries =
+{
+new ContainerRegistry()
 {
 Username = "<username>",
 Password = "<password>",
 RegistryServer = "<registryServer>",
-IdentityReference = new BatchNodeIdentityReference
+IdentityReference = new BatchNodeIdentityReference()
 {
 ResourceId = "<resourceId>",
 },
-}},
+}
+},
                     },
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                     {
-                        Targets = { DiskEncryptionTarget.OsDisk },
+                        Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                     },
-                    NodePlacementConfiguration = new NodePlacementConfiguration
+                    NodePlacementConfiguration = new NodePlacementConfiguration()
                     {
                         Policy = NodePlacementPolicyType.Regional,
                     },
-                    Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                    Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                    OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                    OsDisk = new OSDisk()
                     {
-                        EphemeralOSDiskSettings = new DiffDiskSettings
+                        EphemeralOSDiskSettings = new DiffDiskSettings()
                         {
                             Placement = DiffDiskPlacement.CacheDisk,
                         },
@@ -1284,24 +1355,33 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                 AutoScaleFormula = "<autoScaleFormula>",
                 AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 EnableInterNodeCommunication = true,
-                NetworkConfiguration = new NetworkConfiguration
+                NetworkConfiguration = new NetworkConfiguration()
                 {
                     SubnetId = "<subnetId>",
                     DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                    EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                    PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                    PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                     {
                         IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                        IpAddressIds = { "<ipAddressIds>" },
+                        IpAddressIds =
+{
+"<ipAddressIds>"
+},
                     },
                     EnableAcceleratedNetworking = true,
                 },
@@ -1310,10 +1390,12 @@ SourcePortRanges = {"<sourcePortRanges>"},
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = default,
+                        Registry = null,
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -1321,16 +1403,20 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+IdentityReference = null,
+}
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    UserIdentity = new UserIdentity
+}
+},
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
@@ -1339,510 +1425,104 @@ Value = "<value>",
                     MaxTaskRetryCount = 1234,
                     WaitForSuccess = true,
                 },
-                CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                ApplicationLicenses = { "<applicationLicenses>" },
+}
+},
+                ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
                 TaskSlotsPerNode = 1234,
                 TaskSchedulingPolicy = new TaskSchedulingPolicy(BatchNodeFillType.Spread),
-                UserAccounts = {new UserAccount("<name>", "<password>")
+                UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                Metadata = { new MetadataItem("<name>", "<value>") },
-                MountConfiguration = {new MountConfiguration
+}
+},
+                Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                 TargetNodeCommunicationMode = NodeCommunicationMode.Default,
             };
             Response response = await client.CreatePoolAsync(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.GetPools(null, null, null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.GetPoolsAsync(null, null, null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchPoolListResult> response = client.GetPools();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchPoolListResult> response = await client.GetPoolsAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("eTag").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModified").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("creationTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationState").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationStateTransitionTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeTimeout").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentDedicatedNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentLowPriorityNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetDedicatedNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetLowPriorityNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableAutoScale").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleFormula").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleEvaluationInterval").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("results").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableInterNodeCommunication").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationLicenses")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSlotsPerNode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetNodeCommunicationMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentNodeCommunicationMode").ToString());
-            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.GetPoolsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("eTag").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastModified").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("creationTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationState").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationStateTransitionTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeTimeout").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentDedicatedNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentLowPriorityNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetDedicatedNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetLowPriorityNodes").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableAutoScale").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleFormula").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleEvaluationInterval").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("results").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("enableInterNodeCommunication").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("applicationLicenses")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSlotsPerNode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("targetNodeCommunicationMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("currentNodeCommunicationMode").ToString());
-            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetPools_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchPoolListResult> response = client.GetPools(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPools_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchPoolListResult> response = await client.GetPoolsAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeletePool_ShortVersion()
+        public void Example_DeletePool()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeletePool("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeletePool_ShortVersion_Async()
+        public async Task Example_DeletePool_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeletePoolAsync("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -1855,7 +1535,6 @@ MountOptions = "<mountOptions>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeletePool("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -1868,33 +1547,30 @@ MountOptions = "<mountOptions>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeletePoolAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PoolExists_ShortVersion()
+        public void Example_PoolExists()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.PoolExists("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PoolExists_ShortVersion_Async()
+        public async Task Example_PoolExists_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.PoolExistsAsync("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -1907,7 +1583,6 @@ MountOptions = "<mountOptions>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.PoolExists("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -1920,13 +1595,12 @@ MountOptions = "<mountOptions>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.PoolExistsAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPool_ShortVersion()
+        public void Example_GetPool()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1940,7 +1614,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPool_ShortVersion_Async()
+        public async Task Example_GetPool_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1954,7 +1628,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPool_ShortVersion_Convenience()
+        public void Example_GetPool_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1965,7 +1639,7 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPool_ShortVersion_Convenience_Async()
+        public async Task Example_GetPool_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1982,7 +1656,13 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetPool("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = client.GetPool("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -2158,7 +1838,13 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetPoolAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = await client.GetPoolAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -2334,7 +2020,13 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchPool> response = client.GetPool("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchPool> response = client.GetPool("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
@@ -2345,12 +2037,18 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchPool> response = await client.GetPoolAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchPool> response = await client.GetPoolAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdatePool_ShortVersion()
+        public void Example_UpdatePool()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2358,13 +2056,12 @@ MountOptions = "<mountOptions>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdatePool("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdatePool_ShortVersion_Async()
+        public async Task Example_UpdatePool_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2372,7 +2069,6 @@ MountOptions = "<mountOptions>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdatePoolAsync("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
@@ -2405,8 +2101,8 @@ MountOptions = "<mountOptions>",
                         },
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -2416,15 +2112,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     userIdentity = new
                     {
                         username = "<username>",
@@ -2437,40 +2133,39 @@ value = "<value>",
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                 targetNodeCommunicationMode = "default",
             });
             Response response = client.UpdatePool("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -2503,8 +2198,8 @@ value = "<value>",
                         },
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -2514,15 +2209,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     userIdentity = new
                     {
                         username = "<username>",
@@ -2535,66 +2230,63 @@ value = "<value>",
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                 targetNodeCommunicationMode = "default",
             });
             Response response = await client.UpdatePoolAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DisablePoolAutoScale_ShortVersion()
+        public void Example_DisablePoolAutoScale()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DisablePoolAutoScale("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DisablePoolAutoScale_ShortVersion_Async()
+        public async Task Example_DisablePoolAutoScale_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DisablePoolAutoScaleAsync("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -2607,7 +2299,6 @@ value = "<value>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DisablePoolAutoScale("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -2620,13 +2311,12 @@ value = "<value>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DisablePoolAutoScaleAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnablePoolAutoScale_ShortVersion()
+        public void Example_EnablePoolAutoScale()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2634,13 +2324,12 @@ value = "<value>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.EnablePoolAutoScale("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnablePoolAutoScale_ShortVersion_Async()
+        public async Task Example_EnablePoolAutoScale_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2648,13 +2337,12 @@ value = "<value>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.EnablePoolAutoScaleAsync("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnablePoolAutoScale_ShortVersion_Convenience()
+        public void Example_EnablePoolAutoScale_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2662,11 +2350,12 @@ value = "<value>",
 
             BatchPoolEnableAutoScaleOptions body = new BatchPoolEnableAutoScaleOptions();
             Response response = client.EnablePoolAutoScale("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnablePoolAutoScale_ShortVersion_Convenience_Async()
+        public async Task Example_EnablePoolAutoScale_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2674,6 +2363,7 @@ value = "<value>",
 
             BatchPoolEnableAutoScaleOptions body = new BatchPoolEnableAutoScaleOptions();
             Response response = await client.EnablePoolAutoScaleAsync("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -2690,7 +2380,6 @@ value = "<value>",
                 autoScaleEvaluationInterval = "PT1H23M45S",
             });
             Response response = client.EnablePoolAutoScale("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -2708,7 +2397,6 @@ value = "<value>",
                 autoScaleEvaluationInterval = "PT1H23M45S",
             });
             Response response = await client.EnablePoolAutoScaleAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -2720,12 +2408,13 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolEnableAutoScaleOptions body = new BatchPoolEnableAutoScaleOptions
+            BatchPoolEnableAutoScaleOptions body = new BatchPoolEnableAutoScaleOptions()
             {
                 AutoScaleFormula = "<autoScaleFormula>",
                 AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
             };
             Response response = client.EnablePoolAutoScale("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -2736,17 +2425,18 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolEnableAutoScaleOptions body = new BatchPoolEnableAutoScaleOptions
+            BatchPoolEnableAutoScaleOptions body = new BatchPoolEnableAutoScaleOptions()
             {
                 AutoScaleFormula = "<autoScaleFormula>",
                 AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
             };
             Response response = await client.EnablePoolAutoScaleAsync("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EvaluatePoolAutoScale_ShortVersion()
+        public void Example_EvaluatePoolAutoScale()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2764,7 +2454,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EvaluatePoolAutoScale_ShortVersion_Async()
+        public async Task Example_EvaluatePoolAutoScale_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2782,7 +2472,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EvaluatePoolAutoScale_ShortVersion_Convenience()
+        public void Example_EvaluatePoolAutoScale_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2794,7 +2484,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EvaluatePoolAutoScale_ShortVersion_Convenience_Async()
+        public async Task Example_EvaluatePoolAutoScale_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2876,7 +2566,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ResizePool_ShortVersion()
+        public void Example_ResizePool()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2884,13 +2574,12 @@ value = "<value>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.ResizePool("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ResizePool_ShortVersion_Async()
+        public async Task Example_ResizePool_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2898,13 +2587,12 @@ value = "<value>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.ResizePoolAsync("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ResizePool_ShortVersion_Convenience()
+        public void Example_ResizePool_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2912,11 +2600,12 @@ value = "<value>",
 
             BatchPoolResizeOptions body = new BatchPoolResizeOptions();
             Response response = client.ResizePool("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ResizePool_ShortVersion_Convenience_Async()
+        public async Task Example_ResizePool_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -2924,6 +2613,7 @@ value = "<value>",
 
             BatchPoolResizeOptions body = new BatchPoolResizeOptions();
             Response response = await client.ResizePoolAsync("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -2942,7 +2632,6 @@ value = "<value>",
                 nodeDeallocationOption = "requeue",
             });
             Response response = client.ResizePool("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -2962,7 +2651,6 @@ value = "<value>",
                 nodeDeallocationOption = "requeue",
             });
             Response response = await client.ResizePoolAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -2974,7 +2662,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolResizeOptions body = new BatchPoolResizeOptions
+            BatchPoolResizeOptions body = new BatchPoolResizeOptions()
             {
                 TargetDedicatedNodes = 1234,
                 TargetLowPriorityNodes = 1234,
@@ -2982,6 +2670,7 @@ value = "<value>",
                 NodeDeallocationOption = BatchNodeDeallocationOption.Requeue,
             };
             Response response = client.ResizePool("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -2992,7 +2681,7 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolResizeOptions body = new BatchPoolResizeOptions
+            BatchPoolResizeOptions body = new BatchPoolResizeOptions()
             {
                 TargetDedicatedNodes = 1234,
                 TargetLowPriorityNodes = 1234,
@@ -3000,31 +2689,30 @@ value = "<value>",
                 NodeDeallocationOption = BatchNodeDeallocationOption.Requeue,
             };
             Response response = await client.ResizePoolAsync("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_StopPoolResize_ShortVersion()
+        public void Example_StopPoolResize()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.StopPoolResize("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_StopPoolResize_ShortVersion_Async()
+        public async Task Example_StopPoolResize_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.StopPoolResizeAsync("<poolId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -3037,7 +2725,6 @@ value = "<value>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.StopPoolResize("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -3050,13 +2737,12 @@ value = "<value>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.StopPoolResizeAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplacePoolProperties_ShortVersion()
+        public void Example_ReplacePoolProperties()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3064,38 +2750,37 @@ value = "<value>",
 
             RequestContent content = RequestContent.Create(new
             {
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
             });
             Response response = client.ReplacePoolProperties("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplacePoolProperties_ShortVersion_Async()
+        public async Task Example_ReplacePoolProperties_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3103,75 +2788,76 @@ value = "<value>",
 
             RequestContent content = RequestContent.Create(new
             {
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
             });
             Response response = await client.ReplacePoolPropertiesAsync("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplacePoolProperties_ShortVersion_Convenience()
+        public void Example_ReplacePoolProperties_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new CertificateReference[]
-            {
-new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            }, new ApplicationPackageReference[]
-            {
+            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new List<CertificateReference>()
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
+}, new List<ApplicationPackageReference>()
+{
 new ApplicationPackageReference("<applicationId>")
-            }, new MetadataItem[]
-            {
-new MetadataItem("<name>", "<value>")
-            });
+}, new List<MetadataItem>()
+{
+new MetadataItem("<name>","<value>")
+});
             Response response = client.ReplacePoolProperties("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplacePoolProperties_ShortVersion_Convenience_Async()
+        public async Task Example_ReplacePoolProperties_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new CertificateReference[]
-            {
-new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            }, new ApplicationPackageReference[]
-            {
+            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new List<CertificateReference>()
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
+}, new List<ApplicationPackageReference>()
+{
 new ApplicationPackageReference("<applicationId>")
-            }, new MetadataItem[]
-            {
-new MetadataItem("<name>", "<value>")
-            });
+}, new List<MetadataItem>()
+{
+new MetadataItem("<name>","<value>")
+});
             Response response = await client.ReplacePoolPropertiesAsync("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -3203,8 +2889,8 @@ new MetadataItem("<name>", "<value>")
                         },
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -3214,15 +2900,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     userIdentity = new
                     {
                         username = "<username>",
@@ -3235,40 +2921,39 @@ value = "<value>",
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                 targetNodeCommunicationMode = "default",
             });
             Response response = client.ReplacePoolProperties("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -3301,8 +2986,8 @@ value = "<value>",
                         },
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -3312,15 +2997,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     userIdentity = new
                     {
                         username = "<username>",
@@ -3333,40 +3018,39 @@ value = "<value>",
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-            {
+                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                applicationPackageReferences = new object[]
-            {
+},
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                metadata = new object[]
-            {
+},
+                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                 targetNodeCommunicationMode = "default",
             });
             Response response = await client.ReplacePoolPropertiesAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -3378,43 +3062,48 @@ value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new CertificateReference[]
-            {
-new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new List<CertificateReference>()
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
+Visibility =
+{
+CertificateVisibility.StartTask
+},
 }
-            }, new ApplicationPackageReference[]
-            {
+}, new List<ApplicationPackageReference>()
+{
 new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
 }
-            }, new MetadataItem[]
-            {
-new MetadataItem("<name>", "<value>")
-            })
+}, new List<MetadataItem>()
+{
+new MetadataItem("<name>","<value>")
+})
             {
                 StartTask = new StartTask("<commandLine>")
                 {
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -3422,16 +3111,20 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+IdentityReference = null,
+}
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    UserIdentity = new UserIdentity
+}
+},
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
@@ -3443,6 +3136,7 @@ Value = "<value>",
                 TargetNodeCommunicationMode = NodeCommunicationMode.Default,
             };
             Response response = client.ReplacePoolProperties("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -3453,43 +3147,48 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new CertificateReference[]
-            {
-new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+            BatchPoolReplaceOptions body = new BatchPoolReplaceOptions(new List<CertificateReference>()
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
+Visibility =
+{
+CertificateVisibility.StartTask
+},
 }
-            }, new ApplicationPackageReference[]
-            {
+}, new List<ApplicationPackageReference>()
+{
 new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
 }
-            }, new MetadataItem[]
-            {
-new MetadataItem("<name>", "<value>")
-            })
+}, new List<MetadataItem>()
+{
+new MetadataItem("<name>","<value>")
+})
             {
                 StartTask = new StartTask("<commandLine>")
                 {
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -3497,16 +3196,20 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+IdentityReference = null,
+}
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    UserIdentity = new UserIdentity
+}
+},
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
@@ -3518,11 +3221,12 @@ Value = "<value>",
                 TargetNodeCommunicationMode = NodeCommunicationMode.Default,
             };
             Response response = await client.ReplacePoolPropertiesAsync("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveNodes_ShortVersion()
+        public void Example_RemoveNodes()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3530,19 +3234,18 @@ Value = "<value>",
 
             RequestContent content = RequestContent.Create(new
             {
-                nodeList = new object[]
-            {
+                nodeList = new List<object>()
+{
 "<nodeList>"
-            },
+},
             });
             Response response = client.RemoveNodes("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveNodes_ShortVersion_Async()
+        public async Task Example_RemoveNodes_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3550,38 +3253,45 @@ Value = "<value>",
 
             RequestContent content = RequestContent.Create(new
             {
-                nodeList = new object[]
-            {
+                nodeList = new List<object>()
+{
 "<nodeList>"
-            },
+},
             });
             Response response = await client.RemoveNodesAsync("<poolId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveNodes_ShortVersion_Convenience()
+        public void Example_RemoveNodes_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeRemoveOptions body = new NodeRemoveOptions(new string[] { "<nodeList>" });
+            NodeRemoveOptions body = new NodeRemoveOptions(new List<string>()
+{
+"<nodeList>"
+});
             Response response = client.RemoveNodes("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveNodes_ShortVersion_Convenience_Async()
+        public async Task Example_RemoveNodes_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeRemoveOptions body = new NodeRemoveOptions(new string[] { "<nodeList>" });
+            NodeRemoveOptions body = new NodeRemoveOptions(new List<string>()
+{
+"<nodeList>"
+});
             Response response = await client.RemoveNodesAsync("<poolId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -3594,15 +3304,14 @@ Value = "<value>",
 
             RequestContent content = RequestContent.Create(new
             {
-                nodeList = new object[]
-            {
+                nodeList = new List<object>()
+{
 "<nodeList>"
-            },
+},
                 resizeTimeout = "PT1H23M45S",
                 nodeDeallocationOption = "requeue",
             });
             Response response = client.RemoveNodes("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -3616,15 +3325,14 @@ Value = "<value>",
 
             RequestContent content = RequestContent.Create(new
             {
-                nodeList = new object[]
-            {
+                nodeList = new List<object>()
+{
 "<nodeList>"
-            },
+},
                 resizeTimeout = "PT1H23M45S",
                 nodeDeallocationOption = "requeue",
             });
             Response response = await client.RemoveNodesAsync("<poolId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -3636,12 +3344,16 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeRemoveOptions body = new NodeRemoveOptions(new string[] { "<nodeList>" })
+            NodeRemoveOptions body = new NodeRemoveOptions(new List<string>()
+{
+"<nodeList>"
+})
             {
                 ResizeTimeout = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 NodeDeallocationOption = BatchNodeDeallocationOption.Requeue,
             };
             Response response = client.RemoveNodes("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -3652,17 +3364,21 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeRemoveOptions body = new NodeRemoveOptions(new string[] { "<nodeList>" })
+            NodeRemoveOptions body = new NodeRemoveOptions(new List<string>()
+{
+"<nodeList>"
+})
             {
                 ResizeTimeout = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 NodeDeallocationOption = BatchNodeDeallocationOption.Requeue,
             };
             Response response = await client.RemoveNodesAsync("<poolId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSupportedImages_ShortVersion()
+        public void Example_GetSupportedImages()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3676,7 +3392,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedImages_ShortVersion_Async()
+        public async Task Example_GetSupportedImages_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3690,7 +3406,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSupportedImages_ShortVersion_Convenience()
+        public void Example_GetSupportedImages_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3701,7 +3417,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedImages_ShortVersion_Convenience_Async()
+        public async Task Example_GetSupportedImages_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3784,7 +3500,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPoolNodeCounts_ShortVersion()
+        public void Example_GetPoolNodeCounts()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3798,7 +3514,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPoolNodeCounts_ShortVersion_Async()
+        public async Task Example_GetPoolNodeCounts_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3812,7 +3528,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetPoolNodeCounts_ShortVersion_Convenience()
+        public void Example_GetPoolNodeCounts_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3823,7 +3539,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetPoolNodeCounts_ShortVersion_Convenience_Async()
+        public async Task Example_GetPoolNodeCounts_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -3942,27 +3658,25 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteJob_ShortVersion()
+        public void Example_DeleteJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteJob("<jobId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteJob_ShortVersion_Async()
+        public async Task Example_DeleteJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteJobAsync("<jobId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -3975,7 +3689,6 @@ Value = "<value>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteJob("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -3988,13 +3701,12 @@ Value = "<value>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteJobAsync("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJob_ShortVersion()
+        public void Example_GetJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4008,7 +3720,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJob_ShortVersion_Async()
+        public async Task Example_GetJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4022,7 +3734,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJob_ShortVersion_Convenience()
+        public void Example_GetJob_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4033,7 +3745,7 @@ Value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJob_ShortVersion_Convenience_Async()
+        public async Task Example_GetJob_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4050,7 +3762,13 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetJob("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = client.GetJob("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -4319,7 +4037,13 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetJobAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = await client.GetJobAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -4588,7 +4312,13 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJob> response = client.GetJob("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchJob> response = client.GetJob("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
@@ -4599,12 +4329,18 @@ Value = "<value>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJob> response = await client.GetJobAsync("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchJob> response = await client.GetJobAsync("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateJob_ShortVersion()
+        public void Example_UpdateJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4612,13 +4348,12 @@ Value = "<value>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateJob("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateJob_ShortVersion_Async()
+        public async Task Example_UpdateJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -4626,7 +4361,6 @@ Value = "<value>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateJobAsync("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
@@ -4680,8 +4414,8 @@ Value = "<value>",
                                 {
                                     enableAutomaticUpdates = true,
                                 },
-                                dataDisks = new object[]
-            {
+                                dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -4689,17 +4423,17 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                 licenseType = "<licenseType>",
                                 containerConfiguration = new
                                 {
                                     type = "dockerCompatible",
-                                    containerImageNames = new object[]
-            {
+                                    containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                    containerRegistries = new object[]
-            {
+},
+                                    containerRegistries = new List<object>()
+{
 new
 {
 username = "<username>",
@@ -4710,21 +4444,21 @@ identityReference = new
 resourceId = "<resourceId>",
 },
 }
-            },
+},
                                 },
                                 diskEncryptionConfiguration = new
                                 {
-                                    targets = new object[]
-            {
+                                    targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                 },
                                 nodePlacementConfiguration = new
                                 {
                                     policy = "regional",
                                 },
-                                extensions = new object[]
-            {
+                                extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -4741,12 +4475,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                 osDisk = new
                                 {
                                     ephemeralOSDiskSettings = new
@@ -4773,8 +4507,8 @@ provisionAfterExtensions = new object[]
                                 dynamicVNetAssignmentScope = "none",
                                 endpointConfiguration = new
                                 {
-                                    inboundNATPools = new object[]
-            {
+                                    inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -4782,29 +4516,29 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                 },
                                 publicIPAddressConfiguration = new
                                 {
                                     provision = "batchmanaged",
-                                    ipAddressIds = new object[]
-            {
+                                    ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                 },
                                 enableAcceleratedNetworking = true,
                             },
@@ -4817,8 +4551,8 @@ sourcePortRanges = new object[]
                                     imageName = "<imageName>",
                                     workingDirectory = "taskWorkingDirectory",
                                 },
-                                resourceFiles = new object[]
-            {
+                                resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -4828,15 +4562,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                                environmentSettings = new object[]
-            {
+},
+                                environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                                 userIdentity = new
                                 {
                                     username = "<username>",
@@ -4849,34 +4583,34 @@ value = "<value>",
                                 maxTaskRetryCount = 1234,
                                 waitForSuccess = true,
                             },
-                            certificateReferences = new object[]
-            {
+                            certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                            applicationPackageReferences = new object[]
-            {
+},
+                            applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                            applicationLicenses = new object[]
-            {
+},
+                            applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                            userAccounts = new object[]
-            {
+},
+                            userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -4893,17 +4627,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                            metadata = new object[]
-            {
+},
+                            metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                            mountConfiguration = new object[]
-            {
+},
+                            mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -4938,19 +4672,18 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                             targetNodeCommunicationMode = "default",
                         },
                     },
                 },
                 onAllTasksComplete = "noaction",
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = client.UpdateJob("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -5004,8 +4737,8 @@ null
                                 {
                                     enableAutomaticUpdates = true,
                                 },
-                                dataDisks = new object[]
-            {
+                                dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -5013,17 +4746,17 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                 licenseType = "<licenseType>",
                                 containerConfiguration = new
                                 {
                                     type = "dockerCompatible",
-                                    containerImageNames = new object[]
-            {
+                                    containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                    containerRegistries = new object[]
-            {
+},
+                                    containerRegistries = new List<object>()
+{
 new
 {
 username = "<username>",
@@ -5034,21 +4767,21 @@ identityReference = new
 resourceId = "<resourceId>",
 },
 }
-            },
+},
                                 },
                                 diskEncryptionConfiguration = new
                                 {
-                                    targets = new object[]
-            {
+                                    targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                 },
                                 nodePlacementConfiguration = new
                                 {
                                     policy = "regional",
                                 },
-                                extensions = new object[]
-            {
+                                extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5065,12 +4798,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                 osDisk = new
                                 {
                                     ephemeralOSDiskSettings = new
@@ -5097,8 +4830,8 @@ provisionAfterExtensions = new object[]
                                 dynamicVNetAssignmentScope = "none",
                                 endpointConfiguration = new
                                 {
-                                    inboundNATPools = new object[]
-            {
+                                    inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5106,29 +4839,29 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                 },
                                 publicIPAddressConfiguration = new
                                 {
                                     provision = "batchmanaged",
-                                    ipAddressIds = new object[]
-            {
+                                    ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                 },
                                 enableAcceleratedNetworking = true,
                             },
@@ -5141,8 +4874,8 @@ sourcePortRanges = new object[]
                                     imageName = "<imageName>",
                                     workingDirectory = "taskWorkingDirectory",
                                 },
-                                resourceFiles = new object[]
-            {
+                                resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -5152,15 +4885,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                                environmentSettings = new object[]
-            {
+},
+                                environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                                 userIdentity = new
                                 {
                                     username = "<username>",
@@ -5173,34 +4906,34 @@ value = "<value>",
                                 maxTaskRetryCount = 1234,
                                 waitForSuccess = true,
                             },
-                            certificateReferences = new object[]
-            {
+                            certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                            applicationPackageReferences = new object[]
-            {
+},
+                            applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                            applicationLicenses = new object[]
-            {
+},
+                            applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                            userAccounts = new object[]
-            {
+},
+                            userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5217,17 +4950,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                            metadata = new object[]
-            {
+},
+                            metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                            mountConfiguration = new object[]
-            {
+},
+                            mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -5262,25 +4995,24 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                             targetNodeCommunicationMode = "default",
                         },
                     },
                 },
                 onAllTasksComplete = "noaction",
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = await client.UpdateJobAsync("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceJob_ShortVersion()
+        public void Example_ReplaceJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5291,13 +5023,12 @@ null
                 poolInfo = new object(),
             });
             Response response = client.ReplaceJob("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceJob_ShortVersion_Async()
+        public async Task Example_ReplaceJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5308,13 +5039,12 @@ null
                 poolInfo = new object(),
             });
             Response response = await client.ReplaceJobAsync("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceJob_ShortVersion_Convenience()
+        public void Example_ReplaceJob_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5322,11 +5052,12 @@ null
 
             BatchJob body = new BatchJob(new PoolInformation());
             Response response = client.ReplaceJob("<jobId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceJob_ShortVersion_Convenience_Async()
+        public async Task Example_ReplaceJob_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -5334,6 +5065,7 @@ null
 
             BatchJob body = new BatchJob(new PoolInformation());
             Response response = await client.ReplaceJobAsync("<jobId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -5386,8 +5118,8 @@ null
                                 {
                                     enableAutomaticUpdates = true,
                                 },
-                                dataDisks = new object[]
-            {
+                                dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -5395,17 +5127,17 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                 licenseType = "<licenseType>",
                                 containerConfiguration = new
                                 {
                                     type = "dockerCompatible",
-                                    containerImageNames = new object[]
-            {
+                                    containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                    containerRegistries = new object[]
-            {
+},
+                                    containerRegistries = new List<object>()
+{
 new
 {
 username = "<username>",
@@ -5416,21 +5148,21 @@ identityReference = new
 resourceId = "<resourceId>",
 },
 }
-            },
+},
                                 },
                                 diskEncryptionConfiguration = new
                                 {
-                                    targets = new object[]
-            {
+                                    targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                 },
                                 nodePlacementConfiguration = new
                                 {
                                     policy = "regional",
                                 },
-                                extensions = new object[]
-            {
+                                extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5447,12 +5179,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                 osDisk = new
                                 {
                                     ephemeralOSDiskSettings = new
@@ -5479,8 +5211,8 @@ provisionAfterExtensions = new object[]
                                 dynamicVNetAssignmentScope = "none",
                                 endpointConfiguration = new
                                 {
-                                    inboundNATPools = new object[]
-            {
+                                    inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5488,29 +5220,29 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                 },
                                 publicIPAddressConfiguration = new
                                 {
                                     provision = "batchmanaged",
-                                    ipAddressIds = new object[]
-            {
+                                    ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                 },
                                 enableAcceleratedNetworking = true,
                             },
@@ -5523,8 +5255,8 @@ sourcePortRanges = new object[]
                                     imageName = "<imageName>",
                                     workingDirectory = "taskWorkingDirectory",
                                 },
-                                resourceFiles = new object[]
-            {
+                                resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -5534,15 +5266,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                                environmentSettings = new object[]
-            {
+},
+                                environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                                 userIdentity = new
                                 {
                                     username = "<username>",
@@ -5555,34 +5287,34 @@ value = "<value>",
                                 maxTaskRetryCount = 1234,
                                 waitForSuccess = true,
                             },
-                            certificateReferences = new object[]
-            {
+                            certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                            applicationPackageReferences = new object[]
-            {
+},
+                            applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                            applicationLicenses = new object[]
-            {
+},
+                            applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                            userAccounts = new object[]
-            {
+},
+                            userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5599,17 +5331,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                            metadata = new object[]
-            {
+},
+                            metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                            mountConfiguration = new object[]
-            {
+},
+                            mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -5644,19 +5376,18 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                             targetNodeCommunicationMode = "default",
                         },
                     },
                 },
                 onAllTasksComplete = "noaction",
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = client.ReplaceJob("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -5710,8 +5441,8 @@ null
                                 {
                                     enableAutomaticUpdates = true,
                                 },
-                                dataDisks = new object[]
-            {
+                                dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -5719,17 +5450,17 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                 licenseType = "<licenseType>",
                                 containerConfiguration = new
                                 {
                                     type = "dockerCompatible",
-                                    containerImageNames = new object[]
-            {
+                                    containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                    containerRegistries = new object[]
-            {
+},
+                                    containerRegistries = new List<object>()
+{
 new
 {
 username = "<username>",
@@ -5740,21 +5471,21 @@ identityReference = new
 resourceId = "<resourceId>",
 },
 }
-            },
+},
                                 },
                                 diskEncryptionConfiguration = new
                                 {
-                                    targets = new object[]
-            {
+                                    targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                 },
                                 nodePlacementConfiguration = new
                                 {
                                     policy = "regional",
                                 },
-                                extensions = new object[]
-            {
+                                extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5771,12 +5502,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                 osDisk = new
                                 {
                                     ephemeralOSDiskSettings = new
@@ -5803,8 +5534,8 @@ provisionAfterExtensions = new object[]
                                 dynamicVNetAssignmentScope = "none",
                                 endpointConfiguration = new
                                 {
-                                    inboundNATPools = new object[]
-            {
+                                    inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5812,29 +5543,29 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                 },
                                 publicIPAddressConfiguration = new
                                 {
                                     provision = "batchmanaged",
-                                    ipAddressIds = new object[]
-            {
+                                    ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                 },
                                 enableAcceleratedNetworking = true,
                             },
@@ -5847,8 +5578,8 @@ sourcePortRanges = new object[]
                                     imageName = "<imageName>",
                                     workingDirectory = "taskWorkingDirectory",
                                 },
-                                resourceFiles = new object[]
-            {
+                                resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -5858,15 +5589,15 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                                environmentSettings = new object[]
-            {
+},
+                                environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                                 userIdentity = new
                                 {
                                     username = "<username>",
@@ -5879,34 +5610,34 @@ value = "<value>",
                                 maxTaskRetryCount = 1234,
                                 waitForSuccess = true,
                             },
-                            certificateReferences = new object[]
-            {
+                            certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                            applicationPackageReferences = new object[]
-            {
+},
+                            applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
-                            applicationLicenses = new object[]
-            {
+},
+                            applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                            userAccounts = new object[]
-            {
+},
+                            userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -5923,17 +5654,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                            metadata = new object[]
-            {
+},
+                            metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                            mountConfiguration = new object[]
-            {
+},
+                            mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -5968,19 +5699,18 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                             targetNodeCommunicationMode = "default",
                         },
                     },
                 },
                 onAllTasksComplete = "noaction",
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = await client.ReplaceJobAsync("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -5992,7 +5722,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJob body = new BatchJob(new PoolInformation
+            BatchJob body = new BatchJob(new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -6006,7 +5736,7 @@ null
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -6015,56 +5745,74 @@ null
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = {new ContainerRegistry
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+new ContainerRegistry()
 {
 Username = "<username>",
 Password = "<password>",
 RegistryServer = "<registryServer>",
-IdentityReference = new BatchNodeIdentityReference
+IdentityReference = new BatchNodeIdentityReference()
 {
 ResourceId = "<resourceId>",
 },
-}},
+}
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -6079,24 +5827,33 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
@@ -6105,10 +5862,12 @@ SourcePortRanges = {"<sourcePortRanges>"},
                             ContainerSettings = new TaskContainerSettings("<imageName>")
                             {
                                 ContainerRunOptions = "<containerRunOptions>",
-                                Registry = default,
+                                Registry = null,
                                 WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                             },
-                            ResourceFiles = {new ResourceFile
+                            ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -6116,16 +5875,20 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                            EnvironmentSettings = {new EnvironmentSetting("<name>")
+IdentityReference = null,
+}
+},
+                            EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                            UserIdentity = new UserIdentity
+}
+},
+                            UserIdentity = new UserIdentity()
                             {
                                 Username = "<username>",
-                                AutoUser = new AutoUserSpecification
+                                AutoUser = new AutoUserSpecification()
                                 {
                                     Scope = AutoUserScope.Task,
                                     ElevationLevel = ElevationLevel.NonAdmin,
@@ -6134,54 +5897,75 @@ Value = "<value>",
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+}
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -6190,15 +5974,19 @@ MountOptions = "<mountOptions>",
                 Priority = 1234,
                 AllowTaskPreemption = true,
                 MaxParallelTasks = 1234,
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
                 },
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = client.ReplaceJob("<jobId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -6209,7 +5997,7 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJob body = new BatchJob(new PoolInformation
+            BatchJob body = new BatchJob(new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -6223,7 +6011,7 @@ MountOptions = "<mountOptions>",
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -6232,56 +6020,74 @@ MountOptions = "<mountOptions>",
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = {new ContainerRegistry
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+new ContainerRegistry()
 {
 Username = "<username>",
 Password = "<password>",
 RegistryServer = "<registryServer>",
-IdentityReference = new BatchNodeIdentityReference
+IdentityReference = new BatchNodeIdentityReference()
 {
 ResourceId = "<resourceId>",
 },
-}},
+}
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -6296,24 +6102,33 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
@@ -6322,10 +6137,12 @@ SourcePortRanges = {"<sourcePortRanges>"},
                             ContainerSettings = new TaskContainerSettings("<imageName>")
                             {
                                 ContainerRunOptions = "<containerRunOptions>",
-                                Registry = default,
+                                Registry = null,
                                 WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                             },
-                            ResourceFiles = {new ResourceFile
+                            ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -6333,16 +6150,20 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                            EnvironmentSettings = {new EnvironmentSetting("<name>")
+IdentityReference = null,
+}
+},
+                            EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                            UserIdentity = new UserIdentity
+}
+},
+                            UserIdentity = new UserIdentity()
                             {
                                 Username = "<username>",
-                                AutoUser = new AutoUserSpecification
+                                AutoUser = new AutoUserSpecification()
                                 {
                                     Scope = AutoUserScope.Task,
                                     ElevationLevel = ElevationLevel.NonAdmin,
@@ -6351,54 +6172,75 @@ Value = "<value>",
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+}
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -6407,20 +6249,24 @@ MountOptions = "<mountOptions>",
                 Priority = 1234,
                 AllowTaskPreemption = true,
                 MaxParallelTasks = 1234,
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
                 },
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = await client.ReplaceJobAsync("<jobId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DisableJob_ShortVersion()
+        public void Example_DisableJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6431,13 +6277,12 @@ MountOptions = "<mountOptions>",
                 disableTasks = "requeue",
             });
             Response response = client.DisableJob("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DisableJob_ShortVersion_Async()
+        public async Task Example_DisableJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6448,13 +6293,12 @@ MountOptions = "<mountOptions>",
                 disableTasks = "requeue",
             });
             Response response = await client.DisableJobAsync("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DisableJob_ShortVersion_Convenience()
+        public void Example_DisableJob_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6462,11 +6306,12 @@ MountOptions = "<mountOptions>",
 
             BatchJobDisableOptions body = new BatchJobDisableOptions(DisableJobOption.Requeue);
             Response response = client.DisableJob("<jobId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DisableJob_ShortVersion_Convenience_Async()
+        public async Task Example_DisableJob_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6474,6 +6319,7 @@ MountOptions = "<mountOptions>",
 
             BatchJobDisableOptions body = new BatchJobDisableOptions(DisableJobOption.Requeue);
             Response response = await client.DisableJobAsync("<jobId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -6489,7 +6335,6 @@ MountOptions = "<mountOptions>",
                 disableTasks = "requeue",
             });
             Response response = client.DisableJob("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -6506,7 +6351,6 @@ MountOptions = "<mountOptions>",
                 disableTasks = "requeue",
             });
             Response response = await client.DisableJobAsync("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -6520,6 +6364,7 @@ MountOptions = "<mountOptions>",
 
             BatchJobDisableOptions body = new BatchJobDisableOptions(DisableJobOption.Requeue);
             Response response = client.DisableJob("<jobId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -6532,31 +6377,30 @@ MountOptions = "<mountOptions>",
 
             BatchJobDisableOptions body = new BatchJobDisableOptions(DisableJobOption.Requeue);
             Response response = await client.DisableJobAsync("<jobId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnableJob_ShortVersion()
+        public void Example_EnableJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.EnableJob("<jobId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnableJob_ShortVersion_Async()
+        public async Task Example_EnableJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.EnableJobAsync("<jobId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -6569,7 +6413,6 @@ MountOptions = "<mountOptions>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.EnableJob("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -6582,13 +6425,12 @@ MountOptions = "<mountOptions>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.EnableJobAsync("<jobId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TerminateJob_ShortVersion()
+        public void Example_TerminateJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6596,13 +6438,12 @@ MountOptions = "<mountOptions>",
 
             RequestContent content = null;
             Response response = client.TerminateJob("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TerminateJob_ShortVersion_Async()
+        public async Task Example_TerminateJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6610,30 +6451,31 @@ MountOptions = "<mountOptions>",
 
             RequestContent content = null;
             Response response = await client.TerminateJobAsync("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TerminateJob_ShortVersion_Convenience()
+        public void Example_TerminateJob_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.TerminateJob("<jobId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TerminateJob_ShortVersion_Convenience_Async()
+        public async Task Example_TerminateJob_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.TerminateJobAsync("<jobId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -6649,7 +6491,6 @@ MountOptions = "<mountOptions>",
                 terminateReason = "<terminateReason>",
             });
             Response response = client.TerminateJob("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -6666,7 +6507,6 @@ MountOptions = "<mountOptions>",
                 terminateReason = "<terminateReason>",
             });
             Response response = await client.TerminateJobAsync("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -6678,11 +6518,12 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobTerminateOptions body = new BatchJobTerminateOptions
+            BatchJobTerminateOptions body = new BatchJobTerminateOptions()
             {
                 TerminateReason = "<terminateReason>",
             };
             Response response = client.TerminateJob("<jobId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -6693,16 +6534,17 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobTerminateOptions body = new BatchJobTerminateOptions
+            BatchJobTerminateOptions body = new BatchJobTerminateOptions()
             {
                 TerminateReason = "<terminateReason>",
             };
             Response response = await client.TerminateJobAsync("<jobId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateJob_ShortVersion()
+        public void Example_CreateJob()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6714,13 +6556,12 @@ MountOptions = "<mountOptions>",
                 poolInfo = new object(),
             });
             Response response = client.CreateJob(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateJob_ShortVersion_Async()
+        public async Task Example_CreateJob_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6732,13 +6573,12 @@ MountOptions = "<mountOptions>",
                 poolInfo = new object(),
             });
             Response response = await client.CreateJobAsync(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateJob_ShortVersion_Convenience()
+        public void Example_CreateJob_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6746,11 +6586,12 @@ MountOptions = "<mountOptions>",
 
             BatchJobCreateOptions body = new BatchJobCreateOptions("<id>", new PoolInformation());
             Response response = client.CreateJob(body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateJob_ShortVersion_Convenience_Async()
+        public async Task Example_CreateJob_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -6758,6 +6599,7 @@ MountOptions = "<mountOptions>",
 
             BatchJobCreateOptions body = new BatchJobCreateOptions("<id>", new PoolInformation());
             Response response = await client.CreateJobAsync(body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -6802,8 +6644,8 @@ MountOptions = "<mountOptions>",
                         },
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -6813,9 +6655,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    outputFiles = new object[]
-            {
+},
+                    outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -6825,7 +6667,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -6840,15 +6682,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     constraints = new
                     {
                         maxWallClockTime = "PT1H23M45S",
@@ -6867,20 +6709,20 @@ value = "<value>",
                         },
                     },
                     runExclusive = true,
-                    applicationPackageReferences = new object[]
-            {
+                    applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                     authenticationTokenSettings = new
                     {
-                        access = new object[]
-            {
+                        access = new List<object>()
+{
 "job"
-            },
+},
                     },
                     allowLowPriorityNode = true,
                 },
@@ -6888,14 +6730,14 @@ version = "<version>",
                 {
                     id = "<id>",
                     commandLine = "<commandLine>",
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 null
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                     waitForSuccess = true,
                     rerunOnNodeRebootAfterSuccess = true,
                 },
@@ -6903,21 +6745,21 @@ null
                 {
                     id = "<id>",
                     commandLine = "<commandLine>",
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 null
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                     maxWallClockTime = "PT1H23M45S",
                     retentionTime = "PT1H23M45S",
                 },
-                commonEnvironmentSettings = new object[]
-            {
+                commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                 poolInfo = new
                 {
                     poolId = "<poolId>",
@@ -6950,8 +6792,8 @@ null
                                 {
                                     enableAutomaticUpdates = true,
                                 },
-                                dataDisks = new object[]
-            {
+                                dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -6959,33 +6801,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                 licenseType = "<licenseType>",
                                 containerConfiguration = new
                                 {
                                     type = "dockerCompatible",
-                                    containerImageNames = new object[]
-            {
+                                    containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                    containerRegistries = new object[]
-            {
+},
+                                    containerRegistries = new List<object>()
+{
 null
-            },
+},
                                 },
                                 diskEncryptionConfiguration = new
                                 {
-                                    targets = new object[]
-            {
+                                    targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                 },
                                 nodePlacementConfiguration = new
                                 {
                                     policy = "regional",
                                 },
-                                extensions = new object[]
-            {
+                                extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -7002,12 +6844,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                 osDisk = new
                                 {
                                     ephemeralOSDiskSettings = new
@@ -7034,8 +6876,8 @@ provisionAfterExtensions = new object[]
                                 dynamicVNetAssignmentScope = "none",
                                 endpointConfiguration = new
                                 {
-                                    inboundNATPools = new object[]
-            {
+                                    inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -7043,70 +6885,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                 },
                                 publicIPAddressConfiguration = new
                                 {
                                     provision = "batchmanaged",
-                                    ipAddressIds = new object[]
-            {
+                                    ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                 },
                                 enableAcceleratedNetworking = true,
                             },
                             startTask = new
                             {
                                 commandLine = "<commandLine>",
-                                resourceFiles = new object[]
-            {
+                                resourceFiles = new List<object>()
+{
 null
-            },
-                                environmentSettings = new object[]
-            {
+},
+                                environmentSettings = new List<object>()
+{
 null
-            },
+},
                                 maxTaskRetryCount = 1234,
                                 waitForSuccess = true,
                             },
-                            certificateReferences = new object[]
-            {
+                            certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                            applicationPackageReferences = new object[]
-            {
+},
+                            applicationPackageReferences = new List<object>()
+{
 null
-            },
-                            applicationLicenses = new object[]
-            {
+},
+                            applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                            userAccounts = new object[]
-            {
+},
+                            userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -7123,17 +6965,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                            metadata = new object[]
-            {
+},
+                            metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                            mountConfiguration = new object[]
-            {
+},
+                            mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -7168,7 +7010,7 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                             targetNodeCommunicationMode = "default",
                         },
                     },
@@ -7179,13 +7021,12 @@ mountOptions = "<mountOptions>",
                 {
                     subnetId = "<subnetId>",
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = client.CreateJob(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -7231,8 +7072,8 @@ null
                         },
                         workingDirectory = "taskWorkingDirectory",
                     },
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -7242,9 +7083,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                    outputFiles = new object[]
-            {
+},
+                    outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -7254,7 +7095,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -7269,15 +7110,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                     constraints = new
                     {
                         maxWallClockTime = "PT1H23M45S",
@@ -7296,20 +7137,20 @@ value = "<value>",
                         },
                     },
                     runExclusive = true,
-                    applicationPackageReferences = new object[]
-            {
+                    applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                     authenticationTokenSettings = new
                     {
-                        access = new object[]
-            {
+                        access = new List<object>()
+{
 "job"
-            },
+},
                     },
                     allowLowPriorityNode = true,
                 },
@@ -7317,14 +7158,14 @@ version = "<version>",
                 {
                     id = "<id>",
                     commandLine = "<commandLine>",
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 null
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                     waitForSuccess = true,
                     rerunOnNodeRebootAfterSuccess = true,
                 },
@@ -7332,21 +7173,21 @@ null
                 {
                     id = "<id>",
                     commandLine = "<commandLine>",
-                    resourceFiles = new object[]
-            {
+                    resourceFiles = new List<object>()
+{
 null
-            },
-                    environmentSettings = new object[]
-            {
+},
+                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                     maxWallClockTime = "PT1H23M45S",
                     retentionTime = "PT1H23M45S",
                 },
-                commonEnvironmentSettings = new object[]
-            {
+                commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                 poolInfo = new
                 {
                     poolId = "<poolId>",
@@ -7379,8 +7220,8 @@ null
                                 {
                                     enableAutomaticUpdates = true,
                                 },
-                                dataDisks = new object[]
-            {
+                                dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -7388,33 +7229,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                 licenseType = "<licenseType>",
                                 containerConfiguration = new
                                 {
                                     type = "dockerCompatible",
-                                    containerImageNames = new object[]
-            {
+                                    containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                    containerRegistries = new object[]
-            {
+},
+                                    containerRegistries = new List<object>()
+{
 null
-            },
+},
                                 },
                                 diskEncryptionConfiguration = new
                                 {
-                                    targets = new object[]
-            {
+                                    targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                 },
                                 nodePlacementConfiguration = new
                                 {
                                     policy = "regional",
                                 },
-                                extensions = new object[]
-            {
+                                extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -7431,12 +7272,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                 osDisk = new
                                 {
                                     ephemeralOSDiskSettings = new
@@ -7463,8 +7304,8 @@ provisionAfterExtensions = new object[]
                                 dynamicVNetAssignmentScope = "none",
                                 endpointConfiguration = new
                                 {
-                                    inboundNATPools = new object[]
-            {
+                                    inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -7472,70 +7313,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                 },
                                 publicIPAddressConfiguration = new
                                 {
                                     provision = "batchmanaged",
-                                    ipAddressIds = new object[]
-            {
+                                    ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                 },
                                 enableAcceleratedNetworking = true,
                             },
                             startTask = new
                             {
                                 commandLine = "<commandLine>",
-                                resourceFiles = new object[]
-            {
+                                resourceFiles = new List<object>()
+{
 null
-            },
-                                environmentSettings = new object[]
-            {
+},
+                                environmentSettings = new List<object>()
+{
 null
-            },
+},
                                 maxTaskRetryCount = 1234,
                                 waitForSuccess = true,
                             },
-                            certificateReferences = new object[]
-            {
+                            certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                            applicationPackageReferences = new object[]
-            {
+},
+                            applicationPackageReferences = new List<object>()
+{
 null
-            },
-                            applicationLicenses = new object[]
-            {
+},
+                            applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                            userAccounts = new object[]
-            {
+},
+                            userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -7552,17 +7393,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                            metadata = new object[]
-            {
+},
+                            metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                            mountConfiguration = new object[]
-            {
+},
+                            mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -7597,7 +7438,7 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                             targetNodeCommunicationMode = "default",
                         },
                     },
@@ -7608,13 +7449,12 @@ mountOptions = "<mountOptions>",
                 {
                     subnetId = "<subnetId>",
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = await client.CreateJobAsync(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -7626,7 +7466,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobCreateOptions body = new BatchJobCreateOptions("<id>", new PoolInformation
+            BatchJobCreateOptions body = new BatchJobCreateOptions("<id>", new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -7640,7 +7480,7 @@ null
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -7649,47 +7489,65 @@ null
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = { default },
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+null
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -7704,81 +7562,117 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
                         StartTask = new StartTask("<commandLine>")
                         {
-                            ContainerSettings = default,
-                            ResourceFiles = { default },
-                            EnvironmentSettings = { default },
-                            UserIdentity = default,
+                            ContainerSettings = null,
+                            ResourceFiles =
+{
+null
+},
+                            EnvironmentSettings =
+{
+null
+},
+                            UserIdentity = null,
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = { default },
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+null
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -7789,7 +7683,7 @@ MountOptions = "<mountOptions>",
                 Priority = 1234,
                 AllowTaskPreemption = true,
                 MaxParallelTasks = 1234,
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
@@ -7800,19 +7694,21 @@ MountOptions = "<mountOptions>",
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -7820,25 +7716,35 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                    OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    Constraints = new TaskConstraints
+}
+},
+                    Constraints = new TaskConstraints()
                     {
                         MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -7846,54 +7752,79 @@ Value = "<value>",
                     },
                     RequiredSlots = 1234,
                     KillJobOnCompletion = true,
-                    UserIdentity = new UserIdentity
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
                         },
                     },
                     RunExclusive = true,
-                    ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                    ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                    AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings()
                     {
-                        Access = { AccessScope.Job },
+                        Access =
+{
+AccessScope.Job
+},
                     },
                     AllowLowPriorityNode = true,
                 },
                 JobPreparationTask = new JobPreparationTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
-                    Constraints = default,
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
+                    Constraints = null,
                     WaitForSuccess = true,
-                    UserIdentity = default,
+                    UserIdentity = null,
                     RerunOnNodeRebootAfterSuccess = true,
                 },
                 JobReleaseTask = new JobReleaseTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
-                    UserIdentity = default,
+                    UserIdentity = null,
                 },
-                CommonEnvironmentSettings = { default },
+                CommonEnvironmentSettings =
+{
+null
+},
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
                 OnTaskFailure = OnTaskFailure.NoAction,
                 NetworkConfiguration = new JobNetworkConfiguration("<subnetId>"),
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = client.CreateJob(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -7904,7 +7835,7 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobCreateOptions body = new BatchJobCreateOptions("<id>", new PoolInformation
+            BatchJobCreateOptions body = new BatchJobCreateOptions("<id>", new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -7918,7 +7849,7 @@ Version = "<version>",
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -7927,47 +7858,65 @@ Version = "<version>",
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = { default },
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+null
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -7982,81 +7931,117 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
                         StartTask = new StartTask("<commandLine>")
                         {
-                            ContainerSettings = default,
-                            ResourceFiles = { default },
-                            EnvironmentSettings = { default },
-                            UserIdentity = default,
+                            ContainerSettings = null,
+                            ResourceFiles =
+{
+null
+},
+                            EnvironmentSettings =
+{
+null
+},
+                            UserIdentity = null,
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = { default },
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+null
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -8067,7 +8052,7 @@ MountOptions = "<mountOptions>",
                 Priority = 1234,
                 AllowTaskPreemption = true,
                 MaxParallelTasks = 1234,
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
@@ -8078,19 +8063,21 @@ MountOptions = "<mountOptions>",
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -8098,25 +8085,35 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                    OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    Constraints = new TaskConstraints
+}
+},
+                    Constraints = new TaskConstraints()
                     {
                         MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -8124,59 +8121,84 @@ Value = "<value>",
                     },
                     RequiredSlots = 1234,
                     KillJobOnCompletion = true,
-                    UserIdentity = new UserIdentity
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
                         },
                     },
                     RunExclusive = true,
-                    ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                    ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                    AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings()
                     {
-                        Access = { AccessScope.Job },
+                        Access =
+{
+AccessScope.Job
+},
                     },
                     AllowLowPriorityNode = true,
                 },
                 JobPreparationTask = new JobPreparationTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
-                    Constraints = default,
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
+                    Constraints = null,
                     WaitForSuccess = true,
-                    UserIdentity = default,
+                    UserIdentity = null,
                     RerunOnNodeRebootAfterSuccess = true,
                 },
                 JobReleaseTask = new JobReleaseTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
-                    UserIdentity = default,
+                    UserIdentity = null,
                 },
-                CommonEnvironmentSettings = { default },
+                CommonEnvironmentSettings =
+{
+null
+},
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
                 OnTaskFailure = OnTaskFailure.NoAction,
                 NetworkConfiguration = new JobNetworkConfiguration("<subnetId>"),
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = await client.CreateJobAsync(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobs_ShortVersion()
+        public void Example_GetJobs()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8190,7 +8212,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobs_ShortVersion_Async()
+        public async Task Example_GetJobs_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8204,7 +8226,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobs_ShortVersion_Convenience()
+        public void Example_GetJobs_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8215,7 +8237,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobs_ShortVersion_Convenience_Async()
+        public async Task Example_GetJobs_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8232,7 +8254,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetJobs(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = client.GetJobs(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -8502,7 +8530,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetJobsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = await client.GetJobsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -8772,7 +8806,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobListResult> response = client.GetJobs(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchJobListResult> response = client.GetJobs(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
@@ -8783,12 +8823,18 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobListResult> response = await client.GetJobsAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchJobListResult> response = await client.GetJobsAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobsFromSchedules_ShortVersion()
+        public void Example_GetJobsFromSchedules()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8802,7 +8848,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobsFromSchedules_ShortVersion_Async()
+        public async Task Example_GetJobsFromSchedules_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8816,7 +8862,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobsFromSchedules_ShortVersion_Convenience()
+        public void Example_GetJobsFromSchedules_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8827,7 +8873,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobsFromSchedules_ShortVersion_Convenience_Async()
+        public async Task Example_GetJobsFromSchedules_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -8844,7 +8890,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetJobsFromSchedules("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = client.GetJobsFromSchedules("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -9114,7 +9166,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetJobsFromSchedulesAsync("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = await client.GetJobsFromSchedulesAsync("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -9384,7 +9442,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobListResult> response = client.GetJobsFromSchedules("<jobScheduleId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchJobListResult> response = client.GetJobsFromSchedules("<jobScheduleId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
@@ -9395,12 +9459,18 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobListResult> response = await client.GetJobsFromSchedulesAsync("<jobScheduleId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchJobListResult> response = await client.GetJobsFromSchedulesAsync("<jobScheduleId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobPreparationAndReleaseTaskStatuses_ShortVersion()
+        public void Example_GetJobPreparationAndReleaseTaskStatuses()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9414,7 +9484,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Async()
+        public async Task Example_GetJobPreparationAndReleaseTaskStatuses_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9428,7 +9498,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Convenience()
+        public void Example_GetJobPreparationAndReleaseTaskStatuses_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9439,7 +9509,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobPreparationAndReleaseTaskStatuses_ShortVersion_Convenience_Async()
+        public async Task Example_GetJobPreparationAndReleaseTaskStatuses_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9456,7 +9526,10 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetJobPreparationAndReleaseTaskStatuses("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null);
+            Response response = client.GetJobPreparationAndReleaseTaskStatuses("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolId").ToString());
@@ -9505,7 +9578,10 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null);
+            Response response = await client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolId").ToString());
@@ -9554,7 +9630,10 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobListPreparationAndReleaseTaskStatusResult> response = client.GetJobPreparationAndReleaseTaskStatuses("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" });
+            Response<BatchJobListPreparationAndReleaseTaskStatusResult> response = client.GetJobPreparationAndReleaseTaskStatuses("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
@@ -9565,12 +9644,15 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobListPreparationAndReleaseTaskStatusResult> response = await client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" });
+            Response<BatchJobListPreparationAndReleaseTaskStatusResult> response = await client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobTaskCounts_ShortVersion()
+        public void Example_GetJobTaskCounts()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9593,7 +9675,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobTaskCounts_ShortVersion_Async()
+        public async Task Example_GetJobTaskCounts_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9616,7 +9698,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobTaskCounts_ShortVersion_Convenience()
+        public void Example_GetJobTaskCounts_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9627,7 +9709,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobTaskCounts_ShortVersion_Convenience_Async()
+        public async Task Example_GetJobTaskCounts_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9706,27 +9788,25 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_JobScheduleExists_ShortVersion()
+        public void Example_JobScheduleExists()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.JobScheduleExists("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_JobScheduleExists_ShortVersion_Async()
+        public async Task Example_JobScheduleExists_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.JobScheduleExistsAsync("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -9739,7 +9819,6 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.JobScheduleExists("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -9752,33 +9831,30 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteJobSchedule_ShortVersion()
+        public void Example_DeleteJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteJobSchedule("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteJobSchedule_ShortVersion_Async()
+        public async Task Example_DeleteJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteJobScheduleAsync("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -9791,7 +9867,6 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteJobSchedule("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -9804,13 +9879,12 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteJobScheduleAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobSchedule_ShortVersion()
+        public void Example_GetJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9825,7 +9899,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobSchedule_ShortVersion_Async()
+        public async Task Example_GetJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9840,7 +9914,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobSchedule_ShortVersion_Convenience()
+        public void Example_GetJobSchedule_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9851,7 +9925,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobSchedule_ShortVersion_Convenience_Async()
+        public async Task Example_GetJobSchedule_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -9868,7 +9942,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetJobSchedule("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = client.GetJobSchedule("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -10139,7 +10219,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetJobScheduleAsync("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = await client.GetJobScheduleAsync("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -10410,7 +10496,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobSchedule> response = client.GetJobSchedule("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchJobSchedule> response = client.GetJobSchedule("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
@@ -10421,12 +10513,18 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobSchedule> response = await client.GetJobScheduleAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchJobSchedule> response = await client.GetJobScheduleAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateJobSchedule_ShortVersion()
+        public void Example_UpdateJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10434,13 +10532,12 @@ Version = "<version>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateJobSchedule("<jobScheduleId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateJobSchedule_ShortVersion_Async()
+        public async Task Example_UpdateJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -10448,7 +10545,6 @@ Version = "<version>",
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateJobScheduleAsync("<jobScheduleId>", content);
-
             Console.WriteLine(response.Status);
         }
 
@@ -10508,8 +10604,8 @@ Version = "<version>",
                             },
                             workingDirectory = "taskWorkingDirectory",
                         },
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -10519,9 +10615,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                        outputFiles = new object[]
-            {
+},
+                        outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -10531,7 +10627,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -10546,15 +10642,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                         constraints = new
                         {
                             maxWallClockTime = "PT1H23M45S",
@@ -10573,20 +10669,20 @@ value = "<value>",
                             },
                         },
                         runExclusive = true,
-                        applicationPackageReferences = new object[]
-            {
+                        applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                         authenticationTokenSettings = new
                         {
-                            access = new object[]
-            {
+                            access = new List<object>()
+{
 "job"
-            },
+},
                         },
                         allowLowPriorityNode = true,
                     },
@@ -10594,14 +10690,14 @@ version = "<version>",
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         waitForSuccess = true,
                         rerunOnNodeRebootAfterSuccess = true,
                     },
@@ -10609,21 +10705,21 @@ null
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         maxWallClockTime = "PT1H23M45S",
                         retentionTime = "PT1H23M45S",
                     },
-                    commonEnvironmentSettings = new object[]
-            {
+                    commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                     poolInfo = new
                     {
                         poolId = "<poolId>",
@@ -10656,8 +10752,8 @@ null
                                     {
                                         enableAutomaticUpdates = true,
                                     },
-                                    dataDisks = new object[]
-            {
+                                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -10665,33 +10761,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                     licenseType = "<licenseType>",
                                     containerConfiguration = new
                                     {
                                         type = "dockerCompatible",
-                                        containerImageNames = new object[]
-            {
+                                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                        containerRegistries = new object[]
-            {
+},
+                                        containerRegistries = new List<object>()
+{
 null
-            },
+},
                                     },
                                     diskEncryptionConfiguration = new
                                     {
-                                        targets = new object[]
-            {
+                                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                     },
                                     nodePlacementConfiguration = new
                                     {
                                         policy = "regional",
                                     },
-                                    extensions = new object[]
-            {
+                                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -10708,12 +10804,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                     osDisk = new
                                     {
                                         ephemeralOSDiskSettings = new
@@ -10740,8 +10836,8 @@ provisionAfterExtensions = new object[]
                                     dynamicVNetAssignmentScope = "none",
                                     endpointConfiguration = new
                                     {
-                                        inboundNATPools = new object[]
-            {
+                                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -10749,70 +10845,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                     },
                                     publicIPAddressConfiguration = new
                                     {
                                         provision = "batchmanaged",
-                                        ipAddressIds = new object[]
-            {
+                                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                     },
                                     enableAcceleratedNetworking = true,
                                 },
                                 startTask = new
                                 {
                                     commandLine = "<commandLine>",
-                                    resourceFiles = new object[]
-            {
+                                    resourceFiles = new List<object>()
+{
 null
-            },
-                                    environmentSettings = new object[]
-            {
+},
+                                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                                     maxTaskRetryCount = 1234,
                                     waitForSuccess = true,
                                 },
-                                certificateReferences = new object[]
-            {
+                                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                                applicationPackageReferences = new object[]
-            {
+},
+                                applicationPackageReferences = new List<object>()
+{
 null
-            },
-                                applicationLicenses = new object[]
-            {
+},
+                                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                                userAccounts = new object[]
-            {
+},
+                                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -10829,17 +10925,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                                metadata = new object[]
-            {
+},
+                                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                                mountConfiguration = new object[]
-            {
+},
+                                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -10874,23 +10970,22 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                                 targetNodeCommunicationMode = "default",
                             },
                         },
                     },
-                    metadata = new object[]
-            {
+                    metadata = new List<object>()
+{
 null
-            },
+},
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = client.UpdateJobSchedule("<jobScheduleId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -10950,8 +11045,8 @@ null
                             },
                             workingDirectory = "taskWorkingDirectory",
                         },
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -10961,9 +11056,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                        outputFiles = new object[]
-            {
+},
+                        outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -10973,7 +11068,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -10988,15 +11083,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                         constraints = new
                         {
                             maxWallClockTime = "PT1H23M45S",
@@ -11015,20 +11110,20 @@ value = "<value>",
                             },
                         },
                         runExclusive = true,
-                        applicationPackageReferences = new object[]
-            {
+                        applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                         authenticationTokenSettings = new
                         {
-                            access = new object[]
-            {
+                            access = new List<object>()
+{
 "job"
-            },
+},
                         },
                         allowLowPriorityNode = true,
                     },
@@ -11036,14 +11131,14 @@ version = "<version>",
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         waitForSuccess = true,
                         rerunOnNodeRebootAfterSuccess = true,
                     },
@@ -11051,21 +11146,21 @@ null
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         maxWallClockTime = "PT1H23M45S",
                         retentionTime = "PT1H23M45S",
                     },
-                    commonEnvironmentSettings = new object[]
-            {
+                    commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                     poolInfo = new
                     {
                         poolId = "<poolId>",
@@ -11098,8 +11193,8 @@ null
                                     {
                                         enableAutomaticUpdates = true,
                                     },
-                                    dataDisks = new object[]
-            {
+                                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -11107,33 +11202,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                     licenseType = "<licenseType>",
                                     containerConfiguration = new
                                     {
                                         type = "dockerCompatible",
-                                        containerImageNames = new object[]
-            {
+                                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                        containerRegistries = new object[]
-            {
+},
+                                        containerRegistries = new List<object>()
+{
 null
-            },
+},
                                     },
                                     diskEncryptionConfiguration = new
                                     {
-                                        targets = new object[]
-            {
+                                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                     },
                                     nodePlacementConfiguration = new
                                     {
                                         policy = "regional",
                                     },
-                                    extensions = new object[]
-            {
+                                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -11150,12 +11245,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                     osDisk = new
                                     {
                                         ephemeralOSDiskSettings = new
@@ -11182,8 +11277,8 @@ provisionAfterExtensions = new object[]
                                     dynamicVNetAssignmentScope = "none",
                                     endpointConfiguration = new
                                     {
-                                        inboundNATPools = new object[]
-            {
+                                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -11191,70 +11286,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                     },
                                     publicIPAddressConfiguration = new
                                     {
                                         provision = "batchmanaged",
-                                        ipAddressIds = new object[]
-            {
+                                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                     },
                                     enableAcceleratedNetworking = true,
                                 },
                                 startTask = new
                                 {
                                     commandLine = "<commandLine>",
-                                    resourceFiles = new object[]
-            {
+                                    resourceFiles = new List<object>()
+{
 null
-            },
-                                    environmentSettings = new object[]
-            {
+},
+                                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                                     maxTaskRetryCount = 1234,
                                     waitForSuccess = true,
                                 },
-                                certificateReferences = new object[]
-            {
+                                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                                applicationPackageReferences = new object[]
-            {
+},
+                                applicationPackageReferences = new List<object>()
+{
 null
-            },
-                                applicationLicenses = new object[]
-            {
+},
+                                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                                userAccounts = new object[]
-            {
+},
+                                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -11271,17 +11366,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                                metadata = new object[]
-            {
+},
+                                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                                mountConfiguration = new object[]
-            {
+},
+                                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -11316,29 +11411,28 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                                 targetNodeCommunicationMode = "default",
                             },
                         },
                     },
-                    metadata = new object[]
-            {
+                    metadata = new List<object>()
+{
 null
-            },
+},
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = await client.UpdateJobScheduleAsync("<jobScheduleId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceJobSchedule_ShortVersion()
+        public void Example_ReplaceJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11353,13 +11447,12 @@ null
                 },
             });
             Response response = client.ReplaceJobSchedule("<jobScheduleId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceJobSchedule_ShortVersion_Async()
+        public async Task Example_ReplaceJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11374,13 +11467,12 @@ null
                 },
             });
             Response response = await client.ReplaceJobScheduleAsync("<jobScheduleId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceJobSchedule_ShortVersion_Convenience()
+        public void Example_ReplaceJobSchedule_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11388,11 +11480,12 @@ null
 
             BatchJobSchedule body = new BatchJobSchedule(new Schedule(), new JobSpecification(new PoolInformation()));
             Response response = client.ReplaceJobSchedule("<jobScheduleId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceJobSchedule_ShortVersion_Convenience_Async()
+        public async Task Example_ReplaceJobSchedule_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -11400,6 +11493,7 @@ null
 
             BatchJobSchedule body = new BatchJobSchedule(new Schedule(), new JobSpecification(new PoolInformation()));
             Response response = await client.ReplaceJobScheduleAsync("<jobScheduleId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -11458,8 +11552,8 @@ null
                             },
                             workingDirectory = "taskWorkingDirectory",
                         },
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -11469,9 +11563,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                        outputFiles = new object[]
-            {
+},
+                        outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -11481,7 +11575,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -11496,15 +11590,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                         constraints = new
                         {
                             maxWallClockTime = "PT1H23M45S",
@@ -11523,20 +11617,20 @@ value = "<value>",
                             },
                         },
                         runExclusive = true,
-                        applicationPackageReferences = new object[]
-            {
+                        applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                         authenticationTokenSettings = new
                         {
-                            access = new object[]
-            {
+                            access = new List<object>()
+{
 "job"
-            },
+},
                         },
                         allowLowPriorityNode = true,
                     },
@@ -11544,14 +11638,14 @@ version = "<version>",
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         waitForSuccess = true,
                         rerunOnNodeRebootAfterSuccess = true,
                     },
@@ -11559,21 +11653,21 @@ null
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         maxWallClockTime = "PT1H23M45S",
                         retentionTime = "PT1H23M45S",
                     },
-                    commonEnvironmentSettings = new object[]
-            {
+                    commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                     poolInfo = new
                     {
                         poolId = "<poolId>",
@@ -11606,8 +11700,8 @@ null
                                     {
                                         enableAutomaticUpdates = true,
                                     },
-                                    dataDisks = new object[]
-            {
+                                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -11615,33 +11709,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                     licenseType = "<licenseType>",
                                     containerConfiguration = new
                                     {
                                         type = "dockerCompatible",
-                                        containerImageNames = new object[]
-            {
+                                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                        containerRegistries = new object[]
-            {
+},
+                                        containerRegistries = new List<object>()
+{
 null
-            },
+},
                                     },
                                     diskEncryptionConfiguration = new
                                     {
-                                        targets = new object[]
-            {
+                                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                     },
                                     nodePlacementConfiguration = new
                                     {
                                         policy = "regional",
                                     },
-                                    extensions = new object[]
-            {
+                                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -11658,12 +11752,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                     osDisk = new
                                     {
                                         ephemeralOSDiskSettings = new
@@ -11690,8 +11784,8 @@ provisionAfterExtensions = new object[]
                                     dynamicVNetAssignmentScope = "none",
                                     endpointConfiguration = new
                                     {
-                                        inboundNATPools = new object[]
-            {
+                                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -11699,70 +11793,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                     },
                                     publicIPAddressConfiguration = new
                                     {
                                         provision = "batchmanaged",
-                                        ipAddressIds = new object[]
-            {
+                                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                     },
                                     enableAcceleratedNetworking = true,
                                 },
                                 startTask = new
                                 {
                                     commandLine = "<commandLine>",
-                                    resourceFiles = new object[]
-            {
+                                    resourceFiles = new List<object>()
+{
 null
-            },
-                                    environmentSettings = new object[]
-            {
+},
+                                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                                     maxTaskRetryCount = 1234,
                                     waitForSuccess = true,
                                 },
-                                certificateReferences = new object[]
-            {
+                                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                                applicationPackageReferences = new object[]
-            {
+},
+                                applicationPackageReferences = new List<object>()
+{
 null
-            },
-                                applicationLicenses = new object[]
-            {
+},
+                                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                                userAccounts = new object[]
-            {
+},
+                                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -11779,17 +11873,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                                metadata = new object[]
-            {
+},
+                                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                                mountConfiguration = new object[]
-            {
+},
+                                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -11824,23 +11918,22 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                                 targetNodeCommunicationMode = "default",
                             },
                         },
                     },
-                    metadata = new object[]
-            {
+                    metadata = new List<object>()
+{
 null
-            },
+},
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = client.ReplaceJobSchedule("<jobScheduleId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -11900,8 +11993,8 @@ null
                             },
                             workingDirectory = "taskWorkingDirectory",
                         },
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -11911,9 +12004,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                        outputFiles = new object[]
-            {
+},
+                        outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -11923,7 +12016,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -11938,15 +12031,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                         constraints = new
                         {
                             maxWallClockTime = "PT1H23M45S",
@@ -11965,20 +12058,20 @@ value = "<value>",
                             },
                         },
                         runExclusive = true,
-                        applicationPackageReferences = new object[]
-            {
+                        applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                         authenticationTokenSettings = new
                         {
-                            access = new object[]
-            {
+                            access = new List<object>()
+{
 "job"
-            },
+},
                         },
                         allowLowPriorityNode = true,
                     },
@@ -11986,14 +12079,14 @@ version = "<version>",
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         waitForSuccess = true,
                         rerunOnNodeRebootAfterSuccess = true,
                     },
@@ -12001,21 +12094,21 @@ null
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         maxWallClockTime = "PT1H23M45S",
                         retentionTime = "PT1H23M45S",
                     },
-                    commonEnvironmentSettings = new object[]
-            {
+                    commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                     poolInfo = new
                     {
                         poolId = "<poolId>",
@@ -12048,8 +12141,8 @@ null
                                     {
                                         enableAutomaticUpdates = true,
                                     },
-                                    dataDisks = new object[]
-            {
+                                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -12057,33 +12150,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                     licenseType = "<licenseType>",
                                     containerConfiguration = new
                                     {
                                         type = "dockerCompatible",
-                                        containerImageNames = new object[]
-            {
+                                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                        containerRegistries = new object[]
-            {
+},
+                                        containerRegistries = new List<object>()
+{
 null
-            },
+},
                                     },
                                     diskEncryptionConfiguration = new
                                     {
-                                        targets = new object[]
-            {
+                                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                     },
                                     nodePlacementConfiguration = new
                                     {
                                         policy = "regional",
                                     },
-                                    extensions = new object[]
-            {
+                                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -12100,12 +12193,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                     osDisk = new
                                     {
                                         ephemeralOSDiskSettings = new
@@ -12132,8 +12225,8 @@ provisionAfterExtensions = new object[]
                                     dynamicVNetAssignmentScope = "none",
                                     endpointConfiguration = new
                                     {
-                                        inboundNATPools = new object[]
-            {
+                                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -12141,70 +12234,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                     },
                                     publicIPAddressConfiguration = new
                                     {
                                         provision = "batchmanaged",
-                                        ipAddressIds = new object[]
-            {
+                                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                     },
                                     enableAcceleratedNetworking = true,
                                 },
                                 startTask = new
                                 {
                                     commandLine = "<commandLine>",
-                                    resourceFiles = new object[]
-            {
+                                    resourceFiles = new List<object>()
+{
 null
-            },
-                                    environmentSettings = new object[]
-            {
+},
+                                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                                     maxTaskRetryCount = 1234,
                                     waitForSuccess = true,
                                 },
-                                certificateReferences = new object[]
-            {
+                                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                                applicationPackageReferences = new object[]
-            {
+},
+                                applicationPackageReferences = new List<object>()
+{
 null
-            },
-                                applicationLicenses = new object[]
-            {
+},
+                                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                                userAccounts = new object[]
-            {
+},
+                                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -12221,17 +12314,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                                metadata = new object[]
-            {
+},
+                                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                                mountConfiguration = new object[]
-            {
+},
+                                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -12266,23 +12359,22 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                                 targetNodeCommunicationMode = "default",
                             },
                         },
                     },
-                    metadata = new object[]
-            {
+                    metadata = new List<object>()
+{
 null
-            },
+},
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = await client.ReplaceJobScheduleAsync("<jobScheduleId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -12294,13 +12386,13 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobSchedule body = new BatchJobSchedule(new Schedule
+            BatchJobSchedule body = new BatchJobSchedule(new Schedule()
             {
                 DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
-            }, new JobSpecification(new PoolInformation
+            }, new JobSpecification(new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -12314,7 +12406,7 @@ null
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -12323,47 +12415,65 @@ null
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = { default },
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+null
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -12378,81 +12488,117 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
                         StartTask = new StartTask("<commandLine>")
                         {
-                            ContainerSettings = default,
-                            ResourceFiles = { default },
-                            EnvironmentSettings = { default },
-                            UserIdentity = default,
+                            ContainerSettings = null,
+                            ResourceFiles =
+{
+null
+},
+                            EnvironmentSettings =
+{
+null
+},
+                            UserIdentity = null,
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = { default },
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+null
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -12466,7 +12612,7 @@ MountOptions = "<mountOptions>",
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
                 OnTaskFailure = OnTaskFailure.NoAction,
                 NetworkConfiguration = new JobNetworkConfiguration("<subnetId>"),
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
@@ -12477,19 +12623,21 @@ MountOptions = "<mountOptions>",
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -12497,25 +12645,35 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                    OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    Constraints = new TaskConstraints
+}
+},
+                    Constraints = new TaskConstraints()
                     {
                         MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -12523,54 +12681,82 @@ Value = "<value>",
                     },
                     RequiredSlots = 1234,
                     KillJobOnCompletion = true,
-                    UserIdentity = new UserIdentity
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
                         },
                     },
                     RunExclusive = true,
-                    ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                    ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                    AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings()
                     {
-                        Access = { AccessScope.Job },
+                        Access =
+{
+AccessScope.Job
+},
                     },
                     AllowLowPriorityNode = true,
                 },
                 JobPreparationTask = new JobPreparationTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
-                    Constraints = default,
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
+                    Constraints = null,
                     WaitForSuccess = true,
-                    UserIdentity = default,
+                    UserIdentity = null,
                     RerunOnNodeRebootAfterSuccess = true,
                 },
                 JobReleaseTask = new JobReleaseTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
-                    UserIdentity = default,
+                    UserIdentity = null,
                 },
-                CommonEnvironmentSettings = { default },
-                Metadata = { default },
+                CommonEnvironmentSettings =
+{
+null
+},
+                Metadata =
+{
+null
+},
             })
             {
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = client.ReplaceJobSchedule("<jobScheduleId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -12581,13 +12767,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobSchedule body = new BatchJobSchedule(new Schedule
+            BatchJobSchedule body = new BatchJobSchedule(new Schedule()
             {
                 DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
-            }, new JobSpecification(new PoolInformation
+            }, new JobSpecification(new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -12601,7 +12787,7 @@ Version = "<version>",
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -12610,47 +12796,65 @@ Version = "<version>",
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = { default },
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+null
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -12665,81 +12869,117 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
                         StartTask = new StartTask("<commandLine>")
                         {
-                            ContainerSettings = default,
-                            ResourceFiles = { default },
-                            EnvironmentSettings = { default },
-                            UserIdentity = default,
+                            ContainerSettings = null,
+                            ResourceFiles =
+{
+null
+},
+                            EnvironmentSettings =
+{
+null
+},
+                            UserIdentity = null,
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = { default },
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+null
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -12753,7 +12993,7 @@ MountOptions = "<mountOptions>",
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
                 OnTaskFailure = OnTaskFailure.NoAction,
                 NetworkConfiguration = new JobNetworkConfiguration("<subnetId>"),
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
@@ -12764,19 +13004,21 @@ MountOptions = "<mountOptions>",
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -12784,25 +13026,35 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                    OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    Constraints = new TaskConstraints
+}
+},
+                    Constraints = new TaskConstraints()
                     {
                         MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -12810,79 +13062,105 @@ Value = "<value>",
                     },
                     RequiredSlots = 1234,
                     KillJobOnCompletion = true,
-                    UserIdentity = new UserIdentity
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
                         },
                     },
                     RunExclusive = true,
-                    ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                    ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                    AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings()
                     {
-                        Access = { AccessScope.Job },
+                        Access =
+{
+AccessScope.Job
+},
                     },
                     AllowLowPriorityNode = true,
                 },
                 JobPreparationTask = new JobPreparationTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
-                    Constraints = default,
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
+                    Constraints = null,
                     WaitForSuccess = true,
-                    UserIdentity = default,
+                    UserIdentity = null,
                     RerunOnNodeRebootAfterSuccess = true,
                 },
                 JobReleaseTask = new JobReleaseTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
-                    UserIdentity = default,
+                    UserIdentity = null,
                 },
-                CommonEnvironmentSettings = { default },
-                Metadata = { default },
+                CommonEnvironmentSettings =
+{
+null
+},
+                Metadata =
+{
+null
+},
             })
             {
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = await client.ReplaceJobScheduleAsync("<jobScheduleId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DisableJobSchedule_ShortVersion()
+        public void Example_DisableJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DisableJobSchedule("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DisableJobSchedule_ShortVersion_Async()
+        public async Task Example_DisableJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DisableJobScheduleAsync("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -12895,7 +13173,6 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DisableJobSchedule("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -12908,33 +13185,30 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DisableJobScheduleAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnableJobSchedule_ShortVersion()
+        public void Example_EnableJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.EnableJobSchedule("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnableJobSchedule_ShortVersion_Async()
+        public async Task Example_EnableJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.EnableJobScheduleAsync("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -12947,7 +13221,6 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.EnableJobSchedule("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -12960,33 +13233,30 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.EnableJobScheduleAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TerminateJobSchedule_ShortVersion()
+        public void Example_TerminateJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.TerminateJobSchedule("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TerminateJobSchedule_ShortVersion_Async()
+        public async Task Example_TerminateJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.TerminateJobScheduleAsync("<jobScheduleId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -12999,7 +13269,6 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.TerminateJobSchedule("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -13012,13 +13281,12 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.TerminateJobScheduleAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateJobSchedule_ShortVersion()
+        public void Example_CreateJobSchedule()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13034,13 +13302,12 @@ Version = "<version>",
                 },
             });
             Response response = client.CreateJobSchedule(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateJobSchedule_ShortVersion_Async()
+        public async Task Example_CreateJobSchedule_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13056,13 +13323,12 @@ Version = "<version>",
                 },
             });
             Response response = await client.CreateJobScheduleAsync(content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateJobSchedule_ShortVersion_Convenience()
+        public void Example_CreateJobSchedule_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13070,11 +13336,12 @@ Version = "<version>",
 
             BatchJobScheduleCreateOptions body = new BatchJobScheduleCreateOptions("<id>", new Schedule(), new JobSpecification(new PoolInformation()));
             Response response = client.CreateJobSchedule(body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateJobSchedule_ShortVersion_Convenience_Async()
+        public async Task Example_CreateJobSchedule_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -13082,6 +13349,7 @@ Version = "<version>",
 
             BatchJobScheduleCreateOptions body = new BatchJobScheduleCreateOptions("<id>", new Schedule(), new JobSpecification(new PoolInformation()));
             Response response = await client.CreateJobScheduleAsync(body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -13142,8 +13410,8 @@ Version = "<version>",
                             },
                             workingDirectory = "taskWorkingDirectory",
                         },
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -13153,9 +13421,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                        outputFiles = new object[]
-            {
+},
+                        outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -13165,7 +13433,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -13180,15 +13448,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                         constraints = new
                         {
                             maxWallClockTime = "PT1H23M45S",
@@ -13207,20 +13475,20 @@ value = "<value>",
                             },
                         },
                         runExclusive = true,
-                        applicationPackageReferences = new object[]
-            {
+                        applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                         authenticationTokenSettings = new
                         {
-                            access = new object[]
-            {
+                            access = new List<object>()
+{
 "job"
-            },
+},
                         },
                         allowLowPriorityNode = true,
                     },
@@ -13228,14 +13496,14 @@ version = "<version>",
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         waitForSuccess = true,
                         rerunOnNodeRebootAfterSuccess = true,
                     },
@@ -13243,21 +13511,21 @@ null
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         maxWallClockTime = "PT1H23M45S",
                         retentionTime = "PT1H23M45S",
                     },
-                    commonEnvironmentSettings = new object[]
-            {
+                    commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                     poolInfo = new
                     {
                         poolId = "<poolId>",
@@ -13290,8 +13558,8 @@ null
                                     {
                                         enableAutomaticUpdates = true,
                                     },
-                                    dataDisks = new object[]
-            {
+                                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -13299,33 +13567,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                     licenseType = "<licenseType>",
                                     containerConfiguration = new
                                     {
                                         type = "dockerCompatible",
-                                        containerImageNames = new object[]
-            {
+                                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                        containerRegistries = new object[]
-            {
+},
+                                        containerRegistries = new List<object>()
+{
 null
-            },
+},
                                     },
                                     diskEncryptionConfiguration = new
                                     {
-                                        targets = new object[]
-            {
+                                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                     },
                                     nodePlacementConfiguration = new
                                     {
                                         policy = "regional",
                                     },
-                                    extensions = new object[]
-            {
+                                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -13342,12 +13610,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                     osDisk = new
                                     {
                                         ephemeralOSDiskSettings = new
@@ -13374,8 +13642,8 @@ provisionAfterExtensions = new object[]
                                     dynamicVNetAssignmentScope = "none",
                                     endpointConfiguration = new
                                     {
-                                        inboundNATPools = new object[]
-            {
+                                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -13383,70 +13651,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                     },
                                     publicIPAddressConfiguration = new
                                     {
                                         provision = "batchmanaged",
-                                        ipAddressIds = new object[]
-            {
+                                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                     },
                                     enableAcceleratedNetworking = true,
                                 },
                                 startTask = new
                                 {
                                     commandLine = "<commandLine>",
-                                    resourceFiles = new object[]
-            {
+                                    resourceFiles = new List<object>()
+{
 null
-            },
-                                    environmentSettings = new object[]
-            {
+},
+                                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                                     maxTaskRetryCount = 1234,
                                     waitForSuccess = true,
                                 },
-                                certificateReferences = new object[]
-            {
+                                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                                applicationPackageReferences = new object[]
-            {
+},
+                                applicationPackageReferences = new List<object>()
+{
 null
-            },
-                                applicationLicenses = new object[]
-            {
+},
+                                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                                userAccounts = new object[]
-            {
+},
+                                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -13463,17 +13731,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                                metadata = new object[]
-            {
+},
+                                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                                mountConfiguration = new object[]
-            {
+},
+                                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -13508,23 +13776,22 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                                 targetNodeCommunicationMode = "default",
                             },
                         },
                     },
-                    metadata = new object[]
-            {
+                    metadata = new List<object>()
+{
 null
-            },
+},
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = client.CreateJobSchedule(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -13586,8 +13853,8 @@ null
                             },
                             workingDirectory = "taskWorkingDirectory",
                         },
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -13597,9 +13864,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                        outputFiles = new object[]
-            {
+},
+                        outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -13609,7 +13876,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -13624,15 +13891,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                         constraints = new
                         {
                             maxWallClockTime = "PT1H23M45S",
@@ -13651,20 +13918,20 @@ value = "<value>",
                             },
                         },
                         runExclusive = true,
-                        applicationPackageReferences = new object[]
-            {
+                        applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                         authenticationTokenSettings = new
                         {
-                            access = new object[]
-            {
+                            access = new List<object>()
+{
 "job"
-            },
+},
                         },
                         allowLowPriorityNode = true,
                     },
@@ -13672,14 +13939,14 @@ version = "<version>",
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         waitForSuccess = true,
                         rerunOnNodeRebootAfterSuccess = true,
                     },
@@ -13687,21 +13954,21 @@ null
                     {
                         id = "<id>",
                         commandLine = "<commandLine>",
-                        resourceFiles = new object[]
-            {
+                        resourceFiles = new List<object>()
+{
 null
-            },
-                        environmentSettings = new object[]
-            {
+},
+                        environmentSettings = new List<object>()
+{
 null
-            },
+},
                         maxWallClockTime = "PT1H23M45S",
                         retentionTime = "PT1H23M45S",
                     },
-                    commonEnvironmentSettings = new object[]
-            {
+                    commonEnvironmentSettings = new List<object>()
+{
 null
-            },
+},
                     poolInfo = new
                     {
                         poolId = "<poolId>",
@@ -13734,8 +14001,8 @@ null
                                     {
                                         enableAutomaticUpdates = true,
                                     },
-                                    dataDisks = new object[]
-            {
+                                    dataDisks = new List<object>()
+{
 new
 {
 lun = 1234,
@@ -13743,33 +14010,33 @@ caching = "none",
 diskSizeGB = 1234,
 storageAccountType = "standard_lrs",
 }
-            },
+},
                                     licenseType = "<licenseType>",
                                     containerConfiguration = new
                                     {
                                         type = "dockerCompatible",
-                                        containerImageNames = new object[]
-            {
+                                        containerImageNames = new List<object>()
+{
 "<containerImageNames>"
-            },
-                                        containerRegistries = new object[]
-            {
+},
+                                        containerRegistries = new List<object>()
+{
 null
-            },
+},
                                     },
                                     diskEncryptionConfiguration = new
                                     {
-                                        targets = new object[]
-            {
+                                        targets = new List<object>()
+{
 "osdisk"
-            },
+},
                                     },
                                     nodePlacementConfiguration = new
                                     {
                                         policy = "regional",
                                     },
-                                    extensions = new object[]
-            {
+                                    extensions = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -13786,12 +14053,12 @@ protectedSettings = new
 {
 key = "<protectedSettings>",
 },
-provisionAfterExtensions = new object[]
+provisionAfterExtensions = new List<object>()
 {
 "<provisionAfterExtensions>"
 },
 }
-            },
+},
                                     osDisk = new
                                     {
                                         ephemeralOSDiskSettings = new
@@ -13818,8 +14085,8 @@ provisionAfterExtensions = new object[]
                                     dynamicVNetAssignmentScope = "none",
                                     endpointConfiguration = new
                                     {
-                                        inboundNATPools = new object[]
-            {
+                                        inboundNATPools = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -13827,70 +14094,70 @@ protocol = "tcp",
 backendPort = 1234,
 frontendPortRangeStart = 1234,
 frontendPortRangeEnd = 1234,
-networkSecurityGroupRules = new object[]
+networkSecurityGroupRules = new List<object>()
 {
 new
 {
 priority = 1234,
 access = "allow",
 sourceAddressPrefix = "<sourceAddressPrefix>",
-sourcePortRanges = new object[]
+sourcePortRanges = new List<object>()
 {
 "<sourcePortRanges>"
 },
 }
 },
 }
-            },
+},
                                     },
                                     publicIPAddressConfiguration = new
                                     {
                                         provision = "batchmanaged",
-                                        ipAddressIds = new object[]
-            {
+                                        ipAddressIds = new List<object>()
+{
 "<ipAddressIds>"
-            },
+},
                                     },
                                     enableAcceleratedNetworking = true,
                                 },
                                 startTask = new
                                 {
                                     commandLine = "<commandLine>",
-                                    resourceFiles = new object[]
-            {
+                                    resourceFiles = new List<object>()
+{
 null
-            },
-                                    environmentSettings = new object[]
-            {
+},
+                                    environmentSettings = new List<object>()
+{
 null
-            },
+},
                                     maxTaskRetryCount = 1234,
                                     waitForSuccess = true,
                                 },
-                                certificateReferences = new object[]
-            {
+                                certificateReferences = new List<object>()
+{
 new
 {
 thumbprint = "<thumbprint>",
 thumbprintAlgorithm = "<thumbprintAlgorithm>",
 storeLocation = "currentuser",
 storeName = "<storeName>",
-visibility = new object[]
+visibility = new List<object>()
 {
 "starttask"
 },
 }
-            },
-                                applicationPackageReferences = new object[]
-            {
+},
+                                applicationPackageReferences = new List<object>()
+{
 null
-            },
-                                applicationLicenses = new object[]
-            {
+},
+                                applicationLicenses = new List<object>()
+{
 "<applicationLicenses>"
-            },
-                                userAccounts = new object[]
-            {
+},
+                                userAccounts = new List<object>()
+{
 new
 {
 name = "<name>",
@@ -13907,17 +14174,17 @@ windowsUserConfiguration = new
 loginMode = "batch",
 },
 }
-            },
-                                metadata = new object[]
-            {
+},
+                                metadata = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
-                                mountConfiguration = new object[]
-            {
+},
+                                mountConfiguration = new List<object>()
+{
 new
 {
 azureBlobFileSystemConfiguration = new
@@ -13952,23 +14219,22 @@ relativeMountPath = "<relativeMountPath>",
 mountOptions = "<mountOptions>",
 },
 }
-            },
+},
                                 targetNodeCommunicationMode = "default",
                             },
                         },
                     },
-                    metadata = new object[]
-            {
+                    metadata = new List<object>()
+{
 null
-            },
+},
                 },
-                metadata = new object[]
-            {
+                metadata = new List<object>()
+{
 null
-            },
+},
             });
             Response response = await client.CreateJobScheduleAsync(content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -13980,13 +14246,13 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobScheduleCreateOptions body = new BatchJobScheduleCreateOptions("<id>", new Schedule
+            BatchJobScheduleCreateOptions body = new BatchJobScheduleCreateOptions("<id>", new Schedule()
             {
                 DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
-            }, new JobSpecification(new PoolInformation
+            }, new JobSpecification(new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -14000,7 +14266,7 @@ null
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -14009,47 +14275,65 @@ null
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = { default },
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+null
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -14064,81 +14348,117 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
                         StartTask = new StartTask("<commandLine>")
                         {
-                            ContainerSettings = default,
-                            ResourceFiles = { default },
-                            EnvironmentSettings = { default },
-                            UserIdentity = default,
+                            ContainerSettings = null,
+                            ResourceFiles =
+{
+null
+},
+                            EnvironmentSettings =
+{
+null
+},
+                            UserIdentity = null,
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = { default },
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+null
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -14152,7 +14472,7 @@ MountOptions = "<mountOptions>",
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
                 OnTaskFailure = OnTaskFailure.NoAction,
                 NetworkConfiguration = new JobNetworkConfiguration("<subnetId>"),
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
@@ -14163,19 +14483,21 @@ MountOptions = "<mountOptions>",
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -14183,25 +14505,35 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                    OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    Constraints = new TaskConstraints
+}
+},
+                    Constraints = new TaskConstraints()
                     {
                         MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -14209,55 +14541,83 @@ Value = "<value>",
                     },
                     RequiredSlots = 1234,
                     KillJobOnCompletion = true,
-                    UserIdentity = new UserIdentity
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
                         },
                     },
                     RunExclusive = true,
-                    ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                    ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                    AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings()
                     {
-                        Access = { AccessScope.Job },
+                        Access =
+{
+AccessScope.Job
+},
                     },
                     AllowLowPriorityNode = true,
                 },
                 JobPreparationTask = new JobPreparationTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
-                    Constraints = default,
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
+                    Constraints = null,
                     WaitForSuccess = true,
-                    UserIdentity = default,
+                    UserIdentity = null,
                     RerunOnNodeRebootAfterSuccess = true,
                 },
                 JobReleaseTask = new JobReleaseTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
-                    UserIdentity = default,
+                    UserIdentity = null,
                 },
-                CommonEnvironmentSettings = { default },
-                Metadata = { default },
+                CommonEnvironmentSettings =
+{
+null
+},
+                Metadata =
+{
+null
+},
             })
             {
                 DisplayName = "<displayName>",
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = client.CreateJobSchedule(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -14268,13 +14628,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobScheduleCreateOptions body = new BatchJobScheduleCreateOptions("<id>", new Schedule
+            BatchJobScheduleCreateOptions body = new BatchJobScheduleCreateOptions("<id>", new Schedule()
             {
                 DoNotRunUntil = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 DoNotRunAfter = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 StartWindow = XmlConvert.ToTimeSpan("PT1H23M45S"),
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
-            }, new JobSpecification(new PoolInformation
+            }, new JobSpecification(new PoolInformation()
             {
                 PoolId = "<poolId>",
                 AutoPoolSpecification = new AutoPoolSpecification(PoolLifetimeOption.JobSchedule)
@@ -14288,7 +14648,7 @@ Version = "<version>",
                         {
                             OsVersion = "<osVersion>",
                         },
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference()
                         {
                             Publisher = "<publisher>",
                             Offer = "<offer>",
@@ -14297,47 +14657,65 @@ Version = "<version>",
                             VirtualMachineImageId = "<virtualMachineImageId>",
                         }, "<nodeAgentSKUId>")
                         {
-                            WindowsConfiguration = new WindowsConfiguration
+                            WindowsConfiguration = new WindowsConfiguration()
                             {
                                 EnableAutomaticUpdates = true,
                             },
-                            DataDisks = {new DataDisk(1234, 1234)
+                            DataDisks =
+{
+new DataDisk(1234,1234)
 {
 Caching = CachingType.None,
 StorageAccountType = StorageAccountType.StandardLRS,
-}},
+}
+},
                             LicenseType = "<licenseType>",
                             ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                             {
-                                ContainerImageNames = { "<containerImageNames>" },
-                                ContainerRegistries = { default },
+                                ContainerImageNames =
+{
+"<containerImageNames>"
+},
+                                ContainerRegistries =
+{
+null
+},
                             },
-                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                            DiskEncryptionConfiguration = new DiskEncryptionConfiguration()
                             {
-                                Targets = { DiskEncryptionTarget.OsDisk },
+                                Targets =
+{
+DiskEncryptionTarget.OsDisk
+},
                             },
-                            NodePlacementConfiguration = new NodePlacementConfiguration
+                            NodePlacementConfiguration = new NodePlacementConfiguration()
                             {
                                 Policy = NodePlacementPolicyType.Regional,
                             },
-                            Extensions = {new VMExtension("<name>", "<publisher>", "<type>")
+                            Extensions =
+{
+new VMExtension("<name>","<publisher>","<type>")
 {
 TypeHandlerVersion = "<typeHandlerVersion>",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
 Settings =
 {
-["key"] = "<settings>"
+["key"] = "<settings>",
 },
 ProtectedSettings =
 {
-["key"] = "<protectedSettings>"
+["key"] = "<protectedSettings>",
 },
-ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
-}},
-                            OsDisk = new OSDisk
+ProvisionAfterExtensions =
+{
+"<provisionAfterExtensions>"
+},
+}
+},
+                            OsDisk = new OSDisk()
                             {
-                                EphemeralOSDiskSettings = new DiffDiskSettings
+                                EphemeralOSDiskSettings = new DiffDiskSettings()
                                 {
                                     Placement = DiffDiskPlacement.CacheDisk,
                                 },
@@ -14352,81 +14730,117 @@ ProvisionAfterExtensions = {"<provisionAfterExtensions>"},
                         AutoScaleFormula = "<autoScaleFormula>",
                         AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         EnableInterNodeCommunication = true,
-                        NetworkConfiguration = new NetworkConfiguration
+                        NetworkConfiguration = new NetworkConfiguration()
                         {
                             SubnetId = "<subnetId>",
                             DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                            EndpointConfiguration = new PoolEndpointConfiguration(new InboundNATPool[]
-            {
-new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                            EndpointConfiguration = new PoolEndpointConfiguration(new List<InboundNATPool>()
 {
-NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
+new InboundNATPool("<name>",InboundEndpointProtocol.Tcp,1234,1234,1234)
 {
-SourcePortRanges = {"<sourcePortRanges>"},
-}},
+NetworkSecurityGroupRules =
+{
+new NetworkSecurityGroupRule(1234,NetworkSecurityGroupRuleAccess.Allow,"<sourceAddressPrefix>")
+{
+SourcePortRanges =
+{
+"<sourcePortRanges>"
+},
 }
-            }),
-                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration
+},
+}
+}),
+                            PublicIpAddressConfiguration = new PublicIpAddressConfiguration()
                             {
                                 IpAddressProvisioningType = IPAddressProvisioningType.BatchManaged,
-                                IpAddressIds = { "<ipAddressIds>" },
+                                IpAddressIds =
+{
+"<ipAddressIds>"
+},
                             },
                             EnableAcceleratedNetworking = true,
                         },
                         StartTask = new StartTask("<commandLine>")
                         {
-                            ContainerSettings = default,
-                            ResourceFiles = { default },
-                            EnvironmentSettings = { default },
-                            UserIdentity = default,
+                            ContainerSettings = null,
+                            ResourceFiles =
+{
+null
+},
+                            EnvironmentSettings =
+{
+null
+},
+                            UserIdentity = null,
                             MaxTaskRetryCount = 1234,
                             WaitForSuccess = true,
                         },
-                        CertificateReferences = {new CertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
+                        CertificateReferences =
+{
+new CertificateReference("<thumbprint>","<thumbprintAlgorithm>")
 {
 StoreLocation = CertificateStoreLocation.CurrentUser,
 StoreName = "<storeName>",
-Visibility = {CertificateVisibility.StartTask},
-}},
-                        ApplicationPackageReferences = { default },
-                        ApplicationLicenses = { "<applicationLicenses>" },
-                        UserAccounts = {new UserAccount("<name>", "<password>")
+Visibility =
+{
+CertificateVisibility.StartTask
+},
+}
+},
+                        ApplicationPackageReferences =
+{
+null
+},
+                        ApplicationLicenses =
+{
+"<applicationLicenses>"
+},
+                        UserAccounts =
+{
+new UserAccount("<name>","<password>")
 {
 ElevationLevel = ElevationLevel.NonAdmin,
-LinuxUserConfiguration = new LinuxUserConfiguration
+LinuxUserConfiguration = new LinuxUserConfiguration()
 {
 Uid = 1234,
 Gid = 1234,
 SshPrivateKey = "<sshPrivateKey>",
 },
-WindowsUserConfiguration = new WindowsUserConfiguration
+WindowsUserConfiguration = new WindowsUserConfiguration()
 {
 LoginMode = LoginMode.Batch,
 },
-}},
-                        Metadata = { new MetadataItem("<name>", "<value>") },
-                        MountConfiguration = {new MountConfiguration
+}
+},
+                        Metadata =
 {
-AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>", "<containerName>", "<relativeMountPath>")
+new MetadataItem("<name>","<value>")
+},
+                        MountConfiguration =
+{
+new MountConfiguration()
+{
+AzureBlobFileSystemConfiguration = new AzureBlobFileSystemConfiguration("<accountName>","<containerName>","<relativeMountPath>")
 {
 AccountKey = "<accountKey>",
 SasKey = "<sasKey>",
 BlobfuseOptions = "<blobfuseOptions>",
-IdentityReference = default,
+IdentityReference = null,
 },
-NfsMountConfiguration = new NfsMountConfiguration("<source>", "<relativeMountPath>")
+NfsMountConfiguration = new NfsMountConfiguration("<source>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-CifsMountConfiguration = new CifsMountConfiguration("<username>", "<source>", "<relativeMountPath>", "<password>")
+CifsMountConfiguration = new CifsMountConfiguration("<username>","<source>","<relativeMountPath>","<password>")
 {
 MountOptions = "<mountOptions>",
 },
-AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>", "<azureFileUrl>", "<accountKey>", "<relativeMountPath>")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("<accountName>","<azureFileUrl>","<accountKey>","<relativeMountPath>")
 {
 MountOptions = "<mountOptions>",
 },
-}},
+}
+},
                         TargetNodeCommunicationMode = NodeCommunicationMode.Default,
                     },
                 },
@@ -14440,7 +14854,7 @@ MountOptions = "<mountOptions>",
                 OnAllTasksComplete = OnAllTasksComplete.NoAction,
                 OnTaskFailure = OnTaskFailure.NoAction,
                 NetworkConfiguration = new JobNetworkConfiguration("<subnetId>"),
-                Constraints = new JobConstraints
+                Constraints = new JobConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
@@ -14451,19 +14865,21 @@ MountOptions = "<mountOptions>",
                     ContainerSettings = new TaskContainerSettings("<imageName>")
                     {
                         ContainerRunOptions = "<containerRunOptions>",
-                        Registry = new ContainerRegistry
+                        Registry = new ContainerRegistry()
                         {
                             Username = "<username>",
                             Password = "<password>",
                             RegistryServer = "<registryServer>",
-                            IdentityReference = new BatchNodeIdentityReference
+                            IdentityReference = new BatchNodeIdentityReference()
                             {
                                 ResourceId = "<resourceId>",
                             },
                         },
                         WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                     },
-                    ResourceFiles = {new ResourceFile
+                    ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -14471,25 +14887,35 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                    OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                    OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                    EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                    EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
-                    Constraints = new TaskConstraints
+}
+},
+                    Constraints = new TaskConstraints()
                     {
                         MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                         RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -14497,60 +14923,88 @@ Value = "<value>",
                     },
                     RequiredSlots = 1234,
                     KillJobOnCompletion = true,
-                    UserIdentity = new UserIdentity
+                    UserIdentity = new UserIdentity()
                     {
                         Username = "<username>",
-                        AutoUser = new AutoUserSpecification
+                        AutoUser = new AutoUserSpecification()
                         {
                             Scope = AutoUserScope.Task,
                             ElevationLevel = ElevationLevel.NonAdmin,
                         },
                     },
                     RunExclusive = true,
-                    ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                    ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                    AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings()
                     {
-                        Access = { AccessScope.Job },
+                        Access =
+{
+AccessScope.Job
+},
                     },
                     AllowLowPriorityNode = true,
                 },
                 JobPreparationTask = new JobPreparationTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
-                    Constraints = default,
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
+                    Constraints = null,
                     WaitForSuccess = true,
-                    UserIdentity = default,
+                    UserIdentity = null,
                     RerunOnNodeRebootAfterSuccess = true,
                 },
                 JobReleaseTask = new JobReleaseTask("<commandLine>")
                 {
                     Id = "<id>",
-                    ContainerSettings = default,
-                    ResourceFiles = { default },
-                    EnvironmentSettings = { default },
+                    ContainerSettings = null,
+                    ResourceFiles =
+{
+null
+},
+                    EnvironmentSettings =
+{
+null
+},
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
-                    UserIdentity = default,
+                    UserIdentity = null,
                 },
-                CommonEnvironmentSettings = { default },
-                Metadata = { default },
+                CommonEnvironmentSettings =
+{
+null
+},
+                Metadata =
+{
+null
+},
             })
             {
                 DisplayName = "<displayName>",
-                Metadata = { default },
+                Metadata =
+{
+null
+},
             };
             Response response = await client.CreateJobScheduleAsync(body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobSchedules_ShortVersion()
+        public void Example_GetJobSchedules()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14564,7 +15018,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobSchedules_ShortVersion_Async()
+        public async Task Example_GetJobSchedules_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14578,7 +15032,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobSchedules_ShortVersion_Convenience()
+        public void Example_GetJobSchedules_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14589,7 +15043,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobSchedules_ShortVersion_Convenience_Async()
+        public async Task Example_GetJobSchedules_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -14606,7 +15060,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetJobSchedules(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = client.GetJobSchedules(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -14878,7 +15338,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetJobSchedulesAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = await client.GetJobSchedulesAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -15150,7 +15616,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobScheduleListResult> response = client.GetJobSchedules(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchJobScheduleListResult> response = client.GetJobSchedules(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
@@ -15161,12 +15633,18 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchJobScheduleListResult> response = await client.GetJobSchedulesAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchJobScheduleListResult> response = await client.GetJobSchedulesAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateTask_ShortVersion()
+        public void Example_CreateTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15178,13 +15656,12 @@ Version = "<version>",
                 commandLine = "<commandLine>",
             });
             Response response = client.CreateTask("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateTask_ShortVersion_Async()
+        public async Task Example_CreateTask_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15196,13 +15673,12 @@ Version = "<version>",
                 commandLine = "<commandLine>",
             });
             Response response = await client.CreateTaskAsync("<jobId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateTask_ShortVersion_Convenience()
+        public void Example_CreateTask_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15210,11 +15686,12 @@ Version = "<version>",
 
             BatchTaskCreateOptions body = new BatchTaskCreateOptions("<id>", "<commandLine>");
             Response response = client.CreateTask("<jobId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateTask_ShortVersion_Convenience_Async()
+        public async Task Example_CreateTask_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15222,6 +15699,7 @@ Version = "<version>",
 
             BatchTaskCreateOptions body = new BatchTaskCreateOptions("<id>", "<commandLine>");
             Response response = await client.CreateTaskAsync("<jobId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -15236,10 +15714,10 @@ Version = "<version>",
             {
                 id = "<id>",
                 displayName = "<displayName>",
-                exitConditions = new Dictionary<string, object>
+                exitConditions = new Dictionary<string, object>()
                 {
-                    ["exitCodes"] = new object[]
-            {
+                    ["exitCodes"] = new List<object>()
+{
 new
 {
 code = 1234,
@@ -15249,18 +15727,21 @@ jobAction = "none",
 dependencyAction = "satisfy",
 },
 }
-            },
-                    ["exitCodeRanges"] = new object[]
-            {
+},
+                    ["exitCodeRanges"] = new List<object>()
+{
 new
 {
 start = 1234,
 end = 1234,
 }
-            },
-                    ["preProcessingError"] = null,
-                    ["fileUploadError"] = null,
+},
+                    ["preProcessingError"] = null
+            ,
+                    ["fileUploadError"] = null
+            ,
                     ["default"] = null
+            ,
                 },
                 commandLine = "<commandLine>",
                 containerSettings = new
@@ -15279,8 +15760,8 @@ end = 1234,
                     },
                     workingDirectory = "taskWorkingDirectory",
                 },
-                resourceFiles = new object[]
-            {
+                resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -15290,9 +15771,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                outputFiles = new object[]
-            {
+},
+                outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -15302,7 +15783,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -15317,15 +15798,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                environmentSettings = new object[]
-            {
+},
+                environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                 affinityInfo = new
                 {
                     affinityId = "<affinityId>",
@@ -15350,44 +15831,43 @@ value = "<value>",
                 {
                     numberOfInstances = 1234,
                     coordinationCommandLine = "<coordinationCommandLine>",
-                    commonResourceFiles = new object[]
-            {
+                    commonResourceFiles = new List<object>()
+{
 null
-            },
+},
                 },
                 dependsOn = new
                 {
-                    taskIds = new object[]
-            {
+                    taskIds = new List<object>()
+{
 "<taskIds>"
-            },
-                    taskIdRanges = new object[]
-            {
+},
+                    taskIdRanges = new List<object>()
+{
 new
 {
 start = 1234,
 end = 1234,
 }
-            },
+},
                 },
-                applicationPackageReferences = new object[]
-            {
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                 authenticationTokenSettings = new
                 {
-                    access = new object[]
-            {
+                    access = new List<object>()
+{
 "job"
-            },
+},
                 },
             });
             Response response = client.CreateTask("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -15403,10 +15883,10 @@ version = "<version>",
             {
                 id = "<id>",
                 displayName = "<displayName>",
-                exitConditions = new Dictionary<string, object>
+                exitConditions = new Dictionary<string, object>()
                 {
-                    ["exitCodes"] = new object[]
-            {
+                    ["exitCodes"] = new List<object>()
+{
 new
 {
 code = 1234,
@@ -15416,18 +15896,21 @@ jobAction = "none",
 dependencyAction = "satisfy",
 },
 }
-            },
-                    ["exitCodeRanges"] = new object[]
-            {
+},
+                    ["exitCodeRanges"] = new List<object>()
+{
 new
 {
 start = 1234,
 end = 1234,
 }
-            },
-                    ["preProcessingError"] = null,
-                    ["fileUploadError"] = null,
+},
+                    ["preProcessingError"] = null
+            ,
+                    ["fileUploadError"] = null
+            ,
                     ["default"] = null
+            ,
                 },
                 commandLine = "<commandLine>",
                 containerSettings = new
@@ -15446,8 +15929,8 @@ end = 1234,
                     },
                     workingDirectory = "taskWorkingDirectory",
                 },
-                resourceFiles = new object[]
-            {
+                resourceFiles = new List<object>()
+{
 new
 {
 autoStorageContainerName = "<autoStorageContainerName>",
@@ -15457,9 +15940,9 @@ blobPrefix = "<blobPrefix>",
 filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
-            },
-                outputFiles = new object[]
-            {
+},
+                outputFiles = new List<object>()
+{
 new
 {
 filePattern = "<filePattern>",
@@ -15469,7 +15952,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -15484,15 +15967,15 @@ uploadOptions = new
 uploadCondition = "tasksuccess",
 },
 }
-            },
-                environmentSettings = new object[]
-            {
+},
+                environmentSettings = new List<object>()
+{
 new
 {
 name = "<name>",
 value = "<value>",
 }
-            },
+},
                 affinityInfo = new
                 {
                     affinityId = "<affinityId>",
@@ -15517,44 +16000,43 @@ value = "<value>",
                 {
                     numberOfInstances = 1234,
                     coordinationCommandLine = "<coordinationCommandLine>",
-                    commonResourceFiles = new object[]
-            {
+                    commonResourceFiles = new List<object>()
+{
 null
-            },
+},
                 },
                 dependsOn = new
                 {
-                    taskIds = new object[]
-            {
+                    taskIds = new List<object>()
+{
 "<taskIds>"
-            },
-                    taskIdRanges = new object[]
-            {
+},
+                    taskIdRanges = new List<object>()
+{
 new
 {
 start = 1234,
 end = 1234,
 }
-            },
+},
                 },
-                applicationPackageReferences = new object[]
-            {
+                applicationPackageReferences = new List<object>()
+{
 new
 {
 applicationId = "<applicationId>",
 version = "<version>",
 }
-            },
+},
                 authenticationTokenSettings = new
                 {
-                    access = new object[]
-            {
+                    access = new List<object>()
+{
 "job"
-            },
+},
                 },
             });
             Response response = await client.CreateTaskAsync("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -15569,34 +16051,42 @@ version = "<version>",
             BatchTaskCreateOptions body = new BatchTaskCreateOptions("<id>", "<commandLine>")
             {
                 DisplayName = "<displayName>",
-                ExitConditions = new ExitConditions
+                ExitConditions = new ExitConditions()
                 {
-                    ExitCodes = {new ExitCodeMapping(1234, new ExitOptions
+                    ExitCodes =
+{
+new ExitCodeMapping(1234,new ExitOptions()
 {
 JobAction = JobAction.None,
 DependencyAction = DependencyAction.Satisfy,
-})},
-                    ExitCodeRanges = { new ExitCodeRangeMapping(1234, 1234, default) },
-                    PreProcessingError = default,
-                    FileUploadError = default,
-                    Default = default,
+})
+},
+                    ExitCodeRanges =
+{
+new ExitCodeRangeMapping(1234,1234,null)
+},
+                    PreProcessingError = null,
+                    FileUploadError = null,
+                    Default = null,
                 },
                 ContainerSettings = new TaskContainerSettings("<imageName>")
                 {
                     ContainerRunOptions = "<containerRunOptions>",
-                    Registry = new ContainerRegistry
+                    Registry = new ContainerRegistry()
                     {
                         Username = "<username>",
                         Password = "<password>",
                         RegistryServer = "<registryServer>",
-                        IdentityReference = new BatchNodeIdentityReference
+                        IdentityReference = new BatchNodeIdentityReference()
                         {
                             ResourceId = "<resourceId>",
                         },
                     },
                     WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                 },
-                ResourceFiles = {new ResourceFile
+                ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -15604,36 +16094,46 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
+}
+},
                 AffinityInfo = new AffinityInformation("<affinityId>"),
-                Constraints = new TaskConstraints
+                Constraints = new TaskConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
                 },
                 RequiredSlots = 1234,
-                UserIdentity = new UserIdentity
+                UserIdentity = new UserIdentity()
                 {
                     Username = "<username>",
-                    AutoUser = new AutoUserSpecification
+                    AutoUser = new AutoUserSpecification()
                     {
                         Scope = AutoUserScope.Task,
                         ElevationLevel = ElevationLevel.NonAdmin,
@@ -15642,23 +16142,39 @@ Value = "<value>",
                 MultiInstanceSettings = new MultiInstanceSettings("<coordinationCommandLine>")
                 {
                     NumberOfInstances = 1234,
-                    CommonResourceFiles = { default },
+                    CommonResourceFiles =
+{
+null
+},
                 },
-                DependsOn = new TaskDependencies
+                DependsOn = new TaskDependencies()
                 {
-                    TaskIds = { "<taskIds>" },
-                    TaskIdRanges = { new TaskIdRange(1234, 1234) },
+                    TaskIds =
+{
+"<taskIds>"
+},
+                    TaskIdRanges =
+{
+new TaskIdRange(1234,1234)
+},
                 },
-                ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                AuthenticationTokenSettings = new AuthenticationTokenSettings()
                 {
-                    Access = { AccessScope.Job },
+                    Access =
+{
+AccessScope.Job
+},
                 },
             };
             Response response = client.CreateTask("<jobId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -15672,34 +16188,42 @@ Version = "<version>",
             BatchTaskCreateOptions body = new BatchTaskCreateOptions("<id>", "<commandLine>")
             {
                 DisplayName = "<displayName>",
-                ExitConditions = new ExitConditions
+                ExitConditions = new ExitConditions()
                 {
-                    ExitCodes = {new ExitCodeMapping(1234, new ExitOptions
+                    ExitCodes =
+{
+new ExitCodeMapping(1234,new ExitOptions()
 {
 JobAction = JobAction.None,
 DependencyAction = DependencyAction.Satisfy,
-})},
-                    ExitCodeRanges = { new ExitCodeRangeMapping(1234, 1234, default) },
-                    PreProcessingError = default,
-                    FileUploadError = default,
-                    Default = default,
+})
+},
+                    ExitCodeRanges =
+{
+new ExitCodeRangeMapping(1234,1234,null)
+},
+                    PreProcessingError = null,
+                    FileUploadError = null,
+                    Default = null,
                 },
                 ContainerSettings = new TaskContainerSettings("<imageName>")
                 {
                     ContainerRunOptions = "<containerRunOptions>",
-                    Registry = new ContainerRegistry
+                    Registry = new ContainerRegistry()
                     {
                         Username = "<username>",
                         Password = "<password>",
                         RegistryServer = "<registryServer>",
-                        IdentityReference = new BatchNodeIdentityReference
+                        IdentityReference = new BatchNodeIdentityReference()
                         {
                             ResourceId = "<resourceId>",
                         },
                     },
                     WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
                 },
-                ResourceFiles = {new ResourceFile
+                ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -15707,36 +16231,46 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-                OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+                OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-                EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+                EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
+}
+},
                 AffinityInfo = new AffinityInformation("<affinityId>"),
-                Constraints = new TaskConstraints
+                Constraints = new TaskConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     MaxTaskRetryCount = 1234,
                 },
                 RequiredSlots = 1234,
-                UserIdentity = new UserIdentity
+                UserIdentity = new UserIdentity()
                 {
                     Username = "<username>",
-                    AutoUser = new AutoUserSpecification
+                    AutoUser = new AutoUserSpecification()
                     {
                         Scope = AutoUserScope.Task,
                         ElevationLevel = ElevationLevel.NonAdmin,
@@ -15745,28 +16279,44 @@ Value = "<value>",
                 MultiInstanceSettings = new MultiInstanceSettings("<coordinationCommandLine>")
                 {
                     NumberOfInstances = 1234,
-                    CommonResourceFiles = { default },
+                    CommonResourceFiles =
+{
+null
+},
                 },
-                DependsOn = new TaskDependencies
+                DependsOn = new TaskDependencies()
                 {
-                    TaskIds = { "<taskIds>" },
-                    TaskIdRanges = { new TaskIdRange(1234, 1234) },
+                    TaskIds =
+{
+"<taskIds>"
+},
+                    TaskIdRanges =
+{
+new TaskIdRange(1234,1234)
+},
                 },
-                ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+                ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-                AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+                AuthenticationTokenSettings = new AuthenticationTokenSettings()
                 {
-                    Access = { AccessScope.Job },
+                    Access =
+{
+AccessScope.Job
+},
                 },
             };
             Response response = await client.CreateTaskAsync("<jobId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTasks_ShortVersion()
+        public void Example_GetTasks()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15780,7 +16330,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTasks_ShortVersion_Async()
+        public async Task Example_GetTasks_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15794,7 +16344,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTasks_ShortVersion_Convenience()
+        public void Example_GetTasks_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15805,7 +16355,7 @@ Version = "<version>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTasks_ShortVersion_Convenience_Async()
+        public async Task Example_GetTasks_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -15822,7 +16372,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetTasks("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = client.GetTasks("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -15939,7 +16495,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetTasksAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, new string[] { "<$expand>" }, null);
+            Response response = await client.GetTasksAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -16056,7 +16618,13 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchTaskListResult> response = client.GetTasks("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchTaskListResult> response = client.GetTasks("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
@@ -16067,12 +16635,18 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchTaskListResult> response = await client.GetTasksAsync("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" });
+            Response<BatchTaskListResult> response = await client.GetTasksAsync("<jobId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateTaskCollection_ShortVersion()
+        public void Example_CreateTaskCollection()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16080,14 +16654,14 @@ Version = "<version>",
 
             RequestContent content = RequestContent.Create(new
             {
-                value = new object[]
-            {
+                value = new List<object>()
+{
 new
 {
 id = "<id>",
 commandLine = "<commandLine>",
 }
-            },
+},
             });
             Response response = client.CreateTaskCollection("<jobId>", content);
 
@@ -16097,7 +16671,7 @@ commandLine = "<commandLine>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateTaskCollection_ShortVersion_Async()
+        public async Task Example_CreateTaskCollection_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16105,14 +16679,14 @@ commandLine = "<commandLine>",
 
             RequestContent content = RequestContent.Create(new
             {
-                value = new object[]
-            {
+                value = new List<object>()
+{
 new
 {
 id = "<id>",
 commandLine = "<commandLine>",
 }
-            },
+},
             });
             Response response = await client.CreateTaskCollectionAsync("<jobId>", content);
 
@@ -16122,31 +16696,31 @@ commandLine = "<commandLine>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateTaskCollection_ShortVersion_Convenience()
+        public void Example_CreateTaskCollection_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCollection collection = new BatchTaskCollection(new BatchTaskCreateOptions[]
-            {
-new BatchTaskCreateOptions("<id>", "<commandLine>")
-            });
+            BatchTaskCollection collection = new BatchTaskCollection(new List<BatchTaskCreateOptions>()
+{
+new BatchTaskCreateOptions("<id>","<commandLine>")
+});
             Response<TaskAddCollectionResult> response = client.CreateTaskCollection("<jobId>", collection);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateTaskCollection_ShortVersion_Convenience_Async()
+        public async Task Example_CreateTaskCollection_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCollection collection = new BatchTaskCollection(new BatchTaskCreateOptions[]
-            {
-new BatchTaskCreateOptions("<id>", "<commandLine>")
-            });
+            BatchTaskCollection collection = new BatchTaskCollection(new List<BatchTaskCreateOptions>()
+{
+new BatchTaskCreateOptions("<id>","<commandLine>")
+});
             Response<TaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("<jobId>", collection);
         }
 
@@ -16160,15 +16734,15 @@ new BatchTaskCreateOptions("<id>", "<commandLine>")
 
             RequestContent content = RequestContent.Create(new
             {
-                value = new object[]
-            {
+                value = new List<object>()
+{
 new
 {
 id = "<id>",
 displayName = "<displayName>",
-exitConditions = new Dictionary<string, object>
+exitConditions = new Dictionary<string, object>()
 {
-["exitCodes"] = new object[]
+["exitCodes"] = new List<object>()
 {
 new
 {
@@ -16180,7 +16754,7 @@ dependencyAction = "satisfy",
 },
 }
 },
-["exitCodeRanges"] = new object[]
+["exitCodeRanges"] = new List<object>()
 {
 new
 {
@@ -16188,9 +16762,12 @@ start = 1234,
 end = 1234,
 }
 },
-["preProcessingError"] = null,
-["fileUploadError"] = null,
+["preProcessingError"] = null
+,
+["fileUploadError"] = null
+,
 ["default"] = null
+,
 },
 commandLine = "<commandLine>",
 containerSettings = new
@@ -16209,7 +16786,7 @@ resourceId = "<resourceId>",
 },
 workingDirectory = "taskWorkingDirectory",
 },
-resourceFiles = new object[]
+resourceFiles = new List<object>()
 {
 new
 {
@@ -16221,7 +16798,7 @@ filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
 },
-outputFiles = new object[]
+outputFiles = new List<object>()
 {
 new
 {
@@ -16232,7 +16809,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -16248,7 +16825,7 @@ uploadCondition = "tasksuccess",
 },
 }
 },
-environmentSettings = new object[]
+environmentSettings = new List<object>()
 {
 new
 {
@@ -16280,18 +16857,18 @@ multiInstanceSettings = new
 {
 numberOfInstances = 1234,
 coordinationCommandLine = "<coordinationCommandLine>",
-commonResourceFiles = new object[]
+commonResourceFiles = new List<object>()
 {
 null
 },
 },
 dependsOn = new
 {
-taskIds = new object[]
+taskIds = new List<object>()
 {
 "<taskIds>"
 },
-taskIdRanges = new object[]
+taskIdRanges = new List<object>()
 {
 new
 {
@@ -16300,7 +16877,7 @@ end = 1234,
 }
 },
 },
-applicationPackageReferences = new object[]
+applicationPackageReferences = new List<object>()
 {
 new
 {
@@ -16310,13 +16887,13 @@ version = "<version>",
 },
 authenticationTokenSettings = new
 {
-access = new object[]
+access = new List<object>()
 {
 "job"
 },
 },
 }
-            },
+},
             });
             Response response = client.CreateTaskCollection("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -16343,15 +16920,15 @@ access = new object[]
 
             RequestContent content = RequestContent.Create(new
             {
-                value = new object[]
-            {
+                value = new List<object>()
+{
 new
 {
 id = "<id>",
 displayName = "<displayName>",
-exitConditions = new Dictionary<string, object>
+exitConditions = new Dictionary<string, object>()
 {
-["exitCodes"] = new object[]
+["exitCodes"] = new List<object>()
 {
 new
 {
@@ -16363,7 +16940,7 @@ dependencyAction = "satisfy",
 },
 }
 },
-["exitCodeRanges"] = new object[]
+["exitCodeRanges"] = new List<object>()
 {
 new
 {
@@ -16371,9 +16948,12 @@ start = 1234,
 end = 1234,
 }
 },
-["preProcessingError"] = null,
-["fileUploadError"] = null,
+["preProcessingError"] = null
+,
+["fileUploadError"] = null
+,
 ["default"] = null
+,
 },
 commandLine = "<commandLine>",
 containerSettings = new
@@ -16392,7 +16972,7 @@ resourceId = "<resourceId>",
 },
 workingDirectory = "taskWorkingDirectory",
 },
-resourceFiles = new object[]
+resourceFiles = new List<object>()
 {
 new
 {
@@ -16404,7 +16984,7 @@ filePath = "<filePath>",
 fileMode = "<fileMode>",
 }
 },
-outputFiles = new object[]
+outputFiles = new List<object>()
 {
 new
 {
@@ -16415,7 +16995,7 @@ container = new
 {
 path = "<path>",
 containerUrl = "<containerUrl>",
-uploadHeaders = new object[]
+uploadHeaders = new List<object>()
 {
 new
 {
@@ -16431,7 +17011,7 @@ uploadCondition = "tasksuccess",
 },
 }
 },
-environmentSettings = new object[]
+environmentSettings = new List<object>()
 {
 new
 {
@@ -16463,18 +17043,18 @@ multiInstanceSettings = new
 {
 numberOfInstances = 1234,
 coordinationCommandLine = "<coordinationCommandLine>",
-commonResourceFiles = new object[]
+commonResourceFiles = new List<object>()
 {
 null
 },
 },
 dependsOn = new
 {
-taskIds = new object[]
+taskIds = new List<object>()
 {
 "<taskIds>"
 },
-taskIdRanges = new object[]
+taskIdRanges = new List<object>()
 {
 new
 {
@@ -16483,7 +17063,7 @@ end = 1234,
 }
 },
 },
-applicationPackageReferences = new object[]
+applicationPackageReferences = new List<object>()
 {
 new
 {
@@ -16493,13 +17073,13 @@ version = "<version>",
 },
 authenticationTokenSettings = new
 {
-access = new object[]
+access = new List<object>()
 {
 "job"
 },
 },
 }
-            },
+},
             });
             Response response = await client.CreateTaskCollectionAsync("<jobId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -16524,39 +17104,47 @@ access = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCollection collection = new BatchTaskCollection(new BatchTaskCreateOptions[]
-            {
-new BatchTaskCreateOptions("<id>", "<commandLine>")
+            BatchTaskCollection collection = new BatchTaskCollection(new List<BatchTaskCreateOptions>()
+{
+new BatchTaskCreateOptions("<id>","<commandLine>")
 {
 DisplayName = "<displayName>",
-ExitConditions = new ExitConditions
+ExitConditions = new ExitConditions()
 {
-ExitCodes = {new ExitCodeMapping(1234, new ExitOptions
+ExitCodes =
+{
+new ExitCodeMapping(1234,new ExitOptions()
 {
 JobAction = JobAction.None,
 DependencyAction = DependencyAction.Satisfy,
-})},
-ExitCodeRanges = {new ExitCodeRangeMapping(1234, 1234, default)},
-PreProcessingError = default,
-FileUploadError = default,
-Default = default,
+})
+},
+ExitCodeRanges =
+{
+new ExitCodeRangeMapping(1234,1234,null)
+},
+PreProcessingError = null,
+FileUploadError = null,
+Default = null,
 },
 ContainerSettings = new TaskContainerSettings("<imageName>")
 {
 ContainerRunOptions = "<containerRunOptions>",
-Registry = new ContainerRegistry
+Registry = new ContainerRegistry()
 {
 Username = "<username>",
 Password = "<password>",
 RegistryServer = "<registryServer>",
-IdentityReference = new BatchNodeIdentityReference
+IdentityReference = new BatchNodeIdentityReference()
 {
 ResourceId = "<resourceId>",
 },
 },
 WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
 },
-ResourceFiles = {new ResourceFile
+ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -16564,36 +17152,46 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
+}
+},
 AffinityInfo = new AffinityInformation("<affinityId>"),
-Constraints = new TaskConstraints
+Constraints = new TaskConstraints()
 {
 MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
 RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
 MaxTaskRetryCount = 1234,
 },
 RequiredSlots = 1234,
-UserIdentity = new UserIdentity
+UserIdentity = new UserIdentity()
 {
 Username = "<username>",
-AutoUser = new AutoUserSpecification
+AutoUser = new AutoUserSpecification()
 {
 Scope = AutoUserScope.Task,
 ElevationLevel = ElevationLevel.NonAdmin,
@@ -16602,23 +17200,38 @@ ElevationLevel = ElevationLevel.NonAdmin,
 MultiInstanceSettings = new MultiInstanceSettings("<coordinationCommandLine>")
 {
 NumberOfInstances = 1234,
-CommonResourceFiles = {default},
-},
-DependsOn = new TaskDependencies
+CommonResourceFiles =
 {
-TaskIds = {"<taskIds>"},
-TaskIdRanges = {new TaskIdRange(1234, 1234)},
+null
 },
-ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+},
+DependsOn = new TaskDependencies()
+{
+TaskIds =
+{
+"<taskIds>"
+},
+TaskIdRanges =
+{
+new TaskIdRange(1234,1234)
+},
+},
+ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+AuthenticationTokenSettings = new AuthenticationTokenSettings()
 {
-Access = {AccessScope.Job},
+Access =
+{
+AccessScope.Job
+},
 },
 }
-            });
+});
             Response<TaskAddCollectionResult> response = client.CreateTaskCollection("<jobId>", collection, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
 
@@ -16630,39 +17243,47 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCollection collection = new BatchTaskCollection(new BatchTaskCreateOptions[]
-            {
-new BatchTaskCreateOptions("<id>", "<commandLine>")
+            BatchTaskCollection collection = new BatchTaskCollection(new List<BatchTaskCreateOptions>()
+{
+new BatchTaskCreateOptions("<id>","<commandLine>")
 {
 DisplayName = "<displayName>",
-ExitConditions = new ExitConditions
+ExitConditions = new ExitConditions()
 {
-ExitCodes = {new ExitCodeMapping(1234, new ExitOptions
+ExitCodes =
+{
+new ExitCodeMapping(1234,new ExitOptions()
 {
 JobAction = JobAction.None,
 DependencyAction = DependencyAction.Satisfy,
-})},
-ExitCodeRanges = {new ExitCodeRangeMapping(1234, 1234, default)},
-PreProcessingError = default,
-FileUploadError = default,
-Default = default,
+})
+},
+ExitCodeRanges =
+{
+new ExitCodeRangeMapping(1234,1234,null)
+},
+PreProcessingError = null,
+FileUploadError = null,
+Default = null,
 },
 ContainerSettings = new TaskContainerSettings("<imageName>")
 {
 ContainerRunOptions = "<containerRunOptions>",
-Registry = new ContainerRegistry
+Registry = new ContainerRegistry()
 {
 Username = "<username>",
 Password = "<password>",
 RegistryServer = "<registryServer>",
-IdentityReference = new BatchNodeIdentityReference
+IdentityReference = new BatchNodeIdentityReference()
 {
 ResourceId = "<resourceId>",
 },
 },
 WorkingDirectory = ContainerWorkingDirectory.TaskWorkingDirectory,
 },
-ResourceFiles = {new ResourceFile
+ResourceFiles =
+{
+new ResourceFile()
 {
 AutoStorageContainerName = "<autoStorageContainerName>",
 StorageContainerUrl = "<storageContainerUrl>",
@@ -16670,36 +17291,46 @@ HttpUrl = "<httpUrl>",
 BlobPrefix = "<blobPrefix>",
 FilePath = "<filePath>",
 FileMode = "<fileMode>",
-IdentityReference = default,
-}},
-OutputFiles = {new OutputFile("<filePattern>", new OutputFileDestination
+IdentityReference = null,
+}
+},
+OutputFiles =
+{
+new OutputFile("<filePattern>",new OutputFileDestination()
 {
 Container = new OutputFileBlobContainerDestination("<containerUrl>")
 {
 Path = "<path>",
-IdentityReference = default,
-UploadHeaders = {new HttpHeader("<name>")
+IdentityReference = null,
+UploadHeaders =
+{
+new HttpHeader("<name>")
 {
 Value = "<value>",
-}},
+}
 },
-}, new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))},
-EnvironmentSettings = {new EnvironmentSetting("<name>")
+},
+},new OutputFileUploadOptions(OutputFileUploadCondition.TaskSuccess))
+},
+EnvironmentSettings =
+{
+new EnvironmentSetting("<name>")
 {
 Value = "<value>",
-}},
+}
+},
 AffinityInfo = new AffinityInformation("<affinityId>"),
-Constraints = new TaskConstraints
+Constraints = new TaskConstraints()
 {
 MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
 RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
 MaxTaskRetryCount = 1234,
 },
 RequiredSlots = 1234,
-UserIdentity = new UserIdentity
+UserIdentity = new UserIdentity()
 {
 Username = "<username>",
-AutoUser = new AutoUserSpecification
+AutoUser = new AutoUserSpecification()
 {
 Scope = AutoUserScope.Task,
 ElevationLevel = ElevationLevel.NonAdmin,
@@ -16708,49 +17339,62 @@ ElevationLevel = ElevationLevel.NonAdmin,
 MultiInstanceSettings = new MultiInstanceSettings("<coordinationCommandLine>")
 {
 NumberOfInstances = 1234,
-CommonResourceFiles = {default},
-},
-DependsOn = new TaskDependencies
+CommonResourceFiles =
 {
-TaskIds = {"<taskIds>"},
-TaskIdRanges = {new TaskIdRange(1234, 1234)},
+null
 },
-ApplicationPackageReferences = {new ApplicationPackageReference("<applicationId>")
+},
+DependsOn = new TaskDependencies()
+{
+TaskIds =
+{
+"<taskIds>"
+},
+TaskIdRanges =
+{
+new TaskIdRange(1234,1234)
+},
+},
+ApplicationPackageReferences =
+{
+new ApplicationPackageReference("<applicationId>")
 {
 Version = "<version>",
-}},
-AuthenticationTokenSettings = new AuthenticationTokenSettings
+}
+},
+AuthenticationTokenSettings = new AuthenticationTokenSettings()
 {
-Access = {AccessScope.Job},
+Access =
+{
+AccessScope.Job
+},
 },
 }
-            });
+});
             Response<TaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("<jobId>", collection, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTask_ShortVersion()
+        public void Example_DeleteTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteTask("<jobId>", "<taskId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTask_ShortVersion_Async()
+        public async Task Example_DeleteTask_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteTaskAsync("<jobId>", "<taskId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -16763,7 +17407,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteTask("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -16776,13 +17419,12 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteTaskAsync("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTask_ShortVersion()
+        public void Example_GetTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16796,7 +17438,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTask_ShortVersion_Async()
+        public async Task Example_GetTask_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16810,7 +17452,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTask_ShortVersion_Convenience()
+        public void Example_GetTask_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16821,7 +17463,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTask_ShortVersion_Convenience_Async()
+        public async Task Example_GetTask_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -16838,7 +17480,13 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetTask("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = client.GetTask("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -16954,7 +17602,13 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetTaskAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, new string[] { "<$expand>" }, null, null);
+            Response response = await client.GetTaskAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -17070,7 +17724,13 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchTask> response = client.GetTask("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchTask> response = client.GetTask("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
@@ -17081,12 +17741,18 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchTask> response = await client.GetTaskAsync("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" }, expand: new string[] { "<$expand>" }, requestConditions: null);
+            Response<BatchTask> response = await client.GetTaskAsync("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}, requestConditions: null);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceTask_ShortVersion()
+        public void Example_ReplaceTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17094,13 +17760,12 @@ Access = {AccessScope.Job},
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.ReplaceTask("<jobId>", "<taskId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceTask_ShortVersion_Async()
+        public async Task Example_ReplaceTask_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17108,13 +17773,12 @@ Access = {AccessScope.Job},
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReplaceTaskAsync("<jobId>", "<taskId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceTask_ShortVersion_Convenience()
+        public void Example_ReplaceTask_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17122,11 +17786,12 @@ Access = {AccessScope.Job},
 
             BatchTask body = new BatchTask();
             Response response = client.ReplaceTask("<jobId>", "<taskId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceTask_ShortVersion_Convenience_Async()
+        public async Task Example_ReplaceTask_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17134,6 +17799,7 @@ Access = {AccessScope.Job},
 
             BatchTask body = new BatchTask();
             Response response = await client.ReplaceTaskAsync("<jobId>", "<taskId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -17154,7 +17820,6 @@ Access = {AccessScope.Job},
                 },
             });
             Response response = client.ReplaceTask("<jobId>", "<taskId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -17176,7 +17841,6 @@ Access = {AccessScope.Job},
                 },
             });
             Response response = await client.ReplaceTaskAsync("<jobId>", "<taskId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -17188,9 +17852,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTask body = new BatchTask
+            BatchTask body = new BatchTask()
             {
-                Constraints = new TaskConstraints
+                Constraints = new TaskConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -17198,6 +17862,7 @@ Access = {AccessScope.Job},
                 },
             };
             Response response = client.ReplaceTask("<jobId>", "<taskId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -17208,9 +17873,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTask body = new BatchTask
+            BatchTask body = new BatchTask()
             {
-                Constraints = new TaskConstraints
+                Constraints = new TaskConstraints()
                 {
                     MaxWallClockTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
                     RetentionTime = XmlConvert.ToTimeSpan("PT1H23M45S"),
@@ -17218,11 +17883,12 @@ Access = {AccessScope.Job},
                 },
             };
             Response response = await client.ReplaceTaskAsync("<jobId>", "<taskId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSubTasks_ShortVersion()
+        public void Example_GetSubTasks()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17236,7 +17902,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSubTasks_ShortVersion_Async()
+        public async Task Example_GetSubTasks_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17250,7 +17916,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSubTasks_ShortVersion_Convenience()
+        public void Example_GetSubTasks_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17261,7 +17927,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSubTasks_ShortVersion_Convenience_Async()
+        public async Task Example_GetSubTasks_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17278,7 +17944,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetSubTasks("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, null);
+            Response response = client.GetSubTasks("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -17314,7 +17983,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetSubTasksAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, null);
+            Response response = await client.GetSubTasksAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
@@ -17350,7 +18022,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchTaskListSubtasksResult> response = client.GetSubTasks("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" });
+            Response<BatchTaskListSubtasksResult> response = client.GetSubTasks("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
@@ -17361,32 +18036,33 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchTaskListSubtasksResult> response = await client.GetSubTasksAsync("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" });
+            Response<BatchTaskListSubtasksResult> response = await client.GetSubTasksAsync("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TerminateTask_ShortVersion()
+        public void Example_TerminateTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.TerminateTask("<jobId>", "<taskId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TerminateTask_ShortVersion_Async()
+        public async Task Example_TerminateTask_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.TerminateTaskAsync("<jobId>", "<taskId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -17399,7 +18075,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.TerminateTask("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -17412,33 +18087,30 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.TerminateTaskAsync("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReactivateTask_ShortVersion()
+        public void Example_ReactivateTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.ReactivateTask("<jobId>", "<taskId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReactivateTask_ShortVersion_Async()
+        public async Task Example_ReactivateTask_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.ReactivateTaskAsync("<jobId>", "<taskId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -17451,7 +18123,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.ReactivateTask("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -17464,33 +18135,30 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.ReactivateTaskAsync("<jobId>", "<taskId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTaskFile_ShortVersion()
+        public void Example_DeleteTaskFile()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteTaskFile("<jobId>", "<taskId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTaskFile_ShortVersion_Async()
+        public async Task Example_DeleteTaskFile_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteTaskFileAsync("<jobId>", "<taskId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -17503,7 +18171,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteTaskFile("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
-
             Console.WriteLine(response.Status);
         }
 
@@ -17516,13 +18183,12 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteTaskFileAsync("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTaskFile_ShortVersion()
+        public void Example_GetTaskFile()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17536,7 +18202,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTaskFile_ShortVersion_Async()
+        public async Task Example_GetTaskFile_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17550,7 +18216,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTaskFile_ShortVersion_Convenience()
+        public void Example_GetTaskFile_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17561,7 +18227,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTaskFile_ShortVersion_Convenience_Async()
+        public async Task Example_GetTaskFile_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17622,27 +18288,25 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTaskFileProperties_ShortVersion()
+        public void Example_GetTaskFileProperties()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTaskFileProperties_ShortVersion_Async()
+        public async Task Example_GetTaskFileProperties_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -17655,7 +18319,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -17668,13 +18331,12 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTaskFiles_ShortVersion()
+        public void Example_GetTaskFiles()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17688,7 +18350,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTaskFiles_ShortVersion_Async()
+        public async Task Example_GetTaskFiles_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17702,7 +18364,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTaskFiles_ShortVersion_Convenience()
+        public void Example_GetTaskFiles_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17713,7 +18375,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTaskFiles_ShortVersion_Convenience_Async()
+        public async Task Example_GetTaskFiles_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17790,7 +18452,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateNodeUser_ShortVersion()
+        public void Example_CreateNodeUser()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17801,13 +18463,12 @@ Access = {AccessScope.Job},
                 name = "<name>",
             });
             Response response = client.CreateNodeUser("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateNodeUser_ShortVersion_Async()
+        public async Task Example_CreateNodeUser_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17818,13 +18479,12 @@ Access = {AccessScope.Job},
                 name = "<name>",
             });
             Response response = await client.CreateNodeUserAsync("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateNodeUser_ShortVersion_Convenience()
+        public void Example_CreateNodeUser_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17832,11 +18492,12 @@ Access = {AccessScope.Job},
 
             BatchNodeUserCreateOptions body = new BatchNodeUserCreateOptions("<name>");
             Response response = client.CreateNodeUser("<poolId>", "<nodeId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateNodeUser_ShortVersion_Convenience_Async()
+        public async Task Example_CreateNodeUser_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17844,6 +18505,7 @@ Access = {AccessScope.Job},
 
             BatchNodeUserCreateOptions body = new BatchNodeUserCreateOptions("<name>");
             Response response = await client.CreateNodeUserAsync("<poolId>", "<nodeId>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -17863,7 +18525,6 @@ Access = {AccessScope.Job},
                 sshPublicKey = "<sshPublicKey>",
             });
             Response response = client.CreateNodeUser("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -17884,7 +18545,6 @@ Access = {AccessScope.Job},
                 sshPublicKey = "<sshPublicKey>",
             });
             Response response = await client.CreateNodeUserAsync("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -17904,6 +18564,7 @@ Access = {AccessScope.Job},
                 SshPublicKey = "<sshPublicKey>",
             };
             Response response = client.CreateNodeUser("<poolId>", "<nodeId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -17922,31 +18583,30 @@ Access = {AccessScope.Job},
                 SshPublicKey = "<sshPublicKey>",
             };
             Response response = await client.CreateNodeUserAsync("<poolId>", "<nodeId>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteNodeUser_ShortVersion()
+        public void Example_DeleteNodeUser()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteNodeUser("<poolId>", "<nodeId>", "<userName>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteNodeUser_ShortVersion_Async()
+        public async Task Example_DeleteNodeUser_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteNodeUserAsync("<poolId>", "<nodeId>", "<userName>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -17959,7 +18619,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteNodeUser("<poolId>", "<nodeId>", "<userName>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -17972,13 +18631,12 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteNodeUserAsync("<poolId>", "<nodeId>", "<userName>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceNodeUser_ShortVersion()
+        public void Example_ReplaceNodeUser()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -17986,13 +18644,12 @@ Access = {AccessScope.Job},
 
             RequestContent content = RequestContent.Create(new object());
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceNodeUser_ShortVersion_Async()
+        public async Task Example_ReplaceNodeUser_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18000,13 +18657,12 @@ Access = {AccessScope.Job},
 
             RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReplaceNodeUser_ShortVersion_Convenience()
+        public void Example_ReplaceNodeUser_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18014,11 +18670,12 @@ Access = {AccessScope.Job},
 
             BatchNodeUserUpdateOptions body = new BatchNodeUserUpdateOptions();
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReplaceNodeUser_ShortVersion_Convenience_Async()
+        public async Task Example_ReplaceNodeUser_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18026,6 +18683,7 @@ Access = {AccessScope.Job},
 
             BatchNodeUserUpdateOptions body = new BatchNodeUserUpdateOptions();
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", body);
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18043,7 +18701,6 @@ Access = {AccessScope.Job},
                 sshPublicKey = "<sshPublicKey>",
             });
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18062,7 +18719,6 @@ Access = {AccessScope.Job},
                 sshPublicKey = "<sshPublicKey>",
             });
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18074,13 +18730,14 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchNodeUserUpdateOptions body = new BatchNodeUserUpdateOptions
+            BatchNodeUserUpdateOptions body = new BatchNodeUserUpdateOptions()
             {
                 Password = "<password>",
                 ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 SshPublicKey = "<sshPublicKey>",
             };
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18091,18 +18748,19 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchNodeUserUpdateOptions body = new BatchNodeUserUpdateOptions
+            BatchNodeUserUpdateOptions body = new BatchNodeUserUpdateOptions()
             {
                 Password = "<password>",
                 ExpiryTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 SshPublicKey = "<sshPublicKey>",
             };
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNode_ShortVersion()
+        public void Example_GetNode()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18116,7 +18774,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNode_ShortVersion_Async()
+        public async Task Example_GetNode_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18130,7 +18788,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNode_ShortVersion_Convenience()
+        public void Example_GetNode_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18141,7 +18799,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNode_ShortVersion_Convenience_Async()
+        public async Task Example_GetNode_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18158,7 +18816,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetNode("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, null);
+            Response response = client.GetNode("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -18267,7 +18928,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetNodeAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, null);
+            Response response = await client.GetNodeAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -18376,7 +19040,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchNode> response = client.GetNode("<poolId>", "<nodeId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" });
+            Response<BatchNode> response = client.GetNode("<poolId>", "<nodeId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
@@ -18387,12 +19054,15 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<BatchNode> response = await client.GetNodeAsync("<poolId>", "<nodeId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" });
+            Response<BatchNode> response = await client.GetNodeAsync("<poolId>", "<nodeId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RebootNode_ShortVersion()
+        public void Example_RebootNode()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18400,13 +19070,12 @@ Access = {AccessScope.Job},
 
             RequestContent content = null;
             Response response = client.RebootNode("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RebootNode_ShortVersion_Async()
+        public async Task Example_RebootNode_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18414,30 +19083,31 @@ Access = {AccessScope.Job},
 
             RequestContent content = null;
             Response response = await client.RebootNodeAsync("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RebootNode_ShortVersion_Convenience()
+        public void Example_RebootNode_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.RebootNode("<poolId>", "<nodeId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RebootNode_ShortVersion_Convenience_Async()
+        public async Task Example_RebootNode_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.RebootNodeAsync("<poolId>", "<nodeId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18453,7 +19123,6 @@ Access = {AccessScope.Job},
                 nodeRebootOption = "requeue",
             });
             Response response = client.RebootNode("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18470,7 +19139,6 @@ Access = {AccessScope.Job},
                 nodeRebootOption = "requeue",
             });
             Response response = await client.RebootNodeAsync("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18482,11 +19150,12 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeRebootOptions body = new NodeRebootOptions
+            NodeRebootOptions body = new NodeRebootOptions()
             {
                 NodeRebootOption = BatchNodeRebootOption.Requeue,
             };
             Response response = client.RebootNode("<poolId>", "<nodeId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18497,16 +19166,17 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeRebootOptions body = new NodeRebootOptions
+            NodeRebootOptions body = new NodeRebootOptions()
             {
                 NodeRebootOption = BatchNodeRebootOption.Requeue,
             };
             Response response = await client.RebootNodeAsync("<poolId>", "<nodeId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReimageNode_ShortVersion()
+        public void Example_ReimageNode()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18514,13 +19184,12 @@ Access = {AccessScope.Job},
 
             RequestContent content = null;
             Response response = client.ReimageNode("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReimageNode_ShortVersion_Async()
+        public async Task Example_ReimageNode_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18528,30 +19197,31 @@ Access = {AccessScope.Job},
 
             RequestContent content = null;
             Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReimageNode_ShortVersion_Convenience()
+        public void Example_ReimageNode_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.ReimageNode("<poolId>", "<nodeId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReimageNode_ShortVersion_Convenience_Async()
+        public async Task Example_ReimageNode_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18567,7 +19237,6 @@ Access = {AccessScope.Job},
                 nodeReimageOption = "requeue",
             });
             Response response = client.ReimageNode("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18584,7 +19253,6 @@ Access = {AccessScope.Job},
                 nodeReimageOption = "requeue",
             });
             Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18596,11 +19264,12 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeReimageOptions body = new NodeReimageOptions
+            NodeReimageOptions body = new NodeReimageOptions()
             {
                 NodeReimageOption = BatchNodeReimageOption.Requeue,
             };
             Response response = client.ReimageNode("<poolId>", "<nodeId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18611,16 +19280,17 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeReimageOptions body = new NodeReimageOptions
+            NodeReimageOptions body = new NodeReimageOptions()
             {
                 NodeReimageOption = BatchNodeReimageOption.Requeue,
             };
             Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DisableNodeScheduling_ShortVersion()
+        public void Example_DisableNodeScheduling()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18628,13 +19298,12 @@ Access = {AccessScope.Job},
 
             RequestContent content = null;
             Response response = client.DisableNodeScheduling("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DisableNodeScheduling_ShortVersion_Async()
+        public async Task Example_DisableNodeScheduling_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18642,30 +19311,31 @@ Access = {AccessScope.Job},
 
             RequestContent content = null;
             Response response = await client.DisableNodeSchedulingAsync("<poolId>", "<nodeId>", content);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DisableNodeScheduling_ShortVersion_Convenience()
+        public void Example_DisableNodeScheduling_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DisableNodeScheduling("<poolId>", "<nodeId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DisableNodeScheduling_ShortVersion_Convenience_Async()
+        public async Task Example_DisableNodeScheduling_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DisableNodeSchedulingAsync("<poolId>", "<nodeId>");
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18681,7 +19351,6 @@ Access = {AccessScope.Job},
                 nodeDisableSchedulingOption = "requeue",
             });
             Response response = client.DisableNodeScheduling("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18698,7 +19367,6 @@ Access = {AccessScope.Job},
                 nodeDisableSchedulingOption = "requeue",
             });
             Response response = await client.DisableNodeSchedulingAsync("<poolId>", "<nodeId>", content, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18710,11 +19378,12 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeDisableSchedulingOptions body = new NodeDisableSchedulingOptions
+            NodeDisableSchedulingOptions body = new NodeDisableSchedulingOptions()
             {
                 NodeDisableSchedulingOption = DisableBatchNodeSchedulingOption.Requeue,
             };
             Response response = client.DisableNodeScheduling("<poolId>", "<nodeId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -18725,36 +19394,35 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            NodeDisableSchedulingOptions body = new NodeDisableSchedulingOptions
+            NodeDisableSchedulingOptions body = new NodeDisableSchedulingOptions()
             {
                 NodeDisableSchedulingOption = DisableBatchNodeSchedulingOption.Requeue,
             };
             Response response = await client.DisableNodeSchedulingAsync("<poolId>", "<nodeId>", body: body, timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+            Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnableNodeScheduling_ShortVersion()
+        public void Example_EnableNodeScheduling()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.EnableNodeScheduling("<poolId>", "<nodeId>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnableNodeScheduling_ShortVersion_Async()
+        public async Task Example_EnableNodeScheduling_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.EnableNodeSchedulingAsync("<poolId>", "<nodeId>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -18767,7 +19435,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.EnableNodeScheduling("<poolId>", "<nodeId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
@@ -18780,13 +19447,12 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.EnableNodeSchedulingAsync("<poolId>", "<nodeId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeRemoteLoginSettings_ShortVersion()
+        public void Example_GetNodeRemoteLoginSettings()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18801,7 +19467,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeRemoteLoginSettings_ShortVersion_Async()
+        public async Task Example_GetNodeRemoteLoginSettings_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18816,7 +19482,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeRemoteLoginSettings_ShortVersion_Convenience()
+        public void Example_GetNodeRemoteLoginSettings_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18827,7 +19493,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeRemoteLoginSettings_ShortVersion_Convenience_Async()
+        public async Task Example_GetNodeRemoteLoginSettings_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18890,7 +19556,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeRemoteDesktopFile_ShortVersion()
+        public void Example_GetNodeRemoteDesktopFile()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18904,7 +19570,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeRemoteDesktopFile_ShortVersion_Async()
+        public async Task Example_GetNodeRemoteDesktopFile_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18918,7 +19584,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeRemoteDesktopFile_ShortVersion_Convenience()
+        public void Example_GetNodeRemoteDesktopFile_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18929,7 +19595,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeRemoteDesktopFile_ShortVersion_Convenience_Async()
+        public async Task Example_GetNodeRemoteDesktopFile_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -18990,7 +19656,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UploadNodeLogs_ShortVersion()
+        public void Example_UploadNodeLogs()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19010,7 +19676,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UploadNodeLogs_ShortVersion_Async()
+        public async Task Example_UploadNodeLogs_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19030,7 +19696,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UploadNodeLogs_ShortVersion_Convenience()
+        public void Example_UploadNodeLogs_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19042,7 +19708,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UploadNodeLogs_ShortVersion_Convenience_Async()
+        public async Task Example_UploadNodeLogs_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19113,7 +19779,7 @@ Access = {AccessScope.Job},
             UploadBatchServiceLogsOptions body = new UploadBatchServiceLogsOptions("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
             {
                 EndTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                IdentityReference = new BatchNodeIdentityReference
+                IdentityReference = new BatchNodeIdentityReference()
                 {
                     ResourceId = "<resourceId>",
                 },
@@ -19132,7 +19798,7 @@ Access = {AccessScope.Job},
             UploadBatchServiceLogsOptions body = new UploadBatchServiceLogsOptions("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
             {
                 EndTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-                IdentityReference = new BatchNodeIdentityReference
+                IdentityReference = new BatchNodeIdentityReference()
                 {
                     ResourceId = "<resourceId>",
                 },
@@ -19142,299 +19808,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.GetNodes("<poolId>", null, null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.GetNodesAsync("<poolId>", null, null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchNodeListResult> response = client.GetNodes("<poolId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchNodeListResult> response = await client.GetNodesAsync("<poolId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.GetNodes("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("schedulingState").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastBootTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("ipAddress").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("affinityId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksRun").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTasksCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTaskSlotsCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksSucceeded").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDedicated").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.GetNodesAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new string[] { "<$select>" }, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("schedulingState").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("stateTransitionTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastBootTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("allocationTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("ipAddress").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("affinityId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("vmSize").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksRun").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTasksCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("runningTaskSlotsCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalTasksSucceeded").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("commandLine").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("isDedicated").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
-            Console.WriteLine(result.GetProperty("odata.nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodes_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchNodeListResult> response = client.GetNodes("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodes_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<BatchNodeListResult> response = await client.GetNodesAsync("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new string[] { "<$select>" });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeExtension_ShortVersion()
+        public void Example_GetNodeExtension()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19448,7 +19822,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeExtension_ShortVersion_Async()
+        public async Task Example_GetNodeExtension_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19462,7 +19836,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeExtension_ShortVersion_Convenience()
+        public void Example_GetNodeExtension_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19473,7 +19847,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeExtension_ShortVersion_Convenience_Async()
+        public async Task Example_GetNodeExtension_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19490,7 +19864,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, null);
+            Response response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("provisioningState").ToString());
@@ -19524,7 +19901,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<$select>" }, null);
+            Response response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("provisioningState").ToString());
@@ -19558,7 +19938,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<NodeVMExtension> response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" });
+            Response<NodeVMExtension> response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
@@ -19569,12 +19952,15 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<NodeVMExtension> response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<$select>" });
+            Response<NodeVMExtension> response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeExtensions_ShortVersion()
+        public void Example_GetNodeExtensions()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19588,7 +19974,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeExtensions_ShortVersion_Async()
+        public async Task Example_GetNodeExtensions_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19602,7 +19988,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeExtensions_ShortVersion_Convenience()
+        public void Example_GetNodeExtensions_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19613,7 +19999,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeExtensions_ShortVersion_Convenience_Async()
+        public async Task Example_GetNodeExtensions_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19630,7 +20016,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetNodeExtensions("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, new string[] { "<$select>" }, null);
+            Response response = client.GetNodeExtensions("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("provisioningState").ToString());
@@ -19665,7 +20054,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetNodeExtensionsAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, new string[] { "<$select>" }, null);
+            Response response = await client.GetNodeExtensionsAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, new List<string>()
+{
+"<$select>"
+}, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("provisioningState").ToString());
@@ -19700,7 +20092,10 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<NodeVMExtensionList> response = client.GetNodeExtensions("<poolId>", "<nodeId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, select: new string[] { "<$select>" });
+            Response<NodeVMExtensionList> response = client.GetNodeExtensions("<poolId>", "<nodeId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
@@ -19711,32 +20106,33 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response<NodeVMExtensionList> response = await client.GetNodeExtensionsAsync("<poolId>", "<nodeId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, select: new string[] { "<$select>" });
+            Response<NodeVMExtensionList> response = await client.GetNodeExtensionsAsync("<poolId>", "<nodeId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, select: new List<string>()
+{
+"<$select>"
+});
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteNodeFile_ShortVersion()
+        public void Example_DeleteNodeFile()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteNodeFile("<poolId>", "<nodeId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteNodeFile_ShortVersion_Async()
+        public async Task Example_DeleteNodeFile_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteNodeFileAsync("<poolId>", "<nodeId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -19749,7 +20145,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.DeleteNodeFile("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
-
             Console.WriteLine(response.Status);
         }
 
@@ -19762,13 +20157,12 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.DeleteNodeFileAsync("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeFile_ShortVersion()
+        public void Example_GetNodeFile()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19782,7 +20176,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeFile_ShortVersion_Async()
+        public async Task Example_GetNodeFile_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19796,7 +20190,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeFile_ShortVersion_Convenience()
+        public void Example_GetNodeFile_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19807,7 +20201,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeFile_ShortVersion_Convenience_Async()
+        public async Task Example_GetNodeFile_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19868,27 +20262,25 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeFileProperties_ShortVersion()
+        public void Example_GetNodeFileProperties()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeFileProperties_ShortVersion_Async()
+        public async Task Example_GetNodeFileProperties_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>");
-
             Console.WriteLine(response.Status);
         }
 
@@ -19901,7 +20293,6 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
@@ -19914,13 +20305,12 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeFiles_ShortVersion()
+        public void Example_GetNodeFiles()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19934,7 +20324,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeFiles_ShortVersion_Async()
+        public async Task Example_GetNodeFiles_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19948,7 +20338,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNodeFiles_ShortVersion_Convenience()
+        public void Example_GetNodeFiles_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -19959,7 +20349,7 @@ Access = {AccessScope.Job},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNodeFiles_ShortVersion_Convenience_Async()
+        public async Task Example_GetNodeFiles_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -20032,6 +20422,780 @@ Access = {AccessScope.Job},
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response<NodeFileListResult> response = await client.GetNodeFilesAsync("<poolId>", "<nodeId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", recursive: true);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetPools()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetPools(null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetPoolsAsync(null, null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetPools_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BatchPool item in client.GetPools())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BatchPool item in client.GetPoolsAsync())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetPools_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("displayName").ToString());
+                Console.WriteLine(result[0].GetProperty("url").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("lastModified").ToString());
+                Console.WriteLine(result[0].GetProperty("creationTime").ToString());
+                Console.WriteLine(result[0].GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("stateTransitionTime").ToString());
+                Console.WriteLine(result[0].GetProperty("allocationState").ToString());
+                Console.WriteLine(result[0].GetProperty("allocationStateTransitionTime").ToString());
+                Console.WriteLine(result[0].GetProperty("vmSize").ToString());
+                Console.WriteLine(result[0].GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
+                Console.WriteLine(result[0].GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeTimeout").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("currentDedicatedNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("currentLowPriorityNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("targetDedicatedNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("targetLowPriorityNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("enableAutoScale").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleFormula").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleEvaluationInterval").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("results").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("enableInterNodeCommunication").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
+                Console.WriteLine(result[0].GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("applicationLicenses")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("taskSlotsPerNode").ToString());
+                Console.WriteLine(result[0].GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
+                Console.WriteLine(result[0].GetProperty("metadata")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("metadata")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("url").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
+                Console.WriteLine(result[0].GetProperty("targetNodeCommunicationMode").ToString());
+                Console.WriteLine(result[0].GetProperty("currentNodeCommunicationMode").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetPoolsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, new List<string>()
+{
+"<$expand>"
+}, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("displayName").ToString());
+                Console.WriteLine(result[0].GetProperty("url").ToString());
+                Console.WriteLine(result[0].GetProperty("eTag").ToString());
+                Console.WriteLine(result[0].GetProperty("lastModified").ToString());
+                Console.WriteLine(result[0].GetProperty("creationTime").ToString());
+                Console.WriteLine(result[0].GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("stateTransitionTime").ToString());
+                Console.WriteLine(result[0].GetProperty("allocationState").ToString());
+                Console.WriteLine(result[0].GetProperty("allocationStateTransitionTime").ToString());
+                Console.WriteLine(result[0].GetProperty("vmSize").ToString());
+                Console.WriteLine(result[0].GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
+                Console.WriteLine(result[0].GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("nodeAgentSKUId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("windowsConfiguration").GetProperty("enableAutomaticUpdates").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("lun").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("caching").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("diskSizeGB").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("dataDisks")[0].GetProperty("storageAccountType").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("licenseType").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerImageNames")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("registryServer").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("containerConfiguration").GetProperty("containerRegistries")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("diskEncryptionConfiguration").GetProperty("targets")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("nodePlacementConfiguration").GetProperty("policy").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("publisher").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("typeHandlerVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("autoUpgradeMinorVersion").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("enableAutomaticUpgrade").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("settings").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("protectedSettings").GetProperty("<key>").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("extensions")[0].GetProperty("provisionAfterExtensions")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineConfiguration").GetProperty("osDisk").GetProperty("ephemeralOSDiskSettings").GetProperty("placement").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeTimeout").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("resizeErrors")[0].GetProperty("values")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("currentDedicatedNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("currentLowPriorityNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("targetDedicatedNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("targetLowPriorityNodes").ToString());
+                Console.WriteLine(result[0].GetProperty("enableAutoScale").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleFormula").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleEvaluationInterval").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("timestamp").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("results").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("autoScaleRun").GetProperty("error").GetProperty("values")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("enableInterNodeCommunication").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("subnetId").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("dynamicVNetAssignmentScope").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("protocol").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("backendPort").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeStart").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("frontendPortRangeEnd").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("priority").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("access").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourceAddressPrefix").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("endpointConfiguration").GetProperty("inboundNATPools")[0].GetProperty("networkSecurityGroupRules")[0].GetProperty("sourcePortRanges")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("provision").ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("publicIPAddressConfiguration").GetProperty("ipAddressIds")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("networkConfiguration").GetProperty("enableAcceleratedNetworking").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
+                Console.WriteLine(result[0].GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("applicationLicenses")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("taskSlotsPerNode").ToString());
+                Console.WriteLine(result[0].GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("uid").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("gid").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("linuxUserConfiguration").GetProperty("sshPrivateKey").ToString());
+                Console.WriteLine(result[0].GetProperty("userAccounts")[0].GetProperty("windowsUserConfiguration").GetProperty("loginMode").ToString());
+                Console.WriteLine(result[0].GetProperty("metadata")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("metadata")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("url").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("usageStats").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("usageStats").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("usageStats").GetProperty("dedicatedCoreTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgCPUPercentage").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgMemoryGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakMemoryGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("avgDiskGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("peakDiskGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadIOps").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteIOps").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskReadGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("diskWriteGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkReadGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("stats").GetProperty("resourceStats").GetProperty("networkWriteGiB").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountName").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("containerName").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("accountKey").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("sasKey").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("blobfuseOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureBlobFileSystemConfiguration").GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("nfsMountConfiguration").GetProperty("mountOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("source").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("mountOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("cifsMountConfiguration").GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountName").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("azureFileUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("accountKey").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("relativeMountPath").ToString());
+                Console.WriteLine(result[0].GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("type").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("clientId").ToString());
+                Console.WriteLine(result[0].GetProperty("identity").GetProperty("userAssignedIdentities")[0].GetProperty("principalId").ToString());
+                Console.WriteLine(result[0].GetProperty("targetNodeCommunicationMode").ToString());
+                Console.WriteLine(result[0].GetProperty("currentNodeCommunicationMode").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetPools_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BatchPool item in client.GetPools(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetPools_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BatchPool item in client.GetPoolsAsync(maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}, expand: new List<string>()
+{
+"<$expand>"
+}))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetNodes("<poolId>", null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetNodesAsync("<poolId>", null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BatchNode item in client.GetNodes("<poolId>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BatchNode item in client.GetNodesAsync("<poolId>"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetNodes("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("url").ToString());
+                Console.WriteLine(result[0].GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("schedulingState").ToString());
+                Console.WriteLine(result[0].GetProperty("stateTransitionTime").ToString());
+                Console.WriteLine(result[0].GetProperty("lastBootTime").ToString());
+                Console.WriteLine(result[0].GetProperty("allocationTime").ToString());
+                Console.WriteLine(result[0].GetProperty("ipAddress").ToString());
+                Console.WriteLine(result[0].GetProperty("affinityId").ToString());
+                Console.WriteLine(result[0].GetProperty("vmSize").ToString());
+                Console.WriteLine(result[0].GetProperty("totalTasksRun").ToString());
+                Console.WriteLine(result[0].GetProperty("runningTasksCount").ToString());
+                Console.WriteLine(result[0].GetProperty("runningTaskSlotsCount").ToString());
+                Console.WriteLine(result[0].GetProperty("totalTasksSucceeded").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("isDedicated").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+                Console.WriteLine(result[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetNodesAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<$filter>", new List<string>()
+{
+"<$select>"
+}, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result[0].GetProperty("id").ToString());
+                Console.WriteLine(result[0].GetProperty("url").ToString());
+                Console.WriteLine(result[0].GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("schedulingState").ToString());
+                Console.WriteLine(result[0].GetProperty("stateTransitionTime").ToString());
+                Console.WriteLine(result[0].GetProperty("lastBootTime").ToString());
+                Console.WriteLine(result[0].GetProperty("allocationTime").ToString());
+                Console.WriteLine(result[0].GetProperty("ipAddress").ToString());
+                Console.WriteLine(result[0].GetProperty("affinityId").ToString());
+                Console.WriteLine(result[0].GetProperty("vmSize").ToString());
+                Console.WriteLine(result[0].GetProperty("totalTasksRun").ToString());
+                Console.WriteLine(result[0].GetProperty("runningTasksCount").ToString());
+                Console.WriteLine(result[0].GetProperty("runningTaskSlotsCount").ToString());
+                Console.WriteLine(result[0].GetProperty("totalTasksSucceeded").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("taskUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("jobId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("taskId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("subtaskId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("taskState").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("exitCode").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("retryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRetryTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("requeueCount").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("lastRequeueTime").ToString());
+                Console.WriteLine(result[0].GetProperty("recentTasks")[0].GetProperty("executionInfo").GetProperty("result").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("commandLine").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("containerRunOptions").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("imageName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("password").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("registryServer").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("registry").GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("containerSettings").GetProperty("workingDirectory").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("autoStorageContainerName").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("storageContainerUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("httpUrl").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("blobPrefix").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("filePath").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("fileMode").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("resourceFiles")[0].GetProperty("identityReference").GetProperty("resourceId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("environmentSettings")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("username").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("scope").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("startTask").GetProperty("waitForSuccess").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("startTime").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("endTime").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("exitCode").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("containerId").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("state").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("containerInfo").GetProperty("error").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("category").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("failureInfo").GetProperty("details")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
+                Console.WriteLine(result[0].GetProperty("startTaskInfo").GetProperty("result").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
+                Console.WriteLine(result[0].GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("code").ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("message").ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("value").ToString());
+                Console.WriteLine(result[0].GetProperty("isDedicated").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("name").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("protocol").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicIPAddress").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("publicFQDN").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("frontendPort").ToString());
+                Console.WriteLine(result[0].GetProperty("endpointConfiguration").GetProperty("inboundEndpoints")[0].GetProperty("backendPort").ToString());
+                Console.WriteLine(result[0].GetProperty("nodeAgentInfo").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("nodeAgentInfo").GetProperty("lastUpdateTime").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("publisher").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("offer").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("sku").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("version").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("virtualMachineImageId").ToString());
+                Console.WriteLine(result[0].GetProperty("virtualMachineInfo").GetProperty("imageReference").GetProperty("exactVersion").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetNodes_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            foreach (BatchNode item in client.GetNodes("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetNodes_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            BatchClient client = new BatchClient(endpoint, credential);
+
+            await foreach (BatchNode item in client.GetNodesAsync("<poolId>", maxresults: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), timeOut: 1234, filter: "<$filter>", select: new List<string>()
+{
+"<$select>"
+}))
+            {
+            }
         }
     }
 }

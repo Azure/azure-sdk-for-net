@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -743,172 +744,6 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateCreatePoolRequest(content, timeOut, ocpDate, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all of the Pools in the specified Account. </summary>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="expand"> An OData $expand clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response<BatchPoolListResult>> GetPoolsAsync(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetPoolsAsync(maxresults, ocpDate, timeOut, filter, select, expand, context).ConfigureAwait(false);
-            return Response.FromValue(BatchPoolListResult.FromResponse(response), response);
-        }
-
-        /// <summary> Lists all of the Pools in the specified Account. </summary>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="expand"> An OData $expand clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response<BatchPoolListResult> GetPools(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetPools(maxresults, ocpDate, timeOut, filter, select, expand, context);
-            return Response.FromValue(BatchPoolListResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists all of the Pools in the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="expand"> An OData $expand clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> GetPoolsAsync(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetPools");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetPoolsRequest(maxresults, ocpDate, timeOut, filter, select, expand, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists all of the Pools in the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="expand"> An OData $expand clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
-        public virtual Response GetPools(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetPools");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetPoolsRequest(maxresults, ocpDate, timeOut, filter, select, expand, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4555,6 +4390,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(BatchCertificate,int?,DateTimeOffset?,CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> CreateCertificateAsync(BatchCertificate body, int? timeOut = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
@@ -4578,6 +4414,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(BatchCertificate,int?,DateTimeOffset?,CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response CreateCertificate(BatchCertificate body, int? timeOut = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
@@ -4617,6 +4454,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> CreateCertificateAsync(RequestContent content, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4665,6 +4503,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response CreateCertificate(RequestContent content, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4704,6 +4543,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response<CertificateListResult>> GetCertificatesAsync(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -4732,6 +4572,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response<CertificateListResult> GetCertificates(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -4776,6 +4617,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> GetCertificatesAsync(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
         {
@@ -4829,6 +4671,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response GetCertificates(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
         {
@@ -4873,6 +4716,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletionAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> CancelCertificateDeletionAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4920,6 +4764,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletion(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response CancelCertificateDeletion(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4967,6 +4812,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteCertificateAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> DeleteCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -5014,6 +4860,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteCertificate(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response DeleteCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -5050,6 +4897,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response<BatchCertificate>> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -5077,6 +4925,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response<BatchCertificate> GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -5120,6 +4969,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
@@ -5172,6 +5022,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOut, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
@@ -7870,7 +7721,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTaskFileAsync(jobId, taskId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
+            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
         }
 
         /// <summary> Returns the content of the specified Task file. </summary>
@@ -7903,7 +7754,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTaskFile(jobId, taskId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context);
-            return Response.FromValue(response.Content, response);
+            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
         }
 
         /// <summary>
@@ -9732,7 +9583,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetNodeRemoteDesktopFileAsync(poolId, nodeId, timeOut, ocpDate, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
+            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
         }
 
         /// <summary> Gets the Remote Desktop Protocol file for the specified Compute Node. </summary>
@@ -9767,7 +9618,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetNodeRemoteDesktopFile(poolId, nodeId, timeOut, ocpDate, context);
-            return Response.FromValue(response.Content, response);
+            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
         }
 
         /// <summary>
@@ -10063,188 +9914,6 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateUploadNodeLogsRequest(poolId, nodeId, content, timeOut, ocpDate, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
-        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual async Task<Response<BatchNodeListResult>> GetNodesAsync(string poolId, int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNodesAsync(poolId, maxresults, ocpDate, timeOut, filter, select, context).ConfigureAwait(false);
-            return Response.FromValue(BatchNodeListResult.FromResponse(response), response);
-        }
-
-        /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
-        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
-        public virtual Response<BatchNodeListResult> GetNodes(string poolId, int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNodes(poolId, maxresults, ocpDate, timeOut, filter, select, context);
-            return Response.FromValue(BatchNodeListResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists the Compute Nodes in the specified Pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> GetNodesAsync(string poolId, int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetNodesRequest(poolId, maxresults, ocpDate, timeOut, filter, select, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists the Compute Nodes in the specified Pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="ocpDate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="timeOut">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
-        public virtual Response GetNodes(string poolId, int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetNodesRequest(poolId, maxresults, ocpDate, timeOut, filter, select, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -10746,7 +10415,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetNodeFileAsync(poolId, nodeId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
+            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
         }
 
         /// <summary> Returns the content of the specified Compute Node file. </summary>
@@ -10779,7 +10448,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetNodeFile(poolId, nodeId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context);
-            return Response.FromValue(response.Content, response);
+            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
         }
 
         /// <summary>
@@ -11198,6 +10867,322 @@ namespace Azure.Compute.Batch
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Lists all of the Pools in the specified Account. </summary>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="expand"> An OData $expand clause. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchPool> GetPoolsAsync(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxresults, ocpDate, timeOut, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxresults, ocpDate, timeOut, filter, select, expand, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchPool.DeserializeBatchPool, ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
+        }
+
+        /// <summary> Lists all of the Pools in the specified Account. </summary>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="expand"> An OData $expand clause. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchPool> GetPools(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxresults, ocpDate, timeOut, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxresults, ocpDate, timeOut, filter, select, expand, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchPool.DeserializeBatchPool, ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all of the Pools in the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="expand"> An OData $expand clause. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxresults, ocpDate, timeOut, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxresults, ocpDate, timeOut, filter, select, expand, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all of the Pools in the specified Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="expand"> An OData $expand clause. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetPools(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxresults, ocpDate, timeOut, filter, select, expand, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxresults, ocpDate, timeOut, filter, select, expand, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPools", "value", "odata.nextLink", context);
+        }
+
+        /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
+        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<BatchNode> GetNodesAsync(string poolId, int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchNode.DeserializeBatchNode, ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
+        }
+
+        /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
+        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<BatchNode> GetNodes(string poolId, int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchNode.DeserializeBatchNode, ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the Compute Nodes in the specified Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetNodesAsync(string poolId, int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the Compute Nodes in the specified Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolId"> The ID of the Pool from which you want to list Compute Nodes. </param>
+        /// <param name="maxresults">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="ocpDate">
+        /// The time the request was issued. Client libraries typically set this to the
+        /// current system clock time; set it explicitly if you are calling the REST API
+        /// directly.
+        /// </param>
+        /// <param name="timeOut">
+        /// The maximum number of items to return in the response. A maximum of 1000
+        /// applications can be returned.
+        /// </param>
+        /// <param name="filter">
+        /// An OData $filter clause. For more information on constructing this filter, see
+        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// </param>
+        /// <param name="select"> An OData $select clause. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetNodes(string poolId, int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, maxresults, ocpDate, timeOut, filter, select, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetNodes", "value", "odata.nextLink", context);
         }
 
         internal HttpMessage CreateGetApplicationsRequest(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, RequestContext context)
@@ -13618,6 +13603,44 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("recursive", recursive.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (ocpDate != null)
+            {
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
+            }
+            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
+            request.Headers.Add("return-client-request-id", "true");
+            return message;
+        }
+
+        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (ocpDate != null)
+            {
+                request.Headers.Add("ocp-date", ocpDate.Value, "R");
+            }
+            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
+            request.Headers.Add("return-client-request-id", "true");
+            return message;
+        }
+
+        internal HttpMessage CreateGetNodesNextPageRequest(string nextLink, string poolId, int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (ocpDate != null)
