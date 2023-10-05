@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CloudEndpointsCreate()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Create.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_Create.json
             // this example is just showing the usage of "CloudEndpoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CloudEndpointsGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_Get.json
             // this example is just showing the usage of "CloudEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_CloudEndpointsGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_Get.json
             // this example is just showing the usage of "CloudEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_CloudEndpointsGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_Get.json
             // this example is just showing the usage of "CloudEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_CloudEndpointsListBySyncGroup()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_ListBySyncGroup.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/CloudEndpoints_ListBySyncGroup.json
             // this example is just showing the usage of "CloudEndpoints_ListBySyncGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

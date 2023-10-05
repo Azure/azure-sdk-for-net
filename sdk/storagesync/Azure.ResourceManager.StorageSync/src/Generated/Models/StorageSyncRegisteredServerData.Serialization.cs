@@ -124,6 +124,16 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("monitoringConfiguration"u8);
                 writer.WriteStringValue(MonitoringConfiguration);
             }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (Optional.IsDefined(LatestApplicationId))
+            {
+                writer.WritePropertyName("latestApplicationId"u8);
+                writer.WriteStringValue(LatestApplicationId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -161,6 +171,9 @@ namespace Azure.ResourceManager.StorageSync
             Optional<Uri> monitoringEndpointUri = default;
             Optional<string> monitoringConfiguration = default;
             Optional<string> serverName = default;
+            Optional<string> applicationId = default;
+            Optional<string> latestApplicationId = default;
+            Optional<ServerAuthType> activeAuthType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -359,11 +372,30 @@ namespace Azure.ResourceManager.StorageSync
                             serverName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("applicationId"u8))
+                        {
+                            applicationId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("latestApplicationId"u8))
+                        {
+                            latestApplicationId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("activeAuthType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            activeAuthType = new ServerAuthType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value);
+            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value, applicationId.Value, latestApplicationId.Value, Optional.ToNullable(activeAuthType));
         }
     }
 }

@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
             }
+            if (Optional.IsDefined(ServerEndpointProvisioningStatus))
+            {
+                writer.WritePropertyName("serverEndpointProvisioningStatus"u8);
+                writer.WriteObjectValue(ServerEndpointProvisioningStatus);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.StorageSync
             Optional<LocalCacheMode> localCacheMode = default;
             Optional<InitialUploadPolicy> initialUploadPolicy = default;
             Optional<string> serverName = default;
+            Optional<ServerEndpointProvisioningStatus> serverEndpointProvisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -296,11 +302,20 @@ namespace Azure.ResourceManager.StorageSync
                             serverName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("serverEndpointProvisioningStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverEndpointProvisioningStatus = ServerEndpointProvisioningStatus.DeserializeServerEndpointProvisioningStatus(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new StorageSyncServerEndpointData(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, syncStatus.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferStorageAccountResourceId.Value, Optional.ToNullable(offlineDataTransferStorageAccountTenantId), offlineDataTransferShareName.Value, cloudTieringStatus.Value, recallStatus.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serverName.Value);
+            return new StorageSyncServerEndpointData(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, syncStatus.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferStorageAccountResourceId.Value, Optional.ToNullable(offlineDataTransferStorageAccountTenantId), offlineDataTransferShareName.Value, cloudTieringStatus.Value, recallStatus.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serverName.Value, serverEndpointProvisioningStatus.Value);
         }
     }
 }

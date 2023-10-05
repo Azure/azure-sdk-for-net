@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_RegisteredServersListByStorageSyncService()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_ListByStorageSyncService.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/RegisteredServers_ListByStorageSyncService.json
             // this example is just showing the usage of "RegisteredServers_ListByStorageSyncService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RegisteredServersGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/RegisteredServers_Get.json
             // this example is just showing the usage of "RegisteredServers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_RegisteredServersGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/RegisteredServers_Get.json
             // this example is just showing the usage of "RegisteredServers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_RegisteredServersGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/RegisteredServers_Get.json
             // this example is just showing the usage of "RegisteredServers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_RegisteredServersCreate()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/RegisteredServers_Create.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/RegisteredServers_Create.json
             // this example is just showing the usage of "RegisteredServers_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,6 +198,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 ServerRole = "Standalone",
                 ServerId = Guid.Parse("080d4133-bdb5-40a0-96a0-71a6057bfe9a"),
                 FriendlyName = "afscv-2304-139",
+                ApplicationId = "00000000-0000-0000-0000-000000000001",
             };
             ArmOperation<StorageSyncRegisteredServerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverId, content);
             StorageSyncRegisteredServerResource result = lro.Value;

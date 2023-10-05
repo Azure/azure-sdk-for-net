@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="monitoringEndpointUri"> Telemetry Endpoint Uri. </param>
         /// <param name="monitoringConfiguration"> Monitoring Configuration. </param>
         /// <param name="serverName"> Server name. </param>
-        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName) : base(id, name, resourceType, systemData)
+        /// <param name="applicationId"> Server Application Id. </param>
+        /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied yet. </param>
+        /// <param name="activeAuthType"> Server auth type. </param>
+        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, string applicationId, string latestApplicationId, ServerAuthType? activeAuthType) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -76,6 +79,9 @@ namespace Azure.ResourceManager.StorageSync
             MonitoringEndpointUri = monitoringEndpointUri;
             MonitoringConfiguration = monitoringConfiguration;
             ServerName = serverName;
+            ApplicationId = applicationId;
+            LatestApplicationId = latestApplicationId;
+            ActiveAuthType = activeAuthType;
         }
 
         /// <summary>
@@ -153,5 +159,11 @@ namespace Azure.ResourceManager.StorageSync
         public string MonitoringConfiguration { get; set; }
         /// <summary> Server name. </summary>
         public string ServerName { get; }
+        /// <summary> Server Application Id. </summary>
+        public string ApplicationId { get; set; }
+        /// <summary> Latest Server Application Id discovered from the server. It is not yet applied yet. </summary>
+        public string LatestApplicationId { get; set; }
+        /// <summary> Server auth type. </summary>
+        public ServerAuthType? ActiveAuthType { get; }
     }
 }
