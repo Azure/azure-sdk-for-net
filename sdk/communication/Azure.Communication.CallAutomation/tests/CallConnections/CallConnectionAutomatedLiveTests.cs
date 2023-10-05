@@ -101,5 +101,86 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 await CleanUpCall(client, callConnectionId);
             }
         }
+
+        /// <summary>
+        /// Tests: CreateCall, AddParticipant, CancelAddParticipant
+        /// Test case: ACS to ACS call
+        /// 1. create a CallAutomationClient.
+        /// 2. create a call from source to ACS target.
+        /// 3. get updated call properties and check for the connected state.
+        /// 4. Add a Participant.
+        /// 5. Cancel the add participant
+        /// </summary>
+        /// <returns></returns>
+        [Ignore("ignore until record asset infrastructure is in place")]
+        [RecordedTest]
+        public async Task CancelAddParticipantTest()
+        {
+            // create caller and receiver
+            var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            var targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                // setup service bus
+                var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                // create call and assert response
+                var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+                callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+
+                // wait for incomingcall context
+                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(incomingCallContext);
+
+                // answer the call
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+                AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
+
+                // wait for callConnected
+                var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(connectedEvent);
+                Assert.IsTrue(connectedEvent is CallConnected);
+                Assert.AreEqual(callConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+
+                // add participant
+                var callConnection = response.CallConnection;
+                var operationContext = "context";
+                var addParticipantOptions = new AddParticipantOptions(new CallInvite(participantToAdd))
+                {
+                    InvitationTimeoutInSeconds = 60,
+                    OperationContext = operationContext,
+                };
+                var addParticipantResponse = await callConnection.AddParticipantAsync(addParticipantOptions);
+                Assert.AreEqual(operationContext, addParticipantResponse.Value.OperationContext);
+                Assert.IsNotNull(addParticipantResponse.Value.InvitationId);
+
+                // ensure invitation has arrived
+                await Task.Delay(3000);
+
+                // cancel add participant
+                await callConnection.CancelAddParticipantAsync(addParticipantResponse.Value.InvitationId);
+
+                // wait for cancel event
+                var addParticipantCancelledEvent = await WaitForEvent<AddParticipantCancelled>(callConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(addParticipantCancelledEvent);
+                Assert.IsTrue(addParticipantCancelledEvent is AddParticipantCancelled);
+                Assert.AreEqual(((AddParticipantCancelled)addParticipantCancelledEvent!).InvitationId, addParticipantResponse.Value.InvitationId);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
     }
 }

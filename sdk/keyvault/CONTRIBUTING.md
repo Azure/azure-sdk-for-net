@@ -43,6 +43,20 @@ Our testing framework supports recording service requests made during a unit tes
 
 Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed.
 
+#### Re-recording tests
+
+When re-recording tests, you should first record the latest target framework, followed by the latest target .NET Framework version. There are some tests that are specific to .NET Framework that will not run during the first phase.
+
+Using Visual Studio, in Test Explorer:
+
+1. Select all projects targeting the latest target framework e.g., 'net7.0'.
+2. Click the `Run` button (default binding: `Ctrl+R, T`).
+3. After changing the api-version, expect a lot of failures. In that case, click the `Run failed tests` button (default binding: `Ctrl+R, F`).
+4. Select the latest .NET Framework target e.g., `net47`, for `Azure.Security.KeyVault.Keys.Tests`.
+5. Repeat steps 2 and 3.
+
+After re-recording tests, you need to [sync them to the assets repo](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/documentation/asset-sync/README.md).
+
 ### Running tests
 
 The easiest way to run and debug the tests is via Visual Studio's unit test runner.

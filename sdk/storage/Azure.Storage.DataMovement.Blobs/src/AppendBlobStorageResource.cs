@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The AppendBlobStorageResource class.
     /// </summary>
-    internal class AppendBlobStorageResource : StorageResourceItem
+    internal class AppendBlobStorageResource : StorageResourceItemInternal
     {
         internal AppendBlobClient BlobClient { get; set; }
         internal AppendBlobStorageResourceOptions _options;

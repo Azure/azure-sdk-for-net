@@ -10,9 +10,9 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
     /// <summary>
     /// Streaming Transcription.
     /// </summary>
-    internal class TranscriptionData : TranscriptionPackageBase
+    public class TranscriptionData : TranscriptionPackageBase
     {
-        internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<Word> words, string participantRawID, string resultStatus)
+        internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<WordData> words, string participantRawID, string resultStatus)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// <summary>
         /// The result for each word of the phrase
         /// </summary>
-        public IEnumerable<Word> Words { get; set; }
+        public IEnumerable<WordData> Words { get; set; }
 
         /// <summary>
         /// The identified speaker based on participant raw ID
@@ -64,26 +64,20 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
 
         private static ResultStatus ConvertToResultStatusEnum(string resultStatus)
         {
-            switch (resultStatus)
-            {
-                case "intermediate":
-                    return ResultStatus.Intermediate;
-                case "final":
-                    return ResultStatus.Final;
-                default:
-                    throw new NotSupportedException(resultStatus);
-            }
+            if ("Intermediate".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
+                return ResultStatus.Intermediate;
+            else if ("Final".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
+                return ResultStatus.Final;
+            else
+                throw new NotSupportedException(resultStatus);
         }
 
         private static TextFormat ConvertToTextFormatEnum(string format)
         {
-            switch (format)
-            {
-                case "display":
-                    return TextFormat.Display;
-                default:
-                    throw new NotSupportedException(format);
-            }
+            if ("Display".Equals(format, StringComparison.OrdinalIgnoreCase))
+                return TextFormat.Display;
+            else
+                throw new NotSupportedException(format);
         }
     }
 }

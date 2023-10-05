@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -27,6 +28,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
+            if (Optional.IsDefined(FixedParameters))
+            {
+                if (FixedParameters != null)
+                {
+                    writer.WritePropertyName("fixedParameters"u8);
+                    writer.WriteObjectValue(FixedParameters);
+                }
+                else
+                {
+                    writer.WriteNull("fixedParameters");
+                }
+            }
             if (Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
@@ -37,6 +50,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("limitSettings");
+                }
+            }
+            if (Optional.IsCollectionDefined(SearchSpace))
+            {
+                if (SearchSpace != null)
+                {
+                    writer.WritePropertyName("searchSpace"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SearchSpace)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("searchSpace");
+                }
+            }
+            if (Optional.IsDefined(SweepSettings))
+            {
+                if (SweepSettings != null)
+                {
+                    writer.WritePropertyName("sweepSettings"u8);
+                    writer.WriteObjectValue(SweepSettings);
+                }
+                else
+                {
+                    writer.WriteNull("sweepSettings");
                 }
             }
             if (Optional.IsDefined(ValidationData))
@@ -83,7 +125,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
+            Optional<NlpFixedParameters> fixedParameters = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
+            Optional<IList<NlpParameterSubspace>> searchSpace = default;
+            Optional<NlpSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> validationData = default;
             Optional<MachineLearningLogVerbosity> logVerbosity = default;
             Optional<string> targetColumnName = default;
@@ -110,6 +155,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("fixedParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        fixedParameters = null;
+                        continue;
+                    }
+                    fixedParameters = NlpFixedParameters.DeserializeNlpFixedParameters(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("limitSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -118,6 +173,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("searchSpace"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchSpace = null;
+                        continue;
+                    }
+                    List<NlpParameterSubspace> array = new List<NlpParameterSubspace>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item));
+                    }
+                    searchSpace = array;
+                    continue;
+                }
+                if (property.NameEquals("sweepSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sweepSettings = null;
+                        continue;
+                    }
+                    sweepSettings = NlpSweepSettings.DeserializeNlpSweepSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -160,7 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TextClassificationMultilabel(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, limitSettings.Value, validationData.Value);
+            return new TextClassificationMultilabel(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, Optional.ToList(searchSpace), sweepSettings.Value, validationData.Value);
         }
     }
 }
