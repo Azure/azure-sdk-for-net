@@ -109,42 +109,19 @@ namespace Azure.Core.Pipeline
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
-        {
-            // TODO: what does this means in terms of precedence?
-
-            if (context is null)
-            {
-                context = new RequestContext();
-                if (classifier is not null)
-                {
-                    context.ResponseClassifier = classifier;
-                }
-            }
-            else
-            {
-                if (classifier is not null)
-                {
-                    context.ResponseClassifier = classifier;
-                }
-            }
-
-            return CreateMessage((RequestOptions?)context);
-        }
+            => CreateMessage((RequestOptions?)context, classifier);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <param name="options">Request options to be used by the pipeline when sending the message request.</param>
+        /// <param name="classifier">Classifier to apply to the response.</param>
         /// <returns>The HTTP message.</returns>
-        public override HttpMessage CreateMessage(RequestOptions? options)
+        public override HttpMessage CreateMessage(RequestOptions? options, ResponseErrorClassifier? classifier = default)
         {
-            if (options is null)
-            {
-                options = new RequestOptions();
-                options.ResponseClassifier = ResponseClassifier.Shared;
-            }
+            classifier ??= ResponseClassifier.Shared;
 
-            HttpMessage message = new HttpMessage(CreateRequest(), options);
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier);
 
             if (options is not null)
             {
@@ -158,7 +135,7 @@ namespace Azure.Core.Pipeline
 
             if (options is RequestContext context)
             {
-                message.ApplyRequestContext(context, (ResponseClassifier?)context.ResponseClassifier);
+                message.ApplyRequestContext(context, (ResponseClassifier?)classifier);
             }
 
             return message;

@@ -46,17 +46,17 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
 
         return new HttpClient(handler)
         {
-            // Timeouts are handled by the pipeline
+            // TODO: Timeouts are handled by the pipeline
             Timeout = Timeout.InfiniteTimeSpan,
         };
     }
 
-    public override PipelineMessage CreateMessage(RequestOptions options)
+    public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
         PipelineRequest request = new HttpPipelineRequest();
+        PipelineMessage message = new PipelineMessage(request, classifier);
 
-        // TODO: should options move into request?
-        PipelineMessage message = new PipelineMessage(request, options);
+        // TODO: use options
 
         return message;
     }

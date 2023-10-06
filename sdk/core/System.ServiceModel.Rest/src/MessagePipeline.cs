@@ -88,7 +88,9 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             pipeline[index++] = options.LoggingPolicy;
         }
 
-        ResponseBufferingPolicy bufferingPolicy = new(options.NetworkTimeout);
+        // TODO: add NetworkTimeout to RetryOptions
+        // TODO: would it make sense for this to live on options instead?
+        ResponseBufferingPolicy bufferingPolicy = new(TimeSpan.FromSeconds(100), options.BufferResponse);
         pipeline[index++] = bufferingPolicy;
 
         if (options.Transport != null)
@@ -104,9 +106,9 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return new MessagePipeline(pipeline);
     }
 
-    public override PipelineMessage CreateMessage(RequestOptions options)
+    public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
     {
-        return _transport.CreateMessage(options);
+        return _transport.CreateMessage(options, classifier);
     }
 
     public override void Send(PipelineMessage message)
@@ -114,7 +116,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         enumerator.ProcessNext();
 
-        message.Response.IsError = message.RequestOptions.ResponseClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
     public override async ValueTask SendAsync(PipelineMessage message)
@@ -122,7 +124,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
 
-        message.Response.IsError = message.RequestOptions.ResponseClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
     internal class MessagePipelineExecutor : PipelineEnumerator

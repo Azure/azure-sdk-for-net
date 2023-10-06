@@ -11,10 +11,12 @@ public class PipelineMessage : IDisposable
 
     private bool _disposed;
 
-    protected internal PipelineMessage(PipelineRequest request, RequestOptions options)
+    protected internal PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
     {
         Request = request;
-        RequestOptions = options;
+        ResponseClassifier = classifier;
+
+        // TODO: take options and wire them through?
     }
 
     public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
@@ -36,9 +38,9 @@ public class PipelineMessage : IDisposable
         set => _response = value;
     }
 
-    public virtual bool HasResponse => _response is not null;
+    public bool HasResponse => _response is not null;
 
-    public virtual RequestOptions RequestOptions { get; }
+    public virtual ResponseErrorClassifier ResponseClassifier { get; set; }
 
     #region IDisposable
 

@@ -7,24 +7,26 @@ using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
+// TODO: what do we need from here?
+//using Azure.Core.Buffers;
+
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
 /// </summary>
-// Note: it's a struct so the Azure.Core wrapper can inline the calls to Process.
-// TODO: does it work?  How can we keep from adding too many members to make too big for a struct?
-public struct ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
+public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
 {
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
     private readonly TimeSpan _networkTimeout;
+    private readonly bool _bufferResponse;
 
-    // TODO: does it still make sense to take network timeout in constructor?
-    public ResponseBufferingPolicy(TimeSpan networkTimeout)
+    public ResponseBufferingPolicy(TimeSpan networkTimeout, bool bufferResponse)
     {
         _networkTimeout = networkTimeout;
+        _bufferResponse = bufferResponse;
     }
 
     public void Process(PipelineMessage message, PipelineEnumerator pipeline)
@@ -41,10 +43,7 @@ public struct ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
         var networkTimeout = _networkTimeout;
-
-        // TODO: note that right now this will always override.  We need principles for precedence
-        // that work with Azure.Core library constraints.
-        if (message.RequestOptions.NetworkTimeout is TimeSpan networkTimeoutOverride)
+        if (TryGetNetworkTimeoutOverride(message, out TimeSpan networkTimeoutOverride))
         {
             networkTimeout = networkTimeoutOverride;
         }
@@ -79,7 +78,7 @@ public struct ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
             return;
         }
 
-        if (message.RequestOptions.BufferResponse)
+        if (BufferResponse(message))
         {
             // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
             // register callback to dispose the stream on cancellation.
@@ -117,8 +116,21 @@ public struct ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         }
         else if (networkTimeout != Timeout.InfiniteTimeSpan)
         {
-            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
+            SetReadTimeoutStream(message, responseContentStream, networkTimeout);
         }
+    }
+
+    protected virtual bool TryGetNetworkTimeoutOverride(PipelineMessage message, out TimeSpan timeout)
+    {
+        timeout = default;
+        return false;
+    }
+
+    protected virtual bool BufferResponse(PipelineMessage message) => _bufferResponse;
+
+    protected virtual void SetReadTimeoutStream(PipelineMessage message, Stream responseContentStream, TimeSpan networkTimeout)
+    {
+        message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
     }
 
     private async Task CopyToAsync(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
@@ -176,6 +188,7 @@ public struct ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
 
         if (timeoutToken.IsCancellationRequested)
         {
+            // TODO: Make this error message correct
             throw ClientUtilities.CreateOperationCanceledException(
                 inner,
                 timeoutToken,
