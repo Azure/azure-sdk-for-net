@@ -28,10 +28,10 @@
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
-            "windows2022_NET461": {
+            "windows2022_NET462": {
                 "OSVmImage": "windows-2022",
                 "Pool": "azsdk-pool-mms-win-2022-general",
-                "TestTargetFramework": "net461",
+                "TestTargetFramework": "net462",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
