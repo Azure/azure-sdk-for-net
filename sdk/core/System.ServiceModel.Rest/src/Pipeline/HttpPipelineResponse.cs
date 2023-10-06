@@ -29,7 +29,17 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     public override int Status => (int)_httpResponse.StatusCode;
 
-    public override string ReasonPhrase => _httpResponse.ReasonPhrase ?? string.Empty;
+    public override bool TryGetReasonPhrase(out string reasonPhrase)
+    {
+        if (_httpResponse.ReasonPhrase is not null)
+        {
+            reasonPhrase = _httpResponse.ReasonPhrase;
+            return true;
+        }
+
+        reasonPhrase = string.Empty;
+        return false;
+    }
 
     public override Stream? ContentStream
     {

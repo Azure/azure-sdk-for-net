@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.ServiceModel.Rest.Core;
 using Azure.Core;
@@ -20,6 +21,23 @@ namespace Azure
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
         public abstract string ClientRequestId { get; set; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        public abstract string ReasonPhrase { get; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="reasonPhrase"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool TryGetReasonPhrase(out string reasonPhrase)
+        {
+            reasonPhrase = ReasonPhrase;
+            return true;
+        }
 
         /// <summary>
         /// Get the HTTP response headers.

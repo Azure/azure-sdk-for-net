@@ -13,10 +13,7 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract int Status { get; }
 
-    /// <summary>
-    /// TBD.  Needed for inheritdoc.
-    /// </summary>
-    public abstract string ReasonPhrase { get; }
+    public abstract bool TryGetReasonPhrase(out string reasonPhrase);
 
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());

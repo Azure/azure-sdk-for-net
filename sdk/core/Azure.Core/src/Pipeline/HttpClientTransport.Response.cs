@@ -36,7 +36,11 @@ namespace Azure.Core.Pipeline
                 set => _response.ContentStream = value;
             }
 
-            public override string ReasonPhrase => _response.ReasonPhrase;
+            public override string ReasonPhrase
+            {
+                get => _response.TryGetReasonPhrase(out string reasonPhrase) ?
+                    reasonPhrase : string.Empty;
+            }
 
             public override void Dispose()
             {

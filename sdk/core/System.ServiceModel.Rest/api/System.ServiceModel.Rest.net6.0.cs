@@ -91,12 +91,12 @@ namespace System.ServiceModel.Rest.Core
         public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual bool IsError { get { throw null; } set { } }
-        public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
         public abstract System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders();
         public abstract bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value);
         public abstract bool TryGetHeaderValue(string name, out string? value);
+        public abstract bool TryGetReasonPhrase(out string reasonPhrase);
     }
     public abstract partial class RequestBody : System.IDisposable
     {
@@ -170,13 +170,13 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     {
         public HttpPipelineResponse(System.Net.Http.HttpResponseMessage? httpResponse, System.IO.Stream? contentStream) { }
         public override System.IO.Stream? ContentStream { get { throw null; } set { } }
-        public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
         public override void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public override System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders() { throw null; }
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
+        public override bool TryGetReasonPhrase(out string reasonPhrase) { throw null; }
     }
     public partial interface IPipelineEnumerator
     {

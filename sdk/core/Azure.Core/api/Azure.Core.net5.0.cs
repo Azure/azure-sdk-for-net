@@ -241,6 +241,7 @@ namespace Azure
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public abstract string ReasonPhrase { get; }
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
@@ -250,6 +251,8 @@ namespace Azure
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool TryGetReasonPhrase(out string reasonPhrase) { throw null; }
     }
     public sealed partial class ResponseError
     {
