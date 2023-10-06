@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Metadata package for Media Streaming.
+    /// Metadata for Audio Streaming.
     /// </summary>
-    public class MediaStreamingMetadata : MediaStreamingPackageBase
+    public class AudioMetadata : StreamingData
     {
         /// <summary>
         /// Subscription Id.

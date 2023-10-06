@@ -4,9 +4,13 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Media Streaming Package.
+    /// The format of transcription text
     /// </summary>
-    public abstract class MediaStreamingPackageBase
+    public enum TextFormat
     {
+        /// <summary>
+        ///  Formatted recognize text with punctuations
+        /// </summary>
+        Display
     }
 }
