@@ -1400,6 +1400,16 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.TranscriptionTransport TranscriptionTransport { get { throw null; } }
         public System.Uri TransportUri { get { throw null; } }
     }
+    public abstract partial class TranscriptionPackageBase
+    {
+        protected TranscriptionPackageBase() { }
+    }
+    public static partial class TranscriptionPackageParser
+    {
+        public static Azure.Communication.CallAutomation.TranscriptionPackageBase Parse(System.BinaryData json) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionPackageBase Parse(byte[] receivedBytes) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionPackageBase Parse(string stringJson) { throw null; }
+    }
     public partial class TranscriptionResumed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal TranscriptionResumed() { }
@@ -1523,25 +1533,6 @@ namespace Azure.Communication.CallAutomation
     {
         internal UnmuteParticipantsResult() { }
         public string OperationContext { get { throw null; } }
-    }
-    public partial class UserConsent
-    {
-        internal UserConsent() { }
-        public int? Recording { get { throw null; } }
-    }
-    public partial class VoipHeader : Azure.Communication.CallAutomation.CustomContextHeader
-    {
-        public VoipHeader(string key, string value) : base (default(string), default(string)) { }
-    }
-    public partial class WordData
-    {
-        public WordData() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("offset")]
-        public ulong Offset { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
-        public string Text { get { throw null; } set { } }
-    }
-    public partial class TranscriptionData : Azure.Communication.CallAutomation.TranscriptionPackageBase
     {
         internal TranscriptionData() { }
         public double Confidence { get { throw null; } set { } }
