@@ -1,10 +1,23 @@
 namespace System.ServiceModel.Rest
 {
+    [System.FlagsAttribute]
+    public enum ErrorBehavior
+    {
+        Default = 0,
+        NoThrow = 1,
+    }
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
         public string Key { get { throw null; } }
         public void Update(string key) { }
+    }
+    public partial class MessageFailedException : System.Exception
+    {
+        protected MessageFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public MessageFailedException(System.ServiceModel.Rest.Core.PipelineResponse response) { }
+        protected MessageFailedException(System.ServiceModel.Rest.Core.PipelineResponse response, string message, System.Exception? innerException) { }
+        public int Status { get { throw null; } }
     }
     public partial class NullableResult<T> : System.ServiceModel.Rest.Result
     {
@@ -12,13 +25,6 @@ namespace System.ServiceModel.Rest
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
         public override System.ServiceModel.Rest.Core.PipelineResponse GetRawResponse() { throw null; }
-    }
-    public partial class RequestErrorException : System.Exception
-    {
-        protected RequestErrorException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public RequestErrorException(System.ServiceModel.Rest.Core.PipelineResponse response) { }
-        protected RequestErrorException(System.ServiceModel.Rest.Core.PipelineResponse response, string message, System.Exception? innerException) { }
-        public int Status { get { throw null; } }
     }
     public partial class RequestOptions
     {
@@ -29,10 +35,10 @@ namespace System.ServiceModel.Rest
         public static System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultLoggingPolicy { get { throw null; } set { } }
         public static System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultRetryPolicy { get { throw null; } set { } }
         public static System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultTransport { get { throw null; } set { } }
+        public System.ServiceModel.Rest.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? LoggingPolicy { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[]? PerCallPolicies { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[]? PerTryPolicies { get { throw null; } set { } }
-        public System.ServiceModel.Rest.ResultErrorOptions ResultErrorOptions { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? RetryPolicy { get { throw null; } set { } }
         public System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>? Transport { get { throw null; } set { } }
     }
@@ -42,12 +48,6 @@ namespace System.ServiceModel.Rest
         public static System.ServiceModel.Rest.Result FromResponse(System.ServiceModel.Rest.Core.PipelineResponse response) { throw null; }
         public static System.ServiceModel.Rest.Result<T> FromValue<T>(T value, System.ServiceModel.Rest.Core.PipelineResponse response) { throw null; }
         public abstract System.ServiceModel.Rest.Core.PipelineResponse GetRawResponse();
-    }
-    [System.FlagsAttribute]
-    public enum ResultErrorOptions
-    {
-        Default = 0,
-        NoThrow = 1,
     }
     public partial class Result<T> : System.ServiceModel.Rest.NullableResult<T>
     {

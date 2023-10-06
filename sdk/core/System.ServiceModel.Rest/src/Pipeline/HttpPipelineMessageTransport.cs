@@ -145,7 +145,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         }
         catch (HttpRequestException e)
         {
-            throw new RequestErrorException(e.Message, e);
+            throw new MessageFailedException(e.Message, e);
         }
 
         OnReceivedResponse(message, responseMessage, contentStream);

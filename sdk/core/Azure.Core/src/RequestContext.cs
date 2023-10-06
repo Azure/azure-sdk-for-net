@@ -31,29 +31,29 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ErrorOptions ErrorOptions
         {
-            get => FromResultErrorOptions(ResultErrorOptions);
+            get => FromErrorBehavior(ErrorBehavior);
             set
             {
-                ResultErrorOptions = ToResultErrorOptions(value);
+                ErrorBehavior = ToErrorBehavior(value);
             }
         }
 
-        private ErrorOptions FromResultErrorOptions(ResultErrorOptions errorOptions)
+        private ErrorOptions FromErrorBehavior(ErrorBehavior errorOptions)
         {
             return errorOptions switch
             {
-                ResultErrorOptions.Default => ErrorOptions.Default,
-                ResultErrorOptions.NoThrow => ErrorOptions.NoThrow,
+                ErrorBehavior.Default => ErrorOptions.Default,
+                ErrorBehavior.NoThrow => ErrorOptions.NoThrow,
                 _ => throw new NotSupportedException(),
             };
         }
 
-        private ResultErrorOptions ToResultErrorOptions(ErrorOptions errorOptions)
+        private ErrorBehavior ToErrorBehavior(ErrorOptions errorOptions)
         {
             return errorOptions switch
             {
-                ErrorOptions.Default => ResultErrorOptions.Default,
-                ErrorOptions.NoThrow => ResultErrorOptions.NoThrow,
+                ErrorOptions.Default => ErrorBehavior.Default,
+                ErrorOptions.NoThrow => ErrorBehavior.NoThrow,
                 _ => throw new NotSupportedException(),
             };
         }

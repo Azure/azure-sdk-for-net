@@ -218,7 +218,7 @@ namespace Azure
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.ServiceModel.Rest.RequestErrorException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.ServiceModel.Rest.MessageFailedException, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) : base (default(System.ServiceModel.Rest.Core.PipelineResponse)) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ServiceModel.Rest.Core.PipelineResponse)) { }
