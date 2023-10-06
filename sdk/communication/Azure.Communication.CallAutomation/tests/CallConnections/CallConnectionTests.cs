@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Communication.CallAutomation.Models;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using NUnit.Framework;
 
