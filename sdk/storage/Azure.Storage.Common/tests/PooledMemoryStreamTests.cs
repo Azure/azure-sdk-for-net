@@ -10,6 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
 using Azure.Storage.Tests.Shared;
+using Microsoft.Diagnostics.Runtime.DacInterface;
 using NUnit.Framework;
 
 namespace Azure.Storage.Tests
@@ -103,6 +104,32 @@ namespace Azure.Storage.Tests
             // Assert
             AssertSequenceEqual(originalData, readData);
             Assert.AreEqual(0, pooledMemoryStream.Position);
+        }
+
+        [TestCase(1, 0, 1)]
+        [TestCase(Constants.KB, 512, 2 * Constants.KB)]
+        [TestCase(Constants.KB, 512, 512)]
+        public async Task ReadByte(int dataSize, int initialReadSize, int bufferPartitionSize)
+        {
+            // Arrange
+            byte[] originalData = GetRandomBuffer(dataSize);
+            PooledMemoryStream pooledMemoryStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferPartitionSize);
+            await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);
+            pooledMemoryStream.Position = 0;
+
+            // Read some data initially to test boundary conditions with buffers
+            if (initialReadSize > 0)
+            {
+                byte[] readData = new byte[initialReadSize];
+                await pooledMemoryStream.ReadAsync(readData, 0, initialReadSize);
+            }
+
+            // Act
+            byte result = Convert.ToByte(pooledMemoryStream.ReadByte());
+
+            // Assert
+            Assert.AreEqual(initialReadSize + 1, pooledMemoryStream.Position);
+            Assert.AreEqual(originalData[initialReadSize], result);
         }
 
         private static byte[] GetRandomBuffer(long size)
