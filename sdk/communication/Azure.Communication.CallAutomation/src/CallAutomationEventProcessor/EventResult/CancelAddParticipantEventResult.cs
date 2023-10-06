@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="CancelAddParticipantEventResult"/> is returned from WaitForEvent of <see cref="AddParticipantResult"/>.</summary>
+    /// <summary><see cref="CancelAddParticipantEventResult"/> is returned from WaitForEvent of <see cref="CancelAddParticipantEventResult"/>.</summary>
     public class CancelAddParticipantEventResult
     {
         /// <summary>

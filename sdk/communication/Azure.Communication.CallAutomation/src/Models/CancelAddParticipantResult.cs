@@ -94,7 +94,7 @@ namespace Azure.Communication.CallAutomation
                     result = new CancelAddParticipantEventResult(true, successEvent, null, successEvent?.InvitationId, successEvent?.Participant);
                     break;
                 case CancelAddParticipantFailed failedEvent:
-                    result = new CancelAddParticipantEventResult(false, null, failedEvent, failedEvent.InvitationId);
+                    result = new CancelAddParticipantEventResult(false, null, failedEvent, failedEvent?.InvitationId);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);
