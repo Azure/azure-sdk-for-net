@@ -516,16 +516,18 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        protected static async Task<(HttpAuthorization Authorization, ShareAudience Audience)> GetCopyAuthorizationHeaderAsync(
+        protected static async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(
             ShareFileClient client,
             CancellationToken cancellationToken = default)
         {
             if (client.ClientConfiguration.TokenCredential != default)
             {
-                return (
-                    await client.ClientConfiguration.TokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false),
-                    client.ClientConfiguration.Audience
-                );
+                AccessToken accessToken = await client.ClientConfiguration.TokenCredential.GetTokenAsync(
+                    new TokenRequestContext(new string[] { client.ClientConfiguration.Audience.ToString() }),
+                    cancellationToken).ConfigureAwait(false);
+                return new HttpAuthorization(
+                    Constants.CopyHttpAuthorization.BearerScheme,
+                    accessToken.Token);
             }
             return default;
         }
