@@ -18,7 +18,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public const string AdminUserAccountName = "BatchTestAdmin";
         public const string NonAdminUserAccountName = "BatchTestNonAdmin";
 
-        public Task<BatchPool> Pool { get; protected set; }
+        public BatchPool Pool { get; protected set; }
 
         public string PoolId { get; private set; }
 
@@ -73,14 +73,6 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             TimeSpan computeNodeSteadyTimeout = TimeSpan.FromMinutes(25);
             DateTime allocationWaitStartTime = DateTime.UtcNow;
             DateTime timeoutAfterThisTimeUtc = allocationWaitStartTime.Add(computeNodeSteadyTimeout);
-
-            AsyncPageable<BatchNode> batchNodes =  client.GetNodesAsync(poolId);
-            await foreach (BatchNode item in batchNodes)
-            {
-                if (item.State != BatchNodeState.Idle)
-                {
-                }
-            }
 
             List<BatchNode> computeNodes=  await client.GetNodesAsync(poolId).ToEnumerableAsync();
 

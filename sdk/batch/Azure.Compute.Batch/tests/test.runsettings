@@ -4,7 +4,7 @@
     <RunConfiguration>
         <EnvironmentVariables>
             <!-- List of environment variables we want to set-->
-            <AZURE_TEST_MODE>Live</AZURE_TEST_MODE>
+            <AZURE_TEST_MODE>record</AZURE_TEST_MODE>
             <BATCHACCOUNT_NAME>https://sanitized.azure-api.net/</BATCHACCOUNT_NAME>
             <BATCHACCOUNT_KEY>000000000000000000000000</BATCHACCOUNT_KEY>
         </EnvironmentVariables>

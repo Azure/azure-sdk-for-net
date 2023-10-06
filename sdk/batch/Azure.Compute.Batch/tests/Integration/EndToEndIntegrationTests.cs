@@ -30,8 +30,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             var client = CreateBatchClient();
 
             PaasWindowsPoolFixture paasWindowsPoolFixture = new PaasWindowsPoolFixture(client);
-
-            await client.GetJobAsync("test");
+            BatchPool pool  = await paasWindowsPoolFixture.CreatePoolAsync();
         }
     }
 }

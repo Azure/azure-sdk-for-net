@@ -11,10 +11,12 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     public class PaasWindowsPoolFixture : PoolFixture
     {
-        public PaasWindowsPoolFixture(BatchClient batchClient) : base(TestUtilities.GetMyName() + "-pooltest", batchClient) => Pool = CreatePoolAsync();
+        public PaasWindowsPoolFixture(BatchClient batchClient) : base(TestUtilities.GetMyName() + "-pooltest", batchClient) { }
 
-        private async Task<BatchPool> CreatePoolAsync()
+        public async Task<BatchPool> CreatePoolAsync()
         {
+            BatchPool thePool = await client.GetPoolAsync(PoolId);
+
             BatchPool currentPool = await FindPoolIfExistsAsync();
 
             if (currentPool == null)

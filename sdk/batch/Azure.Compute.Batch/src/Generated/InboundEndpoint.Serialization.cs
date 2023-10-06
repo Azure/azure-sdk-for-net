@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
@@ -20,8 +21,8 @@ namespace Azure.Compute.Batch
             }
             string name = default;
             InboundEndpointProtocol protocol = default;
-            string publicIPAddress = default;
-            string publicFQDN = default;
+            Optional<string> publicIPAddress = default;
+            Optional<string> publicFQDN = default;
             int frontendPort = default;
             int backendPort = default;
             foreach (var property in element.EnumerateObject())
@@ -57,7 +58,7 @@ namespace Azure.Compute.Batch
                     continue;
                 }
             }
-            return new InboundEndpoint(name, protocol, publicIPAddress, publicFQDN, frontendPort, backendPort);
+            return new InboundEndpoint(name, protocol, publicIPAddress.Value, publicFQDN.Value, frontendPort, backendPort);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

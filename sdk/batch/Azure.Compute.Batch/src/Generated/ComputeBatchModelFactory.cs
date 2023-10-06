@@ -781,23 +781,9 @@ namespace Azure.Compute.Batch
         /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publicIpAddress"/> or <paramref name="publicFQDN"/> is null. </exception>
         /// <returns> A new <see cref="Batch.InboundEndpoint"/> instance for mocking. </returns>
         public static InboundEndpoint InboundEndpoint(string name = null, InboundEndpointProtocol protocol = default, string publicIpAddress = null, string publicFQDN = null, int frontendPort = default, int backendPort = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (publicIpAddress == null)
-            {
-                throw new ArgumentNullException(nameof(publicIpAddress));
-            }
-            if (publicFQDN == null)
-            {
-                throw new ArgumentNullException(nameof(publicFQDN));
-            }
-
             return new InboundEndpoint(name, protocol, publicIpAddress, publicFQDN, frontendPort, backendPort);
         }
 

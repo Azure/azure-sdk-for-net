@@ -16,17 +16,28 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of InboundEndpoint. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
+        /// <param name="frontendPort"> The public port number of the endpoint. </param>
+        /// <param name="backendPort"> The backend port number of the endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, int frontendPort, int backendPort)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+            Protocol = protocol;
+            FrontendPort = frontendPort;
+            BackendPort = backendPort;
+        }
+
+        /// <summary> Initializes a new instance of InboundEndpoint. </summary>
+        /// <param name="name"> The name of the endpoint. </param>
+        /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="publicIpAddress"> The public IP address of the Compute Node. </param>
         /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publicIpAddress"/> or <paramref name="publicFQDN"/> is null. </exception>
         internal InboundEndpoint(string name, InboundEndpointProtocol protocol, string publicIpAddress, string publicFQDN, int frontendPort, int backendPort)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(publicIpAddress, nameof(publicIpAddress));
-            Argument.AssertNotNull(publicFQDN, nameof(publicFQDN));
-
             Name = name;
             Protocol = protocol;
             PublicIpAddress = publicIpAddress;

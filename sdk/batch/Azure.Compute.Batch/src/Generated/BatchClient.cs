@@ -4390,7 +4390,6 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(BatchCertificate,int?,DateTimeOffset?,CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> CreateCertificateAsync(BatchCertificate body, int? timeOut = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
@@ -4414,7 +4413,6 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(BatchCertificate,int?,DateTimeOffset?,CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response CreateCertificate(BatchCertificate body, int? timeOut = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
@@ -4454,7 +4452,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificateAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> CreateCertificateAsync(RequestContent content, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4503,7 +4500,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CreateCertificate(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response CreateCertificate(RequestContent content, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4543,7 +4539,6 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response<CertificateListResult>> GetCertificatesAsync(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -4572,7 +4567,6 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response<CertificateListResult> GetCertificates(int? maxresults = null, DateTimeOffset? ocpDate = null, int? timeOut = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -4617,7 +4611,6 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> GetCertificatesAsync(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
         {
@@ -4671,7 +4664,6 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response GetCertificates(int? maxresults, DateTimeOffset? ocpDate, int? timeOut, string filter, IEnumerable<string> select, RequestContext context)
         {
@@ -4716,7 +4708,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletionAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> CancelCertificateDeletionAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4764,7 +4755,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='CancelCertificateDeletion(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response CancelCertificateDeletion(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4812,7 +4802,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteCertificateAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> DeleteCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4860,7 +4849,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteCertificate(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response DeleteCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
@@ -4897,7 +4885,6 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response<BatchCertificate>> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -4925,7 +4912,6 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response<BatchCertificate> GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOut = null, DateTimeOffset? ocpDate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
@@ -4969,7 +4955,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual async Task<Response> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOut, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
@@ -5022,7 +5007,6 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
         public virtual Response GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOut, DateTimeOffset? ocpDate, IEnumerable<string> select, RequestContext context)
         {
@@ -7721,7 +7705,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTaskFileAsync(jobId, taskId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary> Returns the content of the specified Task file. </summary>
@@ -7754,7 +7738,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTaskFile(jobId, taskId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context);
-            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary>
@@ -9583,7 +9567,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetNodeRemoteDesktopFileAsync(poolId, nodeId, timeOut, ocpDate, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary> Gets the Remote Desktop Protocol file for the specified Compute Node. </summary>
@@ -9618,7 +9602,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetNodeRemoteDesktopFile(poolId, nodeId, timeOut, ocpDate, context);
-            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary>
@@ -10415,7 +10399,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetNodeFileAsync(poolId, nodeId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary> Returns the content of the specified Compute Node file. </summary>
@@ -10448,7 +10432,7 @@ namespace Azure.Compute.Batch
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetNodeFile(poolId, nodeId, filePath, timeOut, ocpDate, ocpRange, requestConditions, context);
-            return Response.FromValue(response.Content.ToObjectFromJson<BinaryData>(), response);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary>
