@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
     /// </summary>
-    public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
+    public partial class HttpClientTransport : HttpPipelineTransport
     {
         private sealed class HttpClientTransportResponse : Response
         {
@@ -24,9 +24,13 @@ namespace Azure.Core.Pipeline
                 _response = new HttpPipelineResponse(responseMessage, contentStream);
             }
 
-            public override string ClientRequestId { get; set; }
-
             public override int Status => _response.Status;
+
+            public override string ReasonPhrase =>
+                _response.TryGetReasonPhrase(out string reasonPhrase)
+                    ? reasonPhrase : string.Empty;
+
+            public override string ClientRequestId { get; set; }
 
             public override BinaryData Content => _response.Content;
 
@@ -36,18 +40,7 @@ namespace Azure.Core.Pipeline
                 set => _response.ContentStream = value;
             }
 
-            public override string ReasonPhrase
-            {
-                get => _response.TryGetReasonPhrase(out string reasonPhrase) ?
-                    reasonPhrase : string.Empty;
-            }
-
-            public override void Dispose()
-            {
-                // TODO: implement correctly
-                _response.Dispose();
-            }
-
+            #region Header implementation
             public override bool TryGetHeaderValue(string name, out string? value)
                 => _response.TryGetHeaderValue(name, out value);
 
@@ -68,12 +61,18 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            // TODO: EBN some of these?
             protected internal override bool TryGetHeader(string name, out string? value)
                 => _response.TryGetHeaderValue(name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string>? values)
                 => _response.TryGetHeaderValue(name, out values);
+            #endregion
+
+            public override void Dispose()
+            {
+                HttpPipelineResponse response = _response;
+                response.Dispose();
+            }
         }
     }
 }
