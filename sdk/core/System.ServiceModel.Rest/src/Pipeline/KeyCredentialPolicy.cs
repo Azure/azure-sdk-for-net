@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public class KeyCredentialPolicy : PipelinePolicy
+public class KeyCredentialPolicy : IPipelinePolicy<PipelineMessage>
 {
     private readonly string _name;
     private readonly KeyCredential _credential;
@@ -29,17 +29,17 @@ public class KeyCredentialPolicy : PipelinePolicy
         _prefix = prefix;
     }
 
-    public override void Process(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+    public void Process(PipelineMessage message, PipelineEnumerator pipeline)
     {
         message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {_credential.Key}" : _credential.Key);
 
-        ProcessNext(message, pipeline);
+        pipeline.ProcessNext();
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+    public async ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline)
     {
         message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {_credential.Key}" : _credential.Key);
 
-        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+        await pipeline.ProcessNextAsync().ConfigureAwait(false);
     }
 }

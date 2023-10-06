@@ -26,15 +26,15 @@ namespace System.ServiceModel.Rest
         public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
-        public static System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy? DefaultLoggingPolicy { get { throw null; } set { } }
-        public static System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy? DefaultRetryPolicy { get { throw null; } set { } }
-        public static System.ServiceModel.Rest.Core.Pipeline.MessagePipelineTransport? DefaultTransport { get { throw null; } set { } }
-        public System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
-        public System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
-        public System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
+        public static System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultLoggingPolicy { get { throw null; } set { } }
+        public static System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultRetryPolicy { get { throw null; } set { } }
+        public static System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>? DefaultTransport { get { throw null; } set { } }
+        public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? LoggingPolicy { get { throw null; } set { } }
+        public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[]? PerCallPolicies { get { throw null; } set { } }
+        public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[]? PerTryPolicies { get { throw null; } set { } }
         public System.ServiceModel.Rest.ResultErrorOptions ResultErrorOptions { get { throw null; } set { } }
-        public System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
-        public System.ServiceModel.Rest.Core.Pipeline.MessagePipelineTransport? Transport { get { throw null; } set { } }
+        public System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>? RetryPolicy { get { throw null; } set { } }
+        public System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>? Transport { get { throw null; } set { } }
     }
     public abstract partial class Result
     {
@@ -134,7 +134,7 @@ namespace System.ServiceModel.Rest.Core
 }
 namespace System.ServiceModel.Rest.Core.Pipeline
 {
-    public partial class HttpPipelineMessageTransport : System.ServiceModel.Rest.Core.Pipeline.MessagePipelineTransport
+    public partial class HttpPipelineMessageTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage>, System.IDisposable
     {
         public HttpPipelineMessageTransport() { }
         public HttpPipelineMessageTransport(System.Net.Http.HttpClient client) { }
@@ -178,44 +178,41 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }
-    public partial interface IPipelinePolicy<TMessage, TPolicy> where TPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<TMessage, TPolicy>
+    public partial interface IPipelinePolicy<TMessage>
     {
-        void Process(TMessage message, System.ReadOnlyMemory<TPolicy> pipeline);
-        System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ReadOnlyMemory<TPolicy> pipeline);
+        void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline);
+        System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline);
     }
-    public partial class KeyCredentialPolicy : System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy
+    public partial class KeyCredentialPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
     {
         public KeyCredentialPolicy(System.ServiceModel.Rest.KeyCredential credential, string name, string? prefix = null) { }
-        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline) { throw null; }
+        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
     }
     public partial class MessagePipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage>
     {
-        public MessagePipeline(System.ServiceModel.Rest.Core.Pipeline.MessagePipelineTransport transport, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> policies) { }
-        public static System.ServiceModel.Rest.Core.Pipeline.MessagePipeline Create(System.ServiceModel.Rest.RequestOptions options, System.ReadOnlySpan<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> perTryPolicies) { throw null; }
-        public static System.ServiceModel.Rest.Core.Pipeline.MessagePipeline Create(System.ServiceModel.Rest.RequestOptions options, params System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy[] perTryPolicies) { throw null; }
+        public MessagePipeline(System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage> transport, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>> policies) { }
+        public static System.ServiceModel.Rest.Core.Pipeline.MessagePipeline Create(System.ServiceModel.Rest.RequestOptions options, System.ReadOnlySpan<System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>> perCallPolicies, System.ReadOnlySpan<System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>> perTryPolicies) { throw null; }
+        public static System.ServiceModel.Rest.Core.Pipeline.MessagePipeline Create(System.ServiceModel.Rest.RequestOptions options, params System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>[] perTryPolicies) { throw null; }
         public override System.ServiceModel.Rest.Core.PipelineMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier) { throw null; }
         public override void Send(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
-    public abstract partial class MessagePipelineTransport : System.ServiceModel.Rest.Core.Pipeline.PipelineTransport<System.ServiceModel.Rest.Core.PipelineMessage, System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy>
+    public abstract partial class PipelineEnumerator
     {
-        protected MessagePipelineTransport() { }
+        protected PipelineEnumerator() { }
+        public int Length { get { throw null; } }
+        public abstract bool ProcessNext();
+        public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
     }
-    public abstract partial class PipelinePolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage, System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy>
-    {
-        protected PipelinePolicy() { }
-        public abstract void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline);
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline);
-        protected static void ProcessNext(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline) { }
-        protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline) { throw null; }
-    }
-    public abstract partial class PipelineTransport<TMessage, TPolicy>
+    public abstract partial class PipelineTransport<TMessage> : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<TMessage>
     {
         protected PipelineTransport() { }
         public abstract TMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);
         public abstract void Process(TMessage message);
+        public void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(TMessage message);
+        public System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
     }
     public abstract partial class Pipeline<TMessage>
     {
@@ -224,12 +221,12 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract void Send(TMessage message);
         public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
     }
-    public partial class ResponseBufferingPolicy : System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy
+    public partial class ResponseBufferingPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
     {
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout, bool bufferResponse) { }
         protected virtual bool BufferResponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
-        public override void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ReadOnlyMemory<System.ServiceModel.Rest.Core.Pipeline.PipelinePolicy> pipeline) { throw null; }
+        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
         protected virtual void SetReadTimeoutStream(System.ServiceModel.Rest.Core.PipelineMessage message, System.IO.Stream responseContentStream, System.TimeSpan networkTimeout) { }
         protected virtual bool TryGetNetworkTimeoutOverride(System.ServiceModel.Rest.Core.PipelineMessage message, out System.TimeSpan timeout) { throw null; }
     }

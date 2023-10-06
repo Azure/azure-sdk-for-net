@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
-using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -10,8 +11,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represent an extension point for the <see cref="HttpPipeline"/> that can mutate the <see cref="Request"/> and react to received <see cref="Response"/>.
     /// </summary>
-    // TODO: is adding the interface a useful addition?  Why or why not?
-    public abstract class HttpPipelinePolicy : IPipelinePolicy<HttpMessage, HttpPipelinePolicy>
+    public abstract class HttpPipelinePolicy
     {
         /// <summary>
         /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.

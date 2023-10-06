@@ -11,7 +11,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 
 // Introduces the dependency on System.Net.Http;
 
-public partial class HttpPipelineMessageTransport : MessagePipelineTransport
+public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
     private readonly HttpClient _httpClient;
 

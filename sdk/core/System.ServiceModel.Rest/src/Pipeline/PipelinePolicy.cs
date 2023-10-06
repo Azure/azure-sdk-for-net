@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public abstract class PipelinePolicy : IPipelinePolicy<PipelineMessage, PipelinePolicy>
+// TODO: can we make it a class? ... but it means all existing polices need to inherit from it.
+public interface IPipelinePolicy<TMessage>
 {
-    public abstract void Process(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline);
+    void Process(TMessage message, PipelineEnumerator pipeline);
 
-    public abstract ValueTask ProcessAsync(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline);
+    ValueTask ProcessAsync(TMessage message, PipelineEnumerator pipeline);
+}
 
-    protected static void ProcessNext(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
-    {
-        pipeline.Span[0].Process(message, pipeline.Slice(1));
-    }
+public abstract class PipelineEnumerator
+{
+    public int Length { get; internal set; }
 
-    protected static ValueTask ProcessNextAsync(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
-    {
-        return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
-    }
+    public abstract bool ProcessNext();
+
+    public abstract ValueTask<bool> ProcessNextAsync();
 }

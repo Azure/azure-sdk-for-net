@@ -15,7 +15,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
 /// </summary>
-public class ResponseBufferingPolicy : PipelinePolicy
+public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
 {
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
@@ -29,15 +29,15 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _bufferResponse = bufferResponse;
     }
 
-    public override void Process(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+    public void Process(PipelineMessage message, PipelineEnumerator pipeline)
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline)
+    public async ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, ReadOnlyMemory<PipelinePolicy> pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineEnumerator pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
@@ -54,11 +54,11 @@ public class ResponseBufferingPolicy : PipelinePolicy
             message.CancellationToken = cts.Token;
             if (async)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                await pipeline.ProcessNextAsync().ConfigureAwait(false);
             }
             else
             {
-                ProcessNext(message, pipeline);
+                pipeline.ProcessNext();
             }
         }
         catch (OperationCanceledException ex)
