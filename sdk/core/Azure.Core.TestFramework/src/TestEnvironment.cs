@@ -572,6 +572,20 @@ namespace Azure.Core.TestFramework
         public static bool GlobalIsRunningInCI => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
         /// <summary>
+        /// Determines if during test recording if we should use the default guid format for clientID.
+        /// </summary>
+        public static bool DefaultClientGuidFormatInRecording
+        {
+            get
+            {
+                string guidDefaultFormat = Environment.GetEnvironmentVariable("RECORDING_DEFAULT_ClIENT_GUID");
+
+                bool.TryParse(guidDefaultFormat, out bool enableDefaultGuidFormat);
+
+                return enableDefaultGuidFormat;
+            }
+        }
+        /// <summary>
         /// Determines if the current global test mode.
         /// </summary>
         internal static RecordedTestMode GlobalTestMode
