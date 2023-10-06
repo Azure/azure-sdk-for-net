@@ -291,7 +291,7 @@ namespace Azure.Communication.CallAutomation
         public bool InterruptCallMediaOperation { get { throw null; } set { } }
         public bool InterruptPrompt { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PlaySource Prompt { get { throw null; } set { } }
         public string SpeechLanguage { get { throw null; } set { } }
         public string SpeechModelEndpointId { get { throw null; } set { } }
@@ -389,7 +389,7 @@ namespace Azure.Communication.CallAutomation
         public CancelAddParticipantOptions(string invitationId) { }
         public string InvitationId { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
     }
     public partial class CancelAddParticipantResult
     {
@@ -494,7 +494,7 @@ namespace Azure.Communication.CallAutomation
     {
         public ContinuousDtmfRecognitionOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class ContinuousDtmfRecognitionStopped : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -677,7 +677,7 @@ namespace Azure.Communication.CallAutomation
         public PlayOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.PlaySource> playSources, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> playTo) { }
         public bool Loop { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.PlaySource> PlaySources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> PlayTo { get { throw null; } }
     }
@@ -698,7 +698,7 @@ namespace Azure.Communication.CallAutomation
         public PlayToAllOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.PlaySource> playSources) { }
         public bool Loop { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.PlaySource> PlaySources { get { throw null; } }
     }
     public partial class RecognitionChoice
@@ -888,7 +888,7 @@ namespace Azure.Communication.CallAutomation
     {
         public RemoveParticipantOptions(Azure.Communication.CommunicationIdentifier participantToRemove) { }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier ParticipantToRemove { get { throw null; } }
     }
     public partial class RemoveParticipantResult
@@ -932,7 +932,7 @@ namespace Azure.Communication.CallAutomation
     {
         public SendDtmfTonesOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones, Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } }
     }
@@ -1022,7 +1022,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public TransferToParticipantOptions(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity) { }
         public string OperationContext { get { throw null; } set { } }
-        public string OverrideCallbackUri { get { throw null; } set { } }
+        public string OverrideCallbackUrl { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Transferee { get { throw null; } set { } }
     }

@@ -28,6 +28,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callback URI to override the main callback URI.
         /// </summary>
-        public string OverrideCallbackUri { get; set; }
+        public string OverrideCallbackUrl { get; set; }
     }
 }

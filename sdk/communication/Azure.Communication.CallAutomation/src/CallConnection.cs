@@ -278,7 +278,7 @@ namespace Azure.Communication.CallAutomation
             {
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                 Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
-                OverrideCallbackUri = options.OverrideCallbackUri
+                OverrideCallbackUri = options.OverrideCallbackUrl
             };
 
             return request;
@@ -528,7 +528,7 @@ namespace Azure.Communication.CallAutomation
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
                 {
                     OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OverrideCallbackUri = options.OverrideCallbackUri
+                    OverrideCallbackUri = options.OverrideCallbackUrl
                 };
 
                 var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -578,7 +578,7 @@ namespace Azure.Communication.CallAutomation
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
                 {
                     OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OverrideCallbackUri = options.OverrideCallbackUri,
+                    OverrideCallbackUri = options.OverrideCallbackUrl,
                 };
 
                 var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
@@ -711,7 +711,7 @@ namespace Azure.Communication.CallAutomation
                 var request = new CancelAddParticipantRequestInternal(options.InvitationId)
                 {
                     OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OverrideCallbackUri = options.OverrideCallbackUri
+                    OverrideCallbackUri = options.OverrideCallbackUrl
                 };
                 var response = await RestClient.CancelAddParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
                 var result = new CancelAddParticipantResult(response);
@@ -758,7 +758,7 @@ namespace Azure.Communication.CallAutomation
                 var request = new CancelAddParticipantRequestInternal(options.InvitationId)
                 {
                     OperationContext = options.OperationContext,
-                    OverrideCallbackUri = options.OverrideCallbackUri
+                    OverrideCallbackUri = options.OverrideCallbackUrl
                 };
                 var response = RestClient.CancelAddParticipant(CallConnectionId, request, cancellationToken);
                 var result = new CancelAddParticipantResult(response);

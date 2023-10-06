@@ -176,7 +176,7 @@ namespace Azure.Communication.CallAutomation
             {
                 request.PlayOptions = new PlayOptionsInternal(options.Loop);
                 request.OperationContext = options.OperationContext;
-                request.OverrideCallbackUri = options.OverrideCallbackUri;
+                request.OverrideCallbackUri = options.OverrideCallbackUrl;
             }
 
             if (request.OperationContext == default)
@@ -202,7 +202,7 @@ namespace Azure.Communication.CallAutomation
                 PlayOptions playOptions = new(options.PlaySources, Enumerable.Empty<CommunicationIdentifier>())
                 {
                     OperationContext = options.OperationContext,
-                    OverrideCallbackUri = options.OverrideCallbackUri,
+                    OverrideCallbackUrl = options.OverrideCallbackUrl,
                     Loop = options.Loop
                 };
                 return await PlayAsync(playOptions, cancellationToken).ConfigureAwait(false);
@@ -250,7 +250,7 @@ namespace Azure.Communication.CallAutomation
                 PlayOptions playOptions = new(options.PlaySources, Enumerable.Empty<CommunicationIdentifier>())
                 {
                     OperationContext = options.OperationContext,
-                    OverrideCallbackUri = options.OverrideCallbackUri,
+                    OverrideCallbackUrl = options.OverrideCallbackUrl,
                     Loop = options.Loop
                 };
                 return Play(playOptions, cancellationToken);
@@ -415,7 +415,7 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeDtmfOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUri;
+                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUrl;
 
                 return request;
             }
@@ -445,7 +445,7 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUri;
+                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUrl;
 
                 return request;
             }
@@ -478,7 +478,7 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUri;
+                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUrl;
 
                 return request;
             }
@@ -519,7 +519,7 @@ namespace Azure.Communication.CallAutomation
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
-                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUri;
+                request.OverrideCallbackUri = recognizeOptions.OverrideCallbackUrl;
 
                 return request;
             }
@@ -634,7 +634,7 @@ namespace Azure.Communication.CallAutomation
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(continuousDtmfRecognitionOptions.TargetParticipant))
                 {
                     OperationContext = continuousDtmfRecognitionOptions.OperationContext,
-                    OverrideCallbackUri = continuousDtmfRecognitionOptions.OverrideCallbackUri
+                    OverrideCallbackUri = continuousDtmfRecognitionOptions.OverrideCallbackUrl
                 };
 
                 return CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
@@ -689,7 +689,7 @@ namespace Azure.Communication.CallAutomation
                 ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(continuousDtmfRecognitionOptions.TargetParticipant))
                 {
                     OperationContext = continuousDtmfRecognitionOptions.OperationContext,
-                    OverrideCallbackUri = continuousDtmfRecognitionOptions.OverrideCallbackUri
+                    OverrideCallbackUri = continuousDtmfRecognitionOptions.OverrideCallbackUrl
                 };
                 return await CallMediaRestClient.StopContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -742,7 +742,8 @@ namespace Azure.Communication.CallAutomation
             {
                 SendDtmfTonesRequestInternal request = new(sendDtmfTonesOptions.Tones, CommunicationIdentifierSerializer.Serialize(sendDtmfTonesOptions.TargetParticipant))
                 {
-                    OperationContext = sendDtmfTonesOptions.OperationContext
+                    OperationContext = sendDtmfTonesOptions.OperationContext,
+                    OverrideCallbackUri = sendDtmfTonesOptions.OverrideCallbackUrl
                 };
 
                 var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -807,7 +808,8 @@ namespace Azure.Communication.CallAutomation
             {
                 SendDtmfTonesRequestInternal request = new(sendDtmfTonesOptions.Tones, CommunicationIdentifierSerializer.Serialize(sendDtmfTonesOptions.TargetParticipant))
                 {
-                    OperationContext = sendDtmfTonesOptions.OperationContext
+                    OperationContext = sendDtmfTonesOptions.OperationContext,
+                    OverrideCallbackUri = sendDtmfTonesOptions.OverrideCallbackUrl
                 };
 
                 var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, cancellationToken);
