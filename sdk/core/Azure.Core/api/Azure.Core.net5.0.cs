@@ -993,7 +993,7 @@ namespace Azure.Core.Pipeline
         public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
-    public abstract partial class HttpPipelinePolicy
+    public abstract partial class HttpPipelinePolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<Azure.Core.HttpMessage, Azure.Core.Pipeline.HttpPipelinePolicy>
     {
         protected HttpPipelinePolicy() { }
         public abstract void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);

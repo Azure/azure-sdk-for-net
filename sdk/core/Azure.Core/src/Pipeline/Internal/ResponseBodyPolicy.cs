@@ -22,43 +22,45 @@ namespace Azure.Core.Pipeline
             _policy = new AzureCoreResponseBufferingPolicy(networkTimeout);
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            // TODO: this is super inefficient so we come back to this
-            AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
+            throw new NotImplementedException();
 
-            try
-            {
-                await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
-            }
-            catch (TaskCanceledException e)
-            {
-                // TODO: come back and clean this up.
-                if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
-                {
-                    string exceptionMessage = e.Message +
-                        $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
-#if NETCOREAPP2_1_OR_GREATER
-                    throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
-#else
-                    throw new TaskCanceledException(exceptionMessage, e.InnerException);
-#endif
-                }
-                else
-                {
-                    throw e;
-                }
-            }
+            // TODO: this is super inefficient so we come back to this
+            //AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
+
+//            try
+//            {
+//                //await _policy.ProcessAsync(message, pipeline).ConfigureAwait(false);
+//            }
+//            catch (TaskCanceledException e)
+//            {
+//                // TODO: come back and clean this up.
+//                if (e.Message.Contains("The operation was cancelled because it exceeded the configured timeout"))
+//                {
+//                    string exceptionMessage = e.Message +
+//                        $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.";
+//#if NETCOREAPP2_1_OR_GREATER
+//                    throw new TaskCanceledException(exceptionMessage, e.InnerException, e.CancellationToken);
+//#else
+//                    throw new TaskCanceledException(exceptionMessage, e.InnerException);
+//#endif
+//                }
+//                else
+//                {
+//                    throw e;
+//                }
+//            }
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             // TODO: this is super inefficient so we come back to this
-            AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
+            //AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
 
             try
             {
-                _policy.Process(message, executor);
+                //_policy.Process(message, executor);
             }
             catch (TaskCanceledException e)
             {
@@ -102,30 +104,30 @@ namespace Azure.Core.Pipeline
         }
     }
 
-#pragma warning disable SA1402 // File may only contain a single type
-    internal class AzureCorePipelineExecutor : PipelineEnumerator
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        private readonly HttpMessage _message;
-        private ReadOnlyMemory<HttpPipelinePolicy> _policies;
+//#pragma warning disable SA1402 // File may only contain a single type
+//    internal class AzureCorePipelineExecutor : PipelineEnumerator
+//#pragma warning restore SA1402 // File may only contain a single type
+//    {
+//        private readonly HttpMessage _message;
+//        private ReadOnlyMemory<HttpPipelinePolicy> _policies;
 
-        public AzureCorePipelineExecutor(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> policies)
-        {
-            _policies = policies;
-            _message = message;
-        }
-        public override bool ProcessNext()
-        {
-            _policies.Span[0].Process(_message, _policies.Slice(1));
-            return true;
-        }
+//        public AzureCorePipelineExecutor(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> policies)
+//        {
+//            _policies = policies;
+//            _message = message;
+//        }
+//        public override bool ProcessNext()
+//        {
+//            _policies.Span[0].Process(_message, _policies.Slice(1));
+//            return true;
+//        }
 
-        public async override ValueTask<bool> ProcessNextAsync()
-        {
-            await _policies.Span[0].ProcessAsync(_message, _policies.Slice(1)).ConfigureAwait(false);
-            return true;
-        }
-    }
+//        public async override ValueTask<bool> ProcessNextAsync()
+//        {
+//            await _policies.Span[0].ProcessAsync(_message, _policies.Slice(1)).ConfigureAwait(false);
+//            return true;
+//        }
+//    }
 
 #pragma warning disable SA1402 // File may only contain a single type
     internal class AzureCoreResponseBufferingPolicy : ResponseBufferingPolicy
