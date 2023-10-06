@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,11 +13,11 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
-        private readonly AzureCoreResponseBufferingPolicy _policy;
+        private readonly ResponseBufferingPolicy _policy;
 
         public ResponseBodyPolicy(TimeSpan networkTimeout)
         {
-            _policy = new AzureCoreResponseBufferingPolicy(networkTimeout);
+            _policy = new ResponseBufferingPolicy(networkTimeout);
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -124,48 +122,6 @@ namespace Azure.Core.Pipeline
         {
             await _policies.Span[0].ProcessAsync(_message, _policies.Slice(1)).ConfigureAwait(false);
             return true;
-        }
-    }
-
-#pragma warning disable SA1402 // File may only contain a single type
-    internal class AzureCoreResponseBufferingPolicy : ResponseBufferingPolicy
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        public AzureCoreResponseBufferingPolicy(TimeSpan networkTimeout)
-            : base(networkTimeout, bufferResponse: true)
-        {
-        }
-
-        protected override bool TryGetNetworkTimeoutOverride(PipelineMessage message, out TimeSpan timeout)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message.GetType()}'.");
-            }
-
-            if (httpMessage.NetworkTimeout is TimeSpan networkTimeoutOverride)
-            {
-                timeout = networkTimeoutOverride;
-                return true;
-            }
-
-            timeout = default;
-            return false;
-        }
-
-        protected override bool BufferResponse(PipelineMessage message)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message.GetType()}'.");
-            }
-
-            return httpMessage.BufferResponse;
-        }
-
-        protected override void SetReadTimeoutStream(PipelineMessage message, Stream responseContentStream, TimeSpan networkTimeout)
-        {
-            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
         }
     }
 }

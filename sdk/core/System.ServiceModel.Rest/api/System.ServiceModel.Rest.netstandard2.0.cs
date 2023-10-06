@@ -224,14 +224,12 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public abstract void Send(TMessage message);
         public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
     }
-    public partial class ResponseBufferingPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct ResponseBufferingPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
     {
-        public ResponseBufferingPolicy(System.TimeSpan networkTimeout, bool bufferResponse) { }
-        protected virtual bool BufferResponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
+        public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { throw null; }
         public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
         public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
-        protected virtual void SetReadTimeoutStream(System.ServiceModel.Rest.Core.PipelineMessage message, System.IO.Stream responseContentStream, System.TimeSpan networkTimeout) { }
-        protected virtual bool TryGetNetworkTimeoutOverride(System.ServiceModel.Rest.Core.PipelineMessage message, out System.TimeSpan timeout) { throw null; }
     }
 }
 namespace System.ServiceModel.Rest.Internal
