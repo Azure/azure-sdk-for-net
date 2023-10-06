@@ -9,7 +9,7 @@ namespace System.ServiceModel.Rest
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
-        public string Key { get { throw null; } }
+        public bool TryGetKey(out string key) { throw null; }
         public void Update(string key) { }
     }
     public partial class MessageFailedException : System.Exception
@@ -155,7 +155,6 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         protected virtual void AddHeader(string name, string value) { }
         protected virtual bool ContainsHeader(string name) { throw null; }
         public virtual void Dispose() { }
-        protected System.Collections.Generic.IEnumerable<string> GetHeaderNames() { throw null; }
         protected virtual bool RemoveHeader(string name) { throw null; }
         protected virtual void SetHeader(string name, string value) { }
         public override void SetHeaderValue(string name, string value) { }
@@ -163,6 +162,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override void SetMethod(string method) { }
         public override string ToString() { throw null; }
         protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
+        protected bool TryGetHeaderNames(out System.Collections.Generic.IEnumerable<string> headerNames) { throw null; }
         protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
         public virtual bool TryGetMethod(out System.Net.Http.HttpMethod method) { throw null; }
     }

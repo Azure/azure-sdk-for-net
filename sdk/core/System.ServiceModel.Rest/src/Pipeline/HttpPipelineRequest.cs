@@ -83,7 +83,13 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         }
     }
 
-    protected IEnumerable<string> GetHeaderNames()
+    protected bool TryGetHeaderNames(out IEnumerable<string> headerNames)
+    {
+        headerNames = GetHeaderNames();
+        return true;
+    }
+
+    private IEnumerable<string> GetHeaderNames()
     {
         for (int i = 0; i < _headers.Count; i++)
         {
