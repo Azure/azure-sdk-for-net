@@ -100,7 +100,8 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         else
         {
             // Add default transport.
-            pipeline[index++] = new HttpPipelineMessageTransport();
+            // TODO: Note this adds an HTTP dependency we should be aware of.
+            pipeline[index++] = HttpPipelineMessageTransport.Shared;
         }
 
         return new MessagePipeline(pipeline);

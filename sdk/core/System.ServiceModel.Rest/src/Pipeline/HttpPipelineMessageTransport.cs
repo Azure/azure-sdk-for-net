@@ -13,15 +13,20 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage>, IDisposable
 {
-    private readonly HttpClient _httpClient;
+    /// <summary>
+    /// A shared instance of <see cref="HttpPipelineMessageTransport"/> with default parameters.
+    /// </summary>
+    internal static readonly HttpPipelineMessageTransport Shared = new();
 
-    // TODO: remove this when refactor is complete.
-    public HttpClient Client => _httpClient;
+    private readonly bool _ownsClient;
+    private readonly HttpClient _httpClient;
 
     private bool _disposed;
 
     public HttpPipelineMessageTransport() : this(CreateDefaultClient())
     {
+        // We will dispose the httpClient.
+        _ownsClient = true;
     }
 
     public HttpPipelineMessageTransport(HttpClient client)
@@ -29,6 +34,9 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         ClientUtilities.AssertNotNull(client, nameof(client));
 
         _httpClient = client;
+
+        // The caller will dispose the httpClient.
+        _ownsClient = false;
     }
 
     private static HttpClient CreateDefaultClient()
@@ -182,8 +190,12 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
     {
         if (disposing && !_disposed)
         {
-            var httpClient = _httpClient;
-            httpClient?.Dispose();
+            if (this != Shared && _ownsClient)
+            {
+                HttpClient httpClient = _httpClient;
+                httpClient?.Dispose();
+            }
+
             _disposed = true;
         }
     }
