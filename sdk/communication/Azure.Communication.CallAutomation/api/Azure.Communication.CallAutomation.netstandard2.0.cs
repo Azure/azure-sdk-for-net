@@ -1400,16 +1400,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.TranscriptionTransport TranscriptionTransport { get { throw null; } }
         public System.Uri TransportUri { get { throw null; } }
     }
-    public abstract partial class TranscriptionPackageBase
-    {
-        protected TranscriptionPackageBase() { }
-    }
-    public static partial class TranscriptionPackageParser
-    {
-        public static Azure.Communication.CallAutomation.TranscriptionPackageBase Parse(System.BinaryData json) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionPackageBase Parse(byte[] receivedBytes) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionPackageBase Parse(string stringJson) { throw null; }
-    }
     public partial class TranscriptionResumed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal TranscriptionResumed() { }
@@ -1533,15 +1523,15 @@ namespace Azure.Communication.CallAutomation
     {
         internal UnmuteParticipantsResult() { }
         public string OperationContext { get { throw null; } }
+    }
+    public partial class UserConsent
     {
-        internal TranscriptionData() { }
-        public double Confidence { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.Models.Transcription.TextFormat Format { get { throw null; } set { } }
-        public ulong Offset { get { throw null; } set { } }
-        public Azure.Communication.CommunicationUserIdentifier Participant { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.Models.Transcription.ResultStatus ResultStatus { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.Models.Transcription.WordData> Words { get { throw null; } set { } }
+        internal UserConsent() { }
+        public int? Recording { get { throw null; } }
+    }
+    public partial class VoipHeader : Azure.Communication.CallAutomation.CustomContextHeader
+    {
+        public VoipHeader(string key, string value) : base (default(string), default(string)) { }
     }
     public partial class WordData
     {
