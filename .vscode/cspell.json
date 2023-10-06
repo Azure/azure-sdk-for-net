@@ -874,14 +874,6 @@
       ]
     },
     {
-      "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
-      "words": [
-        "dras",
-        "nics",
-        "reprotect"
-      ]
-    },
-    {
       "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
       "words": [
         "vcenter",
