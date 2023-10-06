@@ -8,16 +8,18 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 // TODO: can we make it a class? ... but it means all existing polices need to inherit from it.
 public interface IPipelinePolicy<TMessage>
 {
-    void Process(TMessage message, PipelineEnumerator pipeline);
+    void Process(TMessage message, IPipelineEnumerator pipeline);
 
-    ValueTask ProcessAsync(TMessage message, PipelineEnumerator pipeline);
+    ValueTask ProcessAsync(TMessage message, IPipelineEnumerator pipeline);
 }
 
-public abstract class PipelineEnumerator
+// TODO: perf tradeoff between a struct you only ever call methods on through
+// the interface it implements vs. an abstract class you have to allocate every time?
+public interface IPipelineEnumerator
 {
-    public int Length { get; internal set; }
+    int Length { get; }
 
-    public abstract bool ProcessNext();
+    bool ProcessNext();
 
-    public abstract ValueTask<bool> ProcessNextAsync();
+    ValueTask<bool> ProcessNextAsync();
 }

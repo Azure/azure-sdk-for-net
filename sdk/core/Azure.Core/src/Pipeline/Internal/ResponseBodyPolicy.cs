@@ -24,8 +24,7 @@ namespace Azure.Core.Pipeline
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            // TODO: this is super inefficient so we come back to this
-            AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
+            AzureCorePipelineEnumerator executor = new AzureCorePipelineEnumerator(message, pipeline);
 
             try
             {
@@ -53,8 +52,7 @@ namespace Azure.Core.Pipeline
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            // TODO: this is super inefficient so we come back to this
-            AzureCorePipelineExecutor executor = new AzureCorePipelineExecutor(message, pipeline);
+            AzureCorePipelineEnumerator executor = new AzureCorePipelineEnumerator(message, pipeline);
 
             try
             {
@@ -99,31 +97,6 @@ namespace Azure.Core.Pipeline
                     $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
                     $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.");
             }
-        }
-    }
-
-#pragma warning disable SA1402 // File may only contain a single type
-    internal class AzureCorePipelineExecutor : PipelineEnumerator
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        private readonly HttpMessage _message;
-        private ReadOnlyMemory<HttpPipelinePolicy> _policies;
-
-        public AzureCorePipelineExecutor(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> policies)
-        {
-            _policies = policies;
-            _message = message;
-        }
-        public override bool ProcessNext()
-        {
-            _policies.Span[0].Process(_message, _policies.Slice(1));
-            return true;
-        }
-
-        public async override ValueTask<bool> ProcessNextAsync()
-        {
-            await _policies.Span[0].ProcessAsync(_message, _policies.Slice(1)).ConfigureAwait(false);
-            return true;
         }
     }
 

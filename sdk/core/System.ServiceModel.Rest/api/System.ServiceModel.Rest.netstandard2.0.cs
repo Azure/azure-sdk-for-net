@@ -178,16 +178,22 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
     }
+    public partial interface IPipelineEnumerator
+    {
+        int Length { get; }
+        bool ProcessNext();
+        System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
+    }
     public partial interface IPipelinePolicy<TMessage>
     {
-        void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline);
-        System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline);
+        void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline);
+        System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline);
     }
     public partial class KeyCredentialPolicy : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<System.ServiceModel.Rest.Core.PipelineMessage>
     {
         public KeyCredentialPolicy(System.ServiceModel.Rest.KeyCredential credential, string name, string? prefix = null) { }
-        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
-        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
+        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { throw null; }
     }
     public partial class MessagePipeline : System.ServiceModel.Rest.Core.Pipeline.Pipeline<System.ServiceModel.Rest.Core.PipelineMessage>
     {
@@ -198,21 +204,14 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override void Send(System.ServiceModel.Rest.Core.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask SendAsync(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
     }
-    public abstract partial class PipelineEnumerator
-    {
-        protected PipelineEnumerator() { }
-        public int Length { get { throw null; } }
-        public abstract bool ProcessNext();
-        public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
-    }
     public abstract partial class PipelineTransport<TMessage> : System.ServiceModel.Rest.Core.Pipeline.IPipelinePolicy<TMessage>
     {
         protected PipelineTransport() { }
         public abstract TMessage CreateMessage(System.ServiceModel.Rest.RequestOptions options, System.ServiceModel.Rest.Core.ResponseErrorClassifier classifier);
         public abstract void Process(TMessage message);
-        public void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
+        public void Process(TMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(TMessage message);
-        public System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
+        public System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { throw null; }
     }
     public abstract partial class Pipeline<TMessage>
     {
@@ -225,8 +224,8 @@ namespace System.ServiceModel.Rest.Core.Pipeline
     {
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout, bool bufferResponse) { }
         protected virtual bool BufferResponse(System.ServiceModel.Rest.Core.PipelineMessage message) { throw null; }
-        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { }
-        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.PipelineEnumerator pipeline) { throw null; }
+        public void Process(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ServiceModel.Rest.Core.PipelineMessage message, System.ServiceModel.Rest.Core.Pipeline.IPipelineEnumerator pipeline) { throw null; }
         protected virtual void SetReadTimeoutStream(System.ServiceModel.Rest.Core.PipelineMessage message, System.IO.Stream responseContentStream, System.TimeSpan networkTimeout) { }
         protected virtual bool TryGetNetworkTimeoutOverride(System.ServiceModel.Rest.Core.PipelineMessage message, out System.TimeSpan timeout) { throw null; }
     }
