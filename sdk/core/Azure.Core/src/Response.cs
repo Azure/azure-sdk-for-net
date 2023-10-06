@@ -18,12 +18,7 @@ namespace Azure
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
-        /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
-        /// </summary>
-        public abstract string ClientRequestId { get; set; }
-
-        /// <summary>
-        /// TBD.
+        /// Gets the HTTP reason phrase.
         /// </summary>
         public abstract string ReasonPhrase { get; }
 
@@ -38,6 +33,11 @@ namespace Azure
             reasonPhrase = ReasonPhrase;
             return true;
         }
+
+        /// <summary>
+        /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
+        /// </summary>
+        public abstract string ClientRequestId { get; set; }
 
         /// <summary>
         /// Get the HTTP response headers.

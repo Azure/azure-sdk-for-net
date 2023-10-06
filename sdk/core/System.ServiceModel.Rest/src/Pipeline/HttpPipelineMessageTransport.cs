@@ -181,7 +181,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
 
-        return pipelineRequest.BuildRequestMessage(message.CancellationToken);
+        return pipelineRequest.BuildRequestMessage(message);
     }
 
     #region IDisposable
