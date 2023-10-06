@@ -3,7 +3,7 @@
 *Token caching* is a feature provided by the Azure Identity library that allows apps to:
 
 - Improve their resilience and performance.
-- Reduce the number of requests made to Microsoft Entra ID (ME-ID) to obtain access tokens.
+- Reduce the number of requests made to Microsoft Entra ID to obtain access tokens.
 - Reduce the number of times the user is prompted to authenticate.
 
 When an app needs to access a protected Azure resource, it typically needs to obtain an access token from Microsoft Entra ID. Obtaining that token involves sending a request to Microsoft Entra ID and may also involve prompting the user. Microsoft Entra ID then validates the credentials provided in the request and issues an access token.
