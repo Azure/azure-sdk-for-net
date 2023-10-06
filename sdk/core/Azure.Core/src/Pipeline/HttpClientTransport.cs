@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -63,8 +64,8 @@ namespace Azure.Core.Pipeline
         internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
         { }
 
-        // TODO: do we still need this?  Does it make sense?
         /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public sealed override Request CreateRequest() => new HttpClientTransportRequest();
 
         /// <inheritdoc />

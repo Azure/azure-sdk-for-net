@@ -56,30 +56,22 @@ namespace Azure.Core
         {
             get
             {
-                if (_response == null)
+                if (_response is not null)
                 {
-                    if (base.Response is null)
-                    {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                        throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                    }
-
-                    if (base.Response is not Response response)
-                    {
-                        throw new InvalidOperationException($"Invalid response type: '{base.Response.GetType()}'.");
-                    }
-
-                    return (Response)base.Response;
+                    return _response;
                 }
 
-                // TODO: refactor to remove redundancy
-                if (base.Response is not Response _)
+                if (base.Response is null)
+                {
+                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+                }
+
+                if (base.Response is not Response response)
                 {
                     throw new InvalidOperationException($"Invalid response type: '{base.Response.GetType()}'.");
                 }
 
-                return _response;
+                return response;
             }
 
             set => base.Response = _response = value!;

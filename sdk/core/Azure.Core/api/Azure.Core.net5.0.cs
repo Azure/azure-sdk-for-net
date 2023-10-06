@@ -954,6 +954,7 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public override void Dispose() { }
         protected override void OnReceivedResponse(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
@@ -1015,6 +1016,7 @@ namespace Azure.Core.Pipeline
     public abstract partial class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineMessageTransport
     {
         public HttpPipelineTransport() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public abstract Azure.Core.Request CreateRequest();
         public virtual void Process(Azure.Core.HttpMessage message) { }
         public virtual System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }

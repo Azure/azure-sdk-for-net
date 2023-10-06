@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
+using System.ComponentModel;
 using System.Net.Http;
-using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading.Tasks;
 
@@ -19,12 +18,14 @@ namespace Azure.Core.Pipeline
         /// <see cref="HttpPipeline.CreateMessage()"/> should be used instead.
         /// </summary>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public abstract Request CreateRequest();
 
         /// <summary>
         /// TBD
         /// </summary>
         public HttpPipelineTransport() : base() { }
+
         internal HttpPipelineTransport(HttpClient client) : base(client) { }
 
         /// <summary>
@@ -57,14 +58,13 @@ namespace Azure.Core.Pipeline
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        public virtual void Process(HttpMessage message)
-            => Process((PipelineMessage)message);
+        public virtual void Process(HttpMessage message) => base.Process(message);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
         public virtual async ValueTask ProcessAsync(HttpMessage message)
-            => await ProcessAsync((PipelineMessage)message).ConfigureAwait(false);
+            => await base.ProcessAsync(message).ConfigureAwait(false);
     }
 }
