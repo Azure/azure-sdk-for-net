@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.ServiceModel.Rest.Core.Pipeline;
 
 namespace Azure.Core.Pipeline
 {
@@ -13,15 +12,9 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        private sealed class RestRequestAdapter : Request
+        private sealed class HttpClientTransportRequest : Request
         {
-            private HttpPipelineRequest _request;
             private string? _clientRequestId;
-
-            public RestRequestAdapter(HttpPipelineRequest request)
-            {
-                _request = request;
-            }
 
             public override string ClientRequestId
             {
@@ -40,7 +33,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (!TryGetHeader(name, out string? value))
                     {
-                        throw new InvalidOperationException("Why?");
+                        throw new InvalidOperationException("Enumerator returned a header name that was not present in the collection.");
                     }
 
                     yield return new HttpHeader(name, value!);

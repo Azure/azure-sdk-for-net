@@ -155,11 +155,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
     /// TBD. Needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
-    protected virtual void OnSendingRequest(PipelineMessage message)
-    {
-        // TODO: Azure.Core-specific
-        //SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
-    }
+    protected virtual void OnSendingRequest(PipelineMessage message) { }
 
     /// <summary>
     /// TBD.  Needed for inheritdoc.
@@ -174,8 +170,9 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
     {
         if (message.Request is not HttpPipelineRequest pipelineRequest)
         {
-            throw new InvalidOperationException("the request is not compatible with the transport");
+            throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
+
         return pipelineRequest.BuildRequestMessage(message.CancellationToken);
     }
 

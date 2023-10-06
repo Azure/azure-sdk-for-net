@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,7 +53,6 @@ namespace Azure.Core.Pipeline
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client) : base(client)
         {
-            //_httpClient = client;
         }
 
         /// <summary>
@@ -66,8 +64,7 @@ namespace Azure.Core.Pipeline
 
         // TODO: do we still need this?  Does it make sense?
         /// <inheritdoc />
-        public sealed override Request CreateRequest()
-            => new RestRequestAdapter(new HttpPipelineRequest());
+        public sealed override Request CreateRequest() => new HttpClientTransportRequest();
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)

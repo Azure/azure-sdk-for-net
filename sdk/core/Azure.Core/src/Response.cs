@@ -135,11 +135,5 @@ namespace Azure
                 stream = null;
             }
         }
-
-        //public override void Dispose()
-        //{
-        //    // TODO: correct this
-        //    base.Dispose();
-        //}
     }
 }

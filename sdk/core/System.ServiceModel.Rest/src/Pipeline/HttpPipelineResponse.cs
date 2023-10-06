@@ -13,9 +13,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
     private readonly HttpContent _httpContent;
-
-    // TODO: Using our custom thing for now to see what breaks.
-    // Ideally, this gets refactored when we add the buffering policy
     private Stream? _contentStream;
 
     private bool _disposed;
