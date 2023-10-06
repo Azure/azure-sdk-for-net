@@ -106,9 +106,9 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return new MessagePipeline(pipeline);
     }
 
-    public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
+    public override PipelineMessage CreateMessage(RequestOptions options)
     {
-        return _transport.CreateMessage(options, classifier);
+        return _transport.CreateMessage(options);
     }
 
     public override void Send(PipelineMessage message)
@@ -116,7 +116,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         enumerator.ProcessNext();
 
-        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.RequestOptions.ResponseClassifier.IsErrorResponse(message);
     }
 
     public override async ValueTask SendAsync(PipelineMessage message)
@@ -124,7 +124,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
 
-        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.RequestOptions.ResponseClassifier.IsErrorResponse(message);
     }
 
     internal class MessagePipelineExecutor : PipelineEnumerator

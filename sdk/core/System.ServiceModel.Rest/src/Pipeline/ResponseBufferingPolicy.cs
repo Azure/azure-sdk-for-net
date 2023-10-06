@@ -7,9 +7,6 @@ using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-// TODO: what do we need from here?
-//using Azure.Core.Buffers;
-
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
 /// <summary>
@@ -188,7 +185,6 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
 
         if (timeoutToken.IsCancellationRequested)
         {
-            // TODO: Make this error message correct
             throw ClientUtilities.CreateOperationCanceledException(
                 inner,
                 timeoutToken,

@@ -10,8 +10,6 @@ namespace System.ServiceModel.Rest;
 // TODO: Make options freezable
 public class RequestOptions
 {
-    private bool _bufferResponse = true;
-
     public CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
 
     public ResultErrorOptions ResultErrorOptions { get; set; } = ResultErrorOptions.Default;
@@ -26,11 +24,11 @@ public class RequestOptions
 
     public PipelineTransport<PipelineMessage>? Transport { get; set; }
 
-    public bool BufferResponse
-    {
-        get => _bufferResponse;
-        set => _bufferResponse = value;
-    }
+    public bool BufferResponse { get; set; }
+
+    public TimeSpan NetworkTimeout { get; set; }
+
+    public ResponseErrorClassifier ResponseClassifier { get; set; } = DefaultResponseClassifier;
 
     public static IPipelinePolicy<PipelineMessage>? DefaultRetryPolicy { get; set; }
 
@@ -39,4 +37,6 @@ public class RequestOptions
     public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
 
     public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
+
+    public static ResponseErrorClassifier DefaultResponseClassifier { get; set; } = new ResponseErrorClassifier();
 }

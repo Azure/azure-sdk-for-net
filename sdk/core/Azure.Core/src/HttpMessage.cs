@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
 using Azure.Core.Pipeline;
 
@@ -14,7 +15,8 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : PipelineMessage
     {
-        private ArrayBackedPropertyBag<ulong, object> _propertyBag;
+        private readonly ArrayBackedPropertyBag<ulong, object> _propertyBag;
+        private readonly RequestOptions _requestOptions;
 
         private Response? _response;
 
@@ -24,17 +26,20 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : this((PipelineRequest)request, responseClassifier)
+            : this(request, new RequestOptions { ResponseClassifier = responseClassifier })
         {
         }
 
-        internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
-            : base(request, classifier)
+        internal HttpMessage(PipelineRequest request, RequestOptions options)
+            : base(request, options)
         {
             Argument.AssertNotNull(request, nameof(request));
 
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+
+            // TODO: is there a better way to initialize this, e.g. from client options?
+            _requestOptions = new RequestOptions();
         }
 
         /// <summary>
@@ -88,29 +93,46 @@ namespace Azure.Core
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public new bool HasResponse => _response != null || base.HasResponse;
+        public override bool HasResponse => _response != null || base.HasResponse;
 
         internal void ClearResponse() => ResponseInternal = null;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public new ResponseClassifier ResponseClassifier
+        public ResponseClassifier ResponseClassifier
         {
-            get => (ResponseClassifier)base.ResponseClassifier;
-            set => base.ResponseClassifier = value;
+            // TODO: may need an adapter here, make sure functionality is not lost
+            get => (ResponseClassifier)_requestOptions.ResponseClassifier;
+            set => _requestOptions.ResponseClassifier = value;
         }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
         /// </summary>
-        public bool BufferResponse { get; set; }
+        public bool BufferResponse
+        {
+            get => _requestOptions.BufferResponse;
+            set => _requestOptions.BufferResponse = value;
+        }
 
         /// <summary>
         /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> would be used instead.
         /// Defaults to <c>null</c>.
         /// </summary>
-        public TimeSpan? NetworkTimeout { get; set; }
+        public TimeSpan? NetworkTimeout
+        {
+            get => _requestOptions.NetworkTimeout;
+
+            set
+            {
+                // TODO: think through precedence layering if someone were to set this to null.
+                if (value is not null)
+                {
+                    _requestOptions.NetworkTimeout = value.Value;
+                }
+            }
+        }
 
         internal int RetryNumber { get; set; }
 
@@ -140,6 +162,12 @@ namespace Azure.Core
             {
                 ResponseClassifier = context.Apply(classifier);
             }
+
+            // TODO: would we want to copy more across than this?  This is brittle.
+            // TODO: need to ensure ApplyRequestContext is called before message.BufferResponse is set.
+            // Validated - yes, this is called in pipeline.CreateMessage().
+            _requestOptions.BufferResponse = context.BufferResponse;
+            _requestOptions.NetworkTimeout = context.NetworkTimeout;
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
