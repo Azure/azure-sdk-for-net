@@ -22,7 +22,7 @@ extends:
           - $(sub-config-communication-ppe-test-resources-net)
         MatrixReplace: 
           - SKIP_UPDATE_CAPABILITIES_LIVE_TESTS=FALSE/TRUE
-          - SKIP_SIPROUTING_LIVE_TESTS=TRUE/TRUE
+          - SKIP_SIPROUTING_LIVE_TESTS=FALSE/TRUE
       Int:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
