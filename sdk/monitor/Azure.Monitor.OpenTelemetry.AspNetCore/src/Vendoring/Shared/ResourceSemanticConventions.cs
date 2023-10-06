@@ -58,9 +58,16 @@ internal static class ResourceSemanticConventions
     public const string AttributeProcessCommandLine = "process.command_line";
     public const string AttributeProcessUsername = "process.username";
 
-    public const string AttributeCloudProvider = "cloud.provider";
     public const string AttributeCloudAccount = "cloud.account.id";
+    public const string AttributeCloudPlatform = "cloud.platform";
+    public const string AttributeCloudProvider = "cloud.provider";
     public const string AttributeCloudRegion = "cloud.region";
+    public const string AttributeCloudResourceId = "cloud.resource_id";
     public const string AttributeCloudZone = "cloud.zone";
     public const string AttributeComponent = "component";
+
+    public const string AttributeOsType = "os.type";
+    public const string AttributeOsVersion = "os.version";
+
+    public const string AttributeDeploymentEnvironment = "deployment.environment";
 }

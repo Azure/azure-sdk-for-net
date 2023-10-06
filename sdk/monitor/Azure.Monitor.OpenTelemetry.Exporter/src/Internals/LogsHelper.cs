@@ -140,9 +140,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (exceptionStackFrame != null)
             {
-                MethodBase? methodBase = exceptionStackFrame.GetMethod();
+                MethodBase? methodBase = exceptionStackFrame.GetMethodWithoutWarning();
 
-                if (methodBase != null)
+                if (methodBase == null)
+                {
+                    // In an AOT scenario GetMethod() will return null.
+                    // Instead, call ToString() which gives a string like this:
+                    // "MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0"
+                    methodName = exceptionStackFrame.ToString();
+                    methodOffset = System.Diagnostics.StackFrame.OFFSET_UNKNOWN;
+                }
+                else
                 {
                     methodName = (methodBase.DeclaringType?.FullName ?? "Global") + "." + methodBase.Name;
                     methodOffset = exceptionStackFrame.GetILOffset();
