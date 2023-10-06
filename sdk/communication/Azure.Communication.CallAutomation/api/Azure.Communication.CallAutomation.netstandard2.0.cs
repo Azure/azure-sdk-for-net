@@ -1367,6 +1367,8 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionMetadata() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("callConnectionId")]
         public string CallConnectionId { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("correlationId")]
+        public string CorrelationId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("locale")]
         public string Locale { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
