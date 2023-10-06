@@ -1,10 +1,9 @@
 # Release History
 
-### Other Changes
 ## 1.1.0-beta.1 (2023-09-19)
 
 ### Features Added
-- Added Support for PSTN Dial-Out Feature in Azure Communication Services Rooms
+- Added support for PSTN dial-out capability
 
 ### Added
 - Added new overloads for CreateRoom (CreateRoomAsync) and UpdateRooms (UpdateRoomsAsync) with options : CreateRoomOptions and UpdateRoomOptions. 

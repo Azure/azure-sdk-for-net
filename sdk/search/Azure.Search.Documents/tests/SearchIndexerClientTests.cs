@@ -85,16 +85,20 @@ namespace Azure.Search.Documents.Tests
                 dataSource.Name,
                 resources.IndexName);
 
-            SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
-                indexer);
+            await serviceClient.CreateIndexerAsync(indexer);
+
+            // Wait till the indexer is done.
+            await WaitForIndexingAsync(serviceClient, indexer.Name);
+
+            // Remove this workaround once the service issue is fixed: https://github.com/Azure/azure-sdk-for-net/issues/39104#issuecomment-1749469582
+            // Tracking issue: https://msdata.visualstudio.com/Azure%20Search/_workitems/edit/2737454
+            SearchIndexer actualIndexer = await serviceClient.GetIndexerAsync(indexer.Name);
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
                 onlyIfUnchanged: true);
-
-            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(

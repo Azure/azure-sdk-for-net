@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Models
             _value = value;
         }
 
-        private const string _publicAudience = "https://storage.azure.com/";
+        private const string _defaultAudience = "https://storage.azure.com/";
 
         /// <summary>
         /// Default Audience. Use to acquire a token for authorizing requests to any Azure Storage account
@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Models
         ///
         /// If no audience is specified, this is the default value.
         /// </summary>
-        public static BlobAudience PublicAudience { get; } = new(_publicAudience);
+        public static BlobAudience DefaultAudience { get; } = new(_defaultAudience);
 
         /// <summary>
         /// The service endpoint for a given storage account.
@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Models
         /// The storage account name used to populate the service endpoint.
         /// </param>
         /// <returns></returns>
-        public static BlobAudience GetBlobServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.blob.core.windows.net/");
+        public static BlobAudience CreateBlobServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.blob.core.windows.net/");
 
         /// <summary> Determines if two <see cref="BlobAudience"/> values are the same. </summary>
         public static bool operator ==(BlobAudience left, BlobAudience right) => left.Equals(right);
