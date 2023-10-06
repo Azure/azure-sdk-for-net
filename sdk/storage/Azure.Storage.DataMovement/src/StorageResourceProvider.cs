@@ -12,9 +12,9 @@ namespace Azure.Storage.DataMovement
     public abstract class StorageResourceProvider
     {
         /// <summary>
-        /// Type ID. For DataMovement to query in selecting appropirate provider on resume.
+        /// Provider ID. For DataMovement to query in selecting appropriate provider on resume.
         /// </summary>
-        protected internal abstract string TypeId { get; }
+        protected internal abstract string ProviderId { get; }
 
         /// <summary>
         /// Gets a source resource from the given transfer properties.

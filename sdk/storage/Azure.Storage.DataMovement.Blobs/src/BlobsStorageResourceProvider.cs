@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <inheritdoc/>
-        protected override string TypeId => "blob";
+        protected override string ProviderId => "blob";
 
         private readonly CredentialType _credentialType;
         private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;

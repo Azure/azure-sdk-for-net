@@ -371,7 +371,7 @@ namespace Azure.Storage.DataMovement
             {
                 foreach (StorageResourceProvider provider in _resumeProviders)
                 {
-                    if (provider.TypeId == (getSource ? properties.SourceTypeId : properties.DestinationTypeId))
+                    if (provider.ProviderId == (getSource ? properties.SourceTypeId : properties.DestinationTypeId))
                     {
                         resourceProvider = provider;
                         return true;

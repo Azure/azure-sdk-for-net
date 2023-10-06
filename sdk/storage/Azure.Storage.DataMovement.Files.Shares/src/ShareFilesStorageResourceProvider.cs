@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <inheritdoc/>
-        protected override string TypeId => "share";
+        protected override string ProviderId => "share";
 
         private readonly CredentialType _credentialType;
         private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;
