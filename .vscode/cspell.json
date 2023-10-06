@@ -783,15 +783,15 @@
     {
       "filename": "**/sdk/paloaltonetworks/**/*",
       "words": [
-        "armid",
-        "cpus",
-        "eastus",
-        "cloudngfw",
-        "fqdnlists",
-        "isvtestuklegacy",
-        "liftr",
-        "liftrpantestplan",
-        "msal",
+      	"armid",
+      	"cpus",
+      	"eastus",
+      	"cloudngfw",
+      	"fqdnlists",
+      	"isvtestuklegacy",
+      	"liftr",
+      	"liftrpantestplan",
+      	"msal",
         "ngfw",
         "panrsid",
         "palo",
@@ -850,7 +850,7 @@
     {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
-        "qumulo"
+      	"qumulo"
       ]
     },
     {
@@ -927,12 +927,6 @@
       "filename": "**/sdk/resourcehealth/**/*.cs",
       "words": [
         "occured"
-      ]
-    },
-    {
-      "filename": "**/sdk/schemaregistry/**/*.cs",
-      "words": [
-        "protobuf"
       ]
     },
     {
@@ -1212,7 +1206,7 @@
         "protobuf",
         "Ackable",
         "awps"
-      ]
+        ]
     },
     {
       "filename": "**/sdk/openai/**/*.cs",
