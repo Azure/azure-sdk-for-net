@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Transcription package for Transcription Streaming.
+    /// Metadata for Transcription Streaming.
     /// </summary>
-    public class TranscriptionMetadata : TranscriptionPackageBase
+    public class TranscriptionMetadata : StreamingData
     {
         /// <summary>
         /// Transcription Subscription Id.

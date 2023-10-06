@@ -6,11 +6,11 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Streaming audio.
+    /// Streaming Audio.
     /// </summary>
-    public class MediaStreamingAudioData : MediaStreamingPackageBase
+    public class AudioData : StreamingData
     {
-        internal MediaStreamingAudioData(string data, DateTime timestamp, string participantId, bool silent)
+        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
         {
             Data = data;
             Timestamp = timestamp;

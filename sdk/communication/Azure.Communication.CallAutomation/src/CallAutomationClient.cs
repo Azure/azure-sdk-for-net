@@ -681,7 +681,7 @@ namespace Azure.Communication.CallAutomation
         {
             return configuration == default
                 ? default
-                : new TranscriptionOptionsInternal(configuration.TransportUrl.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
+                : new TranscriptionOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
                 configuration.StartTranscription);
         }
 
