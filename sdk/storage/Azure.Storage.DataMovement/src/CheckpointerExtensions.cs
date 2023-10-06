@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,6 +64,36 @@ namespace Azure.Storage.DataMovement
                 DestinationPath = destPath,
                 IsContainer = isContainer,
             };
+        }
+
+        internal static async Task<bool> IsEnumerationCompleteAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken)
+        {
+            using (Stream stream = await checkpointer.ReadJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.EnumerationCompleteIndex,
+                DataMovementConstants.OneByte,
+                cancellationToken).ConfigureAwait(false))
+            {
+                return Convert.ToBoolean(stream.ReadByte());
+            }
+        }
+
+        internal static async Task OnEnumerationCompleteAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken)
+        {
+            byte[] enumerationComplete = { Convert.ToByte(true) };
+            await checkpointer.WriteToJobPlanFileAsync(
+                transferId,
+                DataMovementConstants.JobPlanFile.EnumerationCompleteIndex,
+                enumerationComplete,
+                bufferOffset: 0,
+                length: 1,
+                cancellationToken).ConfigureAwait(false);
         }
     }
 }
