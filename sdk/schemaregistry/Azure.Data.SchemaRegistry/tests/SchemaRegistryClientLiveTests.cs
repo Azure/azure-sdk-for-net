@@ -14,11 +14,11 @@ using System.Net;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
-    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10)]
+    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10, SchemaRegistryClientOptions.ServiceVersion.V2023_07)]
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
         private readonly SchemaRegistryClientOptions.ServiceVersion _serviceVersion;
-        public SchemaRegistryClientLiveTests(bool isAsync, SchemaRegistryClientOptions.ServiceVersion version) : base(isAsync, RecordedTestMode.Playback)
+        public SchemaRegistryClientLiveTests(bool isAsync, SchemaRegistryClientOptions.ServiceVersion version) : base(isAsync)
         {
             TestDiagnostics = false;
             _serviceVersion = version;
