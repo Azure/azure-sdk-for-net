@@ -35,7 +35,7 @@ namespace Azure.Core.TestFramework
             _filter = filter;
 
             bool useFiddler = TestEnvironment.EnableFiddler;
-            _useDefaultClientIDFormat = TestEnvironment.DefaultClientGuidFormatInRecording;
+            _useDefaultClientIDFormat = _recording.DefaultClientRequestIGuid;
             string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
             _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxy.IpAddress;
 

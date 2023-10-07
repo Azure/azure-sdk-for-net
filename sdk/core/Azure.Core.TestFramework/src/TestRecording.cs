@@ -16,6 +16,7 @@ namespace Azure.Core.TestFramework
     public class TestRecording : IAsyncDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
+        private const string DefaultClientGuidFormatInRecordingKey = "DefaultClientGuidFormatInRecording";
         private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         // cspell: disable-next-line
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -186,6 +187,35 @@ namespace Azure.Core.TestFramework
                     }
                 }
                 return _random;
+            }
+        }
+
+        private bool _defaultClientRequestIdGuid;
+
+        /// <summary>
+        /// Retrieves the value for the enviroment variable RECORDING_DEFAULT_ClIENT_GUID
+        /// </summary>
+        public bool DefaultClientRequestIGuid
+        {
+            get
+            {
+                switch (Mode)
+                {
+                    case RecordedTestMode.Live:
+                        _defaultClientRequestIdGuid = false;
+                        break;
+                    case RecordedTestMode.Record:
+                        _defaultClientRequestIdGuid = TestEnvironment.DefaultClientGuidFormatInRecording;
+                        Variables[DefaultClientGuidFormatInRecordingKey] = _defaultClientRequestIdGuid.ToString();
+                        break;
+                    case RecordedTestMode.Playback:
+                        ValidateVariables();
+                        _defaultClientRequestIdGuid = bool.Parse(Variables[DefaultClientGuidFormatInRecordingKey]);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                return _defaultClientRequestIdGuid;
             }
         }
 
