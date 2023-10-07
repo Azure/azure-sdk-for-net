@@ -47,15 +47,16 @@ namespace Azure.Core.Pipeline
             public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
                 => _response.TryGetHeaderValue(name, out value);
 
-            public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
-                => _response.GetHeaders();
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+                => _response.TryGetHeaders(out headers);
 
             protected internal override bool ContainsHeader(string name)
                 => _response.TryGetHeaderValue(name, out string? _);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                foreach (KeyValuePair<string, string> header in GetHeaders())
+                TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+                foreach (KeyValuePair<string, string> header in headers)
                 {
                     yield return new HttpHeader(header.Key, header.Value);
                 }

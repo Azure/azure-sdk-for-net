@@ -56,6 +56,12 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override bool TryGetHeaderValue(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         => TryGetHeader(_httpResponse.Headers, _httpContent, name, out values);
 
+    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+    {
+        headers = GetHeaders(_httpResponse.Headers, _httpContent);
+        return true;
+    }
+
     private static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
     {
 #if NET6_0_OR_GREATER
@@ -97,10 +103,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     }
 
-    public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
-        => GetHeaders(_httpResponse.Headers, _httpContent);
-
-    internal static IEnumerable<KeyValuePair<string, string>> GetHeaders(HttpHeaders headers, HttpContent? content)
+    private static IEnumerable<KeyValuePair<string, string>> GetHeaders(HttpHeaders headers, HttpContent? content)
     {
 #if NET6_0_OR_GREATER
         foreach (var (key, value) in headers.NonValidated)

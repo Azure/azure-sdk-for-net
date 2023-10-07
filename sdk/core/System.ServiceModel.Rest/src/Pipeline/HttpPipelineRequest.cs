@@ -17,6 +17,8 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public class HttpPipelineRequest : PipelineRequest, IDisposable
 {
+    private const string AuthorizationHeaderName = "Authorization";
+
     private HttpMethod _method;
     private Uri? _uri;
     private RequestBody? _content;
@@ -44,9 +46,8 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     public override void SetHeaderValue(string name, string value)
         => SetHeader(name, value);
 
-    // TODO: we can improve perf on this setter by using static instead of a new
     public override void SetMethod(string method)
-        => _method = new HttpMethod(method);
+        => _method = ToHttpMethod(method);
 
     public virtual void SetMethod(HttpMethod method)
         => _method = method;
@@ -55,6 +56,23 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     {
         method = _method;
         return true;
+    }
+
+    // PATCH value needed for compat with pre-net5.0 TFMs
+    private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
+
+    private HttpMethod ToHttpMethod(string method)
+    {
+        return method switch
+        {
+            "GET" => HttpMethod.Get,
+            "POST" => HttpMethod.Post,
+            "PUT" => HttpMethod.Put,
+            "HEAD" => HttpMethod.Head,
+            "DELETE" => HttpMethod.Delete,
+            "PATCH" => _patchMethod,
+            _ => new HttpMethod(method),
+        }; ;
     }
 
     #region Header implementation
@@ -162,7 +180,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     #region Construction for transport
 
-    internal HttpRequestMessage BuildRequestMessage(PipelineMessage? message)
+    internal HttpRequestMessage BuildRequestMessage(PipelineMessage? message = default)
     {
         HttpRequestMessage httpRequest = new HttpRequestMessage(_method, GetUri());
         CancellationToken cancellationToken = message?.CancellationToken ?? default;
@@ -181,9 +199,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
             {
                 case string stringValue:
                     // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-
-                    // TODO: use a constant declaration
-                    if (headerName == "Authorization" && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                    if (headerName == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
                     {
                         httpRequest.Headers.Authorization = authHeader;
                     }
@@ -257,6 +273,5 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    // TODO:
-    //public override string ToString() => BuildRequestMessage().ToString();
+    public override string ToString() => BuildRequestMessage().ToString();
 }

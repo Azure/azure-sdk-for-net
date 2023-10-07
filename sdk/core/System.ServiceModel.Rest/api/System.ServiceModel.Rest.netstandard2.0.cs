@@ -93,7 +93,7 @@ namespace System.ServiceModel.Rest.Core
         public virtual bool IsError { get { throw null; } set { } }
         public abstract int Status { get; }
         public abstract void Dispose();
-        public abstract System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders();
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
         public abstract bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value);
         public abstract bool TryGetHeaderValue(string name, out string? value);
         public abstract bool TryGetReasonPhrase(out string reasonPhrase);
@@ -160,6 +160,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override void SetHeaderValue(string name, string value) { }
         public virtual void SetMethod(System.Net.Http.HttpMethod method) { }
         public override void SetMethod(string method) { }
+        public override string ToString() { throw null; }
         protected virtual bool TryGetHeader(string name, out string? value) { throw null; }
         protected bool TryGetHeaderNames(out System.Collections.Generic.IEnumerable<string> headerNames) { throw null; }
         protected virtual bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
@@ -172,7 +173,7 @@ namespace System.ServiceModel.Rest.Core.Pipeline
         public override int Status { get { throw null; } }
         public override void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        public override System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders() { throw null; }
+        public override bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers) { throw null; }
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
         public override bool TryGetReasonPhrase(out string reasonPhrase) { throw null; }

@@ -96,7 +96,7 @@ namespace Azure
             public override void Dispose()
                 => throw new NotImplementedException();
 
-            public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
                 => throw new NotImplementedException();
 
             public override bool TryGetHeaderValue(string name, out string? value)

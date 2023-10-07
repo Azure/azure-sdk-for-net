@@ -65,7 +65,8 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
             => throw new NotImplementedException();
 
         /// <summary>
