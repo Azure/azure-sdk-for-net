@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -10,7 +11,6 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Rest;
 using System.ServiceModel.Rest.Core;
-using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,22 +21,19 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
-
         /// <summary>
         /// A shared instance of <see cref="HttpClientTransport"/> with default parameters.
         /// </summary>
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
         // The transport's private HttpClient has been made internal because it is used by tests.
-        // TODO: move these tests into System.Rest?
-        //private HttpClient _httpClient;
-        //internal HttpClient Client { get => _httpClient; }
+        // TODO: move these tests into System.Rest? - can we make it private when we do?
+        internal HttpClient Client { get; }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
-        public HttpClientTransport() : base(CreateDefaultClient())
+        public HttpClientTransport() : this(CreateDefaultClient())
         {
         }
 
@@ -44,7 +41,7 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="messageHandler">The instance of <see cref="HttpMessageHandler"/> to use.</param>
-        public HttpClientTransport(HttpMessageHandler messageHandler) : base(new HttpClient(messageHandler))
+        public HttpClientTransport(HttpMessageHandler messageHandler) : this(new HttpClient(messageHandler))
         {
         }
 
@@ -54,7 +51,7 @@ namespace Azure.Core.Pipeline
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client) : base(client)
         {
-            //_httpClient = client;
+            Client = client;
         }
 
         /// <summary>
@@ -64,10 +61,9 @@ namespace Azure.Core.Pipeline
         internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
         { }
 
-        // TODO: do we still need this?  Does it make sense?
         /// <inheritdoc />
-        public sealed override Request CreateRequest()
-            => new RestRequestAdapter(new HttpPipelineRequest());
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public sealed override Request CreateRequest() => new HttpClientTransportRequest();
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
@@ -76,7 +72,7 @@ namespace Azure.Core.Pipeline
             {
                 base.Process(message);
             }
-            catch (RequestErrorException e)
+            catch (MessageFailedException e)
             {
                 if (message.HasResponse)
                 {
@@ -96,7 +92,7 @@ namespace Azure.Core.Pipeline
             {
                 await base.ProcessAsync(message).ConfigureAwait(false);
             }
-            catch (RequestErrorException e)
+            catch (MessageFailedException e)
             {
                 if (message.HasResponse)
                 {

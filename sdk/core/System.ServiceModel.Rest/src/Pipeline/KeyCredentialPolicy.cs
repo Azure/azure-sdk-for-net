@@ -29,16 +29,18 @@ public class KeyCredentialPolicy : IPipelinePolicy<PipelineMessage>
         _prefix = prefix;
     }
 
-    public void Process(PipelineMessage message, PipelineEnumerator pipeline)
+    public void Process(PipelineMessage message, IPipelineEnumerator pipeline)
     {
-        message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {_credential.Key}" : _credential.Key);
+        _credential.TryGetKey(out string key);
+        message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {key}" : key);
 
         pipeline.ProcessNext();
     }
 
-    public async ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline)
+    public async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
     {
-        message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {_credential.Key}" : _credential.Key);
+        _credential.TryGetKey(out string key);
+        message.Request.SetHeaderValue(_name, _prefix != null ? $"{_prefix} {key}" : key);
 
         await pipeline.ProcessNextAsync().ConfigureAwait(false);
     }

@@ -20,7 +20,7 @@ namespace Azure
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
-    public class RequestFailedException : RequestErrorException, ISerializable
+    public class RequestFailedException : MessageFailedException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -93,24 +93,20 @@ namespace Azure
 
             public override Stream? ContentStream { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-            public override string ReasonPhrase => throw new NotImplementedException();
-
             public override void Dispose()
-            {
-                throw new NotImplementedException();
-            }
+                => throw new NotImplementedException();
 
-            public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
-            {
-                throw new NotImplementedException();
-            }
+            public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+                => throw new NotImplementedException();
 
-            public override bool TryGetHeaderValue(string name, out string? value) => throw new NotImplementedException();
+            public override bool TryGetHeaderValue(string name, out string? value)
+                => throw new NotImplementedException();
 
             public override bool TryGetHeaderValue(string name, out IEnumerable<string>? value)
-            {
-                throw new NotImplementedException();
-            }
+                => throw new NotImplementedException();
+
+            public override bool TryGetReasonPhrase(out string reasonPhrase)
+                => throw new NotImplementedException();
         }
 
         internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :

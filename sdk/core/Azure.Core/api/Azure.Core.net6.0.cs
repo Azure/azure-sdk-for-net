@@ -218,7 +218,7 @@ namespace Azure
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.ServiceModel.Rest.RequestErrorException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.ServiceModel.Rest.MessageFailedException, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) : base (default(System.ServiceModel.Rest.Core.PipelineResponse)) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ServiceModel.Rest.Core.PipelineResponse)) { }
@@ -241,15 +241,19 @@ namespace Azure
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
         public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public abstract string ReasonPhrase { get; }
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
-        public override System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetHeaders() { throw null; }
         public override string ToString() { throw null; }
         protected internal abstract bool TryGetHeader(string name, out string? value);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers) { throw null; }
         public override bool TryGetHeaderValue(string name, out System.Collections.Generic.IEnumerable<string>? value) { throw null; }
         public override bool TryGetHeaderValue(string name, out string? value) { throw null; }
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool TryGetReasonPhrase(out string reasonPhrase) { throw null; }
     }
     public sealed partial class ResponseError
     {
@@ -951,6 +955,7 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport() { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public override void Dispose() { }
         protected override void OnReceivedResponse(System.ServiceModel.Rest.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
@@ -1013,6 +1018,7 @@ namespace Azure.Core.Pipeline
     public abstract partial class HttpPipelineTransport : System.ServiceModel.Rest.Core.Pipeline.HttpPipelineMessageTransport
     {
         public HttpPipelineTransport() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public abstract Azure.Core.Request CreateRequest();
         public virtual void Process(Azure.Core.HttpMessage message) { }
         public virtual System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }

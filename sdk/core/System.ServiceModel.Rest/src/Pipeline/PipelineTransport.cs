@@ -29,14 +29,14 @@ public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
     // SetResponse a method on message instead of the transport?
     //public abstract void SetResponse(TMessage message, PipelineResponse response);
 
-    public void Process(TMessage message, PipelineEnumerator pipeline)
+    public void Process(TMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 
         Process(message);
     }
 
-    public async ValueTask ProcessAsync(TMessage message, PipelineEnumerator pipeline)
+    public async ValueTask ProcessAsync(TMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 

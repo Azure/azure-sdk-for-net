@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.ServiceModel.Rest.Core.Pipeline;
+using System.Runtime.InteropServices;
+using System.ServiceModel.Rest.Core;
 
 namespace Azure.Core.Pipeline
 {
@@ -13,15 +14,11 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        private sealed class RestRequestAdapter : Request
+        private sealed class HttpClientTransportRequest : Request
         {
-            private HttpPipelineRequest _request;
-            private string? _clientRequestId;
+            private const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
 
-            public RestRequestAdapter(HttpPipelineRequest request)
-            {
-                _request = request;
-            }
+            private string? _clientRequestId;
 
             public override string ClientRequestId
             {
@@ -35,93 +32,49 @@ namespace Azure.Core.Pipeline
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                foreach (string name in GetHeaderNames())
+                TryGetHeaderNames(out IEnumerable<string> headerNames);
+                foreach (string name in headerNames)
                 {
                     if (!TryGetHeader(name, out string? value))
                     {
-                        throw new InvalidOperationException("Why?");
+                        throw new InvalidOperationException("Enumerator returned a header name that was not present in the collection.");
                     }
 
                     yield return new HttpHeader(name, value!);
                 }
             }
+
+            protected override void OnSending(PipelineMessage message, HttpRequestMessage httpRequest)
+            {
+                if (message is not HttpMessage httpMessage)
+                {
+                    throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
+                }
+
+                SetPropertiesOrOptions(httpRequest, MessageForServerCertificateCallback, httpMessage);
+
+                AddPropertiesForBlazor(httpRequest);
+            }
+
+            private static void AddPropertiesForBlazor(HttpRequestMessage currentRequest)
+            {
+                // Disable response caching and enable streaming in Blazor apps
+                // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+                {
+                    SetPropertiesOrOptions(currentRequest, "WebAssemblyFetchOptions", new Dictionary<string, object> { { "cache", "no-store" } });
+                    SetPropertiesOrOptions(currentRequest, "WebAssemblyEnableStreamingResponse", true);
+                }
+            }
+
+            private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
+            {
+#if NET5_0_OR_GREATER
+                httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
+#else
+                httpRequest.Properties[name] = value;
+#endif
+            }
         }
-
-        //private sealed class HttpClientTransportRequest : Request
-        //{
-        //    private string? _clientRequestId;
-
-        //    public HttpClientTransportRequest()
-        //    {
-        //        Method = RequestMethod.Get;
-        //    }
-
-        //    public override string ClientRequestId
-        //    {
-        //        get => _clientRequestId ??= Guid.NewGuid().ToString();
-        //        set
-        //        {
-        //            Argument.AssertNotNull(value, nameof(value));
-        //            _clientRequestId = value;
-        //        }
-        //    }
-
-        //    protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
-        //    {
-        //        foreach (var name in GetHeaderNames())
-        //        {
-        //            if (!TryGetHeader(name, out string? value))
-        //            {
-        //                throw new InvalidOperationException("Why?");
-        //            }
-
-        //            yield return new HttpHeader(name, value!);
-        //        }
-        //    }
-
-        //    private static readonly HttpMethod s_patch = new HttpMethod("PATCH");
-        //    private static HttpMethod ToHttpClientMethod(RequestMethod requestMethod)
-        //    {
-        //        var method = requestMethod.Method;
-
-        //        // Fast-path common values
-        //        if (method.Length == 3)
-        //        {
-        //            if (string.Equals(method, "GET", StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                return HttpMethod.Get;
-        //            }
-
-        //            if (string.Equals(method, "PUT", StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                return HttpMethod.Put;
-        //            }
-        //        }
-        //        else if (method.Length == 4)
-        //        {
-        //            if (string.Equals(method, "POST", StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                return HttpMethod.Post;
-        //            }
-        //            if (string.Equals(method, "HEAD", StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                return HttpMethod.Head;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (string.Equals(method, "PATCH", StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                return s_patch;
-        //            }
-        //            if (string.Equals(method, "DELETE", StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                return HttpMethod.Delete;
-        //            }
-        //        }
-
-        //        return new HttpMethod(method);
-        //    }
-        //}
     }
 }

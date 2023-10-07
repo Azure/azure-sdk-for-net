@@ -100,7 +100,8 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         else
         {
             // Add default transport.
-            pipeline[index++] = new HttpPipelineMessageTransport();
+            // TODO: Note this adds an HTTP dependency we should be aware of.
+            pipeline[index++] = HttpPipelineMessageTransport.Shared;
         }
 
         return new MessagePipeline(pipeline);
@@ -113,7 +114,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
     public override void Send(PipelineMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
+        IPipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         enumerator.ProcessNext();
 
         message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
@@ -121,13 +122,13 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
     public override async ValueTask SendAsync(PipelineMessage message)
     {
-        PipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
+        IPipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
 
         message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
-    internal class MessagePipelineExecutor : PipelineEnumerator
+    internal struct MessagePipelineExecutor : IPipelineEnumerator
     {
         private PipelineMessage _message;
         private ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
@@ -137,7 +138,10 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             _policies = policies;
             _message = message;
         }
-        public override bool ProcessNext()
+
+        public int Length => _policies.Length;
+
+        public bool ProcessNext()
         {
             var first = _policies.Span[0];
             _policies = _policies.Slice(1);
@@ -145,7 +149,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
             return _policies.Length > 0;
         }
 
-        public async override ValueTask<bool> ProcessNextAsync()
+        public async ValueTask<bool> ProcessNextAsync()
         {
             var first = _policies.Span[0];
             _policies = _policies.Slice(1);

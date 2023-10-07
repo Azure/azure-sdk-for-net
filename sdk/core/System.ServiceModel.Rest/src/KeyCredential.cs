@@ -12,7 +12,11 @@ public class KeyCredential
         _key = key;
     }
 
-    public string Key => _key;
+    public bool TryGetKey(out string key)
+    {
+        key = _key;
+        return true;
+    }
 
     public void Update(string key)
     {

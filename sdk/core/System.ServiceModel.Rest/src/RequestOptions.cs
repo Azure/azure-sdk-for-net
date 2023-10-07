@@ -14,7 +14,7 @@ public class RequestOptions
 
     public CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
 
-    public ResultErrorOptions ResultErrorOptions { get; set; } = ResultErrorOptions.Default;
+    public ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
 
     public IPipelinePolicy<PipelineMessage>[]? PerTryPolicies { get; set; }
 

@@ -9,7 +9,7 @@ namespace System.ServiceModel.Rest
     /// ResultErrorOptions controls the behavior of an operation when an unexpected response status code is received.
     /// </summary>
     [Flags]
-    public enum ResultErrorOptions
+    public enum ErrorBehavior
     {
         /// <summary>
         /// Indicates that an operation should throw an exception when the response indicates a failure.

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.ServiceModel.Rest.Core;
 using Azure.Core;
@@ -16,6 +17,23 @@ namespace Azure
     public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        /// <summary>
+        /// Gets the HTTP reason phrase.
+        /// </summary>
+        public abstract string ReasonPhrase { get; }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="reasonPhrase"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool TryGetReasonPhrase(out string reasonPhrase)
+        {
+            reasonPhrase = ReasonPhrase;
+            return true;
+        }
+
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
@@ -47,7 +65,8 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
             => throw new NotImplementedException();
 
         /// <summary>
@@ -117,11 +136,5 @@ namespace Azure
                 stream = null;
             }
         }
-
-        //public override void Dispose()
-        //{
-        //    // TODO: correct this
-        //    base.Dispose();
-        //}
     }
 }

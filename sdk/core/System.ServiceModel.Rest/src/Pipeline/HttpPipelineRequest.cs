@@ -7,7 +7,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +17,8 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 
 public class HttpPipelineRequest : PipelineRequest, IDisposable
 {
+    private const string AuthorizationHeaderName = "Authorization";
+
     private HttpMethod _method;
     private Uri? _uri;
     private RequestBody? _content;
@@ -45,9 +46,8 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     public override void SetHeaderValue(string name, string value)
         => SetHeader(name, value);
 
-    // TODO: we can improve perf on this setter by using static instead of a new
     public override void SetMethod(string method)
-        => _method = new HttpMethod(method);
+        => _method = ToHttpMethod(method);
 
     public virtual void SetMethod(HttpMethod method)
         => _method = method;
@@ -56,6 +56,23 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     {
         method = _method;
         return true;
+    }
+
+    // PATCH value needed for compat with pre-net5.0 TFMs
+    private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
+
+    private HttpMethod ToHttpMethod(string method)
+    {
+        return method switch
+        {
+            "GET" => HttpMethod.Get,
+            "POST" => HttpMethod.Post,
+            "PUT" => HttpMethod.Put,
+            "HEAD" => HttpMethod.Head,
+            "DELETE" => HttpMethod.Delete,
+            "PATCH" => _patchMethod,
+            _ => new HttpMethod(method),
+        }; ;
     }
 
     #region Header implementation
@@ -83,7 +100,13 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         }
     }
 
-    protected IEnumerable<string> GetHeaderNames()
+    protected bool TryGetHeaderNames(out IEnumerable<string> headerNames)
+    {
+        headerNames = GetHeaderNames();
+        return true;
+    }
+
+    private IEnumerable<string> GetHeaderNames()
     {
         for (int i = 0; i < _headers.Count; i++)
         {
@@ -157,15 +180,15 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     #region Construction for transport
 
-    internal HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
+    internal HttpRequestMessage BuildRequestMessage(PipelineMessage? message = default)
     {
-        HttpRequestMessage currentRequest = new HttpRequestMessage(_method, GetUri());
+        HttpRequestMessage httpRequest = new HttpRequestMessage(_method, GetUri());
+        CancellationToken cancellationToken = message?.CancellationToken ?? default;
 
-        PipelineContentAdapter? currentContent = _content != null ? new PipelineContentAdapter(_content, cancellation) : null;
-        currentRequest.Content = currentContent;
-        // TODO: does it make sense to keep the NETFRAMEWORK TFM without a corresponding build target?
-#if NETFRAMEWORK || NETSTANDARD
-        currentRequest.Headers.ExpectContinue = false;
+        PipelineContentAdapter? httpContent = _content != null ? new PipelineContentAdapter(_content, cancellationToken) : null;
+        httpRequest.Content = httpContent;
+#if NETSTANDARD
+        httpRequest.Headers.ExpectContinue = false;
 #endif
 
         for (int i = 0; i < _headers.Count; i++)
@@ -176,15 +199,13 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
             {
                 case string stringValue:
                     // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-
-                    // TODO: use a constant declaration
-                    if (headerName == "Authorization" && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                    if (headerName == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
                     {
-                        currentRequest.Headers.Authorization = authHeader;
+                        httpRequest.Headers.Authorization = authHeader;
                     }
-                    else if (!currentRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
+                    else if (!httpRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
                     {
-                        if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, stringValue))
+                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(headerName, stringValue))
                         {
                             throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
                         }
@@ -192,9 +213,9 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
                     break;
 
                 case List<string> listValue:
-                    if (!currentRequest.Headers.TryAddWithoutValidation(headerName, listValue))
+                    if (!httpRequest.Headers.TryAddWithoutValidation(headerName, listValue))
                     {
-                        if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, listValue))
+                        if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(headerName, listValue))
                         {
                             throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
                         }
@@ -203,30 +224,12 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
             }
         }
 
-        AddPropertiesForBlazor(currentRequest);
+        OnSending(message!, httpRequest);
 
-        return currentRequest;
+        return httpRequest;
     }
 
-    private static void AddPropertiesForBlazor(HttpRequestMessage currentRequest)
-    {
-        // Disable response caching and enable streaming in Blazor apps
-        // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
-        {
-            SetPropertiesOrOptions(currentRequest, "WebAssemblyFetchOptions", new Dictionary<string, object> { { "cache", "no-store" } });
-            SetPropertiesOrOptions(currentRequest, "WebAssemblyEnableStreamingResponse", true);
-        }
-    }
-
-    private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
-    {
-#if NET5_0_OR_GREATER
-        httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
-#else
-        httpRequest.Properties[name] = value;
-#endif
-    }
+    protected virtual void OnSending(PipelineMessage message, HttpRequestMessage httpRequest) { }
 
     private sealed class PipelineContentAdapter : HttpContent
     {
@@ -270,5 +273,5 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public override string ToString() => BuildRequestMessage(default).ToString();
+    public override string ToString() => BuildRequestMessage().ToString();
 }

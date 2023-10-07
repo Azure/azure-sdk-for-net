@@ -13,9 +13,6 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
     private readonly HttpContent _httpContent;
-
-    // TODO: Using our custom thing for now to see what breaks.
-    // Ideally, this gets refactored when we add the buffering policy
     private Stream? _contentStream;
 
     private bool _disposed;
@@ -29,7 +26,17 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     public override int Status => (int)_httpResponse.StatusCode;
 
-    public override string ReasonPhrase => _httpResponse.ReasonPhrase ?? string.Empty;
+    public override bool TryGetReasonPhrase(out string reasonPhrase)
+    {
+        if (_httpResponse.ReasonPhrase is not null)
+        {
+            reasonPhrase = _httpResponse.ReasonPhrase;
+            return true;
+        }
+
+        reasonPhrase = string.Empty;
+        return false;
+    }
 
     public override Stream? ContentStream
     {
@@ -48,6 +55,12 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     public override bool TryGetHeaderValue(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
         => TryGetHeader(_httpResponse.Headers, _httpContent, name, out values);
+
+    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
+    {
+        headers = GetHeaders(_httpResponse.Headers, _httpContent);
+        return true;
+    }
 
     private static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
     {
@@ -90,10 +103,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     }
 
-    public override IEnumerable<KeyValuePair<string, string>> GetHeaders()
-        => GetHeaders(_httpResponse.Headers, _httpContent);
-
-    internal static IEnumerable<KeyValuePair<string, string>> GetHeaders(HttpHeaders headers, HttpContent? content)
+    private static IEnumerable<KeyValuePair<string, string>> GetHeaders(HttpHeaders headers, HttpContent? content)
     {
 #if NET6_0_OR_GREATER
         foreach (var (key, value) in headers.NonValidated)

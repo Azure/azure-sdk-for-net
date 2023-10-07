@@ -7,9 +7,6 @@ using System.ServiceModel.Rest.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-// TODO: what do we need from here?
-//using Azure.Core.Buffers;
-
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
 /// <summary>
@@ -29,15 +26,15 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         _bufferResponse = bufferResponse;
     }
 
-    public void Process(PipelineMessage message, PipelineEnumerator pipeline)
+    public void Process(PipelineMessage message, IPipelineEnumerator pipeline)
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public async ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline)
+    public async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineEnumerator pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IPipelineEnumerator pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
