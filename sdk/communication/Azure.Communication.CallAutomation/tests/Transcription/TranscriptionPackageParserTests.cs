@@ -23,7 +23,8 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
                 "{" +
                     "\"subscriptionId\":\"subscriptionId\"," +
                     "\"locale\":\"en-US\"," +
-                    "\"callConnectionId\":\"callConnectionId\"" +
+                    "\"callConnectionId\":\"callConnectionId\"," +
+                    "\"correlationId\":\"correlationId\"" +
                 "}" +
             "}";
 
@@ -148,6 +149,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             Assert.AreEqual("subscriptionId", transcriptionMetadata.TranscriptionSubscriptionId);
             Assert.AreEqual("en-US", transcriptionMetadata.Locale);
             Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
+            Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
         }
 
         private static void ValidateTranscriptionData(TranscriptionData transcription)
@@ -159,7 +161,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             Assert.AreEqual(1, transcription.Offset);
 
             // validate individual words
-            IList<Word> words = transcription.Words.ToList();
+            IList<WordData> words = transcription.Words.ToList();
             Assert.AreEqual(2, words.Count);
             Assert.AreEqual("Hello", words[0].Text);
             Assert.AreEqual(1, words[0].Offset);

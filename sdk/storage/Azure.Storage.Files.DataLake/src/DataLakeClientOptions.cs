@@ -362,7 +362,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
         /// </summary>
-        /// <value>If <c>null</c>, <see cref="DataLakeAudience.PublicAudience" /> will be assumed.</value>
+        /// <value>If <c>null</c>, <see cref="DataLakeAudience.DefaultAudience" /> will be assumed.</value>
         public DataLakeAudience? Audience { get; set; }
     }
 }

@@ -354,11 +354,11 @@ namespace Azure.Storage.Blobs.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BlobAudience(string value) { throw null; }
-        public static Azure.Storage.Blobs.Models.BlobAudience PublicAudience { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobAudience DefaultAudience { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobAudience CreateBlobServiceAccountAudience(string storageAccountName) { throw null; }
         public bool Equals(Azure.Storage.Blobs.Models.BlobAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        public static Azure.Storage.Blobs.Models.BlobAudience GetBlobServiceAccountAudience(string storageAccountName) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Blobs.Models.BlobAudience left, Azure.Storage.Blobs.Models.BlobAudience right) { throw null; }
