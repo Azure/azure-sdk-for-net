@@ -11,7 +11,7 @@ namespace Azure.Communication.Messages
     public class MessageTemplateWhatsAppBindings: MessageTemplateBindings
     {
         /// <summary> Initializes a new instance of MessageTemplateWhatsAppBindings. </summary>
-        public MessageTemplateWhatsAppBindings(IEnumerable<string> header = null, IEnumerable<string> body = null, IEnumerable<string> footer = null, IDictionary<string, MessageTemplateValueWhatsAppSubType> button = null)
+        public MessageTemplateWhatsAppBindings(IEnumerable<string> header = null, IEnumerable<string> body = null, IEnumerable<string> footer = null, IEnumerable<KeyValuePair<string, MessageTemplateValueWhatsAppSubType>> button = null)
         {
             Header = header;
             Body = body;
@@ -26,7 +26,7 @@ namespace Azure.Communication.Messages
         /// <summary> Gets the footer. </summary>
         public IEnumerable<string> Footer { get; }
         /// <summary> Gets the button. </summary>
-        public IDictionary<string, MessageTemplateValueWhatsAppSubType> Button { get; }
+        public IEnumerable<KeyValuePair<string, MessageTemplateValueWhatsAppSubType>> Button { get; }
 
         internal override MessageTemplateBindingsInternal ToMessageTemplateBindingsInternal()
         {

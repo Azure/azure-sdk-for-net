@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Messages;
 
-namespace Azure.Communication.Messages.Models
+namespace Azure.Communication.Messages
 {
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationMessagesModelFactory

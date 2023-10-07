@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "456",
         "Content-Type": "application/json",
-        "traceparent": "00-f9e2215d16a34f31dd8b25cedbe73b82-0858fecd3a6894b8-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20230824.1 (.NET 7.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b200d7134f66c94a7314b6488b536372",
+        "traceparent": "00-913861f2b409168794dfe53454963f50-7adf8c14a29e5b7d-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231006.1 (.NET 7.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9af600b4717209ed7b6413a938b3c74a",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 24 Aug 2023 23:53:17 GMT",
+        "x-ms-date": "Sat, 07 Oct 2023 01:01:33 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -59,18 +59,18 @@
         "api-supported-versions": "2023-02-01-preview, 2023-08-24-preview",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 24 Aug 2023 23:53:27 GMT",
-        "MS-CV": "0TQmKJYlH0iXw8YR/N5bKg.0",
+        "Date": "Sat, 07 Oct 2023 01:01:33 GMT",
+        "MS-CV": "/Fs2gutpikuYNqK17XF8sw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0du3nZAAAAAC1JFvQdhZvR4qC3D7fMklETEFYMzExMDAwMTA4MDIzADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Azure-Ref": "07a0gZQAAAAB767DXOlxrSJyaGRAqau0jWVZSMzExMDAwMTE1MDQ1ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "370ms"
+        "X-Processing-Time": "818ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "429e67ac-7613-4aa4-a336-6bd4c306e8fb",
+            "messageId": "a8224921-46df-4880-95a9-fcf7a4552047",
             "to": "\u002B16041234567"
           }
         ]
@@ -79,7 +79,7 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1949234695",
+    "RandomSeed": "1926562621",
     "RECIPIENT_IDENTIFIER": "\u002B16041234567",
     "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
   }

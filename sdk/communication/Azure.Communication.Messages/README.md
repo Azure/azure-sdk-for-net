@@ -37,18 +37,6 @@ NotificationMessagesClient notificationMessagesClient = new NotificationMessages
 MessageTemplateClient messageTemplateClient = new MessageTemplateClient(connectionString);
 ```
 
-#### Token Credential
-
-Alternatively, Messages clients can also be authenticated using a valid token credential. 
-
-```C#
-string endpoint = "<endpoint_url>";
-TokenCredential tokenCredential = new DefaultAzureCredential();
-NotificationMessagesClient notificationMessagesClient = new NotificationMessagesClient(new Uri(endpoint), tokenCredential);
-MessageTemplateClient messageTemplateClient = new MessageTemplateClient(new Uri(endpoint), tokenCredential);
-```
-
-
 ## Examples
 ### Send an Notification Message
 To send a notification message, call the `SendMessage` or `SendMessageAsync` function from the `NotificationMessagesClient`.

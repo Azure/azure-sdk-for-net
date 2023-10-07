@@ -10,16 +10,13 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 > see https://aka.ms/autorest
 ``` yaml
-input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/ef0a60c7e99e6cb611b3ffd21bd1a08d89f1cb6b/specification/communication/data-plane/Messages/preview/2023-08-24-preview/CommunicationServicesMessages.json
+title: Messages
+tag: package-2023-08-24-preview
+model-namespace: false
+require:
+    -  https://github.com/Azure/azure-rest-api-specs-pr/blob/5e85419bed6c70dbfd28f872e298b23d794aa880/specification/communication/data-plane/Messages/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
-directive:
-  from: swagger-document
-  where: $.definitions.*
-  transform: >
-    $["x-namespace"] = "Azure.Communication.Messages"
-
 ```
 
 ### Don't buffer media downloads

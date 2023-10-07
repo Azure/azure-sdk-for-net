@@ -112,9 +112,9 @@ namespace Azure.Communication.Messages.Tests
             IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { name, yes, no };
             MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
                 body: new[] { name.Name },
-                button: new Dictionary<string, MessageTemplateValueWhatsAppSubType> {
-                    { yes.Name, MessageTemplateValueWhatsAppSubType.QuickReply },
-                    { no.Name, MessageTemplateValueWhatsAppSubType.QuickReply }
+                button: new[] {
+                    new KeyValuePair<string, MessageTemplateValueWhatsAppSubType>(yes.Name, MessageTemplateValueWhatsAppSubType.QuickReply),
+                    new KeyValuePair<string, MessageTemplateValueWhatsAppSubType>(no.Name, MessageTemplateValueWhatsAppSubType.QuickReply),
                 }
             );
             MessageTemplate template = new MessageTemplate("sample_issue_resolution", "en_us", values, bindings);
