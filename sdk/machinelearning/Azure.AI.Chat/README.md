@@ -61,6 +61,35 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/machinelearning/Azure.AI.Chat/samples).
 
+### Create a Completion
+
+Lorem ipsum `CreateCompletion`:
+
+```C# Snippet:CreateCompletion
+var client = new ChatClient(new Uri("<my-endpoint>"), new AzureKeyCredential("<my-key>"));
+
+ChatCompletion completion = await client.CreateAsync(new ChatCompletionOptions(
+    messages: new[]
+    {
+        new ChatMessage("Hello", ChatRole.Assistant),
+    },
+    sessionState: BinaryData.FromString("Hello"),
+    extraArguments: new Dictionary<string, BinaryData>
+    {
+        { "World", BinaryData.FromString("Hello") }
+    }
+));
+
+foreach (var choice in completion.Choices)
+{
+    Console.WriteLine("Index: " + choice.Index);
+    Console.WriteLine("Content: ", choice.Message.Content);
+    Console.WriteLine("Role: ", choice.Message.Role);
+    Console.WriteLine("SessionState: ", choice.SessionState);
+    Console.WriteLine("ExtraArguments: ", choice.ExtraArguments);
+}
+```
+
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.

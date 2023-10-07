@@ -6,29 +6,35 @@
 This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
 {
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
-{
-    ["key"] = BinaryData.FromObjectAsJson(new object())
+    new ChatMessage("<content>", ChatRole.User)
 });
 Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptions);
 ]]></code>
 This sample shows how to call CreateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
 {
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
+    new ChatMessage("<content>", ChatRole.User)
+    {
+        SessionState = BinaryData.FromObjectAsJson(new object()),
+    }
+})
 {
-    ["key"] = BinaryData.FromObjectAsJson(new object())
-});
+    SessionState = BinaryData.FromObjectAsJson(new object()),
+    ExtraArguments =
+    {
+        ["key"] = BinaryData.FromObjectAsJson(new object())
+    },
+};
 Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptions);
 ]]></code></example>
     </member>
@@ -37,29 +43,35 @@ Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptio
 This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
 {
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
-{
-    ["key"] = BinaryData.FromObjectAsJson(new object())
+    new ChatMessage("<content>", ChatRole.User)
 });
 Response<ChatCompletion> response = client.Create(chatCompletionOptions);
 ]]></code>
 This sample shows how to call Create with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
 {
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
+    new ChatMessage("<content>", ChatRole.User)
+    {
+        SessionState = BinaryData.FromObjectAsJson(new object()),
+    }
+})
 {
-    ["key"] = BinaryData.FromObjectAsJson(new object())
-});
+    SessionState = BinaryData.FromObjectAsJson(new object()),
+    ExtraArguments =
+    {
+        ["key"] = BinaryData.FromObjectAsJson(new object())
+    },
+};
 Response<ChatCompletion> response = client.Create(chatCompletionOptions);
 ]]></code></example>
     </member>
@@ -68,7 +80,8 @@ Response<ChatCompletion> response = client.Create(chatCompletionOptions);
 This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 RequestContent content = RequestContent.Create(new
 {
@@ -78,15 +91,9 @@ RequestContent content = RequestContent.Create(new
         {
             content = "<content>",
             role = "user",
-            session_state = new object(),
         }
     },
-    stream = true,
-    session_state = new object(),
-    extra_args = new
-    {
-        key = new object(),
-    },
+    stream = false,
 });
 Response response = await client.CreateAsync(content);
 
@@ -94,15 +101,13 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
 ]]></code>
 This sample shows how to call CreateAsync with all request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 RequestContent content = RequestContent.Create(new
 {
@@ -115,7 +120,7 @@ RequestContent content = RequestContent.Create(new
             session_state = new object(),
         }
     },
-    stream = true,
+    stream = false,
     session_state = new object(),
     extra_args = new
     {
@@ -139,7 +144,8 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").T
 This sample shows how to call Create and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 RequestContent content = RequestContent.Create(new
 {
@@ -149,15 +155,9 @@ RequestContent content = RequestContent.Create(new
         {
             content = "<content>",
             role = "user",
-            session_state = new object(),
         }
     },
-    stream = true,
-    session_state = new object(),
-    extra_args = new
-    {
-        key = new object(),
-    },
+    stream = false,
 });
 Response response = client.Create(content);
 
@@ -165,15 +165,13 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
 ]]></code>
 This sample shows how to call Create with all request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ChatClient client = new ChatClient(endpoint, credential);
 
 RequestContent content = RequestContent.Create(new
 {
@@ -186,7 +184,7 @@ RequestContent content = RequestContent.Create(new
             session_state = new object(),
         }
     },
-    stream = true,
+    stream = false,
     session_state = new object(),
     extra_args = new
     {
@@ -200,200 +198,6 @@ Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
-]]></code></example>
-    </member>
-    <member name="CreateStreamingAsync(StreamingChatCompletionOptions,CancellationToken)">
-      <example>
-This sample shows how to call CreateStreamingAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-StreamingChatCompletionOptions streamingChatCompletionOptions = new StreamingChatCompletionOptions(new ChatMessage[]
-{
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
-{
-    ["key"] = BinaryData.FromObjectAsJson(new object())
-});
-Response<ChatCompletionChunk> response = await client.CreateStreamingAsync(streamingChatCompletionOptions);
-]]></code>
-This sample shows how to call CreateStreamingAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-StreamingChatCompletionOptions streamingChatCompletionOptions = new StreamingChatCompletionOptions(new ChatMessage[]
-{
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
-{
-    ["key"] = BinaryData.FromObjectAsJson(new object())
-});
-Response<ChatCompletionChunk> response = await client.CreateStreamingAsync(streamingChatCompletionOptions);
-]]></code></example>
-    </member>
-    <member name="CreateStreaming(StreamingChatCompletionOptions,CancellationToken)">
-      <example>
-This sample shows how to call CreateStreaming.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-StreamingChatCompletionOptions streamingChatCompletionOptions = new StreamingChatCompletionOptions(new ChatMessage[]
-{
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
-{
-    ["key"] = BinaryData.FromObjectAsJson(new object())
-});
-Response<ChatCompletionChunk> response = client.CreateStreaming(streamingChatCompletionOptions);
-]]></code>
-This sample shows how to call CreateStreaming with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-StreamingChatCompletionOptions streamingChatCompletionOptions = new StreamingChatCompletionOptions(new ChatMessage[]
-{
-    new ChatMessage("<content>", ChatRole.User, BinaryData.FromObjectAsJson(new object()))
-}, BinaryData.FromObjectAsJson(new object()), new Dictionary<string, BinaryData>
-{
-    ["key"] = BinaryData.FromObjectAsJson(new object())
-});
-Response<ChatCompletionChunk> response = client.CreateStreaming(streamingChatCompletionOptions);
-]]></code></example>
-    </member>
-    <member name="CreateStreamingAsync(RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateStreamingAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    messages = new object[]
-    {
-        new
-        {
-            content = "<content>",
-            role = "user",
-            session_state = new object(),
-        }
-    },
-    stream = false,
-    session_state = new object(),
-    extra_args = new
-    {
-        key = new object(),
-    },
-});
-Response response = await client.CreateStreamingAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").ToString());
-]]></code>
-This sample shows how to call CreateStreamingAsync with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    messages = new object[]
-    {
-        new
-        {
-            content = "<content>",
-            role = "user",
-            session_state = new object(),
-        }
-    },
-    stream = false,
-    session_state = new object(),
-    extra_args = new
-    {
-        key = new object(),
-    },
-});
-Response response = await client.CreateStreamingAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").GetProperty("content").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
-]]></code></example>
-    </member>
-    <member name="CreateStreaming(RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateStreaming and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    messages = new object[]
-    {
-        new
-        {
-            content = "<content>",
-            role = "user",
-            session_state = new object(),
-        }
-    },
-    stream = false,
-    session_state = new object(),
-    extra_args = new
-    {
-        key = new object(),
-    },
-});
-Response response = client.CreateStreaming(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").ToString());
-]]></code>
-This sample shows how to call CreateStreaming with all request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-ChatClient client = new ChatClient(endpoint);
-
-RequestContent content = RequestContent.Create(new
-{
-    messages = new object[]
-    {
-        new
-        {
-            content = "<content>",
-            role = "user",
-            session_state = new object(),
-        }
-    },
-    stream = false,
-    session_state = new object(),
-    extra_args = new
-    {
-        key = new object(),
-    },
-});
-Response response = client.CreateStreaming(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").GetProperty("content").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("delta").GetProperty("session_state").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());

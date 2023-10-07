@@ -21,12 +21,15 @@ namespace Azure.AI.Chat
             writer.WriteStringValue(Content);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
-            writer.WritePropertyName("session_state"u8);
+            if (Optional.IsDefined(SessionState))
+            {
+                writer.WritePropertyName("session_state"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SessionState);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SessionState.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SessionState.ToString()).RootElement);
 #endif
+            }
             writer.WriteEndObject();
         }
 
@@ -38,7 +41,7 @@ namespace Azure.AI.Chat
             }
             string content = default;
             ChatRole role = default;
-            BinaryData sessionState = default;
+            Optional<BinaryData> sessionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -53,11 +56,15 @@ namespace Azure.AI.Chat
                 }
                 if (property.NameEquals("session_state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     sessionState = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new ChatMessage(content, role, sessionState);
+            return new ChatMessage(content, role, sessionState.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

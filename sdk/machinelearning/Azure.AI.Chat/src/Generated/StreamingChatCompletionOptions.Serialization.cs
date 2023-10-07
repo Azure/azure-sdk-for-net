@@ -24,29 +24,35 @@ namespace Azure.AI.Chat
             writer.WriteEndArray();
             writer.WritePropertyName("stream"u8);
             writer.WriteBooleanValue(Stream);
-            writer.WritePropertyName("session_state"u8);
+            if (Optional.IsDefined(SessionState))
+            {
+                writer.WritePropertyName("session_state"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SessionState);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SessionState.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(SessionState.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("extra_args"u8);
-            writer.WriteStartObject();
-            foreach (var item in ExtraArguments)
+            }
+            if (Optional.IsCollectionDefined(ExtraArguments))
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("extra_args"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtraArguments)
                 {
-                    writer.WriteNullValue();
-                    continue;
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 

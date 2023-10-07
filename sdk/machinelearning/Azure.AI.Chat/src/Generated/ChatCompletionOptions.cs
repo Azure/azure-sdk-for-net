@@ -16,26 +16,21 @@ namespace Azure.AI.Chat
     public partial class ChatCompletionOptions
     {
         /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
-        /// <param name="messages"></param>
-        /// <param name="sessionState"></param>
-        /// <param name="extraArguments"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messages"/>, <paramref name="sessionState"/> or <paramref name="extraArguments"/> is null. </exception>
-        public ChatCompletionOptions(IEnumerable<ChatMessage> messages, BinaryData sessionState, IDictionary<string, BinaryData> extraArguments)
+        /// <param name="messages"> placeholder. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
+        public ChatCompletionOptions(IEnumerable<ChatMessage> messages)
         {
             Argument.AssertNotNull(messages, nameof(messages));
-            Argument.AssertNotNull(sessionState, nameof(sessionState));
-            Argument.AssertNotNull(extraArguments, nameof(extraArguments));
 
             Messages = messages.ToList();
-            SessionState = sessionState;
-            ExtraArguments = extraArguments;
+            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
-        /// <param name="messages"></param>
-        /// <param name="stream"></param>
-        /// <param name="sessionState"></param>
-        /// <param name="extraArguments"></param>
+        /// <param name="messages"> placeholder. </param>
+        /// <param name="stream"> placeholder. </param>
+        /// <param name="sessionState"> placeholder. </param>
+        /// <param name="extraArguments"> placeholder. </param>
         internal ChatCompletionOptions(IList<ChatMessage> messages, bool stream, BinaryData sessionState, IDictionary<string, BinaryData> extraArguments)
         {
             Messages = messages;
@@ -44,13 +39,11 @@ namespace Azure.AI.Chat
             ExtraArguments = extraArguments;
         }
 
-        /// <summary> Gets the messages. </summary>
+        /// <summary> placeholder. </summary>
         public IList<ChatMessage> Messages { get; }
-        /// <summary> Gets the stream. </summary>
-        public bool Stream { get; } = true;
 
         /// <summary>
-        /// Gets the session state
+        /// placeholder
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -79,9 +72,9 @@ namespace Azure.AI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData SessionState { get; }
+        public BinaryData SessionState { get; set; }
         /// <summary>
-        /// Gets the extra arguments
+        /// placeholder
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

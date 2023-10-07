@@ -17,18 +17,13 @@ namespace Azure.AI.Chat
     {
         /// <summary> Initializes a new instance of StreamingChatCompletionOptions. </summary>
         /// <param name="messages"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
-        /// <param name="extraArguments"> placeholder. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messages"/>, <paramref name="sessionState"/> or <paramref name="extraArguments"/> is null. </exception>
-        public StreamingChatCompletionOptions(IEnumerable<ChatMessage> messages, BinaryData sessionState, IDictionary<string, BinaryData> extraArguments)
+        /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
+        public StreamingChatCompletionOptions(IEnumerable<ChatMessage> messages)
         {
             Argument.AssertNotNull(messages, nameof(messages));
-            Argument.AssertNotNull(sessionState, nameof(sessionState));
-            Argument.AssertNotNull(extraArguments, nameof(extraArguments));
 
             Messages = messages.ToList();
-            SessionState = sessionState;
-            ExtraArguments = extraArguments;
+            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of StreamingChatCompletionOptions. </summary>
@@ -46,8 +41,6 @@ namespace Azure.AI.Chat
 
         /// <summary> placeholder. </summary>
         public IList<ChatMessage> Messages { get; }
-        /// <summary> placeholder. </summary>
-        public bool Stream { get; } = false;
 
         /// <summary>
         /// placeholder
@@ -79,7 +72,7 @@ namespace Azure.AI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData SessionState { get; }
+        public BinaryData SessionState { get; set; }
         /// <summary>
         /// placeholder
         /// <para>

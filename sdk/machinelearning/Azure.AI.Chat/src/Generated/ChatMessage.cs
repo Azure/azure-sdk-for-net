@@ -16,13 +16,21 @@ namespace Azure.AI.Chat
         /// <summary> Initializes a new instance of ChatMessage. </summary>
         /// <param name="content"> placeholder. </param>
         /// <param name="role"> placeholder. </param>
-        /// <param name="sessionState"> placeholder. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="sessionState"/> is null. </exception>
-        public ChatMessage(string content, ChatRole role, BinaryData sessionState)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public ChatMessage(string content, ChatRole role)
         {
             Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(sessionState, nameof(sessionState));
 
+            Content = content;
+            Role = role;
+        }
+
+        /// <summary> Initializes a new instance of ChatMessage. </summary>
+        /// <param name="content"> placeholder. </param>
+        /// <param name="role"> placeholder. </param>
+        /// <param name="sessionState"> placeholder. </param>
+        internal ChatMessage(string content, ChatRole role, BinaryData sessionState)
+        {
             Content = content;
             Role = role;
             SessionState = sessionState;

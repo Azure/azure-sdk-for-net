@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Chat
 {
@@ -22,8 +23,8 @@ namespace Azure.AI.Chat
             }
             long index = default;
             ChatMessage message = default;
-            IReadOnlyDictionary<string, BinaryData> extraArgs = default;
-            BinaryData sessionState = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> extraArgs = default;
+            Optional<BinaryData> sessionState = default;
             FinishReason finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,6 +40,10 @@ namespace Azure.AI.Chat
                 }
                 if (property.NameEquals("extra_args"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -56,6 +61,10 @@ namespace Azure.AI.Chat
                 }
                 if (property.NameEquals("session_state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     sessionState = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
@@ -65,7 +74,7 @@ namespace Azure.AI.Chat
                     continue;
                 }
             }
-            return new ChatChoice(index, message, extraArgs, sessionState, finishReason);
+            return new ChatChoice(index, message, Optional.ToDictionary(extraArgs), sessionState.Value, finishReason);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -30,19 +30,10 @@ namespace Azure.AI.Chat
         /// <param name="extraArguments"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/>, <paramref name="extraArguments"/> or <paramref name="sessionState"/> is null. </exception>
         /// <returns> A new <see cref="Chat.ChatChoice"/> instance for mocking. </returns>
         public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, IReadOnlyDictionary<string, BinaryData> extraArguments = null, BinaryData sessionState = null, FinishReason finishReason = default)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
             extraArguments ??= new Dictionary<string, BinaryData>();
-            if (sessionState == null)
-            {
-                throw new ArgumentNullException(nameof(sessionState));
-            }
 
             return new ChatChoice(index, message, extraArguments, sessionState, finishReason);
         }

@@ -20,17 +20,15 @@ namespace Azure.AI.Chat
     public partial class ChatClient
     {
         protected ChatClient() { }
-        public ChatClient(System.Uri endpoint) { }
-        public ChatClient(System.Uri endpoint, Azure.AI.Chat.ChatClientOptions options) { }
+        public ChatClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public ChatClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Chat.ChatClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Chat.ChatCompletion> Create(Azure.AI.Chat.ChatCompletionOptions chatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Chat.ChatCompletion>> CreateAsync(Azure.AI.Chat.ChatCompletionOptions chatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Chat.ChatCompletionChunk> CreateStreaming(Azure.AI.Chat.StreamingChatCompletionOptions streamingChatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateStreaming(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Chat.ChatCompletionChunk>> CreateStreamingAsync(Azure.AI.Chat.StreamingChatCompletionOptions streamingChatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateStreamingAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IEnumerable<Azure.AI.Chat.ChatCompletionChunk>> CreateStreaming(Azure.AI.Chat.StreamingChatCompletionOptions streamingChatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IAsyncEnumerable<Azure.AI.Chat.ChatCompletionChunk>>> CreateStreamingAsync(Azure.AI.Chat.StreamingChatCompletionOptions streamingChatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
@@ -52,15 +50,16 @@ namespace Azure.AI.Chat
     }
     public partial class ChatCompletionOptions
     {
-        public ChatCompletionOptions(System.Collections.Generic.IEnumerable<Azure.AI.Chat.ChatMessage> messages, System.BinaryData sessionState, System.Collections.Generic.IDictionary<string, System.BinaryData> extraArguments) { }
+        public ChatCompletionOptions(System.Collections.Generic.IEnumerable<Azure.AI.Chat.ChatMessage> messages) { }
+        public ChatCompletionOptions(System.Collections.Generic.IList<Azure.AI.Chat.ChatMessage> messages, System.BinaryData sessionState, System.Collections.Generic.IDictionary<string, System.BinaryData> extraArguments = null) { }
+        public ChatCompletionOptions(System.Collections.Generic.IList<Azure.AI.Chat.ChatMessage> messages, System.Collections.Generic.IDictionary<string, System.BinaryData> extraArguments) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ExtraArguments { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Chat.ChatMessage> Messages { get { throw null; } }
-        public System.BinaryData SessionState { get { throw null; } }
-        public bool Stream { get { throw null; } }
+        public System.BinaryData SessionState { get { throw null; } set { } }
     }
     public partial class ChatMessage
     {
-        public ChatMessage(string content, Azure.AI.Chat.ChatRole role, System.BinaryData sessionState) { }
+        public ChatMessage(string content, Azure.AI.Chat.ChatRole role) { }
         public string Content { get { throw null; } set { } }
         public Azure.AI.Chat.ChatRole Role { get { throw null; } set { } }
         public System.BinaryData SessionState { get { throw null; } set { } }
@@ -122,18 +121,19 @@ namespace Azure.AI.Chat
     }
     public partial class StreamingChatCompletionOptions
     {
-        public StreamingChatCompletionOptions(System.Collections.Generic.IEnumerable<Azure.AI.Chat.ChatMessage> messages, System.BinaryData sessionState, System.Collections.Generic.IDictionary<string, System.BinaryData> extraArguments) { }
+        public StreamingChatCompletionOptions(System.Collections.Generic.IEnumerable<Azure.AI.Chat.ChatMessage> messages) { }
+        public StreamingChatCompletionOptions(System.Collections.Generic.IList<Azure.AI.Chat.ChatMessage> messages, System.BinaryData sessionState, System.Collections.Generic.IDictionary<string, System.BinaryData> extraArguments = null) { }
+        public StreamingChatCompletionOptions(System.Collections.Generic.IList<Azure.AI.Chat.ChatMessage> messages, System.Collections.Generic.IDictionary<string, System.BinaryData> extraArguments) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ExtraArguments { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Chat.ChatMessage> Messages { get { throw null; } }
-        public System.BinaryData SessionState { get { throw null; } }
-        public bool Stream { get { throw null; } }
+        public System.BinaryData SessionState { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Azure
 {
     public static partial class AIChatClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Chat.ChatClient, Azure.AI.Chat.ChatClientOptions> AddChatClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Chat.ChatClient, Azure.AI.Chat.ChatClientOptions> AddChatClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Chat.ChatClient, Azure.AI.Chat.ChatClientOptions> AddChatClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

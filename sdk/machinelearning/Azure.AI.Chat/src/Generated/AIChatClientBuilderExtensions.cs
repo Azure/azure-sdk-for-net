@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.AI.Chat;
 using Azure.Core.Extensions;
 
@@ -17,10 +18,11 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="ChatClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The Uri to use. </param>
-        public static IAzureClientBuilder<ChatClient, ChatClientOptions> AddChatClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<ChatClient, ChatClientOptions> AddChatClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<ChatClient, ChatClientOptions>((options) => new ChatClient(endpoint, options));
+            return builder.RegisterClientFactory<ChatClient, ChatClientOptions>((options) => new ChatClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="ChatClient"/> instance. </summary>

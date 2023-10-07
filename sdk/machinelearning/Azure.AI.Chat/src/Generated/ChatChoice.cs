@@ -17,16 +17,26 @@ namespace Azure.AI.Chat
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="index"> placeholder. </param>
         /// <param name="message"> placeholder. </param>
+        /// <param name="finishReason"> placeholder. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        internal ChatChoice(long index, ChatMessage message, FinishReason finishReason)
+        {
+            Argument.AssertNotNull(message, nameof(message));
+
+            Index = index;
+            Message = message;
+            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
+            FinishReason = finishReason;
+        }
+
+        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <param name="index"> placeholder. </param>
+        /// <param name="message"> placeholder. </param>
         /// <param name="extraArguments"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/>, <paramref name="extraArguments"/> or <paramref name="sessionState"/> is null. </exception>
         internal ChatChoice(long index, ChatMessage message, IReadOnlyDictionary<string, BinaryData> extraArguments, BinaryData sessionState, FinishReason finishReason)
         {
-            Argument.AssertNotNull(message, nameof(message));
-            Argument.AssertNotNull(extraArguments, nameof(extraArguments));
-            Argument.AssertNotNull(sessionState, nameof(sessionState));
-
             Index = index;
             Message = message;
             ExtraArguments = extraArguments;
