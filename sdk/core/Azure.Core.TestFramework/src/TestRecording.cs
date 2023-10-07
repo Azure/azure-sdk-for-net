@@ -210,7 +210,14 @@ namespace Azure.Core.TestFramework
                         break;
                     case RecordedTestMode.Playback:
                         ValidateVariables();
-                        _defaultClientRequestIdGuid = bool.Parse(Variables[DefaultClientGuidFormatInRecordingKey]);
+                        try
+                        {
+                            _defaultClientRequestIdGuid = bool.Parse(Variables[DefaultClientGuidFormatInRecordingKey]);
+                        }
+                        catch (System.Collections.Generic.KeyNotFoundException)
+                        {
+                            _defaultClientRequestIdGuid = false;
+                        }
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
