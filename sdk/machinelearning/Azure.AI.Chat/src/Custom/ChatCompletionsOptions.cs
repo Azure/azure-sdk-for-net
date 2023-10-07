@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.Chat;
 
+[CodeGenModel("ChatCompletionOptionsunknownunknown")]
 public partial class ChatCompletionOptions
 {
     internal bool Stream { get; } = false;
@@ -16,7 +17,7 @@ public partial class ChatCompletionOptions
     /// <param name="messages"> placeholder. </param>
     /// <param name="sessionState"> placeholder. </param>
     /// <param name="extraArguments"> placeholder. </param>
-    public  ChatCompletionOptions(IList<ChatMessage> messages, BinaryData sessionState, IDictionary<string, BinaryData> extraArguments = null)
+    public  ChatCompletionOptions(IList<ChatMessage> messages, BinaryData sessionState, BinaryData extraArguments = null)
     {
         Argument.AssertNotNull(messages, nameof(messages));
         Messages = messages;
@@ -27,7 +28,7 @@ public partial class ChatCompletionOptions
     /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
     /// <param name="messages"> placeholder. </param>
     /// <param name="extraArguments"> placeholder. </param>
-    public  ChatCompletionOptions(IList<ChatMessage> messages, IDictionary<string, BinaryData> extraArguments)
+    public  ChatCompletionOptions(IList<ChatMessage> messages, BinaryData extraArguments)
     {
         Argument.AssertNotNull(messages, nameof(messages));
         Messages = messages;

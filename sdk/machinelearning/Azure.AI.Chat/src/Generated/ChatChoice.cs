@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Chat
@@ -25,22 +24,21 @@ namespace Azure.AI.Chat
 
             Index = index;
             Message = message;
-            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
             FinishReason = finishReason;
         }
 
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="index"> placeholder. </param>
         /// <param name="message"> placeholder. </param>
-        /// <param name="extraArguments"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
+        /// <param name="extraArguments"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
-        internal ChatChoice(long index, ChatMessage message, IReadOnlyDictionary<string, BinaryData> extraArguments, BinaryData sessionState, FinishReason finishReason)
+        internal ChatChoice(long index, ChatMessage message, BinaryData sessionState, BinaryData extraArguments, FinishReason finishReason)
         {
             Index = index;
             Message = message;
-            ExtraArguments = extraArguments;
             SessionState = sessionState;
+            ExtraArguments = extraArguments;
             FinishReason = finishReason;
         }
 
@@ -48,37 +46,6 @@ namespace Azure.AI.Chat
         public long Index { get; }
         /// <summary> placeholder. </summary>
         public ChatMessage Message { get; }
-        /// <summary>
-        /// placeholder
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> ExtraArguments { get; }
         /// <summary>
         /// placeholder
         /// <para>
@@ -110,6 +77,37 @@ namespace Azure.AI.Chat
         /// </para>
         /// </summary>
         public BinaryData SessionState { get; }
+        /// <summary>
+        /// placeholder
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ExtraArguments { get; }
         /// <summary> placeholder. </summary>
         public FinishReason FinishReason { get; }
     }

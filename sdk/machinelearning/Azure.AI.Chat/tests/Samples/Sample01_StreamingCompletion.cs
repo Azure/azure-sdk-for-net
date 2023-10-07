@@ -33,10 +33,7 @@ namespace Azure.AI.Chat.Tests.Samples
                     new ChatMessage("Hello", ChatRole.Assistant),
                 },
                 sessionState: BinaryData.FromString("Hello"),
-                extraArguments: new Dictionary<string, BinaryData>
-                {
-                    { "World", BinaryData.FromString("Hello") }
-                }
+                extraArguments: BinaryData.FromString("Hello")
             ));
 
             await foreach (var completionChunk in response.Value)

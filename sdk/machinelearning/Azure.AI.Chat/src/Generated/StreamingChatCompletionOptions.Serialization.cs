@@ -33,25 +33,14 @@ namespace Azure.AI.Chat
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(SessionState.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(ExtraArguments))
+            if (Optional.IsDefined(ExtraArguments))
             {
                 writer.WritePropertyName("extra_args"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtraArguments)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(ExtraArguments);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExtraArguments.ToString()).RootElement);
 #endif
-                }
-                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }

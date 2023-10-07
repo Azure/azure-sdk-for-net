@@ -25,10 +25,7 @@ namespace Azure.AI.Chat.Tests.Samples
                     new ChatMessage("Hello", ChatRole.Assistant),
                 },
                 sessionState: BinaryData.FromString("Hello"),
-                extraArguments: new Dictionary<string, BinaryData>
-                {
-                    { "World", BinaryData.FromString("Hello") }
-                }
+                extraArguments: BinaryData.FromString("Hello")
             ));
 
             foreach (var choice in completion.Choices)

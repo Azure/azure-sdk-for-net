@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.Chat
 {
-    /// <summary> The ChatCompletionOptions. </summary>
+    /// <summary> The ChatCompletionOptionsunknownunknown. </summary>
     public partial class ChatCompletionOptions
     {
         /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
@@ -23,7 +23,6 @@ namespace Azure.AI.Chat
             Argument.AssertNotNull(messages, nameof(messages));
 
             Messages = messages.ToList();
-            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ChatCompletionOptions. </summary>
@@ -31,7 +30,7 @@ namespace Azure.AI.Chat
         /// <param name="stream"> placeholder. </param>
         /// <param name="sessionState"> placeholder. </param>
         /// <param name="extraArguments"> placeholder. </param>
-        internal ChatCompletionOptions(IList<ChatMessage> messages, bool stream, BinaryData sessionState, IDictionary<string, BinaryData> extraArguments)
+        internal ChatCompletionOptions(IList<ChatMessage> messages, bool stream, BinaryData sessionState, BinaryData extraArguments)
         {
             Messages = messages;
             Stream = stream;
@@ -76,7 +75,7 @@ namespace Azure.AI.Chat
         /// <summary>
         /// placeholder
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -103,6 +102,6 @@ namespace Azure.AI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> ExtraArguments { get; }
+        public BinaryData ExtraArguments { get; set; }
     }
 }
