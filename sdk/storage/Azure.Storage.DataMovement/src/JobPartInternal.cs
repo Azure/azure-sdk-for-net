@@ -103,12 +103,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal long? Length;
 
-        /// <summary>
-        /// Defines whether or not this was the final part in the list call. This would determine
-        /// whether or not we needed to keep listing in the job.
-        /// </summary>
-        public bool IsFinalPart { get; internal set; }
-
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
@@ -160,7 +154,6 @@ namespace Azure.Storage.DataMovement
             TransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
-            bool isFinalPart,
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferItemFailedEventArgs> failedEventHandler,
@@ -186,7 +179,6 @@ namespace Azure.Storage.DataMovement
             _progressTracker = progressTracker;
             _cancellationToken = cancellationToken;
             _arrayPool = arrayPool;
-            IsFinalPart = isFinalPart;
             PartTransferStatusEventHandler = jobPartEventHandler;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
@@ -460,13 +452,10 @@ namespace Azure.Storage.DataMovement
         /// Serializes the respective job part and adds it to the checkpointer.
         /// </summary>
         /// <param name="chunksTotal">Number of chunks in the job part.</param>
-        /// <param name="isFinalPart">Defines if this part is the last job part of the job.</param>
         /// <returns></returns>
-        public async virtual Task AddJobPartToCheckpointerAsync(int chunksTotal, bool isFinalPart)
+        public async virtual Task AddJobPartToCheckpointerAsync(int chunksTotal)
         {
-            JobPartPlanHeader header = this.ToJobPartPlanHeader(
-                jobStatus: JobPartStatus,
-                isFinalPart: isFinalPart);
+            JobPartPlanHeader header = this.ToJobPartPlanHeader(jobStatus: JobPartStatus);
             using (Stream stream = new MemoryStream())
             {
                 header.Serialize(stream);

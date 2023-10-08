@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultCreateTime, header.CreateTime);
             Assert.AreEqual(DefaultJobPlanOperation, header.OperationType);
             Assert.AreEqual(false, header.EnumerationComplete);
-            Assert.AreEqual(DefaultJobPlanStatus, header.JobStatus);
+            Assert.AreEqual(DefaultJobStatus, header.JobStatus);
             Assert.AreEqual(DefaultSourcePath, header.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, header.ParentDestinationPath);
         }
@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultCreateTime, deserialized.CreateTime);
             Assert.AreEqual(DefaultJobPlanOperation, deserialized.OperationType);
             Assert.AreEqual(false, deserialized.EnumerationComplete);
-            Assert.AreEqual(DefaultJobPlanStatus, deserialized.JobStatus);
+            Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
         }

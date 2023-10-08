@@ -41,20 +41,31 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Creates a storage resource to the file or directory at the given path.
+        /// Creates a storage resource to the file at the given path.
         /// </summary>
-        /// <param name="path">
-        /// Path to the file or directory.
+        /// <param name="filePath">
+        /// Path to the file.
         /// </param>
         /// <returns>
-        /// Storage resource to this file or directory.
+        /// Storage resource to this file.
         /// </returns>
-        public StorageResource FromPath(string path)
+        public StorageResourceItem FromFile(string filePath)
         {
-            FileAttributes attributes = File.GetAttributes(path);
-            return attributes.HasFlag(FileAttributes.Directory)
-                ? new LocalDirectoryStorageResourceContainer(path)
-                : new LocalFileStorageResource(path);
+            return new LocalFileStorageResource(filePath);
+        }
+
+        /// <summary>
+        /// Creates a storage resource to the directory at the given path.
+        /// </summary>
+        /// <param name="directoryPath">
+        /// Path to the directory.
+        /// </param>
+        /// <returns>
+        /// Storage resource to this directory.
+        /// </returns>
+        public StorageResourceContainer FromDirectory(string directoryPath)
+        {
+            return new LocalDirectoryStorageResourceContainer(directoryPath);
         }
     }
 }

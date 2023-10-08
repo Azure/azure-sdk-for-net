@@ -98,13 +98,19 @@ namespace Azure.Data.AppConfiguration
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
+    public partial class ConfigurationSettingsFilter
+    {
+        public ConfigurationSettingsFilter(string key) { }
+        public string Key { get { throw null; } set { } }
+        public string Label { get { throw null; } set { } }
+    }
     public partial class ConfigurationSnapshot
     {
-        public ConfigurationSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotSettingFilter> filters) { }
+        public ConfigurationSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotSettingFilter> Filters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> Filters { get { throw null; } }
         public long? ItemCount { get { throw null; } }
         public string Name { get { throw null; } }
         public System.TimeSpan? RetentionPeriod { get { throw null; } set { } }
@@ -249,12 +255,6 @@ namespace Azure.Data.AppConfiguration
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotFields> Fields { get { throw null; } }
         public string NameFilter { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.ConfigurationSnapshotStatus> Status { get { throw null; } }
-    }
-    public partial class SnapshotSettingFilter
-    {
-        public SnapshotSettingFilter(string key) { }
-        public string Key { get { throw null; } set { } }
-        public string Label { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Azure

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation.Models.Events;
 
 namespace Azure.Communication.CallAutomation
 {

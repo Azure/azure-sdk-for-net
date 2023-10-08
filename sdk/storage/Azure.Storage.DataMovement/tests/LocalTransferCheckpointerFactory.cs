@@ -74,12 +74,12 @@ namespace Azure.Storage.DataMovement.Tests
         {
             foreach (DataTransfer dataTransfer in dataTransfers)
             {
-                CreateStubJobPlanFile(_checkpointerPath, dataTransfer.Id);
+                CreateStubJobPlanFile(_checkpointerPath, dataTransfer.Id, status: dataTransfer.TransferStatus);
                 CreateStubJobPartPlanFilesAsync(
                     checkpointerPath: _checkpointerPath,
                     transferId: dataTransfer.Id,
                     jobPartCount: _partCountDefault,
-                    status: dataTransfer.TransferStatus);
+                    status: new DataTransferStatus(DataTransferState.Paused, false, false));
             }
             return new LocalTransferCheckpointer(_checkpointerPath);
         }
@@ -143,17 +143,23 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        internal void CreateStubJobPlanFile(string checkpointPath, string transferId)
+        internal void CreateStubJobPlanFile(
+            string checkpointPath,
+            string transferId,
+            string parentSourcePath = _testSourcePath,
+            string parentDestinationPath = _testDestinationPath,
+            DataTransferStatus status = default)
         {
+            status ??= new DataTransferStatus();
             JobPlanHeader header = new JobPlanHeader(
                 DataMovementConstants.JobPlanFile.SchemaVersion,
                 transferId,
                 DateTimeOffset.UtcNow,
                 JobPlanOperation.ServiceToService,
                 false, /* enumerationComplete */
-                JobPlanStatus.Queued,
-                _testSourcePath,
-                _testDestinationPath);
+                status,
+                parentSourcePath,
+                parentDestinationPath);
 
             string filePath = Path.Combine(checkpointPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
             using (FileStream stream = File.Create(filePath))

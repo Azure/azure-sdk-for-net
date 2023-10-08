@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string RecoverableDaysPropertyName = "recoverableDays";
         private const string RecoveryLevelPropertyName = "recoveryLevel";
         private const string ExportablePropertyName = "exportable";
+        private const string HsmPlatformPropertyName = "hsmPlatform";
 
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
@@ -37,6 +38,8 @@ namespace Azure.Security.KeyVault.Keys
         public int? RecoverableDays { get; internal set; }
 
         public string RecoveryLevel { get; internal set; }
+
+        public string HsmPlatform { get; internal set; }
 
         internal bool ShouldSerialize =>
             Enabled.HasValue ||
@@ -74,6 +77,9 @@ namespace Azure.Security.KeyVault.Keys
                     case ExportablePropertyName:
                         Exportable = prop.Value.GetBoolean();
                         break;
+                    case HsmPlatformPropertyName:
+                        HsmPlatform = prop.Value.GetString();
+                        break;
                 }
             }
         }
@@ -104,6 +110,7 @@ namespace Azure.Security.KeyVault.Keys
             // Updated is read-only don't serialize
             // RecoverableDays is read-only don't serialize
             // RecoveryLevel is read-only don't serialize
+            // HsmPlatform is read-only don't serialize
         }
     }
 }
