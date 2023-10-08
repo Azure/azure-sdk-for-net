@@ -16,8 +16,7 @@ $ApplicationOId = az ad sp show --id $AppId --query "id" --output tsv
 
 $Id = [string](Get-Random -Minimum 0 -Maximum 999)
 
-$RootDirectory = (Get-Item $PSScriptRoot).parent.parent.parent.parent.parent.parent
-$TestResourcesDirectory = Join-Path -Path $RootDirectory -ChildPath eng\common\TestResources
+$TestResourcesDirectory = Join-Path -Path $PSScriptRoot -ChildPath ..\..\..\..\..\..\eng\common\TestResources
 
 Write-Host "Triggering New-TestResources script to create all required resources" -ForegroundColor Green
 & $TestResourcesDirectory\New-TestResources.ps1 `
