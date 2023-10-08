@@ -26,7 +26,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
             });
@@ -44,7 +44,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
             });
@@ -86,7 +86,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
                 categories = new object[]
@@ -125,7 +125,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 text = "<text>",
                 categories = new object[]
@@ -198,7 +198,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new object(),
             });
@@ -216,7 +216,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new object(),
             });
@@ -258,7 +258,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new
                 {
@@ -291,7 +291,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 image = new
                 {
@@ -464,7 +464,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
             });
@@ -482,7 +482,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
             });
@@ -500,7 +500,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
                 description = "<description>",
@@ -520,7 +520,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blocklistName = "<blocklistName>",
                 description = "<description>",
@@ -592,7 +592,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItems = new object[]
             {
@@ -616,7 +616,7 @@ text = "<text>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItems = new object[]
             {
@@ -670,7 +670,7 @@ new TextBlockItemInfo("<text>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItems = new object[]
             {
@@ -697,7 +697,7 @@ text = "<text>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItems = new object[]
             {
@@ -760,7 +760,7 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItemIds = new object[]
             {
@@ -780,7 +780,7 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItemIds = new object[]
             {
@@ -824,7 +824,7 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItemIds = new object[]
             {
@@ -844,7 +844,7 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 blockItemIds = new object[]
             {
