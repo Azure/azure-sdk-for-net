@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.UpdateMetadataPolicy("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.UpdateMetadataPolicyAsync("<policyId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 id = "<id>",
@@ -148,7 +148,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, null, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 name = "<name>",
                 id = "<id>",

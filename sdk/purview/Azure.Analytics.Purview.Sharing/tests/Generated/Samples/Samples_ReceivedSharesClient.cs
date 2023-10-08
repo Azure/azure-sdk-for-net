@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ActivateTenantEmailRegistration(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ActivateTenantEmailRegistrationAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -370,7 +370,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new object(),
                 shareKind = "InPlace",
@@ -390,7 +390,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new object(),
                 shareKind = "InPlace",
@@ -410,7 +410,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -452,7 +452,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {

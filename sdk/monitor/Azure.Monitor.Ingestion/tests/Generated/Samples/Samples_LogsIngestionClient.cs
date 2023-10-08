@@ -25,7 +25,7 @@ namespace Azure.Monitor.Ingestion.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -42,7 +42,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -59,7 +59,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
@@ -76,7 +76,7 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new object()
             });
