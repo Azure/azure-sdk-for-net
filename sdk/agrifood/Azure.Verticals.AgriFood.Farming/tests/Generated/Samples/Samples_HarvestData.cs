@@ -241,7 +241,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<harvestDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -255,7 +255,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<harvestDataId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -269,7 +269,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 totalYield = new
                 {
@@ -352,7 +352,7 @@ productName = "<productName>",
             TokenCredential credential = new DefaultAzureCredential();
             HarvestData client = new FarmBeatsClient(credential).GetHarvestDataClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 totalYield = new
                 {
