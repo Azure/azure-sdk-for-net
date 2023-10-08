@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation;
-
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogSensitivityUpdate. </summary>
     internal partial class DialogSensitivityUpdateInternal

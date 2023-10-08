@@ -22,8 +22,4 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\\ConnectionString.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\RoomsClientLiveTests\" />
-    <Folder Include="SessionRecords\Sample1_RoomsClient\" />
-  </ItemGroup>
 </Project>
