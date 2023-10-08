@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoPrivateEndpointConnectionsGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoPrivateEndpointConnectionsGet.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoPrivateEndpointConnectionsCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoPrivateEndpointConnectionsCreateOrUpdate.json
             // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoPrivateEndpointConnectionsDelete.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoPrivateEndpointConnectionsDelete.json
             // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

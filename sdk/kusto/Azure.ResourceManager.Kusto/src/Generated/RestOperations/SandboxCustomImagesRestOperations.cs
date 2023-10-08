@@ -16,20 +16,20 @@ using Azure.ResourceManager.Kusto.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal partial class ManagedPrivateEndpointsRestOperations
+    internal partial class SandboxCustomImagesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointsRestOperations. </summary>
+        /// <summary> Initializes a new instance of SandboxCustomImagesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ManagedPrivateEndpointsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public SandboxCustomImagesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -37,94 +37,7 @@ namespace Azure.ResourceManager.Kusto
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string clusterName, KustoManagedPrivateEndpointNameAvailabilityContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/managedPrivateEndpointsCheckNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Checks that the managed private endpoints resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="content"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string clusterName, KustoManagedPrivateEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KustoNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Checks that the managed private endpoints resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="content"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KustoNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string clusterName, KustoManagedPrivateEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KustoNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string clusterName)
+        internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -137,7 +50,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendPath("/managedPrivateEndpoints", false);
+            uri.AppendPath("/sandboxCustomImages", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -145,28 +58,28 @@ namespace Azure.ResourceManager.Kusto
             return message;
         }
 
-        /// <summary> Returns the list of managed private endpoints. </summary>
+        /// <summary> Returns the list of the existing sandbox custom images of the given Kusto cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedPrivateEndpointListResult>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<SandboxCustomImagesListResult>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName);
+            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ManagedPrivateEndpointListResult value = default;
+                        SandboxCustomImagesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedPrivateEndpointListResult.DeserializeManagedPrivateEndpointListResult(document.RootElement);
+                        value = SandboxCustomImagesListResult.DeserializeSandboxCustomImagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -174,28 +87,28 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        /// <summary> Returns the list of managed private endpoints. </summary>
+        /// <summary> Returns the list of the existing sandbox custom images of the given Kusto cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedPrivateEndpointListResult> List(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<SandboxCustomImagesListResult> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName);
+            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ManagedPrivateEndpointListResult value = default;
+                        SandboxCustomImagesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedPrivateEndpointListResult.DeserializeManagedPrivateEndpointListResult(document.RootElement);
+                        value = SandboxCustomImagesListResult.DeserializeSandboxCustomImagesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -203,7 +116,7 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -216,8 +129,8 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendPath("/managedPrivateEndpoints/", false);
-            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendPath("/sandboxCustomImages/", false);
+            uri.AppendPath(sandboxCustomImageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -225,73 +138,73 @@ namespace Azure.ResourceManager.Kusto
             return message;
         }
 
-        /// <summary> Gets a managed private endpoint. </summary>
+        /// <summary> Returns a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KustoManagedPrivateEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SandboxCustomImageData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        KustoManagedPrivateEndpointData value = default;
+                        SandboxCustomImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(document.RootElement);
+                        value = SandboxCustomImageData.DeserializeSandboxCustomImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KustoManagedPrivateEndpointData)null, message.Response);
+                    return Response.FromValue((SandboxCustomImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets a managed private endpoint. </summary>
+        /// <summary> Returns a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KustoManagedPrivateEndpointData> Get(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SandboxCustomImageData> Get(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        KustoManagedPrivateEndpointData value = default;
+                        SandboxCustomImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(document.RootElement);
+                        value = SandboxCustomImageData.DeserializeSandboxCustomImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KustoManagedPrivateEndpointData)null, message.Response);
+                    return Response.FromValue((SandboxCustomImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, KustoManagedPrivateEndpointData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, SandboxCustomImageData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -304,8 +217,8 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendPath("/managedPrivateEndpoints/", false);
-            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendPath("/sandboxCustomImages/", false);
+            uri.AppendPath(sandboxCustomImageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -317,67 +230,65 @@ namespace Azure.ResourceManager.Kusto
             return message;
         }
 
-        /// <summary> Creates a managed private endpoint. </summary>
+        /// <summary> Creates or updates a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
-        /// <param name="data"> The managed private endpoint parameters. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="data"> The sandbox custom image parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, KustoManagedPrivateEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="sandboxCustomImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, SandboxCustomImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Creates a managed private endpoint. </summary>
+        /// <summary> Creates or updates a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
-        /// <param name="data"> The managed private endpoint parameters. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="data"> The sandbox custom image parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, KustoManagedPrivateEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="sandboxCustomImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, SandboxCustomImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, KustoManagedPrivateEndpointData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, SandboxCustomImageData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -390,8 +301,8 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendPath("/managedPrivateEndpoints/", false);
-            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendPath("/sandboxCustomImages/", false);
+            uri.AppendPath(sandboxCustomImageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -403,28 +314,29 @@ namespace Azure.ResourceManager.Kusto
             return message;
         }
 
-        /// <summary> Updates a managed private endpoint. </summary>
+        /// <summary> Updates a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
-        /// <param name="data"> The managed private endpoint parameters. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="data"> The sandbox custom image parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, KustoManagedPrivateEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="sandboxCustomImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, SandboxCustomImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                 case 202:
                     return message.Response;
                 default:
@@ -432,28 +344,29 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        /// <summary> Updates a managed private endpoint. </summary>
+        /// <summary> Updates a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
-        /// <param name="data"> The managed private endpoint parameters. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="data"> The sandbox custom image parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, KustoManagedPrivateEndpointData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="sandboxCustomImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, SandboxCustomImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                 case 202:
                     return message.Response;
                 default:
@@ -461,7 +374,7 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -474,8 +387,8 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendPath("/managedPrivateEndpoints/", false);
-            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendPath("/sandboxCustomImages/", false);
+            uri.AppendPath(sandboxCustomImageName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -483,22 +396,22 @@ namespace Azure.ResourceManager.Kusto
             return message;
         }
 
-        /// <summary> Deletes a managed private endpoint. </summary>
+        /// <summary> Deletes a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -511,22 +424,22 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        /// <summary> Deletes a managed private endpoint. </summary>
+        /// <summary> Deletes a sandbox custom image. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
-        /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, managedPrivateEndpointName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, sandboxCustomImageName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -534,6 +447,93 @@ namespace Azure.ResourceManager.Kusto
                 case 202:
                 case 204:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string clusterName, SandboxCustomImagesCheckNameContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/sandboxCustomImagesCheckNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Checks that the sandbox custom image resource name is valid and is not already in use. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterName"> The name of the Kusto cluster. </param>
+        /// <param name="content"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string clusterName, SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KustoNameAvailabilityResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Checks that the sandbox custom image resource name is valid and is not already in use. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterName"> The name of the Kusto cluster. </param>
+        /// <param name="content"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<KustoNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string clusterName, SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KustoNameAvailabilityResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> The location. </param>
         public KustoClusterPatch(AzureLocation location) : base(location)
         {
+            Zones = new ChangeTrackingList<string>();
             TrustedExternalTenants = new ChangeTrackingList<KustoClusterTrustedExternalTenant>();
             AllowedIPRangeList = new ChangeTrackingList<string>();
             AcceptedAudiences = new ChangeTrackingList<AcceptedAudience>();
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the cluster. </param>
+        /// <param name="zones"> The availability zones of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="state"> The state of the resource. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
@@ -61,9 +63,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
-        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster) : base(id, name, resourceType, systemData, tags, location)
+        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
+            Zones = zones;
             Identity = identity;
             State = state;
             ProvisioningState = provisioningState;
@@ -94,6 +97,8 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> The SKU of the cluster. </summary>
         public KustoSku Sku { get; set; }
+        /// <summary> The availability zones of the cluster. </summary>
+        public IList<string> Zones { get; }
         /// <summary> The identity of the cluster, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The state of the resource. </summary>

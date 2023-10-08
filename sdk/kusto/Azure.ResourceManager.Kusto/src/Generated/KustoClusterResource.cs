@@ -45,6 +45,8 @@ namespace Azure.ResourceManager.Kusto
         private readonly AttachedDatabaseConfigurationsRestOperations _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient;
         private readonly ClientDiagnostics _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics;
         private readonly ManagedPrivateEndpointsRestOperations _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient;
+        private readonly ClientDiagnostics _sandboxCustomImageClientDiagnostics;
+        private readonly SandboxCustomImagesRestOperations _sandboxCustomImageRestClient;
         private readonly KustoClusterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="KustoClusterResource"/> class for mocking. </summary>
@@ -81,6 +83,9 @@ namespace Azure.ResourceManager.Kusto
             _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoManagedPrivateEndpointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(KustoManagedPrivateEndpointResource.ResourceType, out string kustoManagedPrivateEndpointManagedPrivateEndpointsApiVersion);
             _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient = new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoManagedPrivateEndpointManagedPrivateEndpointsApiVersion);
+            _sandboxCustomImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", SandboxCustomImageResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SandboxCustomImageResource.ResourceType, out string sandboxCustomImageApiVersion);
+            _sandboxCustomImageRestClient = new SandboxCustomImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sandboxCustomImageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -320,6 +325,59 @@ namespace Azure.ResourceManager.Kusto
         public virtual Response<KustoManagedPrivateEndpointResource> GetKustoManagedPrivateEndpoint(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             return GetKustoManagedPrivateEndpoints().Get(managedPrivateEndpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SandboxCustomImageResources in the KustoCluster. </summary>
+        /// <returns> An object representing collection of SandboxCustomImageResources and their operations over a SandboxCustomImageResource. </returns>
+        public virtual SandboxCustomImageCollection GetSandboxCustomImages()
+        {
+            return GetCachedClient(Client => new SandboxCustomImageCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Returns a sandbox custom image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImages/{sandboxCustomImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SandboxCustomImageResource>> GetSandboxCustomImageAsync(string sandboxCustomImageName, CancellationToken cancellationToken = default)
+        {
+            return await GetSandboxCustomImages().GetAsync(sandboxCustomImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a sandbox custom image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImages/{sandboxCustomImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SandboxCustomImageResource> GetSandboxCustomImage(string sandboxCustomImageName, CancellationToken cancellationToken = default)
+        {
+            return GetSandboxCustomImages().Get(sandboxCustomImageName, cancellationToken);
         }
 
         /// <summary> Gets a collection of KustoPrivateEndpointConnectionResources in the KustoCluster. </summary>
@@ -1579,6 +1637,74 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that the sandbox custom image resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImagesCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilitySandboxCustomImageAsync(SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilitySandboxCustomImage");
+            scope.Start();
+            try
+            {
+                var response = await _sandboxCustomImageRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that the sandbox custom image resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImagesCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<KustoNameAvailabilityResult> CheckNameAvailabilitySandboxCustomImage(SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilitySandboxCustomImage");
+            scope.Start();
+            try
+            {
+                var response = _sandboxCustomImageRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
