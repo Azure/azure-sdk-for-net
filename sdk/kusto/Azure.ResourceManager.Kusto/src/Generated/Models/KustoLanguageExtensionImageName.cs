@@ -25,9 +25,15 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string RValue = "R";
         private const string Python3_6_5Value = "Python3_6_5";
         private const string Python3_10_8Value = "Python3_10_8";
+        private const string Python3108DLValue = "Python3_10_8_DL";
+        private const string PythonCustomImageValue = "PythonCustomImage";
 
         /// <summary> R. </summary>
         public static KustoLanguageExtensionImageName R { get; } = new KustoLanguageExtensionImageName(RValue);
+        /// <summary> Python3_10_8_DL. </summary>
+        public static KustoLanguageExtensionImageName Python3108DL { get; } = new KustoLanguageExtensionImageName(Python3108DLValue);
+        /// <summary> PythonCustomImage. </summary>
+        public static KustoLanguageExtensionImageName PythonCustomImage { get; } = new KustoLanguageExtensionImageName(PythonCustomImageValue);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are the same. </summary>
         public static bool operator ==(KustoLanguageExtensionImageName left, KustoLanguageExtensionImageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are not the same. </summary>
