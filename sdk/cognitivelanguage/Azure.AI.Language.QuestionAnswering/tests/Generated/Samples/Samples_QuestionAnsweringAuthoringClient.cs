@@ -96,7 +96,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 language = "<language>",
             });
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 language = "<language>",
             });
@@ -132,7 +132,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 language = "<language>",
@@ -163,7 +163,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 description = "<description>",
                 language = "<language>",
@@ -474,7 +474,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateSynonyms("<projectName>", content);
 
             Console.WriteLine(response.Status);
@@ -488,7 +488,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateSynonymsAsync("<projectName>", content);
 
             Console.WriteLine(response.Status);
@@ -502,7 +502,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 value = new object[]
             {
@@ -529,7 +529,7 @@ alterations = new object[]
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 value = new object[]
             {
@@ -696,7 +696,7 @@ alterations = new object[]
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.AddFeedback("<projectName>", content);
 
             Console.WriteLine(response.Status);
@@ -710,7 +710,7 @@ alterations = new object[]
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.AddFeedbackAsync("<projectName>", content);
 
             Console.WriteLine(response.Status);
@@ -724,7 +724,7 @@ alterations = new object[]
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 records = new object[]
             {
@@ -749,7 +749,7 @@ qnaId = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 records = new object[]
             {
@@ -1260,7 +1260,7 @@ qnaId = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Operation<BinaryData> operation = client.Import(WaitUntil.Completed, "<projectName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1279,7 +1279,7 @@ qnaId = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1298,7 +1298,7 @@ qnaId = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metadata = new
                 {
@@ -1408,7 +1408,7 @@ null
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metadata = new
                 {
@@ -1580,7 +1580,7 @@ null
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -1610,7 +1610,7 @@ sourceKind = "file",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -1640,7 +1640,7 @@ sourceKind = "file",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -1676,7 +1676,7 @@ contentStructureKind = "unstructured",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -1712,7 +1712,7 @@ contentStructureKind = "unstructured",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -1737,7 +1737,7 @@ value = new object(),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -1762,7 +1762,7 @@ value = new object(),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -1850,7 +1850,7 @@ autoSuggestedCount = 1234,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {

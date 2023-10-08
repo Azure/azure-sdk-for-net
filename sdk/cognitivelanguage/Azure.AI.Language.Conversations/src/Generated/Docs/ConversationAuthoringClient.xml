@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectKind = "Conversation",
     projectName = "<projectName>",
@@ -30,7 +30,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectKind = "Conversation",
     settings = new
@@ -65,7 +65,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectKind = "Conversation",
     projectName = "<projectName>",
@@ -86,7 +86,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectKind = "Conversation",
     settings = new
@@ -2099,7 +2099,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectFileVersion = "<projectFileVersion>",
     stringIndexType = "Utf16CodeUnit",
@@ -2125,7 +2125,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectFileVersion = "<projectFileVersion>",
     stringIndexType = "Utf16CodeUnit",
@@ -2259,7 +2259,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectFileVersion = "<projectFileVersion>",
     stringIndexType = "Utf16CodeUnit",
@@ -2285,7 +2285,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     projectFileVersion = "<projectFileVersion>",
     stringIndexType = "Utf16CodeUnit",
@@ -2419,7 +2419,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     modelLabel = "<modelLabel>",
     trainingMode = "advanced",
@@ -2443,7 +2443,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     modelLabel = "<modelLabel>",
     trainingConfigVersion = "<trainingConfigVersion>",
@@ -2502,7 +2502,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     modelLabel = "<modelLabel>",
     trainingMode = "advanced",
@@ -2526,7 +2526,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     modelLabel = "<modelLabel>",
     trainingConfigVersion = "<trainingConfigVersion>",
@@ -2585,7 +2585,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     firstDeploymentName = "<firstDeploymentName>",
     secondDeploymentName = "<secondDeploymentName>",
@@ -2605,7 +2605,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     firstDeploymentName = "<firstDeploymentName>",
     secondDeploymentName = "<secondDeploymentName>",
@@ -2645,7 +2645,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     firstDeploymentName = "<firstDeploymentName>",
     secondDeploymentName = "<secondDeploymentName>",
@@ -2665,7 +2665,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     firstDeploymentName = "<firstDeploymentName>",
     secondDeploymentName = "<secondDeploymentName>",
@@ -2705,7 +2705,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     trainedModelLabel = "<trainedModelLabel>",
 });
@@ -2726,7 +2726,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     trainedModelLabel = "<trainedModelLabel>",
 });
@@ -2750,7 +2750,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     trainedModelLabel = "<trainedModelLabel>",
 });
@@ -2771,7 +2771,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     trainedModelLabel = "<trainedModelLabel>",
 });
