@@ -141,6 +141,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 parentCollection = new
                 {
                     referenceName = "<referenceName>",
+                    type = "<type>",
                 },
             });
             Response response = client.CreateOrUpdateCollection(content);
@@ -175,6 +176,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 parentCollection = new
                 {
                     referenceName = "<referenceName>",
+                    type = "<type>",
                 },
             });
             Response response = await client.CreateOrUpdateCollectionAsync(content);
