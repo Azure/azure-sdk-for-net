@@ -199,6 +199,8 @@ namespace Azure.Core.TestFramework
 
         public string RecordingId { get; private set; }
 
+        public bool UseDefaultClientIDFormat { get { return _recordedTestBase.UseDefaultClientIDFormat; } }
+
         /// <summary>
         /// Gets the moment in time that this test is being run.  This is useful
         /// for any test recordings that capture the current time.
