@@ -87,50 +87,6 @@ namespace Azure.ResourceManager.Resources
             return GetCachedClient(Client => new GenericResourceCollection(Client, Id));
         }
 
-        /// <summary>
-        /// Gets a resource by ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Resources_GetById</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GenericResource>> GetGenericResourceAsync(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
-        {
-            return await GetGenericResources().GetAsync(resourceId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a resource by ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Resources_GetById</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GenericResource> GetGenericResource(ResourceIdentifier resourceId, CancellationToken cancellationToken = default)
-        {
-            return GetGenericResources().Get(resourceId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of TenantPolicyDefinitionResources in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitionResources and their operations over a TenantPolicyDefinitionResource. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()

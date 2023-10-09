@@ -687,10 +687,6 @@ directive:
     where: $.definitions.ProviderExtendedLocation.properties.location
     transform: >
       $["x-ms-format"] = "azure-location"
-  - from: resources.json
-    where: $.paths["/{resourceId}"].get.parameters[?(@.name === "api-version")]
-    transform: >
-      delete $["x-ms-api-version"]
 ```
 
 ### Tag: package-management

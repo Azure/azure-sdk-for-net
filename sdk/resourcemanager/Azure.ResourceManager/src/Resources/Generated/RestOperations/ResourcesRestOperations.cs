@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateGetByIdRequest(string resourceId)
+        internal HttpMessage CreateGetByIdRequest(string resourceId, string apiVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -431,13 +431,15 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<GenericResourceData>> GetByIdAsync(string resourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public async Task<Response<GenericResourceData>> GetByIdAsync(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            using var message = CreateGetByIdRequest(resourceId);
+            using var message = CreateGetByIdRequest(resourceId, apiVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -457,13 +459,15 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets a resource by ID. </summary>
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
+        /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<GenericResourceData> GetById(string resourceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public Response<GenericResourceData> GetById(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            using var message = CreateGetByIdRequest(resourceId);
+            using var message = CreateGetByIdRequest(resourceId, apiVersion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
