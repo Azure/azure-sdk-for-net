@@ -200,7 +200,7 @@ namespace Azure.Core.TestFramework
         public string RecordingId { get; private set; }
 
         /// <summary>
-        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode 
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
         /// should use the default Guid format. The default Guid format contains hyphens.
         /// </summary>
         public bool UseDefaultGuidFormatForClientRequestId

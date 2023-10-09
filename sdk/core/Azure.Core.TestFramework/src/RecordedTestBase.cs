@@ -150,7 +150,7 @@ namespace Azure.Core.TestFramework
         public bool CompareBodies { get; set; } = true;
 
         /// <summary>
-        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode 
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
         /// should use the default Guid format. The default Guid format contains hyphens.
         /// The default value is <value>false</value>.
         /// </summary>
