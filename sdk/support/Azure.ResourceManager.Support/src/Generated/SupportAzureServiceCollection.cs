@@ -240,6 +240,80 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SupportAzureServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _supportAzureServiceServicesRestClient.GetAsync(serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportAzureServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        public virtual NullableResponse<SupportAzureServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
+            using var scope = _supportAzureServiceServicesClientDiagnostics.CreateScope("SupportAzureServiceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _supportAzureServiceServicesRestClient.Get(serviceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SupportAzureServiceResource>(response.GetRawResponse());
+                return Response.FromValue(new SupportAzureServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SupportAzureServiceResource> IEnumerable<SupportAzureServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

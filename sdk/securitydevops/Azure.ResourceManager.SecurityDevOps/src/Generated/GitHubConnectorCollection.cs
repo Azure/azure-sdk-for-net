@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GitHubConnectorResource>> GetIfExistsAsync(string gitHubConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+
+            using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _gitHubConnectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        public virtual NullableResponse<GitHubConnectorResource> GetIfExists(string gitHubConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+
+            using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _gitHubConnectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<GitHubConnectorResource> IEnumerable<GitHubConnectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

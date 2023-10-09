@@ -26,6 +26,7 @@ namespace Azure.Communication.CallAutomation
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> callbackUri = default;
             Optional<string> mediaSubscriptionId = default;
+            Optional<string> dataSubscriptionId = default;
             Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
             Optional<string> sourceDisplayName = default;
             Optional<CommunicationIdentifierModel> sourceIdentity = default;
@@ -76,6 +77,11 @@ namespace Azure.Communication.CallAutomation
                     mediaSubscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dataSubscriptionId"u8))
+                {
+                    dataSubscriptionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("sourceCallerIdNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -114,7 +120,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
         }
     }
 }

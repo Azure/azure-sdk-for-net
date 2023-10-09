@@ -75,7 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
 #endif
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); if (Optional.IsDefined(UseEncryptedEndpoints))
+            JsonSerializer.Serialize(writer, Password);
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);

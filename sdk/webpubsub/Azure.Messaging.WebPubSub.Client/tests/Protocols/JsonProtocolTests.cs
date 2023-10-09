@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -152,7 +153,7 @@ namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
         {
             var protocol = new WebPubSubJsonProtocol();
             var resolvedMessage = protocol.ParseMessage(new ReadOnlySequence<byte>(payload));
-            messageAssert(resolvedMessage);
+            messageAssert(resolvedMessage[0]);
         }
 
         [TestCaseSource(nameof(GetSerializingTestData))]

@@ -321,6 +321,82 @@ namespace Azure.ResourceManager.ManagedServices
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
+        /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registrationAssignmentId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedServicesRegistrationAssignmentResource>> GetIfExistsAsync(string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
+
+            using var scope = _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics.CreateScope("ManagedServicesRegistrationAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.GetAsync(Id, registrationAssignmentId, expandRegistrationDefinition, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServicesRegistrationAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registrationAssignmentId"> The GUID of the registration assignment. </param>
+        /// <param name="expandRegistrationDefinition"> The flag indicating whether to return the registration definition details along with the registration assignment details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registrationAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registrationAssignmentId"/> is null. </exception>
+        public virtual NullableResponse<ManagedServicesRegistrationAssignmentResource> GetIfExists(string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registrationAssignmentId, nameof(registrationAssignmentId));
+
+            using var scope = _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics.CreateScope("ManagedServicesRegistrationAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.Get(Id, registrationAssignmentId, expandRegistrationDefinition, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServicesRegistrationAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesRegistrationAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ManagedServicesRegistrationAssignmentResource> IEnumerable<ManagedServicesRegistrationAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

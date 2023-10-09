@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication.
+        /// Retrieve a valid AML token for an Endpoint using AMLToken-based authentication.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Retrieve a valid AAD token for an Endpoint using AMLToken-based authentication.
+        /// Retrieve a valid AML token for an Endpoint using AMLToken-based authentication.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateTestRunAsync(string,RequestContent,string,RequestContext)" />
-    <member name="CreateOrUpdateTestRun(string,RequestContent,string,RequestContext)" />
     <member name="GetTestRunAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetTestRunAsync and parse the result.
@@ -250,6 +248,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = await client.DeleteTestRunAsync("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestRunAsync with all parameters.
@@ -259,6 +258,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = await client.DeleteTestRunAsync("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -271,6 +271,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = client.DeleteTestRun("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestRun with all parameters.
@@ -280,6 +281,7 @@ TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
 Response response = client.DeleteTestRun("<testRunId>");
+
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
@@ -707,7 +709,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -725,7 +727,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -763,7 +765,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -781,7 +783,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     components = new
     {
@@ -891,7 +893,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -903,7 +905,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     metrics = new
     {
@@ -945,7 +947,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new object());
+using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -957,7 +959,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     metrics = new
     {
@@ -1065,8 +1067,6 @@ Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code></example>
     </member>
-    <member name="GetTestRunsAsync(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)" />
-    <member name="GetTestRuns(string,string,string,DateTimeOffset?,DateTimeOffset?,string,int?,RequestContext)" />
     <member name="GetMetricsAsync(string,string,string,string,RequestContent,string,string,RequestContext)">
       <example>
 This sample shows how to call GetMetricsAsync and parse the result.
@@ -1075,11 +1075,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetricsAsync with all parameters and request content and parse the result.
@@ -1088,14 +1088,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    filters = new List<object>()
+    filters = new object[]
     {
         new
         {
             name = "<name>",
-            values = new List<object>()
+            values = new object[]
             {
                 "<values>"
             },
@@ -1105,10 +1105,10 @@ RequestContent content = RequestContent.Create(new
 await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
-    Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("value").ToString());
-    Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
 }
 ]]></code></example>
     </member>
@@ -1120,11 +1120,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = null;
+using RequestContent content = null;
 foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetrics with all parameters and request content and parse the result.
@@ -1133,14 +1133,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    filters = new List<object>()
+    filters = new object[]
     {
         new
         {
             name = "<name>",
-            values = new List<object>()
+            values = new object[]
             {
                 "<values>"
             },
@@ -1150,10 +1150,10 @@ RequestContent content = RequestContent.Create(new
 foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
-    Console.WriteLine(result[0].GetProperty("data")[0].GetProperty("value").ToString());
-    Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-    Console.WriteLine(result[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
 }
 ]]></code></example>
     </member>
@@ -1168,7 +1168,7 @@ LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 await foreach (BinaryData item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetricDimensionValuesAsync with all parameters and parse the result.
@@ -1180,7 +1180,7 @@ LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 await foreach (BinaryData item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", interval: "PT5S"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code></example>
     </member>
@@ -1195,7 +1195,7 @@ LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 foreach (BinaryData item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
 This sample shows how to call GetMetricDimensionValues with all parameters and parse the result.
@@ -1207,7 +1207,7 @@ LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 foreach (BinaryData item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", interval: "PT5S"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result[0].ToString());
+    Console.WriteLine(result.ToString());
 }
 ]]></code></example>
     </member>

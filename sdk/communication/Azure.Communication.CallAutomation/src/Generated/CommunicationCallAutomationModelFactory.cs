@@ -41,10 +41,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
+        /// <param name="recordingType"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingStateResult"/> instance for mocking. </returns>
-        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null)
+        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null, RecordingType? recordingType = null)
         {
-            return new RecordingStateResult(recordingId, recordingState);
+            return new RecordingStateResult(recordingId, recordingState, recordingType);
         }
 
         /// <summary> Initializes a new instance of ResultInformation. </summary>
@@ -278,6 +279,67 @@ namespace Azure.Communication.CallAutomation
         public static SendDtmfFailed SendDtmfFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             return new SendDtmfFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of TranscriptionStarted. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="transcriptionUpdateResult"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionStarted"/> instance for mocking. </returns>
+        public static TranscriptionStarted TranscriptionStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        {
+            return new TranscriptionStarted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transcriptionUpdateResult);
+        }
+
+        /// <summary> Initializes a new instance of TranscriptionUpdate. </summary>
+        /// <param name="transcriptionStatus"></param>
+        /// <param name="transcriptionStatusDetails"></param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
+        public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null)
+        {
+            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
+        }
+
+        /// <summary> Initializes a new instance of TranscriptionStopped. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="transcriptionUpdateResult"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionStopped"/> instance for mocking. </returns>
+        public static TranscriptionStopped TranscriptionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        {
+            return new TranscriptionStopped(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transcriptionUpdateResult);
+        }
+
+        /// <summary> Initializes a new instance of TranscriptionResumed. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="transcriptionUpdateResult"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionResumed"/> instance for mocking. </returns>
+        public static TranscriptionResumed TranscriptionResumed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        {
+            return new TranscriptionResumed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transcriptionUpdateResult);
+        }
+
+        /// <summary> Initializes a new instance of TranscriptionFailed. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="transcriptionUpdateResult"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionFailed"/> instance for mocking. </returns>
+        public static TranscriptionFailed TranscriptionFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        {
+            return new TranscriptionFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, transcriptionUpdateResult);
         }
     }
 }

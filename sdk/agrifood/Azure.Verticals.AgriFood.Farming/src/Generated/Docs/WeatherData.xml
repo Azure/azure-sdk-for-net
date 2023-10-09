@@ -8,7 +8,7 @@ This sample shows how to call GetWeatherDataAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     providerApiKey = "<providerApiKey>",
     extensionId = "<extensionId>",
@@ -29,9 +29,9 @@ This sample shows how to call GetWeatherDataAsync with all request content and p
 TokenCredential credential = new DefaultAzureCredential();
 WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    locations = new List<object>()
+    locations = new object[]
     {
         new
         {
@@ -126,7 +126,7 @@ This sample shows how to call GetWeatherData and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     providerApiKey = "<providerApiKey>",
     extensionId = "<extensionId>",
@@ -147,9 +147,9 @@ This sample shows how to call GetWeatherData with all request content and parse 
 TokenCredential credential = new DefaultAzureCredential();
 WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
-    locations = new List<object>()
+    locations = new object[]
     {
         new
         {

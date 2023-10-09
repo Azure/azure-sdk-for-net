@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The PageBlobStorageResource class.
     /// </summary>
-    internal class PageBlobStorageResource : StorageResourceItem
+    internal class PageBlobStorageResource : StorageResourceItemInternal
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
@@ -289,6 +289,30 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new BlobSourceCheckpointData();
+        }
+
+        /// <summary>
+        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new BlobDestinationCheckpointData(
+                BlobType.Page,
+                _options.HttpHeaders,
+                _options.AccessTier,
+                _options.Metadata,
+                _options.Tags,
+                default); // TODO: Update when we support encryption scopes
         }
 
         private void GrabEtag(Response response)

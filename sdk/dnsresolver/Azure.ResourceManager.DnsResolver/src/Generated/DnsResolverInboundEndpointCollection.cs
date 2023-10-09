@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DnsResolverInboundEndpointResource>> GetIfExistsAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+
+            using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dnsResolverInboundEndpointInboundEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverInboundEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverInboundEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        public virtual NullableResponse<DnsResolverInboundEndpointResource> GetIfExists(string inboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+
+            using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dnsResolverInboundEndpointInboundEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverInboundEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverInboundEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DnsResolverInboundEndpointResource> IEnumerable<DnsResolverInboundEndpointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

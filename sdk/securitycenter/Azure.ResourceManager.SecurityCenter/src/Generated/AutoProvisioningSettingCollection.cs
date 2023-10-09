@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutoProvisioningSettingResource>> GetIfExistsAsync(string settingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _autoProvisioningSettingRestClient.GetAsync(Id.SubscriptionId, settingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutoProvisioningSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new AutoProvisioningSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        public virtual NullableResponse<AutoProvisioningSettingResource> GetIfExists(string settingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _autoProvisioningSettingRestClient.Get(Id.SubscriptionId, settingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutoProvisioningSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new AutoProvisioningSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutoProvisioningSettingResource> IEnumerable<AutoProvisioningSettingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

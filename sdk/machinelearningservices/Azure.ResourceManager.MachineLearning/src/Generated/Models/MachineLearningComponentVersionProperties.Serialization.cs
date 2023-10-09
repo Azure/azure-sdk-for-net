@@ -33,6 +33,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentSpec");
                 }
             }
+            if (Optional.IsDefined(Stage))
+            {
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage");
+                }
+            }
+            if (Optional.IsDefined(AutoDeleteSetting))
+            {
+                if (AutoDeleteSetting != null)
+                {
+                    writer.WritePropertyName("autoDeleteSetting"u8);
+                    writer.WriteObjectValue(AutoDeleteSetting);
+                }
+                else
+                {
+                    writer.WriteNull("autoDeleteSetting");
+                }
+            }
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
@@ -101,6 +125,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<BinaryData> componentSpec = default;
+            Optional<RegistryAssetProvisioningState> provisioningState = default;
+            Optional<string> stage = default;
+            Optional<AutoDeleteSetting> autoDeleteSetting = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -116,6 +143,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     componentSpec = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("stage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stage = null;
+                        continue;
+                    }
+                    stage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoDeleteSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        autoDeleteSetting = null;
+                        continue;
+                    }
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
@@ -177,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComponentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), componentSpec.Value);
+            return new MachineLearningComponentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), componentSpec.Value, Optional.ToNullable(provisioningState), stage.Value);
         }
     }
 }

@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphResources_GetGraph</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="graphName"> Cosmos DB graph resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GraphResourceGetResultResource>> GetIfExistsAsync(string graphName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+
+            using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _graphResourceGetResultGraphResourcesRestClient.GetGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GraphResourceGetResultResource>(response.GetRawResponse());
+                return Response.FromValue(new GraphResourceGetResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GraphResources_GetGraph</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="graphName"> Cosmos DB graph resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
+        public virtual NullableResponse<GraphResourceGetResultResource> GetIfExists(string graphName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+
+            using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _graphResourceGetResultGraphResourcesRestClient.GetGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GraphResourceGetResultResource>(response.GetRawResponse());
+                return Response.FromValue(new GraphResourceGetResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<GraphResourceGetResultResource> IEnumerable<GraphResourceGetResultResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

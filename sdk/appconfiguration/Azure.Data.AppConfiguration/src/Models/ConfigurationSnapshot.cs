@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public ConfigurationSnapshot(IEnumerable<SnapshotSettingFilter> filters)
+        public ConfigurationSnapshot(IEnumerable<ConfigurationSettingsFilter> filters)
         {
             Argument.AssertNotNull(filters, nameof(filters));
 
@@ -26,7 +26,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
+        /// <param name="snapshotComposition"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
         /// <param name="createdOn"> The time that the snapshot was created. </param>
         /// <param name="expiresOn"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
@@ -34,12 +34,12 @@ namespace Azure.Data.AppConfiguration
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<SnapshotSettingFilter> filters, SnapshotComposition? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag)
+        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag)
         {
             Name = name;
             Status = status;
             Filters = filters;
-            CompositionType = compositionType;
+            SnapshotComposition = snapshotComposition;
             CreatedOn = createdOn;
             ExpiresOn = expiresOn;
             _retentionPeriod = retentionPeriod;
@@ -54,9 +54,9 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The current status of the snapshot. </summary>
         public ConfigurationSnapshotStatus? Status { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
-        public IList<SnapshotSettingFilter> Filters { get; }
+        public IList<ConfigurationSettingsFilter> Filters { get; }
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
-        public SnapshotComposition? CompositionType { get; set; }
+        public SnapshotComposition? SnapshotComposition { get; set; }
         /// <summary> The time that the snapshot was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time that the snapshot will expire. </summary>

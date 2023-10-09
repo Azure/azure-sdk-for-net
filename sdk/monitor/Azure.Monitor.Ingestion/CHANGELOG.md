@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+  - Fix sovereign support for US Gov and China clouds
 
 ### Other Changes
 

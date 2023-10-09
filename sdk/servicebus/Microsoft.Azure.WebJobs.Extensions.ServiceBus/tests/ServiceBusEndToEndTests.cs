@@ -974,9 +974,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
 
-            // Filter out Azure SDK and custom processor logs for easier validation.
+            // Filter out Azure SDK, hosting lifetime, and custom processor logs for easier validation.
             logMessages = logMessages.Where(
                 m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
+                     !m.Category.StartsWith("Microsoft.Hosting.Lifetime") &&
                      m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
             string[] consoleOutputLines = logMessages
@@ -1038,6 +1039,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxBatchWaitTime\":\"00:00:30\",",
                $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
                 "  \"MaxConcurrentSessions\": 8,",
+                "  \"MaxConcurrentCallsPerSession\": 1,",
                 "  \"MaxMessageBatchSize\": 1000,",
                 "  \"MinMessageBatchSize\":1,",
                 "  \"SessionIdleTimeout\": \"\"",

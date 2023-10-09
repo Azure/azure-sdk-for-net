@@ -71,7 +71,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("servicePrincipalId"u8);
             JsonSerializer.Serialize(writer, ServicePrincipalId);
             writer.WritePropertyName("servicePrincipalKey"u8);
-            JsonSerializer.Serialize(writer, ServicePrincipalKey); writer.WritePropertyName("tenant"u8);
+            JsonSerializer.Serialize(writer, ServicePrincipalKey);
+            writer.WritePropertyName("tenant"u8);
             JsonSerializer.Serialize(writer, Tenant);
             writer.WritePropertyName("aadResourceId"u8);
             JsonSerializer.Serialize(writer, AadResourceId);
