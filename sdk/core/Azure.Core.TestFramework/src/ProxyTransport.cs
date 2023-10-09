@@ -135,11 +135,12 @@ namespace Azure.Core.TestFramework
             _recording.HasRequests = true;
             lock (_recording.Random)
             {
-                if (_recording.UseDefaultClientRequestIdFormat)
+                if (_recording.UseDefaultGuidFormatForClientRequestId)
                 {
                     // User want the client format to use the default format
                     request.ClientRequestId = _recording.Random.NewGuid().ToString();
-                }else
+                }
+                else
                 {
                     // Make sure ClientRequestId are the same across request and response
                     request.ClientRequestId = _recording.Random.NewGuid().ToString("N");

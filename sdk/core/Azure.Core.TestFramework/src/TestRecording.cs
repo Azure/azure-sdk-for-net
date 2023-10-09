@@ -200,39 +200,15 @@ namespace Azure.Core.TestFramework
 
         public string RecordingId { get; private set; }
 
-        private bool _useDefaultClientRequestIdFormat;
-
         /// <summary>
-        /// Retrieves the value for the enviroment variable RECORDING_DEFAULT_ClIENT_GUID
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode 
+        /// should use the default Guid format. The default Guid format contains hyphens.
         /// </summary>
-        public bool UseDefaultClientRequestIdFormat
+        public bool UseDefaultGuidFormatForClientRequestId
         {
             get
             {
-                switch (Mode)
-                {
-                    case RecordedTestMode.Live:
-                        _useDefaultClientRequestIdFormat = false;
-                        break;
-                    case RecordedTestMode.Record:
-                        _useDefaultClientRequestIdFormat = _recordedTestBase.UseDefaultClientRequestIdFormat;
-                        Variables[DefaultClientGuidFormatInRecordingKey] = _useDefaultClientRequestIdFormat.ToString();
-                        break;
-                    case RecordedTestMode.Playback:
-                        ValidateVariables();
-                        try
-                        {
-                            _useDefaultClientRequestIdFormat = bool.Parse(Variables[DefaultClientGuidFormatInRecordingKey]);
-                        }
-                        catch (System.Collections.Generic.KeyNotFoundException)
-                        {
-                            _useDefaultClientRequestIdFormat = false;
-                        }
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                return _useDefaultClientRequestIdFormat;
+               return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
             }
         }
 

@@ -150,10 +150,11 @@ namespace Azure.Core.TestFramework
         public bool CompareBodies { get; set; } = true;
 
         /// <summary>
-        /// Determines if during test recording if we should use the default guid format for clientID.
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode 
+        /// should use the default Guid format. The default Guid format contains hyphens.
         /// The default value is <value>false</value>.
         /// </summary>
-        public bool UseDefaultClientRequestIdFormat  { get; set; } = false;
+        public bool UseDefaultGuidFormatForClientRequestId { get; set; } = false;
 
         /// <summary>
         /// Request headers whose values can change between recording and playback without causing request matching
