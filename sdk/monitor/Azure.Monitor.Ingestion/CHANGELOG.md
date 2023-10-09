@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2022-10-10)
+## 1.1.0 (2023-10-10)
 
 ## Features Added
 - Added `LogsIngestionAudience` for multi-cloud support to allow users to select the Azure cloud where the resource is located.
