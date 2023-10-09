@@ -1,15 +1,9 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0-beta.1 (2023-10-10)
 
 ### Bugs Fixed
   - Fix sovereign support for US Gov and China clouds
-
-### Other Changes
 
 ## 1.0.0 (2023-02-21)
 
