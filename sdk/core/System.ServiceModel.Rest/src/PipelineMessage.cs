@@ -1,25 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-
 namespace System.ServiceModel.Rest.Core;
 
 public class PipelineMessage : IDisposable
 {
     private PipelineResponse? _response;
-
     private bool _disposed;
 
-    protected internal PipelineMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+    protected internal PipelineMessage(PipelineRequest request)
     {
         Request = request;
-        ResponseClassifier = classifier;
-
-        // TODO: take options and wire them through?
     }
-
-    public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
     public virtual PipelineRequest Request { get; }
 
@@ -39,8 +31,6 @@ public class PipelineMessage : IDisposable
     }
 
     public bool HasResponse => _response is not null;
-
-    public virtual ResponseErrorClassifier ResponseClassifier { get; set; }
 
     #region IDisposable
 

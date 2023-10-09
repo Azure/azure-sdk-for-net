@@ -5,37 +5,37 @@ using System.Threading.Tasks;
 
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
-public class MessagePipeline : Pipeline<PipelineMessage>
+public class MessagePipeline : Pipeline<PipelineMessage, InvocationOptions>
 {
-    private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
-    private readonly PipelineTransport<PipelineMessage> _transport;
+    private readonly ReadOnlyMemory<IPipelinePolicy<PipelineMessage, InvocationOptions>> _policies;
+    private readonly PipelineTransport<PipelineMessage, InvocationOptions> _transport;
 
     public MessagePipeline(
-        PipelineTransport<PipelineMessage> transport,
-        ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
+        PipelineTransport<PipelineMessage, InvocationOptions> transport,
+        ReadOnlyMemory<IPipelinePolicy<PipelineMessage, InvocationOptions>> policies)
     {
         _transport = transport;
-        var larger = new IPipelinePolicy<PipelineMessage>[policies.Length + 1];
+        var larger = new IPipelinePolicy<PipelineMessage, InvocationOptions>[policies.Length + 1];
         policies.Span.CopyTo(larger);
         larger[policies.Length] = transport;
         _policies = larger;
     }
 
-    private MessagePipeline(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies)
+    private MessagePipeline(ReadOnlyMemory<IPipelinePolicy<PipelineMessage, InvocationOptions>> policies)
     {
-        _transport = (PipelineTransport<PipelineMessage>)policies.Span[policies.Length - 1];
+        _transport = (PipelineTransport<PipelineMessage, InvocationOptions>)policies.Span[policies.Length - 1];
         _policies = policies;
     }
 
     public static MessagePipeline Create(
-        RequestOptions options,
-        params IPipelinePolicy<PipelineMessage>[] perTryPolicies)
-        => Create(options, perTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage>>.Empty);
+        PipelineOptions options,
+        params IPipelinePolicy<PipelineMessage, InvocationOptions>[] perTryPolicies)
+        => Create(options, perTryPolicies, ReadOnlySpan<IPipelinePolicy<PipelineMessage, InvocationOptions>>.Empty);
 
     public static MessagePipeline Create(
-        RequestOptions options,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> perCallPolicies,
-        ReadOnlySpan<IPipelinePolicy<PipelineMessage>> perTryPolicies)
+        PipelineOptions options,
+        ReadOnlySpan<IPipelinePolicy<PipelineMessage, InvocationOptions>> perCallPolicies,
+        ReadOnlySpan<IPipelinePolicy<PipelineMessage, InvocationOptions>> perTryPolicies)
     {
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
@@ -55,8 +55,8 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
-        IPipelinePolicy<PipelineMessage>[] pipeline
-            = new IPipelinePolicy<PipelineMessage>[pipelineLength];
+        IPipelinePolicy<PipelineMessage, InvocationOptions>[] pipeline
+            = new IPipelinePolicy<PipelineMessage, InvocationOptions>[pipelineLength];
 
         int index = 0;
 
@@ -90,7 +90,8 @@ public class MessagePipeline : Pipeline<PipelineMessage>
 
         // TODO: add NetworkTimeout to RetryOptions
         // TODO: would it make sense for this to live on options instead?
-        ResponseBufferingPolicy bufferingPolicy = new(TimeSpan.FromSeconds(100), options.BufferResponse);
+        // TODO: stop hard-coding buffer response
+        ResponseBufferingPolicy bufferingPolicy = new(TimeSpan.FromSeconds(100));
         pipeline[index++] = bufferingPolicy;
 
         if (options.Transport != null)
@@ -107,36 +108,37 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return new MessagePipeline(pipeline);
     }
 
-    public override PipelineMessage CreateMessage(RequestOptions options, ResponseErrorClassifier classifier)
+    public override PipelineMessage CreateMessage()
     {
-        return _transport.CreateMessage(options, classifier);
+        return _transport.CreateMessage();
     }
 
-    public override void Send(PipelineMessage message)
+    public override void Send(PipelineMessage message, InvocationOptions options)
     {
-        IPipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
+        IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, options, _policies);
         enumerator.ProcessNext();
-
-        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
-    public override async ValueTask SendAsync(PipelineMessage message)
+    public override async ValueTask SendAsync(PipelineMessage message, InvocationOptions options)
     {
-        IPipelineEnumerator enumerator = new MessagePipelineExecutor(_policies, message);
+        IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, options, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
-
-        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
     }
 
     internal struct MessagePipelineExecutor : IPipelineEnumerator
     {
         private PipelineMessage _message;
-        private ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> _policies;
+        private InvocationOptions _options;
+        private ReadOnlyMemory<IPipelinePolicy<PipelineMessage, InvocationOptions>> _policies;
 
-        public MessagePipelineExecutor(ReadOnlyMemory<IPipelinePolicy<PipelineMessage>> policies, PipelineMessage message)
+        public MessagePipelineExecutor(
+            PipelineMessage message,
+            InvocationOptions options,
+            ReadOnlyMemory<IPipelinePolicy<PipelineMessage, InvocationOptions>> policies )
         {
-            _policies = policies;
             _message = message;
+            _options = options;
+            _policies = policies;
         }
 
         public int Length => _policies.Length;
@@ -145,7 +147,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         {
             var first = _policies.Span[0];
             _policies = _policies.Slice(1);
-            first.Process(_message, this);
+            first.Process(_message, _options, this);
             return _policies.Length > 0;
         }
 
@@ -153,7 +155,7 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         {
             var first = _policies.Span[0];
             _policies = _policies.Slice(1);
-            await first.ProcessAsync(_message, this).ConfigureAwait(false);
+            await first.ProcessAsync(_message, _options, this).ConfigureAwait(false);
             return _policies.Length > 0;
         }
     }

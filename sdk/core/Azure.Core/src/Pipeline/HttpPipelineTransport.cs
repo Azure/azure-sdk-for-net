@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
         public abstract Request CreateRequest();
 
         /// <summary>
-        /// TBD
+        /// TBD.
         /// </summary>
         public HttpPipelineTransport() : base() { }
 
@@ -58,13 +58,22 @@ namespace Azure.Core.Pipeline
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        public virtual void Process(HttpMessage message) => base.Process(message);
+        public virtual void Process(HttpMessage message)
+        {
+            // TODO: reduce allocations?
+            HttpPipelineInvocationOptions options = new(message);
+
+            base.Process(message, options);
+        }
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
         public virtual async ValueTask ProcessAsync(HttpMessage message)
-            => await base.ProcessAsync(message).ConfigureAwait(false);
+        {
+            HttpPipelineInvocationOptions options = new(message);
+            await base.ProcessAsync(message, options).ConfigureAwait(false);
+        }
     }
 }

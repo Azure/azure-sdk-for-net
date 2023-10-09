@@ -10,7 +10,9 @@ namespace System.ServiceModel.Rest.Core
     {
         private readonly DiagnosticScopeFactory _factory;
 
-        public TelemetrySource(RequestOptions options, bool suppressNestedClientActivities = true)
+        // TODO: Options needs to be ClientOptions to get the namespace for the service client library.
+        // Loop back on this once we decide what ClientOptions is in this world.
+        public TelemetrySource(PipelineOptions options, bool suppressNestedClientActivities = true)
         {
             _factory = new DiagnosticScopeFactory(
                 options.GetType().Namespace!,

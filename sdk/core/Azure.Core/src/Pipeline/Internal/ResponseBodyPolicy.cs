@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,11 +14,13 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
-        private readonly AzureCoreResponseBufferingPolicy _policy;
+        private readonly ResponseBufferingPolicy _policy;
+        private readonly TimeSpan _networkTimeout;
 
         public ResponseBodyPolicy(TimeSpan networkTimeout)
         {
-            _policy = new AzureCoreResponseBufferingPolicy(networkTimeout);
+            _policy = new ResponseBufferingPolicy(networkTimeout);
+            _networkTimeout = networkTimeout;
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -28,7 +29,32 @@ namespace Azure.Core.Pipeline
 
             try
             {
-                await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
+                // TODO: idea: if invocation options was an interface, message could just implement
+                // it instead of using an adapter everywhere?  It would bake in the options, though.
+
+                // TODO: Could we hide the options in the executor somehow?  How would that work?
+
+                HttpPipelineInvocationOptions options = new HttpPipelineInvocationOptions(message);
+
+                TimeSpan networkTimeout = _networkTimeout;
+                if (options.NetworkTimeout is TimeSpan networkTimeoutOverride)
+                {
+                    networkTimeout = networkTimeoutOverride;
+                }
+
+                await _policy.ProcessAsync(message, options, executor).ConfigureAwait(false);
+
+                if (!options.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                {
+                    // TODO: tidy this up
+                    Stream? responseContentStream = message.Response.ContentStream;
+                    if (responseContentStream == null || responseContentStream.CanSeek)
+                    {
+                        return;
+                    }
+
+                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
+                }
             }
             catch (TaskCanceledException e)
             {
@@ -56,7 +82,26 @@ namespace Azure.Core.Pipeline
 
             try
             {
-                _policy.Process(message, executor);
+                HttpPipelineInvocationOptions options = new HttpPipelineInvocationOptions(message);
+
+                TimeSpan networkTimeout = _networkTimeout;
+                if (options.NetworkTimeout is TimeSpan networkTimeoutOverride)
+                {
+                    networkTimeout = networkTimeoutOverride;
+                }
+
+                _policy.Process(message, options, executor);
+
+                if (!options.BufferResponse && networkTimeout != Timeout.InfiniteTimeSpan)
+                {
+                    // TODO: tidy this up
+                    Stream? responseContentStream = message.Response.ContentStream;
+                    if (responseContentStream == null || responseContentStream.CanSeek)
+                    {
+                        return;
+                    }
+                    message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
+                }
             }
             catch (TaskCanceledException e)
             {
@@ -97,48 +142,6 @@ namespace Azure.Core.Pipeline
                     $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
                     $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.");
             }
-        }
-    }
-
-#pragma warning disable SA1402 // File may only contain a single type
-    internal class AzureCoreResponseBufferingPolicy : ResponseBufferingPolicy
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        public AzureCoreResponseBufferingPolicy(TimeSpan networkTimeout)
-            : base(networkTimeout, bufferResponse: true)
-        {
-        }
-
-        protected override bool TryGetNetworkTimeoutOverride(PipelineMessage message, out TimeSpan timeout)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message.GetType()}'.");
-            }
-
-            if (httpMessage.NetworkTimeout is TimeSpan networkTimeoutOverride)
-            {
-                timeout = networkTimeoutOverride;
-                return true;
-            }
-
-            timeout = default;
-            return false;
-        }
-
-        protected override bool BufferResponse(PipelineMessage message)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message.GetType()}'.");
-            }
-
-            return httpMessage.BufferResponse;
-        }
-
-        protected override void SetReadTimeoutStream(PipelineMessage message, Stream responseContentStream, TimeSpan networkTimeout)
-        {
-            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
         }
     }
 }

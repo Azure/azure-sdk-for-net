@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace System.ServiceModel.Rest.Core.Pipeline;
 
 // TODO: can we make it a class? ... but it means all existing polices need to inherit from it.
-public interface IPipelinePolicy<TMessage>
+public interface IPipelinePolicy<TMessage, TOptions>
 {
-    void Process(TMessage message, IPipelineEnumerator pipeline);
+    void Process(TMessage message, TOptions options, IPipelineEnumerator pipeline);
 
-    ValueTask ProcessAsync(TMessage message, IPipelineEnumerator pipeline);
+    ValueTask ProcessAsync(TMessage message, TOptions options, IPipelineEnumerator pipeline);
 }
 
 // TODO: perf tradeoff between a struct you only ever call methods on through
