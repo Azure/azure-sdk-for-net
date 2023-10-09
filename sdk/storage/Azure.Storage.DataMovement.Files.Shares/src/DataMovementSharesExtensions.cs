@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 copyId: details.CopyId,
                 copyProgress: details.CopyProgress,
                 copySource: details.CopySource,
-                contentLength: details.ContentRange.Length,
+                contentLength: details.ContentRange?.Length ?? default,
                 contentType: default,
                 eTag: details.ETag,
                 contentHash: default,
