@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: StorageSync
 namespace: Azure.ResourceManager.StorageSync
-require: https://github.com/Azure/azure-rest-api-specs/blob/ba3357f4f009023601608c39e83cc2a985a778c0/specification/storagesync/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a7e74f434bf94c3ea89bec6b4cf9719de54b9e57/specification/storagesync/resource-manager/readme.md
 tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
         /// <param name="serverName"> Server name. </param>
         /// <param name="serverEndpointProvisioningStatus"> Server Endpoint provisioning status. </param>
-        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, ServerEndpointProvisioningStatus serverEndpointProvisioningStatus) : base(id, name, resourceType, systemData)
+        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, long? volumeFreeSpacePercent, long? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, ServerEndpointProvisioningStatus serverEndpointProvisioningStatus) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Cloud Tiering. </summary>
         public StorageSyncFeatureStatus? CloudTiering { get; set; }
         /// <summary> Level of free space to be maintained by Cloud Tiering if it is enabled. </summary>
-        public int? VolumeFreeSpacePercent { get; set; }
+        public long? VolumeFreeSpacePercent { get; set; }
         /// <summary> Tier files older than days. </summary>
-        public int? TierFilesOlderThanDays { get; set; }
+        public long? TierFilesOlderThanDays { get; set; }
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Server Resource Id. </summary>

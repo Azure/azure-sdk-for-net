@@ -199,6 +199,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 ServerId = Guid.Parse("080d4133-bdb5-40a0-96a0-71a6057bfe9a"),
                 FriendlyName = "afscv-2304-139",
                 ApplicationId = "00000000-0000-0000-0000-000000000001",
+                Identity = true,
             };
             ArmOperation<StorageSyncRegisteredServerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverId, content);
             StorageSyncRegisteredServerResource result = lro.Value;

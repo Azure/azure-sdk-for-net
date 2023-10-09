@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
         /// <param name="applicationId"> Server ServicePrincipal Id. </param>
-        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName, string applicationId) : base(id, name, resourceType, systemData)
+        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName, string applicationId, bool? identity) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             ServerId = serverId;
             FriendlyName = friendlyName;
             ApplicationId = applicationId;
+            Identity = identity;
         }
 
         /// <summary>
@@ -97,5 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public string FriendlyName { get; set; }
         /// <summary> Server ServicePrincipal Id. </summary>
         public string ApplicationId { get; set; }
+        /// <summary> Apply server with newly discovered ApplicationId if available. </summary>
+        public bool? Identity { get; set; }
     }
 }

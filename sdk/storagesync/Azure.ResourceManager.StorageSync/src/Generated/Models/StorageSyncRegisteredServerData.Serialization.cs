@@ -49,11 +49,6 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartbeat);
             }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
             if (Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
@@ -153,7 +148,7 @@ namespace Azure.ResourceManager.StorageSync
             Optional<RegisteredServerAgentVersionStatus> agentVersionStatus = default;
             Optional<DateTimeOffset> agentVersionExpirationDate = default;
             Optional<string> serverOSVersion = default;
-            Optional<int> serverManagementErrorCode = default;
+            Optional<long> serverManagementErrorCode = default;
             Optional<string> lastHeartbeat = default;
             Optional<string> provisioningState = default;
             Optional<string> serverRole = default;
@@ -253,7 +248,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            serverManagementErrorCode = property0.Value.GetInt32();
+                            serverManagementErrorCode = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("lastHeartBeat"u8))

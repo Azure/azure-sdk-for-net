@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Pre Restore restore file spec array. </summary>
         public IList<RestoreFileSpec> RestoreFileSpec { get; }
         /// <summary> Pre Restore pause wait for sync drain time period in seconds. </summary>
-        public int? PauseWaitForSyncDrainTimePeriodInSeconds { get; set; }
+        public long? PauseWaitForSyncDrainTimePeriodInSeconds { get; set; }
     }
 }

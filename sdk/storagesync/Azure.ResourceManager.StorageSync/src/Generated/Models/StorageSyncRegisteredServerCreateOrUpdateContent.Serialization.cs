@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteBooleanValue(Identity.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<Guid> serverId = default;
             Optional<string> friendlyName = default;
             Optional<string> applicationId = default;
+            Optional<bool> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -194,11 +200,20 @@ namespace Azure.ResourceManager.StorageSync.Models
                             applicationId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("identity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identity = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value, applicationId.Value);
+            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value, applicationId.Value, Optional.ToNullable(identity));
         }
     }
 }
