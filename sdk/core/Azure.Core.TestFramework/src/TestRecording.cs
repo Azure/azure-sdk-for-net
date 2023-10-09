@@ -16,6 +16,7 @@ namespace Azure.Core.TestFramework
     public class TestRecording : IAsyncDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
+        private const string DefaultClientGuidFormatInRecordingKey = "DefaultClientGuidFormatInRecording";
         private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         // cspell: disable-next-line
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -199,7 +200,34 @@ namespace Azure.Core.TestFramework
 
         public string RecordingId { get; private set; }
 
-        public bool UseDefaultClientIDFormat { get { return _recordedTestBase.UseDefaultClientIDFormat; } }
+        private bool _useDefaultClientRequestIdFormat;
+
+        /// <summary>
+        /// Retrieves the value for the enviroment variable RECORDING_DEFAULT_ClIENT_GUID
+        /// </summary>
+        public bool UseDefaultClientRequestIdFormat
+        {
+            get
+            {
+                switch (Mode)
+                {
+                    case RecordedTestMode.Live:
+                        _useDefaultClientRequestIdFormat = false;
+                        break;
+                    case RecordedTestMode.Record:
+                        _useDefaultClientRequestIdFormat = _recordedTestBase.UseDefaultClientRequestIdFormat;
+                        Variables[DefaultClientGuidFormatInRecordingKey] = _useDefaultClientRequestIdFormat.ToString();
+                        break;
+                    case RecordedTestMode.Playback:
+                        ValidateVariables();
+                        _useDefaultClientRequestIdFormat = bool.Parse(Variables[DefaultClientGuidFormatInRecordingKey]);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                return _useDefaultClientRequestIdFormat;
+            }
+        }
 
         /// <summary>
         /// Gets the moment in time that this test is being run.  This is useful

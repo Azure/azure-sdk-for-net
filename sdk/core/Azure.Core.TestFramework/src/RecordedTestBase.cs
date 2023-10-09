@@ -153,7 +153,7 @@ namespace Azure.Core.TestFramework
         /// Determines if during test recording if we should use the default guid format for clientID.
         /// The default value is <value>false</value>.
         /// </summary>
-        public bool UseDefaultClientIDFormat  { get; set; } = false;
+        public bool UseDefaultClientRequestIdFormat  { get; set; } = false;
 
         /// <summary>
         /// Request headers whose values can change between recording and playback without causing request matching
