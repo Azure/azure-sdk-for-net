@@ -18,6 +18,7 @@ namespace Azure.Core.TestFramework
         private readonly TestRecording _recording;
         private readonly TestProxy _proxy;
         private readonly bool _isWebRequestTransport;
+
         private const string DevCertIssuer = "CN=localhost";
         private const string FiddlerCertIssuer = "CN=DO_NOT_TRUST_FiddlerRoot, O=DO_NOT_TRUST, OU=Created by http://www.fiddler2.com";
 
