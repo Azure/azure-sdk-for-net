@@ -5,6 +5,6 @@ using Azure.Core;
 
 namespace Azure.AI.Chat;
 
-[CodeGenModel("ChatCompletionunknownunknown")]
+[CodeGenModel("ChatCompletionunknownRecord")]
 public partial class ChatCompletion
 {}

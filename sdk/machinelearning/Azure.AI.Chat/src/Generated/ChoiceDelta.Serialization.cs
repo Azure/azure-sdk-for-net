@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -23,7 +24,7 @@ namespace Azure.AI.Chat
             long index = default;
             ChatMessageDelta delta = default;
             Optional<BinaryData> sessionState = default;
-            Optional<BinaryData> extraArgs = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> extraArgs = default;
             Optional<FinishReason> finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +53,19 @@ namespace Azure.AI.Chat
                     {
                         continue;
                     }
-                    extraArgs = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    extraArgs = dictionary;
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))
@@ -65,7 +78,7 @@ namespace Azure.AI.Chat
                     continue;
                 }
             }
-            return new ChoiceDelta(index, delta, sessionState.Value, extraArgs.Value, Optional.ToNullable(finishReason));
+            return new ChoiceDelta(index, delta, sessionState.Value, Optional.ToDictionary(extraArgs), Optional.ToNullable(finishReason));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

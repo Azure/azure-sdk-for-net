@@ -31,8 +31,10 @@ namespace Azure.AI.Chat
         /// <param name="extraArguments"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
         /// <returns> A new <see cref="Chat.ChatChoice"/> instance for mocking. </returns>
-        public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, BinaryData sessionState = null, BinaryData extraArguments = null, FinishReason finishReason = default)
+        public static ChatChoice ChatChoice(long index = default, ChatMessage message = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> extraArguments = null, FinishReason finishReason = default)
         {
+            extraArguments ??= new Dictionary<string, BinaryData>();
+
             return new ChatChoice(index, message, sessionState, extraArguments, finishReason);
         }
 
@@ -53,8 +55,10 @@ namespace Azure.AI.Chat
         /// <param name="extraArguments"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
         /// <returns> A new <see cref="Chat.ChoiceDelta"/> instance for mocking. </returns>
-        public static ChoiceDelta ChoiceDelta(long index = default, ChatMessageDelta delta = null, BinaryData sessionState = null, BinaryData extraArguments = null, FinishReason? finishReason = null)
+        public static ChoiceDelta ChoiceDelta(long index = default, ChatMessageDelta delta = null, BinaryData sessionState = null, IReadOnlyDictionary<string, BinaryData> extraArguments = null, FinishReason? finishReason = null)
         {
+            extraArguments ??= new Dictionary<string, BinaryData>();
+
             return new ChoiceDelta(index, delta, sessionState, extraArguments, finishReason);
         }
 

@@ -62,7 +62,7 @@ namespace Azure.AI.Chat
         }
 
         /// <summary> placeholder. </summary>
-        /// <param name="chatCompletionOptions"> The ChatCompletionOptionsunknownunknown to use. </param>
+        /// <param name="chatCompletionOptions"> The ChatCompletionOptionsunknownRecord to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
         /// <include file="Docs/ChatClient.xml" path="doc/members/member[@name='CreateAsync(ChatCompletionOptions,CancellationToken)']/*" />
@@ -76,7 +76,7 @@ namespace Azure.AI.Chat
         }
 
         /// <summary> placeholder. </summary>
-        /// <param name="chatCompletionOptions"> The ChatCompletionOptionsunknownunknown to use. </param>
+        /// <param name="chatCompletionOptions"> The ChatCompletionOptionsunknownRecord to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
         /// <include file="Docs/ChatClient.xml" path="doc/members/member[@name='Create(ChatCompletionOptions,CancellationToken)']/*" />

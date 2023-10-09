@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -23,7 +24,7 @@ namespace Azure.AI.Chat
             long index = default;
             ChatMessage message = default;
             Optional<BinaryData> sessionState = default;
-            Optional<BinaryData> extraArgs = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> extraArgs = default;
             FinishReason finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +53,19 @@ namespace Azure.AI.Chat
                     {
                         continue;
                     }
-                    extraArgs = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    extraArgs = dictionary;
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))
@@ -61,7 +74,7 @@ namespace Azure.AI.Chat
                     continue;
                 }
             }
-            return new ChatChoice(index, message, sessionState.Value, extraArgs.Value, finishReason);
+            return new ChatChoice(index, message, sessionState.Value, Optional.ToDictionary(extraArgs), finishReason);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

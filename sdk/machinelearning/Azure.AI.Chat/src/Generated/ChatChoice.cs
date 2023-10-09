@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Chat
@@ -24,6 +25,7 @@ namespace Azure.AI.Chat
 
             Index = index;
             Message = message;
+            ExtraArguments = new ChangeTrackingDictionary<string, BinaryData>();
             FinishReason = finishReason;
         }
 
@@ -33,7 +35,7 @@ namespace Azure.AI.Chat
         /// <param name="sessionState"> placeholder. </param>
         /// <param name="extraArguments"> placeholder. </param>
         /// <param name="finishReason"> placeholder. </param>
-        internal ChatChoice(long index, ChatMessage message, BinaryData sessionState, BinaryData extraArguments, FinishReason finishReason)
+        internal ChatChoice(long index, ChatMessage message, BinaryData sessionState, IReadOnlyDictionary<string, BinaryData> extraArguments, FinishReason finishReason)
         {
             Index = index;
             Message = message;
@@ -80,7 +82,7 @@ namespace Azure.AI.Chat
         /// <summary>
         /// placeholder
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -107,7 +109,7 @@ namespace Azure.AI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ExtraArguments { get; }
+        public IReadOnlyDictionary<string, BinaryData> ExtraArguments { get; }
         /// <summary> placeholder. </summary>
         public FinishReason FinishReason { get; }
     }

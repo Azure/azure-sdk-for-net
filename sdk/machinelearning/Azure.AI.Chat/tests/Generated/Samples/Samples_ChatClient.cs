@@ -127,7 +127,10 @@ session_state = new object(),
             },
                 stream = false,
                 session_state = new object(),
-                extra_args = new object(),
+                extra_args = new
+                {
+                    key = new object(),
+                },
             });
             Response response = client.Create(content);
 
@@ -137,7 +140,7 @@ session_state = new object(),
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
         }
 
@@ -162,7 +165,10 @@ session_state = new object(),
             },
                 stream = false,
                 session_state = new object(),
-                extra_args = new object(),
+                extra_args = new
+                {
+                    key = new object(),
+                },
             });
             Response response = await client.CreateAsync(content);
 
@@ -172,7 +178,7 @@ session_state = new object(),
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("extra_args").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
         }
 
@@ -193,7 +199,10 @@ SessionState = BinaryData.FromObjectAsJson(new object()),
             })
             {
                 SessionState = BinaryData.FromObjectAsJson(new object()),
-                ExtraArguments = BinaryData.FromObjectAsJson(new object()),
+                ExtraArguments =
+{
+["key"] = BinaryData.FromObjectAsJson(new object())
+},
             };
             Response<ChatCompletion> response = client.Create(chatCompletionOptions);
         }
@@ -215,7 +224,10 @@ SessionState = BinaryData.FromObjectAsJson(new object()),
             })
             {
                 SessionState = BinaryData.FromObjectAsJson(new object()),
-                ExtraArguments = BinaryData.FromObjectAsJson(new object()),
+                ExtraArguments =
+{
+["key"] = BinaryData.FromObjectAsJson(new object())
+},
             };
             Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptions);
         }
