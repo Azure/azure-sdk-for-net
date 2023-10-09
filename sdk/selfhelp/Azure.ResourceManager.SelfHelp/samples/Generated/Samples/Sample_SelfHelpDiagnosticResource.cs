@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.SelfHelp;
+using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Samples
 {
@@ -38,7 +39,24 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             SelfHelpDiagnosticResource selfHelpDiagnostic = client.GetSelfHelpDiagnosticResource(selfHelpDiagnosticResourceId);
 
             // invoke the operation
-            SelfHelpDiagnosticData data = new SelfHelpDiagnosticData();
+            SelfHelpDiagnosticData data = new SelfHelpDiagnosticData()
+            {
+                GlobalParameters =
+{
+["startTime"] = "2020-07-01",
+},
+                Insights =
+{
+new SelfHelpDiagnosticInvocation()
+{
+SolutionId = "SampleSolutionId",
+AdditionalParameters =
+{
+["serverName"] = "testServer",
+},
+}
+},
+            };
             ArmOperation<SelfHelpDiagnosticResource> lro = await selfHelpDiagnostic.UpdateAsync(WaitUntil.Completed, data);
             SelfHelpDiagnosticResource result = lro.Value;
 

@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/2ced92ea3d86dbe78f1927a8c4c89767cb48e46a/specification/help/resource-manager/readme.md
-tag: package-2023-06-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/3eb9ec8e9c8f717c6b461c4c0f49a4662fb948fd/specification/help/resource-manager/readme.md
+tag: package-2023-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -80,4 +80,9 @@ override-operation-name:
   Diagnostics_CheckNameAvailability: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
 
+  directive:
+  - from: help.json
+    where: $.definitions
+    transform: >
+      $.SolutionResource.properties.properties.solutionResourceProperties.properties.replacementMaps.properties.metricsBasedChart.properties.timeSpanDuration['format'] = 'duration';
 ```
