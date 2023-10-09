@@ -150,6 +150,8 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId,
             string parentSourcePath = _testSourcePath,
             string parentDestinationPath = _testDestinationPath,
+            string sourceProviderId = _testSourceProviderId,
+            string destinationProviderId = _testDestinationProviderId,
             DataTransferStatus status = default)
         {
             status ??= new DataTransferStatus();
@@ -158,8 +160,8 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId,
                 DateTimeOffset.UtcNow,
                 JobPlanOperation.ServiceToService,
-                _testSourceProviderId,
-                _testDestinationProviderId,
+                sourceProviderId,
+                destinationProviderId,
                 false, /* enumerationComplete */
                 status,
                 parentSourcePath,
