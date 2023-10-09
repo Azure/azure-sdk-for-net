@@ -21,6 +21,10 @@
 - Removed Model `UploadLogsError` representing the error and the associated logs that failed when uploading a subset of logs to Azure Monitor.
 - Removed Model `UploadLogsStatus` indicating the status of a logs upload operation.
 
+## 1.1.0 (2022-10-11)
+## Features Added
+- GA release with sovereign support
+
 ## 1.0.0-beta.4 (2022-10-11)
 
 ## Features Added
