@@ -6,7 +6,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceModel.Rest;
-using System.ServiceModel.Rest.Core;
 using System.ServiceModel.Rest.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +15,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="HttpPipelinePolicy"/> processing steps.
     /// </summary>
-    public class HttpPipeline : Pipeline<HttpMessage>
+    public class HttpPipeline : Pipeline<HttpMessage, InvocationOptions>
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
@@ -94,13 +93,15 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage() => new HttpMessage(CreateRequest(), ResponseClassifier);
+        public override HttpMessage CreateMessage()
+            => new HttpMessage(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext? context)
+            => CreateMessage(context, default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -108,35 +109,16 @@ namespace Azure.Core.Pipeline
         /// <param name="context">Context specifying the message options.</param>
         /// <param name="classifier"></param>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier)
-            => CreateMessage((RequestOptions?)context, classifier);
-
-        /// <summary>
-        /// Creates a new <see cref="HttpMessage"/> instance.
-        /// </summary>
-        /// <param name="options">Request options to be used by the pipeline when sending the message request.</param>
-        /// <param name="classifier">Classifier to apply to the response.</param>
-        /// <returns>The HTTP message.</returns>
-        public override HttpMessage CreateMessage(RequestOptions? options, ResponseErrorClassifier? classifier = default)
+        public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            classifier ??= ResponseClassifier.Shared;
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier ?? ResponseClassifier);
 
-            HttpMessage message = new HttpMessage(CreateRequest(), classifier);
+            // TODO: Note: Azure.Core-based libraries are going to need to somehow create the
+            // message by passing in the request context to create message so that
+            // message.ApplyContext() will be applied.  This is a bit of a tangle, but
+            // I think we can solve it with a little reworkd.
 
-            if (options is not null)
-            {
-                // TODO: is it better to set once or hold an options in the message?
-                // holding an options in the message would let us set it on the base class
-                // if we need to call it in the System.ServiceModel.Rest pipeline.
-                // but, should message hold options?  That seems inside-out if options
-                // holds a pipeline.  Must think!
-                message.BufferResponse = options.BufferResponse;
-            }
-
-            if (options is RequestContext context)
-            {
-                message.ApplyRequestContext(context, (ResponseClassifier?)classifier);
-            }
+            message.ApplyRequestContext(context, classifier);
 
             return message;
         }
@@ -163,15 +145,17 @@ namespace Azure.Core.Pipeline
                 return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
             }
 
-            return SendAsync(message);
+            InvocationOptions options = new HttpPipelineInvocationOptions(message);
+            return SendAsync(message, options);
         }
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        public override async ValueTask SendAsync(HttpMessage message)
+        public override async ValueTask SendAsync(HttpMessage message, InvocationOptions options)
         {
             int length = _pipeline.Length + message.Policies!.Count;
             var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
@@ -204,14 +188,16 @@ namespace Azure.Core.Pipeline
                 return;
             }
 
-            Send(message);
+            InvocationOptions options = new HttpPipelineInvocationOptions(message);
+            Send(message, options);
         }
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
-        public override void Send(HttpMessage message)
+        /// <param name="options"></param>
+        public override void Send(HttpMessage message, InvocationOptions options)
         {
             int length = _pipeline.Length + message.Policies!.Count;
             var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);

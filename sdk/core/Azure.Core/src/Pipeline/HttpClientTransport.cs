@@ -106,12 +106,14 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        protected override void OnSendingRequest(PipelineMessage message)
+        protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
         {
             if (message is not HttpMessage httpMessage)
             {
                 throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
             }
+
+            HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
 
             httpMessage.ClearResponse();
         }

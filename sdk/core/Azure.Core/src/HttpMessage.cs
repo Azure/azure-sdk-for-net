@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel.Rest.Core;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -24,17 +25,13 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : this((PipelineRequest)request, responseClassifier)
-        {
-        }
-
-        internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
-            : base(request, classifier)
+            : base(request)
         {
             Argument.AssertNotNull(request, nameof(request));
 
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            ResponseClassifier = responseClassifier;
         }
 
         /// <summary>
@@ -85,13 +82,14 @@ namespace Azure.Core
         internal void ClearResponse() => ResponseInternal = null;
 
         /// <summary>
+        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
+        /// </summary>
+        public CancellationToken CancellationToken { get; internal set; }
+
+        /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public new ResponseClassifier ResponseClassifier
-        {
-            get => (ResponseClassifier)base.ResponseClassifier;
-            set => base.ResponseClassifier = value;
-        }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.

@@ -12,35 +12,34 @@ namespace System.ServiceModel.Rest.Core.Pipeline;
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
 /// </summary>
-public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
+public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage, InvocationOptions>
 {
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
     private readonly TimeSpan _networkTimeout;
-    private readonly bool _bufferResponse;
 
-    public ResponseBufferingPolicy(TimeSpan networkTimeout, bool bufferResponse)
+    public ResponseBufferingPolicy(TimeSpan networkTimeout)
     {
         _networkTimeout = networkTimeout;
-        _bufferResponse = bufferResponse;
     }
 
-    public void Process(PipelineMessage message, IPipelineEnumerator pipeline)
+    public void Process(PipelineMessage message, InvocationOptions options, IPipelineEnumerator pipeline)
+
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
+        => ProcessSyncOrAsync(message, options, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
-        => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
+    public async ValueTask ProcessAsync(PipelineMessage message, InvocationOptions options, IPipelineEnumerator pipeline)
+        => await ProcessSyncOrAsync(message, options, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IPipelineEnumerator pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, InvocationOptions options, IPipelineEnumerator pipeline, bool async)
     {
-        CancellationToken oldToken = message.CancellationToken;
+        CancellationToken oldToken = options.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-        var networkTimeout = _networkTimeout;
-        if (TryGetNetworkTimeoutOverride(message, out TimeSpan networkTimeoutOverride))
+        TimeSpan networkTimeout = _networkTimeout;
+        if (options.NetworkTimeout is TimeSpan networkTimeoutOverride)
         {
             networkTimeout = networkTimeoutOverride;
         }
@@ -48,7 +47,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         cts.CancelAfter(networkTimeout);
         try
         {
-            message.CancellationToken = cts.Token;
+            options.CancellationToken = cts.Token;
             if (async)
             {
                 await pipeline.ProcessNextAsync().ConfigureAwait(false);
@@ -65,7 +64,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
         }
         finally
         {
-            message.CancellationToken = oldToken;
+            options.CancellationToken = oldToken;
             cts.CancelAfter(Timeout.Infinite);
         }
 
@@ -75,7 +74,7 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
             return;
         }
 
-        if (BufferResponse(message))
+        if (options.BufferResponse)
         {
             // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
             // register callback to dispose the stream on cancellation.
@@ -111,23 +110,6 @@ public class ResponseBufferingPolicy : IPipelinePolicy<PipelineMessage>
                 throw;
             }
         }
-        else if (networkTimeout != Timeout.InfiniteTimeSpan)
-        {
-            SetReadTimeoutStream(message, responseContentStream, networkTimeout);
-        }
-    }
-
-    protected virtual bool TryGetNetworkTimeoutOverride(PipelineMessage message, out TimeSpan timeout)
-    {
-        timeout = default;
-        return false;
-    }
-
-    protected virtual bool BufferResponse(PipelineMessage message) => _bufferResponse;
-
-    protected virtual void SetReadTimeoutStream(PipelineMessage message, Stream responseContentStream, TimeSpan networkTimeout)
-    {
-        message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
     }
 
     private async Task CopyToAsync(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)

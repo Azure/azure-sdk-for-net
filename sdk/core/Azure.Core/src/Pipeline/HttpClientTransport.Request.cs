@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.ServiceModel.Rest.Core;
 
 namespace Azure.Core.Pipeline
 {
@@ -44,14 +43,9 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            protected override void OnSending(PipelineMessage message, HttpRequestMessage httpRequest)
+            internal static void AddAzureProperties(HttpMessage message, HttpRequestMessage httpRequest)
             {
-                if (message is not HttpMessage httpMessage)
-                {
-                    throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-                }
-
-                SetPropertiesOrOptions(httpRequest, MessageForServerCertificateCallback, httpMessage);
+                SetPropertiesOrOptions(httpRequest, MessageForServerCertificateCallback, message);
 
                 AddPropertiesForBlazor(httpRequest);
             }
