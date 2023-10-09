@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 subject = new
                 {
@@ -56,7 +56,7 @@ isDataAction = true,
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 subject = new
                 {
@@ -86,7 +86,7 @@ isDataAction = true,
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 subject = new
                 {
@@ -126,7 +126,7 @@ isDataAction = true,
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 subject = new
                 {
@@ -232,7 +232,7 @@ isDataAction = true,
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -252,7 +252,7 @@ isDataAction = true,
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -272,7 +272,7 @@ isDataAction = true,
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -297,7 +297,7 @@ isDataAction = true,
             TokenCredential credential = new DefaultAzureCredential();
             RoleAssignmentsClient client = new RoleAssignmentsClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                 principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",

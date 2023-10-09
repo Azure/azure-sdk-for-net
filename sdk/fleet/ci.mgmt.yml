@@ -11,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/fleet/ci.mgmt.yml
-    - sdk/fleet/Azure.ResourceManager.DatabaseFleetManager/
+    - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +19,5 @@ extends:
     ServiceDirectory: fleet
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.DatabaseFleetManager
-      safeName: AzureResourceManagerDatabaseFleetManager
+    - name: Azure.ResourceManager.ContainerServiceFleet
+      safeName: AzureResourceManagerContainerServiceFleet
