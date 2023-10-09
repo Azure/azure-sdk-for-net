@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncPrivateEndpointConnectionResource created on azure
             // for more information of creating StorageSyncPrivateEndpointConnectionResource, please refer to the document of StorageSyncPrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
             string resourceGroupName = "res6977";
             string storageSyncServiceName = "sss2527";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncPrivateEndpointConnectionResource created on azure
             // for more information of creating StorageSyncPrivateEndpointConnectionResource, please refer to the document of StorageSyncPrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
             string resourceGroupName = "res7687";
             string storageSyncServiceName = "sss2527";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncPrivateEndpointConnectionResource created on azure
             // for more information of creating StorageSyncPrivateEndpointConnectionResource, please refer to the document of StorageSyncPrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
             string resourceGroupName = "res6977";
             string storageSyncServiceName = "sss2527";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";

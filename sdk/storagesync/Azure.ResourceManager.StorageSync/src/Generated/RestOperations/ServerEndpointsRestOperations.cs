@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Create a new ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Create a new ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Patch a given ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Patch a given ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete a given ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete a given ServerEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a ServerEndpoint list. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a ServerEndpoint list. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Recall a server endpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Recall a server endpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>

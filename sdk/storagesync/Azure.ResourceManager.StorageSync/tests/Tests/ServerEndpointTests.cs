@@ -20,6 +20,9 @@ namespace Azure.ResourceManager.StorageSync.Tests
         private CloudEndpointResource _cloudEndpointResource;
 
         private string _serverEndpointName;
+        private string _cloudEndpointName;
+        private string _storageSyncServiceName;
+        private Guid _guid;
 
         public ServerEndpointTests(bool async) : base(async) //, RecordedTestMode.Record)
         {
@@ -34,6 +37,35 @@ namespace Azure.ResourceManager.StorageSync.Tests
             _cloudEndpointResource = await CreateCloudEndpointAsync(_storageSyncGroupResource);
 
             _serverEndpointName = Recording.GenerateAssetName(DefaultServerEndpointRecordingName);
+            _cloudEndpointName = Recording.GenerateAssetName(DefaultCloudEndpointRecordingName);
+            _storageSyncServiceName = Recording.GenerateAssetName(DefaultStorageSyncServiceRecordingName);
+            _guid = StorageSyncManagementTestUtilities.GenerateSeededGuid(int.Parse(Recording.Variables["RandomSeed"]));
+        }
+
+        [TearDown]
+        public async Task DeleteStorageSyncResources()
+        {
+            var storageSyncServiseExists = (await _resourceGroup.GetStorageSyncServices().ExistsAsync(_storageSyncServiceName)).Value;
+            if (storageSyncServiseExists)
+            {
+                var storageSyncService = (await _resourceGroup.GetStorageSyncServiceAsync(_storageSyncServiceName)).Value;
+                if ((await storageSyncService.GetStorageSyncRegisteredServers().ExistsAsync(_guid)).Value)
+                {
+                    var registeredServerResource = (await storageSyncService.GetStorageSyncRegisteredServerAsync(_guid)).Value;
+                    await registeredServerResource.DeleteAsync(WaitUntil.Completed);
+                }
+
+                var cloudEndpointExists = (await _storageSyncGroupResource.GetCloudEndpoints().ExistsAsync(_cloudEndpointName)).Value;
+
+                if (cloudEndpointExists)
+                {
+                    CloudEndpointResource cloudEndpointResource = (await _storageSyncGroupResource.GetCloudEndpointAsync(_cloudEndpointName)).Value;
+                    await cloudEndpointResource.DeleteAsync(WaitUntil.Completed);
+                }
+
+                await _storageSyncGroupResource.DeleteAsync(WaitUntil.Completed);
+                await _storageSyncServiceResource.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [Test]

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a Workflow List. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a Workflow List. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get Workflows resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="workflowId"> workflow Id. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get Workflows resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="workflowId"> workflow Id. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Abort the given workflow. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="workflowId"> workflow Id. </param>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Abort the given workflow. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="workflowId"> workflow Id. </param>

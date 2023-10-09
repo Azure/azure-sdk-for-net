@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given registered server list. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given registered server list. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Add a new registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Add a new registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Update registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Update registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete the given registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete the given registered server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Triggers Server certificate rollover. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> Server Id. </param>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Triggers Server certificate rollover. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="serverId"> Server Id. </param>

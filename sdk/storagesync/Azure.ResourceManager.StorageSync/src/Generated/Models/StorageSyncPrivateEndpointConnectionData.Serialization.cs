@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.StorageSync
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<StorageSyncPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<StorageSyncPrivateEndpointConnectionProvisioningState> provisioningState = default;
@@ -82,6 +84,20 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("groupIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("privateEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -113,7 +129,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new StorageSyncPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a SyncGroup List. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a SyncGroup List. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Create a new SyncGroup. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Create a new SyncGroup. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given SyncGroup. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given SyncGroup. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete a given SyncGroup. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete a given SyncGroup. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>

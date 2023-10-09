@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             if (Optional.IsDefined(UseIdentity))
             {
-                writer.WritePropertyName("UseIdentity"u8);
+                writer.WritePropertyName("useIdentity"u8);
                 writer.WriteBooleanValue(UseIdentity.Value);
             }
             writer.WriteEndObject();

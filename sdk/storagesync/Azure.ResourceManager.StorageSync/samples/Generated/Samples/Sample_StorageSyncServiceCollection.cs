@@ -47,18 +47,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
             string storageSyncServiceName = "SampleStorageSyncService_1";
             StorageSyncServiceCreateOrUpdateContent content = new StorageSyncServiceCreateOrUpdateContent(new AzureLocation("WestUS"))
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned"),
+                IncomingTrafficPolicy = IncomingTrafficPolicy.AllowAllTraffic,
                 Tags =
 {
 },
-                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity(),
-},
-                },
-                IncomingTrafficPolicy = IncomingTrafficPolicy.AllowAllTraffic,
             };
             ArmOperation<StorageSyncServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageSyncServiceName, content);
             StorageSyncServiceResource result = lro.Value;

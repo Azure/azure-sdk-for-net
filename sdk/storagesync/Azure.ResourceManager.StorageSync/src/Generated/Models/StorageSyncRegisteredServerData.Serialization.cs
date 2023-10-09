@@ -172,6 +172,7 @@ namespace Azure.ResourceManager.StorageSync
             Optional<string> monitoringConfiguration = default;
             Optional<string> serverName = default;
             Optional<string> applicationId = default;
+            Optional<bool> identity = default;
             Optional<string> latestApplicationId = default;
             Optional<ServerAuthType> activeAuthType = default;
             foreach (var property in element.EnumerateObject())
@@ -377,6 +378,15 @@ namespace Azure.ResourceManager.StorageSync
                             applicationId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("identity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identity = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("latestApplicationId"u8))
                         {
                             latestApplicationId = property0.Value.GetString();
@@ -395,7 +405,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value, applicationId.Value, latestApplicationId.Value, Optional.ToNullable(activeAuthType));
+            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value, applicationId.Value, Optional.ToNullable(identity), latestApplicationId.Value, Optional.ToNullable(activeAuthType));
         }
     }
 }

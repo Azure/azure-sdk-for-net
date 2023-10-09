@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageSync
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("UseIdentity"u8))
+                        if (property0.NameEquals("useIdentity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
