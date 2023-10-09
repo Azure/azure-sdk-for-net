@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitizedcommunication.azure.com/messages/notifications/:send?api-version=2023-08-24-preview",
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications/:send?api-version=2023-08-24-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
