@@ -16,7 +16,6 @@ namespace Azure.Core.TestFramework
     public class TestRecording : IAsyncDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
-        private const string DefaultClientGuidFormatInRecordingKey = "DefaultClientGuidFormatInRecording";
         private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         // cspell: disable-next-line
         private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
