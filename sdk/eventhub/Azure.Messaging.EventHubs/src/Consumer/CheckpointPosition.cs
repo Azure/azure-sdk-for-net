@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   with the checkpoint, this value will be used for positioning when events are read.
         /// </summary>
         ///
-        public long? Offset { get; internal set; } = null;
+        public long? Offset { get; internal set; }
 
         /// <summary>
         ///   The replication segment to associate with the checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   The sequence number to associate with the checkpoint. It indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
         ///
-        public long SequenceNumber { get; internal set; } = long.MinValue;
+        public long SequenceNumber { get; internal set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.

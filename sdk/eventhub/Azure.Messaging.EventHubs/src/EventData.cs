@@ -553,6 +553,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastReplicationSegment">The replication segment that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
@@ -570,6 +571,7 @@ namespace Azure.Messaging.EventHubs
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
                            long? lastPartitionOffset = null,
+                           string lastReplicationSegment = null,
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
                            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
                            int? publishedSequenceNumber = null,
@@ -589,6 +591,7 @@ namespace Azure.Messaging.EventHubs
                 partitionKey,
                 lastPartitionSequenceNumber,
                 lastPartitionOffset,
+                lastReplicationSegment,
                 lastPartitionEnqueuedTime,
                 lastPartitionPropertiesRetrievalTime);
 

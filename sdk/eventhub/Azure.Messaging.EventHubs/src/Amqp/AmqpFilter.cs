@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs
 
             if (eventPosition.SequenceNumber.HasValue)
             {
-                return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.SequenceNumber.Value }";
+                return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } {eventPosition.ReplicationSegment ?? "" }:{ eventPosition.SequenceNumber.Value }";
             }
 
             if (eventPosition.EnqueuedTime.HasValue)

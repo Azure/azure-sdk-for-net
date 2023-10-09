@@ -17,21 +17,6 @@ namespace Azure.Messaging.EventHubs.Tests
     {
         /// <summary>
         ///   Verifies functionality of the <see cref="CheckpointPosition "/>
-        ///   constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void DefaultsAreSet()
-        {
-            var checkpoint = new CheckpointPosition();
-
-            Assert.That(checkpoint.SequenceNumber, Is.EqualTo(long.MinValue), "The default sequence number should be long.MinValue.");
-            Assert.That(checkpoint.ReplicationSegment, Is.EqualTo(null), "The default replication segment should be null.");
-            Assert.That(checkpoint.Offset, Is.EqualTo(null), "The default offset should be null.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
         ///   equality.
         /// </summary>
         ///
