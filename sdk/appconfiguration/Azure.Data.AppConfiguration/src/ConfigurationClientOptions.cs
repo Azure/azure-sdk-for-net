@@ -29,6 +29,11 @@ namespace Azure.Data.AppConfiguration
             /// Version 2022-11-01-preview.
             /// </summary>
             V2022_11_01_Preview = 1,
+
+            ///// <summary>
+            ///// Version 2023-10-01.
+            ///// </summary>
+            //V2023_10_01 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -48,6 +53,7 @@ namespace Azure.Data.AppConfiguration
             {
                 ServiceVersion.V1_0 => "1.0",
                 ServiceVersion.V2022_11_01_Preview => "2022-11-01-preview",
+              //  ServiceVersion.V2023_10_01 => "2023-10-01",
 
                 _ => throw new NotSupportedException()
             };

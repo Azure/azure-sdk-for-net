@@ -232,6 +232,74 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Location of the invitation. </param>
+        /// <param name="invitationId"> An invitation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<DataShareConsumerInvitationResource>> GetIfExistsAsync(AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataShareConsumerInvitationConsumerInvitationsRestClient.GetAsync(location, invitationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareConsumerInvitationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Location of the invitation. </param>
+        /// <param name="invitationId"> An invitation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<DataShareConsumerInvitationResource> GetIfExists(AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataShareConsumerInvitationConsumerInvitationsRestClient.Get(location, invitationId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareConsumerInvitationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DataShareConsumerInvitationResource> IEnumerable<DataShareConsumerInvitationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

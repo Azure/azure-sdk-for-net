@@ -331,6 +331,80 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationServer_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authsid"> Identifier of the authorization server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementAuthorizationServerResource>> GetIfExistsAsync(string authsid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+
+            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementAuthorizationServerAuthorizationServerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementAuthorizationServerResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationServer_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authsid"> Identifier of the authorization server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementAuthorizationServerResource> GetIfExists(string authsid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authsid, nameof(authsid));
+
+            using var scope = _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics.CreateScope("ApiManagementAuthorizationServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementAuthorizationServerAuthorizationServerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementAuthorizationServerResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ApiManagementAuthorizationServerResource> IEnumerable<ApiManagementAuthorizationServerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

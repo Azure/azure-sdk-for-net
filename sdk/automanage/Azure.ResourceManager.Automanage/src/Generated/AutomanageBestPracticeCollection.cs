@@ -240,6 +240,80 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bestPracticeName"> The Automanage best practice name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageBestPracticeResource>> GetIfExistsAsync(string bestPracticeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
+
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageBestPracticeBestPracticesRestClient.GetAsync(bestPracticeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageBestPracticeResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bestPracticeName"> The Automanage best practice name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageBestPracticeResource> GetIfExists(string bestPracticeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
+
+            using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageBestPracticeBestPracticesRestClient.Get(bestPracticeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageBestPracticeResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageBestPracticeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<AutomanageBestPracticeResource> IEnumerable<AutomanageBestPracticeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

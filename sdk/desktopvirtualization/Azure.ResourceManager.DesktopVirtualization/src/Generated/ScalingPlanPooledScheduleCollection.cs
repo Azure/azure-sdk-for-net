@@ -329,6 +329,80 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPooledSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScalingPlanPooledScheduleResource>> GetIfExistsAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+
+            using var scope = _scalingPlanPooledScheduleClientDiagnostics.CreateScope("ScalingPlanPooledScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scalingPlanPooledScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScalingPlanPooledScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanPooledScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPooledSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        public virtual NullableResponse<ScalingPlanPooledScheduleResource> GetIfExists(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+
+            using var scope = _scalingPlanPooledScheduleClientDiagnostics.CreateScope("ScalingPlanPooledScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scalingPlanPooledScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScalingPlanPooledScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanPooledScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ScalingPlanPooledScheduleResource> IEnumerable<ScalingPlanPooledScheduleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

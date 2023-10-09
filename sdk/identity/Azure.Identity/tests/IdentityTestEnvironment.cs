@@ -10,6 +10,11 @@ namespace Azure.Identity.Tests
     public class IdentityTestEnvironment : TestEnvironment
     {
         public string IdentityTenantId => GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
+        public string MultiTenantAppTenantId => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_TENANT_ID");
+        public string MultiTenantAppClientId => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_CLIENT_ID");
+        public string MultiTenantAppClientSecret => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_CLIENT_SECRET", options => options.IsSecret());
+        public string MultiTenantUserName => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_USERNAME");
+        public string MultiTenantPassword => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_PASSWORD", options => options.IsSecret());
         public string Username => GetRecordedVariable("AZURE_IDENTITY_TEST_USERNAME");
         public string Password => GetVariable("AZURE_IDENTITY_TEST_PASSWORD");
         public string IdentityClientId => GetVariable("AZURE_IDENTITY_TEST_CLIENT_ID");

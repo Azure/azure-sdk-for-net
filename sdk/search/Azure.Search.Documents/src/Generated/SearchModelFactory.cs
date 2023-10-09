@@ -133,7 +133,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexStatistics"/> instance for mocking. </returns>
-        public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long? vectorIndexSize = null)
+        public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long vectorIndexSize = default)
         {
             return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
         }

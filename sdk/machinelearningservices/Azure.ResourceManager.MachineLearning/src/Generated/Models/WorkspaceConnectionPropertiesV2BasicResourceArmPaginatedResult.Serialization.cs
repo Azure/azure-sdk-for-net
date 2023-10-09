@@ -20,10 +20,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningWorkspaceConnectionData>> value = default;
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MachineLearningWorkspaceConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -38,13 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(Optional.ToList(value), nextLink.Value);
+            return new WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

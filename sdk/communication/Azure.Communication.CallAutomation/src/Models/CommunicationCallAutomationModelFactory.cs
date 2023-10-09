@@ -40,6 +40,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
         /// <param name="mediaSubscriptionId">The subscriptionId for Media Streaming.</param>
+        /// <param name="dataSubscriptionId">The subscriptionId for transcription.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
             string callConnectionId = default,
@@ -50,9 +51,10 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
-            string mediaSubscriptionId = default)
+            string mediaSubscriptionId = default,
+            string dataSubscriptionId = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId, dataSubscriptionId);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -79,6 +81,15 @@ namespace Azure.Communication.CallAutomation
         public static RemoveParticipantResult RemoveParticipantResult(string operationContext = default)
         {
             return new RemoveParticipantResult(operationContext);
+        }
+
+        /// <summary> Initializes a new instance of CancelAddParticipantResult. </summary>
+        /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantResult"/> instance for mocking. </returns>
+        public static CancelAddParticipantResult CancelAddParticipantResult(string invitationId = default, string operationContext = default)
+        {
+            return new CancelAddParticipantResult(invitationId, operationContext);
         }
 
         /// <summary> Create an EventSource. </summary>
@@ -221,6 +232,50 @@ namespace Azure.Communication.CallAutomation
                 transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
                 );
             return new CallTransferAccepted(internalEvent);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of add participant cancelled event.
+        /// </summary>
+        public static AddParticipantCancelled AddParticipantCancelled(
+            string callConnectionId = default,
+            string serverCallId = default,
+            string correlationId = default,
+            string invitationId = default,
+            CommunicationIdentifier participant = default,
+            string operationContext = default)
+        {
+            var internalObject = new AddParticipantCancelledInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                participant: CommunicationIdentifierSerializer.Serialize(participant),
+                invitationId);
+
+            return new AddParticipantCancelled(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of cancel add participant failed event.
+        /// </summary>
+        public static CancelAddParticipantFailed CancelAddParticipantFailed(
+            string callConnectionId = default,
+            string serverCallId = default,
+            string correlationId = default,
+            string invitationId = default,
+            ResultInformation resultInformation = default,
+            string operationContext = default)
+        {
+            var internalObject = new CancelAddParticipantFailedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                invitationId);
+
+            return new CancelAddParticipantFailed(internalObject);
         }
     }
 }

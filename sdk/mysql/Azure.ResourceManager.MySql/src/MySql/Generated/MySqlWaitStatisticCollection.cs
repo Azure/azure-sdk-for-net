@@ -247,5 +247,79 @@ namespace Azure.ResourceManager.MySql
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/waitStatistics/{waitStatisticsId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
+        public virtual async Task<NullableResponse<MySqlWaitStatisticResource>> GetIfExistsAsync(string waitStatisticsId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+
+            using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mySqlWaitStatisticWaitStatisticsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, waitStatisticsId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlWaitStatisticResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlWaitStatisticResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/waitStatistics/{waitStatisticsId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
+        public virtual NullableResponse<MySqlWaitStatisticResource> GetIfExists(string waitStatisticsId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+
+            using var scope = _mySqlWaitStatisticWaitStatisticsClientDiagnostics.CreateScope("MySqlWaitStatisticCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mySqlWaitStatisticWaitStatisticsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, waitStatisticsId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MySqlWaitStatisticResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlWaitStatisticResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

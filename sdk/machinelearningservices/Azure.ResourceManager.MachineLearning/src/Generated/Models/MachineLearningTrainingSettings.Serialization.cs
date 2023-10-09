@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackEnsembleSettings");
                 }
             }
+            if (Optional.IsDefined(TrainingMode))
+            {
+                writer.WritePropertyName("trainingMode"u8);
+                writer.WriteStringValue(TrainingMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> enableVoteEnsemble = default;
             Optional<TimeSpan> ensembleModelDownloadTimeout = default;
             Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
+            Optional<TrainingMode> trainingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableDnnTraining"u8))
@@ -140,8 +146,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("trainingMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    trainingMode = new TrainingMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new MachineLearningTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value);
+            return new MachineLearningTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode));
         }
     }
 }

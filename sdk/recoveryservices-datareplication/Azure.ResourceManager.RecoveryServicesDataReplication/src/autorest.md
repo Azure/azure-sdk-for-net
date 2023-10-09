@@ -30,6 +30,7 @@ rename-mapping:
   CheckNameAvailabilityModel.type: -|resource-type
   CheckNameAvailabilityResponseModel: DataReplicationNameAvailabilityResult
   CheckNameAvailabilityResponseModel.nameAvailable: IsNameAvailable
+  DeploymentPreflightResource: DeploymentPreflightResourceInfo
   DeploymentPreflightResource.type: -|resource-type
   DraModel: DataReplicationDra
   DraModelCollection: DataReplicationDraListResult

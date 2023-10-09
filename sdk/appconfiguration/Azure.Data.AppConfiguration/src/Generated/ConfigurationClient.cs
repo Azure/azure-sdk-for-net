@@ -19,6 +19,10 @@ namespace Azure.Data.AppConfiguration
     /// <summary> The Configuration service client. </summary>
     public partial class ConfigurationClient
     {
+        private const string AuthorizationHeader = "Connection String";
+        private readonly AzureKeyCredential _keyCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "user_impersonation" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _syncToken;
@@ -46,7 +50,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeysAsync(string,string,string,RequestContext)']/*" />
         internal virtual async Task<Response> CheckKeysAsync(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeys");
@@ -79,7 +82,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeys(string,string,string,RequestContext)']/*" />
         internal virtual Response CheckKeys(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeys");
@@ -112,17 +114,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValuesAsync(string,string,string,string,IEnumerable{string},string,RequestContext)']/*" />
-        internal virtual async Task<Response> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
+        internal virtual async Task<Response> CheckKeyValuesAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, context);
+                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -148,17 +150,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValues(string,string,string,string,IEnumerable{string},string,RequestContext)']/*" />
-        internal virtual Response CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
+        internal virtual Response CheckKeyValues(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValues");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, context);
+                using HttpMessage message = CreateCheckKeyValuesRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -188,7 +190,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingAsync(string,string,string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -227,7 +228,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSetting(string,string,string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
         internal virtual Response GetConfigurationSetting(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -266,7 +266,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSettingAsync(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -305,7 +304,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSetting(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
         internal virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -342,7 +340,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSettingAsync(string,string,ETag?,RequestContext)']/*" />
         internal virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, ETag? ifMatch, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -379,7 +376,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSetting(string,string,ETag?,RequestContext)']/*" />
         internal virtual Response DeleteConfigurationSetting(string key, string label, ETag? ifMatch, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -418,7 +414,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValueAsync(string,string,string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> CheckKeyValueAsync(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -457,7 +452,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckKeyValue(string,string,string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
         internal virtual Response CheckKeyValue(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -490,7 +484,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshotsAsync(string,RequestContext)']/*" />
         internal virtual async Task<Response> CheckSnapshotsAsync(string after = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshots");
@@ -521,7 +514,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshots(string,RequestContext)']/*" />
         internal virtual Response CheckSnapshots(string after = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshots");
@@ -556,7 +548,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotAsync(string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -593,7 +584,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshot(string,IEnumerable{string},MatchConditions,RequestContext)']/*" />
         internal virtual Response GetSnapshot(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -624,14 +614,14 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/merge-patch+json". </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotStatusAsync(string,RequestContent,MatchConditions,RequestContext)']/*" />
-        internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
@@ -640,7 +630,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, content, matchConditions, context);
+                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, content, contentType, matchConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -662,14 +652,14 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/merge-patch+json". </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='UpdateSnapshotStatus(string,RequestContent,MatchConditions,RequestContext)']/*" />
-        internal virtual Response UpdateSnapshotStatus(string name, RequestContent content, MatchConditions matchConditions = null, RequestContext context = null)
+        internal virtual Response UpdateSnapshotStatus(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
@@ -678,7 +668,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, content, matchConditions, context);
+                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, content, contentType, matchConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -705,7 +695,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshotAsync(string,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> CheckSnapshotAsync(string name, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -741,7 +730,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckSnapshot(string,MatchConditions,RequestContext)']/*" />
         internal virtual Response CheckSnapshot(string name, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -777,7 +765,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckLabelsAsync(string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual async Task<Response> CheckLabelsAsync(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
@@ -811,7 +798,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckLabels(string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual Response CheckLabels(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
@@ -846,7 +832,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLockAsync(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -883,7 +868,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLock(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual Response CreateReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -920,7 +904,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLockAsync(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -957,7 +940,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLock(string,string,MatchConditions,RequestContext)']/*" />
         internal virtual Response DeleteReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -994,7 +976,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckRevisionsAsync(string,string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual async Task<Response> CheckRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
@@ -1029,7 +1010,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CheckRevisions(string,string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual Response CheckRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckRevisions");
@@ -1061,7 +1041,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetailsAsync(string,RequestContext)']/*" />
         internal virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -1095,7 +1074,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetails(string,RequestContext)']/*" />
         internal virtual Response GetOperationDetails(string snapshot, RequestContext context)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
@@ -1130,7 +1108,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeysAsync(string,string,string,RequestContext)']/*" />
         internal virtual AsyncPageable<BinaryData> GetKeysAsync(string name, string after, string acceptDatetime, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
@@ -1154,7 +1131,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeys(string,string,string,RequestContext)']/*" />
         internal virtual Pageable<BinaryData> GetKeys(string name, string after, string acceptDatetime, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
@@ -1178,14 +1154,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingsAsync(string,string,string,string,IEnumerable{string},string,RequestContext)']/*" />
-        internal virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
@@ -1205,14 +1181,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with 'key' and 'label' filters. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettings(string,string,string,string,IEnumerable{string},string,RequestContext)']/*" />
-        internal virtual Pageable<BinaryData> GetConfigurationSettings(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
+        internal virtual Pageable<BinaryData> GetConfigurationSettings(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, matchConditions, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
         }
 
@@ -1233,7 +1209,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshotsAsync(string,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         internal virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
@@ -1258,7 +1233,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetSnapshots(string,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         internal virtual Pageable<BinaryData> GetSnapshots(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, after, select, status, context);
@@ -1283,7 +1257,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabelsAsync(string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual AsyncPageable<BinaryData> GetLabelsAsync(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
@@ -1308,7 +1281,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabels(string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual Pageable<BinaryData> GetLabels(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
@@ -1334,7 +1306,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisionsAsync(string,string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
@@ -1360,7 +1331,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisions(string,string,string,string,IEnumerable{string},RequestContext)']/*" />
         internal virtual Pageable<BinaryData> GetRevisions(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
@@ -1387,7 +1357,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshotAsync(WaitUntil,string,RequestContent,ContentType,RequestContext)']/*" />
         internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1426,7 +1395,6 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateSnapshot(WaitUntil,string,RequestContent,ContentType,RequestContext)']/*" />
         internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -1505,7 +1473,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1544,10 +1512,14 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
             return message;
         }
 
-        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
+        internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1584,6 +1556,10 @@ namespace Azure.Data.AppConfiguration
             if (acceptDatetime != null)
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
             }
             return message;
         }
@@ -1736,7 +1712,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (status != null && Optional.IsCollectionDefined(status))
             {
-                uri.AppendQueryDelimited("Status", status, ",", true);
+                uri.AppendQueryDelimited("status", status, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
@@ -1816,7 +1792,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1836,7 +1812,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add(matchConditions);
             }
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
         }
@@ -2095,7 +2071,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2112,6 +2088,10 @@ namespace Azure.Data.AppConfiguration
             if (acceptDatetime != null)
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
+            }
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
             }
             return message;
         }
