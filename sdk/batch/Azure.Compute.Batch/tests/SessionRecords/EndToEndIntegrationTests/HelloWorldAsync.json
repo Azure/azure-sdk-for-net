@@ -1,0 +1,559 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest?api-version=2023-05-01.17.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "client-request-id": "4f720e27-8b3d-dafc-31ec-25118b31c6b7",
+        "return-client-request-id": "true",
+        "traceparent": "00-07e617534540fe3ba15dc1acee76d572-5a13068b7f7ab9a3-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20231006.1 (.NET 7.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4f720e27-8b3d-dafc-31ec-25118b31c6b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "client-request-id": "4f720e27-8b3d-dafc-31ec-25118b31c6b7",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "DataServiceVersion": "3.0",
+        "Date": "Sat, 07 Oct 2023 00:56:40 GMT",
+        "ETag": "0x8DBC55A11E1B6F7",
+        "Last-Modified": "Thu, 05 Oct 2023 04:18:04 GMT",
+        "request-id": "a11448a3-c05f-41b4-bbb5-135ba0ecce79",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/$metadata#pools/@Element",
+        "id": "wiboris-pooltest",
+        "url": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest",
+        "eTag": "0x8DBC55A11E1B6F7",
+        "lastModified": "2023-10-05T04:18:04.0790775Z",
+        "creationTime": "2023-10-05T04:18:04.0790775Z",
+        "state": "active",
+        "stateTransitionTime": "2023-10-05T04:18:04.0790775Z",
+        "allocationState": "steady",
+        "allocationStateTransitionTime": "2023-10-05T04:22:07.1174739Z",
+        "vmSize": "standard_d1_v2",
+        "resizeTimeout": "PT15M",
+        "currentDedicatedNodes": 1,
+        "targetDedicatedNodes": 1,
+        "currentLowPriorityNodes": 0,
+        "targetLowPriorityNodes": 0,
+        "enableAutoScale": false,
+        "enableInterNodeCommunication": false,
+        "startTask": {
+          "commandLine": "cmd /c hostname",
+          "environmentSettings": [
+            {
+              "name": "key",
+              "value": "value"
+            }
+          ],
+          "userIdentity": {
+            "autoUser": {
+              "scope": "pool",
+              "elevationLevel": "nonadmin"
+            }
+          },
+          "maxTaskRetryCount": 0,
+          "waitForSuccess": true
+        },
+        "userAccounts": [
+          {
+            "name": "BatchTestAdmin",
+            "elevationLevel": "admin",
+            "windowsUserConfiguration": {
+              "loginMode": "interactive"
+            }
+          },
+          {
+            "name": "BatchTestNonAdmin",
+            "elevationLevel": "nonadmin",
+            "windowsUserConfiguration": {
+              "loginMode": "interactive"
+            }
+          }
+        ],
+        "taskSlotsPerNode": 1,
+        "taskSchedulingPolicy": {
+          "nodeFillType": "Spread"
+        },
+        "cloudServiceConfiguration": {
+          "osFamily": "4",
+          "osVersion": "*"
+        },
+        "currentNodeCommunicationMode": "classic"
+      }
+    },
+    {
+      "RequestUri": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools?api-version=2023-05-01.17.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "client-request-id": "223feb9b-d38b-78ab-4775-20a6bd7bd586",
+        "return-client-request-id": "true",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20231006.1 (.NET 7.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "223feb9b-d38b-78ab-4775-20a6bd7bd586",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "client-request-id": "223feb9b-d38b-78ab-4775-20a6bd7bd586",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "DataServiceVersion": "3.0",
+        "Date": "Sat, 07 Oct 2023 00:56:42 GMT",
+        "request-id": "8c226d94-6a77-4925-91b4-90292066a490",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/$metadata#pools",
+        "value": [
+          {
+            "id": "test",
+            "displayName": "test",
+            "url": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/test",
+            "eTag": "0x8DBC5C998B86682",
+            "lastModified": "2023-10-05T17:36:24.4377218Z",
+            "creationTime": "2023-09-26T20:57:25.7684846Z",
+            "state": "active",
+            "stateTransitionTime": "2023-09-26T20:57:25.7684846Z",
+            "allocationState": "steady",
+            "allocationStateTransitionTime": "2023-10-05T17:38:46.7207757Z",
+            "vmSize": "standard_d2s_v3",
+            "resizeTimeout": "PT15M",
+            "currentDedicatedNodes": 1,
+            "targetDedicatedNodes": 1,
+            "currentLowPriorityNodes": 0,
+            "targetLowPriorityNodes": 0,
+            "enableAutoScale": false,
+            "enableInterNodeCommunication": false,
+            "taskSlotsPerNode": 1,
+            "taskSchedulingPolicy": {
+              "nodeFillType": "Pack"
+            },
+            "virtualMachineConfiguration": {
+              "imageReference": {
+                "publisher": "microsoftwindowsserver",
+                "offer": "windowsserver",
+                "sku": "2012-datacenter",
+                "version": "latest"
+              },
+              "nodeAgentSKUId": "batch.node.windows amd64",
+              "windowsConfiguration": {
+                "enableAutomaticUpdates": false
+              },
+              "nodePlacementConfiguration": {
+                "policy": "Regional"
+              }
+            },
+            "networkConfiguration": {
+              "dynamicVNetAssignmentScope": "none",
+              "publicIPAddressConfiguration": {
+                "provision": "BatchManaged"
+              },
+              "enableAcceleratedNetworking": false
+            },
+            "targetNodeCommunicationMode": "default",
+            "currentNodeCommunicationMode": "classic"
+          },
+          {
+            "id": "test2",
+            "displayName": "test2",
+            "url": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/test2",
+            "eTag": "0x8DBBED33DD7F7FD",
+            "lastModified": "2023-09-26T20:57:48.7997949Z",
+            "creationTime": "2023-09-26T20:57:48.7997949Z",
+            "state": "active",
+            "stateTransitionTime": "2023-09-26T20:57:48.7997949Z",
+            "allocationState": "steady",
+            "allocationStateTransitionTime": "2023-09-26T20:57:49.8008093Z",
+            "vmSize": "standard_d2s_v3",
+            "resizeTimeout": "PT15M",
+            "currentDedicatedNodes": 0,
+            "targetDedicatedNodes": 0,
+            "currentLowPriorityNodes": 0,
+            "targetLowPriorityNodes": 0,
+            "enableAutoScale": false,
+            "enableInterNodeCommunication": false,
+            "taskSlotsPerNode": 1,
+            "taskSchedulingPolicy": {
+              "nodeFillType": "Pack"
+            },
+            "virtualMachineConfiguration": {
+              "imageReference": {
+                "publisher": "microsoftwindowsserver",
+                "offer": "windowsserver",
+                "sku": "2012-datacenter",
+                "version": "latest"
+              },
+              "nodeAgentSKUId": "batch.node.windows amd64",
+              "windowsConfiguration": {
+                "enableAutomaticUpdates": false
+              },
+              "nodePlacementConfiguration": {
+                "policy": "Regional"
+              }
+            },
+            "networkConfiguration": {
+              "dynamicVNetAssignmentScope": "none",
+              "publicIPAddressConfiguration": {
+                "provision": "BatchManaged"
+              },
+              "enableAcceleratedNetworking": false
+            },
+            "targetNodeCommunicationMode": "default"
+          },
+          {
+            "id": "wiboris-pooltest",
+            "url": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest",
+            "eTag": "0x8DBC55A11E1B6F7",
+            "lastModified": "2023-10-05T04:18:04.0790775Z",
+            "creationTime": "2023-10-05T04:18:04.0790775Z",
+            "state": "active",
+            "stateTransitionTime": "2023-10-05T04:18:04.0790775Z",
+            "allocationState": "steady",
+            "allocationStateTransitionTime": "2023-10-05T04:22:07.1174739Z",
+            "vmSize": "standard_d1_v2",
+            "resizeTimeout": "PT15M",
+            "currentDedicatedNodes": 1,
+            "targetDedicatedNodes": 1,
+            "currentLowPriorityNodes": 0,
+            "targetLowPriorityNodes": 0,
+            "enableAutoScale": false,
+            "enableInterNodeCommunication": false,
+            "startTask": {
+              "commandLine": "cmd /c hostname",
+              "environmentSettings": [
+                {
+                  "name": "key",
+                  "value": "value"
+                }
+              ],
+              "userIdentity": {
+                "autoUser": {
+                  "scope": "pool",
+                  "elevationLevel": "nonadmin"
+                }
+              },
+              "maxTaskRetryCount": 0,
+              "waitForSuccess": true
+            },
+            "userAccounts": [
+              {
+                "name": "BatchTestAdmin",
+                "elevationLevel": "admin",
+                "windowsUserConfiguration": {
+                  "loginMode": "interactive"
+                }
+              },
+              {
+                "name": "BatchTestNonAdmin",
+                "elevationLevel": "nonadmin",
+                "windowsUserConfiguration": {
+                  "loginMode": "interactive"
+                }
+              }
+            ],
+            "taskSlotsPerNode": 1,
+            "taskSchedulingPolicy": {
+              "nodeFillType": "Spread"
+            },
+            "cloudServiceConfiguration": {
+              "osFamily": "4",
+              "osVersion": "*"
+            },
+            "currentNodeCommunicationMode": "classic"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest?api-version=2023-05-01.17.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "client-request-id": "df5d90ab-8e98-ac8b-8168-218c2ce80623",
+        "return-client-request-id": "true",
+        "traceparent": "00-f1b09d88e1aae2daa2a97aae4b8396a4-ecd2b71ac5366684-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20231006.1 (.NET 7.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "df5d90ab-8e98-ac8b-8168-218c2ce80623",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "client-request-id": "df5d90ab-8e98-ac8b-8168-218c2ce80623",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "DataServiceVersion": "3.0",
+        "Date": "Sat, 07 Oct 2023 00:56:48 GMT",
+        "ETag": "0x8DBC55A11E1B6F7",
+        "Last-Modified": "Thu, 05 Oct 2023 04:18:04 GMT",
+        "request-id": "bf932b37-ce5c-416d-a9b1-29fbb5f173d8",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/$metadata#pools/@Element",
+        "id": "wiboris-pooltest",
+        "url": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest",
+        "eTag": "0x8DBC55A11E1B6F7",
+        "lastModified": "2023-10-05T04:18:04.0790775Z",
+        "creationTime": "2023-10-05T04:18:04.0790775Z",
+        "state": "active",
+        "stateTransitionTime": "2023-10-05T04:18:04.0790775Z",
+        "allocationState": "steady",
+        "allocationStateTransitionTime": "2023-10-05T04:22:07.1174739Z",
+        "vmSize": "standard_d1_v2",
+        "resizeTimeout": "PT15M",
+        "currentDedicatedNodes": 1,
+        "targetDedicatedNodes": 1,
+        "currentLowPriorityNodes": 0,
+        "targetLowPriorityNodes": 0,
+        "enableAutoScale": false,
+        "enableInterNodeCommunication": false,
+        "startTask": {
+          "commandLine": "cmd /c hostname",
+          "environmentSettings": [
+            {
+              "name": "key",
+              "value": "value"
+            }
+          ],
+          "userIdentity": {
+            "autoUser": {
+              "scope": "pool",
+              "elevationLevel": "nonadmin"
+            }
+          },
+          "maxTaskRetryCount": 0,
+          "waitForSuccess": true
+        },
+        "userAccounts": [
+          {
+            "name": "BatchTestAdmin",
+            "elevationLevel": "admin",
+            "windowsUserConfiguration": {
+              "loginMode": "interactive"
+            }
+          },
+          {
+            "name": "BatchTestNonAdmin",
+            "elevationLevel": "nonadmin",
+            "windowsUserConfiguration": {
+              "loginMode": "interactive"
+            }
+          }
+        ],
+        "taskSlotsPerNode": 1,
+        "taskSchedulingPolicy": {
+          "nodeFillType": "Spread"
+        },
+        "cloudServiceConfiguration": {
+          "osFamily": "4",
+          "osVersion": "*"
+        },
+        "currentNodeCommunicationMode": "classic"
+      }
+    },
+    {
+      "RequestUri": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest?api-version=2023-05-01.17.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "client-request-id": "46f8ae2a-70ca-5317-62fa-07c86a561db6",
+        "return-client-request-id": "true",
+        "traceparent": "00-b61d5ebcbd8d5cf8c4f0a2e19e047d46-6a554b3b611b3a53-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20231006.1 (.NET 7.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "46f8ae2a-70ca-5317-62fa-07c86a561db6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "client-request-id": "46f8ae2a-70ca-5317-62fa-07c86a561db6",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "DataServiceVersion": "3.0",
+        "Date": "Sat, 07 Oct 2023 00:56:48 GMT",
+        "ETag": "0x8DBC55A11E1B6F7",
+        "Last-Modified": "Thu, 05 Oct 2023 04:18:04 GMT",
+        "request-id": "f8af4b83-1cc2-48ee-993c-f94d82084209",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/$metadata#pools/@Element",
+        "id": "wiboris-pooltest",
+        "url": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest",
+        "eTag": "0x8DBC55A11E1B6F7",
+        "lastModified": "2023-10-05T04:18:04.0790775Z",
+        "creationTime": "2023-10-05T04:18:04.0790775Z",
+        "state": "active",
+        "stateTransitionTime": "2023-10-05T04:18:04.0790775Z",
+        "allocationState": "steady",
+        "allocationStateTransitionTime": "2023-10-05T04:22:07.1174739Z",
+        "vmSize": "standard_d1_v2",
+        "resizeTimeout": "PT15M",
+        "currentDedicatedNodes": 1,
+        "targetDedicatedNodes": 1,
+        "currentLowPriorityNodes": 0,
+        "targetLowPriorityNodes": 0,
+        "enableAutoScale": false,
+        "enableInterNodeCommunication": false,
+        "startTask": {
+          "commandLine": "cmd /c hostname",
+          "environmentSettings": [
+            {
+              "name": "key",
+              "value": "value"
+            }
+          ],
+          "userIdentity": {
+            "autoUser": {
+              "scope": "pool",
+              "elevationLevel": "nonadmin"
+            }
+          },
+          "maxTaskRetryCount": 0,
+          "waitForSuccess": true
+        },
+        "userAccounts": [
+          {
+            "name": "BatchTestAdmin",
+            "elevationLevel": "admin",
+            "windowsUserConfiguration": {
+              "loginMode": "interactive"
+            }
+          },
+          {
+            "name": "BatchTestNonAdmin",
+            "elevationLevel": "nonadmin",
+            "windowsUserConfiguration": {
+              "loginMode": "interactive"
+            }
+          }
+        ],
+        "taskSlotsPerNode": 1,
+        "taskSchedulingPolicy": {
+          "nodeFillType": "Spread"
+        },
+        "cloudServiceConfiguration": {
+          "osFamily": "4",
+          "osVersion": "*"
+        },
+        "currentNodeCommunicationMode": "classic"
+      }
+    },
+    {
+      "RequestUri": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest/nodes?api-version=2023-05-01.17.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "client-request-id": "fa659f16-e6d4-0c1e-5f93-a022b21f4c5f",
+        "return-client-request-id": "true",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20231006.1 (.NET 7.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fa659f16-e6d4-0c1e-5f93-a022b21f4c5f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "client-request-id": "fa659f16-e6d4-0c1e-5f93-a022b21f4c5f",
+        "Content-Type": "application/json; odata=minimalmetadata",
+        "DataServiceVersion": "3.0",
+        "Date": "Sat, 07 Oct 2023 00:56:48 GMT",
+        "request-id": "4a2f7624-12e6-4ad2-96d1-f2ef885ad4cf",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "odata.metadata": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/$metadata#nodes",
+        "value": [
+          {
+            "id": "tvmps_a98dfc3d7affefa7d9ac0458d71da5011e5500f330e880bca48e105cf2bd3f5d_d",
+            "url": "https://dotnotsdkbatchaccount.eastus.batch.azure.com/pools/wiboris-pooltest/nodes/tvmps_a98dfc3d7affefa7d9ac0458d71da5011e5500f330e880bca48e105cf2bd3f5d_d",
+            "state": "idle",
+            "schedulingState": "enabled",
+            "stateTransitionTime": "2023-10-05T04:27:43.318679Z",
+            "lastBootTime": "2023-10-05T04:27:40.56919Z",
+            "allocationTime": "2023-10-05T04:22:06.2934633Z",
+            "ipAddress": "10.218.0.4",
+            "affinityId": "TVM:tvmps_a98dfc3d7affefa7d9ac0458d71da5011e5500f330e880bca48e105cf2bd3f5d_d",
+            "vmSize": "standard_d1_v2",
+            "totalTasksRun": 0,
+            "totalTasksSucceeded": 0,
+            "runningTasksCount": 0,
+            "runningTaskSlotsCount": 0,
+            "startTask": {
+              "commandLine": "cmd /c hostname",
+              "environmentSettings": [
+                {
+                  "name": "key",
+                  "value": "value"
+                }
+              ],
+              "userIdentity": {
+                "autoUser": {
+                  "scope": "pool",
+                  "elevationLevel": "nonadmin"
+                }
+              },
+              "maxTaskRetryCount": 0,
+              "waitForSuccess": true
+            },
+            "startTaskInfo": {
+              "state": "completed",
+              "startTime": "2023-10-05T04:27:43.14642Z",
+              "endTime": "2023-10-05T04:27:43.30267Z",
+              "exitCode": 0,
+              "result": "success",
+              "retryCount": 0
+            },
+            "certificateReferences": [],
+            "isDedicated": true,
+            "endpointConfiguration": {
+              "inboundEndpoints": [
+                {
+                  "name": "Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput",
+                  "protocol": "tcp",
+                  "frontendPort": 3389,
+                  "backendPort": 20000
+                }
+              ]
+            },
+            "nodeAgentInfo": {
+              "lastUpdateTime": "2023-10-05T04:27:40.56919Z",
+              "version": "1.10.9"
+            },
+            "virtualMachineInfo": {}
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "CLIENT_ID": "b0f2ffd2-8956-4a40-a711-637d38d153cf",
+    "RandomSeed": "1941941796",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  }
+}

@@ -18,8 +18,6 @@ namespace Azure.Core.TestFramework
         private readonly TestRecording _recording;
         private readonly TestProxy _proxy;
         private readonly bool _isWebRequestTransport;
-        private readonly bool _useDefaultClientIDFormat;
-
         private const string DevCertIssuer = "CN=localhost";
         private const string FiddlerCertIssuer = "CN=DO_NOT_TRUST_FiddlerRoot, O=DO_NOT_TRUST, OU=Created by http://www.fiddler2.com";
 
@@ -35,7 +33,6 @@ namespace Azure.Core.TestFramework
             _filter = filter;
 
             bool useFiddler = TestEnvironment.EnableFiddler;
-            _useDefaultClientIDFormat = _recording.DefaultClientRequestIGuid;
             string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
             _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxy.IpAddress;
 
@@ -137,7 +134,7 @@ namespace Azure.Core.TestFramework
             _recording.HasRequests = true;
             lock (_recording.Random)
             {
-                if (_useDefaultClientIDFormat)
+                if (_recording.UseDefaultClientIDFormat)
                 {
                     // User want the client format to use the default format
                     request.ClientRequestId = _recording.Random.NewGuid().ToString();
