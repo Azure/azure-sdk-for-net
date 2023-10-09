@@ -74,7 +74,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         internal virtual Task WaitForReload()
         {
             // WaitForReload is only called when the _reloadInterval has a value.
-            return Task.Delay(_reloadInterval.Value, _cancellationToken.Token);
+            // Generate jitter for competing client.
+            double interval = _reloadInterval.Value.TotalSeconds;
+            double jitter = (interval / 2) + new Random().NextDouble() * interval;
+
+            return Task.Delay(TimeSpan.FromSeconds(jitter), _cancellationToken.Token);
         }
 
         private async Task LoadAsync()
