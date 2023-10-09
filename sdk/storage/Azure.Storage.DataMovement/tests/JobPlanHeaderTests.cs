@@ -3,7 +3,6 @@
 
 using System.IO;
 using Azure.Storage.DataMovement.JobPlan;
-using FastSerialization;
 using NUnit.Framework;
 using static Azure.Storage.DataMovement.Tests.CheckpointerTesting;
 
@@ -49,11 +48,6 @@ namespace Azure.Storage.DataMovement.Tests
 
                 CollectionAssert.AreEqual(expected, actual);
             }
-
-            //using (FileStream f = File.OpenWrite(@"D:\azure-sdk-for-net\sdk\storage\Azure.Storage.DataMovement\tests\Resources\SampleJobPlanFile.b1.ndm"))
-            //{
-            //    header.Serialize(f);
-            //}
         }
 
         [Test]
