@@ -346,7 +346,7 @@ This sample shows how to call CreateDataDeleteJobAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     extensionId = "<extensionId>",
     partyId = "<partyId>",
@@ -365,7 +365,7 @@ This sample shows how to call CreateDataDeleteJobAsync with all parameters and r
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     extensionId = "<extensionId>",
     partyId = "<partyId>",
@@ -415,7 +415,7 @@ This sample shows how to call CreateDataDeleteJob and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     extensionId = "<extensionId>",
     partyId = "<partyId>",
@@ -434,7 +434,7 @@ This sample shows how to call CreateDataDeleteJob with all parameters and reques
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     extensionId = "<extensionId>",
     partyId = "<partyId>",
@@ -484,7 +484,7 @@ This sample shows how to call CreateDataIngestionJobAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     boundaryId = "<boundaryId>",
     partyId = "<partyId>",
@@ -510,7 +510,7 @@ This sample shows how to call CreateDataIngestionJobAsync with all parameters an
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     boundaryId = "<boundaryId>",
     partyId = "<partyId>",
@@ -563,7 +563,7 @@ This sample shows how to call CreateDataIngestionJob and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     boundaryId = "<boundaryId>",
     partyId = "<partyId>",
@@ -589,7 +589,7 @@ This sample shows how to call CreateDataIngestionJob with all parameters and req
 TokenCredential credential = new DefaultAzureCredential();
 Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     boundaryId = "<boundaryId>",
     partyId = "<partyId>",

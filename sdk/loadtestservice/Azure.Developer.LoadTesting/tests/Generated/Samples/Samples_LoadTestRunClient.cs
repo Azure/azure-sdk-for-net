@@ -762,7 +762,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -783,7 +783,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -804,7 +804,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -842,7 +842,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 components = new
                 {
@@ -958,7 +958,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -973,7 +973,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -988,7 +988,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metrics = new
                 {
@@ -1030,7 +1030,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 metrics = new
                 {
@@ -1152,7 +1152,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1168,7 +1168,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -1184,7 +1184,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 filters = new object[]
             {
@@ -1216,7 +1216,7 @@ values = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 filters = new object[]
             {

@@ -840,7 +840,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -866,7 +866,7 @@ key = "<hashes>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -892,7 +892,7 @@ key = "<hashes>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
@@ -927,7 +927,7 @@ url = "<url>",
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
-            RequestContent content = RequestContent.Create(new object[]
+            using RequestContent content = RequestContent.Create(new object[]
             {
 new
 {
