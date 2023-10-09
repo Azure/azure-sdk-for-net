@@ -67,7 +67,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             return new Memory<byte>(writer.ToArray());
         }
 
-        public virtual IList<WebPubSubMessage> ParseMessage(ReadOnlySequence<byte> input)
+        public virtual IReadOnlyList<WebPubSubMessage> ParseMessage(ReadOnlySequence<byte> input)
         {
             try
             {
