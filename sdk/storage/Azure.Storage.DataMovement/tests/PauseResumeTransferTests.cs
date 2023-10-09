@@ -383,7 +383,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
