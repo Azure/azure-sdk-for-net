@@ -3,7 +3,7 @@
 ## 1.1.0-beta.1 (2023-10-10)
 
 ### Bugs Fixed
-  - Fix sovereign support for US Gov and China clouds
+- Added `LogsIngestionAudience` for multi-cloud support to allow users to select the Azure cloud where the resource is located.
 
 ## 1.0.0 (2023-02-21)
 
