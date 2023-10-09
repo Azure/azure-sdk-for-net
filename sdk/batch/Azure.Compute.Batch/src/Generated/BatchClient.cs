@@ -873,7 +873,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='PoolExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> PoolExistsAsync(string poolId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<Response<bool>> PoolExistsAsync(string poolId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -882,7 +882,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreatePoolExistsRequest(poolId, timeOut, ocpDate, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -919,7 +919,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='PoolExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response PoolExists(string poolId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual Response<bool> PoolExists(string poolId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
@@ -928,7 +928,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreatePoolExistsRequest(poolId, timeOut, ocpDate, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -5055,7 +5055,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> JobScheduleExistsAsync(string jobScheduleId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<Response<bool>> JobScheduleExistsAsync(string jobScheduleId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -5064,7 +5064,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -5101,7 +5101,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response JobScheduleExists(string jobScheduleId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual Response<bool> JobScheduleExists(string jobScheduleId, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -5110,7 +5110,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -7893,7 +7893,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetTaskFilePropertiesAsync(string jobId, string taskId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<Response<bool>> GetTaskFilePropertiesAsync(string jobId, string taskId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -7907,7 +7907,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateGetTaskFilePropertiesRequest(jobId, taskId, filePath, timeOut, ocpDate, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -7946,7 +7946,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response GetTaskFileProperties(string jobId, string taskId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual Response<bool> GetTaskFileProperties(string jobId, string taskId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -7960,7 +7960,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateGetTaskFilePropertiesRequest(jobId, taskId, filePath, timeOut, ocpDate, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -10587,7 +10587,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetNodeFilePropertiesAsync(string poolId, string nodeId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<Response<bool>> GetNodeFilePropertiesAsync(string poolId, string nodeId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -10601,7 +10601,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateGetNodeFilePropertiesRequest(poolId, nodeId, filePath, timeOut, ocpDate, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -10640,7 +10640,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response GetNodeFileProperties(string poolId, string nodeId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual Response<bool> GetNodeFileProperties(string poolId, string nodeId, string filePath, int? timeOut = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -10654,7 +10654,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateGetNodeFilePropertiesRequest(poolId, nodeId, filePath, timeOut, ocpDate, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -11359,7 +11359,7 @@ namespace Azure.Compute.Batch
 
         internal HttpMessage CreatePoolExistsRequest(string poolId, int? timeOut, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200To300400To500);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -12272,7 +12272,7 @@ namespace Azure.Compute.Batch
 
         internal HttpMessage CreateJobScheduleExistsRequest(string jobScheduleId, int? timeOut, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200To300400To500);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -12952,7 +12952,7 @@ namespace Azure.Compute.Batch
 
         internal HttpMessage CreateGetTaskFilePropertiesRequest(string jobId, string taskId, string filePath, int? timeOut, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200To300400To500);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -13527,7 +13527,7 @@ namespace Azure.Compute.Batch
 
         internal HttpMessage CreateGetNodeFilePropertiesRequest(string poolId, string nodeId, string filePath, int? timeOut, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200To300400To500);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -13653,8 +13653,21 @@ namespace Azure.Compute.Batch
         private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier200404;
-        private static ResponseClassifier ResponseClassifier200404 => _responseClassifier200404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
+        private sealed class ResponseClassifier200To300400To500Override : ResponseClassifier
+        {
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                return message.Response.Status switch
+                {
+                    >= 200 and < 300 => false,
+                    >= 400 and < 500 => false,
+                    _ => true
+                };
+            }
+        }
+
+        private static ResponseClassifier _responseClassifier200To300400To500;
+        private static ResponseClassifier ResponseClassifier200To300400To500 => _responseClassifier200To300400To500 ??= new ResponseClassifier200To300400To500Override();
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }

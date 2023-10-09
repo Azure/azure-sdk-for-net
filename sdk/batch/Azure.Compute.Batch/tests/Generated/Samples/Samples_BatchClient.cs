@@ -1454,9 +1454,9 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.PoolExists("<poolId>");
+            Response<bool> response = client.PoolExists("<poolId>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -1467,9 +1467,9 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.PoolExistsAsync("<poolId>");
+            Response<bool> response = await client.PoolExistsAsync("<poolId>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -1480,9 +1480,9 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.PoolExists("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = client.PoolExists("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -1493,9 +1493,9 @@ MountOptions = "<mountOptions>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.PoolExistsAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = await client.PoolExistsAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -9286,9 +9286,9 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.JobScheduleExists("<jobScheduleId>");
+            Response<bool> response = client.JobScheduleExists("<jobScheduleId>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -9299,9 +9299,9 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.JobScheduleExistsAsync("<jobScheduleId>");
+            Response<bool> response = await client.JobScheduleExistsAsync("<jobScheduleId>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -9312,9 +9312,9 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.JobScheduleExists("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = client.JobScheduleExists("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -9325,9 +9325,9 @@ Version = "<version>",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -17202,9 +17202,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>");
+            Response<bool> response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -17215,9 +17215,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>");
+            Response<bool> response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -17228,9 +17228,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -17241,9 +17241,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -19156,9 +19156,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>");
+            Response<bool> response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -19169,9 +19169,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>");
+            Response<bool> response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>");
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -19182,9 +19182,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]
@@ -19195,9 +19195,9 @@ Access = {AccessScope.Job},
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+            Response<bool> response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-            Console.WriteLine(response.Status);
+            Console.WriteLine(response.GetRawResponse().Status);
         }
 
         [Test]

@@ -1381,9 +1381,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.PoolExistsAsync("<poolId>");
+Response<bool> response = await client.PoolExistsAsync("<poolId>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call PoolExistsAsync with all parameters.
 <code><![CDATA[
@@ -1391,9 +1391,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.PoolExistsAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = await client.PoolExistsAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="PoolExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
@@ -1404,9 +1404,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.PoolExists("<poolId>");
+Response<bool> response = client.PoolExists("<poolId>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call PoolExists with all parameters.
 <code><![CDATA[
@@ -1414,9 +1414,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.PoolExists("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = client.PoolExists("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
@@ -8967,9 +8967,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.JobScheduleExistsAsync("<jobScheduleId>");
+Response<bool> response = await client.JobScheduleExistsAsync("<jobScheduleId>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call JobScheduleExistsAsync with all parameters.
 <code><![CDATA[
@@ -8977,9 +8977,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
@@ -8990,9 +8990,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.JobScheduleExists("<jobScheduleId>");
+Response<bool> response = client.JobScheduleExists("<jobScheduleId>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call JobScheduleExists with all parameters.
 <code><![CDATA[
@@ -9000,9 +9000,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.JobScheduleExists("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = client.JobScheduleExists("<jobScheduleId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="DeleteJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
@@ -16691,9 +16691,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>");
+Response<bool> response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call GetTaskFilePropertiesAsync with all parameters.
 <code><![CDATA[
@@ -16701,9 +16701,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="GetTaskFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
@@ -16714,9 +16714,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>");
+Response<bool> response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call GetTaskFileProperties with all parameters.
 <code><![CDATA[
@@ -16724,9 +16724,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
@@ -18465,9 +18465,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>");
+Response<bool> response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call GetNodeFilePropertiesAsync with all parameters.
 <code><![CDATA[
@@ -18475,9 +18475,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="GetNodeFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
@@ -18488,9 +18488,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>");
+Response<bool> response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>");
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code>
 This sample shows how to call GetNodeFileProperties with all parameters.
 <code><![CDATA[
@@ -18498,9 +18498,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
+Response<bool> response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
-Console.WriteLine(response.Status);
+Console.WriteLine(response.GetRawResponse().Status);
 ]]></code></example>
     </member>
     <member name="GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
